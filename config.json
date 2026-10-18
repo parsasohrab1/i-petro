@@ -1,0 +1,137 @@
+{
+  "agent_name_fa": "توسعه بازار برون مرزی هوشمند",
+  "agent_name_en": "Smart Cross-Border Market Development",
+  "company": {
+    "name": "Parsa International Group",
+    "city": "Istanbul",
+    "country": "Türkiye",
+    "website": "parsaint.group",
+    "email": "info@parsaint.group",
+    "signatory": "Narges Farahani",
+    "signatory_title": "AI Sector",
+    "github_user": "parsasohrab1",
+    "track_record": "No completed contracts or client references yet in AI or industrial smartification. Capability is demonstrated only by the software prototypes in the GitHub portfolio (mostly TRL 4-5, many trained on synthetic data)."
+  },
+  "domains": {
+    "oil_gas_petrochemical": [
+      "digital twin",
+      "predictive maintenance",
+      "process optimization",
+      "petrochemical",
+      "refinery",
+      "oil and gas",
+      "artificial lift",
+      "reservoir",
+      "gas turbine",
+      "pipeline monitoring",
+      "tank farm",
+      "SCADA",
+      "industrial IoT",
+      "condition monitoring",
+      "asset performance management",
+      "drilling optimization",
+      "oil well",
+      "oilfield"
+    ],
+    "energy_sustainability": [
+      "energy management system",
+      "energy efficiency",
+      "carbon management",
+      "emissions monitoring",
+      "decarbonization",
+      "HVAC optimization",
+      "smart grid",
+      "renewable energy forecasting"
+    ],
+    "industrial_ai": [
+      "artificial intelligence",
+      "machine learning",
+      "decision support system",
+      "operator assistant",
+      "smart factory",
+      "industry 4.0",
+      "digital transformation",
+      "data analytics platform",
+      "computer vision inspection",
+      "anomaly detection"
+    ],
+    "healthcare_ai": [
+      "clinical decision support",
+      "medical imaging",
+      "health information system",
+      "electronic health record",
+      "FHIR",
+      "health data analytics",
+      "diagnostic software",
+      "telemedicine platform",
+      "laboratory information system"
+    ],
+    "biotech_pharma": [
+      "drug discovery",
+      "genomics",
+      "pharmacogenomics",
+      "bioinformatics",
+      "precision medicine",
+      "gene therapy",
+      "cell therapy",
+      "nanomedicine"
+    ],
+    "nuclear": [
+      "nuclear power plant digital",
+      "reactor monitoring",
+      "nuclear predictive maintenance"
+    ]
+  },
+  "exclude_keywords": [
+    "catering",
+    "cleaning services",
+    "construction works",
+    "furniture",
+    "vehicles",
+    "uniforms",
+    "food supply",
+    "weapons",
+    "ammunition",
+    "military",
+    "water well",
+    "borehole",
+    "laboratory reagents"
+  ],
+  "sources": {
+    "ted": {
+      "enabled": true,
+      "lookback_days": 3,
+      "max_pages": 3
+    },
+    "worldbank": {
+      "enabled": true,
+      "rows_per_query": 50
+    },
+    "uk_fts": {
+      "enabled": true,
+      "lookback_days": 3,
+      "max_pages": 10
+    }
+  },
+  "screening": {
+    "min_days_to_deadline": 7,
+    "min_keyword_score": 2,
+    "max_llm_analyses_per_day": 8,
+    "max_partner_packages_per_day": 3
+  },
+  "llm": {
+    "model": "claude-opus-5-5",
+    "analysis_effort": "medium",
+    "drafting_effort": "high"
+  },
+  "mail": {
+    "drafts_folder_candidates": [
+      "INBOX.Drafts",
+      "Drafts",
+      "INBOX/Drafts"
+    ]
+  },
+  "dashboard": {
+    "output": "docs/index.html"
+  }
+}
