@@ -13,7 +13,7 @@
     "track_record": "No completed contracts or client references yet in AI or industrial smartification. Capability is demonstrated only by the software prototypes in the GitHub portfolio (mostly TRL 4-5, many trained on synthetic data)."
   },
   "domains": {
-    "oil_gas_petrochemical": [
+    "energy": [
       "digital twin",
       "predictive maintenance",
       "process optimization",
@@ -31,42 +31,29 @@
       "asset performance management",
       "drilling optimization",
       "oil well",
-      "oilfield"
-    ],
-    "energy_sustainability": [
+      "oilfield",
       "energy management system",
       "energy efficiency",
       "carbon management",
       "emissions monitoring",
       "decarbonization",
-      "HVAC optimization",
       "smart grid",
-      "renewable energy forecasting"
+      "renewable energy forecasting",
+      "power plant optimization",
+      "gas network",
+      "energy storage management"
     ],
-    "industrial_ai": [
-      "artificial intelligence",
-      "machine learning",
-      "decision support system",
-      "operator assistant",
-      "smart factory",
-      "industry 4.0",
-      "digital transformation",
-      "data analytics platform",
-      "computer vision inspection",
-      "anomaly detection"
-    ],
-    "healthcare_ai": [
+    "medical": [
       "clinical decision support",
       "medical imaging",
       "health information system",
+      "hospital information system",
       "electronic health record",
       "FHIR",
       "health data analytics",
       "diagnostic software",
       "telemedicine platform",
-      "laboratory information system"
-    ],
-    "biotech_pharma": [
+      "laboratory information system",
       "drug discovery",
       "genomics",
       "pharmacogenomics",
@@ -76,10 +63,53 @@
       "cell therapy",
       "nanomedicine"
     ],
+    "aviation": [
+      "aviation",
+      "airport operations",
+      "airport management system",
+      "aircraft maintenance",
+      "aircraft MRO",
+      "predictive maintenance aircraft",
+      "aircraft engine monitoring",
+      "air traffic management",
+      "airline operations",
+      "flight data analysis",
+      "baggage handling system"
+    ],
     "nuclear": [
-      "nuclear power plant digital",
+      "nuclear power plant",
       "reactor monitoring",
-      "nuclear predictive maintenance"
+      "nuclear predictive maintenance",
+      "nuclear safety analysis",
+      "radiation monitoring"
+    ],
+    "urban": [
+      "smart city",
+      "urban mobility",
+      "traffic management system",
+      "intelligent transport system",
+      "smart building",
+      "building energy management",
+      "HVAC optimization",
+      "water distribution network",
+      "leak detection",
+      "district heating",
+      "urban digital twin",
+      "emergency management system",
+      "crisis management",
+      "public safety platform"
+    ],
+    "ai_cross_cutting": [
+      "artificial intelligence",
+      "machine learning",
+      "decision support system",
+      "operator assistant",
+      "smart factory",
+      "industry 4.0",
+      "digital transformation",
+      "data analytics platform",
+      "computer vision",
+      "anomaly detection"
     ]
   },
   "exclude_keywords": [
@@ -111,6 +141,10 @@
       "enabled": true,
       "lookback_days": 3,
       "max_pages": 10
+    },
+    "setad": {
+      "enabled": true,
+      "page_size": 50
     }
   },
   "screening": {
@@ -133,5 +167,119 @@
   },
   "dashboard": {
     "output": "docs/index.html"
-  }
+  },
+  "domain_labels_fa": {
+    "energy": "انرژی",
+    "medical": "پزشکی",
+    "aviation": "هوانوردی",
+    "nuclear": "هسته‌ای",
+    "urban": "شهری",
+    "ai_cross_cutting": "هوش مصنوعی (عمومی)"
+  },
+  "domestic_keywords": {
+    "energy": [
+      "هوشمند سازی",
+      "هوشمندسازی",
+      "دوقلوی دیجیتال",
+      "نگهداری پیش بینانه",
+      "نگهداری پیشگویانه",
+      "پایش وضعیت",
+      "پایش برخط",
+      "مدیریت انرژی",
+      "بهینه سازی مصرف انرژی",
+      "اسکادا",
+      "پالایشگاه",
+      "پتروشیمی",
+      "چاه نفت",
+      "میدان نفتی",
+      "توربین گازی",
+      "مدیریت دارایی",
+      "کنتور هوشمند",
+      "مدیریت کربن"
+    ],
+    "medical": [
+      "سامانه اطلاعات بیمارستانی",
+      "پرونده الکترونیک سلامت",
+      "تصویربرداری پزشکی",
+      "نرم افزار تشخیص",
+      "ژنومیک",
+      "سلامت دیجیتال",
+      "سامانه آزمایشگاهی"
+    ],
+    "aviation": [
+      "فرودگاه",
+      "ناوبری هوایی",
+      "تعمیر و نگهداری هواپیما",
+      "موتور هواپیما"
+    ],
+    "nuclear": [
+      "هسته ای",
+      "نیروگاه اتمی",
+      "پرتو"
+    ],
+    "urban": [
+      "شهر هوشمند",
+      "تقاطع هوشمند",
+      "حمل و نقل هوشمند",
+      "کنترل ترافیک",
+      "ساختمان هوشمند",
+      "شبکه آب",
+      "نشت یابی",
+      "مدیریت بحران"
+    ],
+    "ai_cross_cutting": [
+      "هوش مصنوعی",
+      "یادگیری ماشین",
+      "داده کاوی",
+      "تحلیل داده",
+      "سامانه پشتیبان تصمیم",
+      "بینایی ماشین",
+      "سامانه هوشمند"
+    ]
+  },
+  "domestic_exclude_keywords": [
+    "گوشی",
+    "تلویزیون",
+    "لوازم التحریر",
+    "خودرو",
+    "حراج",
+    "مزایده",
+    "پوشاک",
+    "مواد غذایی",
+    "مبلمان",
+    "ساختمانی",
+    "مرمت",
+    "بهسازی",
+    "مصالح",
+    "آجر",
+    "فیلتر",
+    "کولر",
+    "لوله",
+    "کابل",
+    "تعمیر ساختمان",
+    "تولید محتوا",
+    "تبلیغات"
+  ],
+  "domestic_required_any": [
+    "هوشمند",
+    "هوش مصنوعی",
+    "نرم افزار",
+    "نرم‌افزار",
+    "سامانه",
+    "سیستم",
+    "دیجیتال",
+    "پایش",
+    "اسکادا",
+    "داده",
+    "نگهداری پیش",
+    "دوقلوی",
+    "مانیتورینگ",
+    "اتوماسیون",
+    "کنترل از راه دور",
+    "تله متری",
+    "بینایی ماشین",
+    "یادگیری ماشین",
+    "IoT",
+    "اینترنت اشیا"
+  ]
 }

@@ -46,11 +46,12 @@ def upsert(state, tender):
     existing = state["tenders"].get(tender["id"])
     if existing:
         # refresh listing fields, keep pipeline fields
-        for k in ("title", "description", "deadline", "url", "buyer", "country", "days_left", "keyword_score", "domains"):
+        for k in ("title", "description", "deadline", "deadline_fa", "url", "buyer", "country", "days_left",
+                  "keyword_score", "domains", "facts", "market"):
             if tender.get(k) not in (None, ""):
                 existing[k] = tender[k]
         return existing, False
-    record = {**tender, "status": "new", "first_seen": now(), "history": [{"at": now(), "status": "new"}]}
+    record = {**{k: v for k, v in tender.items() if k != "full_text"}, "status": "new", "first_seen": now(), "history": [{"at": now(), "status": "new"}]}
     state["tenders"][tender["id"]] = record
     return record, True
 

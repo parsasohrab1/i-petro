@@ -7,7 +7,7 @@ from .analyst import Analyst, llm_available
 from .config import OUTPUT_DIR, env, load_config
 from .portfolio import build_profile, profile_text
 from .screening import days_left, screen
-from .sources import collect_all
+from .sources import collect_all, enrich_full_text
 
 REMIND_AT = {14, 7, 3, 1}
 
@@ -49,7 +49,7 @@ def _draft(cfg, rec, subject, body, attachments, to, use_mail, log):
 
 def process_candidate(analyst, cfg, rec, use_mail, budget, log):
     log(f"Analysing {rec['id']}: {rec['title'][:90]}")
-    analysis = analyst.analyse(rec)
+    analysis = analyst.analyse({**rec, "analysis_text": enrich_full_text(rec, log)})
     rec["analysis"] = analysis
     _save_json(rec, "analysis.json", analysis)
     if analysis["relevance_score"] < 40 or analysis["eligibility"] == "not_feasible":
@@ -92,11 +92,14 @@ def summary_text(cfg, run, state):
             where = "در Drafts وب‌میل" if str(r.get("draft_saved_to", "")).startswith("webmail") else "در پوشه outputs"
             lines.append(f"• {r['country'] or '؟'} | {r['title'][:80]}\n  امتیاز {a.get('relevance_score', '-')} | "
                          f"مهلت {r['deadline'] or 'نامشخص'} | {kind} {where}\n  {r['url']}")
-    pending = [t[i] for i in run["new_ids"] if t[i]["status"] == "new"]
-    if pending:
-        lines.append(f"\n🔎 {len(pending)} فرصت مرتبط جدید منتظر تحلیل است (در داشبورد):")
-        for r in pending[:8]:
-            lines.append(f"• {r['country'] or '؟'} | {r['title'][:80]} | مهلت {r['deadline'] or '؟'}")
+    for market, label in (("international", "🌍 بازار بین‌المللی"), ("domestic", "🇮🇷 بازار داخلی (ستاد)")):
+        pending = [t[i] for i in run["new_ids"] if t[i]["status"] == "new" and t[i].get("market", "international") == market]
+        if pending:
+            lines.append(f"\n{label}: {len(pending)} فرصت مرتبط جدید (جزئیات و شرایط در داشبورد)")
+            for r in pending[:8]:
+                price = (r.get("facts") or {}).get("price", "")
+                price = "" if price.startswith("در خلاصه") else f" | {price}"
+                lines.append(f"• {r['country'] or '؟'} | {r['title'][:80]} | مهلت {r.get('deadline_fa') or r['deadline'] or '؟'}{price}")
     if run["reminders"]:
         lines.append("\n⏰ یادآوری مهلت‌ها:")
         for rid in run["reminders"]:
@@ -137,7 +140,9 @@ def run(use_llm=True, use_mail=True, send_notification=True):
     actioned = []
     if use_llm and llm_available():
         analyst = Analyst(cfg, profile_text(cfg, profile))
-        queue = sorted((r for r in state["tenders"].values() if r["status"] == "new"),
+        # Claude analysis and drafting run for the international market; domestic notices are listed from Setad data.
+        queue = sorted((r for r in state["tenders"].values()
+                        if r["status"] == "new" and r.get("market", "international") == "international"),
                        key=lambda r: (-r.get("keyword_score", 0), r.get("days_left") or 999))
         budget = {"partner": cfg["screening"]["max_partner_packages_per_day"]}
         for rec in queue[:cfg["screening"]["max_llm_analyses_per_day"]]:

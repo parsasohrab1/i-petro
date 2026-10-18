@@ -7,6 +7,7 @@ on:
 
 permissions:
   contents: write
+  actions: write
 
 concurrency:
   group: daily-tender-scan
@@ -18,10 +19,23 @@ jobs:
     timeout-minutes: 60
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+
       - run: pip install -r requirements.txt
+
+      # Pipeline state lives in the Actions cache, which is never publicly downloadable.
+      - name: Restore pipeline state
+        uses: actions/cache/restore@v4
+        with:
+          path: |
+            data
+            outputs
+          key: agent-state-${{ github.run_id }}
+          restore-keys: agent-state-
+
       - name: Run agent
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
@@ -38,10 +52,32 @@ jobs:
           NOTIFY_EMAIL: ${{ secrets.NOTIFY_EMAIL }}
           DASHBOARD_URL: ${{ vars.DASHBOARD_URL }}
         run: python -m agent run
-      - name: Save pipeline state, drafts and dashboard
+
+      - name: Save pipeline state
+        if: always()
+        uses: actions/cache/save@v4
+        with:
+          path: |
+            data
+            outputs
+          key: agent-state-${{ github.run_id }}
+
+      - name: Check repository visibility
+        id: vis
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: echo "private=$(gh api repos/${{ github.repository }} --jq .private)" >> "$GITHUB_OUTPUT"
+
+      # Drafts, MoUs, partner lists and the dashboard are committed ONLY to a private repository.
+      - name: Commit results (private repository only)
+        if: steps.vis.outputs.private == 'true'
         run: |
           git config user.name "smart-cross-border-agent"
           git config user.email "actions@users.noreply.github.com"
           git add data outputs docs
           git diff --cached --quiet || git commit -m "Daily scan $(date -u +%F)"
           git push
+
+      - name: Public repository - results not committed
+        if: steps.vis.outputs.private != 'true'
+        run: echo "::warning::Repository is public, so drafts and analyses were kept in the private Actions cache and not committed. Make the repository private to get the dashboard and files in the repo."

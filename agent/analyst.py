@@ -35,9 +35,22 @@ ANALYSIS_SCHEMA = {
     "type": "object",
     "additionalProperties": False,
     "required": ["relevance_score", "matched_products", "summary_fa", "scope_fa", "key_requirements_fa",
-                 "eligibility", "eligibility_reasoning_fa", "compliance_flags_fa", "partner_profile_en",
-                 "next_actions_fa"],
+                 "conditions", "eligibility", "eligibility_reasoning_fa", "compliance_flags_fa",
+                 "partner_profile_en", "next_actions_fa"],
     "properties": {
+        "conditions": {
+            "type": "object",
+            "additionalProperties": False,
+            "description": "Bid conditions at a glance, in Persian. Quote figures from the notice; "
+                           "write 'در آگهی ذکر نشده' when the notice is silent.",
+            "required": ["price_fa", "guarantee_fa", "experience_fa", "international_fa"],
+            "properties": {
+                "price_fa": {"type": "string", "description": "estimated value / budget / price basis and evaluation method"},
+                "guarantee_fa": {"type": "string", "description": "bid security and performance guarantee: amount, form, validity"},
+                "experience_fa": {"type": "string", "description": "required CVs, references, similar contracts, turnover, certifications, samples"},
+                "international_fa": {"type": "string", "description": "whether foreign / international firms may bid, eligibility rules, JV and local-partner rules"},
+            },
+        },
         "relevance_score": {"type": "integer", "description": "0-100 fit between the tender scope and the product lines"},
         "matched_products": {"type": "array", "items": {"type": "string"}, "description": "product ids from the profile"},
         "summary_fa": {"type": "string"},
@@ -150,13 +163,15 @@ class Analyst:
     def _tender_block(t):
         return (f"TENDER\nID: {t['id']}\nSource: {t['source']}\nTitle: {t['title']}\nBuyer: {t['buyer']}\n"
                 f"Country: {t['country']}\nNotice type: {t.get('notice_type', '')}\nDeadline: {t['deadline']}\n"
-                f"URL: {t['url']}\nDescription: {t['description']}")
+                f"URL: {t['url']}\nNotice text: {t.get('analysis_text') or t['description']}")
 
     # ---------------------------------------------------------------- steps
     def analyse(self, tender):
         prompt = (self._tender_block(tender) + "\n\nAssess this tender for Parsa International Group. "
                   "Score relevance against the product lines, list the key requirements you can infer, decide "
                   "eligibility (direct / partner_required / not_feasible) given the company's lack of references, "
+                  "fill the at-a-glance bid conditions (price, guarantees, experience/references, acceptance of "
+                  "international firms) from the notice text, "
                   "and describe the ideal local partner if one is needed.")
         return self._structured(prompt, ANALYSIS_SCHEMA, self.cfg["llm"]["analysis_effort"])
 

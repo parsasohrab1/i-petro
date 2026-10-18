@@ -32,5 +32,5 @@ def profile_text(cfg, profile):
     ]
     for p in profile["products"]:
         flag = " [IP ownership to be confirmed before offering]" if p.get("ip_check") else ""
-        lines.append(f"- {p['id']}: {p['name']} ({p['domain']}) - {p['summary']} Maturity: {p['maturity']}.{flag}")
+        lines.append(f"- {p['id']}: {p['name']} ({', '.join(p['domains'])}) - {p['summary']} Maturity: {p['maturity']}.{flag}")
     return "\n".join(lines)

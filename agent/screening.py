@@ -1,16 +1,29 @@
-"""Cheap rule-based pre-screen so only promising tenders reach the (paid) LLM analysis."""
+"""Cheap rule-based pre-screen so only promising tenders reach the (paid) LLM analysis.
+International tenders are matched with English keywords, domestic (Iran) tenders with Persian keywords."""
 from datetime import date
+
+from .sources import normalize_fa
+
+
+def _keyword_sets(tender, cfg):
+    if tender.get("market") == "domestic":
+        return cfg["domestic_keywords"], cfg.get("domestic_exclude_keywords", []), normalize_fa
+    return cfg["domains"], cfg["exclude_keywords"], str
 
 
 def keyword_score(tender, cfg):
-    title = tender["title"].lower()
-    body = f"{tender['title']} {tender['description']}".lower()
-    if any(x in title for x in cfg["exclude_keywords"]):
+    domains_map, exclude, norm = _keyword_sets(tender, cfg)
+    title = norm(tender["title"]).lower()
+    body = norm(f"{tender['title']} {tender['description']}").lower()
+    if any(norm(x).lower() in title for x in exclude):
         return 0, []
+    required = cfg.get("domestic_required_any") if tender.get("market") == "domestic" else None
+    if required and not any(norm(x).lower() in title for x in required):
+        return 0, []  # domestic notices must name a technology scope, not only a sector
     score, domains = 0, set()
-    for domain, phrases in cfg["domains"].items():
+    for domain, phrases in domains_map.items():
         for p in phrases:
-            p = p.lower()
+            p = norm(p).lower()
             if p in title:
                 score += 3
                 domains.add(domain)
@@ -36,9 +49,10 @@ def screen(tenders, cfg):
     for t in tenders:
         score, domains = keyword_score(t, cfg)
         left = days_left(t)
+        min_days = scfg["min_days_to_deadline"] if t.get("market") != "domestic" else scfg.get("min_days_domestic", 2)
         if score < scfg["min_keyword_score"]:
             continue
-        if left is not None and left < scfg["min_days_to_deadline"]:
+        if left is not None and left < min_days:
             continue
         out.append({**t, "keyword_score": score, "domains": domains, "days_left": left})
     out.sort(key=lambda t: (-t["keyword_score"], t["days_left"] if t["days_left"] is not None else 999))
