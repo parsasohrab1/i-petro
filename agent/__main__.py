@@ -5,12 +5,16 @@
   python -m agent status <tender-id> <status> [note...]      move a tender along the pipeline
   python -m agent redo <tender-id>                           re-analyse and re-draft one tender
   python -m agent dashboard                                  rebuild docs/index.html
+  python -m agent star <country> / unstar <country>          countries for weekly partner scouting
+  python -m agent event <event-id> <status>                  considering | registered | attending | attended | skipped
+  python -m agent partner <company-key> <status>             sent | replied | meeting | mou | not_interested
 """
+import json
 import argparse
 import sys
 
-from . import dashboard, store
-from .config import load_config
+from . import dashboard, events, partners, store
+from .config import ROOT, load_config
 
 
 def main(argv=None):
@@ -31,6 +35,14 @@ def main(argv=None):
     rd = sub.add_parser("redo")
     rd.add_argument("tender_id")
     sub.add_parser("dashboard")
+    for name in ("star", "unstar"):
+        sub.add_parser(name).add_argument("country")
+    ev = sub.add_parser("event")
+    ev.add_argument("event_id")
+    ev.add_argument("status", choices=list(events.STATUSES))
+    pa = sub.add_parser("partner")
+    pa.add_argument("key")
+    pa.add_argument("status", choices=list(partners.STATUSES))
     a = p.parse_args(argv)
 
     if a.cmd == "run":
@@ -39,6 +51,34 @@ def main(argv=None):
         return
 
     cfg, state = load_config(), store.load()
+    if a.cmd in ("star", "unstar"):
+        stars = cfg.setdefault("starred_countries", [])
+        if a.cmd == "star" and a.country not in stars:
+            stars.append(a.country)
+        if a.cmd == "unstar" and a.country in stars:
+            stars.remove(a.country)
+        (ROOT / "config.json").write_text(json.dumps(cfg, ensure_ascii=False, indent=2), encoding="utf-8")
+        dashboard.render(cfg, state)
+        print("starred countries:", ", ".join(stars) or "-")
+        return
+    if a.cmd == "event":
+        es = events.load()
+        if a.event_id not in es["events"]:
+            sys.exit(f"unknown event {a.event_id}")
+        events.set_status(es, a.event_id, a.status)
+        events.save(es)
+        dashboard.render(cfg, state)
+        print(f"{a.event_id} -> {events.STATUSES[a.status]}")
+        return
+    if a.cmd == "partner":
+        ps = partners.load()
+        if a.key not in ps["companies"]:
+            sys.exit(f"unknown company {a.key}")
+        ps["companies"][a.key]["status"] = a.status
+        partners.save(ps)
+        dashboard.render(cfg, state)
+        print(f"{a.key} -> {partners.STATUSES[a.status]}")
+        return
     if a.cmd == "list":
         for t in sorted(state["tenders"].values(), key=lambda t: t.get("deadline") or "9"):
             if a.all or t["status"] in store.ACTIVE:

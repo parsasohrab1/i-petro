@@ -1,19 +1,20 @@
 {
  "tenders": {
-  "SETAD-1105004106001068": {
-   "id": "SETAD-1105004106001068",
+  "SETAD-1105100916000002": {
+   "id": "SETAD-1105100916000002",
    "source": "ستاد (setadiran.ir)",
    "market": "domestic",
-   "title": "نیاز خدمات-طرح توسعه هوشمند سازی لوازم اندازه گیری هوشمند سازی کنتور سه فاز محله نبوت الهیه شمالی به مبلغ پایه : 8.799.253.140ریال",
+   "title": "نیاز خدمات-خریدواجرای نصب دوربین پلاکخوان وتشخیص چهره ونظارتی(دیددرشب وروزرنگی)طبق استعلام بهاء اقلام درخواستی پیوستی",
    "description": "– خرید",
-   "buyer": "شرکت توزیع نیروی برق استان هرمزگان",
-   "country": "ایران – هرمزگان",
+   "buyer": "دهیاری تازه کندبکراباد بخش مرکزی شهرستان ورزقان",
+   "country": "ایران – آذربایجان شرقی",
    "deadline": "2026-10-20",
-   "deadline_fa": "1405/07/28 - 09:15",
+   "deadline_fa": "1405/07/28 - 08:00",
    "published": "",
    "url": "https://fe.setadiran.ir/centralboard/#/central-board-0",
    "notice_type": "خرید",
-   "setad_number": "1105004106001068",
+   "setad_number": "1105100916000002",
+   "sector": "دولتی",
    "facts": {
     "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
     "guarantee": "تضمین شرکت در فرایند ارجاع کار طبق آیین‌نامه تضمین معاملات دولتی – مبلغ در اسناد ستاد",
@@ -22,32 +23,68 @@
    },
    "keyword_score": 3,
    "domains": [
-    "energy"
+    "ai_cross_cutting"
    ],
    "days_left": 2,
+   "line": "ai",
    "status": "new",
-   "first_seen": "2026-10-18T21:15:13",
+   "first_seen": "2026-10-18T22:02:18",
    "history": [
     {
-     "at": "2026-10-18T21:15:13",
+     "at": "2026-10-18T22:02:18",
      "status": "new"
     }
    ]
   },
-  "SETAD-1105001036001138": {
-   "id": "SETAD-1105001036001138",
+  "TED-712676-2026": {
+   "id": "TED-712676-2026",
+   "source": "TED (EU)",
+   "market": "international",
+   "title": "Ireland – IT services: consulting, software development, Internet and support – Single-party Framework for the Provision of Website Design, Hosting and Support for New Website and Related Services",
+   "description": "The Charities Regulator proposes to engage in a competitive process for the establishment of a single party framework agreement for the design and development of a new website, website hosting, security, support and disaster recovery provisions, as well as ongoing support and maintenance and delivery of other website projects and services as required over the framework duration. The Charities Regulator is seeking tender submissions from competent service providers for the design, development, hosting and maintenance of a new website and related services required during the framework duration. The framework agreement will be established for a period of seven (7) years as catered for in certain circumstances in accordance with Art. 33.1 of Directive 2014/24/EU.",
+   "buyer": "Charities Regulator",
+   "country": "IRL",
+   "deadline": "2026-10-30",
+   "published": "2026-10-15",
+   "url": "https://ted.europa.eu/en/notice/-/detail/712676-2026",
+   "notice_type": "cn-standard",
+   "sector": "دولتی",
+   "facts": {
+    "price": "ارزش برآوردی: 569,106 EUR",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "رویه‌ی باز اتحادیه اروپا – شرکت‌های خارج از EU معمولاً مجازند مگر محدودیت صریح در اسناد"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "web"
+   ],
+   "days_left": 12,
+   "line": "web",
+   "status": "new",
+   "first_seen": "2026-10-18T22:02:18",
+   "history": [
+    {
+     "at": "2026-10-18T22:02:18",
+     "status": "new"
+    }
+   ]
+  },
+  "SETAD-1105092288003523": {
+   "id": "SETAD-1105092288003523",
    "source": "ستاد (setadiran.ir)",
    "market": "domestic",
-   "title": "نیاز خدمات-سامانه هوشمند احکام قضایی - وب سرویس سامانه سرآمد (نسخه 1.5) طبق مستندات پیوست.",
+   "title": "نیاز کالا-هدست به منظور برگزاری دوره هوش مصنوعی",
    "description": "– خرید",
-   "buyer": "بانک سپه",
-   "country": "ایران – تهران",
-   "deadline": "2026-10-21",
-   "deadline_fa": "1405/07/29 - 10:00",
+   "buyer": "شرکت ملی مناطق نفت خیز جنوب",
+   "country": "ایران – خوزستان",
+   "deadline": "2026-10-31",
+   "deadline_fa": "1405/08/09 - 08:00",
    "published": "",
    "url": "https://fe.setadiran.ir/centralboard/#/central-board-0",
    "notice_type": "خرید",
-   "setad_number": "1105001036001138",
+   "setad_number": "1105092288003523",
+   "sector": "شرکت دولتی / عمومی",
    "facts": {
     "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
     "guarantee": "تضمین شرکت در فرایند ارجاع کار طبق آیین‌نامه تضمین معاملات دولتی – مبلغ در اسناد ستاد",
@@ -58,182 +95,13 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": 3,
+   "days_left": 13,
+   "line": "ai",
    "status": "new",
-   "first_seen": "2026-10-18T21:15:13",
+   "first_seen": "2026-10-18T22:02:18",
    "history": [
     {
-     "at": "2026-10-18T21:15:13",
-     "status": "new"
-    }
-   ]
-  },
-  "SETAD-1105095102000039": {
-   "id": "SETAD-1105095102000039",
-   "source": "ستاد (setadiran.ir)",
-   "market": "domestic",
-   "title": "نیاز خدمات-پروژه8050719 تعویض کنتور هوشمند منطقه5",
-   "description": "– خرید",
-   "buyer": "امور برق منطقه 5 شهر اهواز",
-   "country": "ایران – خوزستان",
-   "deadline": "2026-10-21",
-   "deadline_fa": "1405/07/29 - 12:30",
-   "published": "",
-   "url": "https://fe.setadiran.ir/centralboard/#/central-board-0",
-   "notice_type": "خرید",
-   "setad_number": "1105095102000039",
-   "facts": {
-    "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
-    "guarantee": "تضمین شرکت در فرایند ارجاع کار طبق آیین‌نامه تضمین معاملات دولتی – مبلغ در اسناد ستاد",
-    "experience": "ارزیابی کیفی/رتبه و سوابق طبق اسناد ستاد (نیاز به ورود به سامانه)",
-    "international": "نیاز به ثبت‌نام در ستاد و شخصیت حقوقی ایرانی؛ شرکت خارجی فقط از طریق شریک ایرانی"
-   },
-   "keyword_score": 3,
-   "domains": [
-    "energy"
-   ],
-   "days_left": 3,
-   "status": "new",
-   "first_seen": "2026-10-18T21:15:13",
-   "history": [
-    {
-     "at": "2026-10-18T21:15:13",
-     "status": "new"
-    }
-   ]
-  },
-  "SETAD-1105095102000040": {
-   "id": "SETAD-1105095102000040",
-   "source": "ستاد (setadiran.ir)",
-   "market": "domestic",
-   "title": "نیاز خدمات-پروژه8050718 تعویض کنتور هوشمند منطقه5",
-   "description": "– خرید",
-   "buyer": "امور برق منطقه 5 شهر اهواز",
-   "country": "ایران – خوزستان",
-   "deadline": "2026-10-21",
-   "deadline_fa": "1405/07/29 - 12:30",
-   "published": "",
-   "url": "https://fe.setadiran.ir/centralboard/#/central-board-0",
-   "notice_type": "خرید",
-   "setad_number": "1105095102000040",
-   "facts": {
-    "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
-    "guarantee": "تضمین شرکت در فرایند ارجاع کار طبق آیین‌نامه تضمین معاملات دولتی – مبلغ در اسناد ستاد",
-    "experience": "ارزیابی کیفی/رتبه و سوابق طبق اسناد ستاد (نیاز به ورود به سامانه)",
-    "international": "نیاز به ثبت‌نام در ستاد و شخصیت حقوقی ایرانی؛ شرکت خارجی فقط از طریق شریک ایرانی"
-   },
-   "keyword_score": 3,
-   "domains": [
-    "energy"
-   ],
-   "days_left": 3,
-   "status": "new",
-   "first_seen": "2026-10-18T21:15:13",
-   "history": [
-    {
-     "at": "2026-10-18T21:15:13",
-     "status": "new"
-    }
-   ]
-  },
-  "SETAD-1105090395000152": {
-   "id": "SETAD-1105090395000152",
-   "source": "ستاد (setadiran.ir)",
-   "market": "domestic",
-   "title": "نیاز خدمات-توسعه سامانه هوشمند پیش بینی بازار و تحلیل ریسک رقم لطفا فایل پیوست بررسی شود.",
-   "description": "– خرید",
-   "buyer": "مرکز ملی فضای مجازی کشور",
-   "country": "ایران – تهران",
-   "deadline": "2026-10-24",
-   "deadline_fa": "1405/08/02 - 09:00",
-   "published": "",
-   "url": "https://fe.setadiran.ir/centralboard/#/central-board-0",
-   "notice_type": "خرید",
-   "setad_number": "1105090395000152",
-   "facts": {
-    "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
-    "guarantee": "تضمین شرکت در فرایند ارجاع کار طبق آیین‌نامه تضمین معاملات دولتی – مبلغ در اسناد ستاد",
-    "experience": "ارزیابی کیفی/رتبه و سوابق طبق اسناد ستاد (نیاز به ورود به سامانه)",
-    "international": "نیاز به ثبت‌نام در ستاد و شخصیت حقوقی ایرانی؛ شرکت خارجی فقط از طریق شریک ایرانی"
-   },
-   "keyword_score": 3,
-   "domains": [
-    "ai_cross_cutting"
-   ],
-   "days_left": 6,
-   "status": "new",
-   "first_seen": "2026-10-18T21:15:13",
-   "history": [
-    {
-     "at": "2026-10-18T21:15:13",
-     "status": "new"
-    }
-   ]
-  },
-  "SETAD-2005005353000022": {
-   "id": "SETAD-2005005353000022",
-   "source": "ستاد (setadiran.ir)",
-   "market": "domestic",
-   "title": "مناقصه عمومی همزمان با ارزیابی (یکپارچه) دو مرحله ای خرید کنتور هوشمند",
-   "description": "– مناقصه",
-   "buyer": "شرکت توزیع نیروی برق شهر اهواز",
-   "country": "ایران – خوزستان",
-   "deadline": "2026-10-24",
-   "deadline_fa": "1405/08/02 - 12:00",
-   "published": "",
-   "url": "https://fe.setadiran.ir/centralboard/#/central-board-0",
-   "notice_type": "مناقصه",
-   "setad_number": "2005005353000022",
-   "facts": {
-    "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
-    "guarantee": "تضمین شرکت در فرایند ارجاع کار طبق آیین‌نامه تضمین معاملات دولتی – مبلغ در اسناد ستاد",
-    "experience": "ارزیابی کیفی/رتبه و سوابق طبق اسناد ستاد (نیاز به ورود به سامانه)",
-    "international": "نیاز به ثبت‌نام در ستاد و شخصیت حقوقی ایرانی؛ شرکت خارجی فقط از طریق شریک ایرانی"
-   },
-   "keyword_score": 3,
-   "domains": [
-    "energy"
-   ],
-   "days_left": 6,
-   "status": "new",
-   "first_seen": "2026-10-18T21:15:13",
-   "history": [
-    {
-     "at": "2026-10-18T21:15:13",
-     "status": "new"
-    }
-   ]
-  },
-  "SETAD-2005099746000005": {
-   "id": "SETAD-2005099746000005",
-   "source": "ستاد (setadiran.ir)",
-   "market": "domestic",
-   "title": "مناقصه عمومی یک مرحله ای تهیه و استقرار سامانه هوشمند نظارتی و پایش تصویری دهیاری های شرقی به نمایندگی دهیاری شاهین تپه",
-   "description": "– مناقصه",
-   "buyer": "دهیاری شاهین تپه بخش دشتابی شهرستان بویین زهرا",
-   "country": "ایران – قزوین",
-   "deadline": "2026-11-02",
-   "deadline_fa": "1405/08/11 - 13:00",
-   "published": "",
-   "url": "https://fe.setadiran.ir/centralboard/#/central-board-0",
-   "notice_type": "مناقصه",
-   "setad_number": "2005099746000005",
-   "facts": {
-    "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
-    "guarantee": "تضمین شرکت در فرایند ارجاع کار طبق آیین‌نامه تضمین معاملات دولتی – مبلغ در اسناد ستاد",
-    "experience": "ارزیابی کیفی/رتبه و سوابق طبق اسناد ستاد (نیاز به ورود به سامانه)",
-    "international": "نیاز به ثبت‌نام در ستاد و شخصیت حقوقی ایرانی؛ شرکت خارجی فقط از طریق شریک ایرانی"
-   },
-   "keyword_score": 3,
-   "domains": [
-    "ai_cross_cutting"
-   ],
-   "days_left": 15,
-   "status": "new",
-   "first_seen": "2026-10-18T21:15:13",
-   "history": [
-    {
-     "at": "2026-10-18T21:15:13",
+     "at": "2026-10-18T22:02:18",
      "status": "new"
     }
    ]
@@ -251,6 +119,7 @@
    "url": "https://projects.worldbank.org/en/projects-operations/procurement-detail/OP00465889",
    "notice_type": "Invitation for Bids",
    "procurement_method": "Request for Bids",
+   "sector": "دولتی (پروژه با تأمین مالی بانک جهانی)",
    "facts": {
     "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
     "guarantee": "طبق آگهی: bid security of us $ 100,000",
@@ -262,11 +131,12 @@
     "energy"
    ],
    "days_left": 18,
+   "line": "ai",
    "status": "new",
-   "first_seen": "2026-10-18T21:15:13",
+   "first_seen": "2026-10-18T22:02:18",
    "history": [
     {
-     "at": "2026-10-18T21:15:13",
+     "at": "2026-10-18T22:02:18",
      "status": "new"
     }
    ]
@@ -284,6 +154,7 @@
    "url": "https://projects.worldbank.org/en/projects-operations/procurement-detail/OP00470201",
    "notice_type": "Invitation for Bids",
    "procurement_method": "Request for Bids",
+   "sector": "دولتی (پروژه با تأمین مالی بانک جهانی)",
    "facts": {
     "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
     "guarantee": "طبق آگهی: bid security of us $ 50,000",
@@ -295,11 +166,12 @@
     "energy"
    ],
    "days_left": 23,
+   "line": "ai",
    "status": "new",
-   "first_seen": "2026-10-18T21:15:13",
+   "first_seen": "2026-10-18T22:02:18",
    "history": [
     {
-     "at": "2026-10-18T21:15:13",
+     "at": "2026-10-18T22:02:18",
      "status": "new"
     }
    ]
@@ -317,6 +189,7 @@
    "url": "https://projects.worldbank.org/en/projects-operations/procurement-detail/OP00468997",
    "notice_type": "Invitation for Bids",
    "procurement_method": "Request for Bids",
+   "sector": "دولتی (پروژه با تأمین مالی بانک جهانی)",
    "facts": {
     "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
     "guarantee": "طبق آگهی: bid security shall not be required",
@@ -328,11 +201,12 @@
     "energy"
    ],
    "days_left": 25,
+   "line": "ai",
    "status": "new",
-   "first_seen": "2026-10-18T21:15:13",
+   "first_seen": "2026-10-18T22:02:18",
    "history": [
     {
-     "at": "2026-10-18T21:15:13",
+     "at": "2026-10-18T22:02:18",
      "status": "new"
     }
    ]
@@ -349,6 +223,7 @@
    "published": "2026-10-15",
    "url": "https://ted.europa.eu/en/notice/-/detail/714863-2026",
    "notice_type": "cn-standard",
+   "sector": "نامشخص",
    "facts": {
     "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
     "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
@@ -360,11 +235,12 @@
     "energy"
    ],
    "days_left": 29,
+   "line": "ai",
    "status": "new",
-   "first_seen": "2026-10-18T21:15:13",
+   "first_seen": "2026-10-18T22:02:18",
    "history": [
     {
-     "at": "2026-10-18T21:15:13",
+     "at": "2026-10-18T22:02:18",
      "status": "new"
     }
    ]
@@ -381,6 +257,7 @@
    "published": "2026-10-16",
    "url": "https://ted.europa.eu/en/notice/-/detail/716134-2026",
    "notice_type": "cn-standard",
+   "sector": "نامشخص",
    "facts": {
     "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
     "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
@@ -392,11 +269,12 @@
     "energy"
    ],
    "days_left": 29,
+   "line": "ai",
    "status": "new",
-   "first_seen": "2026-10-18T21:15:13",
+   "first_seen": "2026-10-18T22:02:18",
    "history": [
     {
-     "at": "2026-10-18T21:15:13",
+     "at": "2026-10-18T22:02:18",
      "status": "new"
     }
    ]
@@ -413,6 +291,7 @@
    "published": "2026-10-15",
    "url": "https://ted.europa.eu/en/notice/-/detail/713357-2026",
    "notice_type": "cn-standard",
+   "sector": "دولتی",
    "facts": {
     "price": "ارزش برآوردی: 8,984,000 EUR",
     "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
@@ -424,11 +303,12 @@
     "aviation"
    ],
    "days_left": 37,
+   "line": "ai",
    "status": "new",
-   "first_seen": "2026-10-18T21:15:13",
+   "first_seen": "2026-10-18T22:02:18",
    "history": [
     {
-     "at": "2026-10-18T21:15:13",
+     "at": "2026-10-18T22:02:18",
      "status": "new"
     }
    ]
@@ -446,6 +326,7 @@
    "url": "https://projects.worldbank.org/en/projects-operations/procurement-detail/OP00473664",
    "notice_type": "Invitation for Bids",
    "procurement_method": "Request for Bids",
+   "sector": "دولتی (پروژه با تأمین مالی بانک جهانی)",
    "facts": {
     "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
     "guarantee": "طبق آگهی: bid security of us $ 100,000",
@@ -457,11 +338,12 @@
     "energy"
    ],
    "days_left": 43,
+   "line": "ai",
    "status": "new",
-   "first_seen": "2026-10-18T21:15:13",
+   "first_seen": "2026-10-18T22:02:18",
    "history": [
     {
-     "at": "2026-10-18T21:15:13",
+     "at": "2026-10-18T22:02:18",
      "status": "new"
     }
    ]
@@ -479,6 +361,7 @@
    "url": "https://projects.worldbank.org/en/projects-operations/procurement-detail/OP00473693",
    "notice_type": "Invitation for Bids",
    "procurement_method": "Request for Bids",
+   "sector": "دولتی (پروژه با تأمین مالی بانک جهانی)",
    "facts": {
     "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
     "guarantee": "طبق آگهی: bid security of us $ 80,000",
@@ -490,11 +373,12 @@
     "energy"
    ],
    "days_left": 51,
+   "line": "ai",
    "status": "new",
-   "first_seen": "2026-10-18T21:15:13",
+   "first_seen": "2026-10-18T22:02:18",
    "history": [
     {
-     "at": "2026-10-18T21:15:13",
+     "at": "2026-10-18T22:02:18",
      "status": "new"
     }
    ]
@@ -512,6 +396,7 @@
    "url": "https://projects.worldbank.org/en/projects-operations/procurement-detail/OP00473300",
    "notice_type": "Request for Expression of Interest",
    "procurement_method": "Individual Consultant Selection",
+   "sector": "دولتی (پروژه با تأمین مالی بانک جهانی)",
    "facts": {
     "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
     "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
@@ -523,11 +408,12 @@
     "energy"
    ],
    "days_left": 9,
+   "line": "ai",
    "status": "new",
-   "first_seen": "2026-10-18T21:15:13",
+   "first_seen": "2026-10-18T22:02:18",
    "history": [
     {
-     "at": "2026-10-18T21:15:13",
+     "at": "2026-10-18T22:02:18",
      "status": "new"
     }
    ]
@@ -544,6 +430,7 @@
    "published": "2026-10-16",
    "url": "https://ted.europa.eu/en/notice/-/detail/716537-2026",
    "notice_type": "cn-standard",
+   "sector": "دولتی",
    "facts": {
     "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
     "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
@@ -556,11 +443,12 @@
     "medical"
    ],
    "days_left": 29,
+   "line": "ai",
    "status": "new",
-   "first_seen": "2026-10-18T21:15:13",
+   "first_seen": "2026-10-18T22:02:18",
    "history": [
     {
-     "at": "2026-10-18T21:15:13",
+     "at": "2026-10-18T22:02:18",
      "status": "new"
     }
    ]
@@ -578,6 +466,7 @@
    "url": "https://projects.worldbank.org/en/projects-operations/procurement-detail/OP00472448",
    "notice_type": "Invitation for Bids",
    "procurement_method": "Request for Bids",
+   "sector": "دولتی (پروژه با تأمین مالی بانک جهانی)",
    "facts": {
     "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
     "guarantee": "طبق آگهی: bid security of eur 50,000",
@@ -590,11 +479,12 @@
     "urban"
    ],
    "days_left": 36,
+   "line": "ai",
    "status": "new",
-   "first_seen": "2026-10-18T21:15:13",
+   "first_seen": "2026-10-18T22:02:18",
    "history": [
     {
-     "at": "2026-10-18T21:15:13",
+     "at": "2026-10-18T22:02:18",
      "status": "new"
     }
    ]
@@ -602,17 +492,41 @@
  },
  "runs": [
   {
-   "at": "2026-10-18T21:15:13",
-   "collected": 350,
-   "matched": 18,
+   "at": "2026-10-18T22:02:18",
+   "collected": 378,
+   "matched": 14,
+   "partner_drafts": [],
+   "events_added": 0,
+   "events_soon": [
+    {
+     "start": "2026-11-02",
+     "name": "ADIPEC 2026",
+     "name_fa": "نمایشگاه و کنفرانس نفت و گاز ابوظبی",
+     "city": "ابوظبی"
+    },
+    {
+     "start": "2026-11-03",
+     "name": "Smart City Expo World Congress 2026",
+     "name_fa": "کنگره جهانی شهر هوشمند",
+     "city": "بارسلونا"
+    },
+    {
+     "start": "2026-11-09",
+     "name": "Web Summit 2026",
+     "name_fa": "وب سامیت لیسبون",
+     "city": "لیسبون"
+    },
+    {
+     "start": "2026-11-16",
+     "name": "MEDICA 2026",
+     "name_fa": "نمایشگاه تجهیزات و فناوری پزشکی دوسلدورف",
+     "city": "دوسلدورف"
+    }
+   ],
    "new_ids": [
-    "SETAD-1105004106001068",
-    "SETAD-1105001036001138",
-    "SETAD-1105095102000039",
-    "SETAD-1105095102000040",
-    "SETAD-1105090395000152",
-    "SETAD-2005005353000022",
-    "SETAD-2005099746000005",
+    "SETAD-1105100916000002",
+    "TED-712676-2026",
+    "SETAD-1105092288003523",
     "WB-OP00465889",
     "WB-OP00470201",
     "WB-OP00468997",
@@ -625,14 +539,6 @@
     "TED-716537-2026",
     "WB-OP00472448"
    ],
-   "actioned_ids": [],
-   "reminders": []
-  },
-  {
-   "at": "2026-10-18T21:19:05",
-   "collected": 188,
-   "matched": 11,
-   "new_ids": [],
    "actioned_ids": [],
    "reminders": []
   }

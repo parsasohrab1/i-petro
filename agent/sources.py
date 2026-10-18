@@ -64,7 +64,28 @@ def _facts(price="", guarantee="", experience="", international=""):
 
 
 def international_phrases(cfg):
-    return sorted({p for phrases in cfg["domains"].values() for p in phrases})
+    phrases = {p for ps in cfg["domains"].values() for p in ps}
+    phrases.update(cfg.get("web_services", {}).get("keywords_en", []))
+    return sorted(phrases)
+
+
+TED_SECTOR = {"pub-undert": "شرکت دولتی / عمومی", "spec-rights-entity": "خصوصی (دارای حقوق ویژه)",
+              "int-org": "سازمان بین‌المللی", "eu-ins-bod-ag": "نهاد اتحادیه اروپا"}
+
+
+def ted_sector(types):
+    for t in types or []:
+        for key, label in TED_SECTOR.items():
+            if str(t).startswith(key):
+                return label
+    return "دولتی" if types else "نامشخص"
+
+
+def setad_sector(org):
+    org = org or ""
+    if "شرکت" in org and not any(x in org for x in ("وزارت", "سازمان", "اداره", "دانشگاه", "شهرداری")):
+        return "شرکت دولتی / عمومی"
+    return "دولتی"
 
 
 # ---------------------------------------------------------------- TED (EU)
@@ -74,7 +95,7 @@ def fetch_ted(cfg, log):
     phrases = international_phrases(cfg)
     fields = ["publication-number", "notice-title", "buyer-name", "buyer-country",
               "deadline-receipt-tender-date-lot", "description-lot", "notice-type", "publication-date",
-              "estimated-value-lot", "estimated-value-cur-lot", "procedure-type"]
+              "estimated-value-lot", "estimated-value-cur-lot", "procedure-type", "buyer-legal-type"]
     results = {}
     # TED's expert query has a length limit, so phrases are sent in small groups.
     for i in range(0, len(phrases), 8):
@@ -112,6 +133,7 @@ def fetch_ted(cfg, log):
                     "published": (n.get("publication-date") or "")[:10],
                     "url": f"https://ted.europa.eu/en/notice/-/detail/{pub}",
                     "notice_type": n.get("notice-type", ""),
+                    "sector": ted_sector(n.get("buyer-legal-type")),
                     "facts": _facts(price=price, international=(
                         "رویه‌ی باز اتحادیه اروپا – شرکت‌های خارج از EU معمولاً مجازند مگر محدودیت صریح در اسناد"
                         if n.get("procedure-type") == "open" else "")),
@@ -183,6 +205,7 @@ def fetch_worldbank(cfg, log):
                 "url": f"https://projects.worldbank.org/en/projects-operations/procurement-detail/{nid}",
                 "notice_type": n.get("notice_type", ""),
                 "procurement_method": n.get("procurement_method_name", ""),
+                "sector": "دولتی (پروژه با تأمین مالی بانک جهانی)",
                 "facts": _facts(guarantee=guarantee, experience=experience, international=international),
             }
         time.sleep(0.5)
@@ -223,6 +246,7 @@ def fetch_uk_fts(cfg, log):
                 "published": (rel.get("date") or "")[:10],
                 "url": f"https://www.find-tender.service.gov.uk/Notice/{rid}",
                 "notice_type": ",".join(rel.get("tag", [])),
+                "sector": "دولتی",
                 "facts": _facts(
                     price=f"ارزش برآوردی: {_money(value.get('amount'), value.get('currency', 'GBP'))}" if value.get("amount") else "",
                     international="Procurement Act 2023 بریتانیا: شرکت‌های خارجی مجازند، مگر محدودیت امنیتی یا صریح"),
@@ -283,7 +307,8 @@ def fetch_setad(cfg, log):
     scfg = cfg["sources"].get("setad", {})
     url = "https://gw.setadiran.ir/api/centralboard/cards/"
     headers = {**UA, "Origin": "https://fe.setadiran.ir", "Referer": "https://fe.setadiran.ir/"}
-    keywords = sorted({k for ks in cfg["domestic_keywords"].values() for k in ks})
+    keywords = sorted({k for ks in cfg["domestic_keywords"].values() for k in ks}
+                      | set(cfg.get("web_services", {}).get("keywords_fa", [])))
     results, failures = {}, 0
     for kw in keywords:
         try:
@@ -319,6 +344,7 @@ def fetch_setad(cfg, log):
                 "url": "https://fe.setadiran.ir/centralboard/#/central-board-0",
                 "notice_type": c.get("boardName", ""),
                 "setad_number": number,
+                "sector": setad_sector(c.get("orgName")),
                 "facts": _facts(
                     price=f"قیمت پایه: {base:,} ریال" if isinstance(base, (int, float)) and base else "",
                     guarantee="تضمین شرکت در فرایند ارجاع کار طبق آیین‌نامه تضمین معاملات دولتی – مبلغ در اسناد ستاد",

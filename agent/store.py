@@ -47,7 +47,7 @@ def upsert(state, tender):
     if existing:
         # refresh listing fields, keep pipeline fields
         for k in ("title", "description", "deadline", "deadline_fa", "url", "buyer", "country", "days_left",
-                  "keyword_score", "domains", "facts", "market"):
+                  "keyword_score", "domains", "facts", "market", "sector", "line"):
             if tender.get(k) not in (None, ""):
                 existing[k] = tender[k]
         return existing, False

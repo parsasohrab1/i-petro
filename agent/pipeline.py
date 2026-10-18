@@ -1,8 +1,8 @@
 """Daily run: collect -> screen -> analyse -> draft (partner email + MoU, or direct EOI) -> remind -> dashboard -> notify."""
 import json
-from datetime import date
+from datetime import date, timedelta
 
-from . import dashboard, documents, mailbox, notify, store
+from . import dashboard, documents, events, mailbox, notify, partners, store
 from .analyst import Analyst, llm_available
 from .config import OUTPUT_DIR, env, load_config
 from .portfolio import build_profile, profile_text
@@ -92,8 +92,11 @@ def summary_text(cfg, run, state):
             where = "در Drafts وب‌میل" if str(r.get("draft_saved_to", "")).startswith("webmail") else "در پوشه outputs"
             lines.append(f"• {r['country'] or '؟'} | {r['title'][:80]}\n  امتیاز {a.get('relevance_score', '-')} | "
                          f"مهلت {r['deadline'] or 'نامشخص'} | {kind} {where}\n  {r['url']}")
-    for market, label in (("international", "🌍 بازار بین‌المللی"), ("domestic", "🇮🇷 بازار داخلی (ستاد)")):
-        pending = [t[i] for i in run["new_ids"] if t[i]["status"] == "new" and t[i].get("market", "international") == market]
+    groups = (("🌍 بازار بین‌المللی", lambda r: r.get("market", "international") == "international" and r.get("line", "ai") == "ai"),
+              ("🇮🇷 پروژه‌های هوش مصنوعی ایران", lambda r: r.get("market") == "domestic" and r.get("line", "ai") == "ai"),
+              ("🌐 طراحی سایت و سئو", lambda r: r.get("line") == "web"))
+    for label, match in groups:
+        pending = [t[i] for i in run["new_ids"] if t[i]["status"] == "new" and match(t[i])]
         if pending:
             lines.append(f"\n{label}: {len(pending)} فرصت مرتبط جدید (جزئیات و شرایط در داشبورد)")
             for r in pending[:8]:
@@ -105,6 +108,14 @@ def summary_text(cfg, run, state):
         for rid in run["reminders"]:
             r = t[rid]
             lines.append(f"• {r['days_left']} روز تا مهلت: {r['title'][:70]} ({store.STATUSES[r['status']]})")
+    if run.get("partner_drafts"):
+        lines.append(f"\n🤝 {len(run['partner_drafts'])} پیش‌نویس پیشنهاد همکاری برای کشورهای ستاره‌دار در Drafts وب‌میل")
+    if run.get("events_soon"):
+        lines.append("\n📅 رویدادهای هوش مصنوعی پیش رو (۴۵ روز آینده):")
+        for e in run["events_soon"]:
+            lines.append(f"• {e['start']} | {e['name_fa'] or e['name']} – {e['city']}")
+    if run.get("events_added"):
+        lines.append(f"• {run['events_added']} رویداد جدید به فهرست اضافه شد")
     url = env("DASHBOARD_URL")
     if url:
         lines.append(f"\n📊 داشبورد: {url}")
@@ -137,12 +148,14 @@ def run(use_llm=True, use_mail=True, send_notification=True):
         elif rec["status"] in store.ACTIVE - {"new"} and rec["days_left"] in REMIND_AT:
             reminders.append(rec["id"])
 
-    actioned = []
+    actioned, partner_drafts, events_added = [], [], 0
+    ev_state, pt_state = events.load(), partners.load()
     if use_llm and llm_available():
         analyst = Analyst(cfg, profile_text(cfg, profile))
         # Claude analysis and drafting run for the international market; domestic notices are listed from Setad data.
         queue = sorted((r for r in state["tenders"].values()
-                        if r["status"] == "new" and r.get("market", "international") == "international"),
+                        if r["status"] == "new" and r.get("market", "international") == "international"
+                        and r.get("line", "ai") == "ai"),
                        key=lambda r: (-r.get("keyword_score", 0), r.get("days_left") or 999))
         budget = {"partner": cfg["screening"]["max_partner_packages_per_day"]}
         for rec in queue[:cfg["screening"]["max_llm_analyses_per_day"]]:
@@ -153,10 +166,29 @@ def run(use_llm=True, use_mail=True, send_notification=True):
             except Exception as exc:
                 log(f"  analysis failed for {rec['id']}: {exc}")
             store.save(state)
+        # daily events refresh and weekly partner scouting for starred countries
+        try:
+            if events.due(ev_state, cfg):
+                events_added = events.update(cfg, analyst, ev_state, log)
+        except Exception as exc:
+            log(f"Events update failed: {exc}")
+        try:
+            open_tenders = [r for r in state["tenders"].values() if r["status"] in store.ACTIVE]
+            partner_drafts = partners.scout(cfg, analyst, pt_state, open_tenders, use_mail, log)
+        except Exception as exc:
+            log(f"Partner scouting failed: {exc}")
     elif use_llm:
         log("ANTHROPIC_API_KEY not set - keyword screening only, no analysis or drafts.")
 
+    events.save(ev_state)
+    partners.save(pt_state)
+    today, soon = date.today().isoformat(), (date.today() + timedelta(days=45)).isoformat()
+    events_soon = sorted((e for e in ev_state["events"].values()
+                          if e.get("start") and today <= e["start"] <= soon and e.get("status") != "skipped"),
+                         key=lambda e: e["start"])
     run_info = {"at": store.now(), "collected": len(tenders), "matched": len(candidates),
+                "partner_drafts": partner_drafts, "events_added": events_added,
+                "events_soon": [{k: e.get(k, "") for k in ("start", "name", "name_fa", "city")} for e in events_soon],
                 "new_ids": new_ids, "actioned_ids": actioned, "reminders": reminders,
                 "unmapped_repos": profile["unmapped_repos"]}
     state["runs"] = (state.get("runs", []) + [{k: v for k, v in run_info.items() if k != "unmapped_repos"}])[-60:]

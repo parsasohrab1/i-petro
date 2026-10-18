@@ -11,12 +11,24 @@ def _keyword_sets(tender, cfg):
     return cfg["domains"], cfg["exclude_keywords"], str
 
 
+def web_hit(tender, cfg):
+    """Website design / SEO requests go to the separate web-services tab."""
+    web = cfg.get("web_services", {})
+    domestic = tender.get("market") == "domestic"
+    words = web.get("keywords_fa" if domestic else "keywords_en", [])
+    norm = normalize_fa if domestic else str
+    title = norm(tender["title"]).lower()
+    return any(norm(w).lower() in title for w in words)
+
+
 def keyword_score(tender, cfg):
     domains_map, exclude, norm = _keyword_sets(tender, cfg)
     title = norm(tender["title"]).lower()
     body = norm(f"{tender['title']} {tender['description']}").lower()
     if any(norm(x).lower() in title for x in exclude):
         return 0, []
+    if web_hit(tender, cfg):
+        return 3, ["web"]
     required = cfg.get("domestic_required_any") if tender.get("market") == "domestic" else None
     if required and not any(norm(x).lower() in title for x in required):
         return 0, []  # domestic notices must name a technology scope, not only a sector
@@ -54,6 +66,7 @@ def screen(tenders, cfg):
             continue
         if left is not None and left < min_days:
             continue
-        out.append({**t, "keyword_score": score, "domains": domains, "days_left": left})
+        line = "web" if domains == ["web"] else "ai"
+        out.append({**t, "keyword_score": score, "domains": domains, "days_left": left, "line": line})
     out.sort(key=lambda t: (-t["keyword_score"], t["days_left"] if t["days_left"] is not None else 999))
     return out
