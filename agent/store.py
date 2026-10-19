@@ -61,3 +61,32 @@ def set_status(record, status, note=""):
         raise ValueError(f"unknown status {status}; use one of {', '.join(STATUSES)}")
     record["status"] = status
     record.setdefault("history", []).append({"at": now(), "status": status, "note": note})
+
+
+# ------------------------------------------------------------- follow-up tracking
+STAGES = {
+    "identified": "شناسایی",
+    "documents": "دریافت مدارک",
+    "partner_email": "ارسال ایمیل به شریک تجاری",
+    "partner_meeting": "پاسخ / جلسه با شریک",
+    "mou": "امضای تفاهم‌نامه",
+    "proposal": "تهیه‌ی پروپوزال",
+    "submitted": "ارسال پیشنهاد",
+    "result": "اعلام نتیجه",
+}
+
+
+def track(record, owner=None, stage=None, next_action=None, next_date=None, note=""):
+    """Update the follow-up fields of a tender and keep a history line."""
+    if stage is not None and stage not in STAGES:
+        raise ValueError(f"unknown stage {stage}; use one of {', '.join(STAGES)}")
+    tr = record.setdefault("tracking", {"owner": "", "stage": "identified", "next_action": "", "next_date": "", "log": []})
+    changes = []
+    for key, value in (("owner", owner), ("stage", stage), ("next_action", next_action), ("next_date", next_date)):
+        if value is not None and value != tr.get(key):
+            tr[key] = value
+            changes.append(f"{key}={STAGES.get(value, value) if key == 'stage' else value}")
+    if changes or note:
+        tr["log"].append({"at": now(), "change": "، ".join(changes), "note": note})
+    tr["updated"] = now()
+    return tr

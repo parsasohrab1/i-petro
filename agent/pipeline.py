@@ -69,6 +69,7 @@ def process_candidate(analyst, cfg, rec, use_mail, budget, log):
         _draft(cfg, rec, pkg["email_subject"], pkg["email_body"], [mou], "", use_mail, log)
         rec["suggested_to"] = first_contact
         store.set_status(rec, "partner_search", "partner email + MoU drafted")
+        store.track(rec, stage="partner_email", next_action="ارسال ایمیل همکاری از Drafts وب‌میل به شریک", note="پیش‌نویس ایمیل و MoU آماده شد")
         return "partner_search"
     pkg = analyst.direct_package(rec, analysis)
     _save_json(rec, "direct_package.json", pkg)
@@ -76,6 +77,7 @@ def process_candidate(analyst, cfg, rec, use_mail, budget, log):
     rec.setdefault("files", {})["checklist"] = checklist.relative_to(OUTPUT_DIR.parent).as_posix()
     _draft(cfg, rec, pkg["letter_subject"], pkg["letter_body"], [], "", use_mail, log)
     store.set_status(rec, "bid_prep", "EOI letter + checklist drafted")
+    store.track(rec, stage="documents", next_action="دریافت اسناد مناقصه و تکمیل چک‌لیست", note="نامه‌ی ابراز علاقه و چک‌لیست آماده شد")
     return "bid_prep"
 
 
@@ -103,6 +105,15 @@ def summary_text(cfg, run, state):
                 price = (r.get("facts") or {}).get("price", "")
                 price = "" if price.startswith("در خلاصه") else f" | {price}"
                 lines.append(f"• {r['country'] or '؟'} | {r['title'][:80]} | مهلت {r.get('deadline_fa') or r['deadline'] or '؟'}{price}")
+    today = date.today().isoformat()
+    due_items = [r for r in t.values() if r.get("status") in store.ACTIVE and (r.get("tracking") or {}).get("next_date")
+                 and r["tracking"]["next_date"] <= today]
+    if due_items:
+        lines.append("\n🗂 پیگیری‌های سررسیدشده:")
+        for r in sorted(due_items, key=lambda r: r["tracking"]["next_date"]):
+            tr = r["tracking"]
+            lines.append(f"• {tr['next_date']} | {tr.get('owner') or 'بدون مسئول'} | {store.STAGES.get(tr.get('stage'), '')} | "
+                         f"{tr.get('next_action') or ''} – {r['title'][:60]}")
     if run["reminders"]:
         lines.append("\n⏰ یادآوری مهلت‌ها:")
         for rid in run["reminders"]:

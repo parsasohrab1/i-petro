@@ -10,6 +10,8 @@
   python -m agent partner <company-key> <status>             sent | replied | meeting | mou | not_interested
   python -m agent select <investor-id> / unselect <investor-id>  investors that get an introduction draft
   python -m agent lead <lead-id> <status>                    called | interested | proposal | won | not_interested | do_not_call
+  python -m agent track <tender-id> [--owner NAME] [--stage STAGE] [--next TEXT] [--date YYYY-MM-DD] [--note TEXT]
+      stages: identified | documents | partner_email | partner_meeting | mou | proposal | submitted | result
   python -m agent investor <investor-id> <status>            researching | contacted | meeting | due_diligence | term_sheet | declined
 """
 import json
@@ -48,6 +50,13 @@ def main(argv=None):
     pa = sub.add_parser("partner")
     pa.add_argument("key")
     pa.add_argument("status", choices=list(partners.STATUSES))
+    tk = sub.add_parser("track")
+    tk.add_argument("tender_id")
+    tk.add_argument("--owner")
+    tk.add_argument("--stage", choices=list(store.STAGES))
+    tk.add_argument("--next", dest="next_action")
+    tk.add_argument("--date", dest="next_date")
+    tk.add_argument("--note", default="")
     ld = sub.add_parser("lead")
     ld.add_argument("lead_id")
     ld.add_argument("status", choices=list(leads.STATUSES))
@@ -101,6 +110,15 @@ def main(argv=None):
         (ROOT / "config.json").write_text(json.dumps(cfg, ensure_ascii=False, indent=2), encoding="utf-8")
         dashboard.render(cfg, state)
         print("selected investors:", ", ".join(chosen) or "-")
+        return
+    if a.cmd == "track":
+        rec = state["tenders"].get(a.tender_id)
+        if not rec:
+            sys.exit(f"unknown tender {a.tender_id}")
+        tr = store.track(rec, a.owner, a.stage, a.next_action, a.next_date, a.note)
+        store.save(state)
+        dashboard.render(cfg, state)
+        print(f"{a.tender_id}: {tr.get('owner') or '-'} | {store.STAGES[tr['stage']]} | {tr.get('next_action') or '-'} {tr.get('next_date') or ''}")
         return
     if a.cmd == "lead":
         ls_ = leads.load()

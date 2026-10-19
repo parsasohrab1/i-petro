@@ -76,6 +76,7 @@ td{display:block;border:0;padding:3px 12px}td.t{min-width:0}td[data-l]::before{c
 <button role="tab" data-page="web">Web Design & SEO Projects</button>
 <button role="tab" data-page="events">AI Events</button>
 <button role="tab" data-page="investors">AI Investors & Accelerators</button>
+<button role="tab" data-page="tracking">Project Tracking</button>
 </nav></header>
 <main>
 <div class="note" id="srcnote"></div>
@@ -95,6 +96,8 @@ const PAGES = {
    tabs:[['list','فرصت‌ها'],['glance','شرایط شرکت در مناقصه در یک نگاه'],['partners','شرکای کشورهای ستاره‌دار']], intl:'پذیرش شرکت‌های بین‌المللی'},
  web:{note:'درخواست‌های طراحی سایت و سئو از همه‌ی منابع داخلی و بین‌المللی. پیشنهاد پیش‌فرض برای مشتریان داخلی: طراحی سایت + سئو.',
    tabs:[['list','فرصت‌ها'],['glance','شرایط در یک نگاه'],['leads','تولیدکنندگان بدون سایت (تماس تلفنی)']], intl:'پذیرش شرکت‌های خارجی / داخلی'},
+ tracking:{note:'روند پیگیری همه‌ی پروژه‌های فعال (داخلی، بین‌المللی و طراحی سایت): مسئول پیگیری، مرحله و اقدام بعدی. به‌روزرسانی: python -m agent track <شناسه> --owner "نام" --stage documents --next "…" --date 2026-10-25',
+   tabs:[['all','همه'],['mine','بدون مسئول'],['overdue','سررسیدشده']]},
  investors:{note:'صندوق‌های خطرپذیر، سرمایه‌گذاران شرکتی و شتاب‌دهنده‌های جهان در حوزه‌های هوش مصنوعی شرکت – به‌روزرسانی هفتگی. ارقام از منبع ذکرشده‌اند و ممکن است قدیمی باشند؛ پیش از مذاکره با سایت رسمی تطبیق دهید.',
    tabs:[['all','همه'],['selected','منتخب (ایمیل معرفی)'],['vc','صندوق خطرپذیر'],['cvc','سرمایه‌گذار شرکتی'],['accelerator','شتاب‌دهنده']]},
  events:{note:'رویدادهای هوش مصنوعی و حوزه‌های انرژی، پزشکی، هوانوردی، هسته‌ای و شهری در ایران و جهان – به‌روزرسانی روزانه.',
@@ -121,7 +124,8 @@ function setStatusOptions(map,withActive){sel.innerHTML=(withActive?'<option val
 function tenders(){const s=sel.value,qq=q();return DATA.tenders.filter(t=>inPage(t)&&(s==='active'?ACTIVE.has(t.status):!s||t.status===s)&&
   (!qq||[t.title,t.country,t.buyer,t.source,t.sector].join(' ').toLowerCase().includes(qq)))}
 function kpis(){let items;
- if(page==='investors'){const v=DATA.investors,c=t=>v.filter(x=>x.type===t).length;items=[['کل',v.length],['صندوق خطرپذیر',c('vc')],['سرمایه‌گذار شرکتی',c('cvc')],['شتاب‌دهنده',c('accelerator')],['در حال مذاکره',v.filter(x=>['contacted','meeting','due_diligence','term_sheet'].includes(x.status)).length]]}
+ if(page==='tracking'){const a=DATA.tenders.filter(t=>ACTIVE.has(t.status)),today=new Date().toISOString().slice(0,10),c=k=>a.filter(t=>((t.tracking||{}).stage||'identified')===k).length;items=[['پروژه‌ی فعال',a.length],['بدون مسئول',a.filter(t=>!(t.tracking||{}).owner).length],['دریافت مدارک',c('documents')],['ایمیل به شریک',c('partner_email')],['پروپوزال',c('proposal')],['سررسیدشده',a.filter(t=>(t.tracking||{}).next_date&&t.tracking.next_date<=today).length]]}
+ else if(page==='investors'){const v=DATA.investors,c=t=>v.filter(x=>x.type===t).length;items=[['کل',v.length],['صندوق خطرپذیر',c('vc')],['سرمایه‌گذار شرکتی',c('cvc')],['شتاب‌دهنده',c('accelerator')],['در حال مذاکره',v.filter(x=>['contacted','meeting','due_diligence','term_sheet'].includes(x.status)).length]]}
  else if(page==='events'){const e=DATA.events;items=[['رویداد پیش رو',e.length],['ایران',e.filter(x=>x.region==='iran').length],['جهان',e.filter(x=>x.region==='world').length],
    ['تاریخ اعلام نشده',e.filter(x=>x.date_status==='tba').length],['در حال بررسی',e.filter(x=>x.status==='considering').length],['ثبت‌نام شد',e.filter(x=>['registered','attending'].includes(x.status)).length]]}
  else{const t=DATA.tenders.filter(inPage),c=s=>t.filter(x=>x.status===s).length;
@@ -190,6 +194,23 @@ function leadsView(){const s=sel.value,qq=q();
   <td data-l="تماس">${l.phone?l.phone.split('/').map(p=>`<a href="tel:${esc(p.trim())}"><code>${esc(p.trim())}</code></a>`).join(' '):'<span class="meta">'+esc(l.contact_note_fa||'—')+'</span>'}${l.email?'<br><code>'+esc(l.email)+'</code>':''}</td>
   <td data-l="منبع">${link(l.url,l.source)}</td><td data-l="پیشنهاد">${esc(l.service_fa)}</td>
   <td data-l="وضعیت"><span class="pill s-${l.status}">${esc(DATA.lead_statuses[l.status]||l.status)}</span><br><code>${esc(l.id)}</code></td></tr>`).join('')+'</tbody></table></div>'}
+function trackingView(){const s=sel.value,qq=q(),today=new Date().toISOString().slice(0,10);
+  const stages=Object.keys(DATA.stages);
+  const list=DATA.tenders.filter(t=>ACTIVE.has(t.status)).filter(t=>{const tr=t.tracking||{};
+    if(tab==='mine'&&tr.owner)return false; if(tab==='overdue'&&!(tr.next_date&&tr.next_date<=today))return false;
+    if(s&&(tr.stage||'identified')!==s)return false;
+    return !qq||[t.title,t.country,tr.owner,tr.next_action].join(' ').toLowerCase().includes(qq)});
+  if(!list.length)return '<p class="empty">موردی یافت نشد.</p>';
+  return `<div class="tablewrap"><table><thead><tr><th>پروژه</th><th>بازار / منبع</th><th>مهلت مناقصه</th><th>مسئول پیگیری</th><th>مرحله‌ی پیگیری</th>
+  <th>اقدام بعدی</th><th>آخرین یادداشت</th></tr></thead><tbody>`+list.map(t=>{const tr=t.tracking||{},st=tr.stage||'identified',idx=stages.indexOf(st);
+   const bar=stages.map((k,i)=>`<span title="${esc(DATA.stages[k])}" style="display:inline-block;width:10px;height:10px;border-radius:2px;margin-left:2px;background:${i<=idx?'var(--accent)':'var(--line)'}"></span>`).join('');
+   const last=(tr.log||[]).slice(-1)[0];const over=tr.next_date&&tr.next_date<=today;
+   const mkt=t.line==='web'?'طراحی سایت':(t.market==='domestic'?'ایران':'بین‌المللی');
+   return `<tr><td class="t">${link(t.url,t.title)}<br><code>${esc(t.id)}</code></td><td data-l="بازار">${mkt}<br><span class="meta">${esc(t.source)} · ${esc(t.country)}</span></td>
+   <td data-l="مهلت">${deadline(t)}</td><td data-l="مسئول">${tr.owner?esc(tr.owner):'<span class="urgent">تعیین نشده</span>'}</td>
+   <td data-l="مرحله"><b>${esc(DATA.stages[st])}</b><br>${bar}</td>
+   <td data-l="اقدام بعدی">${esc(tr.next_action||'—')}${tr.next_date?`<br><span class="${over?'urgent':'meta'}">${esc(tr.next_date)}</span>`:''}</td>
+   <td data-l="یادداشت">${last?esc((last.note||last.change)+' ('+last.at.slice(0,10)+')'):'—'}</td></tr>`}).join('')+'</tbody></table></div>'}
 function eventsView(){const s=sel.value,qq=q();
   const list=DATA.events.filter(e=>(tab==='all'||e.region===tab)&&(!s||e.status===s)&&(!qq||[e.name,e.name_fa,e.city,e.country,e.type].join(' ').toLowerCase().includes(qq)));
   if(!list.length)return '<p class="empty">رویدادی یافت نشد.</p>';
@@ -207,7 +228,8 @@ function render(){
   document.querySelectorAll('#tabs button').forEach(b=>b.onclick=()=>{tab=b.dataset.tab;sel.value='';render()});
   document.getElementById('srcnote').textContent=PAGES[page].note;
   const prev=sel.value;
-  if(page==='events')setStatusOptions(DATA.event_statuses,false);
+  if(page==='tracking')setStatusOptions(DATA.stages,false);
+  else if(page==='events')setStatusOptions(DATA.event_statuses,false);
   else if(page==='investors')setStatusOptions(DATA.investor_statuses,false);
   else if(tab==='partners')setStatusOptions(DATA.partner_statuses,false);
   else if(tab==='leads')setStatusOptions(DATA.lead_statuses,false);
@@ -215,7 +237,8 @@ function render(){
   if([...sel.options].some(o=>o.value===prev))sel.value=prev;
   kpis();
   const v=document.getElementById('view');
-  if(page==='events')v.innerHTML=eventsView();
+  if(page==='tracking')v.innerHTML=trackingView();
+  else if(page==='events')v.innerHTML=eventsView();
   else if(page==='investors')v.innerHTML=investorsView();
   else if(tab==='partners')v.innerHTML=partnersView();
   else if(tab==='leads')v.innerHTML=leadsView();
@@ -235,11 +258,11 @@ def render(cfg, state, run_info=None):
                                     t.get("days_left") if t.get("days_left") is not None else 999))
     keep = ("id", "title", "country", "buyer", "source", "market", "line", "sector", "deadline", "deadline_fa",
             "days_left", "url", "status", "keyword_score", "domains", "analysis", "partners", "files",
-            "draft_saved_to", "facts", "setad_number")
+            "draft_saved_to", "facts", "setad_number", "tracking")
     ev = sorted((e for e in events.load()["events"].values() if events.is_upcoming(e)),
                 key=lambda e: (e.get("start") or "9999", e.get("name", "")))
     pt = sorted(partners.load()["companies"].values(), key=lambda p: (p["country"], p["name"]))
-    data = {"labels": cfg.get("domain_labels_fa", {}), "statuses": store.STATUSES, "active": sorted(store.ACTIVE),
+    data = {"labels": cfg.get("domain_labels_fa", {}), "statuses": store.STATUSES, "stages": store.STAGES, "active": sorted(store.ACTIVE),
             "tenders": [{k: t.get(k) for k in keep} for t in tenders],
             "events": ev, "event_statuses": events.STATUSES,
             "partners": pt, "partner_statuses": partners.STATUSES,
