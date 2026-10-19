@@ -2,7 +2,7 @@
 import json
 from datetime import date, timedelta
 
-from . import dashboard, documents, events, mailbox, notify, partners, store
+from . import dashboard, documents, events, investors, mailbox, notify, partners, store
 from .analyst import Analyst, llm_available
 from .config import OUTPUT_DIR, env, load_config
 from .portfolio import build_profile, profile_text
@@ -116,6 +116,8 @@ def summary_text(cfg, run, state):
             lines.append(f"• {e['start']} | {e['name_fa'] or e['name']} – {e['city']}")
     if run.get("events_added"):
         lines.append(f"• {run['events_added']} رویداد جدید به فهرست اضافه شد")
+    if run.get("investors_added"):
+        lines.append(f"\n💰 {run['investors_added']} سرمایه‌گذار یا شتاب‌دهنده‌ی جدید به فهرست اضافه شد")
     url = env("DASHBOARD_URL")
     if url:
         lines.append(f"\n📊 داشبورد: {url}")
@@ -149,7 +151,7 @@ def run(use_llm=True, use_mail=True, send_notification=True):
             reminders.append(rec["id"])
 
     actioned, partner_drafts, events_added = [], [], 0
-    ev_state, pt_state = events.load(), partners.load()
+    ev_state, pt_state, inv_state, investors_added = events.load(), partners.load(), investors.load(), 0
     if use_llm and llm_available():
         analyst = Analyst(cfg, profile_text(cfg, profile))
         # Claude analysis and drafting run for the international market; domestic notices are listed from Setad data.
@@ -173,6 +175,11 @@ def run(use_llm=True, use_mail=True, send_notification=True):
         except Exception as exc:
             log(f"Events update failed: {exc}")
         try:
+            if investors.due(inv_state, cfg):
+                investors_added = investors.update(cfg, analyst, inv_state, log)
+        except Exception as exc:
+            log(f"Investors update failed: {exc}")
+        try:
             open_tenders = [r for r in state["tenders"].values() if r["status"] in store.ACTIVE]
             partner_drafts = partners.scout(cfg, analyst, pt_state, open_tenders, use_mail, log)
         except Exception as exc:
@@ -182,12 +189,13 @@ def run(use_llm=True, use_mail=True, send_notification=True):
 
     events.save(ev_state)
     partners.save(pt_state)
+    investors.save(inv_state)
     today, soon = date.today().isoformat(), (date.today() + timedelta(days=45)).isoformat()
     events_soon = sorted((e for e in ev_state["events"].values()
                           if e.get("start") and today <= e["start"] <= soon and e.get("status") != "skipped"),
                          key=lambda e: e["start"])
     run_info = {"at": store.now(), "collected": len(tenders), "matched": len(candidates),
-                "partner_drafts": partner_drafts, "events_added": events_added,
+                "partner_drafts": partner_drafts, "events_added": events_added, "investors_added": investors_added,
                 "events_soon": [{k: e.get(k, "") for k in ("start", "name", "name_fa", "city")} for e in events_soon],
                 "new_ids": new_ids, "actioned_ids": actioned, "reminders": reminders,
                 "unmapped_repos": profile["unmapped_repos"]}

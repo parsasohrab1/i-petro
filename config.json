@@ -288,5 +288,8 @@
   "events": {
     "update_every_days": 1,
     "horizon_months": 12
+  },
+  "investors": {
+    "update_every_days": 7
   }
 }

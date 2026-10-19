@@ -8,12 +8,13 @@
   python -m agent star <country> / unstar <country>          countries for weekly partner scouting
   python -m agent event <event-id> <status>                  considering | registered | attending | attended | skipped
   python -m agent partner <company-key> <status>             sent | replied | meeting | mou | not_interested
+  python -m agent investor <investor-id> <status>            researching | contacted | meeting | due_diligence | term_sheet | declined
 """
 import json
 import argparse
 import sys
 
-from . import dashboard, events, partners, store
+from . import dashboard, events, investors, partners, store
 from .config import ROOT, load_config
 
 
@@ -43,6 +44,9 @@ def main(argv=None):
     pa = sub.add_parser("partner")
     pa.add_argument("key")
     pa.add_argument("status", choices=list(partners.STATUSES))
+    iv = sub.add_parser("investor")
+    iv.add_argument("investor_id")
+    iv.add_argument("status", choices=list(investors.STATUSES))
     a = p.parse_args(argv)
 
     if a.cmd == "run":
@@ -78,6 +82,15 @@ def main(argv=None):
         partners.save(ps)
         dashboard.render(cfg, state)
         print(f"{a.key} -> {partners.STATUSES[a.status]}")
+        return
+    if a.cmd == "investor":
+        ist = investors.load()
+        if a.investor_id not in ist["investors"]:
+            sys.exit(f"unknown investor {a.investor_id}")
+        ist["investors"][a.investor_id]["status"] = a.status
+        investors.save(ist)
+        dashboard.render(cfg, state)
+        print(f"{a.investor_id} -> {investors.STATUSES[a.status]}")
         return
     if a.cmd == "list":
         for t in sorted(state["tenders"].values(), key=lambda t: t.get("deadline") or "9"):

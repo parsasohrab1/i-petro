@@ -5,10 +5,11 @@ Pages:
   international  international AI tenders            tabs: opportunities | conditions at a glance | partners
   web            website design & SEO requests        tabs: opportunities | conditions at a glance
   events         AI events in Iran and worldwide
+  investors      VCs, corporate venture arms and accelerators
 """
 import json
 
-from . import events, partners, store
+from . import events, investors, partners, store
 from .config import ROOT
 
 TEMPLATE = r"""<!doctype html>
@@ -74,6 +75,7 @@ td{display:block;border:0;padding:3px 12px}td.t{min-width:0}td[data-l]::before{c
 <button role="tab" data-page="international">بازار بین‌المللی</button>
 <button role="tab" data-page="web">طراحی سایت و سئو</button>
 <button role="tab" data-page="events">رویدادهای هوش مصنوعی</button>
+<button role="tab" data-page="investors">سرمایه‌گذاران و شتاب‌دهنده‌ها</button>
 </nav></header>
 <main>
 <div class="note" id="srcnote"></div>
@@ -92,6 +94,8 @@ const PAGES = {
    tabs:[['list','فرصت‌ها'],['glance','شرایط شرکت در مناقصه در یک نگاه'],['partners','شرکای کشورهای ستاره‌دار']], intl:'پذیرش شرکت‌های بین‌المللی'},
  web:{note:'درخواست‌های طراحی سایت و سئو از همه‌ی منابع داخلی و بین‌المللی. پیشنهاد پیش‌فرض برای مشتریان داخلی: طراحی سایت + سئو.',
    tabs:[['list','فرصت‌ها'],['glance','شرایط در یک نگاه']], intl:'پذیرش شرکت‌های خارجی / داخلی'},
+ investors:{note:'صندوق‌های خطرپذیر، سرمایه‌گذاران شرکتی و شتاب‌دهنده‌های جهان در حوزه‌های هوش مصنوعی شرکت – به‌روزرسانی هفتگی. ارقام از منبع ذکرشده‌اند و ممکن است قدیمی باشند؛ پیش از مذاکره با سایت رسمی تطبیق دهید.',
+   tabs:[['all','همه'],['vc','صندوق خطرپذیر'],['cvc','سرمایه‌گذار شرکتی'],['accelerator','شتاب‌دهنده']]},
  events:{note:'رویدادهای هوش مصنوعی و حوزه‌های انرژی، پزشکی، هوانوردی، هسته‌ای و شهری در ایران و جهان – به‌روزرسانی روزانه.',
    tabs:[['iran','ایران'],['world','جهان'],['all','همه']]}};
 let page='international', tab='list';
@@ -116,7 +120,8 @@ function setStatusOptions(map,withActive){sel.innerHTML=(withActive?'<option val
 function tenders(){const s=sel.value,qq=q();return DATA.tenders.filter(t=>inPage(t)&&(s==='active'?ACTIVE.has(t.status):!s||t.status===s)&&
   (!qq||[t.title,t.country,t.buyer,t.source,t.sector].join(' ').toLowerCase().includes(qq)))}
 function kpis(){let items;
- if(page==='events'){const e=DATA.events;items=[['رویداد پیش رو',e.length],['ایران',e.filter(x=>x.region==='iran').length],['جهان',e.filter(x=>x.region==='world').length],
+ if(page==='investors'){const v=DATA.investors,c=t=>v.filter(x=>x.type===t).length;items=[['کل',v.length],['صندوق خطرپذیر',c('vc')],['سرمایه‌گذار شرکتی',c('cvc')],['شتاب‌دهنده',c('accelerator')],['در حال مذاکره',v.filter(x=>['contacted','meeting','due_diligence','term_sheet'].includes(x.status)).length]]}
+ else if(page==='events'){const e=DATA.events;items=[['رویداد پیش رو',e.length],['ایران',e.filter(x=>x.region==='iran').length],['جهان',e.filter(x=>x.region==='world').length],
    ['تاریخ اعلام نشده',e.filter(x=>x.date_status==='tba').length],['در حال بررسی',e.filter(x=>x.status==='considering').length],['ثبت‌نام شد',e.filter(x=>['registered','attending'].includes(x.status)).length]]}
  else{const t=DATA.tenders.filter(inPage),c=s=>t.filter(x=>x.status===s).length;
   items=[['فعال',t.filter(x=>ACTIVE.has(x.status)).length],['جدید',c('new')],['در جست‌وجوی شریک',c('partner_search')+c('mou_negotiation')],
@@ -162,6 +167,19 @@ function partnersView(){const s=sel.value,qq=q();
   <td data-l="ایمیل">${p.email?`<code>${esc(p.email)}</code><br>${link(p.email_source,'منبع')}`:'<span class="meta">ایمیل عمومی پیدا نشد – از فرم سایت</span>'}</td>
   <td data-l="موضوع">${esc(p.subject)}<br><span class="meta">${esc(p.draft_saved_to||'')}</span></td>
   <td data-l="وضعیت"><span class="pill s-${p.status}">${esc(DATA.partner_statuses[p.status]||p.status)}</span></td></tr>`).join('')+'</tbody></table></div>'}
+function investorsView(){const s=sel.value,qq=q();
+  const list=DATA.investors.filter(v=>(tab==='all'||v.type===tab)&&(!s||v.status===s)&&
+   (!qq||[v.name,v.hq,v.focus_fa,v.stage_fa,(v.domains||[]).map(x=>DATA.labels[x]||x).join(' ')].join(' ').toLowerCase().includes(qq)));
+  if(!list.length)return '<p class="empty">موردی یافت نشد.</p>';
+  return `<div class="tablewrap"><table><thead><tr><th>سرمایه‌گذار</th><th>مقر</th><th>حوزه‌های ما</th><th>مرحله و مبلغ</th><th>اندازه‌ی صندوق / بودجه</th>
+  <th>سرمایه‌گذاری‌های انجام‌شده</th><th>حوزه‌ی علاقه‌مندی</th><th>راه ارتباط</th><th>ملاحظات</th><th>وضعیت</th></tr></thead><tbody>`+
+  list.map(v=>`<tr><td class="t">${esc(v.name)}<br><span class="meta">${esc(DATA.investor_types[v.type]||v.type)}</span></td>
+  <td data-l="مقر">${esc(v.hq)}</td><td data-l="حوزه">${esc((v.domains||[]).map(x=>DATA.labels[x]||x).join('، '))}</td>
+  <td data-l="مرحله و مبلغ">${esc(v.stage_fa)}<br><span class="meta">${esc(v.ticket_fa)}</span></td><td data-l="اندازه صندوق">${esc(v.fund_fa)}</td>
+  <td data-l="سرمایه‌گذاری‌ها">${esc(v.investments_fa)}</td><td data-l="علاقه‌مندی">${esc(v.focus_fa)}</td>
+  <td data-l="ارتباط">${link(v.website,'وب‌سایت')}${v.apply&&v.apply!==v.website?'<br>'+link(v.apply,'ارائه‌ی طرح / ثبت‌نام'):''}${v.email?'<br><code>'+esc(v.email)+'</code>':''}<br>${link(v.source,'منبع ارقام')}</td>
+  <td data-l="ملاحظات">${esc(v.compliance_fa||'—')}</td>
+  <td data-l="وضعیت"><span class="pill s-${v.status}">${esc(DATA.investor_statuses[v.status]||v.status)}</span><br><code>${esc(v.id)}</code></td></tr>`).join('')+'</tbody></table></div>'}
 function eventsView(){const s=sel.value,qq=q();
   const list=DATA.events.filter(e=>(tab==='all'||e.region===tab)&&(!s||e.status===s)&&(!qq||[e.name,e.name_fa,e.city,e.country,e.type].join(' ').toLowerCase().includes(qq)));
   if(!list.length)return '<p class="empty">رویدادی یافت نشد.</p>';
@@ -179,12 +197,14 @@ function render(){
   document.getElementById('srcnote').textContent=PAGES[page].note;
   const prev=sel.value;
   if(page==='events')setStatusOptions(DATA.event_statuses,false);
+  else if(page==='investors')setStatusOptions(DATA.investor_statuses,false);
   else if(tab==='partners')setStatusOptions(DATA.partner_statuses,false);
   else setStatusOptions(ST,true);
   if([...sel.options].some(o=>o.value===prev))sel.value=prev;
   kpis();
   const v=document.getElementById('view');
   if(page==='events')v.innerHTML=eventsView();
+  else if(page==='investors')v.innerHTML=investorsView();
   else if(tab==='partners')v.innerHTML=partnersView();
   else{const list=tenders();v.innerHTML=tab==='glance'?glance(list):(list.map(card).join('')||'<p class="empty">موردی یافت نشد.</p>')}
   try{localStorage.setItem('scb-view',JSON.stringify({page,tab}))}catch(e){}}
@@ -210,6 +230,8 @@ def render(cfg, state, run_info=None):
             "tenders": [{k: t.get(k) for k in keep} for t in tenders],
             "events": ev, "event_statuses": events.STATUSES,
             "partners": pt, "partner_statuses": partners.STATUSES,
+            "investors": sorted(investors.load()["investors"].values(), key=lambda v: (v["type"], v["name"])),
+            "investor_statuses": investors.STATUSES, "investor_types": investors.TYPES,
             "starred": cfg.get("starred_countries", []),
             "last_run": (run_info or {}).get("at") or (state.get("runs") or [{}])[-1].get("at")}
     out = ROOT / cfg["dashboard"]["output"]
