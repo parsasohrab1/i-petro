@@ -24,7 +24,7 @@ EVENT_SCHEMA = {
     "properties": {"events": {"type": "array", "items": {
         "type": "object",
         "additionalProperties": False,
-        "required": ["name", "name_fa", "region", "country", "city", "start", "end", "date_status",
+        "required": ["name", "name_fa", "region", "country", "city", "start", "end", "date_fa", "date_status",
                      "usual_period_fa", "categories", "type", "why_fa", "participation_fa", "url", "source"],
         "properties": {
             "name": {"type": "string"},
@@ -34,6 +34,7 @@ EVENT_SCHEMA = {
             "city": {"type": "string", "description": "in Persian"},
             "start": {"type": "string", "description": "YYYY-MM-DD or empty when not announced"},
             "end": {"type": "string", "description": "YYYY-MM-DD or empty"},
+            "date_fa": {"type": "string", "description": "for events in Iran: Persian (Jalali) date range WITH the year and the venue, e.g. '۲۹ آذر تا ۱ دی ۱۴۰۵ – تهران'; if not announced, state the last known edition with its year. Empty for events outside Iran."},
             "date_status": {"type": "string", "enum": ["confirmed", "to_verify", "tba"]},
             "usual_period_fa": {"type": "string", "description": "usual timing when dates are not announced, else empty"},
             "categories": {"type": "array", "items": {"type": "string", "enum": CATEGORIES}},
@@ -57,7 +58,11 @@ def load():
     state = json.loads(STATE_FILE.read_text(encoding="utf-8")) if STATE_FILE.exists() else {"events": {}, "updated": ""}
     events = state["events"]
     for e in seed:
-        events.setdefault(e["id"], {**e, "status": "new", "origin": "seed"})
+        current = events.get(e["id"])
+        if current is None:
+            events[e["id"]] = {**e, "status": "new", "origin": "seed"}
+        elif current.get("origin") == "seed":  # researched seed corrections win; the user's status is kept
+            events[e["id"]] = {**current, **e, "status": current.get("status", "new"), "origin": "seed"}
     return state
 
 
@@ -87,7 +92,9 @@ def update(cfg, analyst, state, log):
         "months that a young AI company from Istanbul/Iran should consider attending, exhibiting at or pitching at: "
         "AI conferences and summits, technology exhibitions with AI tracks, startup/investor events, and industry "
         "fairs where AI is applied to energy (oil, gas, power), medicine/health, aviation, nuclear power or smart "
-        "cities. Cover Iran (Tehran exhibitions, national AI events, technology-exchange events of public bodies) "
+        "cities. Cover Iran (Tehran exhibitions, national AI events, technology-exchange events of public bodies; "
+        "for every Iranian event give the Persian/Jalali date range with the year, or the last edition's date and year "
+        "if the next one is not announced) "
         "and the world, prioritising Türkiye, the Gulf, Europe and Asia. Exclude military/defence events. "
         f"Already known (only report them if their dates changed): {known}. For every event give the official "
         "website and a page that confirms the dates; mark dates as unconfirmed when only one unofficial listing "
@@ -105,7 +112,7 @@ def update(cfg, analyst, state, log):
         if key in state["events"]:
             old = state["events"][key]
             if e["start"] and e["date_status"] != "tba":
-                old.update({k: e[k] for k in ("start", "end", "date_status", "url", "source") if e[k]})
+                old.update({k: e[k] for k in ("start", "end", "date_fa", "date_status", "url", "source") if e[k]})
         else:
             state["events"][key] = {**e, "id": key, "status": "new", "origin": "agent", "found": date.today().isoformat()}
             added += 1

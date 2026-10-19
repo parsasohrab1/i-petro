@@ -2,7 +2,7 @@
 import json
 from datetime import date, timedelta
 
-from . import dashboard, documents, events, investors, mailbox, notify, partners, store
+from . import dashboard, documents, events, investors, leads, mailbox, notify, partners, store
 from .analyst import Analyst, llm_available
 from .config import OUTPUT_DIR, env, load_config
 from .portfolio import build_profile, profile_text
@@ -116,6 +116,8 @@ def summary_text(cfg, run, state):
             lines.append(f"• {e['start']} | {e['name_fa'] or e['name']} – {e['city']}")
     if run.get("events_added"):
         lines.append(f"• {run['events_added']} رویداد جدید به فهرست اضافه شد")
+    if run.get("leads_added"):
+        lines.append(f"\n📞 {run['leads_added']} تولیدکننده‌ی بدون سایت برای تماس تلفنی (Web Design & SEO Projects)")
     if run.get("investor_drafts"):
         lines.append(f"\n✉️ {len(run['investor_drafts'])} پیش‌نویس ایمیل معرفی به سرمایه‌گذاران منتخب آماده شد")
     if run.get("investors_added"):
@@ -190,6 +192,14 @@ def run(use_llm=True, use_mail=True, send_notification=True):
     elif use_llm:
         log("ANTHROPIC_API_KEY not set - keyword screening only, no analysis or drafts.")
 
+    # weekly website-design leads (no Claude needed)
+    lead_state, leads_added = leads.load(), 0
+    try:
+        if leads.due(lead_state, cfg):
+            leads_added = leads.update(cfg, lead_state, log)
+    except Exception as exc:
+        log(f"Leads update failed: {exc}")
+    leads.save(lead_state)
     # investor introduction drafts run with or without Claude (hand-written drafts need no API key)
     investor_drafts = []
     try:
@@ -205,7 +215,7 @@ def run(use_llm=True, use_mail=True, send_notification=True):
                           if e.get("start") and today <= e["start"] <= soon and e.get("status") != "skipped"),
                          key=lambda e: e["start"])
     run_info = {"at": store.now(), "collected": len(tenders), "matched": len(candidates),
-                "partner_drafts": partner_drafts, "events_added": events_added, "investors_added": investors_added, "investor_drafts": investor_drafts,
+                "partner_drafts": partner_drafts, "events_added": events_added, "investors_added": investors_added, "investor_drafts": investor_drafts, "leads_added": leads_added,
                 "events_soon": [{k: e.get(k, "") for k in ("start", "name", "name_fa", "city")} for e in events_soon],
                 "new_ids": new_ids, "actioned_ids": actioned, "reminders": reminders}
     state["runs"] = (state.get("runs", []) + [run_info])[-60:]

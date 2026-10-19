@@ -304,7 +304,6 @@
       "بازطراحی سایت",
       "سایت اینترنتی",
       "وب سایت",
-      "وبسایت",
       "پرتال",
       "سئو",
       "بهینه سازی موتور جستجو"
@@ -333,5 +332,20 @@
     "shell-ventures",
     "ycombinator",
     "techstars"
-  ]
+  ],
+  "leads": {
+    "update_every_days": 7,
+    "sellfree": {
+      "enabled": true,
+      "pages": 8,
+      "max_listings": 150,
+      "delay_seconds": 1.5
+    },
+    "abcagahi": {
+      "enabled": true,
+      "pages": 3,
+      "delay_seconds": 1.5
+    },
+    "_excluded_fa": "دیوار و شیپور: شماره فقط پس از ورود · دیجی‌کالا: شماره‌ی فروشنده منتشر نمی‌شود · iranniaz.com: دامنه‌ی فروشی · irantejarat: در دسترس نبود"
+  }
 }

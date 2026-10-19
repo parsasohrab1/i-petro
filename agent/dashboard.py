@@ -9,7 +9,7 @@ Pages:
 """
 import json
 
-from . import events, investors, partners, store
+from . import events, investors, leads, partners, store
 from .config import ROOT
 
 TEMPLATE = r"""<!doctype html>
@@ -94,7 +94,7 @@ const PAGES = {
  international:{note:'منابع: TED (اتحادیه اروپا)، بانک جهانی، Find a Tender (بریتانیا). ستاره کنار نام کشور = جست‌وجوی هفتگی شرکای همکاری در آن کشور.',
    tabs:[['list','فرصت‌ها'],['glance','شرایط شرکت در مناقصه در یک نگاه'],['partners','شرکای کشورهای ستاره‌دار']], intl:'پذیرش شرکت‌های بین‌المللی'},
  web:{note:'درخواست‌های طراحی سایت و سئو از همه‌ی منابع داخلی و بین‌المللی. پیشنهاد پیش‌فرض برای مشتریان داخلی: طراحی سایت + سئو.',
-   tabs:[['list','فرصت‌ها'],['glance','شرایط در یک نگاه']], intl:'پذیرش شرکت‌های خارجی / داخلی'},
+   tabs:[['list','فرصت‌ها'],['glance','شرایط در یک نگاه'],['leads','تولیدکنندگان بدون سایت (تماس تلفنی)']], intl:'پذیرش شرکت‌های خارجی / داخلی'},
  investors:{note:'صندوق‌های خطرپذیر، سرمایه‌گذاران شرکتی و شتاب‌دهنده‌های جهان در حوزه‌های هوش مصنوعی شرکت – به‌روزرسانی هفتگی. ارقام از منبع ذکرشده‌اند و ممکن است قدیمی باشند؛ پیش از مذاکره با سایت رسمی تطبیق دهید.',
    tabs:[['all','همه'],['selected','منتخب (ایمیل معرفی)'],['vc','صندوق خطرپذیر'],['cvc','سرمایه‌گذار شرکتی'],['accelerator','شتاب‌دهنده']]},
  events:{note:'رویدادهای هوش مصنوعی و حوزه‌های انرژی، پزشکی، هوانوردی، هسته‌ای و شهری در ایران و جهان – به‌روزرسانی روزانه.',
@@ -181,11 +181,21 @@ function investorsView(){const s=sel.value,qq=q();
   <td data-l="ارتباط">${link(v.website,'وب‌سایت')}${v.apply&&v.apply!==v.website?'<br>'+link(v.apply,'ارائه‌ی طرح / ثبت‌نام'):''}${v.email?'<br><code>'+esc(v.email)+'</code>':''}<br>${link(v.source,'منبع ارقام')}</td>
   <td data-l="ملاحظات">${esc(v.compliance_fa||'—')}</td>
   <td data-l="وضعیت"><span class="pill s-${v.status}">${esc(DATA.investor_statuses[v.status]||v.status)}</span><br><code>${esc(v.id)}</code></td></tr>`).join('')+'</tbody></table></div>'}
+function leadsView(){const s=sel.value,qq=q();
+  const list=DATA.leads.filter(l=>(!s||l.status===s)&&(!qq||[l.name,l.activity,l.city,l.source].join(' ').toLowerCase().includes(qq)));
+  if(!list.length)return '<p class="empty">هنوز موردی ثبت نشده است؛ فهرست هفتگی به‌روز می‌شود.</p>';
+  return `<p class="note">فقط اطلاعاتی که آگهی‌دهنده خودش در آگهی منتشر کرده ثبت می‌شود. پیشنهاد پیش‌فرض: طراحی سایت + سئو. در تماس، اگر مخاطب نخواست، وضعیت را «تماس نگیرید» کنید تا دیگر فهرست نشود.</p>
+  <div class="tablewrap"><table><thead><tr><th>نام / مسئول</th><th>حوزه‌ی فعالیت</th><th>شهر</th><th>شماره تماس</th><th>منبع</th><th>پیشنهاد</th><th>وضعیت</th></tr></thead><tbody>`+
+  list.map(l=>`<tr><td class="t">${esc(l.name||'—')}</td><td data-l="فعالیت">${esc(l.activity)}</td><td data-l="شهر">${esc([l.city,l.province].filter(Boolean).join('، ')||'—')}</td>
+  <td data-l="تماس">${l.phone?l.phone.split('/').map(p=>`<a href="tel:${esc(p.trim())}"><code>${esc(p.trim())}</code></a>`).join(' '):'<span class="meta">'+esc(l.contact_note_fa||'—')+'</span>'}${l.email?'<br><code>'+esc(l.email)+'</code>':''}</td>
+  <td data-l="منبع">${link(l.url,l.source)}</td><td data-l="پیشنهاد">${esc(l.service_fa)}</td>
+  <td data-l="وضعیت"><span class="pill s-${l.status}">${esc(DATA.lead_statuses[l.status]||l.status)}</span><br><code>${esc(l.id)}</code></td></tr>`).join('')+'</tbody></table></div>'}
 function eventsView(){const s=sel.value,qq=q();
   const list=DATA.events.filter(e=>(tab==='all'||e.region===tab)&&(!s||e.status===s)&&(!qq||[e.name,e.name_fa,e.city,e.country,e.type].join(' ').toLowerCase().includes(qq)));
   if(!list.length)return '<p class="empty">رویدادی یافت نشد.</p>';
   return `<div class="tablewrap"><table><thead><tr><th>رویداد</th><th>محل</th><th>تاریخ</th><th>حوزه</th><th>نوع</th><th>چرا مهم است</th><th>نحوه‌ی مشارکت</th><th>وضعیت</th></tr></thead><tbody>`+
-  list.map(e=>{const date=e.start?(e.start+(e.end&&e.end!==e.start?' تا '+e.end:'')+(e.date_status==='to_verify'?' <span class="meta">(نیاز به تأیید)</span>':'')):'<span class="meta">اعلام نشده – '+esc(e.usual_period_fa||'')+'</span>';
+  list.map(e=>{const greg=e.start?(e.start+(e.end&&e.end!==e.start?' تا '+e.end:'')+(e.date_status==='to_verify'?' <span class="meta">(نیاز به تأیید)</span>':'')):'';
+   const date=e.date_fa?`<b>${esc(e.date_fa)}</b>${greg?'<br><span class="meta">'+greg+'</span>':''}`:(greg||'<span class="meta">اعلام نشده – '+esc(e.usual_period_fa||'')+'</span>');
    return `<tr><td class="t">${link(e.url,e.name_fa||e.name)}<br><span class="meta">${esc(e.name)}</span></td><td data-l="محل">${esc(e.city)}، ${esc(e.country)}</td>
    <td data-l="تاریخ">${date}${e.source?'<br>'+link(e.source,'منبع تاریخ'):''}</td><td data-l="حوزه">${esc((e.categories||[]).map(x=>DATA.labels[x]||x).join('، '))}</td>
    <td data-l="نوع">${esc(e.type)}</td><td data-l="اهمیت">${esc(e.why_fa)}</td><td data-l="مشارکت">${esc(e.participation_fa)}</td>
@@ -200,6 +210,7 @@ function render(){
   if(page==='events')setStatusOptions(DATA.event_statuses,false);
   else if(page==='investors')setStatusOptions(DATA.investor_statuses,false);
   else if(tab==='partners')setStatusOptions(DATA.partner_statuses,false);
+  else if(tab==='leads')setStatusOptions(DATA.lead_statuses,false);
   else setStatusOptions(ST,true);
   if([...sel.options].some(o=>o.value===prev))sel.value=prev;
   kpis();
@@ -207,6 +218,7 @@ function render(){
   if(page==='events')v.innerHTML=eventsView();
   else if(page==='investors')v.innerHTML=investorsView();
   else if(tab==='partners')v.innerHTML=partnersView();
+  else if(tab==='leads')v.innerHTML=leadsView();
   else{const list=tenders();v.innerHTML=tab==='glance'?glance(list):(list.map(card).join('')||'<p class="empty">موردی یافت نشد.</p>')}
   try{localStorage.setItem('scb-view',JSON.stringify({page,tab}))}catch(e){}}
 document.querySelectorAll('.pages button').forEach(b=>b.onclick=()=>{page=b.dataset.page;tab=PAGES[page].tabs[0][0];sel.value='';render()});
@@ -234,6 +246,8 @@ def render(cfg, state, run_info=None):
             "investors": sorted(investors.load()["investors"].values(), key=lambda v: (v["type"], v["name"])),
             "investor_statuses": investors.STATUSES, "investor_types": investors.TYPES,
             "selected_investors": cfg.get("selected_investors", []),
+            "leads": sorted(leads.load()["leads"].values(), key=lambda x: x.get("found", ""), reverse=True),
+            "lead_statuses": leads.STATUSES,
             "starred": cfg.get("starred_countries", []),
             "last_run": (run_info or {}).get("at") or (state.get("runs") or [{}])[-1].get("at")}
     out = ROOT / cfg["dashboard"]["output"]

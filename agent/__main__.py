@@ -9,13 +9,14 @@
   python -m agent event <event-id> <status>                  considering | registered | attending | attended | skipped
   python -m agent partner <company-key> <status>             sent | replied | meeting | mou | not_interested
   python -m agent select <investor-id> / unselect <investor-id>  investors that get an introduction draft
+  python -m agent lead <lead-id> <status>                    called | interested | proposal | won | not_interested | do_not_call
   python -m agent investor <investor-id> <status>            researching | contacted | meeting | due_diligence | term_sheet | declined
 """
 import json
 import argparse
 import sys
 
-from . import dashboard, events, investors, partners, store
+from . import dashboard, events, investors, leads, partners, store
 from .config import ROOT, load_config
 
 
@@ -47,6 +48,9 @@ def main(argv=None):
     pa = sub.add_parser("partner")
     pa.add_argument("key")
     pa.add_argument("status", choices=list(partners.STATUSES))
+    ld = sub.add_parser("lead")
+    ld.add_argument("lead_id")
+    ld.add_argument("status", choices=list(leads.STATUSES))
     iv = sub.add_parser("investor")
     iv.add_argument("investor_id")
     iv.add_argument("status", choices=list(investors.STATUSES))
@@ -97,6 +101,19 @@ def main(argv=None):
         (ROOT / "config.json").write_text(json.dumps(cfg, ensure_ascii=False, indent=2), encoding="utf-8")
         dashboard.render(cfg, state)
         print("selected investors:", ", ".join(chosen) or "-")
+        return
+    if a.cmd == "lead":
+        ls_ = leads.load()
+        if a.lead_id not in ls_["leads"]:
+            sys.exit(f"unknown lead {a.lead_id}")
+        rec = ls_["leads"][a.lead_id]
+        rec["status"] = a.status
+        if a.status == "do_not_call":
+            ls_.setdefault("do_not_call", []).extend(p.strip() for p in rec.get("phone", "").split("/") if p.strip())
+            rec["phone"] = ""
+        leads.save(ls_)
+        dashboard.render(cfg, state)
+        print(f"{a.lead_id} -> {leads.STATUSES[a.status]}")
         return
     if a.cmd == "investor":
         ist = investors.load()

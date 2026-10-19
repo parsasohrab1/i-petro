@@ -1,23 +1,414 @@
 {
-  "_note": "Seed list researched 2026-10-18. Dates checked against organiser or multiple listings; 'tba' = next edition not announced yet. The weekly events update adds and refreshes entries in data/events.json.",
-  "events": [
-    {"id": "adipec-2026", "name": "ADIPEC 2026", "name_fa": "نمایشگاه و کنفرانس نفت و گاز ابوظبی", "region": "world", "country": "امارات", "city": "ابوظبی", "start": "2026-11-02", "end": "2026-11-05", "date_status": "confirmed", "categories": ["energy", "ai_cross_cutting"], "type": "نمایشگاه و کنفرانس", "why_fa": "بزرگ‌ترین رویداد انرژی جهان (حدود ۲۰۰ هزار بازدیدکننده)؛ محل ملاقات با پیمانکاران EPC و یکپارچه‌سازان دیجیتال نفت و گاز – شرکای بالقوه برای مناقصه‌ها", "participation_fa": "بازدیدکننده (B2B)، جلسات از پیش تعیین‌شده با شرکا", "url": "https://www.adipec.com", "source": "https://www.hydrocarbonengineering.com/events/adipec-2026/"},
-    {"id": "scewc-2026", "name": "Smart City Expo World Congress 2026", "name_fa": "کنگره جهانی شهر هوشمند", "region": "world", "country": "اسپانیا", "city": "بارسلونا", "start": "2026-11-03", "end": "2026-11-05", "date_status": "confirmed", "categories": ["urban", "energy", "ai_cross_cutting"], "type": "نمایشگاه و کنگره", "why_fa": "مرجع جهانی شهر هوشمند؛ آشنایی با شهرداری‌ها و یکپارچه‌سازان برای محصولات مدیریت انرژی ساختمان، تصمیم‌یار بحران و پایش", "participation_fa": "بازدیدکننده، شبکه‌سازی با غرفه‌های ملی", "url": "https://www.smartcityexpo.com", "source": "https://build-up.ec.europa.eu/en/news-and-events/events/smart-city-expo-world-congress-2026"},
-    {"id": "websummit-2026", "name": "Web Summit 2026", "name_fa": "وب سامیت لیسبون", "region": "world", "country": "پرتغال", "city": "لیسبون", "start": "2026-11-09", "end": "2026-11-12", "date_status": "confirmed", "categories": ["ai_cross_cutting"], "type": "کنفرانس فناوری و استارتاپ", "why_fa": "حضور گسترده‌ی سرمایه‌گذاران خطرپذیر؛ امکان معرفی محصولات هوش مصنوعی به سرمایه‌گذاران", "participation_fa": "بازدیدکننده، برنامه‌ی استارتاپی (ALPHA) با درخواست قبلی", "url": "https://websummit.com", "source": "https://english.rvo.nl/events/web-summit-2026-lisbon"},
-    {"id": "medica-2026", "name": "MEDICA 2026", "name_fa": "نمایشگاه تجهیزات و فناوری پزشکی دوسلدورف", "region": "world", "country": "آلمان", "city": "دوسلدورف", "start": "2026-11-16", "end": "2026-11-19", "date_status": "confirmed", "categories": ["medical", "ai_cross_cutting"], "type": "نمایشگاه", "why_fa": "بزرگ‌ترین نمایشگاه فناوری پزشکی جهان؛ بخش سلامت دیجیتال و هوش مصنوعی برای NeuroPredict-AI و تحلیل کیت‌های تشخیصی", "participation_fa": "بازدیدکننده، جلسه با تولیدکنندگان کیت تشخیصی و شرکت‌های سلامت دیجیتال", "url": "https://www.medica-tradefair.com", "source": "https://www.cc.lu/en/agenda/detail/medica-2026-national-pavilion"},
-    {"id": "gitex-2026", "name": "GITEX Global 2026", "name_fa": "جیتکس دبی", "region": "world", "country": "امارات", "city": "دبی (Expo City)", "start": "2026-12-07", "end": "2026-12-11", "date_status": "confirmed", "categories": ["ai_cross_cutting", "urban", "medical"], "type": "نمایشگاه فناوری", "why_fa": "مهم‌ترین نمایشگاه فناوری خاورمیانه؛ امسال برای نخستین بار در دسامبر و در Expo City؛ بخش استارتاپی و سرمایه‌گذاری (Expand North Star)", "participation_fa": "بازدیدکننده یا غرفه‌ی استارتاپی", "url": "https://www.gitex.com", "source": "https://mediaoffice.ae/en/news/2025/october/08-10/gitex-global-to-begin-a-new-chapter-at-expo-city-dubai-in-2026"},
-    {"id": "neurips-2026", "name": "NeurIPS 2026", "name_fa": "کنفرانس NeurIPS (سیدنی / آتلانتا / پاریس)", "region": "world", "country": "استرالیا / آمریکا / فرانسه", "city": "سیدنی، آتلانتا، پاریس", "start": "2026-12-06", "end": "2026-12-12", "date_status": "confirmed", "categories": ["ai_cross_cutting"], "type": "کنفرانس علمی", "why_fa": "معتبرترین کنفرانس علمی یادگیری ماشین؛ مناسب برای جذب نیرو و ارتباط با پژوهشگران، نه فروش مستقیم", "participation_fa": "ثبت‌نام شرکت‌کننده؛ نزدیک‌ترین گزینه برای تیم استانبول: پاریس", "url": "https://neurips.cc", "source": "https://neurips.cc/Conferences/current/Dates"},
-    {"id": "icci-2027", "name": "ICCI 2027", "name_fa": "نمایشگاه و کنفرانس بین‌المللی انرژی و محیط زیست استانبول", "region": "world", "country": "ترکیه", "city": "استانبول", "start": "2027-01-20", "end": "2027-01-22", "date_status": "confirmed", "categories": ["energy"], "type": "نمایشگاه و کنفرانس", "why_fa": "در شهر خود شرکت؛ کم‌هزینه‌ترین فرصت برای آشنایی با شرکت‌های انرژی ترکیه به‌عنوان شریک مناقصه", "participation_fa": "بازدیدکننده یا غرفه‌ی کوچک", "url": "https://www.icci.com.tr", "source": "https://www.showsbee.com/fairs/60531-ICCI-Turkey-2027.html"},
-    {"id": "whx-2027", "name": "World Health Expo (WHX) Dubai 2027", "name_fa": "نمایشگاه جهانی سلامت دبی (عرب هلث سابق)", "region": "world", "country": "امارات", "city": "دبی", "start": "2027-01-25", "end": "2027-01-28", "date_status": "confirmed", "categories": ["medical", "ai_cross_cutting"], "type": "نمایشگاه", "why_fa": "بزرگ‌ترین رویداد سلامت منطقه؛ بخش WHX Tech برای هوش مصنوعی سلامت", "participation_fa": "بازدیدکننده، WHX Tech", "url": "https://www.worldhealthexpo.com/events/healthcare/dubai/en.html", "source": "https://www.worldhealthexpo.com/events/healthcare/dubai/overview/general-event-faqs/"},
-    {"id": "mro-me-2027", "name": "MRO Middle East 2027", "name_fa": "نمایشگاه تعمیر و نگهداری هوایی خاورمیانه", "region": "world", "country": "امارات", "city": "دبی", "start": "2027-02-02", "end": "2027-02-03", "date_status": "confirmed", "categories": ["aviation"], "type": "نمایشگاه و کنفرانس", "why_fa": "ورود به بازار هوانوردی: نگهداری پیش‌بینانه و پایش موتور (بر پایه‌ی محصولات پایش توربین و دوقلوی دیجیتال)", "participation_fa": "بازدیدکننده، شناسایی شرکای MRO", "url": "https://mromiddleeast.aviationweek.com", "source": "https://mromiddleeast.aviationweek.com/"},
-    {"id": "hannover-2027", "name": "Hannover Messe 2027", "name_fa": "نمایشگاه صنعتی هانوفر", "region": "world", "country": "آلمان", "city": "هانوفر", "start": "2027-04-05", "end": "2027-04-08", "date_status": "confirmed", "categories": ["energy", "ai_cross_cutting"], "type": "نمایشگاه", "why_fa": "مرجع جهانی صنعت ۴.۰ و هوش مصنوعی صنعتی؛ مناسب برای دوقلوی دیجیتال، نگهداری پیش‌بینانه و مدیریت انرژی", "participation_fa": "بازدیدکننده، جلسات B2B", "url": "https://www.hannovermesse.de", "source": "https://www.hannovermesse.de/en/for-visitors/opening-hours/"},
-    {"id": "leap-2027", "name": "LEAP 2027", "name_fa": "رویداد فناوری لیپ ریاض", "region": "world", "country": "عربستان", "city": "ریاض", "start": "2027-04-12", "end": "2027-04-15", "date_status": "to_verify", "categories": ["ai_cross_cutting", "energy", "medical"], "type": "نمایشگاه و کنفرانس", "why_fa": "یکی از بزرگ‌ترین رویدادهای فناوری منطقه همراه با DeepFest (هوش مصنوعی)؛ بازار بزرگ دولتی عربستان", "participation_fa": "بازدیدکننده؛ تاریخ را پیش از برنامه‌ریزی با سایت رسمی تطبیق دهید", "url": "https://onegiantleap.com", "source": "https://www.beri.net/events/leap-2027"},
-    {"id": "expomed-2027", "name": "Expomed Eurasia 2027", "name_fa": "نمایشگاه پزشکی اکسپومد اوراسیا", "region": "world", "country": "ترکیه", "city": "استانبول", "start": "2027-04-15", "end": "2027-04-18", "date_status": "confirmed", "categories": ["medical"], "type": "نمایشگاه", "why_fa": "بزرگ‌ترین نمایشگاه پزشکی ترکیه در استانبول؛ دسترسی به بیمارستان‌ها و تولیدکنندگان تجهیزات و کیت", "participation_fa": "بازدیدکننده یا غرفه", "url": "https://tuyap.com.tr/en/exhibitions/expomed-eurasia", "source": "https://tuyap.com.tr/en/exhibitions/expomed-eurasia"},
-    {"id": "wne-2027", "name": "World Nuclear Exhibition 2027", "name_fa": "نمایشگاه جهانی صنعت هسته‌ای پاریس", "region": "world", "country": "فرانسه", "city": "پاریس", "start": "2027-12-07", "end": "2027-12-09", "date_status": "confirmed", "categories": ["nuclear"], "type": "نمایشگاه", "why_fa": "مهم‌ترین نمایشگاه صنعت هسته‌ای غیرنظامی (دوسالانه)؛ به ملاحظات انطباق و کنترل صادرات توجه شود", "participation_fa": "بازدیدکننده؛ ثبت‌نام پس از بررسی انطباق", "url": "https://www.world-nuclear-exhibition.com", "source": "https://world-nuclear.org/events/otherconferences"},
-    {"id": "iran-oilshow-1406", "name": "Iran Oil Show 1406", "name_fa": "نمایشگاه بین‌المللی نفت، گاز، پالایش و پتروشیمی تهران", "region": "iran", "country": "ایران", "city": "تهران", "start": "", "end": "", "date_status": "tba", "usual_period_fa": "معمولاً اردیبهشت (دوره‌ی ۱۴۰۴: ۱۸ تا ۲۱ اردیبهشت)", "categories": ["energy", "ai_cross_cutting"], "type": "نمایشگاه", "why_fa": "مهم‌ترین نمایشگاه صنعت نفت ایران؛ کارفرمایان اصلی محصولات انرژی شرکت در آن حضور دارند", "participation_fa": "غرفه (ثبت‌نام معمولاً از زمستان آغاز می‌شود) یا بازدید", "url": "https://iranoilshow.ir", "source": "https://www.entekhab.ir/fa/news/403186"},
-    {"id": "iran-aix-expo", "name": "Iran AIX Expo (2nd edition)", "name_fa": "نمایشگاه بین‌المللی هوش مصنوعی ایران (AIX Expo)", "region": "iran", "country": "ایران", "city": "تهران", "start": "", "end": "", "date_status": "tba", "usual_period_fa": "دوره‌ی نخست: ۲۲ تا ۲۵ دی ۱۴۰۴", "categories": ["ai_cross_cutting", "energy", "medical", "urban"], "type": "نمایشگاه", "why_fa": "تنها نمایشگاه تخصصی هوش مصنوعی کشور با بخش B2B و B2G؛ مناسب برای معرفی همه‌ی محصولات", "participation_fa": "غرفه؛ تاریخ دوره‌ی دوم هنوز اعلام نشده", "url": "https://digiato.com/iran-technology-news/aix-expo-%DB%B2%DB%B0%DB%B2%DB%B6", "source": "https://digiato.com/iran-technology-news/aix-expo-%DB%B2%DB%B0%DB%B2%DB%B6"},
-    {"id": "iran-smartcity-irandoc", "name": "Iran Smart City & AI Conference and Exhibition", "name_fa": "کنفرانس و نمایشگاه شهر هوشمند و هوش مصنوعی ایران (ایرانداک)", "region": "iran", "country": "ایران", "city": "تهران", "start": "", "end": "", "date_status": "tba", "usual_period_fa": "سالانه؛ تاریخ دوره‌ی بعد اعلام نشده", "categories": ["urban", "ai_cross_cutting"], "type": "کنفرانس و نمایشگاه", "why_fa": "ارتباط با شهرداری‌ها؛ رونمایی از جایزه‌ی ملی شهر هوشمند ایران", "participation_fa": "ارسال مقاله یا غرفه", "url": "https://irandoc.ac.ir", "source": "https://www.mehrnews.com/news/6647749"},
-    {"id": "iran-health-1406", "name": "Iran Health 1406", "name_fa": "نمایشگاه بین‌المللی ایران هلث", "region": "iran", "country": "ایران", "city": "تهران", "start": "", "end": "", "date_status": "tba", "usual_period_fa": "دوره‌ی ۱۴۰۵: ۱۷ تا ۲۰ مرداد", "categories": ["medical"], "type": "نمایشگاه", "why_fa": "بزرگ‌ترین نمایشگاه تجهیزات پزشکی کشور؛ مناسب برای کیت‌های تشخیصی و سلامت دیجیتال", "participation_fa": "غرفه یا بازدید", "url": "https://iranhealth.org", "source": "https://vista.ir/2608/211/gspl0"},
-    {"id": "elecomp-1405", "name": "Elecomp 1405", "name_fa": "نمایشگاه الکامپ", "region": "iran", "country": "ایران", "city": "تهران", "start": "", "end": "", "date_status": "tba", "usual_period_fa": "دوره‌ی ۱۴۰۴ پس از تعویق در مهر برگزار شد", "categories": ["ai_cross_cutting"], "type": "نمایشگاه", "why_fa": "بزرگ‌ترین نمایشگاه فاوای کشور با بخش‌های هوش مصنوعی و استارتاپی", "participation_fa": "غرفه یا بازدید", "url": "https://elecompiran.com", "source": "https://www.zoomit.ir/tech-iran/445993-elecomp-1404-pre-registration/"}
-  ]
+ "_note": "Seed list researched 2026-10-18/19. Iranian events always carry date_fa (Persian date with year). 'tba' = next edition not announced; date_fa then states the last known edition with its year.",
+ "events": [
+  {
+   "id": "adipec-2026",
+   "name": "ADIPEC 2026",
+   "name_fa": "نمایشگاه و کنفرانس نفت و گاز ابوظبی",
+   "region": "world",
+   "country": "امارات",
+   "city": "ابوظبی",
+   "start": "2026-11-02",
+   "end": "2026-11-05",
+   "date_status": "confirmed",
+   "categories": [
+    "energy",
+    "ai_cross_cutting"
+   ],
+   "type": "نمایشگاه و کنفرانس",
+   "why_fa": "بزرگ‌ترین رویداد انرژی جهان (حدود ۲۰۰ هزار بازدیدکننده)؛ محل ملاقات با پیمانکاران EPC و یکپارچه‌سازان دیجیتال نفت و گاز – شرکای بالقوه برای مناقصه‌ها",
+   "participation_fa": "بازدیدکننده (B2B)، جلسات از پیش تعیین‌شده با شرکا",
+   "url": "https://www.adipec.com",
+   "source": "https://www.hydrocarbonengineering.com/events/adipec-2026/"
+  },
+  {
+   "id": "scewc-2026",
+   "name": "Smart City Expo World Congress 2026",
+   "name_fa": "کنگره جهانی شهر هوشمند",
+   "region": "world",
+   "country": "اسپانیا",
+   "city": "بارسلونا",
+   "start": "2026-11-03",
+   "end": "2026-11-05",
+   "date_status": "confirmed",
+   "categories": [
+    "urban",
+    "energy",
+    "ai_cross_cutting"
+   ],
+   "type": "نمایشگاه و کنگره",
+   "why_fa": "مرجع جهانی شهر هوشمند؛ آشنایی با شهرداری‌ها و یکپارچه‌سازان برای محصولات مدیریت انرژی ساختمان، تصمیم‌یار بحران و پایش",
+   "participation_fa": "بازدیدکننده، شبکه‌سازی با غرفه‌های ملی",
+   "url": "https://www.smartcityexpo.com",
+   "source": "https://build-up.ec.europa.eu/en/news-and-events/events/smart-city-expo-world-congress-2026"
+  },
+  {
+   "id": "websummit-2026",
+   "name": "Web Summit 2026",
+   "name_fa": "وب سامیت لیسبون",
+   "region": "world",
+   "country": "پرتغال",
+   "city": "لیسبون",
+   "start": "2026-11-09",
+   "end": "2026-11-12",
+   "date_status": "confirmed",
+   "categories": [
+    "ai_cross_cutting"
+   ],
+   "type": "کنفرانس فناوری و استارتاپ",
+   "why_fa": "حضور گسترده‌ی سرمایه‌گذاران خطرپذیر؛ امکان معرفی محصولات هوش مصنوعی به سرمایه‌گذاران",
+   "participation_fa": "بازدیدکننده، برنامه‌ی استارتاپی (ALPHA) با درخواست قبلی",
+   "url": "https://websummit.com",
+   "source": "https://english.rvo.nl/events/web-summit-2026-lisbon"
+  },
+  {
+   "id": "medica-2026",
+   "name": "MEDICA 2026",
+   "name_fa": "نمایشگاه تجهیزات و فناوری پزشکی دوسلدورف",
+   "region": "world",
+   "country": "آلمان",
+   "city": "دوسلدورف",
+   "start": "2026-11-16",
+   "end": "2026-11-19",
+   "date_status": "confirmed",
+   "categories": [
+    "medical",
+    "ai_cross_cutting"
+   ],
+   "type": "نمایشگاه",
+   "why_fa": "بزرگ‌ترین نمایشگاه فناوری پزشکی جهان؛ بخش سلامت دیجیتال و هوش مصنوعی برای NeuroPredict-AI و تحلیل کیت‌های تشخیصی",
+   "participation_fa": "بازدیدکننده، جلسه با تولیدکنندگان کیت تشخیصی و شرکت‌های سلامت دیجیتال",
+   "url": "https://www.medica-tradefair.com",
+   "source": "https://www.cc.lu/en/agenda/detail/medica-2026-national-pavilion"
+  },
+  {
+   "id": "gitex-2026",
+   "name": "GITEX Global 2026",
+   "name_fa": "جیتکس دبی",
+   "region": "world",
+   "country": "امارات",
+   "city": "دبی (Expo City)",
+   "start": "2026-12-07",
+   "end": "2026-12-11",
+   "date_status": "confirmed",
+   "categories": [
+    "ai_cross_cutting",
+    "urban",
+    "medical"
+   ],
+   "type": "نمایشگاه فناوری",
+   "why_fa": "مهم‌ترین نمایشگاه فناوری خاورمیانه؛ امسال برای نخستین بار در دسامبر و در Expo City؛ بخش استارتاپی و سرمایه‌گذاری (Expand North Star)",
+   "participation_fa": "بازدیدکننده یا غرفه‌ی استارتاپی",
+   "url": "https://www.gitex.com",
+   "source": "https://mediaoffice.ae/en/news/2025/october/08-10/gitex-global-to-begin-a-new-chapter-at-expo-city-dubai-in-2026"
+  },
+  {
+   "id": "neurips-2026",
+   "name": "NeurIPS 2026",
+   "name_fa": "کنفرانس NeurIPS (سیدنی / آتلانتا / پاریس)",
+   "region": "world",
+   "country": "استرالیا / آمریکا / فرانسه",
+   "city": "سیدنی، آتلانتا، پاریس",
+   "start": "2026-12-06",
+   "end": "2026-12-12",
+   "date_status": "confirmed",
+   "categories": [
+    "ai_cross_cutting"
+   ],
+   "type": "کنفرانس علمی",
+   "why_fa": "معتبرترین کنفرانس علمی یادگیری ماشین؛ مناسب برای جذب نیرو و ارتباط با پژوهشگران، نه فروش مستقیم",
+   "participation_fa": "ثبت‌نام شرکت‌کننده؛ نزدیک‌ترین گزینه برای تیم استانبول: پاریس",
+   "url": "https://neurips.cc",
+   "source": "https://neurips.cc/Conferences/current/Dates"
+  },
+  {
+   "id": "icci-2027",
+   "name": "ICCI 2027",
+   "name_fa": "نمایشگاه و کنفرانس بین‌المللی انرژی و محیط زیست استانبول",
+   "region": "world",
+   "country": "ترکیه",
+   "city": "استانبول",
+   "start": "2027-01-20",
+   "end": "2027-01-22",
+   "date_status": "confirmed",
+   "categories": [
+    "energy"
+   ],
+   "type": "نمایشگاه و کنفرانس",
+   "why_fa": "در شهر خود شرکت؛ کم‌هزینه‌ترین فرصت برای آشنایی با شرکت‌های انرژی ترکیه به‌عنوان شریک مناقصه",
+   "participation_fa": "بازدیدکننده یا غرفه‌ی کوچک",
+   "url": "https://www.icci.com.tr",
+   "source": "https://www.showsbee.com/fairs/60531-ICCI-Turkey-2027.html"
+  },
+  {
+   "id": "whx-2027",
+   "name": "World Health Expo (WHX) Dubai 2027",
+   "name_fa": "نمایشگاه جهانی سلامت دبی (عرب هلث سابق)",
+   "region": "world",
+   "country": "امارات",
+   "city": "دبی",
+   "start": "2027-01-25",
+   "end": "2027-01-28",
+   "date_status": "confirmed",
+   "categories": [
+    "medical",
+    "ai_cross_cutting"
+   ],
+   "type": "نمایشگاه",
+   "why_fa": "بزرگ‌ترین رویداد سلامت منطقه؛ بخش WHX Tech برای هوش مصنوعی سلامت",
+   "participation_fa": "بازدیدکننده، WHX Tech",
+   "url": "https://www.worldhealthexpo.com/events/healthcare/dubai/en.html",
+   "source": "https://www.worldhealthexpo.com/events/healthcare/dubai/overview/general-event-faqs/"
+  },
+  {
+   "id": "mro-me-2027",
+   "name": "MRO Middle East 2027",
+   "name_fa": "نمایشگاه تعمیر و نگهداری هوایی خاورمیانه",
+   "region": "world",
+   "country": "امارات",
+   "city": "دبی",
+   "start": "2027-02-02",
+   "end": "2027-02-03",
+   "date_status": "confirmed",
+   "categories": [
+    "aviation"
+   ],
+   "type": "نمایشگاه و کنفرانس",
+   "why_fa": "ورود به بازار هوانوردی: نگهداری پیش‌بینانه و پایش موتور (بر پایه‌ی محصولات پایش توربین و دوقلوی دیجیتال)",
+   "participation_fa": "بازدیدکننده، شناسایی شرکای MRO",
+   "url": "https://mromiddleeast.aviationweek.com",
+   "source": "https://mromiddleeast.aviationweek.com/"
+  },
+  {
+   "id": "hannover-2027",
+   "name": "Hannover Messe 2027",
+   "name_fa": "نمایشگاه صنعتی هانوفر",
+   "region": "world",
+   "country": "آلمان",
+   "city": "هانوفر",
+   "start": "2027-04-05",
+   "end": "2027-04-08",
+   "date_status": "confirmed",
+   "categories": [
+    "energy",
+    "ai_cross_cutting"
+   ],
+   "type": "نمایشگاه",
+   "why_fa": "مرجع جهانی صنعت ۴.۰ و هوش مصنوعی صنعتی؛ مناسب برای دوقلوی دیجیتال، نگهداری پیش‌بینانه و مدیریت انرژی",
+   "participation_fa": "بازدیدکننده، جلسات B2B",
+   "url": "https://www.hannovermesse.de",
+   "source": "https://www.hannovermesse.de/en/for-visitors/opening-hours/"
+  },
+  {
+   "id": "leap-2027",
+   "name": "LEAP 2027",
+   "name_fa": "رویداد فناوری لیپ ریاض",
+   "region": "world",
+   "country": "عربستان",
+   "city": "ریاض",
+   "start": "2027-04-12",
+   "end": "2027-04-15",
+   "date_status": "to_verify",
+   "categories": [
+    "ai_cross_cutting",
+    "energy",
+    "medical"
+   ],
+   "type": "نمایشگاه و کنفرانس",
+   "why_fa": "یکی از بزرگ‌ترین رویدادهای فناوری منطقه همراه با DeepFest (هوش مصنوعی)؛ بازار بزرگ دولتی عربستان",
+   "participation_fa": "بازدیدکننده؛ تاریخ را پیش از برنامه‌ریزی با سایت رسمی تطبیق دهید",
+   "url": "https://onegiantleap.com",
+   "source": "https://www.beri.net/events/leap-2027"
+  },
+  {
+   "id": "expomed-2027",
+   "name": "Expomed Eurasia 2027",
+   "name_fa": "نمایشگاه پزشکی اکسپومد اوراسیا",
+   "region": "world",
+   "country": "ترکیه",
+   "city": "استانبول",
+   "start": "2027-04-15",
+   "end": "2027-04-18",
+   "date_status": "confirmed",
+   "categories": [
+    "medical"
+   ],
+   "type": "نمایشگاه",
+   "why_fa": "بزرگ‌ترین نمایشگاه پزشکی ترکیه در استانبول؛ دسترسی به بیمارستان‌ها و تولیدکنندگان تجهیزات و کیت",
+   "participation_fa": "بازدیدکننده یا غرفه",
+   "url": "https://tuyap.com.tr/en/exhibitions/expomed-eurasia",
+   "source": "https://tuyap.com.tr/en/exhibitions/expomed-eurasia"
+  },
+  {
+   "id": "wne-2027",
+   "name": "World Nuclear Exhibition 2027",
+   "name_fa": "نمایشگاه جهانی صنعت هسته‌ای پاریس",
+   "region": "world",
+   "country": "فرانسه",
+   "city": "پاریس",
+   "start": "2027-12-07",
+   "end": "2027-12-09",
+   "date_status": "confirmed",
+   "categories": [
+    "nuclear"
+   ],
+   "type": "نمایشگاه",
+   "why_fa": "مهم‌ترین نمایشگاه صنعت هسته‌ای غیرنظامی (دوسالانه)؛ به ملاحظات انطباق و کنترل صادرات توجه شود",
+   "participation_fa": "بازدیدکننده؛ ثبت‌نام پس از بررسی انطباق",
+   "url": "https://www.world-nuclear-exhibition.com",
+   "source": "https://world-nuclear.org/events/otherconferences"
+  },
+  {
+   "id": "iran-oilshow-1406",
+   "name": "Iran Oil Show (30th, postponed)",
+   "name_fa": "سی‌امین نمایشگاه بین‌المللی نفت، گاز، پالایش و پتروشیمی تهران",
+   "region": "iran",
+   "country": "ایران",
+   "city": "تهران",
+   "start": "",
+   "end": "",
+   "date_status": "tba",
+   "usual_period_fa": "معمولاً اردیبهشت",
+   "categories": [
+    "energy",
+    "ai_cross_cutting"
+   ],
+   "type": "نمایشگاه",
+   "why_fa": "مهم‌ترین نمایشگاه صنعت نفت ایران؛ کارفرمایان اصلی محصولات انرژی شرکت در آن حضور دارند",
+   "participation_fa": "غرفه (ثبت‌نام معمولاً از زمستان آغاز می‌شود) یا بازدید",
+   "url": "http://iran-oilshow.ir/",
+   "source": "https://www.shana.ir/news/1760508/",
+   "date_fa": "قرار بود ۱۹ تا ۲۲ اردیبهشت ۱۴۰۵ – تا اطلاع ثانوی به تعویق افتاده"
+  },
+  {
+   "id": "iran-aix-expo",
+   "name": "Iran AIX Expo (2nd edition)",
+   "name_fa": "نمایشگاه بین‌المللی هوش مصنوعی ایران (AIX Expo)",
+   "region": "iran",
+   "country": "ایران",
+   "city": "تهران",
+   "start": "",
+   "end": "",
+   "date_status": "tba",
+   "usual_period_fa": "دوره‌ی نخست: ۲۲ تا ۲۵ دی ۱۴۰۴",
+   "categories": [
+    "ai_cross_cutting",
+    "energy",
+    "medical",
+    "urban"
+   ],
+   "type": "نمایشگاه",
+   "why_fa": "تنها نمایشگاه تخصصی هوش مصنوعی کشور با بخش B2B و B2G؛ مناسب برای معرفی همه‌ی محصولات",
+   "participation_fa": "غرفه؛ تاریخ دوره‌ی دوم هنوز اعلام نشده",
+   "url": "https://iranaiexpo.com/",
+   "source": "https://digiato.com/iran-technology-news/aix-expo-%DB%B2%DB%B0%DB%B2%DB%B6",
+   "date_fa": "دوره‌ی دوم اعلام نشده – دوره‌ی اول: ۲۲ تا ۲۵ دی ۱۴۰۴، نمایشگاه بین‌المللی تهران"
+  },
+  {
+   "id": "iran-smartcity-irandoc",
+   "name": "7th Iran Smart City & AI Conference and Exhibition",
+   "name_fa": "هفتمین نمایشگاه و کنفرانس بین‌المللی شهر هوشمند و هوش مصنوعی ایران (ایرانداک)",
+   "region": "iran",
+   "country": "ایران",
+   "city": "تهران",
+   "start": "2026-12-20",
+   "end": "2026-12-22",
+   "date_status": "confirmed",
+   "usual_period_fa": "",
+   "categories": [
+    "urban",
+    "ai_cross_cutting"
+   ],
+   "type": "کنفرانس و نمایشگاه",
+   "why_fa": "ارتباط با شهرداری‌ها؛ رونمایی از جایزه‌ی ملی شهر هوشمند ایران",
+   "participation_fa": "غرفه یا ارسال مقاله؛ مهلت ثبت‌نام اولیه (۱۹ مهر ۱۴۰۵) گذشته – تمدید را از ghazaal.inif.ir استعلام کنید",
+   "url": "https://smartcity.irandoc.ac.ir/",
+   "source": "https://snn.ir/fa/news/1470618/",
+   "date_fa": "۲۹ آذر تا ۱ دی ۱۴۰۵ – مصلای امام خمینی (ره)، تهران"
+  },
+  {
+   "id": "iran-health-1406",
+   "name": "Iran Health 1406",
+   "name_fa": "نمایشگاه بین‌المللی ایران هلث",
+   "region": "iran",
+   "country": "ایران",
+   "city": "تهران",
+   "start": "",
+   "end": "",
+   "date_status": "tba",
+   "usual_period_fa": "دوره‌ی ۱۴۰۵: ۱۷ تا ۲۰ مرداد",
+   "categories": [
+    "medical"
+   ],
+   "type": "نمایشگاه",
+   "why_fa": "بزرگ‌ترین نمایشگاه تجهیزات پزشکی کشور؛ مناسب برای کیت‌های تشخیصی و سلامت دیجیتال",
+   "participation_fa": "غرفه یا بازدید",
+   "url": "https://iranhealth.org",
+   "source": "https://vista.ir/2608/211/gspl0",
+   "date_fa": "دوره‌ی ۱۴۰۶ اعلام نشده – دوره‌ی ۱۴۰۵ برای ۱۷ تا ۲۰ مرداد ۱۴۰۵ اعلام شده بود"
+  },
+  {
+   "id": "elecomp-1405",
+   "name": "Elecomp 1406",
+   "name_fa": "نمایشگاه الکامپ ۱۴۰۶",
+   "region": "iran",
+   "country": "ایران",
+   "city": "تهران",
+   "start": "",
+   "end": "",
+   "date_status": "tba",
+   "usual_period_fa": "معمولاً شهریور",
+   "categories": [
+    "ai_cross_cutting"
+   ],
+   "type": "نمایشگاه",
+   "why_fa": "بزرگ‌ترین نمایشگاه فاوای کشور با بخش‌های هوش مصنوعی و استارتاپی",
+   "participation_fa": "غرفه یا بازدید",
+   "url": "https://elecompiran.com",
+   "source": "https://sparksoft.ir/elecomp-2026-exhibition/",
+   "date_fa": "دوره‌ی ۱۴۰۶ اعلام نشده – دوره‌ی قبل: ۹ تا ۱۲ شهریور ۱۴۰۵"
+  },
+  {
+   "id": "media-expo-1405",
+   "name": "Media Expo 1405 (2nd)",
+   "name_fa": "دومین نمایشگاه مدیا اکسپو (با بخش هوش مصنوعی)",
+   "region": "iran",
+   "country": "ایران",
+   "city": "تهران (برج میلاد)",
+   "start": "2026-10-28",
+   "end": "2026-10-31",
+   "date_status": "confirmed",
+   "date_fa": "۶ تا ۹ آبان ۱۴۰۵ – مرکز نمایشگاه‌های بین‌المللی برج میلاد",
+   "usual_period_fa": "",
+   "categories": [
+    "ai_cross_cutting"
+   ],
+   "type": "نمایشگاه",
+   "why_fa": "بخش ویژه‌ی هوش مصنوعی و رسانه؛ رونمایی از هوش مصنوعی بومی و حضور شرکت‌های خارجی",
+   "participation_fa": "بازدید و شبکه‌سازی",
+   "url": "https://purson.ir/fa/content/1459275/",
+   "source": "https://www.qudsonline.ir/news/1163935/"
+  },
+  {
+   "id": "iran-itex-1405",
+   "name": "Iran ITEX 1405 (5th) – Sharif University",
+   "name_fa": "پنجمین نمایشگاه ایران ایتکس دانشگاه صنعتی شریف",
+   "region": "iran",
+   "country": "ایران",
+   "city": "تهران (دانشگاه صنعتی شریف)",
+   "start": "2026-12-13",
+   "end": "2026-12-15",
+   "date_status": "confirmed",
+   "date_fa": "۲۲ تا ۲۴ آذر ۱۴۰۵ – دانشگاه صنعتی شریف",
+   "usual_period_fa": "",
+   "categories": [
+    "ai_cross_cutting"
+   ],
+   "type": "نمایشگاه فناوری و کار",
+   "why_fa": "تمرکز بر هوش مصنوعی و فناوری اطلاعات؛ پیوند صنعت، دانشگاه و جذب نیرو",
+   "participation_fa": "غرفه یا بازدید؛ مناسب برای جذب متخصص هوش مصنوعی",
+   "url": "https://www.khabarfoori.com/بخش-اقتصادی-145/3251411",
+   "source": "https://www.khabarfoori.com/بخش-اقتصادی-145/3251411"
+  }
+ ]
 }
