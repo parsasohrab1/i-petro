@@ -1,14 +1,11 @@
 {
- "_note": "Product lines the agent may match against tenders. Maturity is stated conservatively from the repository READMEs. 'ip_check' = the repo describes a product built for a specific client: confirm IP ownership before offering it abroad. Client names are never used in outreach.",
+ "_note": "Product lines the agent may match against tenders and present to partners and investors. Maturity is stated conservatively. 'ip_check' = confirm IP ownership before offering the product. Only generic product names are used; no client names, locations or source repositories.",
  "products": [
   {
    "id": "ogim",
    "name": "OGIM – Oil & Gas Field Intelligent Monitoring",
    "summary": "Real-time monitoring, analytics and AI for oil and gas fields.",
    "maturity": "Working platform, demo deployment",
-   "repos": [
-    "OGIM---NISOC"
-   ],
    "ip_check": true,
    "domains": [
     "energy"
@@ -19,10 +16,6 @@
    "name": "FIDPS / FCDD – Formation Damage Detection and Prevention",
    "summary": "Identifies, predicts and prevents formation damage in real time during drilling, completion and production.",
    "maturity": "Specified (SRS v12) with software prototype",
-   "repos": [
-    "FIDPS---Intelligent-Formation-Integrity-damage-prevention-system-",
-    "iFDC---FCDDWCSW"
-   ],
    "ip_check": false,
    "domains": [
     "energy"
@@ -33,9 +26,6 @@
    "name": "IntelliLift – AI Artificial Lift Management",
    "summary": "Monitoring, predictive analytics and optimisation of artificial lift systems (ESP, rod pump, gas lift).",
    "maturity": "Dashboard prototype",
-   "repos": [
-    "i-lift---AI-Powered-Artificial-Lift-Management-Dashboard"
-   ],
    "ip_check": false,
    "domains": [
     "energy"
@@ -46,9 +36,6 @@
    "name": "ApexAsset AI – Asset Lifecycle Digital Twin",
    "summary": "Digital twin covering the full oil and gas asset lifecycle with predictive analytics.",
    "maturity": "Specified with prototype",
-   "repos": [
-    "-ApexAsset-AI"
-   ],
    "ip_check": false,
    "domains": [
     "energy",
@@ -60,13 +47,6 @@
    "name": "Petrochemical Process Digital Twin & Optimisation",
    "summary": "Process digital twins, virtual sensors (e.g. melt index), grade-transition optimisation, catalyst and equipment degradation prediction, real-time energy optimisation.",
    "maturity": "Several client-specific prototypes",
-   "repos": [
-    "inno-Khalij-Arvand-ChlorAlkali-PVC-Digital-Twin-System-",
-    "inno-Khalij-AryaSasol-MultiGrade-PE-Transition-Optimization-System-",
-    "inno-Khalij-Apadana-Reformer-Methanol-Digital-Twin-System",
-    "inno-Jam-Petrochemical-polymerization-digitwin",
-    "Khalij-Production-Process-Prediction-and-Optimization-System"
-   ],
    "ip_check": true,
    "domains": [
     "energy"
@@ -77,11 +57,6 @@
    "name": "Condition-Based Maintenance & Smart Plant Dashboards",
    "summary": "Condition-based and predictive maintenance dashboards, refinery unit monitoring, operator assistant.",
    "maturity": "Working dashboards with sample data",
-   "repos": [
-    "inno-Abadan-Petrochemical-Smart-Dash",
-    "inno---inteligent---ref---park-naft",
-    "inno-fanavaran-ioa"
-   ],
    "ip_check": true,
    "domains": [
     "energy",
@@ -93,10 +68,6 @@
    "name": "Gas Turbine Digital Twin & Predictive Maintenance",
    "summary": "Monitoring, predictive maintenance and performance analytics for industrial gas turbine compressors.",
    "maturity": "Specified (SRS v11) with prototype",
-   "repos": [
-    "digital-twine-gas-turbine",
-    "pfd---pid-design-for-gas-turbine"
-   ],
    "ip_check": false,
    "domains": [
     "energy",
@@ -108,9 +79,6 @@
    "name": "Tank Terminal Intelligent Management",
    "summary": "Monitoring and management software for oil and product storage terminals.",
    "maturity": "Implemented per SRS (Docker deployment)",
-   "repos": [
-    "inno-terminals-tanks"
-   ],
    "ip_check": false,
    "domains": [
     "energy"
@@ -121,9 +89,6 @@
    "name": "Gas Supply & Demand Optimisation",
    "summary": "Integration, forecasting and optimisation of natural gas supply and demand across a transmission grid.",
    "maturity": "Specified (SRS)",
-   "repos": [
-    "Gas-supply-and-demand-optimization-software-system"
-   ],
    "ip_check": false,
    "domains": [
     "energy",
@@ -135,11 +100,6 @@
    "name": "iEMS – Energy, Carbon & Sustainability Management",
    "summary": "1 Hz energy data streaming, carbon accounting, sustainability KPIs and operator console for process plants; RL-based energy optimisation.",
    "maturity": "Working platform with operator console",
-   "repos": [
-    "khalij-Intelligent-Energy-Carbon-and-Sustainability-Management-System",
-    "intelligent-management-sys-energy-carbon-sustainability-",
-    "inno-khorasan-petrochemical-SEM"
-   ],
    "ip_check": true,
    "domains": [
     "energy",
@@ -151,9 +111,6 @@
    "name": "HVAC Energy Optimisation",
    "summary": "Intelligent control and optimisation of HVAC electricity consumption.",
    "maturity": "Specified (SRS)",
-   "repos": [
-    "inno-HVAC-efficiency-10-"
-   ],
    "ip_check": false,
    "domains": [
     "energy",
@@ -165,11 +122,6 @@
    "name": "AI Decision Support & Digital Transformation Platforms",
    "summary": "AI decision support for crisis/logistics, value-chain integration command centre, smart industrial park dashboard.",
    "maturity": "Demo MVPs",
-   "repos": [
-    "inno-khark-dss",
-    "khalij-Digital-Transformation-and-Value-Chain-Integration-System",
-    "inno---Oil-Industry-Smart-Technology-and-Innovation-Park"
-   ],
    "ip_check": true,
    "domains": [
     "energy",
@@ -181,10 +133,6 @@
    "name": "Nuclear Reactor Digital Twin & Predictive Maintenance",
    "summary": "Physics-informed digital twin and anomaly detection / predictive maintenance for reactors.",
    "maturity": "Specified with prototype",
-   "repos": [
-    "Digital-twin---nuc---reac",
-    "nuc---pdm---reactor"
-   ],
    "ip_check": false,
    "domains": [
     "nuclear"
@@ -195,9 +143,6 @@
    "name": "NeuroPredict-AI",
    "summary": "Multimodal AI (MRI, biomarkers, cognitive tests, APOE) for Alzheimer's and Parkinson's risk assessment.",
    "maturity": "Full-stack prototype, synthetic data, TRL 4-5",
-   "repos": [
-    "NPA---Neuro-Predict-Ai"
-   ],
    "ip_check": false,
    "domains": [
     "medical"
@@ -208,9 +153,6 @@
    "name": "Esophageal Cancer AI Platform",
    "summary": "Cancer risk prediction, prognosis, treatment decision support and trial matching.",
    "maturity": "Full-stack platform, TRL 5",
-   "repos": [
-    "Intelligent-software-for-diagnosing-and-treating-esophageal-cancer"
-   ],
    "ip_check": false,
    "domains": [
     "medical"
@@ -221,9 +163,6 @@
    "name": "AI Diagnostic Kit Analytics (qPCR/ELISA)",
    "summary": "Automated QC and interpretation of diagnostic kit data, edge deployment, multi-centre.",
    "maturity": "Most mature: 4 phases complete, TRL 5",
-   "repos": [
-    "barekat-Diagnostic-Kits"
-   ],
    "ip_check": true,
    "domains": [
     "medical"
@@ -234,9 +173,6 @@
    "name": "Health Big Data Analytics",
    "summary": "Integration and analytics of EHR, lab, DICOM, HL7/FHIR and real-time clinical events.",
    "maturity": "Operational end-to-end on synthetic data, TRL 5",
-   "repos": [
-    "BAREKAT-Big-Data-Analytics-in-Health"
-   ],
    "ip_check": true,
    "domains": [
     "medical"
@@ -247,9 +183,6 @@
    "name": "Genomics & Pharmacogenomics Platform",
    "summary": "FASTQ-to-report pipeline, variant interpretation and drug-response prediction.",
    "maturity": "Operational in simulated mode, TRL 4-5",
-   "repos": [
-    "barekat-Genomics"
-   ],
    "ip_check": true,
    "domains": [
     "medical"
@@ -260,9 +193,6 @@
    "name": "IPIND – AI Nanocarrier Design",
    "summary": "Generative AI, GNN, RL and molecular dynamics for drug-delivery nanocarrier design.",
    "maturity": "TRL 4, partial implementation",
-   "repos": [
-    "N---Barekat---IPIND---Intelligent-Platform-for-Integrated-Nanocarrier-Design"
-   ],
    "ip_check": true,
    "domains": [
     "medical"
@@ -273,9 +203,6 @@
    "name": "Gene Vector (LNP) Design Platform",
    "summary": "Lipid nanoparticle candidate design, ranking and lab-loop integration.",
    "maturity": "v1.0, synthetic data, TRL 4-5",
-   "repos": [
-    "barekat-gen-therapy"
-   ],
    "ip_check": true,
    "domains": [
     "medical"
@@ -286,9 +213,6 @@
    "name": "CAR-T Design & Safety Prediction",
    "summary": "CAR construct design, response, CRS and neurotoxicity prediction.",
    "maturity": "v0.2, TRL 4",
-   "repos": [
-    "barekat-Advanced-Cell-Therapy-Products"
-   ],
    "ip_check": true,
    "domains": [
     "medical"
@@ -299,9 +223,6 @@
    "name": "HQCA – Hybrid Quantum-Classical Drug Discovery",
    "summary": "Binding-affinity prediction and virtual screening on quantum simulators.",
    "maturity": "Runnable MVP, TRL 4",
-   "repos": [
-    "HQCA-Hybrid-Quantum-Classical-Drug-Discovery"
-   ],
    "ip_check": false,
    "domains": [
     "medical"

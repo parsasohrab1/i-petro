@@ -207,9 +207,8 @@ def run(use_llm=True, use_mail=True, send_notification=True):
     run_info = {"at": store.now(), "collected": len(tenders), "matched": len(candidates),
                 "partner_drafts": partner_drafts, "events_added": events_added, "investors_added": investors_added, "investor_drafts": investor_drafts,
                 "events_soon": [{k: e.get(k, "") for k in ("start", "name", "name_fa", "city")} for e in events_soon],
-                "new_ids": new_ids, "actioned_ids": actioned, "reminders": reminders,
-                "unmapped_repos": profile["unmapped_repos"]}
-    state["runs"] = (state.get("runs", []) + [{k: v for k, v in run_info.items() if k != "unmapped_repos"}])[-60:]
+                "new_ids": new_ids, "actioned_ids": actioned, "reminders": reminders}
+    state["runs"] = (state.get("runs", []) + [run_info])[-60:]
     store.save(state)
     dashboard.render(cfg, state, run_info)
 

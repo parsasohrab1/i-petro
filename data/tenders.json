@@ -806,6 +806,54 @@
    ],
    "actioned_ids": [],
    "reminders": []
+  },
+  {
+   "at": "2026-10-19T13:09:21",
+   "collected": 369,
+   "matched": 16,
+   "partner_drafts": [],
+   "events_added": 0,
+   "investors_added": 0,
+   "investor_drafts": [
+    "revo",
+    "212",
+    "hub71",
+    "aramco-ventures",
+    "antler-menap",
+    "equinor-ventures",
+    "shell-ventures",
+    "ycombinator",
+    "techstars"
+   ],
+   "events_soon": [
+    {
+     "start": "2026-11-02",
+     "name": "ADIPEC 2026",
+     "name_fa": "نمایشگاه و کنفرانس نفت و گاز ابوظبی",
+     "city": "ابوظبی"
+    },
+    {
+     "start": "2026-11-03",
+     "name": "Smart City Expo World Congress 2026",
+     "name_fa": "کنگره جهانی شهر هوشمند",
+     "city": "بارسلونا"
+    },
+    {
+     "start": "2026-11-09",
+     "name": "Web Summit 2026",
+     "name_fa": "وب سامیت لیسبون",
+     "city": "لیسبون"
+    },
+    {
+     "start": "2026-11-16",
+     "name": "MEDICA 2026",
+     "name_fa": "نمایشگاه تجهیزات و فناوری پزشکی دوسلدورف",
+     "city": "دوسلدورف"
+    }
+   ],
+   "new_ids": [],
+   "actioned_ids": [],
+   "reminders": []
   }
  ]
 }
