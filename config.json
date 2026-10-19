@@ -291,5 +291,14 @@
   },
   "investors": {
     "update_every_days": 7
-  }
+  },
+  "selected_investors": [
+    "revo",
+    "212",
+    "hub71",
+    "aramco-ventures",
+    "antler-menap",
+    "equinor-ventures",
+    "shell-ventures"
+  ]
 }

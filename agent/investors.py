@@ -99,3 +99,69 @@ def update(cfg, analyst, state, log):
     state["updated"] = datetime.now().isoformat(timespec="seconds")
     log(f"Investors update: {added} new investors")
     return added
+
+
+# ------------------------------------------------------------ outreach drafts
+DRAFTS_FILE = ROOT / "investor_drafts.json"
+
+DRAFT_SCHEMA = {
+    "type": "object",
+    "additionalProperties": False,
+    "required": ["subject", "body", "channel_fa"],
+    "properties": {
+        "subject": {"type": "string"},
+        "body": {"type": "string", "description": "plain-text email, salutation to signature"},
+        "channel_fa": {"type": "string", "description": "best way to send it (application form, contact form, email), in Persian"},
+    },
+}
+
+
+def _write_draft(cfg, rec, draft, use_mail, log):
+    from . import mailbox
+    from .config import OUTPUT_DIR, env
+    sender = env("IMAP_USER") or cfg["company"]["email"]
+    msg = mailbox.build_message(sender, draft["subject"], draft["body"], to=draft.get("to", ""))
+    folder = OUTPUT_DIR / "investors"
+    folder.mkdir(parents=True, exist_ok=True)
+    (folder / f"{rec['id']}.eml").write_bytes(msg.as_bytes())
+    rec["draft"] = {k: draft.get(k, "") for k in ("to", "subject", "body", "channel_fa")}
+    if use_mail and mailbox.configured():
+        try:
+            rec["draft_saved_to"] = "webmail:" + mailbox.save_draft(msg, cfg)
+            log(f"  investor draft saved to webmail: {rec['name']}")
+        except Exception as exc:
+            log(f"  investor draft for {rec['name']} not saved to webmail: {exc}")
+            rec["draft_saved_to"] = "outputs/investors (webmail failed)"
+    else:
+        rec["draft_saved_to"] = "outputs/investors (webmail not configured)"
+
+
+def outreach(cfg, analyst, state, profile_text, use_mail, log):
+    """Draft an introduction email for every selected investor that has no webmail draft yet.
+    Hand-written drafts in investor_drafts.json are used first; otherwise Claude writes one (when available)."""
+    handwritten = json.loads(DRAFTS_FILE.read_text(encoding="utf-8"))["drafts"] if DRAFTS_FILE.exists() else {}
+    c = cfg["company"]
+    done = []
+    for inv_id in cfg.get("selected_investors", []):
+        rec = state["investors"].get(inv_id)
+        if not rec or str(rec.get("draft_saved_to", "")).startswith("webmail"):
+            continue
+        draft = rec.get("draft") or handwritten.get(inv_id)
+        if not draft and analyst is not None:
+            draft = analyst._structured(
+                f"INVESTOR\n{json.dumps({k: rec.get(k) for k in ('name', 'type', 'hq', 'stage_fa', 'ticket_fa', 'fund_fa', 'investments_fa', 'focus_fa', 'website', 'apply')}, ensure_ascii=False)}\n\n"
+                f"Write a short introduction email from {c['signatory']} ({c['signatory_title']}, {c['name']}, {c['city']}) "
+                "to this investor. Name the two or three product lines that match the investor's focus, be honest that the "
+                "products are advanced prototypes (TRL 4-5) without commercial customers yet, say what we are seeking "
+                "(pilot partners, seed funding or programme admission, matched to the investor's stage), acknowledge "
+                "if our stage is earlier than the investor's usual stage, and ask for a short call. Sign with name, "
+                f"title, company, city, {c['email']}, {c['website']}. Do not invent traction, customers or figures.",
+                DRAFT_SCHEMA, cfg["llm"]["drafting_effort"])
+            draft["to"] = rec.get("email", "")
+        if not draft:
+            continue
+        if not draft.get("to") and rec.get("email"):
+            draft["to"] = rec["email"]
+        _write_draft(cfg, rec, draft, use_mail, log)
+        done.append(inv_id)
+    return done

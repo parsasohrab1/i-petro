@@ -71,11 +71,11 @@ td{display:block;border:0;padding:3px 12px}td.t{min-width:0}td[data-l]::before{c
 <header><h1>توسعه بازار برون مرزی هوشمند</h1>
 <div class="sub">آخرین اجرا: <span id="last"></span> · کشورهای ستاره‌دار: <span id="stars"></span></div>
 <nav class="pages" role="tablist">
-<button role="tab" data-page="domestic">پروژه‌های هوش مصنوعی ایران</button>
-<button role="tab" data-page="international">بازار بین‌المللی</button>
-<button role="tab" data-page="web">طراحی سایت و سئو</button>
-<button role="tab" data-page="events">رویدادهای هوش مصنوعی</button>
-<button role="tab" data-page="investors">سرمایه‌گذاران و شتاب‌دهنده‌ها</button>
+<button role="tab" data-page="domestic">Iran AI Projects</button>
+<button role="tab" data-page="international">Overseas AI Projects</button>
+<button role="tab" data-page="web">Web Design & SEO Projects</button>
+<button role="tab" data-page="events">AI Events</button>
+<button role="tab" data-page="investors">AI Investors & Accelerators</button>
 </nav></header>
 <main>
 <div class="note" id="srcnote"></div>
@@ -86,6 +86,7 @@ td{display:block;border:0;padding:3px 12px}td.t{min-width:0}td[data-l]::before{c
 </main>
 <script>
 const DATA = __DATA__;
+const SELECTED = new Set(DATA.selected_investors||[]);
 const ST = DATA.statuses, ACTIVE = new Set(DATA.active), STARRED = new Set(DATA.starred.map(s=>s.toLowerCase()));
 const PAGES = {
  domestic:{note:'منبع: سامانه تدارکات الکترونیکی دولت (ستاد) – فقط فراخوان‌های حوزه‌ی هوش مصنوعی. جزئیات تضمین و ارزیابی در اسناد ستاد.',
@@ -95,7 +96,7 @@ const PAGES = {
  web:{note:'درخواست‌های طراحی سایت و سئو از همه‌ی منابع داخلی و بین‌المللی. پیشنهاد پیش‌فرض برای مشتریان داخلی: طراحی سایت + سئو.',
    tabs:[['list','فرصت‌ها'],['glance','شرایط در یک نگاه']], intl:'پذیرش شرکت‌های خارجی / داخلی'},
  investors:{note:'صندوق‌های خطرپذیر، سرمایه‌گذاران شرکتی و شتاب‌دهنده‌های جهان در حوزه‌های هوش مصنوعی شرکت – به‌روزرسانی هفتگی. ارقام از منبع ذکرشده‌اند و ممکن است قدیمی باشند؛ پیش از مذاکره با سایت رسمی تطبیق دهید.',
-   tabs:[['all','همه'],['vc','صندوق خطرپذیر'],['cvc','سرمایه‌گذار شرکتی'],['accelerator','شتاب‌دهنده']]},
+   tabs:[['all','همه'],['selected','منتخب (ایمیل معرفی)'],['vc','صندوق خطرپذیر'],['cvc','سرمایه‌گذار شرکتی'],['accelerator','شتاب‌دهنده']]},
  events:{note:'رویدادهای هوش مصنوعی و حوزه‌های انرژی، پزشکی، هوانوردی، هسته‌ای و شهری در ایران و جهان – به‌روزرسانی روزانه.',
    tabs:[['iran','ایران'],['world','جهان'],['all','همه']]}};
 let page='international', tab='list';
@@ -168,12 +169,12 @@ function partnersView(){const s=sel.value,qq=q();
   <td data-l="موضوع">${esc(p.subject)}<br><span class="meta">${esc(p.draft_saved_to||'')}</span></td>
   <td data-l="وضعیت"><span class="pill s-${p.status}">${esc(DATA.partner_statuses[p.status]||p.status)}</span></td></tr>`).join('')+'</tbody></table></div>'}
 function investorsView(){const s=sel.value,qq=q();
-  const list=DATA.investors.filter(v=>(tab==='all'||v.type===tab)&&(!s||v.status===s)&&
+  const list=DATA.investors.filter(v=>(tab==='all'||(tab==='selected'?SELECTED.has(v.id):v.type===tab))&&(!s||v.status===s)&&
    (!qq||[v.name,v.hq,v.focus_fa,v.stage_fa,(v.domains||[]).map(x=>DATA.labels[x]||x).join(' ')].join(' ').toLowerCase().includes(qq)));
   if(!list.length)return '<p class="empty">موردی یافت نشد.</p>';
   return `<div class="tablewrap"><table><thead><tr><th>سرمایه‌گذار</th><th>مقر</th><th>حوزه‌های ما</th><th>مرحله و مبلغ</th><th>اندازه‌ی صندوق / بودجه</th>
   <th>سرمایه‌گذاری‌های انجام‌شده</th><th>حوزه‌ی علاقه‌مندی</th><th>راه ارتباط</th><th>ملاحظات</th><th>وضعیت</th></tr></thead><tbody>`+
-  list.map(v=>`<tr><td class="t">${esc(v.name)}<br><span class="meta">${esc(DATA.investor_types[v.type]||v.type)}</span></td>
+  list.map(v=>`<tr><td class="t">${SELECTED.has(v.id)?'✉️ ':''}${esc(v.name)}<br><span class="meta">${esc(DATA.investor_types[v.type]||v.type)}${SELECTED.has(v.id)?' · منتخب':''}</span>${v.draft?`<details><summary>پیش‌نویس ایمیل</summary><b>${esc(v.draft.subject)}</b><br><span class="meta">${esc(v.draft.channel_fa||'')} · ${esc(v.draft_saved_to||'')}</span><pre style="white-space:pre-wrap;font:inherit;font-size:12px;direction:ltr;text-align:left">${esc(v.draft.body)}</pre></details>`:''}</td>
   <td data-l="مقر">${esc(v.hq)}</td><td data-l="حوزه">${esc((v.domains||[]).map(x=>DATA.labels[x]||x).join('، '))}</td>
   <td data-l="مرحله و مبلغ">${esc(v.stage_fa)}<br><span class="meta">${esc(v.ticket_fa)}</span></td><td data-l="اندازه صندوق">${esc(v.fund_fa)}</td>
   <td data-l="سرمایه‌گذاری‌ها">${esc(v.investments_fa)}</td><td data-l="علاقه‌مندی">${esc(v.focus_fa)}</td>
@@ -232,6 +233,7 @@ def render(cfg, state, run_info=None):
             "partners": pt, "partner_statuses": partners.STATUSES,
             "investors": sorted(investors.load()["investors"].values(), key=lambda v: (v["type"], v["name"])),
             "investor_statuses": investors.STATUSES, "investor_types": investors.TYPES,
+            "selected_investors": cfg.get("selected_investors", []),
             "starred": cfg.get("starred_countries", []),
             "last_run": (run_info or {}).get("at") or (state.get("runs") or [{}])[-1].get("at")}
     out = ROOT / cfg["dashboard"]["output"]

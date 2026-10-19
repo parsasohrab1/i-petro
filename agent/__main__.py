@@ -8,6 +8,7 @@
   python -m agent star <country> / unstar <country>          countries for weekly partner scouting
   python -m agent event <event-id> <status>                  considering | registered | attending | attended | skipped
   python -m agent partner <company-key> <status>             sent | replied | meeting | mou | not_interested
+  python -m agent select <investor-id> / unselect <investor-id>  investors that get an introduction draft
   python -m agent investor <investor-id> <status>            researching | contacted | meeting | due_diligence | term_sheet | declined
 """
 import json
@@ -36,6 +37,8 @@ def main(argv=None):
     rd = sub.add_parser("redo")
     rd.add_argument("tender_id")
     sub.add_parser("dashboard")
+    for name in ("select", "unselect"):
+        sub.add_parser(name).add_argument("investor_id")
     for name in ("star", "unstar"):
         sub.add_parser(name).add_argument("country")
     ev = sub.add_parser("event")
@@ -82,6 +85,18 @@ def main(argv=None):
         partners.save(ps)
         dashboard.render(cfg, state)
         print(f"{a.key} -> {partners.STATUSES[a.status]}")
+        return
+    if a.cmd in ("select", "unselect"):
+        chosen = cfg.setdefault("selected_investors", [])
+        if a.investor_id not in investors.load()["investors"]:
+            sys.exit(f"unknown investor {a.investor_id}")
+        if a.cmd == "select" and a.investor_id not in chosen:
+            chosen.append(a.investor_id)
+        if a.cmd == "unselect" and a.investor_id in chosen:
+            chosen.remove(a.investor_id)
+        (ROOT / "config.json").write_text(json.dumps(cfg, ensure_ascii=False, indent=2), encoding="utf-8")
+        dashboard.render(cfg, state)
+        print("selected investors:", ", ".join(chosen) or "-")
         return
     if a.cmd == "investor":
         ist = investors.load()

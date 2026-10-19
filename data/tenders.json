@@ -25,7 +25,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": 2,
+   "days_left": 1,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-18T22:02:18",
@@ -59,7 +59,7 @@
    "domains": [
     "web"
    ],
-   "days_left": 12,
+   "days_left": 11,
    "line": "web",
    "status": "new",
    "first_seen": "2026-10-18T22:02:18",
@@ -95,7 +95,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": 13,
+   "days_left": 12,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-18T22:02:18",
@@ -130,7 +130,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 18,
+   "days_left": 17,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-18T22:02:18",
@@ -165,7 +165,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 23,
+   "days_left": 22,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-18T22:02:18",
@@ -200,7 +200,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 25,
+   "days_left": 24,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-18T22:02:18",
@@ -234,7 +234,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 29,
+   "days_left": 28,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-18T22:02:18",
@@ -268,7 +268,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 29,
+   "days_left": 28,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-18T22:02:18",
@@ -302,7 +302,7 @@
    "domains": [
     "aviation"
    ],
-   "days_left": 37,
+   "days_left": 36,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-18T22:02:18",
@@ -337,7 +337,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 43,
+   "days_left": 42,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-18T22:02:18",
@@ -372,7 +372,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 51,
+   "days_left": 50,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-18T22:02:18",
@@ -407,7 +407,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 9,
+   "days_left": 8,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-18T22:02:18",
@@ -442,7 +442,7 @@
     "ai_cross_cutting",
     "medical"
    ],
-   "days_left": 29,
+   "days_left": 28,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-18T22:02:18",
@@ -478,13 +478,225 @@
     "energy",
     "urban"
    ],
-   "days_left": 36,
+   "days_left": 35,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-18T22:02:18",
    "history": [
     {
      "at": "2026-10-18T22:02:18",
+     "status": "new"
+    }
+   ]
+  },
+  "SETAD-1105004403000914": {
+   "id": "SETAD-1105004403000914",
+   "source": "ستاد (setadiran.ir)",
+   "market": "domestic",
+   "title": "نیاز خدمات-سامانه دستیار هوشمند سازمانی مبتنی بر هوش مصنوعی (طبق شرایط و مشخصات فایل پیوست)",
+   "description": "– خرید",
+   "buyer": "سازمان بهزیستی کشور",
+   "country": "ایران – تهران",
+   "deadline": "2026-10-22",
+   "deadline_fa": "1405/07/30 - 16:00",
+   "published": "",
+   "url": "https://fe.setadiran.ir/centralboard/#/central-board-0",
+   "notice_type": "خرید",
+   "setad_number": "1105004403000914",
+   "sector": "دولتی",
+   "facts": {
+    "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "guarantee": "تضمین شرکت در فرایند ارجاع کار طبق آیین‌نامه تضمین معاملات دولتی – مبلغ در اسناد ستاد",
+    "experience": "ارزیابی کیفی/رتبه و سوابق طبق اسناد ستاد (نیاز به ورود به سامانه)",
+    "international": "نیاز به ثبت‌نام در ستاد و شخصیت حقوقی ایرانی؛ شرکت خارجی فقط از طریق شریک ایرانی"
+   },
+   "keyword_score": 6,
+   "domains": [
+    "ai_cross_cutting"
+   ],
+   "days_left": 3,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-10-19T12:44:15",
+   "history": [
+    {
+     "at": "2026-10-19T12:44:15",
+     "status": "new"
+    }
+   ]
+  },
+  "SETAD-1105092187000164": {
+   "id": "SETAD-1105092187000164",
+   "source": "ستاد (setadiran.ir)",
+   "market": "domestic",
+   "title": "نیاز کالا-دستگاه تشخیص چهره - تعداد نفرات حداقل",
+   "description": "– خرید",
+   "buyer": "مدیریت پخش فرآورده های نفتی منطقه قزوین",
+   "country": "ایران – قزوین",
+   "deadline": "2026-10-21",
+   "deadline_fa": "1405/07/29 - 09:00",
+   "published": "",
+   "url": "https://fe.setadiran.ir/centralboard/#/central-board-0",
+   "notice_type": "خرید",
+   "setad_number": "1105092187000164",
+   "sector": "دولتی",
+   "facts": {
+    "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "guarantee": "تضمین شرکت در فرایند ارجاع کار طبق آیین‌نامه تضمین معاملات دولتی – مبلغ در اسناد ستاد",
+    "experience": "ارزیابی کیفی/رتبه و سوابق طبق اسناد ستاد (نیاز به ورود به سامانه)",
+    "international": "نیاز به ثبت‌نام در ستاد و شخصیت حقوقی ایرانی؛ شرکت خارجی فقط از طریق شریک ایرانی"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "ai_cross_cutting"
+   ],
+   "days_left": 2,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-10-19T12:44:15",
+   "history": [
+    {
+     "at": "2026-10-19T12:44:15",
+     "status": "new"
+    }
+   ]
+  },
+  "SETAD-1105090453000008": {
+   "id": "SETAD-1105090453000008",
+   "source": "ستاد (setadiran.ir)",
+   "market": "domestic",
+   "title": "نیاز کالا-تهیه یکدستگاه حضور وغیاب تشخیص چهره و اثر انگشت بایکسال گارانتی و نصب و راه اندازی وآموزش درسازمان تامین اجتماعی شعبه هندیجان",
+   "description": "– خرید",
+   "buyer": "سازمان تامین اجتماعی شعبه هندیجان",
+   "country": "ایران – خوزستان",
+   "deadline": "2026-10-22",
+   "deadline_fa": "1405/07/30 - 08:00",
+   "published": "",
+   "url": "https://fe.setadiran.ir/centralboard/#/central-board-0",
+   "notice_type": "خرید",
+   "setad_number": "1105090453000008",
+   "sector": "دولتی",
+   "facts": {
+    "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "guarantee": "تضمین شرکت در فرایند ارجاع کار طبق آیین‌نامه تضمین معاملات دولتی – مبلغ در اسناد ستاد",
+    "experience": "ارزیابی کیفی/رتبه و سوابق طبق اسناد ستاد (نیاز به ورود به سامانه)",
+    "international": "نیاز به ثبت‌نام در ستاد و شخصیت حقوقی ایرانی؛ شرکت خارجی فقط از طریق شریک ایرانی"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "ai_cross_cutting"
+   ],
+   "days_left": 3,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-10-19T12:44:15",
+   "history": [
+    {
+     "at": "2026-10-19T12:44:15",
+     "status": "new"
+    }
+   ]
+  },
+  "SETAD-1105092288003550": {
+   "id": "SETAD-1105092288003550",
+   "source": "ستاد (setadiran.ir)",
+   "market": "domestic",
+   "title": "نیاز خدمات-خدمات تامین اکانت پایپ لاین هوش مصنوعی برای خط تولید سامانه های مالی به مدت یکسال",
+   "description": "– خرید",
+   "buyer": "شرکت ملی مناطق نفت خیز جنوب",
+   "country": "ایران – خوزستان",
+   "deadline": "2026-11-01",
+   "deadline_fa": "1405/08/10 - 13:00",
+   "published": "",
+   "url": "https://fe.setadiran.ir/centralboard/#/central-board-0",
+   "notice_type": "خرید",
+   "setad_number": "1105092288003550",
+   "sector": "شرکت دولتی / عمومی",
+   "facts": {
+    "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "guarantee": "تضمین شرکت در فرایند ارجاع کار طبق آیین‌نامه تضمین معاملات دولتی – مبلغ در اسناد ستاد",
+    "experience": "ارزیابی کیفی/رتبه و سوابق طبق اسناد ستاد (نیاز به ورود به سامانه)",
+    "international": "نیاز به ثبت‌نام در ستاد و شخصیت حقوقی ایرانی؛ شرکت خارجی فقط از طریق شریک ایرانی"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "ai_cross_cutting"
+   ],
+   "days_left": 13,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-10-19T12:44:15",
+   "history": [
+    {
+     "at": "2026-10-19T12:44:15",
+     "status": "new"
+    }
+   ]
+  },
+  "TED-719546-2026": {
+   "id": "TED-719546-2026",
+   "source": "TED (EU)",
+   "market": "international",
+   "title": "Germany – Command and control system – SCADA Hard- and Software Ukraine",
+   "description": "DDP Lieferung von SCADA Hard- und Software an ein Transport-Hub innerhalb Deutschlands (Eschborn +200km). DDP Lieferung von SCADA Hard- und Software an ein Transport-Hub innerhalb Deutschlands (Eschborn +200km). DDP Lieferung von SCADA Hard- und Software an ein Transport-Hub innerhalb Deutschlands (Eschborn +200km). DDP Lieferung von SCADA Hard- und Software an ein Transport-Hub innerhalb Deutschlands (Eschborn +200km).",
+   "buyer": "Deutsche Gesellschaft für Internationale Zusammenarbeit (GIZ) GmbH",
+   "country": "DEU",
+   "deadline": "2026-11-02",
+   "published": "2026-10-19",
+   "url": "https://ted.europa.eu/en/notice/-/detail/719546-2026",
+   "notice_type": "cn-standard",
+   "sector": "شرکت دولتی / عمومی",
+   "facts": {
+    "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "رویه‌ی باز اتحادیه اروپا – شرکت‌های خارج از EU معمولاً مجازند مگر محدودیت صریح در اسناد"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "energy"
+   ],
+   "days_left": 14,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-10-19T12:44:15",
+   "history": [
+    {
+     "at": "2026-10-19T12:44:15",
+     "status": "new"
+    }
+   ]
+  },
+  "TED-721845-2026": {
+   "id": "TED-721845-2026",
+   "source": "TED (EU)",
+   "market": "international",
+   "title": "Belgium – Services related to the oil and gas industry – Raamovereenkomst Technische ondersteuning (perceel 1) en boekhoud kundige en financiële ondersteuning (perceel 2) in het kader van projectvoorstellen voor een offshore ten der",
+   "description": "soutien technique (lot 1) et comptable et financier (lot 2) dans le cadre de propositions de projet pour un appel d'offres offshore assistance comptable et financier (lot 2) dans le cadre de la mise en œuvre et de l'évaluation d'un appel d'offres offshore",
+   "buyer": "SPF Economie, PME, Classes moyennes et Energie",
+   "country": "BEL",
+   "deadline": "2026-11-18",
+   "published": "2026-10-19",
+   "url": "https://ted.europa.eu/en/notice/-/detail/721845-2026",
+   "notice_type": "cn-standard",
+   "sector": "دولتی",
+   "facts": {
+    "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "رویه‌ی باز اتحادیه اروپا – شرکت‌های خارج از EU معمولاً مجازند مگر محدودیت صریح در اسناد"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "energy"
+   ],
+   "days_left": 30,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-10-19T12:44:15",
+   "history": [
+    {
+     "at": "2026-10-19T12:44:15",
      "status": "new"
     }
    ]
@@ -538,6 +750,59 @@
     "WB-OP00473300",
     "TED-716537-2026",
     "WB-OP00472448"
+   ],
+   "actioned_ids": [],
+   "reminders": []
+  },
+  {
+   "at": "2026-10-19T12:44:15",
+   "collected": 367,
+   "matched": 16,
+   "partner_drafts": [],
+   "events_added": 0,
+   "investors_added": 0,
+   "investor_drafts": [
+    "revo",
+    "212",
+    "hub71",
+    "aramco-ventures",
+    "antler-menap",
+    "equinor-ventures",
+    "shell-ventures"
+   ],
+   "events_soon": [
+    {
+     "start": "2026-11-02",
+     "name": "ADIPEC 2026",
+     "name_fa": "نمایشگاه و کنفرانس نفت و گاز ابوظبی",
+     "city": "ابوظبی"
+    },
+    {
+     "start": "2026-11-03",
+     "name": "Smart City Expo World Congress 2026",
+     "name_fa": "کنگره جهانی شهر هوشمند",
+     "city": "بارسلونا"
+    },
+    {
+     "start": "2026-11-09",
+     "name": "Web Summit 2026",
+     "name_fa": "وب سامیت لیسبون",
+     "city": "لیسبون"
+    },
+    {
+     "start": "2026-11-16",
+     "name": "MEDICA 2026",
+     "name_fa": "نمایشگاه تجهیزات و فناوری پزشکی دوسلدورف",
+     "city": "دوسلدورف"
+    }
+   ],
+   "new_ids": [
+    "SETAD-1105004403000914",
+    "SETAD-1105092187000164",
+    "SETAD-1105090453000008",
+    "SETAD-1105092288003550",
+    "TED-719546-2026",
+    "TED-721845-2026"
    ],
    "actioned_ids": [],
    "reminders": []
