@@ -1,494 +1,5 @@
 {
  "tenders": {
-  "SETAD-1105100916000002": {
-   "id": "SETAD-1105100916000002",
-   "source": "ستاد (setadiran.ir)",
-   "market": "domestic",
-   "title": "نیاز خدمات-خریدواجرای نصب دوربین پلاکخوان وتشخیص چهره ونظارتی(دیددرشب وروزرنگی)طبق استعلام بهاء اقلام درخواستی پیوستی",
-   "description": "– خرید",
-   "buyer": "دهیاری تازه کندبکراباد بخش مرکزی شهرستان ورزقان",
-   "country": "ایران – آذربایجان شرقی",
-   "deadline": "2026-10-20",
-   "deadline_fa": "1405/07/28 - 08:00",
-   "published": "",
-   "url": "https://fe.setadiran.ir/centralboard/#/central-board-0",
-   "notice_type": "خرید",
-   "setad_number": "1105100916000002",
-   "sector": "دولتی",
-   "facts": {
-    "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
-    "guarantee": "تضمین شرکت در فرایند ارجاع کار طبق آیین‌نامه تضمین معاملات دولتی – مبلغ در اسناد ستاد",
-    "experience": "ارزیابی کیفی/رتبه و سوابق طبق اسناد ستاد (نیاز به ورود به سامانه)",
-    "international": "نیاز به ثبت‌نام در ستاد و شخصیت حقوقی ایرانی؛ شرکت خارجی فقط از طریق شریک ایرانی"
-   },
-   "keyword_score": 3,
-   "domains": [
-    "ai_cross_cutting"
-   ],
-   "days_left": 1,
-   "line": "ai",
-   "status": "new",
-   "first_seen": "2026-10-18T22:02:18",
-   "history": [
-    {
-     "at": "2026-10-18T22:02:18",
-     "status": "new"
-    }
-   ]
-  },
-  "TED-712676-2026": {
-   "id": "TED-712676-2026",
-   "source": "TED (EU)",
-   "market": "international",
-   "title": "Ireland – IT services: consulting, software development, Internet and support – Single-party Framework for the Provision of Website Design, Hosting and Support for New Website and Related Services",
-   "description": "The Charities Regulator proposes to engage in a competitive process for the establishment of a single party framework agreement for the design and development of a new website, website hosting, security, support and disaster recovery provisions, as well as ongoing support and maintenance and delivery of other website projects and services as required over the framework duration. The Charities Regulator is seeking tender submissions from competent service providers for the design, development, hosting and maintenance of a new website and related services required during the framework duration. The framework agreement will be established for a period of seven (7) years as catered for in certain circumstances in accordance with Art. 33.1 of Directive 2014/24/EU.",
-   "buyer": "Charities Regulator",
-   "country": "IRL",
-   "deadline": "2026-10-30",
-   "published": "2026-10-15",
-   "url": "https://ted.europa.eu/en/notice/-/detail/712676-2026",
-   "notice_type": "cn-standard",
-   "sector": "دولتی",
-   "facts": {
-    "price": "ارزش برآوردی: 569,106 EUR",
-    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
-    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
-    "international": "رویه‌ی باز اتحادیه اروپا – شرکت‌های خارج از EU معمولاً مجازند مگر محدودیت صریح در اسناد"
-   },
-   "keyword_score": 3,
-   "domains": [
-    "web"
-   ],
-   "days_left": 11,
-   "line": "web",
-   "status": "new",
-   "first_seen": "2026-10-18T22:02:18",
-   "history": [
-    {
-     "at": "2026-10-18T22:02:18",
-     "status": "new"
-    }
-   ]
-  },
-  "SETAD-1105092288003523": {
-   "id": "SETAD-1105092288003523",
-   "source": "ستاد (setadiran.ir)",
-   "market": "domestic",
-   "title": "نیاز کالا-هدست به منظور برگزاری دوره هوش مصنوعی",
-   "description": "– خرید",
-   "buyer": "شرکت ملی مناطق نفت خیز جنوب",
-   "country": "ایران – خوزستان",
-   "deadline": "2026-10-31",
-   "deadline_fa": "1405/08/09 - 08:00",
-   "published": "",
-   "url": "https://fe.setadiran.ir/centralboard/#/central-board-0",
-   "notice_type": "خرید",
-   "setad_number": "1105092288003523",
-   "sector": "شرکت دولتی / عمومی",
-   "facts": {
-    "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
-    "guarantee": "تضمین شرکت در فرایند ارجاع کار طبق آیین‌نامه تضمین معاملات دولتی – مبلغ در اسناد ستاد",
-    "experience": "ارزیابی کیفی/رتبه و سوابق طبق اسناد ستاد (نیاز به ورود به سامانه)",
-    "international": "نیاز به ثبت‌نام در ستاد و شخصیت حقوقی ایرانی؛ شرکت خارجی فقط از طریق شریک ایرانی"
-   },
-   "keyword_score": 3,
-   "domains": [
-    "ai_cross_cutting"
-   ],
-   "days_left": 12,
-   "line": "ai",
-   "status": "new",
-   "first_seen": "2026-10-18T22:02:18",
-   "history": [
-    {
-     "at": "2026-10-18T22:02:18",
-     "status": "new"
-    }
-   ]
-  },
-  "WB-OP00465889": {
-   "id": "WB-OP00465889",
-   "source": "World Bank",
-   "market": "international",
-   "title": "Supply, Installation, Testing and Commissioning of Asset Performance Management System (APMS) in PESCO Peshawar & Khyber Operation Circles Khyber Pakhtunkhwa Province",
-   "description": "Electricity Distribution Efficiency Improvement Project. Request for Bids Goods (Single Stage Two Envelop - Bidding Process) Country: Islamic Republic of Pakistan. Name of Project: Electricity Distribution Efficiency Improvement Project (EDEIP ) Contract Title: Procurement of 11,413 No’s Standard Asset Performance Management System (APMS) with Magnetic Contactor and Non – Motorized MCCB (Ordering Code: APMS-MC-S100 & APMS-MC-S200) along with Allied material and Related Services for Installation in in PESCO Operation Circles (Peshawar & Khyber) Loan No: IBRD -93180-PK RFB Reference No: PK-PESCO-556530-GO-RFB-ICB-10 Addendum No.1 AMENDMENT IN ACCORDANCE WITH SECTION-I (ITB-8) TO THE RFB DOCUMENT. ACTIVITY NO. PK-PESCO-556530-GO-RFB-ICB-10 This addendum No.1, in SPN against RFB No.PK-PESCO-556530-GO-RFB-ICB-10 is being issued on October 16th, 2026, in accordance with the Section I – Instruction to Bidders (ITB-8) to the RFB Document. The Bid submission deadline date and Bid opening date previously mentioned as 22-10-2026 at 11:00 A.M are hereby revised to 05-11-2026 at 11:00 AM (Pakistan local time). All other terms and conditions of the Specific Procurement Notice shall remain the same. =============================================================================== Published SPN Islamic Republic of Pakistan. Represented by CE (Dev.) PMU has received financing from the World Bank toward the cost of the Electricity Distribution Efficiency Improvement Project (EDEIP), and intends to apply part of the proceeds toward payments under the contract for Procurement of 11,413 Nos. Asset Performance Management System (APMS) along with Allied Material and Related Services for Installation on Distribution Transformers of 200KVA & 100KVA Ratings. For this contract, the Borrower shall process the payments using the Payment disbursement methods, as defined in the World Bank’s Disbursement Guidelines for Investment Project Financing, except for those payments, which the contract provides to be made through Letter of Credit. The Chief Engineer (Development), PMU PESCO, now invites sealed Bids from eligible Bidders for the supply, installation, integration, testing and commissioning of Asset Performance Management Systems (APMS) along with allied materials and related services for distribution transformers in Peshawar and Khyber Operation Circles of PESCO. The Goods shall be delivered at the Project Site: PESCO GSC Warehouse, 132 kV Grid Station, Industrial Estate, Jamrud Road, Hayatabad, Peshawar, Khyber Pakhtunkhwa, Pakistan. Bidding will be conducted through international competitive procurement using Single stage two envelope procedure on Carriage and Insurance paid (CIP) basis using a Request for Bids (RFB) as specified in the World Bank’s “Procurement Regulations for IPF Borrowers “Procurement Regulations November 2020” and is open to all eligible Bidders as defined in the Procurement Regulations. Bids will be evaluated in accordance with the evaluation process set out in the bidding documents. The following weightings shall apply for Rated Criteria (including Technical and non-price factors): 30% and for Bid Cost: 70% Interested eligible Bidders may obtain further information from Chief Engineer (Development) PMU PESCO, Peshawar and e-mail : ce.pmupesco@gmail.com or pmupesco@gmail.com and inspect the bidding document during office hours i.e. 0900 to 1600 hours at the address given below. The Bidding Document may be downloaded free of cost, in English, from PESCO website at https://www.pesco.com.pk/world-bank/wb-reports . The Bidding Document downloaded from the PESCO website shall be considered valid for participation in the bidding process. Prospective Bidders are requested to submit the Basic Information Sheet provided in the Bidding Document by email for registration and future communication. A Pre-Bid meeting will be taken place in the office of the Purchaser at the address given below on 06-10-2026 at 11:00 A.M. (Local Time). The firm ",
-   "buyer": "Peshawar Electric Supply Company",
-   "country": "Pakistan",
-   "deadline": "2026-11-05",
-   "published": "2026-10-16",
-   "url": "https://projects.worldbank.org/en/projects-operations/procurement-detail/OP00465889",
-   "notice_type": "Invitation for Bids",
-   "procurement_method": "Request for Bids",
-   "sector": "دولتی (پروژه با تأمین مالی بانک جهانی)",
-   "facts": {
-    "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
-    "guarantee": "طبق آگهی: bid security of us $ 100,000",
-    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
-    "international": "رقابت ملی – احتمالاً محدود به شرکت‌های داخلی کشور خریدار"
-   },
-   "keyword_score": 3,
-   "domains": [
-    "energy"
-   ],
-   "days_left": 17,
-   "line": "ai",
-   "status": "new",
-   "first_seen": "2026-10-18T22:02:18",
-   "history": [
-    {
-     "at": "2026-10-18T22:02:18",
-     "status": "new"
-    }
-   ]
-  },
-  "WB-OP00470201": {
-   "id": "WB-OP00470201",
-   "source": "World Bank",
-   "market": "international",
-   "title": "Supply, Installation, Testing and Commissioning of Asset Performance Management System (APMS) in PESCO Swat Operation Circle Khyber Pakhtunkhwa Province",
-   "description": "Electricity Distribution Efficiency Improvement Project. Request for Bids Goods (Single Stage Two Envelope - Bidding Process) Country: Islamic Republic of Pakistan. Name of Project: Electricity Distribution Efficiency Improvement Project (EDEIP ) Contract Title: Package IV - Procurement of 3,249 No’s Standard Asset Performance Management System (APMS) with Magnetic Contactor and Non – Motorized MCCB (Ordering Code: APMS-MC-S100 & APMS-MC-S200) along with Allied material and Related Services for Installation in PESCO Operation Circle Swat. Loan No: IBRD -93180-PK RFB Reference No: PK-PESCO-556537-GO-RFB-ICB-11 Islamic Republic of Pakistan. Represented by CE (Dev.) PMU has received financing from the World Bank toward the cost of the Electricity Distribution Efficiency Improvement Project (EDEIP), and intends to apply part of the proceeds toward payments under the contract for Procurement of 3,249 Nos. Asset Performance Management System (APMS) along with Allied Material and Related Services for Installation on Distribution Transformers of 200KVA & 100KVA Ratings. For this contract, the Borrower shall process the payments using the Payment disbursement methods, as defined in the World Bank’s Disbursement Guidelines for Investment Project Financing, except for those payments, which the contract provides to be made through Letter of Credit. The Chief Engineer (Development), PMU PESCO, now invites sealed Bids from eligible Bidders for the supply, installation, integration, testing and commissioning of Asset Performance Management Systems (APMS) along with allied materials and related services for distribution transformers in Swat Operation Circle of PESCO. The Goods shall be delivered at the Project Site: PESCO GSC Warehouse, 132 kV Grid Station, Industrial Estate, Jamrud Road, Hayatabad, Peshawar, Khyber Pakhtunkhwa, Pakistan. Bidding will be conducted through international competitive procurement using Single stage two envelope procedure on Carriage and Insurance paid (CIP) basis using a Request for Bids (RFB) as specified in the World Bank’s “Procurement Regulations for IPF Borrowers “Procurement Regulations November 2020” and is open to all eligible Bidders as defined in the Procurement Regulations. Bids will be evaluated in accordance with the evaluation process set out in the bidding documents. The following weightings shall apply for Rated Criteria (including Technical and non-price factors): 30% and for Bid Cost: 70% Interested eligible Bidders may obtain further information from Chief Engineer (Development) PMU PESCO, Peshawar and e-mail : ce.pmupesco@gmail.com or pmupesco@gmail.com and inspect the bidding document during office hours i.e. 0900 to 1600 hours at the address given below. The Bidding Document may be downloaded free of cost, in English, from PESCO website at https://www.pesco.com.pk/world-bank/wb-reports . The Bidding Document downloaded from the PESCO website shall be considered valid for participation in the bidding process. Prospective Bidders are requested to submit the Basic Information Sheet provided in the Bidding Document by email for registration and future communication. A Pre-Bid meeting will be held in the office of the Purchaser at the address given below on 27-10-2026 at 11:00 A.M. (Local Time). The firm may participate online, for which request may be sent on the email provided. Bids must be delivered to the address below on or before 10-11-2026 at 11:00 Hrs. Electronic Bidding will not be permitted. Late Bids will be rejected. The outer Bid envelopes marked “Original Bid”, and the inner envelopes marked “Technical Part” will be publicly opened in the presence of the Bidders’ designated representatives and anyone who chooses to attend, at the address below on or before 10-11-2026 Immediately after Bids submission deadline. All envelopes marked “Second Envelope: Financial Part” shall remain unopened and will be held in safe custody of the Purchaser until the second public opening. All Bids must b",
-   "buyer": "Peshawar Electric Supply Company",
-   "country": "Pakistan",
-   "deadline": "2026-11-10",
-   "published": "2026-09-22",
-   "url": "https://projects.worldbank.org/en/projects-operations/procurement-detail/OP00470201",
-   "notice_type": "Invitation for Bids",
-   "procurement_method": "Request for Bids",
-   "sector": "دولتی (پروژه با تأمین مالی بانک جهانی)",
-   "facts": {
-    "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
-    "guarantee": "طبق آگهی: bid security of us $ 50,000",
-    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
-    "international": "رقابت ملی – احتمالاً محدود به شرکت‌های داخلی کشور خریدار"
-   },
-   "keyword_score": 3,
-   "domains": [
-    "energy"
-   ],
-   "days_left": 22,
-   "line": "ai",
-   "status": "new",
-   "first_seen": "2026-10-18T22:02:18",
-   "history": [
-    {
-     "at": "2026-10-18T22:02:18",
-     "status": "new"
-    }
-   ]
-  },
-  "WB-OP00468997": {
-   "id": "WB-OP00468997",
-   "source": "World Bank",
-   "market": "international",
-   "title": "Procurement of Battery Energy Storage Systems (BESS) with Energy Management Systems (EMS) and Ancillary Equipment at Kyiv HPP / PSP, Kaniv, Kremenchuk and Seredniodniprovska Hydropower Plants, including related services (training of UHE staff)",
-   "description": "Improving Power System Resilience for European Power Grid Integration Project. SPECIFIC PROCUREMENT NOTICE Request for Bids Plant Design, Supply, and Installation (Without Prequalification) (Two-Envelope Bidding Process with rated criteria) Country : Ukraine Project : Ukraine – Improving Power System Resilience for European Power Grid Integration (Installation of Hybrid Systems for Electricity Production in Ukrhydroenergo) Contract Title : Design, Supply and Installation of Battery Energy Storage Systems (BESS) with Energy Management Systems (EMS) and Ancillary Equipment at Kyiv HPP / PSP, Kaniv, Kremenchuk and Seredniodniprovska Hydropower Plants, including related services (training of UHE staff) (hereinafter referred to ‘the Contract’) comprising the following lots: Lot 1: Design, Supply and Installation of Battery Energy Storage Systems (BESS) with Energy Management Systems (EMS) and Ancillary Equipment at Kyiv HPP / PSP, including related services (training of UHE staff) (46 MW BESS capacity). Lot 2: Design, Supply and Installation of Battery Energy Storage Systems (BESS) with Energy Management Systems (EMS) and Ancillary Equipment at Kaniv HPP, including related services (training of UHE staff) (66 MW BESS capacity). Lot 3: Design, Supply and Installation of Battery Energy Storage Systems (BESS) with Energy Management Systems (EMS) and Ancillary Equipment at Kremenchuk HPP, including related services (training of UHE staff) (60 MW BESS capacity). Lot 4: Design, Supply and Installation of Battery Energy Storage Systems (BESS) with Energy Management Systems (EMS) and Ancillary Equipment at Seredniodniprovska HPP, including related services (training of UHE staff) (25 MW BESS capacity). Source of financing: IBRD Loan No.: 9284-UA; CTF Loan No.: TF0B5994; CTF Loan No.: TF0C5903-UA; and CTF Grant No.: TF-0B5724. Project ID : P176114 RFB reference No .: UHE-IPSR-DSI-1 1. Private Joint Stock Company “Ukrhydroenergo” (PJSC “Ukrhydroenergo” or UHE) has received financing from the World Bank (hereinafter referred to as the “Bank”) toward the cost of the Project “Ukraine – Improving Power System Resilience for European Power Grid Integration (Installation of Hybrid Systems for Electricity Production in Ukrhydroenergo)” and intends to apply part of the proceeds toward payments under the Contract. Under this Contract, UHE intends to make payments using the Direct Payment disbursement method, as defined in the World Bank Disbursement Guidelines for Investment Project Financing. 2. PJSC “Ukrhydroenergo” now invites eligible Bidders to submit Bids for the Contract. Bidders can bid for any one lot, more than one lot or all the four lots . The Time for Completion shall be between 420 and 510 calendar days from the Effective Date of the Contract. No credit will be given for early completion, and Bids offering a Time for Completion exceeding 510 days shall be rejected. 3. Prospective Bidders shall meet the following minimum qualification requirements: (a) General Experience: Experience in activities related to the design, supply and installation of equipment for energy infrastructure facilities, including generating facilities, battery energy storage systems (BESS), and MV and HV grids, under contracts in the role of contractor, subcontractor, or management contractor since at least January 2020. Design and construction experience may be from different contracts. (b) Financial Capabilities : The Bidder shall submit audited balance sheets or, if not required by the law of the Bidder’s country, other financial statements acceptable to UHE for the last five (5) fiscal years to demonstrate the current soundness of the Bidder’s financial position and its prospective long-term profitability. (c) Average Annual Turnover: The Bidder shall demonstrate a minimum average annual turnover for the last three (3) fiscal years as follows: Lot 1 – USD 36 million; Lot 2 – USD 51 million; Lot 3 – USD 46 million; Lot 4 – USD 20 million. Bidders submitting Bids",
-   "buyer": "PRIVATE JOINT STOCK COMPANY “UKRHYDROENERGO”",
-   "country": "Ukraine",
-   "deadline": "2026-11-12",
-   "published": "2026-09-16",
-   "url": "https://projects.worldbank.org/en/projects-operations/procurement-detail/OP00468997",
-   "notice_type": "Invitation for Bids",
-   "procurement_method": "Request for Bids",
-   "sector": "دولتی (پروژه با تأمین مالی بانک جهانی)",
-   "facts": {
-    "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
-    "guarantee": "طبق آگهی: bid security shall not be required",
-    "experience": "طبق آگهی: qualification requirements: (a) general experience: experience in activities related to the design, supply and installation of equipment for energy infrastructure facilities, including generating facilities, battery ener",
-    "international": "رقابت ملی – احتمالاً محدود به شرکت‌های داخلی کشور خریدار"
-   },
-   "keyword_score": 3,
-   "domains": [
-    "energy"
-   ],
-   "days_left": 24,
-   "line": "ai",
-   "status": "new",
-   "first_seen": "2026-10-18T22:02:18",
-   "history": [
-    {
-     "at": "2026-10-18T22:02:18",
-     "status": "new"
-    }
-   ]
-  },
-  "TED-714863-2026": {
-   "id": "TED-714863-2026",
-   "source": "TED (EU)",
-   "market": "international",
-   "title": "Poland – Servers – Zakup serwerów dla potrzeb Projektu SCADA w Enea Operator sp. z o.o.",
-   "description": "1.1. Przedmiotem zamówienia jest zakup serwerów dla potrzeb Projektu SCADA w Enea Operator sp. z o.o. 1.2. Szczegółowy opis przedmiotu zamówienia został zawarty w Rozdziale II SWZ „Opis przedmiotu zamówienia”. 1.3. Zamawiający nie przewiduje możliwości ani wymogu odbycia wizji lokalnej lub sprawdzenia przez Wykonawców dokumentów niezbędnych do realizacji zamówienia dostępnych na miejscu u Zamawiającego, o których mowa w art. 131 ust. 2 ustawy Pzp.",
-   "buyer": "ENEA Operator sp. z o.o.",
-   "country": "POL",
-   "deadline": "2026-11-16",
-   "published": "2026-10-15",
-   "url": "https://ted.europa.eu/en/notice/-/detail/714863-2026",
-   "notice_type": "cn-standard",
-   "sector": "نامشخص",
-   "facts": {
-    "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
-    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
-    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
-    "international": "رویه‌ی باز اتحادیه اروپا – شرکت‌های خارج از EU معمولاً مجازند مگر محدودیت صریح در اسناد"
-   },
-   "keyword_score": 3,
-   "domains": [
-    "energy"
-   ],
-   "days_left": 28,
-   "line": "ai",
-   "status": "new",
-   "first_seen": "2026-10-18T22:02:18",
-   "history": [
-    {
-     "at": "2026-10-18T22:02:18",
-     "status": "new"
-    }
-   ]
-  },
-  "TED-716134-2026": {
-   "id": "TED-716134-2026",
-   "source": "TED (EU)",
-   "market": "international",
-   "title": "Poland – Servers – Zakup serwerów dla potrzeb Projektu SCADA w Enea Operator sp. z o.o.",
-   "description": "1.1. Przedmiotem zamówienia jest zakup serwerów dla potrzeb Projektu SCADA w Enea Operator sp. z o.o. 1.2. Szczegółowy opis przedmiotu zamówienia został zawarty w Rozdziale II SWZ „Opis przedmiotu zamówienia”. 1.3. Zamawiający nie przewiduje możliwości ani wymogu odbycia wizji lokalnej lub sprawdzenia przez Wykonawców dokumentów niezbędnych do realizacji zamówienia dostępnych na miejscu u Zamawiającego, o których mowa w art. 131 ust. 2 ustawy Pzp.",
-   "buyer": "ENEA Operator sp. z o.o.",
-   "country": "POL",
-   "deadline": "2026-11-16",
-   "published": "2026-10-16",
-   "url": "https://ted.europa.eu/en/notice/-/detail/716134-2026",
-   "notice_type": "cn-standard",
-   "sector": "نامشخص",
-   "facts": {
-    "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
-    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
-    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
-    "international": "رویه‌ی باز اتحادیه اروپا – شرکت‌های خارج از EU معمولاً مجازند مگر محدودیت صریح در اسناد"
-   },
-   "keyword_score": 3,
-   "domains": [
-    "energy"
-   ],
-   "days_left": 28,
-   "line": "ai",
-   "status": "new",
-   "first_seen": "2026-10-18T22:02:18",
-   "history": [
-    {
-     "at": "2026-10-18T22:02:18",
-     "status": "new"
-    }
-   ]
-  },
-  "TED-713357-2026": {
-   "id": "TED-713357-2026",
-   "source": "TED (EU)",
-   "market": "international",
-   "title": "Italy – Aircraft maintenance services – GARA EUROPEA A PROCEDURA APERTA PER APPALTO DELLA FORNITURA DI UN SERVIZIO DI SUPPORTO LOGISTICO TECNICO E MANUTENTIVO PER LA FLOTTA DI AEROMOBILI PIAGGIO P180 AVANTI II DEL DIPARTIMENTO DEI VIGILI DEL FUOCO DEL SOCCORSO PUBBLICO E DELLA DIFESA CIVILE",
-   "description": "SERVIZIO DI SUPPORTO LOGISTICO, TECNICO E MANUTENTIVO PER LA FLOTTA DI AEROMOBILI PIAGGIO P180 AVANTI II DEL DIPARTIMENTO DEI VIGILI DEL FUOCO, DEL SOCCORSO PUBBLICO E DELLA DIFESA CIVILE. Descrizione: SERVIZIO DI SUPPORTO LOGISTICO, TECNICO E MANUTENTIVO PER LA FLOTTA DI AEROMOBILI PIAGGIO P180 AVANTI II DEL DIPARTIMENTO DEI VIGILI DEL FUOCO, DEL SOCCORSO PUBBLICO E DELLA DIFESA CIVILE.",
-   "buyer": "DIREZIONE CENTRALE PER L'EMERGENZA E IL SOCCORSO TECNICO",
-   "country": "ITA",
-   "deadline": "2026-11-24",
-   "published": "2026-10-15",
-   "url": "https://ted.europa.eu/en/notice/-/detail/713357-2026",
-   "notice_type": "cn-standard",
-   "sector": "دولتی",
-   "facts": {
-    "price": "ارزش برآوردی: 8,984,000 EUR",
-    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
-    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
-    "international": "رویه‌ی باز اتحادیه اروپا – شرکت‌های خارج از EU معمولاً مجازند مگر محدودیت صریح در اسناد"
-   },
-   "keyword_score": 3,
-   "domains": [
-    "aviation"
-   ],
-   "days_left": 36,
-   "line": "ai",
-   "status": "new",
-   "first_seen": "2026-10-18T22:02:18",
-   "history": [
-    {
-     "at": "2026-10-18T22:02:18",
-     "status": "new"
-    }
-   ]
-  },
-  "WB-OP00473664": {
-   "id": "WB-OP00473664",
-   "source": "World Bank",
-   "market": "international",
-   "title": "Supply, Installation, Testing and Commissioning of Asset Performance Management System (APMS) in PESCO Mardan & Swabi Operation Circles Khyber Pakhtunkhwa Province",
-   "description": "Electricity Distribution Efficiency Improvement Project. Request for Bids Goods (Single Stage Two Envelop - Bidding Process) Country: Islamic Republic of Pakistan. Name of Project: Electricity Distribution Efficiency Improvement Project (EDEIP ) Contract Title: Procurement of 4,011 No’s Standard Asset Performance Management System (APMS) with Magnetic Contactor and Non – Motorized MCCB (Ordering Code: APMS-MC-S100 & APMS-MC-S200) along with Allied material and Related Services for Installation in in PESCO Operation Circles (Mardan & Swabi) Loan No: IBRD -9318-PK RFB Reference No: PK-PESCO-556530-GO-RFB-ICB-12 Islamic Republic of Pakistan. Represented by CE (Dev.) PMU has received financing from the World Bank toward the cost of the Electricity Distribution Efficiency Improvement Project (EDEIP), and intends to apply part of the proceeds toward payments under the contract for Procurement of 4,011 Nos. Asset Performance Management System (APMS) along with Allied Material and Related Services for Installation on Distribution Transformers of 200KVA & 100KVA Ratings. For this contract, the Borrower shall process the payments using the Payment disbursement methods, as defined in the World Bank’s Disbursement Guidelines for Investment Project Financing, except for those payments, which the contract provides to be made through Letter of Credit. The Chief Engineer (Development), PMU PESCO, now invites sealed Bids from eligible Bidders for the supply, installation, integration, testing and commissioning of Asset Performance Management Systems (APMS) along with allied materials and related services for distribution transformers in Mardan and Swabi Operation Circles of PESCO. The Goods shall be delivered at the Project Site: PESCO GSC Warehouse, 132 kV Grid Station, Industrial Estate, Jamrud Road, Hayatabad, Peshawar, Khyber Pakhtunkhwa, Pakistan. Bidding will be conducted through international competitive procurement using Single stage two envelope procedure on Carriage and Insurance paid (CIP) basis using a Request for Bids (RFB) as specified in the World Bank’s “Procurement Regulations for IPF Borrowers “Procurement Regulations November 2020” and is open to all eligible Bidders as defined in the Procurement Regulations. Bids will be evaluated in accordance with the evaluation process set out in the bidding documents. The following weightings shall apply for Rated Criteria (including Technical and non-price factors): 30% and for Bid Cost: 70% Interested eligible Bidders may obtain further information from Chief Engineer (Development) PMU PESCO, Peshawar and e-mail : ce.pmupesco@gmail.com or pmupesco@gmail.com and inspect the bidding document during office hours i.e. 0900 to 1600 hours at the address given below. The Bidding Document may be downloaded free of cost, in English, from PESCO website at https://www.pesco.com.pk/world-bank/wb-reports . The Bidding Document downloaded from the PESCO website shall be considered valid for participation in the bidding process. Prospective Bidders are requested to submit the Basic Information Sheet provided in the Bidding Document by email for registration and future communication. A Pre-Bid meeting will be taken place in the office of the Purchaser at the address given below on 12-11-2026 at 11:00 A.M. (Local Time). The firm may participate online, for which request may be sent on the email provided or visit PESCO website for online participation details. Bids must be delivered to the address below on or before 30-11-2026 at 11:00Hrs. Electronic Bidding will not be permitted. Late Bids will be rejected. The outer Bid envelopes marked “Original Bid”, and the inner envelopes marked “Technical Part” will be publicly opened in the presence of the Bidders’ designated representatives and anyone who chooses to attend, at the address below on or before 30-11-2026 just after Bids submission deadline. All envelopes marked “Second Envelope: Financial Part” shall remain unopened and will be held in safe custo",
-   "buyer": "Peshawar Electric Supply Company",
-   "country": "Pakistan",
-   "deadline": "2026-11-30",
-   "published": "2026-10-08",
-   "url": "https://projects.worldbank.org/en/projects-operations/procurement-detail/OP00473664",
-   "notice_type": "Invitation for Bids",
-   "procurement_method": "Request for Bids",
-   "sector": "دولتی (پروژه با تأمین مالی بانک جهانی)",
-   "facts": {
-    "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
-    "guarantee": "طبق آگهی: bid security of us $ 100,000",
-    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
-    "international": "رقابت ملی – احتمالاً محدود به شرکت‌های داخلی کشور خریدار"
-   },
-   "keyword_score": 3,
-   "domains": [
-    "energy"
-   ],
-   "days_left": 42,
-   "line": "ai",
-   "status": "new",
-   "first_seen": "2026-10-18T22:02:18",
-   "history": [
-    {
-     "at": "2026-10-18T22:02:18",
-     "status": "new"
-    }
-   ]
-  },
-  "WB-OP00473693": {
-   "id": "WB-OP00473693",
-   "source": "World Bank",
-   "market": "international",
-   "title": "Supply, Installation, Testing and Commissioning of Asset Performance Management System (APMS) in PESCO Bannu & Dera Ismail Khan Operation Circles Khyber Pakhtunkhwa Province",
-   "description": "Electricity Distribution Efficiency Improvement Project. Request for Bids Goods (Single Stage Two Envelop - Bidding Process) Country: Islamic Republic of Pakistan. Name of Project: Electricity Distribution Efficiency Improvement Project (EDEIP ) Contract Title: Package III - Procurement of 2,050 No’s Standard Asset Performance Management System (APMS) with Magnetic Contactor and Non – Motorized MCCB (Ordering Code: APMS-MC-S100 & APMS-MC-S200) along with Allied material and Related Services for Installation in in PESCO Operation Circles (Bannu & D.I Khan) Loan No: IBRD -9318-PK RFB Reference No: PK-PESCO-556535-GO-RFB-ICB-13 Addendum No.1 AMENDMENT IN ACCORDANCE WITH SECTION-I (ITB-8) TO THE RFB DOCUMENT. ACTIVITY NO. PK-PESCO-556535-GO-RFB-ICB-13 This addendum No.1, in SPN against RFB No.PK-PESCO-556535-GO-RFB-ICB-13 is being issued on October 16th, 2026, in accordance with the Section I – Instruction to Bidders (ITB-8) to the RFB Document. The RFB No. PK-PESCO-556535-GO-RFB-ICB-13 stated in the Specific Procurement Notice version No.1 shall stand amended to PK-PESCO-556535-GO-RFB-ICB-12 . All other terms and conditions of the Specific Procurement Notice shall remain the same. =============================================================================== Published SPN Islamic Republic of Pakistan. Represented by CE (Dev.) PMU has received financing from the World Bank toward the cost of the Electricity Distribution Efficiency Improvement Project (EDEIP), and intends to apply part of the proceeds toward payments under the contract for Procurement of 2,050 Nos. Asset Performance Management System (APMS) along with Allied Material and Related Services for Installation on Distribution Transformers of 200KVA & 100KVA Ratings. For this contract, the Borrower shall process the payments using the Payment disbursement methods, as defined in the World Bank’s Disbursement Guidelines for Investment Project Financing, except for those payments, which the contract provides to be made through Letter of Credit. The Chief Engineer (Development), PMU PESCO, now invites sealed Bids from eligible Bidders for the supply, installation, integration, testing and commissioning of Asset Performance Management Systems (APMS) along with allied materials and related services for distribution transformers in Bannu & D.I Khan Operation Circles of PESCO. The Goods shall be delivered at the Project Site: PESCO GSC Warehouse, 132 kV Grid Station, Industrial Estate, Jamrud Road, Hayatabad, Peshawar, Khyber Pakhtunkhwa, Pakistan. Bidding will be conducted through international competitive procurement using Single stage two envelope procedure on Carriage and Insurance paid (CIP) basis using a Request for Bids (RFB) as specified in the World Bank’s “Procurement Regulations for IPF Borrowers “Procurement Regulations November 2020” and is open to all eligible Bidders as defined in the Procurement Regulations. Bids will be evaluated in accordance with the evaluation process set out in the bidding documents. The following weightings shall apply for Rated Criteria (including Technical and non-price factors): 30% and for Bid Cost: 70% Interested eligible Bidders may obtain further information from Chief Engineer (Development) PMU PESCO, Peshawar and e-mail : ce.pmupesco@gmail.com or pmupesco@gmail.com and inspect the bidding document during office hours i.e. 0900 to 1600 hours at the address given below. The Bidding Document may be downloaded free of cost, in English, from PESCO website at https://www.pesco.com.pk/world-bank/wb-reports . The Bidding Document downloaded from the PESCO website shall be considered valid for participation in the bidding process. Prospective Bidders are requested to submit the Basic Information Sheet provided in the Bidding Document by email for registration and future communication. A Pre-Bid meeting will be taken place in the office of the Purchaser at the address given below on 18-11-2026 at 11:00 A.M. (Local Time). The firm may partici",
-   "buyer": "Peshawar Electric Supply Company",
-   "country": "Pakistan",
-   "deadline": "2026-12-08",
-   "published": "2026-10-16",
-   "url": "https://projects.worldbank.org/en/projects-operations/procurement-detail/OP00473693",
-   "notice_type": "Invitation for Bids",
-   "procurement_method": "Request for Bids",
-   "sector": "دولتی (پروژه با تأمین مالی بانک جهانی)",
-   "facts": {
-    "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
-    "guarantee": "طبق آگهی: bid security of us $ 80,000",
-    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
-    "international": "رقابت ملی – احتمالاً محدود به شرکت‌های داخلی کشور خریدار"
-   },
-   "keyword_score": 3,
-   "domains": [
-    "energy"
-   ],
-   "days_left": 50,
-   "line": "ai",
-   "status": "new",
-   "first_seen": "2026-10-18T22:02:18",
-   "history": [
-    {
-     "at": "2026-10-18T22:02:18",
-     "status": "new"
-    }
-   ]
-  },
-  "WB-OP00473300": {
-   "id": "WB-OP00473300",
-   "source": "World Bank",
-   "market": "international",
-   "title": "Local Hydropower Engineer – full-time 12 months",
-   "description": "Zletovica Productivity through Irrigation and Renewable Energy. REQUEST FOR EXPRESSIONS OF INTEREST (CONSULTING SERVICES - INDIVIDUAL CONSULTANT - LOCAL) Republic of North Macedonia Ministry of Agriculture, Forestry and Water Economy Zletovica Productivity through Irrigation and Renewable Energy Project (PIREP) Grant No.: TF0D2152 Assignment Title: Local Hydropower Engineer (full-time, 12 months) Reference No.: PIREP-IC-08 The Republic of North Macedonia has received financing from the World Bank, acting as trustee of the Grant Facility for Project Preparation (GFPP), for the preparation of the Zletovica Productivity through Irrigation and Renewable Energy Project (PIREP), and intends to apply part of the proceeds for consulting services. The Ministry of Agriculture, Forestry and Water Economy (MAFWE), through its Project Implementation Unit (PIU), is responsible for implementation of the grant. The preparation grant supports the updating of technical and hydraulic studies, dam safety documentation, transboundary-water analyses, and environmental and social instruments for Phases II and III of the Zletovica Hydrosystem, comprising irrigation development and hydropower generation. The PIU implements the grant in close coordination with the Public Enterprise for Water Management Activities HS “Zletovica”–Probištip (PE HS Zletovica), which provides technical leadership, data, access to facilities and institutional support. The objective of this assignment is to provide PE HS Zletovica and the PIU with senior technical advice and engineering oversight for the preparation and early implementation of the Phase III hydropower investments, while ensuring their integration with Phase II irrigation investments and the existing multipurpose system. The Engineer will help ensure that the investments are technically sound, economically and financially justified, safe, climate-resilient, construction-ready, operable and maintainable, compliant with applicable national requirements, and aligned with World Bank requirements. The consulting services (\"the Services\") include supporting hydropower-related procurement and, when formally appointed, providing technical input as a member of evaluation committees; reviewing feasibility studies, hydrological and energy-yield analyses, detailed designs, technical specifications, bills of quantities, cost estimates and bidding documents; optimizing hydropower schemes; reviewing electro-mechanical and electrical systems, SCADA, grid interconnection and commissioning arrangements; coordinating hydropower development with irrigation, drinking-water supply, reservoir operations and dam safety; integrating environmental and social requirements; supporting approvals and permits; reviewing consultant and contractor outputs; conducting site inspections; supporting construction, testing, commissioning and handover; and providing appraisal inputs, reports and capacity building. The Engineer will report technically to the Director of PE HS Zletovica. The PIU Coordinator/Project Director will serve as the contract-management focal point and provide administrative oversight and coordination on procurement, fiduciary, environmental and social matters. The assignment will be full-time for twelve (12) months during the GFPP-funded preparation period. The duty station will be the offices of PE HS Zletovica in Probištip, with regular travel to project sites and, as needed, to Skopje or other locations for coordination meetings, inspections, testing and commissioning activities. Any continuation into project implementation will be subject to satisfactory performance, project approval, financing availability, and a contract extension or new contract, as applicable. The complete Terms of Reference (TOR) for the assignment are included in Annex 1 to this Request for Expressions of Interest and form an integral part of it. MAFWE now invites eligible individuals (\"Consultants\") to indicate their interest in providing the Servi",
-   "buyer": "PE Hydrosystem Zletovica",
-   "country": "North Macedonia",
-   "deadline": "2026-10-27",
-   "published": "2026-10-06",
-   "url": "https://projects.worldbank.org/en/projects-operations/procurement-detail/OP00473300",
-   "notice_type": "Request for Expression of Interest",
-   "procurement_method": "Individual Consultant Selection",
-   "sector": "دولتی (پروژه با تأمین مالی بانک جهانی)",
-   "facts": {
-    "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
-    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
-    "experience": "طبق آگهی: experience to perform the services",
-    "international": "قواعد خرید بانک جهانی: باز برای شرکت‌های همه‌ی کشورهای واجد شرایط (Eligibility rules)"
-   },
-   "keyword_score": 2,
-   "domains": [
-    "energy"
-   ],
-   "days_left": 8,
-   "line": "ai",
-   "status": "new",
-   "first_seen": "2026-10-18T22:02:18",
-   "history": [
-    {
-     "at": "2026-10-18T22:02:18",
-     "status": "new"
-    }
-   ]
-  },
-  "TED-716537-2026": {
-   "id": "TED-716537-2026",
-   "source": "TED (EU)",
-   "market": "international",
-   "title": "Poland – Medical software package – Rozbudowa systemu szpitalnego (HIS) Katowickiego Centrum Onkologii o dodatkowe moduły",
-   "description": "Na przedmiot zamówienia składają się z następujące moduły wraz z licencjami: Moduł nr 1 - Monitorowanie incydentów sercowych u pacjentów będących w trakcie chemioterapii Moduł nr 2 - Monitorowanie cukrzycy ciężarnych Moduł nr 3 - e-Usługa: Portal pacjenta - Uczulenia, Zażywane leki Moduł nr 4 - Rejestracja do laboratorium Moduł nr 5 - CDSS (Clinical Decision Support System) - Moduł Przegląd lekowy Moduł nr 6 - Sprawdzenie przez lekarza czy są EDM z innych placówek Moduł nr 7 - Raportowanie - wzmocnienie procesów IT Moduł nr 8 - System monitorowania temperatury na workach z krwią podczas transportu",
-   "buyer": "Katowickie Centrum Onkologii",
-   "country": "POL",
-   "deadline": "2026-11-16",
-   "published": "2026-10-16",
-   "url": "https://ted.europa.eu/en/notice/-/detail/716537-2026",
-   "notice_type": "cn-standard",
-   "sector": "دولتی",
-   "facts": {
-    "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
-    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
-    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
-    "international": "رویه‌ی باز اتحادیه اروپا – شرکت‌های خارج از EU معمولاً مجازند مگر محدودیت صریح در اسناد"
-   },
-   "keyword_score": 2,
-   "domains": [
-    "ai_cross_cutting",
-    "medical"
-   ],
-   "days_left": 28,
-   "line": "ai",
-   "status": "new",
-   "first_seen": "2026-10-18T22:02:18",
-   "history": [
-    {
-     "at": "2026-10-18T22:02:18",
-     "status": "new"
-    }
-   ]
-  },
-  "WB-OP00472448": {
-   "id": "WB-OP00472448",
-   "source": "World Bank",
-   "market": "international",
-   "title": "Installation of Individual Heat Substations and associated piping for public buildings in Chisinau DH system (Batch 2)",
-   "description": "Sustainable Transition through Energy Efficiency in Moldova Project (STEEM). Specific Procurement Notice Request for Bids Plant Design, Supply and Installation (Two-envelope Bidding Process, Without Prequalification) Employer: Moldova Energy Projects Implementation Unit (MEPIU) Project: Sustainable Transition through Energy Efficiency in Moldova Project (STEEM) Contract title: Installation of Individual Heat Substations and associated piping for public buildings in Chisinau DH system (Batch 2) Country: Republic of Moldova Loan No.: 9696-MD RFB No: 9696-E1.2.2 Issued on: 01 October, 2026 The Republic of Moldova has received financing from the World Bank toward the cost of the Sustainable Transition through Energy Efficiency in Moldova Project (STEEM) and intends to apply part of the proceeds toward payments under the contract for Installation of Individual Heat Substations and associated piping for public buildings in Chisinau DH system (Plant - Design, Supply & Installation). The Moldova Energy Projects Implementation Unit (MEPIU) now invites sealed Bids from eligible Bidders for the or the design, supply, installation and commissioning of Individual Heat Substations and associated piping for public buildings in the Chisinau District Heating system. Bidding will be conducted through international competitive procurement using Request for Bids (RFB), in accordance with the World Bank’s “Procurement Regulations for IPF Borrowers” dated September 2025 (“Procurement Regulations”) and the applicable World Bank Standard Procurement Document for Works – Request for Bids (Two-Envelope with Rated Criteria), September 2025, and is open to all eligible Bidders as defined in the Procurement Regulations. Interested eligible Bidders may obtain further information from the Moldova Energy Projects Implementation Unit (MEPIU) and inspect the bidding document during office hours from 09:00 to 17:00 local time at the address given below. The Bidding Document in English may be purchased by interested eligible Proposers upon submission of a written application to the address indicated below and upon payment of a non-refundable fee of EUR 50.00 (fifty euros, zero eurocents) , net of bank charges , for the electronic distribution of the Bidding Document via e-mail. Prior to the Bidding Document being provided by MEPIU, the payment of the non-refundable fee must be evidenced by a SWIFT payment confirmation, which may be submitted via the e-mail listed below. Payment shall be made by bank transfer to one of the bank accounts listed below, depending on the country of Bidder: For payments in foreign currency (non-resident) – Euro (EUR)*: Beneficiary: MF – TR Chisinau – bugetul de stat, Unitatea Consolidata pentru Implementarea si Monitorizarea Proiectelor in domeniul Energeticii Tax identification Code: 1023601000072 Beneficiary Bank : National Bank of Moldova, Chiinu, Moldova Republic of IBAN: MD18NBPBIV145150J16649AB SWIFT Code: NBMDMD2X Correspondent Bank: Raiffeisen Bank International AG, Vienna, Austria IBAN: AT953100000155096770 SWIFT Code: RZBAATWW For payments in the local currency (residents– Moldovan Leu (MDL)*: Beneficiary: MF- TR Chisinau - bugetul de stat, Unitatea Consolidata pentru Implementarea si Monitorizarea Proiectelor in domeniul Energeticii Tax identification Code: 1023601000072 Beneficiary Bank : Ministerul Finantelor – Trezoreria de stat IBAN : MD83TRPIAA145150J16649AB SWIFT Code: TREZMD2X * The banking details provided above shall remain valid exclusively until December 31, 2026. Bids must be delivered to the address below on or before 23 November, 2026 at 11:00 AM (local time). Electronic bidding will not be permitted. Late Bids will be rejected. The outer Bid envelopes marked “ORIGINAL BID”, and the inner envelopes marked “TECHNICAL PART” will be publicly opened in the presence of the Bidders’ designated representatives and anyone who chooses to attend, at the address below on 23 November, 2026 at 11:15 AM (local time). All en",
-   "buyer": "Moldova Energy Project Implementation Unit",
-   "country": "Moldova",
-   "deadline": "2026-11-23",
-   "published": "2026-10-01",
-   "url": "https://projects.worldbank.org/en/projects-operations/procurement-detail/OP00472448",
-   "notice_type": "Invitation for Bids",
-   "procurement_method": "Request for Bids",
-   "sector": "دولتی (پروژه با تأمین مالی بانک جهانی)",
-   "facts": {
-    "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
-    "guarantee": "طبق آگهی: bid security of eur 50,000",
-    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
-    "international": "رقابت ملی – احتمالاً محدود به شرکت‌های داخلی کشور خریدار"
-   },
-   "keyword_score": 2,
-   "domains": [
-    "energy",
-    "urban"
-   ],
-   "days_left": 35,
-   "line": "ai",
-   "status": "new",
-   "first_seen": "2026-10-18T22:02:18",
-   "history": [
-    {
-     "at": "2026-10-18T22:02:18",
-     "status": "new"
-    }
-   ]
-  },
   "SETAD-1105004403000914": {
    "id": "SETAD-1105004403000914",
    "source": "ستاد (setadiran.ir)",
@@ -517,10 +28,10 @@
    "days_left": 3,
    "line": "ai",
    "status": "new",
-   "first_seen": "2026-10-19T12:44:15",
+   "first_seen": "2026-10-19T13:28:54",
    "history": [
     {
-     "at": "2026-10-19T12:44:15",
+     "at": "2026-10-19T13:28:54",
      "status": "new"
     }
    ]
@@ -553,10 +64,10 @@
    "days_left": 2,
    "line": "ai",
    "status": "new",
-   "first_seen": "2026-10-19T12:44:15",
+   "first_seen": "2026-10-19T13:28:54",
    "history": [
     {
-     "at": "2026-10-19T12:44:15",
+     "at": "2026-10-19T13:28:54",
      "status": "new"
     }
    ]
@@ -589,10 +100,334 @@
    "days_left": 3,
    "line": "ai",
    "status": "new",
-   "first_seen": "2026-10-19T12:44:15",
+   "first_seen": "2026-10-19T13:28:54",
    "history": [
     {
-     "at": "2026-10-19T12:44:15",
+     "at": "2026-10-19T13:28:54",
+     "status": "new"
+    }
+   ]
+  },
+  "SATE-BT6J0Gv55f4": {
+   "id": "SATE-BT6J0Gv55f4",
+   "source": "ساتع (sate.atf.gov.ir)",
+   "market": "domestic",
+   "prefiltered": true,
+   "title": "سامانه هوشمند برداشت، پایش و پیش بینی پایداری دیواره‌های معدن مبتنی بر اسکن لیزری سه بعدی و هوش مصنوعی",
+   "description": "پژوهش کاربردی – ماهیت: فناوری",
+   "buyer": "سازمان توسعه و نوسازی معادن و صنایع معدنی ایران - مادر تخصصی",
+   "country": "ایران – تهران",
+   "deadline": "2026-10-22",
+   "deadline_fa": "1405/07/30",
+   "published": "",
+   "url": "https://sate.atf.gov.ir/Systems/Default.aspx?SiteRequestId=BT6J0Gv55f4=",
+   "notice_type": "پژوهش کاربردی / فناوری",
+   "sector": "دولتی",
+   "facts": {
+    "price": "اعتبار پروژه‌ی پژوهشی/فناوری – مبلغ در سند نیاز ساتع",
+    "guarantee": "طبق قرارداد پژوهشی با دستگاه متقاضی (معمولاً تضمین حسن انجام کار)",
+    "experience": "ارسال پیشنهاده (پروپوزال) و سوابق فناور در سامانه ساتع؛ ارزیابی توسط دستگاه متقاضی",
+    "international": "ویژه‌ی فناوران و شرکت‌های ایرانی ثبت‌نام‌شده در ساتع"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "ai_cross_cutting"
+   ],
+   "days_left": 3,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-10-19T13:28:54",
+   "history": [
+    {
+     "at": "2026-10-19T13:28:54",
+     "status": "new"
+    }
+   ]
+  },
+  "SATE-hJTuANu4pa8": {
+   "id": "SATE-hJTuANu4pa8",
+   "source": "ساتع (sate.atf.gov.ir)",
+   "market": "domestic",
+   "prefiltered": true,
+   "title": "طراحی سامانه مانیتورینگ و پایش برخط راندمان سنجی و مصرف انرژی در ماشین آلات صنعتی دوار مناطق نفتخیز جنوب (0276)",
+   "description": "پژوهش کاربردی – ماهیت: فناوری",
+   "buyer": "شرکت ملی مناطق نفتخیز جنوب",
+   "country": "ایران – اهواز",
+   "deadline": "2026-10-22",
+   "deadline_fa": "1405/07/30",
+   "published": "",
+   "url": "https://sate.atf.gov.ir/Systems/Default.aspx?SiteRequestId=hJTuANu4pa8=",
+   "notice_type": "پژوهش کاربردی / فناوری",
+   "sector": "شرکت دولتی / عمومی",
+   "facts": {
+    "price": "اعتبار پروژه‌ی پژوهشی/فناوری – مبلغ در سند نیاز ساتع",
+    "guarantee": "طبق قرارداد پژوهشی با دستگاه متقاضی (معمولاً تضمین حسن انجام کار)",
+    "experience": "ارسال پیشنهاده (پروپوزال) و سوابق فناور در سامانه ساتع؛ ارزیابی توسط دستگاه متقاضی",
+    "international": "ویژه‌ی فناوران و شرکت‌های ایرانی ثبت‌نام‌شده در ساتع"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "ai_cross_cutting"
+   ],
+   "days_left": 3,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-10-19T13:28:54",
+   "history": [
+    {
+     "at": "2026-10-19T13:28:54",
+     "status": "new"
+    }
+   ]
+  },
+  "SATE-10n1I4Dvhmg": {
+   "id": "SATE-10n1I4Dvhmg",
+   "source": "ساتع (sate.atf.gov.ir)",
+   "market": "domestic",
+   "prefiltered": true,
+   "title": "بررسی و طراحی روشی برای تشخیص عیوب جوش خطوط لوله مبتنی بر هوش مصنوعی",
+   "description": "پژوهش کاربردی – ماهیت: فناوری",
+   "buyer": "شرکت گاز استان مازندران",
+   "country": "ایران – ساری",
+   "deadline": "2026-10-23",
+   "deadline_fa": "1405/08/01",
+   "published": "",
+   "url": "https://sate.atf.gov.ir/Systems/Default.aspx?SiteRequestId=10n1I4Dvhmg=",
+   "notice_type": "پژوهش کاربردی / فناوری",
+   "sector": "شرکت دولتی / عمومی",
+   "facts": {
+    "price": "اعتبار پروژه‌ی پژوهشی/فناوری – مبلغ در سند نیاز ساتع",
+    "guarantee": "طبق قرارداد پژوهشی با دستگاه متقاضی (معمولاً تضمین حسن انجام کار)",
+    "experience": "ارسال پیشنهاده (پروپوزال) و سوابق فناور در سامانه ساتع؛ ارزیابی توسط دستگاه متقاضی",
+    "international": "ویژه‌ی فناوران و شرکت‌های ایرانی ثبت‌نام‌شده در ساتع"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "ai_cross_cutting"
+   ],
+   "days_left": 4,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-10-19T13:28:54",
+   "history": [
+    {
+     "at": "2026-10-19T13:28:54",
+     "status": "new"
+    }
+   ]
+  },
+  "SATE-wXGwdPl4": {
+   "id": "SATE-wXGwdPl4",
+   "source": "ساتع (sate.atf.gov.ir)",
+   "market": "domestic",
+   "prefiltered": true,
+   "title": "توسعه چارچوب داده محور چندمنبعی برای پایش و پیش آگاهی مکانی - زمانی خشکسالی در خراسان رضوی",
+   "description": "پژوهش کاربردی – ماهیت: فناوری",
+   "buyer": "شرکت سهامی آب منطقه‌ای خراسان رضوی",
+   "country": "ایران – مشهد",
+   "deadline": "2026-10-24",
+   "deadline_fa": "1405/08/02",
+   "published": "",
+   "url": "https://sate.atf.gov.ir/Systems/Default.aspx?SiteRequestId=/wXGwd/P/l4=",
+   "notice_type": "پژوهش کاربردی / فناوری",
+   "sector": "شرکت دولتی / عمومی",
+   "facts": {
+    "price": "اعتبار پروژه‌ی پژوهشی/فناوری – مبلغ در سند نیاز ساتع",
+    "guarantee": "طبق قرارداد پژوهشی با دستگاه متقاضی (معمولاً تضمین حسن انجام کار)",
+    "experience": "ارسال پیشنهاده (پروپوزال) و سوابق فناور در سامانه ساتع؛ ارزیابی توسط دستگاه متقاضی",
+    "international": "ویژه‌ی فناوران و شرکت‌های ایرانی ثبت‌نام‌شده در ساتع"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "ai_cross_cutting"
+   ],
+   "days_left": 5,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-10-19T13:28:54",
+   "history": [
+    {
+     "at": "2026-10-19T13:28:54",
+     "status": "new"
+    }
+   ]
+  },
+  "SATE-5bAsvT9EoY8": {
+   "id": "SATE-5bAsvT9EoY8",
+   "source": "ساتع (sate.atf.gov.ir)",
+   "market": "domestic",
+   "prefiltered": true,
+   "title": "توسعه مدل بهینه‌سازی الگوی مصرف آب زیرزمینی در کشت‌های بهاره مبتنی بر روش‌های نوین آبیاری و هوش مصنوعی (مطالعه موردی: مزارع نمونه)",
+   "description": "پژوهش کاربردی – ماهیت: فناوری",
+   "buyer": "شرکت سهامی آب منطقه‌ای لرستان",
+   "country": "ایران – نور آباد",
+   "deadline": "2026-10-28",
+   "deadline_fa": "1405/08/06",
+   "published": "",
+   "url": "https://sate.atf.gov.ir/Systems/Default.aspx?SiteRequestId=5bAsvT9EoY8=",
+   "notice_type": "پژوهش کاربردی / فناوری",
+   "sector": "شرکت دولتی / عمومی",
+   "facts": {
+    "price": "اعتبار پروژه‌ی پژوهشی/فناوری – مبلغ در سند نیاز ساتع",
+    "guarantee": "طبق قرارداد پژوهشی با دستگاه متقاضی (معمولاً تضمین حسن انجام کار)",
+    "experience": "ارسال پیشنهاده (پروپوزال) و سوابق فناور در سامانه ساتع؛ ارزیابی توسط دستگاه متقاضی",
+    "international": "ویژه‌ی فناوران و شرکت‌های ایرانی ثبت‌نام‌شده در ساتع"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "ai_cross_cutting"
+   ],
+   "days_left": 9,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-10-19T13:28:54",
+   "history": [
+    {
+     "at": "2026-10-19T13:28:54",
+     "status": "new"
+    }
+   ]
+  },
+  "SATE-q5Hcg1scPs": {
+   "id": "SATE-q5Hcg1scPs",
+   "source": "ساتع (sate.atf.gov.ir)",
+   "market": "domestic",
+   "prefiltered": true,
+   "title": "طراحی و اعتبارسنجی سامانه پشتیبان تصمیم‌گیری هوشمند (DSS) برای مدیریت بهینه منابع آب در بحران‌های زیستی در سدها و افزایش تاب‌آوری تأمین آب شرب",
+   "description": "پژوهش کاربردی – ماهیت: فناوری",
+   "buyer": "شرکت سهامی آب منطقه‌ای لرستان",
+   "country": "ایران – نور آباد",
+   "deadline": "2026-10-28",
+   "deadline_fa": "1405/08/06",
+   "published": "",
+   "url": "https://sate.atf.gov.ir/Systems/Default.aspx?SiteRequestId=/q5Hcg1scPs=",
+   "notice_type": "پژوهش کاربردی / فناوری",
+   "sector": "شرکت دولتی / عمومی",
+   "facts": {
+    "price": "اعتبار پروژه‌ی پژوهشی/فناوری – مبلغ در سند نیاز ساتع",
+    "guarantee": "طبق قرارداد پژوهشی با دستگاه متقاضی (معمولاً تضمین حسن انجام کار)",
+    "experience": "ارسال پیشنهاده (پروپوزال) و سوابق فناور در سامانه ساتع؛ ارزیابی توسط دستگاه متقاضی",
+    "international": "ویژه‌ی فناوران و شرکت‌های ایرانی ثبت‌نام‌شده در ساتع"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "ai_cross_cutting"
+   ],
+   "days_left": 9,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-10-19T13:28:54",
+   "history": [
+    {
+     "at": "2026-10-19T13:28:54",
+     "status": "new"
+    }
+   ]
+  },
+  "SATE-VwlBGmr1AWg": {
+   "id": "SATE-VwlBGmr1AWg",
+   "source": "ساتع (sate.atf.gov.ir)",
+   "market": "domestic",
+   "prefiltered": true,
+   "title": "استفاده از دستیار هوش  مصنوعی در تحلیل و ارزیابی سیمان پشت لوله های جداری",
+   "description": "پژوهش کاربردی – ماهیت: فناوری",
+   "buyer": "شرکت نفت خزر",
+   "country": "ایران – تهران",
+   "deadline": "2026-10-29",
+   "deadline_fa": "1405/08/07",
+   "published": "",
+   "url": "https://sate.atf.gov.ir/Systems/Default.aspx?SiteRequestId=VwlBGmr1AWg=",
+   "notice_type": "پژوهش کاربردی / فناوری",
+   "sector": "شرکت دولتی / عمومی",
+   "facts": {
+    "price": "اعتبار پروژه‌ی پژوهشی/فناوری – مبلغ در سند نیاز ساتع",
+    "guarantee": "طبق قرارداد پژوهشی با دستگاه متقاضی (معمولاً تضمین حسن انجام کار)",
+    "experience": "ارسال پیشنهاده (پروپوزال) و سوابق فناور در سامانه ساتع؛ ارزیابی توسط دستگاه متقاضی",
+    "international": "ویژه‌ی فناوران و شرکت‌های ایرانی ثبت‌نام‌شده در ساتع"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "ai_cross_cutting"
+   ],
+   "days_left": 10,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-10-19T13:28:54",
+   "history": [
+    {
+     "at": "2026-10-19T13:28:54",
+     "status": "new"
+    }
+   ]
+  },
+  "SATE-wZ0ZrLLt9YI": {
+   "id": "SATE-wZ0ZrLLt9YI",
+   "source": "ساتع (sate.atf.gov.ir)",
+   "market": "domestic",
+   "prefiltered": true,
+   "title": "توسعه مدل برخط تعیین منحنی فرمان مخازن سدهای شرب مبتنی بر بیگ دیتا و یادگیری ماشین برای حداکثرسازی تأمین آب و افزایش تاب‌آوری ذی‌نفعان",
+   "description": "پژوهش کاربردی – ماهیت: فناوری",
+   "buyer": "شرکت سهامی آب منطقه‌ای لرستان",
+   "country": "ایران – نور آباد",
+   "deadline": "2026-10-29",
+   "deadline_fa": "1405/08/07",
+   "published": "",
+   "url": "https://sate.atf.gov.ir/Systems/Default.aspx?SiteRequestId=wZ0ZrLLt9YI=",
+   "notice_type": "پژوهش کاربردی / فناوری",
+   "sector": "شرکت دولتی / عمومی",
+   "facts": {
+    "price": "اعتبار پروژه‌ی پژوهشی/فناوری – مبلغ در سند نیاز ساتع",
+    "guarantee": "طبق قرارداد پژوهشی با دستگاه متقاضی (معمولاً تضمین حسن انجام کار)",
+    "experience": "ارسال پیشنهاده (پروپوزال) و سوابق فناور در سامانه ساتع؛ ارزیابی توسط دستگاه متقاضی",
+    "international": "ویژه‌ی فناوران و شرکت‌های ایرانی ثبت‌نام‌شده در ساتع"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "ai_cross_cutting"
+   ],
+   "days_left": 10,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-10-19T13:28:54",
+   "history": [
+    {
+     "at": "2026-10-19T13:28:54",
+     "status": "new"
+    }
+   ]
+  },
+  "SETAD-1105092288003523": {
+   "id": "SETAD-1105092288003523",
+   "source": "ستاد (setadiran.ir)",
+   "market": "domestic",
+   "title": "نیاز کالا-هدست به منظور برگزاری دوره هوش مصنوعی",
+   "description": "– خرید",
+   "buyer": "شرکت ملی مناطق نفت خیز جنوب",
+   "country": "ایران – خوزستان",
+   "deadline": "2026-10-31",
+   "deadline_fa": "1405/08/09 - 08:00",
+   "published": "",
+   "url": "https://fe.setadiran.ir/centralboard/#/central-board-0",
+   "notice_type": "خرید",
+   "setad_number": "1105092288003523",
+   "sector": "شرکت دولتی / عمومی",
+   "facts": {
+    "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "guarantee": "تضمین شرکت در فرایند ارجاع کار طبق آیین‌نامه تضمین معاملات دولتی – مبلغ در اسناد ستاد",
+    "experience": "ارزیابی کیفی/رتبه و سوابق طبق اسناد ستاد (نیاز به ورود به سامانه)",
+    "international": "نیاز به ثبت‌نام در ستاد و شخصیت حقوقی ایرانی؛ شرکت خارجی فقط از طریق شریک ایرانی"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "ai_cross_cutting"
+   ],
+   "days_left": 12,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-10-19T13:28:54",
+   "history": [
+    {
+     "at": "2026-10-19T13:28:54",
      "status": "new"
     }
    ]
@@ -625,10 +460,10 @@
    "days_left": 13,
    "line": "ai",
    "status": "new",
-   "first_seen": "2026-10-19T12:44:15",
+   "first_seen": "2026-10-19T13:28:54",
    "history": [
     {
-     "at": "2026-10-19T12:44:15",
+     "at": "2026-10-19T13:28:54",
      "status": "new"
     }
    ]
@@ -659,10 +494,149 @@
    "days_left": 14,
    "line": "ai",
    "status": "new",
-   "first_seen": "2026-10-19T12:44:15",
+   "first_seen": "2026-10-19T13:28:54",
    "history": [
     {
-     "at": "2026-10-19T12:44:15",
+     "at": "2026-10-19T13:28:54",
+     "status": "new"
+    }
+   ]
+  },
+  "WB-OP00465889": {
+   "id": "WB-OP00465889",
+   "source": "World Bank",
+   "market": "international",
+   "title": "Supply, Installation, Testing and Commissioning of Asset Performance Management System (APMS) in PESCO Peshawar & Khyber Operation Circles Khyber Pakhtunkhwa Province",
+   "description": "Electricity Distribution Efficiency Improvement Project. Request for Bids Goods (Single Stage Two Envelop - Bidding Process) Country: Islamic Republic of Pakistan. Name of Project: Electricity Distribution Efficiency Improvement Project (EDEIP ) Contract Title: Procurement of 11,413 No’s Standard Asset Performance Management System (APMS) with Magnetic Contactor and Non – Motorized MCCB (Ordering Code: APMS-MC-S100 & APMS-MC-S200) along with Allied material and Related Services for Installation in in PESCO Operation Circles (Peshawar & Khyber) Loan No: IBRD -93180-PK RFB Reference No: PK-PESCO-556530-GO-RFB-ICB-10 Addendum No.1 AMENDMENT IN ACCORDANCE WITH SECTION-I (ITB-8) TO THE RFB DOCUMENT. ACTIVITY NO. PK-PESCO-556530-GO-RFB-ICB-10 This addendum No.1, in SPN against RFB No.PK-PESCO-556530-GO-RFB-ICB-10 is being issued on October 16th, 2026, in accordance with the Section I – Instruction to Bidders (ITB-8) to the RFB Document. The Bid submission deadline date and Bid opening date previously mentioned as 22-10-2026 at 11:00 A.M are hereby revised to 05-11-2026 at 11:00 AM (Pakistan local time). All other terms and conditions of the Specific Procurement Notice shall remain the same. =============================================================================== Published SPN Islamic Republic of Pakistan. Represented by CE (Dev.) PMU has received financing from the World Bank toward the cost of the Electricity Distribution Efficiency Improvement Project (EDEIP), and intends to apply part of the proceeds toward payments under the contract for Procurement of 11,413 Nos. Asset Performance Management System (APMS) along with Allied Material and Related Services for Installation on Distribution Transformers of 200KVA & 100KVA Ratings. For this contract, the Borrower shall process the payments using the Payment disbursement methods, as defined in the World Bank’s Disbursement Guidelines for Investment Project Financing, except for those payments, which the contract provides to be made through Letter of Credit. The Chief Engineer (Development), PMU PESCO, now invites sealed Bids from eligible Bidders for the supply, installation, integration, testing and commissioning of Asset Performance Management Systems (APMS) along with allied materials and related services for distribution transformers in Peshawar and Khyber Operation Circles of PESCO. The Goods shall be delivered at the Project Site: PESCO GSC Warehouse, 132 kV Grid Station, Industrial Estate, Jamrud Road, Hayatabad, Peshawar, Khyber Pakhtunkhwa, Pakistan. Bidding will be conducted through international competitive procurement using Single stage two envelope procedure on Carriage and Insurance paid (CIP) basis using a Request for Bids (RFB) as specified in the World Bank’s “Procurement Regulations for IPF Borrowers “Procurement Regulations November 2020” and is open to all eligible Bidders as defined in the Procurement Regulations. Bids will be evaluated in accordance with the evaluation process set out in the bidding documents. The following weightings shall apply for Rated Criteria (including Technical and non-price factors): 30% and for Bid Cost: 70% Interested eligible Bidders may obtain further information from Chief Engineer (Development) PMU PESCO, Peshawar and e-mail : ce.pmupesco@gmail.com or pmupesco@gmail.com and inspect the bidding document during office hours i.e. 0900 to 1600 hours at the address given below. The Bidding Document may be downloaded free of cost, in English, from PESCO website at https://www.pesco.com.pk/world-bank/wb-reports . The Bidding Document downloaded from the PESCO website shall be considered valid for participation in the bidding process. Prospective Bidders are requested to submit the Basic Information Sheet provided in the Bidding Document by email for registration and future communication. A Pre-Bid meeting will be taken place in the office of the Purchaser at the address given below on 06-10-2026 at 11:00 A.M. (Local Time). The firm ",
+   "buyer": "Peshawar Electric Supply Company",
+   "country": "Pakistan",
+   "deadline": "2026-11-05",
+   "published": "2026-10-16",
+   "url": "https://projects.worldbank.org/en/projects-operations/procurement-detail/OP00465889",
+   "notice_type": "Invitation for Bids",
+   "procurement_method": "Request for Bids",
+   "sector": "دولتی (پروژه با تأمین مالی بانک جهانی)",
+   "facts": {
+    "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "guarantee": "طبق آگهی: bid security of us $ 100,000",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "رقابت ملی – احتمالاً محدود به شرکت‌های داخلی کشور خریدار"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "energy"
+   ],
+   "days_left": 17,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-10-19T13:28:54",
+   "history": [
+    {
+     "at": "2026-10-19T13:28:54",
+     "status": "new"
+    }
+   ]
+  },
+  "WB-OP00470201": {
+   "id": "WB-OP00470201",
+   "source": "World Bank",
+   "market": "international",
+   "title": "Supply, Installation, Testing and Commissioning of Asset Performance Management System (APMS) in PESCO Swat Operation Circle Khyber Pakhtunkhwa Province",
+   "description": "Electricity Distribution Efficiency Improvement Project. Request for Bids Goods (Single Stage Two Envelope - Bidding Process) Country: Islamic Republic of Pakistan. Name of Project: Electricity Distribution Efficiency Improvement Project (EDEIP ) Contract Title: Package IV - Procurement of 3,249 No’s Standard Asset Performance Management System (APMS) with Magnetic Contactor and Non – Motorized MCCB (Ordering Code: APMS-MC-S100 & APMS-MC-S200) along with Allied material and Related Services for Installation in PESCO Operation Circle Swat. Loan No: IBRD -93180-PK RFB Reference No: PK-PESCO-556537-GO-RFB-ICB-11 Islamic Republic of Pakistan. Represented by CE (Dev.) PMU has received financing from the World Bank toward the cost of the Electricity Distribution Efficiency Improvement Project (EDEIP), and intends to apply part of the proceeds toward payments under the contract for Procurement of 3,249 Nos. Asset Performance Management System (APMS) along with Allied Material and Related Services for Installation on Distribution Transformers of 200KVA & 100KVA Ratings. For this contract, the Borrower shall process the payments using the Payment disbursement methods, as defined in the World Bank’s Disbursement Guidelines for Investment Project Financing, except for those payments, which the contract provides to be made through Letter of Credit. The Chief Engineer (Development), PMU PESCO, now invites sealed Bids from eligible Bidders for the supply, installation, integration, testing and commissioning of Asset Performance Management Systems (APMS) along with allied materials and related services for distribution transformers in Swat Operation Circle of PESCO. The Goods shall be delivered at the Project Site: PESCO GSC Warehouse, 132 kV Grid Station, Industrial Estate, Jamrud Road, Hayatabad, Peshawar, Khyber Pakhtunkhwa, Pakistan. Bidding will be conducted through international competitive procurement using Single stage two envelope procedure on Carriage and Insurance paid (CIP) basis using a Request for Bids (RFB) as specified in the World Bank’s “Procurement Regulations for IPF Borrowers “Procurement Regulations November 2020” and is open to all eligible Bidders as defined in the Procurement Regulations. Bids will be evaluated in accordance with the evaluation process set out in the bidding documents. The following weightings shall apply for Rated Criteria (including Technical and non-price factors): 30% and for Bid Cost: 70% Interested eligible Bidders may obtain further information from Chief Engineer (Development) PMU PESCO, Peshawar and e-mail : ce.pmupesco@gmail.com or pmupesco@gmail.com and inspect the bidding document during office hours i.e. 0900 to 1600 hours at the address given below. The Bidding Document may be downloaded free of cost, in English, from PESCO website at https://www.pesco.com.pk/world-bank/wb-reports . The Bidding Document downloaded from the PESCO website shall be considered valid for participation in the bidding process. Prospective Bidders are requested to submit the Basic Information Sheet provided in the Bidding Document by email for registration and future communication. A Pre-Bid meeting will be held in the office of the Purchaser at the address given below on 27-10-2026 at 11:00 A.M. (Local Time). The firm may participate online, for which request may be sent on the email provided. Bids must be delivered to the address below on or before 10-11-2026 at 11:00 Hrs. Electronic Bidding will not be permitted. Late Bids will be rejected. The outer Bid envelopes marked “Original Bid”, and the inner envelopes marked “Technical Part” will be publicly opened in the presence of the Bidders’ designated representatives and anyone who chooses to attend, at the address below on or before 10-11-2026 Immediately after Bids submission deadline. All envelopes marked “Second Envelope: Financial Part” shall remain unopened and will be held in safe custody of the Purchaser until the second public opening. All Bids must b",
+   "buyer": "Peshawar Electric Supply Company",
+   "country": "Pakistan",
+   "deadline": "2026-11-10",
+   "published": "2026-09-22",
+   "url": "https://projects.worldbank.org/en/projects-operations/procurement-detail/OP00470201",
+   "notice_type": "Invitation for Bids",
+   "procurement_method": "Request for Bids",
+   "sector": "دولتی (پروژه با تأمین مالی بانک جهانی)",
+   "facts": {
+    "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "guarantee": "طبق آگهی: bid security of us $ 50,000",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "رقابت ملی – احتمالاً محدود به شرکت‌های داخلی کشور خریدار"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "energy"
+   ],
+   "days_left": 22,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-10-19T13:28:54",
+   "history": [
+    {
+     "at": "2026-10-19T13:28:54",
+     "status": "new"
+    }
+   ]
+  },
+  "WB-OP00468997": {
+   "id": "WB-OP00468997",
+   "source": "World Bank",
+   "market": "international",
+   "title": "Procurement of Battery Energy Storage Systems (BESS) with Energy Management Systems (EMS) and Ancillary Equipment at Kyiv HPP / PSP, Kaniv, Kremenchuk and Seredniodniprovska Hydropower Plants, including related services (training of UHE staff)",
+   "description": "Improving Power System Resilience for European Power Grid Integration Project. SPECIFIC PROCUREMENT NOTICE Request for Bids Plant Design, Supply, and Installation (Without Prequalification) (Two-Envelope Bidding Process with rated criteria) Country : Ukraine Project : Ukraine – Improving Power System Resilience for European Power Grid Integration (Installation of Hybrid Systems for Electricity Production in Ukrhydroenergo) Contract Title : Design, Supply and Installation of Battery Energy Storage Systems (BESS) with Energy Management Systems (EMS) and Ancillary Equipment at Kyiv HPP / PSP, Kaniv, Kremenchuk and Seredniodniprovska Hydropower Plants, including related services (training of UHE staff) (hereinafter referred to ‘the Contract’) comprising the following lots: Lot 1: Design, Supply and Installation of Battery Energy Storage Systems (BESS) with Energy Management Systems (EMS) and Ancillary Equipment at Kyiv HPP / PSP, including related services (training of UHE staff) (46 MW BESS capacity). Lot 2: Design, Supply and Installation of Battery Energy Storage Systems (BESS) with Energy Management Systems (EMS) and Ancillary Equipment at Kaniv HPP, including related services (training of UHE staff) (66 MW BESS capacity). Lot 3: Design, Supply and Installation of Battery Energy Storage Systems (BESS) with Energy Management Systems (EMS) and Ancillary Equipment at Kremenchuk HPP, including related services (training of UHE staff) (60 MW BESS capacity). Lot 4: Design, Supply and Installation of Battery Energy Storage Systems (BESS) with Energy Management Systems (EMS) and Ancillary Equipment at Seredniodniprovska HPP, including related services (training of UHE staff) (25 MW BESS capacity). Source of financing: IBRD Loan No.: 9284-UA; CTF Loan No.: TF0B5994; CTF Loan No.: TF0C5903-UA; and CTF Grant No.: TF-0B5724. Project ID : P176114 RFB reference No .: UHE-IPSR-DSI-1 1. Private Joint Stock Company “Ukrhydroenergo” (PJSC “Ukrhydroenergo” or UHE) has received financing from the World Bank (hereinafter referred to as the “Bank”) toward the cost of the Project “Ukraine – Improving Power System Resilience for European Power Grid Integration (Installation of Hybrid Systems for Electricity Production in Ukrhydroenergo)” and intends to apply part of the proceeds toward payments under the Contract. Under this Contract, UHE intends to make payments using the Direct Payment disbursement method, as defined in the World Bank Disbursement Guidelines for Investment Project Financing. 2. PJSC “Ukrhydroenergo” now invites eligible Bidders to submit Bids for the Contract. Bidders can bid for any one lot, more than one lot or all the four lots . The Time for Completion shall be between 420 and 510 calendar days from the Effective Date of the Contract. No credit will be given for early completion, and Bids offering a Time for Completion exceeding 510 days shall be rejected. 3. Prospective Bidders shall meet the following minimum qualification requirements: (a) General Experience: Experience in activities related to the design, supply and installation of equipment for energy infrastructure facilities, including generating facilities, battery energy storage systems (BESS), and MV and HV grids, under contracts in the role of contractor, subcontractor, or management contractor since at least January 2020. Design and construction experience may be from different contracts. (b) Financial Capabilities : The Bidder shall submit audited balance sheets or, if not required by the law of the Bidder’s country, other financial statements acceptable to UHE for the last five (5) fiscal years to demonstrate the current soundness of the Bidder’s financial position and its prospective long-term profitability. (c) Average Annual Turnover: The Bidder shall demonstrate a minimum average annual turnover for the last three (3) fiscal years as follows: Lot 1 – USD 36 million; Lot 2 – USD 51 million; Lot 3 – USD 46 million; Lot 4 – USD 20 million. Bidders submitting Bids",
+   "buyer": "PRIVATE JOINT STOCK COMPANY “UKRHYDROENERGO”",
+   "country": "Ukraine",
+   "deadline": "2026-11-12",
+   "published": "2026-09-16",
+   "url": "https://projects.worldbank.org/en/projects-operations/procurement-detail/OP00468997",
+   "notice_type": "Invitation for Bids",
+   "procurement_method": "Request for Bids",
+   "sector": "دولتی (پروژه با تأمین مالی بانک جهانی)",
+   "facts": {
+    "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "guarantee": "طبق آگهی: bid security shall not be required",
+    "experience": "طبق آگهی: qualification requirements: (a) general experience: experience in activities related to the design, supply and installation of equipment for energy infrastructure facilities, including generating facilities, battery ener",
+    "international": "رقابت ملی – احتمالاً محدود به شرکت‌های داخلی کشور خریدار"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "energy"
+   ],
+   "days_left": 24,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-10-19T13:28:54",
+   "history": [
+    {
+     "at": "2026-10-19T13:28:54",
+     "status": "new"
+    }
+   ]
+  },
+  "TED-716134-2026": {
+   "id": "TED-716134-2026",
+   "source": "TED (EU)",
+   "market": "international",
+   "title": "Poland – Servers – Zakup serwerów dla potrzeb Projektu SCADA w Enea Operator sp. z o.o.",
+   "description": "1.1. Przedmiotem zamówienia jest zakup serwerów dla potrzeb Projektu SCADA w Enea Operator sp. z o.o. 1.2. Szczegółowy opis przedmiotu zamówienia został zawarty w Rozdziale II SWZ „Opis przedmiotu zamówienia”. 1.3. Zamawiający nie przewiduje możliwości ani wymogu odbycia wizji lokalnej lub sprawdzenia przez Wykonawców dokumentów niezbędnych do realizacji zamówienia dostępnych na miejscu u Zamawiającego, o których mowa w art. 131 ust. 2 ustawy Pzp.",
+   "buyer": "ENEA Operator sp. z o.o.",
+   "country": "POL",
+   "deadline": "2026-11-16",
+   "published": "2026-10-16",
+   "url": "https://ted.europa.eu/en/notice/-/detail/716134-2026",
+   "notice_type": "cn-standard",
+   "sector": "نامشخص",
+   "facts": {
+    "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "رویه‌ی باز اتحادیه اروپا – شرکت‌های خارج از EU معمولاً مجازند مگر محدودیت صریح در اسناد"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "energy"
+   ],
+   "days_left": 28,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-10-19T13:28:54",
+   "history": [
+    {
+     "at": "2026-10-19T13:28:54",
      "status": "new"
     }
    ]
@@ -693,10 +667,186 @@
    "days_left": 30,
    "line": "ai",
    "status": "new",
-   "first_seen": "2026-10-19T12:44:15",
+   "first_seen": "2026-10-19T13:28:54",
    "history": [
     {
-     "at": "2026-10-19T12:44:15",
+     "at": "2026-10-19T13:28:54",
+     "status": "new"
+    }
+   ]
+  },
+  "WB-OP00473664": {
+   "id": "WB-OP00473664",
+   "source": "World Bank",
+   "market": "international",
+   "title": "Supply, Installation, Testing and Commissioning of Asset Performance Management System (APMS) in PESCO Mardan & Swabi Operation Circles Khyber Pakhtunkhwa Province",
+   "description": "Electricity Distribution Efficiency Improvement Project. Request for Bids Goods (Single Stage Two Envelop - Bidding Process) Country: Islamic Republic of Pakistan. Name of Project: Electricity Distribution Efficiency Improvement Project (EDEIP ) Contract Title: Procurement of 4,011 No’s Standard Asset Performance Management System (APMS) with Magnetic Contactor and Non – Motorized MCCB (Ordering Code: APMS-MC-S100 & APMS-MC-S200) along with Allied material and Related Services for Installation in in PESCO Operation Circles (Mardan & Swabi) Loan No: IBRD -9318-PK RFB Reference No: PK-PESCO-556530-GO-RFB-ICB-12 Islamic Republic of Pakistan. Represented by CE (Dev.) PMU has received financing from the World Bank toward the cost of the Electricity Distribution Efficiency Improvement Project (EDEIP), and intends to apply part of the proceeds toward payments under the contract for Procurement of 4,011 Nos. Asset Performance Management System (APMS) along with Allied Material and Related Services for Installation on Distribution Transformers of 200KVA & 100KVA Ratings. For this contract, the Borrower shall process the payments using the Payment disbursement methods, as defined in the World Bank’s Disbursement Guidelines for Investment Project Financing, except for those payments, which the contract provides to be made through Letter of Credit. The Chief Engineer (Development), PMU PESCO, now invites sealed Bids from eligible Bidders for the supply, installation, integration, testing and commissioning of Asset Performance Management Systems (APMS) along with allied materials and related services for distribution transformers in Mardan and Swabi Operation Circles of PESCO. The Goods shall be delivered at the Project Site: PESCO GSC Warehouse, 132 kV Grid Station, Industrial Estate, Jamrud Road, Hayatabad, Peshawar, Khyber Pakhtunkhwa, Pakistan. Bidding will be conducted through international competitive procurement using Single stage two envelope procedure on Carriage and Insurance paid (CIP) basis using a Request for Bids (RFB) as specified in the World Bank’s “Procurement Regulations for IPF Borrowers “Procurement Regulations November 2020” and is open to all eligible Bidders as defined in the Procurement Regulations. Bids will be evaluated in accordance with the evaluation process set out in the bidding documents. The following weightings shall apply for Rated Criteria (including Technical and non-price factors): 30% and for Bid Cost: 70% Interested eligible Bidders may obtain further information from Chief Engineer (Development) PMU PESCO, Peshawar and e-mail : ce.pmupesco@gmail.com or pmupesco@gmail.com and inspect the bidding document during office hours i.e. 0900 to 1600 hours at the address given below. The Bidding Document may be downloaded free of cost, in English, from PESCO website at https://www.pesco.com.pk/world-bank/wb-reports . The Bidding Document downloaded from the PESCO website shall be considered valid for participation in the bidding process. Prospective Bidders are requested to submit the Basic Information Sheet provided in the Bidding Document by email for registration and future communication. A Pre-Bid meeting will be taken place in the office of the Purchaser at the address given below on 12-11-2026 at 11:00 A.M. (Local Time). The firm may participate online, for which request may be sent on the email provided or visit PESCO website for online participation details. Bids must be delivered to the address below on or before 30-11-2026 at 11:00Hrs. Electronic Bidding will not be permitted. Late Bids will be rejected. The outer Bid envelopes marked “Original Bid”, and the inner envelopes marked “Technical Part” will be publicly opened in the presence of the Bidders’ designated representatives and anyone who chooses to attend, at the address below on or before 30-11-2026 just after Bids submission deadline. All envelopes marked “Second Envelope: Financial Part” shall remain unopened and will be held in safe custo",
+   "buyer": "Peshawar Electric Supply Company",
+   "country": "Pakistan",
+   "deadline": "2026-11-30",
+   "published": "2026-10-08",
+   "url": "https://projects.worldbank.org/en/projects-operations/procurement-detail/OP00473664",
+   "notice_type": "Invitation for Bids",
+   "procurement_method": "Request for Bids",
+   "sector": "دولتی (پروژه با تأمین مالی بانک جهانی)",
+   "facts": {
+    "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "guarantee": "طبق آگهی: bid security of us $ 100,000",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "رقابت ملی – احتمالاً محدود به شرکت‌های داخلی کشور خریدار"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "energy"
+   ],
+   "days_left": 42,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-10-19T13:28:54",
+   "history": [
+    {
+     "at": "2026-10-19T13:28:54",
+     "status": "new"
+    }
+   ]
+  },
+  "WB-OP00473693": {
+   "id": "WB-OP00473693",
+   "source": "World Bank",
+   "market": "international",
+   "title": "Supply, Installation, Testing and Commissioning of Asset Performance Management System (APMS) in PESCO Bannu & Dera Ismail Khan Operation Circles Khyber Pakhtunkhwa Province",
+   "description": "Electricity Distribution Efficiency Improvement Project. Request for Bids Goods (Single Stage Two Envelop - Bidding Process) Country: Islamic Republic of Pakistan. Name of Project: Electricity Distribution Efficiency Improvement Project (EDEIP ) Contract Title: Package III - Procurement of 2,050 No’s Standard Asset Performance Management System (APMS) with Magnetic Contactor and Non – Motorized MCCB (Ordering Code: APMS-MC-S100 & APMS-MC-S200) along with Allied material and Related Services for Installation in in PESCO Operation Circles (Bannu & D.I Khan) Loan No: IBRD -9318-PK RFB Reference No: PK-PESCO-556535-GO-RFB-ICB-13 Addendum No.1 AMENDMENT IN ACCORDANCE WITH SECTION-I (ITB-8) TO THE RFB DOCUMENT. ACTIVITY NO. PK-PESCO-556535-GO-RFB-ICB-13 This addendum No.1, in SPN against RFB No.PK-PESCO-556535-GO-RFB-ICB-13 is being issued on October 16th, 2026, in accordance with the Section I – Instruction to Bidders (ITB-8) to the RFB Document. The RFB No. PK-PESCO-556535-GO-RFB-ICB-13 stated in the Specific Procurement Notice version No.1 shall stand amended to PK-PESCO-556535-GO-RFB-ICB-12 . All other terms and conditions of the Specific Procurement Notice shall remain the same. =============================================================================== Published SPN Islamic Republic of Pakistan. Represented by CE (Dev.) PMU has received financing from the World Bank toward the cost of the Electricity Distribution Efficiency Improvement Project (EDEIP), and intends to apply part of the proceeds toward payments under the contract for Procurement of 2,050 Nos. Asset Performance Management System (APMS) along with Allied Material and Related Services for Installation on Distribution Transformers of 200KVA & 100KVA Ratings. For this contract, the Borrower shall process the payments using the Payment disbursement methods, as defined in the World Bank’s Disbursement Guidelines for Investment Project Financing, except for those payments, which the contract provides to be made through Letter of Credit. The Chief Engineer (Development), PMU PESCO, now invites sealed Bids from eligible Bidders for the supply, installation, integration, testing and commissioning of Asset Performance Management Systems (APMS) along with allied materials and related services for distribution transformers in Bannu & D.I Khan Operation Circles of PESCO. The Goods shall be delivered at the Project Site: PESCO GSC Warehouse, 132 kV Grid Station, Industrial Estate, Jamrud Road, Hayatabad, Peshawar, Khyber Pakhtunkhwa, Pakistan. Bidding will be conducted through international competitive procurement using Single stage two envelope procedure on Carriage and Insurance paid (CIP) basis using a Request for Bids (RFB) as specified in the World Bank’s “Procurement Regulations for IPF Borrowers “Procurement Regulations November 2020” and is open to all eligible Bidders as defined in the Procurement Regulations. Bids will be evaluated in accordance with the evaluation process set out in the bidding documents. The following weightings shall apply for Rated Criteria (including Technical and non-price factors): 30% and for Bid Cost: 70% Interested eligible Bidders may obtain further information from Chief Engineer (Development) PMU PESCO, Peshawar and e-mail : ce.pmupesco@gmail.com or pmupesco@gmail.com and inspect the bidding document during office hours i.e. 0900 to 1600 hours at the address given below. The Bidding Document may be downloaded free of cost, in English, from PESCO website at https://www.pesco.com.pk/world-bank/wb-reports . The Bidding Document downloaded from the PESCO website shall be considered valid for participation in the bidding process. Prospective Bidders are requested to submit the Basic Information Sheet provided in the Bidding Document by email for registration and future communication. A Pre-Bid meeting will be taken place in the office of the Purchaser at the address given below on 18-11-2026 at 11:00 A.M. (Local Time). The firm may partici",
+   "buyer": "Peshawar Electric Supply Company",
+   "country": "Pakistan",
+   "deadline": "2026-12-08",
+   "published": "2026-10-16",
+   "url": "https://projects.worldbank.org/en/projects-operations/procurement-detail/OP00473693",
+   "notice_type": "Invitation for Bids",
+   "procurement_method": "Request for Bids",
+   "sector": "دولتی (پروژه با تأمین مالی بانک جهانی)",
+   "facts": {
+    "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "guarantee": "طبق آگهی: bid security of us $ 80,000",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "رقابت ملی – احتمالاً محدود به شرکت‌های داخلی کشور خریدار"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "energy"
+   ],
+   "days_left": 50,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-10-19T13:28:54",
+   "history": [
+    {
+     "at": "2026-10-19T13:28:54",
+     "status": "new"
+    }
+   ]
+  },
+  "WB-OP00473300": {
+   "id": "WB-OP00473300",
+   "source": "World Bank",
+   "market": "international",
+   "title": "Local Hydropower Engineer – full-time 12 months",
+   "description": "Zletovica Productivity through Irrigation and Renewable Energy. REQUEST FOR EXPRESSIONS OF INTEREST (CONSULTING SERVICES - INDIVIDUAL CONSULTANT - LOCAL) Republic of North Macedonia Ministry of Agriculture, Forestry and Water Economy Zletovica Productivity through Irrigation and Renewable Energy Project (PIREP) Grant No.: TF0D2152 Assignment Title: Local Hydropower Engineer (full-time, 12 months) Reference No.: PIREP-IC-08 The Republic of North Macedonia has received financing from the World Bank, acting as trustee of the Grant Facility for Project Preparation (GFPP), for the preparation of the Zletovica Productivity through Irrigation and Renewable Energy Project (PIREP), and intends to apply part of the proceeds for consulting services. The Ministry of Agriculture, Forestry and Water Economy (MAFWE), through its Project Implementation Unit (PIU), is responsible for implementation of the grant. The preparation grant supports the updating of technical and hydraulic studies, dam safety documentation, transboundary-water analyses, and environmental and social instruments for Phases II and III of the Zletovica Hydrosystem, comprising irrigation development and hydropower generation. The PIU implements the grant in close coordination with the Public Enterprise for Water Management Activities HS “Zletovica”–Probištip (PE HS Zletovica), which provides technical leadership, data, access to facilities and institutional support. The objective of this assignment is to provide PE HS Zletovica and the PIU with senior technical advice and engineering oversight for the preparation and early implementation of the Phase III hydropower investments, while ensuring their integration with Phase II irrigation investments and the existing multipurpose system. The Engineer will help ensure that the investments are technically sound, economically and financially justified, safe, climate-resilient, construction-ready, operable and maintainable, compliant with applicable national requirements, and aligned with World Bank requirements. The consulting services (\"the Services\") include supporting hydropower-related procurement and, when formally appointed, providing technical input as a member of evaluation committees; reviewing feasibility studies, hydrological and energy-yield analyses, detailed designs, technical specifications, bills of quantities, cost estimates and bidding documents; optimizing hydropower schemes; reviewing electro-mechanical and electrical systems, SCADA, grid interconnection and commissioning arrangements; coordinating hydropower development with irrigation, drinking-water supply, reservoir operations and dam safety; integrating environmental and social requirements; supporting approvals and permits; reviewing consultant and contractor outputs; conducting site inspections; supporting construction, testing, commissioning and handover; and providing appraisal inputs, reports and capacity building. The Engineer will report technically to the Director of PE HS Zletovica. The PIU Coordinator/Project Director will serve as the contract-management focal point and provide administrative oversight and coordination on procurement, fiduciary, environmental and social matters. The assignment will be full-time for twelve (12) months during the GFPP-funded preparation period. The duty station will be the offices of PE HS Zletovica in Probištip, with regular travel to project sites and, as needed, to Skopje or other locations for coordination meetings, inspections, testing and commissioning activities. Any continuation into project implementation will be subject to satisfactory performance, project approval, financing availability, and a contract extension or new contract, as applicable. The complete Terms of Reference (TOR) for the assignment are included in Annex 1 to this Request for Expressions of Interest and form an integral part of it. MAFWE now invites eligible individuals (\"Consultants\") to indicate their interest in providing the Servi",
+   "buyer": "PE Hydrosystem Zletovica",
+   "country": "North Macedonia",
+   "deadline": "2026-10-27",
+   "published": "2026-10-06",
+   "url": "https://projects.worldbank.org/en/projects-operations/procurement-detail/OP00473300",
+   "notice_type": "Request for Expression of Interest",
+   "procurement_method": "Individual Consultant Selection",
+   "sector": "دولتی (پروژه با تأمین مالی بانک جهانی)",
+   "facts": {
+    "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "طبق آگهی: experience to perform the services",
+    "international": "قواعد خرید بانک جهانی: باز برای شرکت‌های همه‌ی کشورهای واجد شرایط (Eligibility rules)"
+   },
+   "keyword_score": 2,
+   "domains": [
+    "energy"
+   ],
+   "days_left": 8,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-10-19T13:28:54",
+   "history": [
+    {
+     "at": "2026-10-19T13:28:54",
+     "status": "new"
+    }
+   ]
+  },
+  "TED-716537-2026": {
+   "id": "TED-716537-2026",
+   "source": "TED (EU)",
+   "market": "international",
+   "title": "Poland – Medical software package – Rozbudowa systemu szpitalnego (HIS) Katowickiego Centrum Onkologii o dodatkowe moduły",
+   "description": "Na przedmiot zamówienia składają się z następujące moduły wraz z licencjami: Moduł nr 1 - Monitorowanie incydentów sercowych u pacjentów będących w trakcie chemioterapii Moduł nr 2 - Monitorowanie cukrzycy ciężarnych Moduł nr 3 - e-Usługa: Portal pacjenta - Uczulenia, Zażywane leki Moduł nr 4 - Rejestracja do laboratorium Moduł nr 5 - CDSS (Clinical Decision Support System) - Moduł Przegląd lekowy Moduł nr 6 - Sprawdzenie przez lekarza czy są EDM z innych placówek Moduł nr 7 - Raportowanie - wzmocnienie procesów IT Moduł nr 8 - System monitorowania temperatury na workach z krwią podczas transportu",
+   "buyer": "Katowickie Centrum Onkologii",
+   "country": "POL",
+   "deadline": "2026-11-16",
+   "published": "2026-10-16",
+   "url": "https://ted.europa.eu/en/notice/-/detail/716537-2026",
+   "notice_type": "cn-standard",
+   "sector": "دولتی",
+   "facts": {
+    "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "رویه‌ی باز اتحادیه اروپا – شرکت‌های خارج از EU معمولاً مجازند مگر محدودیت صریح در اسناد"
+   },
+   "keyword_score": 2,
+   "domains": [
+    "ai_cross_cutting",
+    "medical"
+   ],
+   "days_left": 28,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-10-19T13:28:54",
+   "history": [
+    {
+     "at": "2026-10-19T13:28:54",
+     "status": "new"
+    }
+   ]
+  },
+  "WB-OP00472448": {
+   "id": "WB-OP00472448",
+   "source": "World Bank",
+   "market": "international",
+   "title": "Installation of Individual Heat Substations and associated piping for public buildings in Chisinau DH system (Batch 2)",
+   "description": "Sustainable Transition through Energy Efficiency in Moldova Project (STEEM). Specific Procurement Notice Request for Bids Plant Design, Supply and Installation (Two-envelope Bidding Process, Without Prequalification) Employer: Moldova Energy Projects Implementation Unit (MEPIU) Project: Sustainable Transition through Energy Efficiency in Moldova Project (STEEM) Contract title: Installation of Individual Heat Substations and associated piping for public buildings in Chisinau DH system (Batch 2) Country: Republic of Moldova Loan No.: 9696-MD RFB No: 9696-E1.2.2 Issued on: 01 October, 2026 The Republic of Moldova has received financing from the World Bank toward the cost of the Sustainable Transition through Energy Efficiency in Moldova Project (STEEM) and intends to apply part of the proceeds toward payments under the contract for Installation of Individual Heat Substations and associated piping for public buildings in Chisinau DH system (Plant - Design, Supply & Installation). The Moldova Energy Projects Implementation Unit (MEPIU) now invites sealed Bids from eligible Bidders for the or the design, supply, installation and commissioning of Individual Heat Substations and associated piping for public buildings in the Chisinau District Heating system. Bidding will be conducted through international competitive procurement using Request for Bids (RFB), in accordance with the World Bank’s “Procurement Regulations for IPF Borrowers” dated September 2025 (“Procurement Regulations”) and the applicable World Bank Standard Procurement Document for Works – Request for Bids (Two-Envelope with Rated Criteria), September 2025, and is open to all eligible Bidders as defined in the Procurement Regulations. Interested eligible Bidders may obtain further information from the Moldova Energy Projects Implementation Unit (MEPIU) and inspect the bidding document during office hours from 09:00 to 17:00 local time at the address given below. The Bidding Document in English may be purchased by interested eligible Proposers upon submission of a written application to the address indicated below and upon payment of a non-refundable fee of EUR 50.00 (fifty euros, zero eurocents) , net of bank charges , for the electronic distribution of the Bidding Document via e-mail. Prior to the Bidding Document being provided by MEPIU, the payment of the non-refundable fee must be evidenced by a SWIFT payment confirmation, which may be submitted via the e-mail listed below. Payment shall be made by bank transfer to one of the bank accounts listed below, depending on the country of Bidder: For payments in foreign currency (non-resident) – Euro (EUR)*: Beneficiary: MF – TR Chisinau – bugetul de stat, Unitatea Consolidata pentru Implementarea si Monitorizarea Proiectelor in domeniul Energeticii Tax identification Code: 1023601000072 Beneficiary Bank : National Bank of Moldova, Chiinu, Moldova Republic of IBAN: MD18NBPBIV145150J16649AB SWIFT Code: NBMDMD2X Correspondent Bank: Raiffeisen Bank International AG, Vienna, Austria IBAN: AT953100000155096770 SWIFT Code: RZBAATWW For payments in the local currency (residents– Moldovan Leu (MDL)*: Beneficiary: MF- TR Chisinau - bugetul de stat, Unitatea Consolidata pentru Implementarea si Monitorizarea Proiectelor in domeniul Energeticii Tax identification Code: 1023601000072 Beneficiary Bank : Ministerul Finantelor – Trezoreria de stat IBAN : MD83TRPIAA145150J16649AB SWIFT Code: TREZMD2X * The banking details provided above shall remain valid exclusively until December 31, 2026. Bids must be delivered to the address below on or before 23 November, 2026 at 11:00 AM (local time). Electronic bidding will not be permitted. Late Bids will be rejected. The outer Bid envelopes marked “ORIGINAL BID”, and the inner envelopes marked “TECHNICAL PART” will be publicly opened in the presence of the Bidders’ designated representatives and anyone who chooses to attend, at the address below on 23 November, 2026 at 11:15 AM (local time). All en",
+   "buyer": "Moldova Energy Project Implementation Unit",
+   "country": "Moldova",
+   "deadline": "2026-11-23",
+   "published": "2026-10-01",
+   "url": "https://projects.worldbank.org/en/projects-operations/procurement-detail/OP00472448",
+   "notice_type": "Invitation for Bids",
+   "procurement_method": "Request for Bids",
+   "sector": "دولتی (پروژه با تأمین مالی بانک جهانی)",
+   "facts": {
+    "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "guarantee": "طبق آگهی: bid security of eur 50,000",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "رقابت ملی – احتمالاً محدود به شرکت‌های داخلی کشور خریدار"
+   },
+   "keyword_score": 2,
+   "domains": [
+    "energy",
+    "urban"
+   ],
+   "days_left": 35,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-10-19T13:28:54",
+   "history": [
+    {
+     "at": "2026-10-19T13:28:54",
      "status": "new"
     }
    ]
@@ -704,113 +854,9 @@
  },
  "runs": [
   {
-   "at": "2026-10-18T22:02:18",
-   "collected": 378,
-   "matched": 14,
-   "partner_drafts": [],
-   "events_added": 0,
-   "events_soon": [
-    {
-     "start": "2026-11-02",
-     "name": "ADIPEC 2026",
-     "name_fa": "نمایشگاه و کنفرانس نفت و گاز ابوظبی",
-     "city": "ابوظبی"
-    },
-    {
-     "start": "2026-11-03",
-     "name": "Smart City Expo World Congress 2026",
-     "name_fa": "کنگره جهانی شهر هوشمند",
-     "city": "بارسلونا"
-    },
-    {
-     "start": "2026-11-09",
-     "name": "Web Summit 2026",
-     "name_fa": "وب سامیت لیسبون",
-     "city": "لیسبون"
-    },
-    {
-     "start": "2026-11-16",
-     "name": "MEDICA 2026",
-     "name_fa": "نمایشگاه تجهیزات و فناوری پزشکی دوسلدورف",
-     "city": "دوسلدورف"
-    }
-   ],
-   "new_ids": [
-    "SETAD-1105100916000002",
-    "TED-712676-2026",
-    "SETAD-1105092288003523",
-    "WB-OP00465889",
-    "WB-OP00470201",
-    "WB-OP00468997",
-    "TED-714863-2026",
-    "TED-716134-2026",
-    "TED-713357-2026",
-    "WB-OP00473664",
-    "WB-OP00473693",
-    "WB-OP00473300",
-    "TED-716537-2026",
-    "WB-OP00472448"
-   ],
-   "actioned_ids": [],
-   "reminders": []
-  },
-  {
-   "at": "2026-10-19T12:44:15",
-   "collected": 367,
-   "matched": 16,
-   "partner_drafts": [],
-   "events_added": 0,
-   "investors_added": 0,
-   "investor_drafts": [
-    "revo",
-    "212",
-    "hub71",
-    "aramco-ventures",
-    "antler-menap",
-    "equinor-ventures",
-    "shell-ventures"
-   ],
-   "events_soon": [
-    {
-     "start": "2026-11-02",
-     "name": "ADIPEC 2026",
-     "name_fa": "نمایشگاه و کنفرانس نفت و گاز ابوظبی",
-     "city": "ابوظبی"
-    },
-    {
-     "start": "2026-11-03",
-     "name": "Smart City Expo World Congress 2026",
-     "name_fa": "کنگره جهانی شهر هوشمند",
-     "city": "بارسلونا"
-    },
-    {
-     "start": "2026-11-09",
-     "name": "Web Summit 2026",
-     "name_fa": "وب سامیت لیسبون",
-     "city": "لیسبون"
-    },
-    {
-     "start": "2026-11-16",
-     "name": "MEDICA 2026",
-     "name_fa": "نمایشگاه تجهیزات و فناوری پزشکی دوسلدورف",
-     "city": "دوسلدورف"
-    }
-   ],
-   "new_ids": [
-    "SETAD-1105004403000914",
-    "SETAD-1105092187000164",
-    "SETAD-1105090453000008",
-    "SETAD-1105092288003550",
-    "TED-719546-2026",
-    "TED-721845-2026"
-   ],
-   "actioned_ids": [],
-   "reminders": []
-  },
-  {
-   "at": "2026-10-19T13:09:21",
-   "collected": 369,
-   "matched": 16,
+   "at": "2026-10-19T13:28:54",
+   "collected": 377,
+   "matched": 24,
    "partner_drafts": [],
    "events_added": 0,
    "investors_added": 0,
@@ -851,7 +897,32 @@
      "city": "دوسلدورف"
     }
    ],
-   "new_ids": [],
+   "new_ids": [
+    "SETAD-1105004403000914",
+    "SETAD-1105092187000164",
+    "SETAD-1105090453000008",
+    "SATE-BT6J0Gv55f4",
+    "SATE-hJTuANu4pa8",
+    "SATE-10n1I4Dvhmg",
+    "SATE-wXGwdPl4",
+    "SATE-5bAsvT9EoY8",
+    "SATE-q5Hcg1scPs",
+    "SATE-VwlBGmr1AWg",
+    "SATE-wZ0ZrLLt9YI",
+    "SETAD-1105092288003523",
+    "SETAD-1105092288003550",
+    "TED-719546-2026",
+    "WB-OP00465889",
+    "WB-OP00470201",
+    "WB-OP00468997",
+    "TED-716134-2026",
+    "TED-721845-2026",
+    "WB-OP00473664",
+    "WB-OP00473693",
+    "WB-OP00473300",
+    "TED-716537-2026",
+    "WB-OP00472448"
+   ],
    "actioned_ids": [],
    "reminders": []
   }

@@ -300,7 +300,8 @@ def _jalali_field(text):
 
 
 def normalize_fa(text):
-    return (text or "").replace("ي", "ی").replace("ك", "ک").replace("‌", " ")
+    text = (text or "").replace("ي", "ی").replace("ك", "ک").replace("‌", " ")
+    return re.sub(r"\s+", " ", text)
 
 
 def fetch_setad(cfg, log):
@@ -379,7 +380,69 @@ def enrich_full_text(tender, log):
     return text or tender.get("description", "")
 
 
-COLLECTORS = {"ted": fetch_ted, "worldbank": fetch_worldbank, "uk_fts": fetch_uk_fts, "setad": fetch_setad}
+# ------------------------------------- Iran – SATE research & technology demand (sate.atf.gov.ir)
+def fetch_sate(cfg, log):
+    """Calls for research/technology projects published by state companies and agencies in SATE
+    (سامانه اجرایی تقاضا و عرضه پژوهش و فناوری). Filters from config: demand group, demand nature, live with deadline."""
+    scfg = cfg["sources"]["sate"]
+    base = scfg.get("url", "https://sate.atf.gov.ir").rstrip("/")
+    try:
+        r = _get(f"{base}/NewRequests.aspx", headers=UA)
+        page = r.text
+    except Exception as exc:
+        log(f"SATE unreachable: {exc}")
+        return []
+    today = date.today().isoformat()
+    group_kw, nature_eq = scfg.get("group_contains", "پژوهش"), scfg.get("nature_equals", "فناوری")
+    ai_terms = [normalize_fa(x) for x in scfg.get("ai_keywords", [])]
+    results, active = {}, 0
+    for card in page.split('<div class="card ')[1:]:
+        def field(label):
+            m = re.search(re.escape(label) + r'\s*:</span>\s*<span class="text-muted">(.*?)</span>', card, re.S)
+            return _clean(m.group(1), 300) if m else ""
+        status = field("وضعیت تقاضا")
+        if status != "فعال":
+            continue
+        active += 1
+        m = re.search(r'href="(/Systems/Default\.aspx\?SiteRequestId=[^"]+)"[^>]*?title="([^"]+)"', card, re.S)
+        if not m:
+            continue
+        title = html.unescape(m.group(2)).strip()
+        group, nature, deadline_fa = field("گروه تقاضا"), field("ماهیت تقاضا"), field("مهلت ارسال پیشنهاده")
+        deadline = _jalali_field(deadline_fa)
+        if group_kw not in group or nature != nature_eq or not deadline or deadline < today:
+            continue
+        if ai_terms and not any(a in normalize_fa(title) for a in ai_terms):
+            continue
+        org = field("شرکت متقاضی")
+        rid = re.sub(r"[^A-Za-z0-9]", "", m.group(1).split("=", 1)[1])
+        results[f"SATE-{rid}"] = {
+            "id": f"SATE-{rid}",
+            "source": "ساتع (sate.atf.gov.ir)",
+            "market": "domestic",
+            "prefiltered": True,
+            "title": title,
+            "description": f"{group} – ماهیت: {nature}",
+            "buyer": org,
+            "country": "ایران" + (f" – {field('شهر')}" if field("شهر") else ""),
+            "deadline": deadline,
+            "deadline_fa": deadline_fa,
+            "published": "",
+            "url": base + m.group(1),
+            "notice_type": f"{group} / {nature}",
+            "sector": setad_sector(org),
+            "facts": _facts(
+                price="اعتبار پروژه‌ی پژوهشی/فناوری – مبلغ در سند نیاز ساتع",
+                guarantee="طبق قرارداد پژوهشی با دستگاه متقاضی (معمولاً تضمین حسن انجام کار)",
+                experience="ارسال پیشنهاده (پروپوزال) و سوابق فناور در سامانه ساتع؛ ارزیابی توسط دستگاه متقاضی",
+                international="ویژه‌ی فناوران و شرکت‌های ایرانی ثبت‌نام‌شده در ساتع"),
+        }
+    log(f"SATE (Iran): {active} active calls, {len(results)} after filters")
+    return list(results.values())
+
+
+COLLECTORS = {"ted": fetch_ted, "worldbank": fetch_worldbank, "uk_fts": fetch_uk_fts, "setad": fetch_setad,
+              "sate": fetch_sate}
 
 
 def collect_all(cfg, log):

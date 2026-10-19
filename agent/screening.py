@@ -22,6 +22,8 @@ def web_hit(tender, cfg):
 
 
 def keyword_score(tender, cfg):
+    if tender.get("prefiltered"):  # SATE notices are filtered at the source (research / technology / live / AI)
+        return 3, ["ai_cross_cutting"]
     domains_map, exclude, norm = _keyword_sets(tender, cfg)
     title = norm(tender["title"]).lower()
     body = norm(f"{tender['title']} {tender['description']}").lower()
