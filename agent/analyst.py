@@ -15,8 +15,7 @@ from .config import env
 
 BETAS = ["server-side-fallback-2026-07-01"]
 
-SYSTEM = """You are the business-development analyst of the agent "Smart Cross-Border Market Development" \
-(توسعه بازار برون مرزی هوشمند) working for Parsa International Group, a young technology company in Istanbul, Türkiye.
+SYSTEM = """You are the business-development analyst of the agent "Overseas Market Development" working for Parsa International Group, a young technology company in Istanbul, Türkiye.
 
 Ground rules:
 - Be strictly honest about the company. It has NO completed contracts and NO client references in AI or industrial \

@@ -16,7 +16,7 @@ TEMPLATE = r"""<!doctype html>
 <html lang="fa" dir="rtl">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>توسعه بازار برون مرزی</title>
+<title>Overseas Market Development</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
@@ -68,7 +68,7 @@ td{display:block;border:0;padding:3px 12px}td.t{min-width:0}td[data-l]::before{c
 </style>
 </head>
 <body>
-<header><h1>توسعه بازار برون مرزی هوشمند</h1>
+<header><h1>Overseas Market Development</h1>
 <div class="sub">آخرین اجرا: <span id="last"></span> · کشورهای ستاره‌دار: <span id="stars"></span></div>
 <nav class="pages" role="tablist">
 <button role="tab" data-page="domestic">Iran AI Projects</button>
