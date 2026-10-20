@@ -25,7 +25,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": 3,
+   "days_left": 2,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -61,7 +61,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": 2,
+   "days_left": 1,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -97,7 +97,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": 3,
+   "days_left": 2,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -133,7 +133,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": 3,
+   "days_left": 2,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -169,7 +169,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": 3,
+   "days_left": 2,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -205,7 +205,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": 4,
+   "days_left": 3,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -241,7 +241,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": 5,
+   "days_left": 4,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -277,7 +277,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": 9,
+   "days_left": 8,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -313,7 +313,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": 9,
+   "days_left": 8,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -349,7 +349,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": 10,
+   "days_left": 9,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -385,7 +385,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": 10,
+   "days_left": 9,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -421,7 +421,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": 12,
+   "days_left": 11,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -457,7 +457,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": 13,
+   "days_left": 12,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -491,7 +491,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 14,
+   "days_left": 13,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -526,7 +526,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 17,
+   "days_left": 16,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -561,7 +561,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 22,
+   "days_left": 21,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -596,7 +596,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 24,
+   "days_left": 23,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -630,7 +630,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 28,
+   "days_left": 27,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -664,7 +664,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 30,
+   "days_left": 29,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -699,7 +699,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 42,
+   "days_left": 41,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -734,7 +734,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 50,
+   "days_left": 49,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -769,7 +769,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 8,
+   "days_left": 7,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -804,7 +804,7 @@
     "ai_cross_cutting",
     "medical"
    ],
-   "days_left": 28,
+   "days_left": 27,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -840,13 +840,149 @@
     "energy",
     "urban"
    ],
-   "days_left": 35,
+   "days_left": 34,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
    "history": [
     {
      "at": "2026-10-19T13:28:54",
+     "status": "new"
+    }
+   ]
+  },
+  "TED-723563-2026": {
+   "id": "TED-723563-2026",
+   "source": "TED (EU)",
+   "market": "international",
+   "title": "Sweden – District heating – AI styrning av styr- och övervakningsystem",
+   "description": "AI styrning av styr- och övervakningsystem AI styrning av styr- och övervakningsystem. AI styrning av styr- och övervakningsystem",
+   "buyer": "Bostads AB Mimer",
+   "country": "SWE",
+   "deadline": "2026-11-20",
+   "published": "2026-10-20",
+   "url": "https://ted.europa.eu/en/notice/-/detail/723563-2026",
+   "notice_type": "cn-standard",
+   "sector": "دولتی",
+   "facts": {
+    "price": "ارزش برآوردی: 18,000,000 SEK (3 بخش)",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "رویه‌ی باز اتحادیه اروپا – شرکت‌های خارج از EU معمولاً مجازند مگر محدودیت صریح در اسناد"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "urban"
+   ],
+   "days_left": 31,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-10-20T09:40:22",
+   "history": [
+    {
+     "at": "2026-10-20T09:40:22",
+     "status": "new"
+    }
+   ]
+  },
+  "TED-723054-2026": {
+   "id": "TED-723054-2026",
+   "source": "TED (EU)",
+   "market": "international",
+   "title": "Netherlands – Gas network equipment – Gasmeter aansluitsets G10, G16 en G25",
+   "description": "Het leveren van aansluitsets voor een gasmetercapaciteit van 16m3/h (G10) en 25m3/h (G16) en aansluitsets voor een gasmetercapaciteit van 40m3/h (G25). Voor beide gasmetercapaciteiten is een versie nodig met gasdrukregelaar en zonder gasdrukregelaar. Voor beide uitvoeringen is een set nodig voor een nieuw aan te sluiten aansluiting en ter vervanging van een aansluiting. Het leveren van gasdrukregelaars met een capaciteit tot 25 m3/h en gasdrukregelaars met een capaciteit tot 40 m3/h.",
+   "buyer": "Alliander N.V.",
+   "country": "NLD",
+   "deadline": "2027-01-12",
+   "published": "2026-10-20",
+   "url": "https://ted.europa.eu/en/notice/-/detail/723054-2026",
+   "notice_type": "cn-standard",
+   "sector": "نامشخص",
+   "facts": {
+    "price": "ارزش برآوردی: 3,400,000 EUR (2 بخش)",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "رویه‌ی باز اتحادیه اروپا – شرکت‌های خارج از EU معمولاً مجازند مگر محدودیت صریح در اسناد"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "energy"
+   ],
+   "days_left": 84,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-10-20T09:40:22",
+   "history": [
+    {
+     "at": "2026-10-20T09:40:22",
+     "status": "new"
+    }
+   ]
+  },
+  "TED-723592-2026": {
+   "id": "TED-723592-2026",
+   "source": "TED (EU)",
+   "market": "international",
+   "title": "Belgium – Financial and insurance services – Aviation Liability Insurance",
+   "description": "Legal Liability Insurance arising out of aviation activities and duties as the Belgian Air Traffic Control and Air Navigation Service Provider; insured limit of (minimum) 1,250,000,000, - EUR any one occurrence and in the annual aggregate in respect of Products Liability; including War and Terrorism Liability insurance (extension clause AVN52E) with an insured limit of (minimum) 250,000,000, - USD any one occurrence and in the annual aggregate. War and Terrorism Liability insurance (extension clause AVN52G); insured limit of (minimum) 1,000,000.000, - USD any one occurrence and in the annual aggregate in exess of (minimum) 250,000,000, - USD (primary policy).",
+   "buyer": "skeyes",
+   "country": "BEL",
+   "deadline": "",
+   "published": "2026-10-20",
+   "url": "https://ted.europa.eu/en/notice/-/detail/723592-2026",
+   "notice_type": "cn-standard",
+   "sector": "دولتی",
+   "facts": {
+    "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "aviation"
+   ],
+   "days_left": null,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-10-20T09:40:22",
+   "history": [
+    {
+     "at": "2026-10-20T09:40:22",
+     "status": "new"
+    }
+   ]
+  },
+  "TED-725345-2026": {
+   "id": "TED-725345-2026",
+   "source": "TED (EU)",
+   "market": "international",
+   "title": "Germany – District heating – BV_FW_Rhodiusstraße",
+   "description": "Projektauftrag zur Lieferung von Fernwärme-Systemmaterial und die dazugehörige Ausführung von Montagearbeiten (Muffenmontage) für das Projekt Rhodiusstr.: VERBUNDMANTELROHR KST DN250 12M Länge 1968 M ROHRBOGEN M.PE-HD-SEGM.DN250 50 ST SCHRUMPFMUFFE F. KMR-ROHR DN250 AD400 244 ST KUGELHAHN DN250 PN25 EINSCHW. VORISOL. 14 ST KMR-PE-X-Schrumpfmuffen montieren 244 LE Dehnpolster liefern montieren 200 Meter Dehnpolster liefern montieren 300 Meter Feuchtigkeitsindikatoren liefern+montieren 244 Stück T-Weiche (TW) Montagemeister Baustellenleiter Obermonteur Monteur Meßtechniker An- und Abfahrtpauschale Winterbaumaßnahme DN 250 bis DN 500",
+   "buyer": "RheinEnergie AG -L-",
+   "country": "DEU",
+   "deadline": "",
+   "published": "2026-10-20",
+   "url": "https://ted.europa.eu/en/notice/-/detail/725345-2026",
+   "notice_type": "cn-standard",
+   "sector": "نامشخص",
+   "facts": {
+    "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "urban"
+   ],
+   "days_left": null,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-10-20T09:40:22",
+   "history": [
+    {
+     "at": "2026-10-20T09:40:22",
      "status": "new"
     }
    ]
@@ -927,9 +1063,9 @@
    "reminders": []
   },
   {
-   "at": "2026-10-19T13:42:45",
-   "collected": 368,
-   "matched": 24,
+   "at": "2026-10-19T10:14:45",
+   "collected": 250,
+   "matched": 11,
    "partner_drafts": [],
    "events_added": 0,
    "investors_added": 0,
@@ -944,7 +1080,6 @@
     "ycombinator",
     "techstars"
    ],
-   "leads_added": 6,
    "events_soon": [
     {
      "start": "2026-11-02",
@@ -972,6 +1107,66 @@
     }
    ],
    "new_ids": [],
+   "actioned_ids": [],
+   "reminders": []
+  },
+  {
+   "at": "2026-10-20T09:40:22",
+   "collected": 239,
+   "matched": 13,
+   "partner_drafts": [],
+   "events_added": 0,
+   "investors_added": 0,
+   "investor_drafts": [
+    "revo",
+    "212",
+    "hub71",
+    "aramco-ventures",
+    "antler-menap",
+    "equinor-ventures",
+    "shell-ventures",
+    "ycombinator",
+    "techstars"
+   ],
+   "leads_added": 0,
+   "events_soon": [
+    {
+     "start": "2026-10-28",
+     "name": "Media Expo 1405 (2nd)",
+     "name_fa": "دومین نمایشگاه مدیا اکسپو (با بخش هوش مصنوعی)",
+     "city": "تهران (برج میلاد)"
+    },
+    {
+     "start": "2026-11-02",
+     "name": "ADIPEC 2026",
+     "name_fa": "نمایشگاه و کنفرانس نفت و گاز ابوظبی",
+     "city": "ابوظبی"
+    },
+    {
+     "start": "2026-11-03",
+     "name": "Smart City Expo World Congress 2026",
+     "name_fa": "کنگره جهانی شهر هوشمند",
+     "city": "بارسلونا"
+    },
+    {
+     "start": "2026-11-09",
+     "name": "Web Summit 2026",
+     "name_fa": "وب سامیت لیسبون",
+     "city": "لیسبون"
+    },
+    {
+     "start": "2026-11-16",
+     "name": "MEDICA 2026",
+     "name_fa": "نمایشگاه تجهیزات و فناوری پزشکی دوسلدورف",
+     "city": "دوسلدورف"
+    }
+   ],
+   "new_ids": [
+    "TED-723563-2026",
+    "TED-723054-2026",
+    "TED-723592-2026",
+    "TED-725345-2026"
+   ],
    "actioned_ids": [],
    "reminders": []
   }
