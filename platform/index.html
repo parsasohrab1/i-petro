@@ -102,6 +102,9 @@ a{color:var(--brand)}
 .sheet .sig{margin-top:40px;text-align:left}
 .sheet .sig img{max-height:70px;display:block;margin-right:auto}
 .sheet .foot{margin-top:24px;border-top:1px solid #ccc;padding-top:6px;font-size:11px;color:#555}
+.compose{display:grid;grid-template-columns:minmax(0,420px) minmax(0,1fr);gap:16px;align-items:start;margin-bottom:16px}
+.compose>*{min-width:0}
+@media (max-width:980px){.compose{grid-template-columns:minmax(0,1fr)}}
 @media (max-width:760px){
   .rows table{min-width:0}.rows thead{display:none}
   .rows tr{display:block;border-bottom:1px solid var(--line);padding:6px 0}
@@ -109,6 +112,13 @@ a{color:var(--brand)}
   .rows td[data-l]::before{content:attr(data-l) ": ";color:var(--muted);font-weight:600}
   .sheet{padding:18px}
 }
+.kanban{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(250px,1fr);gap:10px;overflow-x:auto;padding-bottom:8px;align-items:start}
+.kcol{background:var(--sunken);border-radius:var(--r);padding:8px;min-width:0}
+.kcol h4{margin:0 0 6px;font-size:13px;display:flex;justify-content:space-between;gap:6px}
+.kcard{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:8px 10px;margin-bottom:8px;font-size:12.5px;line-height:1.6}
+.cal-day{margin-top:14px;font-weight:700;border-bottom:1px solid var(--line);padding-bottom:2px}
+.cal-item{display:flex;gap:8px;align-items:baseline;padding:4px 0;flex-wrap:wrap}
+.sheet.ltr{direction:ltr;text-align:left}.sheet.ltr .sig{text-align:left}.sheet.ltr .sig img{margin-right:0}
 @media (prefers-reduced-motion:no-preference){.drawer{animation:slide .18s ease-out}@keyframes slide{from{transform:translateX(-24px);opacity:.6}}}
 </style>
 
@@ -142,11 +152,11 @@ a{color:var(--brand)}
 const MODULES = [
   ["market","Market"],["events","Events"],["erp","ERP"],["bpms","BPMS"],["letters","Letters"],["patent","Patent"]];
 const SUBS = {
-  market:[["iran","Iran AI Projects"],["overseas","Overseas AI Projects"],["web","Web Design & SEO"],["investors","AI Investors & Accelerators"],["tracking","Project Tracking"]],
-  events:[["iran","ایران"],["world","جهان"],["all","همه"]],
-  erp:[["overview","نمای کلی"],["domains","حوزه‌های فعالیت"],["products","توسعه‌ی محصول هوشمند"],["people","نیروی انسانی"],["finance","مالی"],["clients","مشتریان و قراردادها"]],
-  bpms:[["myday","روز من"],["tasks","تسک‌ها"],["reports","گزارش عملکرد"],["teams","تیم‌ها"],["process","فرایندها"],["members","اعضا و ثبت‌نام"]],
-  letters:[["list","دفتر نامه‌ها"],["new","نامه‌ی جدید"]],
+  market:[["iran","Iran AI Projects"],["overseas","Overseas AI Projects"],["web","Web Design & SEO"],["investors","AI Investors & Accelerators"],["tracking","Project Tracking"],["pipeline","Pipeline"],["memory","Team Memory"]],
+  events:[["iran","ایران"],["world","جهان"],["all","همه"],["taken","در دست پیگیری"]],
+  erp:[["overview","نمای کلی"],["domains","حوزه‌های فعالیت"],["products","توسعه‌ی محصول هوشمند"],["people","نیروی انسانی"],["finance","مالی"],["clients","مشتریان و قراردادها"],["backup","پشتیبان‌گیری"]],
+  bpms:[["myday","روز من"],["tasks","تسک‌ها"],["reports","گزارش عملکرد"],["rarchive","بایگانی گزارش‌ها"],["teams","تیم‌ها"],["process","فرایندها"],["calendar","تقویم"],["members","اعضا و ثبت‌نام"]],
+  letters:[["new","نامه‌ی جدید (ساخت فایل Word)"],["archive","بایگانی نامه‌های پیشین و پیگیری"]],
   patent:[["home","پتنت‌ها"],["ops","فرصت‌های ثبت اختراع"],["products","محصولات ریپو"]]
 };
 const TEAMS = {finance:"مالی",admin:"اداری",web:"طراحی سایت",ai:"هوش مصنوعی",content:"تولید محتوا"};
@@ -159,6 +169,9 @@ const ACTIVE = new Set(["new","analysed","partner_search","bid_prep","mou_negoti
 const TASK_ST = {todo:"انجام نشده",doing:"در حال انجام",done:"انجام شد",approved:"تأیید مدیر"};
 const PRIORITY = {high:"فوری",normal:"عادی",low:"کم"};
 const CLIENT_STAGES = {intro:"معرفی",demo:"دموی نرم‌افزار با داده‌ی مصنوعی",initial:"قرارداد اولیه",data:"دریافت داده‌ی واقعی",trl:"ارتقای TRL",main:"قرارداد اصلی"};
+const OUTCOME = {"":"— (در جریان)",won:"برنده شدیم",lost:"نبردیم",dropped:"انصراف دادیم"};
+const OUTCOME_PILL = {won:"p-ok",lost:"p-bad",dropped:"p-mute"};
+const STAGE_PROB = {identified:5,documents:10,partner_email:15,partner_meeting:25,mou:40,proposal:55,submitted:70,result:90};
 const PAT_ST = {granted:"ثبت‌شده",review:"در دست داوری",filed:"اظهارنامه ارسال شد",draft:"پیش‌نویس"};
 const LABELS = {energy:"انرژی",medical:"پزشکی",aviation:"هوانوردی",nuclear:"هسته‌ای",urban:"شهری",ai_cross_cutting:"هوش مصنوعی",web:"طراحی سایت"};
 const FIN_TYPES = {insurance:"بیمه",tax:"مالیات",payroll:"حقوق و دستمزد",rent:"اجاره",other:"سایر"};
@@ -167,9 +180,9 @@ const FIN_TYPES = {insurance:"بیمه",tax:"مالیات",payroll:"حقوق و 
 const S = {mod:"market", sub:"iran", q:"", db:null, user:null, assets:null, sample:null, downloads:null,
   me:{id:null,isOwner:false,canEdit:false}, canWrite:null,
   m:{tenders:[],events:[],investors:[],leads:[],partners:[]}, opsList:[],
-  settings:{}, members:[], tasks:[], letters:[], products:[], patents:[], finance:[], clients:[], tracking:{},
-  myAtt:[], myReports:[], allReports:[], allAtt:[], loaded:false, seenTasks:new Set()};
-try{const v=JSON.parse(localStorage.getItem("ppt-view")||"{}");if(v.mod&&SUBS[v.mod]){S.mod=v.mod;S.sub=v.sub||SUBS[v.mod][0][0]}}catch(e){}
+  settings:{}, members:[], tasks:[], letters:[], lettersArchive:[], draft:null, archF:"all", ra:{member:null,from:"",to:""}, repLoaded:false, allLoaded:false, forceFull:false, products:[], patents:[], finance:[], clients:[], tracking:{},
+  myAtt:[], myReports:[], allReports:[], allAtt:[], loaded:false, got:new Set(), welcomed:false, calMine:false, calTypes:null, seenTasks:new Set()};
+try{const v=JSON.parse(localStorage.getItem("ppt-view")||"{}");if(v.mod&&SUBS[v.mod]){S.mod=v.mod;S.sub=SUBS[v.mod].some(x=>x[0]===v.sub)?v.sub:SUBS[v.mod][0][0]}}catch(e){}
 try{S.seenTasks=new Set(JSON.parse(localStorage.getItem("ppt-seen")||"[]"))}catch(e){}
 
 // ------------------------------------------------------------------ helpers
@@ -197,7 +210,7 @@ function match(...xs){ if(!S.q) return true; return xs.join(" ").toLowerCase().i
 const COLS = {
   "market/data/tenders":"m.tenders","market/data/events":"m.events","market/data/investors":"m.investors",
   "market/data/leads":"m.leads","market/data/partners":"m.partners","patentops/data/items":"opsList",
-  members:"members", tasks:"tasks", letters:"letters", products:"products", patents:"patents",
+  members:"members", tasks:"tasks", letters:"letters", letters_archive:"lettersArchive", products:"products", patents:"patents",
   finance:"finance", clients:"clients"
 };
 function setPath(key, val){ const [a,b]=key.split("."); if(b) S[a][b]=val; else S[a]=val; }
@@ -205,14 +218,14 @@ function subscribe(){
   for(const [path,key] of Object.entries(COLS)){
     S.db.collection(path).onSnapshot(snap => {
       setPath(key, snap.docs.map(d => ({id:d.id, ...d.data()})));
-      S.loaded = true; render();
+      S.loaded = true; S.got.add(key); render(); if(key==="members") maybeWelcome();
     }, () => {});
   }
   S.db.collection("tracking").onSnapshot(snap => { const t={}; snap.docs.forEach(d=>t[d.id]=d.data()); S.tracking=t; render(); }, ()=>{});
   S.db.doc("settings/company").onSnapshot(d => { S.settings = d.exists ? d.data() : {}; paintBrand(); render(); }, ()=>{});
   if(S.me.id){
     S.db.collection(`attendance/${S.me.id}/days`).onSnapshot(s=>{S.myAtt=s.docs.map(d=>({id:d.id,...d.data()}));render()},()=>{});
-    S.db.collection(`reports/${S.me.id}/items`).onSnapshot(s=>{S.myReports=s.docs.map(d=>({id:d.id,...d.data()}));render()},()=>{});
+    S.db.collection(`reports/${S.me.id}/items`).onSnapshot(s=>{S.myReports=s.docs.map(d=>({id:d.id,...d.data()}));S.repLoaded=true;render()},()=>{});
   }
 }
 async function loadAllReports(){ // admins read every member's reports and attendance (rules open it to admin)
@@ -222,12 +235,12 @@ async function loadAllReports(){ // admins read every member's reports and atten
     try{ const r=await S.db.collection(`reports/${m.id}/items`).get(); r.docs.forEach(d=>all.push({member:m.id,id:d.id,...d.data()})); }catch(e){}
     try{ const a=await S.db.collection(`attendance/${m.id}/days`).get(); a.docs.forEach(d=>att.push({member:m.id,id:d.id,...d.data()})); }catch(e){}
   }
-  S.allReports=all; S.allAtt=att; render();
+  S.allReports=all; S.allAtt=att; S.allLoaded=true; render();
 }
 async function save(path, data, okMsg="ذخیره شد"){
   if(!S.db){ toast("اتصال به پایگاه داده برقرار نیست."); return false; }
   try{ await S.db.doc(path).set(data); toast(okMsg); return true; }
-  catch(e){ toast(e.code==="invalid_argument" ? "اجازه‌ی ثبت این مورد را ندارید یا داده نامعتبر است." : e.code==="quota_exceeded" ? "ظرفیت پایگاه داده پر است؛ موارد قدیمی را حذف کنید." : "ذخیره نشد؛ دوباره تلاش کنید."); return false; }
+  catch(e){ console.error("save", path, e); toast(e.code==="invalid_argument" ? (S.canWrite===false ?"دسترسی شما به این سامانه «Contributor» نیست؛ از مالک سامانه بخواهید در منوی Share سطح دسترسی شما را Contributor کند." : "این بخش برای سطح دسترسی شما مجاز نیست یا داده نامعتبر است: " + (e.message||"")) : e.code==="quota_exceeded" ? "ظرفیت پایگاه داده پر است؛ موارد قدیمی را حذف کنید." : "ذخیره نشد؛ دوباره تلاش کنید."); return false; }
 }
 async function remove(path){ try{ await S.db.doc(path).delete(); toast("حذف شد"); }catch(e){ toast("حذف نشد"); } }
 const newId = () => Date.now().toString(36) + Math.random().toString(36).slice(2,6);
@@ -240,7 +253,7 @@ function paintBrand(){
 }
 
 // ------------------------------------------------------------------ drawer forms
-function openForm({title, fields, values={}, onSave, extra=""}){
+function openForm({title, fields, values={}, onSave, extra="", required=false}){
   const f = fields.map(fd => {
     const v = values[fd.k] ?? fd.value ?? "";
     const id = "f_"+fd.k;
@@ -252,8 +265,8 @@ function openForm({title, fields, values={}, onSave, extra=""}){
     else ctl = `<input id="${id}" type="${fd.type||"text"}" value="${esc(v)}" ${fd.dir?`dir="${fd.dir}"`:""}>`;
     return `<div class="field"><label for="${id}">${esc(fd.label)}</label>${ctl}${fd.hint?`<span class="meta">${esc(fd.hint)}</span>`:""}</div>`;
   }).join("");
-  $("#layer").innerHTML = `<div class="scrim" data-act="close-scrim"><form class="drawer" id="drawer"><h3>${esc(title)}</h3>${extra}${f}
-    <div class="row"><button class="btn" type="submit">ذخیره</button><button class="btn ghost" type="button" data-act="close">انصراف</button></div></form></div>`;
+  $("#layer").innerHTML = `<div class="scrim"${required?"":' data-act="close-scrim"'}><form class="drawer" id="drawer"><h3>${esc(title)}</h3>${extra}${f}
+    <div class="row"><button class="btn" type="submit">${required?"ثبت‌نام و ورود به سامانه":"ذخیره"}</button>${required?"":'<button class="btn ghost" type="button" data-act="close">انصراف</button>'}</div></form></div>`;
   $("#drawer").addEventListener("submit", async ev => {
     ev.preventDefault();
     const out = {};
@@ -286,6 +299,11 @@ function paintNav(){
 }
 function render(){ paintNav(); renderBanners(); renderView(); paintBell(); }
 function renderView(){
+  if(S.mod==="letters"&&S.sub==="new"&&$("#composer")&&!S.forceFull){ // live data arrived: refresh only the ledger, never the form being typed in
+    const d=S.draft; if(d&&d.numAuto){ d.number=nextLetterNo(d.identity); const el=$("[data-c=number]"); if(el&&document.activeElement!==el) el.value=d.number; const p=$("#cprev"); if(p) p.innerHTML=letterSheet(draftLetter()); }
+    const lg=$("#ledger"); if(lg) lg.innerHTML=letterLedger(); return;
+  }
+  S.forceFull=false;
   const fn = VIEWS[S.mod+"."+S.sub] || VIEWS[S.mod];
   let html; try{ html = fn ? fn() : ""; }catch(e){ html = `<p class="empty">نمایش این بخش با خطا روبه‌رو شد: ${esc(e.message)}</p>`; console.error(e); }
   $("#view").innerHTML = html;
@@ -300,9 +318,16 @@ function myInbox(){
     if(t.created_by===me && t.assignee!==me && t.status==="done") items.push({id:"d"+t.id+t.updated, text:`«${t.title}» توسط ${memberName(t.assignee)} انجام شد؛ تأیید کنید`, task:t});
     if(isAdmin() && t.created_by===t.assignee && t.created_by!==me && t.status==="todo") items.push({id:"s"+t.id, text:`${memberName(t.created_by)} برای خود تسک «${t.title}» تعریف کرد`, task:t});
   }
+  const soon=addDays(today(),1);
+  for(const [k,tr] of Object.entries(S.tracking)) if(tr.owner===me&&tr.next_date&&tr.next_date<=soon&&!tr.outcome) items.push({id:"tn"+k+tr.next_date,sticky:tr.next_date<=today(),text:`اقدام بعدی «${tr.next_action||"پیگیری"}» برای «${trackTitle(k)}» ${relDay(tr.next_date)} است.`,task:{}});
+  for(const t of S.m.tenders) { const tr=S.tracking[t.id]||{}; if(tr.owner===me&&!tr.outcome&&ACTIVE.has(t.status)&&t.days_left!=null&&t.days_left>=0&&t.days_left<=3) items.push({id:"dl"+t.id+t.days_left,sticky:true,text:`مهلت «${t.title}» ${t.days_left===0?"امروز":faNum(t.days_left)+" روز دیگر"} است.`,task:{}}); }
+  for(const a of S.lettersArchive) if(a.owner===me&&a.status!=="closed"&&a.next_date&&a.next_date<=soon) items.push({id:"an"+a.id+a.next_date,sticky:a.next_date<=today(),text:`پیگیری نامه‌ی «${a.subject}»: ${a.next_action||"اقدام بعدی"} (${relDay(a.next_date)})`,task:{}});
+  for(const t of S.tasks) if(t.assignee===me&&t.due&&t.due<=soon&&!["done","approved"].includes(t.status)) items.push({id:"td"+t.id+t.due,sticky:t.due<=today(),text:`مهلت تسک «${t.title}» ${relDay(t.due)} است.`,task:{}});
+  missingReportDays(myMember()).forEach(d=>items.push({id:"r"+d,sticky:true,text:`گزارش عملکرد ${faDate(d)} را ثبت نکرده‌اید؛ لطفاً هرچه زودتر ثبت کنید.`,task:{}}));
+  if(isAdmin()&&S.allLoaded&&new Date().getHours()>=16) S.members.filter(m=>m.id!==me&&isOfficeDay(m,today())&&!S.allReports.some(r=>r.member===m.id&&(r.date||r.id)===today())).forEach(m=>items.push({id:"ar"+m.id+today(),sticky:true,text:`${m.full_name} گزارش عملکرد امروز را ثبت نکرده است.`,task:{}}));
   return items;
 }
-function paintBell(){ const n=myInbox().filter(i=>!S.seenTasks.has(i.id)).length; const b=$("#bellN"); b.hidden=!n; b.textContent=faNum(n); }
+function paintBell(){ const n=myInbox().filter(i=>i.sticky||!S.seenTasks.has(i.id)).length; const b=$("#bellN"); b.hidden=!n; b.textContent=faNum(n); }
 function renderBanners(){
   const out=[]; const me=S.members.find(m=>m.id===S.me.id);
   if(S.me.id && !me) out.push(`<div class="banner">هنوز در سامانه ثبت‌نام نکرده‌اید. از <b>BPMS ← اعضا و ثبت‌نام</b> مشخصات، روزهای حضور و تصویر امضای خود را ثبت کنید.</div>`);
@@ -312,12 +337,13 @@ function renderBanners(){
     const hr = new Date().getHours();
     if((me.office_days||[]).includes(wd)){
       if(!att && hr>=9) out.push(`<div class="banner">امروز روز حضور شماست و ورود ثبت نشده است. از <b>BPMS ← روز من</b> ورود را ثبت کنید.</div>`);
-      if(att && !S.myReports.find(r=>r.date===today()) && hr>=16) out.push(`<div class="banner">گزارش عملکرد امروز را پیش از پایان روز ثبت کنید.</div>`);
     }
+    const miss=missingReportDays(me);
+    if(miss.length) out.push(`<div class="banner bad"><b>گزارش عملکرد ثبت‌نشده:</b> ${miss.slice(0,4).map(faDate).join("، ")}${miss.length>4?` و ${faNum(miss.length-4)} روز دیگر`:""} <button class="btn sm sig" data-act="report-new" data-date="${miss[0]}">ثبت گزارش</button></div>`);
     const low = S.myReports.filter(r=>r.score!=null).sort((a,b)=>(b.date||"").localeCompare(a.date||""))[0];
     if(low && low.score<40) out.push(`<div class="banner bad"><b>تذکر بهره‌وری:</b> نمره‌ی آخرین گزارش شما ${faNum(low.score)} از ۱۰۰ است. با این بهره‌وری احتمال قطع همکاری وجود دارد؛ روی بهره‌وری خود وقت بگذارید.</div>`);
   }
-  if(S.db===null && S.loaded===false) {}
+  if(isAdmin()&&S.got.has("members")&&(!S.settings.last_backup||dayDiff(S.settings.last_backup)<=-7)) out.push(`<div class="banner">${S.settings.last_backup?"بیش از ۷ روز از آخرین پشتیبان گذشته است.":"هنوز پشتیبان‌گیری نشده است."} از <b>ERP ← پشتیبان‌گیری</b> فایل کامل را دریافت کنید.</div>`);
   $("#banners").innerHTML = out.join("");
 }
 
@@ -327,26 +353,59 @@ const VIEWS = {};
 // ---------- MARKET
 function tenderCond(t){const f=t.facts||{},c=(t.analysis||{}).conditions||{};return{price:c.price_fa||f.price||"—",guarantee:c.guarantee_fa||f.guarantee||"—",experience:c.experience_fa||f.experience||"—",intl:c.international_fa||f.international||"—"}}
 function dl(t){ const d=t.days_left; const s = d==null?"نامشخص":(d<=7?`<span class="p-bad">${faNum(d)} روز</span>`:`${faNum(d)} روز`); return `${esc(t.deadline_fa||t.deadline||"؟")} (${s})`; }
+// Go / No-Go: one transparent score per analysed tender (relevance 40, eligibility 25, time 15, foreign access 10, compliance 10)
+const GNG = {go:["Go","p-ok"],maybe:["بررسی","p-warn"],nogo:["No-Go","p-bad"],wait:["در انتظار تحلیل","p-mute"]};
+function pastIn(country){ if(!country) return 0; return S.m.tenders.filter(x=>x.country===country&&["lost","dropped"].includes((S.tracking[x.id]||{}).outcome||({lost:"lost",skipped:"dropped"})[x.status])).length; }
+function goNoGo(t){
+  const a=t.analysis; if(!a) return {v:"wait",score:null,why:["این مورد هنوز توسط ایجنت تحلیل نشده است."]};
+  const why=[], rel=Number(a.relevance_score)||0, d=t.days_left;
+  const elig={direct:100,partner_required:60,not_feasible:0}[a.eligibility]??50;
+  const time=d==null?50:d<0?0:d>=21?100:d>=14?75:d>=7?45:15;
+  const intl=(a.conditions||{}).international_fa||"", intlMarket=(t.market||"international")==="international";
+  const closed=intlMarket&&/مجاز نیست|نمی‌?پذیر|ممنوع|فقط شرکت‌?های (داخلی|محلی|ایرانی)/.test(intl);
+  const flags=(a.compliance_flags_fa||[]).length, comp=Math.max(0,100-flags*25);
+  const score=Math.round(.40*rel+.25*elig+.15*time+.10*(closed?0:80)+.10*comp);
+  why.push(`تطابق با محصولات: ${faNum(rel)} از ۱۰۰`);
+  why.push({direct:"می‌توانیم مستقیم پیشنهاد دهیم",partner_required:"به شریک محلی نیاز داریم",not_feasible:"با شرایط فعلی شرکت شدنی نیست"}[a.eligibility]||"وضعیت صلاحیت نامشخص");
+  if(d!=null) why.push(d<0?"مهلت گذشته است":`${faNum(d)} روز تا مهلت`);
+  if(closed) why.push("پذیرش شرکت‌های خارجی محدود به نظر می‌رسد");
+  if(flags) why.push(`${faNum(flags)} نکته‌ی انطباق و تحریم باید بررسی شود`);
+  const past=pastIn(t.country); if(past) why.push(`سابقه: ${faNum(past)} مورد باخت یا انصراف در همین کشور (حافظه‌ی تیم)`);
+  let v=score>=65?"go":score>=45?"maybe":"nogo";
+  if(a.eligibility==="not_feasible"||(d!=null&&d<0)||closed) v="nogo";
+  return {v,score,why};
+}
+const gngCell = t => { const g=goNoGo(t), [l,c]=GNG[g.v]; return `<span class="pill ${c}">${l}</span>${g.score!=null?` <b class="mono">${faNum(g.score)}</b>`:""}<details><summary>دلایل</summary><span class="meta">${g.why.map(esc).join("<br>")}</span></details>`; };
+// an item someone has taken responsibility for leaves the open lists and lives in the tracking views
+const owned = key => !!(S.tracking[key]||{}).owner;
+const claimBtn = key => `<button class="btn sm" data-act="claim" data-id="${esc(key)}">مسئولیت را می‌گیرم</button>`;
 function tenderTable(list){
-  return table(["عنوان","کشور / خریدار","بخش","مهلت","قیمت","ضمانت‌نامه","رزومه و رفرنس","پذیرش شرکت‌ها","وضعیت"], list.map(t=>{const k=tenderCond(t);return `<tr>
+  return table(["عنوان","کشور / خریدار","بخش","مهلت","قیمت","ضمانت‌نامه","رزومه و رفرنس","پذیرش شرکت‌ها","Go / No-Go","وضعیت",""], list.map(t=>{const k=tenderCond(t);return `<tr>
     ${td("عنوان",`${link(t.url,t.title)}<br><span class="meta">${esc(t.source)}${t.setad_number?` · <span class="mono">${esc(t.setad_number)}</span>`:""}</span>${(t.analysis||{}).summary_fa?`<details><summary>تحلیل</summary>${esc(t.analysis.summary_fa)}</details>`:""}`,"t")}
     ${td("کشور",`${esc(t.country)}<br><span class="meta">${esc(t.buyer)}</span>`)}${td("بخش",esc(t.sector||"—"))}${td("مهلت",dl(t))}
     ${td("قیمت",esc(k.price))}${td("ضمانت‌نامه",esc(k.guarantee))}${td("رزومه",esc(k.experience))}${td("پذیرش",esc(k.intl))}
-    ${td("وضعیت",`<span class="pill p-info">${esc(T_STATUS[t.status]||t.status)}</span>`)}</tr>`}), "هنوز داده‌ای از ایجنت بازار همگام نشده است. همگام‌سازی روزانه این بخش را پر می‌کند.");
+    ${td("Go/No-Go",gngCell(t))}${td("وضعیت",`<span class="pill p-info">${esc(T_STATUS[t.status]||t.status)}</span>`)}${td("",claimBtn(t.id))}</tr>`}), "موردِ بدون مسئولی باقی نمانده است. موارد واگذارشده در «Project Tracking» هستند.");
 }
 const mk = filter => () => {
-  const list = S.m.tenders.filter(filter).filter(t=>ACTIVE.has(t.status)).filter(t=>match(t.title,t.country,t.buyer,t.source,t.sector));
+  const list = S.m.tenders.filter(filter).filter(t=>ACTIVE.has(t.status)&&!owned(t.id)).filter(t=>match(t.title,t.country,t.buyer,t.source,t.sector));
   const soon = list.filter(t=>t.days_left!=null&&t.days_left<=7).length;
   return kpis([["فرصت فعال",faNum(list.length)],["مهلت ≤ ۷ روز",faNum(soon),soon>0],["دولتی",faNum(list.filter(t=>(t.sector||"").startsWith("دولتی")).length)],["شرکت دولتی / عمومی",faNum(list.filter(t=>(t.sector||"").includes("شرکت")).length)]]) + tenderTable(list);
 };
 VIEWS["market.iran"] = mk(t=>t.market==="domestic"&&t.line!=="web");
 VIEWS["market.overseas"] = mk(t=>(t.market||"international")==="international"&&t.line!=="web");
 VIEWS["market.web"] = () => {
-  const list = S.m.tenders.filter(t=>t.line==="web"&&ACTIVE.has(t.status)).filter(t=>match(t.title,t.country));
-  const leads = S.m.leads.filter(l=>match(l.name,l.activity,l.city));
+  const list = S.m.tenders.filter(t=>t.line==="web"&&ACTIVE.has(t.status)&&!owned(t.id)).filter(t=>match(t.title,t.country));
+  const leads = S.m.leads.filter(l=>!owned("ld_"+l.id)&&match(l.name,l.activity,l.city));
+  const takenLeads = S.m.leads.filter(l=>owned("ld_"+l.id)&&match(l.name,l.activity,l.city));
+  const takenWeb = S.m.tenders.filter(t=>t.line==="web"&&ACTIVE.has(t.status)&&owned(t.id));
   return `<h2>درخواست‌های طراحی سایت و سئو</h2><p class="note">پیشنهاد پیش‌فرض برای مشتریان داخلی: طراحی سایت + سئو.</p>${tenderTable(list)}
    <h2>تولیدکنندگان بدون سایت (تماس تلفنی)</h2><p class="note">فقط اطلاعاتی که آگهی‌دهنده خودش منتشر کرده است. اگر مخاطب نخواست، او را از فهرست حذف کنید.</p>`+
-   table(["نام / مسئول","حوزه‌ی فعالیت","شهر","شماره تماس","منبع"], leads.map(l=>`<tr>${td("نام",esc(l.name||"—"),"t")}${td("فعالیت",esc(l.activity))}${td("شهر",esc(l.city||"—"))}${td("تماس",l.phone?`<span class="mono">${esc(l.phone)}</span>`:`<span class="meta">${esc(l.contact_note_fa||"—")}</span>`)}${td("منبع",link(l.url,l.source))}</tr>`));
+   table(["نام / مسئول","حوزه‌ی فعالیت","شهر","شماره تماس","منبع"], leads.map(l=>`<tr>${td("نام",esc(l.name||"—"),"t")}${td("فعالیت",esc(l.activity))}${td("شهر",esc(l.city||"—"))}${td("تماس",l.phone?`<span class="mono">${esc(l.phone)}</span>`:`<span class="meta">${esc(l.contact_note_fa||"—")}</span>`)}${td("منبع",link(l.url,l.source))}${td("",claimBtn("ld_"+l.id))}</tr>`), "تولیدکننده‌ی بدون مسئولی باقی نمانده است.")+
+   `<h2>در دست پیگیری</h2><p class="note">مواردی که کسی مسئولیتشان را گرفته از فهرست‌های بالا برداشته شده‌اند. مسئول یا مدیر می‌تواند مورد را به فهرست بازگرداند.</p>`+
+   table(["مورد","نوع","مسئول",""], [
+     ...takenWeb.map(t=>{const tr=S.tracking[t.id]||{};return `<tr>${td("مورد",link(t.url,t.title),"t")}${td("نوع","درخواست طراحی سایت")}${td("مسئول",esc(memberName(tr.owner)))}${td("",tr.owner===S.me.id||isAdmin()?`<button class="btn sm ghost" data-act="unclaim" data-id="${esc(t.id)}">بازگرداندن به فهرست</button>`:"")}</tr>`}),
+     ...takenLeads.map(l=>{const key="ld_"+l.id,tr=S.tracking[key]||{};return `<tr>${td("مورد",`${esc(l.name||"—")}${l.phone?` · <span class="mono">${esc(l.phone)}</span>`:""}`,"t")}${td("نوع","تماس با تولیدکننده")}${td("مسئول",esc(memberName(tr.owner)))}${td("",tr.owner===S.me.id||isAdmin()?`<button class="btn sm ghost" data-act="unclaim" data-id="${esc(key)}">بازگرداندن به فهرست</button>`:"")}</tr>`})
+   ], "هنوز کسی مسئولیت موردی از طراحی سایت را نگرفته است.");
 };
 VIEWS["market.investors"] = () => {
   const list=S.m.investors.filter(v=>match(v.name,v.hq,v.focus_fa));
@@ -368,12 +427,15 @@ VIEWS["market.tracking"] = () => {
 
 // ---------- EVENTS
 VIEWS.events = () => {
-  const list = S.m.events.filter(e=>{const end=e.end||e.start;return !end||end>=today()}).filter(e=>S.sub==="all"||e.region===S.sub).filter(e=>match(e.name,e.name_fa,e.city,e.country))
+  const taken = S.sub==="taken";
+  const list = S.m.events.filter(e=>{const end=e.end||e.start;return !end||end>=today()}).filter(e=>taken ? owned("ev_"+e.id) : !owned("ev_"+e.id)&&(S.sub==="all"||e.region===S.sub)).filter(e=>match(e.name,e.name_fa,e.city,e.country))
     .sort((a,b)=>(a.start||"9999").localeCompare(b.start||"9999"));
-  return table(["رویداد","محل","تاریخ","حوزه","چرا مهم است","نحوه‌ی مشارکت"], list.map(e=>{const g=e.start?`${e.start}${e.end&&e.end!==e.start?" تا "+e.end:""}`:"";
+  const last = e => { const key="ev_"+e.id, tr=S.tracking[key]||{};
+    return taken ? td("مسئول",`${esc(memberName(tr.owner))}${tr.owner===S.me.id||isAdmin()?`<br><button class="btn sm ghost" data-act="unclaim" data-id="${esc(key)}">بازگرداندن به فهرست</button>`:""}`) : td("",claimBtn(key)); };
+  return table(["رویداد","محل","تاریخ","حوزه","چرا مهم است","نحوه‌ی مشارکت",taken?"مسئول":""], list.map(e=>{const g=e.start?`${e.start}${e.end&&e.end!==e.start?" تا "+e.end:""}`:"";
     const d=e.date_fa?`<b>${esc(e.date_fa)}</b>${g?`<br><span class="meta mono">${g}</span>`:""}`:(g?`${faDate(e.start)}${e.end&&e.end!==e.start?" تا "+faDate(e.end):""}<br><span class="meta mono">${g}</span>`:`<span class="meta">اعلام نشده – ${esc(e.usual_period_fa||"")}</span>`);
-    return `<tr>${td("رویداد",`${link(e.url,e.name_fa||e.name)}<br><span class="meta">${esc(e.name)}</span>`,"t")}${td("محل",`${esc(e.city)}، ${esc(e.country)}`)}${td("تاریخ",d+(e.source?`<br>${link(e.source,"منبع تاریخ")}`:""))}${td("حوزه",esc((e.categories||[]).map(x=>LABELS[x]||x).join("، ")))}${td("اهمیت",esc(e.why_fa))}${td("مشارکت",esc(e.participation_fa))}</tr>`}),
-    "رویدادها پس از نخستین همگام‌سازی نمایش داده می‌شوند.");
+    return `<tr>${td("رویداد",`${link(e.url,e.name_fa||e.name)}<br><span class="meta">${esc(e.name)}</span>`,"t")}${td("محل",`${esc(e.city)}، ${esc(e.country)}`)}${td("تاریخ",d+(e.source?`<br>${link(e.source,"منبع تاریخ")}`:""))}${td("حوزه",esc((e.categories||[]).map(x=>LABELS[x]||x).join("، ")))}${td("اهمیت",esc(e.why_fa))}${td("مشارکت",esc(e.participation_fa))}${last(e)}</tr>`}),
+    taken ? "هنوز کسی مسئولیت رویدادی را نگرفته است." : "رویداد بدون مسئولی باقی نمانده است. رویدادهای واگذارشده در «در دست پیگیری» هستند.");
 };
 
 // ---------- ERP
@@ -498,17 +560,40 @@ VIEWS["bpms.reports"] = () => {
    (summary.length?`<h3>بهره‌وری اعضا</h3>`+table(["عضو","تعداد گزارش","میانگین نمره","وضعیت"],summary):"")+
    `<h3>گزارش‌ها</h3>`+table(["تاریخ","عضو","ساعت کار","شرح","نمره","بازخورد"], list.map(r=>`<tr>${td("تاریخ",faDate(r.date))}${td("عضو",esc(memberName(r.member)),"t")}${td("ساعت",`<span class="mono">${esc(r.hours??"—")}</span>`)}${td("شرح",esc(r.text))}${td("نمره",light(r.score))}${td("بازخورد",esc(r.feedback||""))}</tr>`),"گزارشی ثبت نشده است.");
 };
-function reportForm(){
+const REPORT_START = "2026-10-21"; // reports are expected from this date for members who registered before it
+const addDays = (d,n) => new Date(new Date(d+"T12:00:00").getTime()+n*864e5).toISOString().slice(0,10);
+const wdOf = d => WEEKDAYS[(new Date(d+"T12:00:00").getDay()+1)%7][0];
+const isOfficeDay = (m,d) => !!m && (m.office_days||[]).includes(wdOf(d));
+// office days (last 14) on which this member has not sent a report; today only counts after 16:00
+function missingReportDays(me){
+  const out=[]; if(!me||!S.repLoaded) return out;
+  const cutoff=me.joined||REPORT_START, hr=new Date().getHours();
+  for(let i=0;i<14;i++){
+    const d=addDays(today(),-i);
+    if(d<cutoff) break;
+    if(!isOfficeDay(me,d)) continue;
+    if(i===0&&hr<16) continue;
+    if(S.myReports.some(r=>(r.date||r.id)===d)) continue;
+    out.push(d);
+  }
+  return out;
+}
+function reportForm(date){
   const me=myMember(); if(!me){toast("ابتدا ثبت‌نام کنید.");return}
-  const att=S.myAtt.find(a=>a.id===today())||{};
-  const hours = att.in&&att.out ? Math.max(0,(toMin(att.out)-toMin(att.in)-(att.break_min??60))/60) : null;
+  const missing=missingReportDays(me);
+  const opts={}; [today(),...missing].filter((d,i,a)=>a.indexOf(d)===i&&!S.myReports.some(r=>(r.date||r.id)===d)).sort().reverse().forEach(d=>opts[d]=faDate(d)+(d===today()?" (امروز)":""));
+  if(!Object.keys(opts).length){toast("گزارش امروز و روزهای قبل ثبت شده است.");return}
+  const first=opts[date]?date:Object.keys(opts)[0];
   const myTasks=S.tasks.filter(t=>t.assignee===S.me.id);
-  openForm({title:"گزارش عملکرد امروز", extra:`<p class="note">ساعت کار ثبت‌شده: ${hours==null?"ورود/خروج کامل نیست":hours.toFixed(1)} · تسک‌های باز: ${faNum(myTasks.filter(t=>!["done","approved"].includes(t.status)).length)} · انجام‌شده امروز: ${faNum(myTasks.filter(t=>t.status==="done"&&(t.updated||"").startsWith(today())).length)}</p>`,
-   fields:[{k:"text",label:"کارهایی که امروز انجام دادید (دقیق و با خروجی قابل بررسی)",type:"textarea"},{k:"blockers",label:"موانع",type:"textarea"},{k:"tomorrow",label:"برنامه‌ی فردا",type:"textarea"}],
+  const hoursOf=d=>{const att=S.myAtt.find(a=>a.id===d)||{};return att.in&&att.out?Math.max(0,(toMin(att.out)-toMin(att.in)-(att.break_min??60))/60):null};
+  const h0=hoursOf(first);
+  openForm({title:"گزارش عملکرد", values:{date:first}, extra:`<p class="note">ساعت کار ثبت‌شده‌ی روز انتخابی: ${h0==null?"ورود/خروج کامل نیست":h0.toFixed(1)} · تسک‌های باز: ${faNum(myTasks.filter(t=>!["done","approved"].includes(t.status)).length)}. گزارش روزهای گذشته با برچسب «با تأخیر» در بایگانی ثبت می‌شود.</p>`,
+   fields:[{k:"date",label:"تاریخ گزارش",type:"select",options:opts},{k:"text",label:"کارهایی که در آن روز انجام دادید (دقیق و با خروجی قابل بررسی)",type:"textarea"},{k:"blockers",label:"موانع",type:"textarea"},{k:"tomorrow",label:"برنامه‌ی روز بعد",type:"textarea"}],
    onSave: async v => {
      if(!v.text){toast("شرح کارها را بنویسید.");return false}
-     const rec={date:today(),hours:hours==null?null:Number(hours.toFixed(1)),text:v.text,blockers:v.blockers,tomorrow:v.tomorrow,score:null,feedback:"",created:new Date().toISOString()};
-     const ok=await save(`reports/${S.me.id}/items/${today()}`,rec,"گزارش ثبت شد؛ در حال نمره‌دهی…"); if(!ok) return false;
+     const hours=hoursOf(v.date);
+     const rec={date:v.date,hours:hours==null?null:Number(hours.toFixed(1)),text:v.text,blockers:v.blockers,tomorrow:v.tomorrow,score:null,feedback:"",late:v.date<today(),created:new Date().toISOString()};
+     const ok=await save(`reports/${S.me.id}/items/${v.date}`,rec,"گزارش ثبت شد؛ در حال نمره‌دهی…"); if(!ok) return false;
      gradeReport(rec, me, myTasks); return true;
    }});
 }
@@ -530,6 +615,55 @@ Return JSON only: {"score": <integer 0-100>, "feedback_fa": "<2-3 short Persian 
     await S.db.doc(`reports/${S.me.id}/items/${rec.date}`).update({score,feedback:fb,graded:new Date().toISOString()});
     toast(`نمره‌ی گزارش: ${score} از ۱۰۰`);
   }catch(e){ toast(e.code==="not_granted"?"نمره‌دهی خودکار اجازه داده نشد.":"نمره‌دهی انجام نشد؛ بعداً دوباره ثبت کنید."); }
+}
+// ---------- REPORT ARCHIVE: one row per day for each person; missed office days are visible and flagged
+function raDays(){
+  const admin=isAdmin(), ids=admin?S.members.map(m=>m.id):[S.me.id], ra=S.ra;
+  if(!ra.member||!ids.includes(ra.member)) ra.member=ids.includes(S.me.id)?S.me.id:ids[0];
+  if(!ra.to) ra.to=today(); if(!ra.from) ra.from=addDays(today(),-29);
+  const m=S.members.find(x=>x.id===ra.member);
+  const reps=admin?S.allReports.filter(r=>r.member===ra.member):S.myReports.map(r=>({...r,member:S.me.id}));
+  const byDate={}; reps.forEach(r=>byDate[r.date||r.id]=r);
+  const hr=new Date().getHours(), rows=[];
+  for(let d=ra.to, n=0; d>=ra.from && n<400; d=addDays(d,-1), n++){
+    const r=byDate[d], office=isOfficeDay(m,d), cutoff=(m&&m.joined)||REPORT_START;
+    if(!r && (!office || d>today() || d<cutoff)) continue;
+    const state = r ? "ok" : (d===today()&&hr<16 ? "wait" : "missing");
+    rows.push({date:d,state,r,office});
+  }
+  return {ids,m,rows};
+}
+VIEWS["bpms.rarchive"] = () => {
+  if(!S.me.id) return `<p class="empty">برای استفاده از این بخش باید با حساب claude.ai وارد شده باشید.</p>`;
+  const {ids,m,rows}=raDays(), admin=isAdmin(), ra=S.ra;
+  const done=rows.filter(x=>x.state==="ok"), missing=rows.filter(x=>x.state==="missing"), scored=done.filter(x=>x.r.score!=null);
+  const avg=scored.length?Math.round(scored.reduce((s,x)=>s+x.r.score,0)/scored.length):null;
+  const todayBox = admin && S.allLoaded ? (()=>{
+    const due=S.members.filter(x=>isOfficeDay(x,today())), noRep=due.filter(x=>!S.allReports.some(r=>r.member===x.id&&(r.date||r.id)===today()));
+    return `<div class="card" style="margin-bottom:12px"><h3 style="margin-top:0">وضعیت گزارش امروز – ${faDate(today())}</h3>${due.length?`<p>${due.map(x=>`<span class="pill ${noRep.includes(x)?"p-bad":"p-ok"}">${esc(x.full_name)}${noRep.includes(x)?" – ثبت نشده":" – ثبت شد"}</span>`).join(" ")}</p>${new Date().getHours()>=16&&noRep.length?`<p class="p-bad">اعلان یادآوری برای ${faNum(noRep.length)} نفر فعال است.</p>`:""}`:`<p class="meta">امروز عضوی روز حضور ندارد.</p>`}</div>`;})() : "";
+  return `<p class="note">بایگانی روزانه‌ی گزارش عملکرد هر عضو. روزهای حضور بدون گزارش با وضعیت «ثبت نشد» نشان داده می‌شود و عضو تا ثبت گزارش اعلان می‌گیرد؛ روزهای غیرحضور بدون گزارش نمایش داده نمی‌شوند.</p>${todayBox}
+   <div class="toolbar">${admin?`<select data-ra="member" aria-label="عضو">${ids.map(id=>`<option value="${esc(id)}"${id===ra.member?" selected":""}>${esc(memberName(id))}</option>`).join("")}</select>`:`<b>${esc(memberName(S.me.id))}</b>`}
+    <label class="meta">از <input type="date" data-ra="from" value="${esc(ra.from)}"></label><label class="meta">تا <input type="date" data-ra="to" value="${esc(ra.to)}"></label>
+    ${admin?`<button class="btn ghost" data-act="reload-reports">به‌روزرسانی از پایگاه</button>`:""}<button class="btn ghost" data-act="ra-csv"${S.downloads&&rows.length?"":" disabled"}>دریافت CSV</button></div>`+
+  kpis([["روزهای حضور بررسی‌شده",faNum(done.length+missing.length)],["گزارش ثبت‌شده",faNum(done.length)],["ثبت‌نشده",faNum(missing.length),missing.length>0],["میانگین نمره",avg==null?"—":faNum(avg)]])+
+  table(["تاریخ","روز","وضعیت","ساعت کار","نمره","خلاصه‌ی گزارش",""], rows.map(({date,state,r})=>`<tr>${td("تاریخ",faDate(date))}${td("روز",esc((WEEKDAYS.find(w=>w[0]===wdOf(date))||[])[1]||""))}
+    ${td("وضعیت",state==="ok"?`<span class="pill p-ok">ثبت شد</span>${r.late?' <span class="pill p-warn">با تأخیر</span>':""}`:state==="wait"?'<span class="pill p-mute">هنوز مهلت دارد</span>':'<span class="pill p-bad">ثبت نشد</span>')}
+    ${td("ساعت",`<span class="mono">${esc(r?r.hours??"—":"—")}</span>`)}${td("نمره",r?light(r.score):"—")}${td("خلاصه",r?esc((r.text||"").slice(0,140)):"—","t")}
+    ${td("",r?`<button class="btn sm ghost" data-act="report-view" data-m="${esc(ra.member)}" data-d="${esc(date)}">مشاهده</button>`:(state==="missing"&&ra.member===S.me.id?`<button class="btn sm sig" data-act="report-new" data-date="${esc(date)}">ثبت گزارش این روز</button>`:""))}</tr>`),
+   "در این بازه روز حضور یا گزارشی برای این عضو ثبت نشده است.");
+};
+function reportDetail(member,date){
+  const r=(isAdmin()?S.allReports.filter(x=>x.member===member):S.myReports).find(x=>(x.date||x.id)===date); if(!r) return;
+  $("#layer").innerHTML=`<div class="scrim" data-act="close-scrim"><div class="drawer"><div class="row"><h3 style="flex:1;margin:0">گزارش ${esc(memberName(member))} – ${faDate(date)}</h3><button class="btn ghost sm" data-act="close">بستن</button></div>
+   <p>${light(r.score)} ${r.late?'<span class="pill p-warn">با تأخیر ثبت شده</span>':""}</p><p class="meta">ساعت کار خالص: ${esc(r.hours??"ثبت نشده")}</p>
+   <h3>کارهای انجام‌شده</h3><p style="white-space:pre-wrap">${esc(r.text||"")}</p>${r.blockers?`<h3>موانع</h3><p style="white-space:pre-wrap">${esc(r.blockers)}</p>`:""}${r.tomorrow?`<h3>برنامه‌ی روز بعد</h3><p style="white-space:pre-wrap">${esc(r.tomorrow)}</p>`:""}
+   <h3>بازخورد</h3><p>${esc(r.feedback||"هنوز نمره‌دهی نشده است.")}</p></div></div>`;
+}
+async function reportsCsv(){
+  const {rows}=raDays(), q=v=>`"${String(v??"").replace(/"/g,'""')}"`;
+  const lines=[["تاریخ (میلادی)","تاریخ","روز","وضعیت","ساعت کار","نمره","گزارش","موانع","بازخورد"].map(q).join(",")];
+  rows.forEach(({date,state,r})=>lines.push([date,faDate(date),(WEEKDAYS.find(w=>w[0]===wdOf(date))||[])[1],state==="ok"?(r.late?"ثبت شد (با تأخیر)":"ثبت شد"):state==="wait"?"هنوز مهلت دارد":"ثبت نشد",r&&r.hours,r&&r.score,r&&r.text,r&&r.blockers,r&&r.feedback].map(q).join(",")));
+  try{ await S.downloads.save({filename:`reports-${S.ra.from}_${S.ra.to}.csv`,data:new Blob(["﻿"+lines.join("\r\n")],{type:"text/csv"})}); }catch(err){ if(!err||err.code!=="declined") toast("دریافت فایل انجام نشد."); }
 }
 VIEWS["bpms.teams"] = () => `<div class="grid2">${Object.entries(TEAMS).map(([k,l])=>{const mem=S.members.filter(m=>m.team===k);const open=S.tasks.filter(t=>t.team===k&&!["done","approved"].includes(t.status)).length;
   return `<div class="card"><h3>${l}</h3><p class="meta">${faNum(mem.length)} عضو · ${faNum(open)} تسک باز</p><p>${esc(mem.map(m=>m.full_name).join("، ")||"عضوی ثبت نشده")}</p><p class="note">${esc(TEAM_DUTIES[k])}</p></div>`}).join("")}</div>`;
@@ -558,21 +692,26 @@ VIEWS["bpms.members"] = () => {
    <p class="note">هر عضو با حساب claude.ai خود وارد می‌شود و فقط مشخصات خودش را ویرایش می‌کند. تصویر امضا برای امضای الکترونیک نامه‌ها استفاده می‌شود. برای اعلان موبایل، شناسه‌ی چت تلگرام را وارد کنید.</p>`+
    table(["نام","نقش","تیم","نوع نیرو","روزهای حضور","امضا"], S.members.map(m=>`<tr>${td("نام",esc(m.full_name),"t")}${td("نقش",esc(ROLES[m.role]||"—"))}${td("تیم",esc(TEAMS[m.team]||"—"))}${td("نوع",esc(STAFF[m.staff_type]||"—"))}${td("روزها",esc((m.office_days||[]).map(d=>(WEEKDAYS.find(w=>w[0]===d)||[])[1]).join("، ")))}${td("امضا",m.signature_asset?`<img src="${esc(blobUrl(m.signature_asset))}" alt="امضا" style="max-height:34px">`:'<span class="meta">ثبت نشده</span>')}</tr>`),"هنوز عضوی ثبت‌نام نکرده است.");
 };
-function registerForm(){
+function maybeWelcome(){ // a new person is asked to register the moment the members list has loaded
+  if(S.welcomed||!S.me.id||S.canWrite===false||!S.got.has("members")||myMember()) return;
+  S.welcomed=true; registerForm(true);
+}
+function registerForm(first=false){
   if(!S.me.id){toast("برای ثبت‌نام باید با حساب claude.ai وارد شده باشید.");return}
-  const m=myMember()||{};
-  openForm({title:"ثبت‌نام عضو",values:m,fields:[{k:"full_name",label:"نام و نام خانوادگی"},{k:"role_title",label:"عنوان شغلی"},{k:"role",label:"نقش در سامانه",type:"select",options:ROLES,hint:"نقش «مسئول دفتر» و «مدیرعامل» را مدیر سامانه تأیید می‌کند."},{k:"team",label:"تیم",type:"select",options:TEAMS},{k:"staff_type",label:"نوع نیرو",type:"select",options:STAFF},
+  if(S.canWrite===false){toast("دسترسی شما فقط مشاهده است؛ از مالک سامانه بخواهید در منوی Share سطح دسترسی شما را Contributor کند.");return}
+  const m=myMember()||(first&&S.userName?{full_name:S.userName}:{});
+  openForm({title:first?"خوش آمدید؛ ثبت‌نام عضو جدید":"ثبت‌نام عضو",required:first,extra:first?`<p class="note">برای استفاده از سامانه ابتدا مشخصات خود را ثبت کنید. نام، تیم، روزهای حضور و امضای شما برای تسک‌ها، گزارش عملکرد و امضای الکترونیک نامه‌ها لازم است.</p>`:"",values:m,fields:[{k:"full_name",label:"نام و نام خانوادگی"},{k:"role_title",label:"عنوان شغلی"},{k:"role",label:"نقش در سامانه",type:"select",options:ROLES,hint:"نقش «مسئول دفتر» و «مدیرعامل» را مدیر سامانه تأیید می‌کند."},{k:"team",label:"تیم",type:"select",options:TEAMS},{k:"staff_type",label:"نوع نیرو",type:"select",options:STAFF},
    {k:"office_days",label:"روزهای حضور در شرکت",type:"days"},{k:"start_time",label:"ساعت ورود",type:"time"},{k:"email",label:"ایمیل (برای اعلان)",dir:"ltr"},{k:"telegram",label:"شناسه‌ی چت تلگرام (برای اعلان موبایل)",dir:"ltr"},
    {k:"signature",label:"تصویر امضا (PNG با زمینه‌ی سفید یا شفاف)",type:"file"}],
    onSave: async v => { if(!v.full_name){toast("نام را وارد کنید.");return false}
      const {signature,...rest}=v; let sig=m.signature_asset||null;
      if(signature){ const id=await uploadImage(signature); if(id) sig=id; }
-     return save(`members/${S.me.id}`,{...m,...rest,signature_asset:sig,updated:new Date().toISOString()},"مشخصات شما ثبت شد"); }});
+     return save(`members/${S.me.id}`,{...m,...rest,signature_asset:sig,joined:m.joined||today(),updated:new Date().toISOString()},"مشخصات شما ثبت شد"); }});
 }
 function companyForm(){
   const st=S.settings;
   openForm({title:"مشخصات شرکت",values:st,fields:[{k:"name_fa",label:"نام شرکت"},{k:"name_en",label:"نام لاتین",dir:"ltr"},{k:"reg_no",label:"شماره‌ی ثبت شرکت"},{k:"national_id",label:"شناسه‌ی ملی"},{k:"address",label:"نشانی"},{k:"phone",label:"تلفن",dir:"ltr"},
-   {k:"ceo_member",label:"مدیرعامل",type:"select",options:Object.fromEntries([["","—"],...S.members.map(m=>[m.id,m.full_name])])},{k:"logo",label:"لوگوی شرکت",type:"file"},{k:"ceo_sig",label:"تصویر امضای مدیرعامل",type:"file"}],
+   {k:"ceo_member",label:"مدیرعامل",type:"select",options:Object.fromEntries([["","—"],...S.members.map(m=>[m.id,m.full_name])])},{k:"intl_name",label:"هویت بین‌المللی – نام شرکت (برای پیشنهادهای خارجی)",dir:"ltr",value:INTL_DEFAULT.name},{k:"intl_address",label:"هویت بین‌المللی – نشانی",dir:"ltr",value:INTL_DEFAULT.address},{k:"intl_website",label:"وب‌سایت",dir:"ltr",value:INTL_DEFAULT.website},{k:"intl_email",label:"ایمیل رسمی",dir:"ltr",value:INTL_DEFAULT.email},{k:"intl_signatory",label:"امضاکننده‌ی نامه‌های بین‌المللی",dir:"ltr",value:INTL_DEFAULT.signatory},{k:"intl_title",label:"سمت امضاکننده",dir:"ltr",value:INTL_DEFAULT.title},{k:"logo",label:"لوگوی شرکت",type:"file"},{k:"ceo_sig",label:"تصویر امضای مدیرعامل",type:"file"}],
    onSave: async v => { const {logo,ceo_sig,...rest}=v; const out={...st,...rest};
      if(logo){const id=await uploadImage(logo); if(id) out.logo_asset=id;}
      if(ceo_sig){const id=await uploadImage(ceo_sig); if(id) out.ceo_sig_asset=id;}
@@ -580,40 +719,193 @@ function companyForm(){
 }
 
 // ---------- LETTERS
-VIEWS["letters.list"] = () => {
-  const list=S.letters.filter(l=>match(l.subject,l.recipient,l.number,l.employer_no)).sort((a,b)=>(b.date||"").localeCompare(a.date||""));
-  return kpis([["کل نامه‌ها",faNum(list.length)],["در انتظار امضای مسئول دفتر",faNum(list.filter(l=>!l.office_sig).length)],["در انتظار امضای مدیرعامل",faNum(list.filter(l=>l.office_sig&&!l.ceo_sig).length)],["جلسه‌ی پیش رو",faNum(list.filter(l=>l.meeting_date&&l.meeting_date>=today()).length)],["اقدام بعدی سررسیده",faNum(list.filter(l=>l.next_date&&l.next_date<=today()).length),true]])+
-  table(["شماره‌ی شرکت","شماره در سیستم کارفرما","تاریخ","موضوع","گیرنده","جلسه‌ی پیرو","اقدام بعدی","امضاها",""], list.map(l=>`<tr>${td("شماره",`<span class="mono">${esc(l.number)}</span>`)}${td("شماره کارفرما",`<span class="mono">${esc(l.employer_no||"—")}</span>`)}${td("تاریخ",faDate(l.date))}${td("موضوع",esc(l.subject),"t")}${td("گیرنده",esc(l.recipient))}
-   ${td("جلسه",l.meeting_date?`${esc(l.meeting_mode==="online"?"آنلاین":"حضوری")} · ${faDate(l.meeting_date)} ${esc(l.meeting_time||"")}<br><span class="meta">${esc(l.meeting_place||"")}</span>`:"—")}
-   ${td("اقدام بعدی",`${esc(l.next_action||"—")}${l.next_date?`<br><span class="${l.next_date<=today()?"p-bad":"meta"}">${faDate(l.next_date)}</span>`:""}`)}
-   ${td("امضا",`${l.office_sig?'<span class="pill p-ok">مسئول دفتر</span>':'<span class="pill p-mute">مسئول دفتر</span>'} ${l.ceo_sig?'<span class="pill p-ok">مدیرعامل</span>':'<span class="pill p-mute">مدیرعامل</span>'}`)}
-   ${td("",`<button class="btn sm ghost" data-act="letter-view" data-id="${l.id}">مشاهده</button>`)}</tr>`),"هنوز نامه‌ای ثبت نشده است. از «نامه‌ی جدید» شروع کنید.");
+// Two separate sections: "new" composes a letter on the company letterhead and produces a ready-to-send Word file;
+// "archive" tracks letters that were sent before the agent existed and where each one stands now.
+/*DOCX-START*/
+// Minimal dependency-free .docx writer: stored ZIP + WordprocessingML (RTL, letterhead in header/footer).
+const CRC_T = (()=>{const t=new Uint32Array(256);for(let n=0;n<256;n++){let c=n;for(let k=0;k<8;k++)c=c&1?0xEDB88320^(c>>>1):c>>>1;t[n]=c>>>0}return t})();
+function crc32(b){let c=0xFFFFFFFF;for(let i=0;i<b.length;i++)c=CRC_T[(c^b[i])&255]^(c>>>8);return (c^0xFFFFFFFF)>>>0}
+function zipStore(files){
+  const enc=new TextEncoder(), parts=[], central=[]; let off=0;
+  const u16=n=>[n&255,(n>>8)&255], u32=n=>[n&255,(n>>8)&255,(n>>16)&255,(n>>>24)&255];
+  for(const f of files){
+    const name=enc.encode(f.name), data=typeof f.data==="string"?enc.encode(f.data):f.data, crc=crc32(data), sz=data.length;
+    const lh=Uint8Array.from([0x50,0x4b,3,4,...u16(20),...u16(0x0800),...u16(0),...u16(0),...u16(0x21),...u32(crc),...u32(sz),...u32(sz),...u16(name.length),...u16(0)]);
+    const ch=Uint8Array.from([0x50,0x4b,1,2,...u16(20),...u16(20),...u16(0x0800),...u16(0),...u16(0),...u16(0x21),...u32(crc),...u32(sz),...u32(sz),...u16(name.length),...u16(0),...u16(0),...u16(0),...u16(0),...u32(0),...u32(off)]);
+    parts.push(lh,name,data); central.push(ch,name); off+=lh.length+name.length+sz;
+  }
+  const cdSize=central.reduce((s,c)=>s+c.length,0);
+  const end=Uint8Array.from([0x50,0x4b,5,6,...u16(0),...u16(0),...u16(files.length),...u16(files.length),...u32(cdSize),...u32(off),...u16(0)]);
+  const all=[...parts,...central,end], out=new Uint8Array(all.reduce((s,c)=>s+c.length,0)); let p=0;
+  for(const c of all){out.set(c,p);p+=c.length} return out;
+}
+const WX = s => String(s ?? "").replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F]/g,"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const WLTR = s => s ? "‪"+s+"‬" : "";   // keep Latin ids like PPT-1405-0001 in reading order inside RTL text
+const WD = {ltr:false};   // direction of the letter being built: false = Persian RTL letterhead, true = English (international identity)
+const wRun = (text,{b=false,sz=24,color=""}={}) => `<w:r><w:rPr><w:rFonts w:ascii="Tahoma" w:hAnsi="Tahoma" w:cs="B Nazanin"/>${b?"<w:b/><w:bCs/>":""}${color?`<w:color w:val="${color}"/>`:""}<w:sz w:val="${sz}"/><w:szCs w:val="${sz+2}"/>${WD.ltr?"":"<w:rtl/>"}</w:rPr><w:t xml:space="preserve">${WX(text)}</w:t></w:r>`;
+// jc: omitted = start (visual right in RTL), "both" = justified, "right" = end (visual left in RTL), "center"
+const wPara = (inner,{jc="",before=0,after=0,line=0,border=null}={}) => `<w:p><w:pPr>${border?`<w:pBdr><w:${border.side} w:val="single" w:sz="${border.sz}" w:space="4" w:color="${border.color}"/></w:pBdr>`:""}${WD.ltr?"":"<w:bidi/>"}<w:spacing w:before="${before}" w:after="${after}"${line?` w:line="${line}" w:lineRule="auto"`:""}/>${jc?`<w:jc w:val="${jc}"/>`:""}</w:pPr>${inner}</w:p>`;
+const wImg = (rid,n,cx,cy) => `<w:r><w:drawing><wp:inline distT="0" distB="0" distL="0" distR="0"><wp:extent cx="${cx}" cy="${cy}"/><wp:docPr id="${n}" name="img${n}"/><a:graphic xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main"><a:graphicData uri="http://schemas.openxmlformats.org/drawingml/2006/picture"><pic:pic xmlns:pic="http://schemas.openxmlformats.org/drawingml/2006/picture"><pic:nvPicPr><pic:cNvPr id="${n}" name="img${n}.png"/><pic:cNvPicPr/></pic:nvPicPr><pic:blipFill><a:blip r:embed="${rid}"/><a:stretch><a:fillRect/></a:stretch></pic:blipFill><pic:spPr><a:xfrm><a:off x="0" y="0"/><a:ext cx="${cx}" cy="${cy}"/></a:xfrm><a:prstGeom prst="rect"><a:avLst/></a:prstGeom></pic:spPr></pic:pic></a:graphicData></a:graphic></wp:inline></w:drawing></w:r>`;
+const W_NS = 'xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships" xmlns:wp="http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing"';
+const RELNS = "http://schemas.openxmlformats.org/officeDocument/2006/relationships";
+const imgSize = (im,hCm) => { const cy=Math.round(hCm*360000); return [Math.round(cy*im.w/im.h), cy]; };
+
+// L: {number,dateFa,recipient,subject,body,attachments,cc}; C: {nameFa,nameEn,footer,ceoName,ceoTitle}; logo/sig: {bytes,w,h}|null
+function buildLetterDocx(L, C, logo, sig, ltr=false){
+  WD.ltr=ltr; const END=ltr?"":"right";
+  const T=ltr?{no:"Ref: ",date:"Date: ",att:"Enclosures: ",none:"None",subj:"Subject: ",hello:"Dear Sir or Madam,",thanks:"Thank you for your time and consideration.",cc:"cc: ",bye:"Yours sincerely,"}:{no:"شماره: ",date:"تاریخ: ",att:"پیوست: ",none:"ندارد",subj:"موضوع: ",hello:"با سلام و احترام،",thanks:"پیشاپیش از حسن توجه جنابعالی سپاسگزاریم.",cc:"رونوشت: ",bye:""};
+  const lines = s => String(s||"").split(/\r?\n/).map(x=>x.trim()).filter(Boolean);
+  // header = letterhead
+  const names = wPara(wRun(C.nameFa||"",{b:true,sz:32}),{after:20}) + (C.nameEn?wPara(wRun(WLTR(C.nameEn),{sz:20,color:"555555"})):"");
+  let hdrTbl;
+  if(logo){ const [cx,cy]=imgSize(logo,1.8);
+    hdrTbl = `<w:tbl><w:tblPr><w:tblW w:w="5000" w:type="pct"/>${ltr?"":"<w:bidiVisual/>"}<w:tblLayout w:type="fixed"/></w:tblPr><w:tblGrid><w:gridCol w:w="2400"/><w:gridCol w:w="7238"/></w:tblGrid><w:tr>`+
+      `<w:tc><w:tcPr><w:tcW w:w="2400" w:type="dxa"/><w:vAlign w:val="center"/></w:tcPr>${wPara(wImg("rIdLogo",1,cx,cy))}</w:tc>`+
+      `<w:tc><w:tcPr><w:tcW w:w="7238" w:type="dxa"/><w:vAlign w:val="center"/></w:tcPr>${names}</w:tc></w:tr></w:tbl>`;
+  } else hdrTbl = `<w:tbl><w:tblPr><w:tblW w:w="5000" w:type="pct"/>${ltr?"":"<w:bidiVisual/>"}<w:tblLayout w:type="fixed"/></w:tblPr><w:tblGrid><w:gridCol w:w="9638"/></w:tblGrid><w:tr><w:tc><w:tcPr><w:tcW w:w="9638" w:type="dxa"/></w:tcPr>${names}</w:tc></w:tr></w:tbl>`;
+  const header = `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><w:hdr ${W_NS}>${hdrTbl}${wPara("",{after:0,border:{side:"bottom",sz:12,color:"D12A1F"}})}</w:hdr>`;
+  const footer = `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><w:ftr ${W_NS}>${wPara(wRun(C.footer||"",{sz:17,color:"555555"}),{jc:"center",border:{side:"top",sz:4,color:"BBBBBB"}})}</w:ftr>`;
+  // body
+  const b=[];
+  b.push(wPara(wRun(T.no+WLTR(L.number),{sz:22}),{jc:END}));
+  b.push(wPara(wRun(T.date+L.dateFa,{sz:22}),{jc:END}));
+  b.push(wPara(wRun(T.att+(L.attachments||T.none),{sz:22}),{jc:END,after:240}));
+  lines(L.recipient).forEach(t=>b.push(wPara(wRun(t,{b:true}),{line:300})));
+  b.push(wPara(wRun(T.subj,{b:true})+wRun(L.subject||""),{before:160,after:160,line:300}));
+  b.push(wPara(wRun(T.hello),{after:120,line:360}));
+  lines(L.body).forEach(t=>b.push(wPara(wRun(t),{jc:"both",after:120,line:360})));
+  b.push(wPara(wRun(T.thanks),{before:120,after:120,line:360}));
+  if(ltr) b.push(wPara(wRun(T.bye),{after:0,line:360}));
+  const sigRun = sig ? (([cx,cy])=>wImg("rIdSig",2,cx,cy))(imgSize(sig,2.2)) : "";
+  b.push(wPara(sigRun,{jc:END,before:sig?240:720}));
+  if(C.ceoName) b.push(wPara(wRun(C.ceoName,{b:true}),{jc:END}));
+  b.push(wPara(wRun(C.ceoTitle||"مدیرعامل"),{jc:END,after:240}));
+  if(L.cc) b.push(wPara(wRun(T.cc+L.cc,{sz:20,color:"444444"}),{line:300}));
+  const sect = `<w:sectPr><w:headerReference w:type="default" r:id="rIdHdr"/><w:footerReference w:type="default" r:id="rIdFtr"/><w:pgSz w:w="11906" w:h="16838"/><w:pgMar w:top="2268" w:right="1134" w:bottom="1418" w:left="1134" w:header="567" w:footer="567" w:gutter="0"/>${ltr?"":"<w:bidi/>"}</w:sectPr>`;
+  const doc = `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><w:document ${W_NS}><w:body>${b.join("")}${sect}</w:body></w:document>`;
+  const styles = `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><w:styles xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"><w:docDefaults><w:rPrDefault><w:rPr><w:rFonts w:ascii="Tahoma" w:hAnsi="Tahoma" w:cs="B Nazanin"/><w:sz w:val="24"/><w:szCs w:val="26"/><w:lang w:val="en-US" w:bidi="fa-IR"/></w:rPr></w:rPrDefault><w:pPrDefault><w:pPr>${ltr?"":"<w:bidi/>"}</w:pPr></w:pPrDefault></w:docDefaults><w:style w:type="paragraph" w:default="1" w:styleId="Normal"><w:name w:val="Normal"/><w:qFormat/></w:style></w:styles>`;
+  const ct = `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Default Extension="png" ContentType="image/png"/><Override PartName="/word/document.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml"/><Override PartName="/word/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.styles+xml"/><Override PartName="/word/header1.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.header+xml"/><Override PartName="/word/footer1.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.footer+xml"/></Types>`;
+  const rels = (items) => `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">${items.map(([id,t,tg])=>`<Relationship Id="${id}" Type="${RELNS}/${t}" Target="${tg}"/>`).join("")}</Relationships>`;
+  const files = [
+    {name:"[Content_Types].xml",data:ct},
+    {name:"_rels/.rels",data:rels([["rId1","officeDocument","word/document.xml"]])},
+    {name:"word/document.xml",data:doc},
+    {name:"word/styles.xml",data:styles},
+    {name:"word/header1.xml",data:header},
+    {name:"word/footer1.xml",data:footer},
+    {name:"word/_rels/document.xml.rels",data:rels([["rIdHdr","header","header1.xml"],["rIdFtr","footer","footer1.xml"],["rIdSty","styles","styles.xml"],...(sig?[["rIdSig","image","media/sig.png"]]:[])])},
+  ];
+  if(logo){ files.push({name:"word/_rels/header1.xml.rels",data:rels([["rIdLogo","image","media/logo.png"]])},{name:"word/media/logo.png",data:logo.bytes}); }
+  if(sig) files.push({name:"word/media/sig.png",data:sig.bytes});
+  return zipStore(files);
+}
+/*DOCX-END*/
+
+async function prepImage(assetId, maxPx){ // asset -> PNG bytes + size, so the Word file never depends on the original format
+  try{
+    const blob = await (await fetch(blobUrl(assetId))).blob();
+    const url = URL.createObjectURL(blob);
+    const im = await new Promise((ok,no)=>{ const i=new Image(); i.onload=()=>ok(i); i.onerror=no; i.src=url; });
+    const k = Math.min(1, maxPx/Math.max(im.naturalWidth||1, im.naturalHeight||1));
+    const w=Math.max(1,Math.round(im.naturalWidth*k)), h=Math.max(1,Math.round(im.naturalHeight*k));
+    const cv=document.createElement("canvas"); cv.width=w; cv.height=h; cv.getContext("2d").drawImage(im,0,0,w,h);
+    URL.revokeObjectURL(url);
+    const png = await new Promise(ok=>cv.toBlob(ok,"image/png"));
+    return {bytes:new Uint8Array(await png.arrayBuffer()), w, h};
+  }catch(e){ console.error("image prep failed", e); return null; }
+}
+async function makeLetterDocx(l){
+  const st=S.settings, ceo=S.members.find(m=>m.id===st.ceo_member);
+  const sigId = l.ceo_sig ? (l.ceo_sig.asset||st.ceo_sig_asset) : null;
+  const [logo,sig] = await Promise.all([st.logo_asset?prepImage(st.logo_asset,700):null, sigId?prepImage(sigId,600):null]);
+  if(l.identity==="intl"){ const I=intlId();
+    return buildLetterDocx({number:l.number,dateFa:enDate(l.date),recipient:l.recipient,subject:l.subject,body:l.body,attachments:l.attachments,cc:l.cc},
+      {nameFa:I.name,nameEn:"",footer:[I.address,I.website,I.email].filter(Boolean).join(" · "),ceoName:I.signatory,ceoTitle:I.title}, logo, sig, true); }
+  const footer=[st.address, st.phone&&`تلفن: ${st.phone}`, st.reg_no&&`شماره‌ی ثبت: ${st.reg_no}`, st.national_id&&`شناسه‌ی ملی: ${st.national_id}`].filter(Boolean).join(" · ");
+  return buildLetterDocx({number:l.number,dateFa:faDate(l.date),recipient:l.recipient,subject:l.subject,body:l.body,attachments:l.attachments,cc:l.cc},
+    {nameFa:st.name_fa||"پترو پالا توس",nameEn:st.name_en||"",footer,ceoName:ceo?ceo.full_name:"",ceoTitle:`مدیرعامل ${st.name_fa||""}`.trim()}, logo, sig);
+}
+async function downloadLetter(l){
+  if(!S.downloads){ toast("دریافت فایل فقط داخل claude.ai فعال است."); return; }
+  try{
+    toast("در حال ساخت فایل Word…");
+    const bytes = await makeLetterDocx(l);
+    await S.downloads.save({filename:`${String(l.number||"letter").replace(/[^\w.-]+/g,"_")}.docx`, data:new Blob([bytes],{type:"application/vnd.openxmlformats-officedocument.wordprocessingml.document"})});
+  }catch(err){ if(!err||err.code!=="declined"){ toast("ساخت یا دریافت فایل Word انجام نشد."); console.error(err); } }
+}
+
+// International proposals go out under the company's foreign identity (Istanbul), in English; Iranian letters keep the Persian letterhead.
+const INTL_DEFAULT = {name:"Parsa International Group",address:"Istanbul, Türkiye",website:"parsaint.group",email:"info@parsaint.group",signatory:"Narges Farahani",title:"AI Sector, Parsa International Group"};
+const intlId = () => { const st=S.settings; return {name:st.intl_name||INTL_DEFAULT.name,address:st.intl_address||INTL_DEFAULT.address,website:st.intl_website||INTL_DEFAULT.website,email:st.intl_email||INTL_DEFAULT.email,signatory:st.intl_signatory||INTL_DEFAULT.signatory,title:st.intl_title||INTL_DEFAULT.title}; };
+const enDate = d => { try{ return new Intl.DateTimeFormat("en-GB",{day:"numeric",month:"long",year:"numeric"}).format(new Date((d||today())+"T12:00:00")); }catch(e){ return d||""; } };
+function nextLetterNo(identity){ if(identity==="intl"){ const y=new Date().getFullYear(); const n=S.letters.filter(l=>(l.number||"").startsWith(`PIG-${y}-`)).length+1; return `PIG-${y}-${String(n).padStart(4,"0")}`; }
+  const y=new Intl.DateTimeFormat("en-u-ca-persian",{year:"numeric"}).format(new Date()).replace(/\D/g,""); const n=S.letters.filter(l=>(l.number||"").includes(`PPT-${y}-`)).length+1; return `PPT-${y}-${String(n).padStart(4,"0")}`; }
+function getDraft(){ if(!S.draft) S.draft={number:nextLetterNo(),date:today(),numAuto:true}; return S.draft; }
+function draftLetter(){ return {...getDraft()}; }
+
+VIEWS["letters.new"] = () => {
+  const d=getDraft(), st=S.settings;
+  const fld=(k,label,ctl)=>`<div class="field"><label for="c_${k}">${esc(label)}</label>${ctl}</div>`;
+  const inp=(k,label,type="text",dir="")=>fld(k,label,`<input id="c_${k}" data-c="${k}" type="${type}" value="${esc(d[k]||"")}" ${dir?`dir="${dir}"`:""}>`);
+  const ta=(k,label,rows)=>fld(k,label,`<textarea id="c_${k}" data-c="${k}" rows="${rows}" style="min-height:${rows*28}px">${esc(d[k]||"")}</textarea>`);
+  return `${!st.name_fa&&!st.logo_asset?`<div class="banner">سربرگ هنوز کامل نیست: از <b>BPMS ← اعضا و ثبت‌نام ← مشخصات شرکت</b> نام، نشانی، لوگو و امضای مدیرعامل را ثبت کنید تا روی فایل Word بیاید.</div>`:""}
+  <div class="compose"><div class="card" id="composer"><h3>${d.id?"ویرایش نامه":"نوشتن نامه‌ی جدید"}</h3>
+   <p class="note">فقط محتوا را وارد کنید؛ سربرگ (لوگو، نام و نشانی شرکت)، شماره، تاریخ و جای امضا به‌صورت خودکار در فایل Word قرار می‌گیرد.</p>
+   ${fld("identity","هویت فرستنده",`<select id="c_identity" data-c="identity"><option value="ir"${d.identity!=="intl"?" selected":""}>ایران – پترو پالا توس (فارسی، سربرگ داخلی)</option><option value="intl"${d.identity==="intl"?" selected":""}>بین‌المللی – ${esc(intlId().name)} (English)</option></select>`)}
+   ${d.identity==="intl"?`<p class="note">نامه به انگلیسی و با سربرگ ${esc(intlId().name)} (${esc(intlId().address)}) ساخته می‌شود؛ گیرنده، موضوع و متن را هم انگلیسی بنویسید. شماره با پیشوند PIG است.</p>`:""}
+   <div class="grid2" style="gap:0 12px">${inp("number","شماره‌ی نامه","text","ltr")}${inp("date","تاریخ نامه","date")}</div>
+   ${ta("recipient","گیرنده (هر سطر یک خط: نام، سمت، سازمان)",3)}${inp("subject","موضوع نامه")}${ta("body","متن نامه (هر پاراگراف در یک سطر جدا)",12)}
+   <div class="grid2" style="gap:0 12px">${inp("attachments","پیوست‌ها (در صورت وجود)")}${inp("cc","رونوشت (در صورت وجود)")}</div>
+   <div class="row"><button class="btn sig" data-act="compose-go">ثبت نامه و ساخت فایل Word</button><button class="btn ghost" data-act="compose-reset">فرم تازه</button></div>
+   ${S.downloads?"":`<p class="note">فایل Word فقط داخل claude.ai ساخته می‌شود؛ در این نما نامه فقط ثبت می‌شود.</p>`}
+   <p class="note">پس از ثبت، امضای مسئول دفتر و مدیرعامل از «مشاهده» در فهرست زیر انجام می‌شود و با دریافت دوباره‌ی فایل، امضای مدیرعامل روی نامه می‌نشیند.</p></div>
+   <div><h3>پیش‌نمایش روی سربرگ</h3><div id="cprev">${letterSheet(draftLetter())}</div></div></div>
+  <h3>نامه‌های تولیدشده با این بخش</h3><div id="ledger">${letterLedger()}</div>`;
 };
-VIEWS["letters.new"] = () => { setTimeout(()=>letterForm(),0); return `<p class="empty">فرم نامه‌ی جدید باز شد.</p>`; };
-function nextLetterNo(){ const y=new Intl.DateTimeFormat("en-u-ca-persian",{year:"numeric"}).format(new Date()).replace(/\D/g,""); const n=S.letters.filter(l=>(l.number||"").includes(`-${y}-`)).length+1; return `PPT-${y}-${String(n).padStart(4,"0")}`; }
-function letterForm(l={}){
-  openForm({title:l.id?"ویرایش نامه":"نامه‌ی جدید",values:{number:nextLetterNo(),date:today(),meeting_mode:"in_person",...l},fields:[
-   {k:"number",label:"شماره‌ی ثبت شرکت (شماره‌ی نامه)",dir:"ltr"},{k:"employer_no",label:"شماره‌ی ثبت در سیستم کارفرما",dir:"ltr"},{k:"date",label:"تاریخ نامه",type:"date"},
-   {k:"subject",label:"موضوع نامه"},{k:"recipient",label:"گیرنده‌ی نامه (نام، سمت، سازمان)"},{k:"order",label:"دستور نامه (ارجاع / دستور اقدام)",type:"textarea"},
-   {k:"body",label:"شرح کار نامه (متن اصلی)",type:"textarea"},{k:"meeting_mode",label:"جلسه‌ی پیرو نامه",type:"select",options:{none:"ندارد",in_person:"حضوری",online:"آنلاین"}},
-   {k:"meeting_date",label:"تاریخ جلسه",type:"date"},{k:"meeting_time",label:"ساعت جلسه",type:"time"},{k:"meeting_place",label:"مکان یا لینک جلسه"},
-   {k:"next_action",label:"اقدام بعدی"},{k:"next_date",label:"تاریخ اقدام بعدی",type:"date"},{k:"owner",label:"مسئول پیگیری",type:"select",options:Object.fromEntries([["","—"],...S.members.map(m=>[m.id,m.full_name])])}],
-   onSave: v => { if(!v.subject||!v.recipient){toast("موضوع و گیرنده‌ی نامه را وارد کنید.");return false}
-     const id=l.id||newId(); const changed = l.id && (v.body!==l.body||v.subject!==l.subject||v.recipient!==l.recipient);
-     const rec={...l,...v,updated:new Date().toISOString(),created_by:l.created_by||S.me.id};
-     if(changed){ rec.office_sig=null; rec.ceo_sig=null; } // edited content needs fresh signatures
-     return save(`letters/${id}`,rec,"نامه ثبت شد"); }});
+function letterLedger(){
+  const list=S.letters.filter(l=>match(l.subject,l.recipient,l.number)).sort((a,b)=>(b.date||"").localeCompare(a.date||"")||(b.number||"").localeCompare(a.number||""));
+  return kpis([["کل نامه‌ها",faNum(list.length)],["در انتظار امضای مسئول دفتر",faNum(list.filter(l=>!l.office_sig).length)],["در انتظار امضای مدیرعامل",faNum(list.filter(l=>l.office_sig&&!l.ceo_sig).length)],["امضاشده و آماده‌ی ارسال",faNum(list.filter(l=>l.ceo_sig).length)]])+
+  table(["شماره","تاریخ","موضوع","گیرنده","امضاها",""], list.map(l=>`<tr>${td("شماره",`<span class="mono">${esc(l.number)}</span>`)}${td("تاریخ",faDate(l.date))}${td("موضوع",esc(l.subject),"t")}${td("گیرنده",esc((l.recipient||"").split("\n")[0]))}
+   ${td("امضا",`${l.office_sig?'<span class="pill p-ok">مسئول دفتر</span>':'<span class="pill p-mute">مسئول دفتر</span>'} ${l.ceo_sig?'<span class="pill p-ok">مدیرعامل</span>':'<span class="pill p-mute">مدیرعامل</span>'}`)}
+   ${td("",`<div class="row"><button class="btn sm ghost" data-act="letter-view" data-id="${esc(l.id)}">مشاهده و امضا</button><button class="btn sm ghost" data-act="letter-edit" data-id="${esc(l.id)}">ویرایش</button>${S.downloads?`<button class="btn sm" data-act="letter-dl" data-id="${esc(l.id)}">Word</button>`:""}</div>`)}</tr>`),"هنوز نامه‌ای با این بخش ساخته نشده است.");
+}
+async function composeSubmit(){
+  const d=getDraft(); const v=k=>String(d[k]||"").trim();
+  if(!v("subject")||!v("recipient")||!v("body")){ toast("گیرنده، موضوع و متن نامه را وارد کنید."); return; }
+  if(d.numAuto) d.number=nextLetterNo(d.identity);
+  if(!v("number")){ toast("شماره‌ی نامه را وارد کنید."); return; }
+  if(S.letters.some(l=>l.number===d.number&&l.id!==d.id)){ toast("این شماره قبلاً برای نامه‌ی دیگری ثبت شده است."); return; }
+  const old=d.id?S.letters.find(x=>x.id===d.id):null;
+  const id=d.id||newId();
+  const rec={...(old||{}),identity:d.identity==="intl"?"intl":"ir",number:v("number"),date:d.date||today(),recipient:v("recipient"),subject:v("subject"),body:v("body"),attachments:v("attachments"),cc:v("cc"),updated:new Date().toISOString(),created_by:(old&&old.created_by)||S.me.id};
+  if(old&&(old.body!==rec.body||old.subject!==rec.subject||old.recipient!==rec.recipient)){ rec.office_sig=null; rec.ceo_sig=null; } // edited content needs fresh signatures
+  delete rec.id;
+  if(!await save(`letters/${id}`,rec,"نامه ثبت شد")) return;
+  S.draft=null; S.forceFull=true; render();
+  await downloadLetter({...rec,id});
+}
+function letterSheetIntl(l){
+  const I=intlId(), st=S.settings, sigId=l.ceo_sig?(l.ceo_sig.asset||st.ceo_sig_asset):null;
+  return `<div class="sheet ltr" id="sheet"><div class="lh"><div>${st.logo_asset?`<img src="${esc(blobUrl(st.logo_asset))}" alt="logo">`:""}<div class="meta3"><b style="font-size:17px">${esc(I.name)}</b></div></div>
+   <div class="meta3" style="text-align:right">Ref: ${esc(l.number)}<br>Date: ${enDate(l.date)}<br>Enclosures: ${esc(l.attachments||"None")}</div></div>
+   <p><b>${esc(l.recipient||"").replace(/\n/g,"<br>")}</b></p><p><b>Subject:</b> ${esc(l.subject)}</p><p>Dear Sir or Madam,</p>
+   <div style="white-space:pre-wrap">${esc(l.body||"")}</div><p>Thank you for your time and consideration.</p><p>Yours sincerely,</p>
+   <div class="sig">${sigId?`<img src="${esc(blobUrl(sigId))}" alt="signature">`:""}<b>${esc(I.signatory)}</b><br>${esc(I.title)}</div>
+   ${l.cc?`<p class="meta" style="margin-top:14px">cc: ${esc(l.cc)}</p>`:""}
+   <div class="foot">${[I.address,I.website,I.email].filter(Boolean).map(esc).join(" · ")}</div></div>`;
 }
 function letterSheet(l){
+  if(l.identity==="intl") return letterSheetIntl(l);
   const st=S.settings, ceo=S.members.find(m=>m.id===st.ceo_member);
   const ceoSig = l.ceo_sig ? (l.ceo_sig.asset||st.ceo_sig_asset) : null;
-  const meeting = l.meeting_mode&&l.meeting_mode!=="none"&&l.meeting_date ? `<p><b>جلسه‌ی پیرو:</b> ${l.meeting_mode==="online"?"آنلاین":"حضوری"}، ${esc(new Intl.DateTimeFormat("fa-IR-u-ca-persian",{weekday:"long"}).format(new Date(l.meeting_date+"T12:00:00")))} ${faDate(l.meeting_date)}، ساعت ${esc(l.meeting_time||"—")}${l.meeting_place?`، ${esc(l.meeting_place)}`:""}</p>`:"";
+  const meeting = l.meeting_mode&&l.meeting_mode!=="none"&&l.meeting_date ? `<p><b>جلسه‌ی پیرو:</b> ${l.meeting_mode==="online"?"آنلاین":"حضوری"}، ${faDate(l.meeting_date)}، ساعت ${esc(l.meeting_time||"—")}${l.meeting_place?`، ${esc(l.meeting_place)}`:""}</p>`:"";
   return `<div class="sheet" id="sheet"><div class="lh"><div>${st.logo_asset?`<img src="${esc(blobUrl(st.logo_asset))}" alt="لوگو">`:`<b style="font-size:18px">${esc(st.name_fa||"Petro Pala Toos")}</b>`}<div class="meta3">${esc(st.name_fa||"")}${st.name_en?`<br><span dir="ltr">${esc(st.name_en)}</span>`:""}</div></div>
-   <div class="meta3">شماره: <span dir="ltr">${esc(l.number)}</span><br>تاریخ: ${faDate(l.date)}<br>${l.employer_no?`شماره‌ی کارفرما: <span dir="ltr">${esc(l.employer_no)}</span><br>`:""}پیوست: ندارد</div></div>
-   <p><b>${esc(l.recipient)}</b></p><p><b>موضوع:</b> ${esc(l.subject)}</p><p>با سلام و احترام،</p>
+   <div class="meta3">شماره: <span dir="ltr">${esc(l.number)}</span><br>تاریخ: ${faDate(l.date)}<br>${l.employer_no?`شماره‌ی کارفرما: <span dir="ltr">${esc(l.employer_no)}</span><br>`:""}پیوست: ${esc(l.attachments||"ندارد")}</div></div>
+   <p><b>${esc(l.recipient||"").replace(/\n/g,"<br>")}</b></p><p><b>موضوع:</b> ${esc(l.subject)}</p><p>با سلام و احترام،</p>
    <div style="white-space:pre-wrap">${esc(l.body||"")}</div>${meeting}
    <p>پیشاپیش از حسن توجه جنابعالی سپاسگزاریم.</p>
    <div class="sig">${ceoSig?`<img src="${esc(blobUrl(ceoSig))}" alt="امضای مدیرعامل">`:""}<b>${esc(ceo?ceo.full_name:"")}</b><br>مدیرعامل ${esc(st.name_fa||"")}</div>
+   ${l.cc?`<p class="meta" style="margin-top:14px">رونوشت: ${esc(l.cc)}</p>`:""}
    <div class="foot">${esc(st.address||"")}${st.phone?` · تلفن: <span dir="ltr">${esc(st.phone)}</span>`:""}${st.reg_no?` · شماره‌ی ثبت: ${esc(st.reg_no)}`:""}${st.national_id?` · شناسه‌ی ملی: ${esc(st.national_id)}`:""}</div></div>`;
 }
 function letterView(id){
@@ -622,12 +914,67 @@ function letterView(id){
   const canOffice = me.role==="office_manager" && !l.office_sig;
   const canCeo = (st.ceo_member===S.me.id) && l.office_sig && !l.ceo_sig;
   $("#layer").innerHTML = `<div class="scrim" data-act="close-scrim"><div class="drawer" style="width:min(860px,100%)"><div class="row"><h3 style="flex:1;margin:0">نامه‌ی ${esc(l.number)}</h3><button class="btn ghost sm" data-act="close">بستن</button></div>
-   <div class="card" style="margin:10px 0"><b>دستور نامه:</b> ${esc(l.order||"—")}<br><b>اقدام بعدی:</b> ${esc(l.next_action||"—")} ${l.next_date?`(${faDate(l.next_date)})`:""}<br><b>مسئول پیگیری:</b> ${esc(memberName(l.owner))}<br>
-    <b>امضای مسئول دفتر:</b> ${l.office_sig?`${esc(memberName(l.office_sig.by))} – ${faDate(l.office_sig.at.slice(0,10))} ${(S.members.find(m=>m.id===l.office_sig.by)||{}).signature_asset?`<img src="${esc(blobUrl(S.members.find(m=>m.id===l.office_sig.by).signature_asset))}" alt="امضا" style="max-height:32px;vertical-align:middle">`:""}`:"ثبت نشده"}<br>
+   <div class="card" style="margin:10px 0"><b>امضای مسئول دفتر:</b> ${l.office_sig?`${esc(memberName(l.office_sig.by))} – ${faDate(l.office_sig.at.slice(0,10))} ${(S.members.find(m=>m.id===l.office_sig.by)||{}).signature_asset?`<img src="${esc(blobUrl(S.members.find(m=>m.id===l.office_sig.by).signature_asset))}" alt="امضا" style="max-height:32px;vertical-align:middle">`:""}`:"ثبت نشده"}<br>
     <b>امضای مدیرعامل:</b> ${l.ceo_sig?`ثبت شد – ${faDate(l.ceo_sig.at.slice(0,10))}`:"ثبت نشده"}</div>
-   <div class="row" style="margin-bottom:10px">${canOffice?`<button class="btn" data-act="sign-office" data-id="${l.id}">امضای الکترونیک مسئول دفتر</button>`:""}${canCeo?`<button class="btn sig" data-act="sign-ceo" data-id="${l.id}">امضای مدیرعامل</button>`:""}
-    <button class="btn ghost" data-act="letter-edit" data-id="${l.id}">ویرایش</button>${S.downloads?`<button class="btn ghost" data-act="letter-dl" data-id="${l.id}">دریافت فایل Word</button>`:""}</div>
-   <p class="note">امضای مسئول دفتر در دفتر نامه‌ها ثبت می‌شود؛ روی برگه‌ی نامه فقط امضای مدیرعامل در پایین صفحه درج می‌شود. هر ویرایش متن، امضاها را باطل می‌کند.</p>${letterSheet(l)}</div></div>`;
+   <div class="row" style="margin-bottom:10px">${canOffice?`<button class="btn" data-act="sign-office" data-id="${esc(l.id)}">امضای الکترونیک مسئول دفتر</button>`:""}${canCeo?`<button class="btn sig" data-act="sign-ceo" data-id="${esc(l.id)}">امضای مدیرعامل</button>`:""}
+    <button class="btn ghost" data-act="letter-edit" data-id="${esc(l.id)}">ویرایش</button>${S.downloads?`<button class="btn" data-act="letter-dl" data-id="${esc(l.id)}">دریافت فایل Word</button>`:""}</div>
+   <p class="note">امضای مسئول دفتر در سامانه ثبت می‌شود؛ روی برگه‌ی نامه فقط امضای مدیرعامل در پایین صفحه درج می‌شود. هر ویرایش متن، امضاها را باطل می‌کند.</p>${letterSheet(l)}</div></div>`;
+}
+
+// ---------- LETTERS ARCHIVE (letters sent without the agent)
+const ARCH_STAGES = {sent:"ارسال شد",received:"ثبت در دبیرخانه‌ی گیرنده",review:"در دست بررسی",reply:"پاسخ دریافت شد",meeting:"جلسه / مذاکره",done:"نتیجه‌گیری"};
+const ARCH_ST = {active:"در جریان",stalled:"متوقف / نیازمند پیگیری",closed:"بسته شد"};
+const ARCH_CH = {secretariat:"دبیرخانه / پست",email:"ایمیل",hand:"تحویل حضوری",automation:"اتوماسیون اداری کارفرما",other:"سایر"};
+const ARCH_F = {all:"همه",active:"در جریان",stalled:"متوقف",overdue:"اقدام سررسیده",stale:"بدون پیگیری بیش از ۱۴ روز",closed:"بسته‌شده"};
+const daysBetween = (a,b) => Math.floor((new Date(b+"T12:00:00")-new Date(a+"T12:00:00"))/864e5);
+const archLast = a => ((a.log&&a.log.length?a.log[a.log.length-1].at:(a.updated||a.created||""))||"").slice(0,10);
+const archOpen = a => a.status!=="closed" && a.stage!=="done";
+const archOverdue = a => archOpen(a) && a.next_date && a.next_date<=today();
+const archStale = a => archOpen(a) && archLast(a) && daysBetween(archLast(a),today())>14;
+VIEWS["letters.archive"] = () => {
+  const all=S.lettersArchive.filter(a=>match(a.subject,a.recipient,a.number,a.employer_no,a.summary));
+  const flt={all:()=>true,active:a=>archOpen(a)&&a.status!=="stalled",stalled:a=>archOpen(a)&&a.status==="stalled",overdue:archOverdue,stale:archStale,closed:a=>!archOpen(a)}[S.archF]||(()=>true);
+  const list=all.filter(flt).sort((a,b)=>(b.date||"").localeCompare(a.date||""));
+  const keys=Object.keys(ARCH_STAGES);
+  return `<div class="banner">این بخش جدا از «نامه‌ی جدید» است: نامه‌هایی که تا امروز بدون کمک ایجنت ارسال شده‌اند و پیگیری‌شان ادامه دارد. برای هر نامه مشخص است در کدام مرحله هستیم، آخرین اقدام چه بوده و گام بعدی کِی است.</div>
+  <div class="toolbar"><button class="btn sig" data-act="arch-new">ثبت نامه‌ی ارسال‌شده‌ی پیشین</button>${Object.entries(ARCH_F).map(([k,l])=>`<button class="btn sm ${S.archF===k?"":"ghost"}" data-act="arch-f" data-k="${k}">${esc(l)}</button>`).join("")}</div>`+
+  kpis([["کل نامه‌های بایگانی",faNum(all.length)],["در جریان",faNum(all.filter(a=>archOpen(a)&&a.status!=="stalled").length)],["متوقف",faNum(all.filter(a=>archOpen(a)&&a.status==="stalled").length),all.some(a=>archOpen(a)&&a.status==="stalled")],["اقدام بعدی سررسیده",faNum(all.filter(archOverdue).length),all.some(archOverdue)],["بدون پیگیری بیش از ۱۴ روز",faNum(all.filter(archStale).length),all.some(archStale)],["بسته‌شده",faNum(all.filter(a=>!archOpen(a)).length)]])+
+  table(["شماره / تاریخ ارسال","موضوع","گیرنده","پیشرفت","آخرین وضعیت","اقدام بعدی","مسئول",""], list.map(a=>{
+    const i=keys.indexOf(a.stage), last=(a.log||[])[(a.log||[]).length-1], since=archLast(a)?daysBetween(archLast(a),today()):null;
+    return `<tr>${td("شماره",`<span class="mono">${esc(a.number||"—")}</span><br><span class="meta">${faDate(a.date)}</span>${a.employer_no?`<br><span class="meta">کارفرما: <span class="mono">${esc(a.employer_no)}</span></span>`:""}`)}
+     ${td("موضوع",`${esc(a.subject)}${a.summary?`<br><span class="meta">${esc(a.summary)}</span>`:""}${a.scan_asset?`<br>${link(blobUrl(a.scan_asset),"فایل / تصویر نامه")}`:""}`,"t")}
+     ${td("گیرنده",`${esc(a.recipient)}<br><span class="meta">${esc(ARCH_CH[a.channel]||"")}</span>`)}
+     ${td("پیشرفت",`<b>${esc(ARCH_STAGES[a.stage]||"—")}</b><div class="steps">${keys.map((k,j)=>`<span class="${j<=i?"on":""}"></span>`).join("")}</div><span class="pill ${a.status==="closed"||a.stage==="done"?"p-ok":a.status==="stalled"?"p-bad":"p-info"}">${esc(a.stage==="done"?ARCH_ST.closed:ARCH_ST[a.status]||ARCH_ST.active)}</span>`)}
+     ${td("آخرین وضعیت",`${last&&last.note?esc(last.note):"—"}<br><span class="${archStale(a)?"p-bad":"meta"}">${archLast(a)?`${faDate(archLast(a))}${since!=null&&archOpen(a)?` (${faNum(since)} روز پیش)`:""}`:""}</span>${(a.log||[]).length>1?`<details><summary>تاریخچه (${faNum(a.log.length)})</summary>${[...a.log].reverse().map(e=>`<div class="meta">${faDate((e.at||"").slice(0,10))} · ${esc(ARCH_STAGES[e.stage]||"")} · ${esc(e.note||"")} <i>(${esc(memberName(e.by))})</i></div>`).join("")}</details>`:""}`)}
+     ${td("اقدام بعدی",`${esc(a.next_action||"—")}${a.next_date?`<br><span class="${archOverdue(a)?"p-bad":"meta"}">${faDate(a.next_date)}</span>`:""}`)}
+     ${td("مسئول",esc(memberName(a.owner)))}
+     ${td("",`<div class="row"><button class="btn sm" data-act="arch-progress" data-id="${esc(a.id)}">به‌روزرسانی پیشرفت</button><button class="btn sm ghost" data-act="arch-edit" data-id="${esc(a.id)}">ویرایش</button></div>`)}</tr>`}),
+   "هنوز نامه‌ای در بایگانی ثبت نشده است. نامه‌های ارسال‌شده‌ی پیشین را با «ثبت نامه‌ی ارسال‌شده‌ی پیشین» وارد کنید.");
+};
+const memberOpts = () => Object.fromEntries([["","—"],...S.members.map(m=>[m.id,m.full_name])]);
+function archForm(a={}){
+  openForm({title:a.id?"ویرایش نامه‌ی بایگانی":"ثبت نامه‌ی ارسال‌شده‌ی پیشین",values:{stage:"sent",status:"active",channel:"secretariat",...a},fields:[
+   {k:"number",label:"شماره‌ی نامه‌ی ما",dir:"ltr"},{k:"employer_no",label:"شماره‌ی ثبت در سیستم گیرنده / کارفرما",dir:"ltr"},{k:"date",label:"تاریخ ارسال",type:"date"},
+   {k:"subject",label:"موضوع نامه"},{k:"recipient",label:"گیرنده (نام، سمت، سازمان)"},{k:"channel",label:"روش ارسال",type:"select",options:ARCH_CH},
+   {k:"summary",label:"خلاصه‌ی درخواست یا محتوای نامه",type:"textarea"},
+   {k:"stage",label:"مرحله‌ی فعلی",type:"select",options:ARCH_STAGES},{k:"status",label:"وضعیت پیگیری",type:"select",options:ARCH_ST},
+   {k:"owner",label:"مسئول پیگیری",type:"select",options:memberOpts()},{k:"next_action",label:"اقدام بعدی"},{k:"next_date",label:"تاریخ اقدام بعدی",type:"date"},
+   {k:"scan",label:"فایل یا تصویر نامه (اختیاری)",type:"file",accept:"image/*,application/pdf"}],
+   onSave: async v => { if(!v.subject||!v.recipient){toast("موضوع و گیرنده را وارد کنید.");return false}
+     const {scan,...rest}=v; let asset=a.scan_asset||null; if(scan){ const id=await uploadImage(scan); if(id) asset=id; }
+     const now=new Date().toISOString(); if(rest.stage==="done") rest.status="closed";
+     const log=a.log&&a.log.length?a.log:[{at:now,by:S.me.id,stage:rest.stage,status:rest.status,note:"ثبت در بایگانی"}];
+     const {id:_i,...base}=a;
+     return save(`letters_archive/${a.id||newId()}`,{...base,...rest,scan_asset:asset,log,created:a.created||now,updated:now,created_by:a.created_by||S.me.id},"نامه در بایگانی ثبت شد"); }});
+}
+function archProgress(a){
+  openForm({title:`پیشرفت پیگیری – ${a.subject}`,values:{stage:a.stage||"sent",status:a.status||"active",next_action:a.next_action,next_date:a.next_date},
+   extra:`<p class="note">مرحله‌ی فعلی: <b>${esc(ARCH_STAGES[a.stage]||"—")}</b>. هر به‌روزرسانی در تاریخچه ثبت می‌شود.</p>`,
+   fields:[{k:"stage",label:"مرحله‌ی جدید",type:"select",options:ARCH_STAGES},{k:"status",label:"وضعیت پیگیری",type:"select",options:ARCH_ST},{k:"note",label:"شرح پیشرفت (با چه کسی صحبت شد، پاسخ چه بود؟)",type:"textarea"},{k:"next_action",label:"اقدام بعدی"},{k:"next_date",label:"تاریخ اقدام بعدی",type:"date"}],
+   onSave: v => { if(!v.note){toast("شرح پیشرفت را بنویسید.");return false}
+     if(v.stage==="done") v.status="closed";
+     const now=new Date().toISOString(); const {id,...base}=a;
+     return save(`letters_archive/${id}`,{...base,stage:v.stage,status:v.status,next_action:v.next_action,next_date:v.next_date,log:[...(a.log||[]),{at:now,by:S.me.id,stage:v.stage,status:v.status,note:v.note}].slice(-60),updated:now},"پیشرفت ثبت شد"); }});
 }
 
 // ---------- PATENT
@@ -649,6 +996,105 @@ VIEWS["patent.ops"] = () => {
 };
 VIEWS["patent.products"] = () => table(["محصول","TRL","حوزه","گیت‌هاب","اختراع‌های ما","قابلیت ثبت"], S.products.filter(p=>match(p.name)).map(p=>`<tr>${td("محصول",esc(p.name),"t")}${td("TRL",`<span class="mono">${esc(p.trl??"—")}</span>`)}${td("حوزه",esc((p.domains||[]).map(d=>LABELS[d]||d).join("، ")))}${td("گیت‌هاب",p.github?link(p.github,"ریپو"):"—")}${td("اختراع",faNum(S.patents.filter(x=>x.product===p.id).length))}${td("قابلیت",esc((p.patentability||"در انتظار جست‌وجو").slice(0,140)))}</tr>`),"محصولی همگام نشده است.");
 
+
+// ---------- PIPELINE (unified sales funnel for every tracked opportunity)
+const trackTitle = key => { const t=S.m.tenders.find(x=>x.id===key); if(t) return t.title;
+  if(key.startsWith("ev_")){ const e=S.m.events.find(x=>"ev_"+x.id===key); return e?`رویداد: ${e.name_fa||e.name}`:key; }
+  if(key.startsWith("ld_")){ const l=S.m.leads.find(x=>"ld_"+x.id===key); return l?`تماس: ${l.name||l.activity}`:key; }
+  return key; };
+const prob = tr => tr.prob!=null&&tr.prob!==""?Number(tr.prob):(STAGE_PROB[tr.stage||"identified"]||5);
+const usd = n => "$"+faNum(Math.round(n||0));
+VIEWS["market.pipeline"] = () => {
+  const st=Object.keys(STAGES);
+  const list=S.m.tenders.filter(t=>ACTIVE.has(t.status)&&!(S.tracking[t.id]||{}).outcome).filter(t=>match(t.title,t.country,t.buyer,(S.tracking[t.id]||{}).owner));
+  const val=t=>Number((S.tracking[t.id]||{}).value_usd)||0, wt=t=>val(t)*prob(S.tracking[t.id]||{})/100;
+  const total=list.reduce((a,t)=>a+val(t),0), weighted=list.reduce((a,t)=>a+wt(t),0);
+  const go=list.filter(t=>goNoGo(t).v==="go").length;
+  const cols=st.map(k=>{ const items=list.filter(t=>((S.tracking[t.id]||{}).stage||"identified")===k).sort((a,b)=>(a.days_left??999)-(b.days_left??999));
+    const i=st.indexOf(k);
+    return `<div class="kcol"><h4><span>${esc(STAGES[k])}</span><span class="meta">${faNum(items.length)} · ${usd(items.reduce((a,t)=>a+val(t),0))}</span></h4>${items.map(t=>{const tr=S.tracking[t.id]||{},g=goNoGo(t),[gl,gc]=GNG[g.v];
+      return `<div class="kcard"><b>${link(t.url,t.title)}</b><br><span class="meta">${esc(t.country||"")} · ${esc(memberName(tr.owner)!=="—"?memberName(tr.owner):"بدون مسئول")} · ${dl(t)}</span><br>
+       <span class="pill ${gc}">${gl}${g.score!=null?" "+faNum(g.score):""}</span> <span class="mono">${usd(val(t))}</span> <span class="meta">× ${faNum(prob(tr))}٪</span>
+       <div class="row" style="margin-top:4px">${i>0?`<button class="btn sm ghost" data-act="pipe-move" data-id="${esc(t.id)}" data-d="-1" title="مرحله‌ی قبل">›</button>`:""}${i<st.length-1?`<button class="btn sm ghost" data-act="pipe-move" data-id="${esc(t.id)}" data-d="1" title="مرحله‌ی بعد">‹</button>`:""}<button class="btn sm ghost" data-act="track" data-id="${esc(t.id)}">ویرایش</button></div></div>`}).join("")||'<p class="meta">—</p>'}</div>`}).join("");
+  const cl=S.clients, cst=Object.keys(CLIENT_STAGES);
+  return `<p class="note">همه‌ی فرصت‌های در دست پیگیری در یک قیف. ارزش و احتمال برد را از «ویرایش» وارد کنید؛ اگر احتمال خالی باشد، درصد پیش‌فرض هر مرحله به‌کار می‌رود. با ثبت نتیجه‌ی نهایی، مورد از قیف خارج و وارد «Team Memory» می‌شود.</p>`+
+  kpis([["فرصت در قیف",faNum(list.length)],["پیشنهاد Go",faNum(go)],["ارزش کل (دلار)",usd(total)],["پیش‌بینی وزنی (دلار)",usd(weighted)],["بدون مسئول",faNum(list.filter(t=>!(S.tracking[t.id]||{}).owner).length),true]])+
+  `<div class="kanban">${cols}</div><h3>قراردادهای مشتری (ERP)</h3>`+kpis(cst.map(k=>[CLIENT_STAGES[k],faNum(cl.filter(c=>c.stage===k).length)]))+
+  `<p class="meta">ارزش قراردادهای مشتری به ریال در «ERP ← مشتریان و قراردادها» ثبت می‌شود: ${faNum(cl.reduce((a,c)=>a+(Number(c.value)||0),0))} ریال.</p>`;
+};
+
+// ---------- TEAM MEMORY (what the agent learns from)
+VIEWS["market.memory"] = () => {
+  const rows=S.m.tenders.map(t=>{const tr=S.tracking[t.id]||{}; const o=tr.outcome||({won:"won",lost:"lost",skipped:"dropped"})[t.status]; return o?{t,tr,o}:null;}).filter(Boolean).filter(r=>match(r.t.title,r.t.country,r.tr.outcome_reason));
+  const c=k=>rows.filter(r=>r.o===k).length, decided=c("won")+c("lost");
+  return `<p class="note">نتیجه و دلیل هر فرصت که تیم ثبت می‌کند، در اجرای بعدی به ایجنت داده می‌شود تا امتیاز تطابق و صلاحیت را با سابقه‌ی واقعی شرکت تنظیم کند. این خلاصه تنها با همگام‌سازی روزانه به ایجنت می‌رسد.</p>`+
+  kpis([["برنده",faNum(c("won"))],["نبردیم",faNum(c("lost"))],["انصراف",faNum(c("dropped"))],["نرخ برد",decided?faNum(Math.round(100*c("won")/decided))+"٪":"—"]])+
+  table(["فرصت","کشور","نتیجه","دلیل","Go/No-Go هنگام ثبت","ثبت‌کننده"], rows.map(({t,tr,o})=>`<tr>${td("فرصت",link(t.url,t.title),"t")}${td("کشور",esc(t.country||"—"))}${td("نتیجه",`<span class="pill ${OUTCOME_PILL[o]}">${esc(OUTCOME[o])}</span>`)}${td("دلیل",esc(tr.outcome_reason||"ثبت نشده"))}${td("Go/No-Go",gngCell(t))}${td("ثبت‌کننده",esc(memberName(tr.updated_by)))}</tr>`),"هنوز نتیجه‌ای ثبت نشده است. از «Project Tracking ← ویرایش» نتیجه و دلیل را وارد کنید.");
+};
+
+// ---------- CALENDAR (deadlines, events, follow-ups, tasks, finance, letters)
+const CAL_T = {tender:"مهلت مناقصه",event:"رویداد",followup:"اقدام بعدی پروژه",task:"تسک",finance:"سررسید مالی",letter:"پیگیری نامه",meeting:"جلسه"};
+const isoOk = d => /^\d{4}-\d{2}-\d{2}/.test(d||"");
+const dayDiff = iso => Math.round((Date.parse(iso.slice(0,10)+"T00:00:00Z")-Date.parse(today()+"T00:00:00Z"))/864e5);
+function calEntries(){
+  const me=S.me.id, out=[];
+  S.m.tenders.filter(t=>ACTIVE.has(t.status)).forEach(t=>{ const tr=S.tracking[t.id]||{}; if(tr.outcome) return;
+    const d=isoOk(t.deadline)?t.deadline.slice(0,10):(t.days_left!=null?addDays(today(),t.days_left):null);
+    if(d) out.push({date:d,type:"tender",title:t.title,url:t.url,owner:tr.owner||"",stop:true});
+    if(tr.next_date) out.push({date:tr.next_date,type:"followup",title:`${tr.next_action||"اقدام بعدی"} – ${t.title}`,owner:tr.owner||""}); });
+  Object.entries(S.tracking).forEach(([k,tr])=>{ if(!tr.next_date||S.m.tenders.some(t=>t.id===k)||tr.outcome) return; out.push({date:tr.next_date,type:"followup",title:`${tr.next_action||"اقدام بعدی"} – ${trackTitle(k)}`,owner:tr.owner||""}); });
+  S.m.events.forEach(e=>{ const tr=S.tracking["ev_"+e.id]||{}; if(isoOk(e.start)&&e.start>=addDays(today(),-1)) out.push({date:e.start.slice(0,10),type:"event",title:e.name_fa||e.name,url:e.url,owner:tr.owner||"",stop:true}); });
+  S.tasks.filter(t=>t.due&&!["done","approved"].includes(t.status)).forEach(t=>out.push({date:t.due,type:"task",title:t.title,owner:t.assignee||""}));
+  if(isAdmin()) S.finance.filter(f=>f.due&&f.status!=="paid").forEach(f=>out.push({date:f.due,type:"finance",title:`${f.title} – ${faNum(f.amount||0)} ریال`,owner:""}));
+  S.lettersArchive.filter(a=>a.next_date&&a.status!=="closed").forEach(a=>out.push({date:a.next_date,type:"letter",title:`${a.next_action||"پیگیری"} – ${a.subject}`,owner:a.owner||""}));
+  S.letters.filter(l=>l.meeting_mode&&l.meeting_mode!=="none"&&isoOk(l.meeting_date)).forEach(l=>out.push({date:l.meeting_date,type:"meeting",title:`جلسه‌ی پیرو نامه‌ی ${l.number}${l.meeting_time?` – ساعت ${l.meeting_time}`:""}`,owner:l.created_by||"",stop:true}));
+  return out.filter(x=>isoOk(x.date)).sort((a,b)=>a.date.localeCompare(b.date));
+}
+const relDay = d => { const n=dayDiff(d); return n===0?"امروز":n===1?"فردا":n===-1?"دیروز":n<0?`${faNum(-n)} روز پیش`:`${faNum(n)} روز دیگر`; };
+VIEWS["bpms.calendar"] = () => {
+  const all=calEntries().filter(x=>!S.calMine||x.owner===S.me.id).filter(x=>!S.calTypes||S.calTypes.has(x.type)).filter(x=>match(x.title,CAL_T[x.type]));
+  const late=all.filter(x=>!x.stop&&x.date<today()), upcoming=all.filter(x=>x.date>=today()&&x.date<=addDays(today(),60));
+  const days=[...new Set(upcoming.map(x=>x.date))];
+  const row=x=>`<div class="cal-item"><span class="pill p-info">${esc(CAL_T[x.type])}</span> ${x.url?link(x.url,x.title):esc(x.title)}${x.owner?` <span class="meta">· ${esc(memberName(x.owner))}</span>`:""}</div>`;
+  return `<div class="toolbar"><label class="chip"><input type="checkbox" data-cal="mine"${S.calMine?" checked":""}> فقط موارد من</label>
+    <select data-cal="type"><option value="">همه‌ی انواع</option>${Object.entries(CAL_T).map(([k,l])=>`<option value="${k}"${S.calTypes&&S.calTypes.has(k)?" selected":""}>${esc(l)}</option>`).join("")}</select>
+    ${S.downloads?'<button class="btn ghost" data-act="cal-ics">دریافت فایل تقویم (ICS)</button>':""}<span class="meta">۶۰ روز آینده؛ یادآوری موارد من در زنگ اعلان می‌آید.</span></div>`+
+  kpis([["عقب‌افتاده",faNum(late.length),late.length>0],["امروز",faNum(upcoming.filter(x=>x.date===today()).length)],["۷ روز آینده",faNum(upcoming.filter(x=>x.date<=addDays(today(),7)).length)],["۶۰ روز آینده",faNum(upcoming.length)]])+
+  (late.length?`<div class="cal-day p-bad">عقب‌افتاده</div>${late.map(x=>`<div class="cal-item"><span class="meta">${faDate(x.date)}</span> ${row(x)}</div>`).join("")}`:"")+
+  (days.length?days.map(d=>`<div class="cal-day">${faDate(d)} <span class="meta">· ${relDay(d)}</span></div>${upcoming.filter(x=>x.date===d).map(row).join("")}`).join(""):'<p class="empty">موردی در ۶۰ روز آینده ثبت نشده است.</p>');
+};
+async function calIcs(){
+  if(!S.downloads){ toast("دریافت فایل فقط داخل claude.ai فعال است."); return; }
+  const ics=x=>String(x).replace(/[\;,]/g,m=>"\\"+m).replace(/\r?\n/g," ");
+  const ev=calEntries().filter(x=>!S.calMine||x.owner===S.me.id).filter(x=>x.date>=addDays(today(),-7));
+  const body=["BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//Petro Pala Toos//Hub//FA","CALSCALE:GREGORIAN",...ev.flatMap((x,i)=>["BEGIN:VEVENT",`UID:ppt-${i}-${x.date}@hub`,`DTSTAMP:${new Date().toISOString().replace(/[-:]|\.\d+/g,"")}`,`DTSTART;VALUE=DATE:${x.date.replace(/-/g,"")}`,`DTEND;VALUE=DATE:${addDays(x.date,1).replace(/-/g,"")}`,`SUMMARY:${ics(CAL_T[x.type]+": "+x.title)}`,"BEGIN:VALARM","TRIGGER:-P1D","ACTION:DISPLAY","DESCRIPTION:Reminder","END:VALARM","END:VEVENT"]),"END:VCALENDAR"].join("\r\n");
+  try{ await S.downloads.save({filename:"ppt-calendar.ics",data:new Blob([body],{type:"text/calendar"})}); }catch(err){ if(!err||err.code!=="declined") toast("ساخت فایل تقویم انجام نشد."); }
+}
+
+// ---------- BACKUP / EXPORT
+const BACKUP_SETS = () => ({settings:[S.settings],members:S.members,tasks:S.tasks,letters:S.letters,letters_archive:S.lettersArchive,products:S.products,patents:S.patents,finance:isAdmin()?S.finance:[],clients:S.clients,
+  tracking:Object.entries(S.tracking).map(([id,v])=>({id,...v})),reports:S.allReports,attendance:S.allAtt,tenders:S.m.tenders,events:S.m.events,investors:S.m.investors,leads:S.m.leads,partners:S.m.partners,patent_ops:S.opsList});
+const csvCell = v => { const t=v==null?"":typeof v==="object"?JSON.stringify(v):String(v); return /[",\n]/.test(t)?`"${t.replace(/"/g,'""')}"`:t; };
+VIEWS["erp.backup"] = () => {
+  if(!isAdmin()) return `<p class="empty">پشتیبان‌گیری فقط برای مدیران است.</p>`;
+  const sets=BACKUP_SETS(), last=S.settings.last_backup;
+  return `<div class="banner">${last?`آخرین پشتیبان: <b>${faDate(last.slice(0,10))}</b>`:"هنوز پشتیبان‌گیری نشده است."} پیشنهاد: هفته‌ای یک بار فایل JSON کامل را دریافت و در جای امن (مثلاً Google Drive شرکت) نگه دارید. داده‌ها فقط در پایگاه همین سامانه نگه‌داری می‌شوند.</div>
+   <div class="toolbar">${S.downloads?'<button class="btn sig" data-act="backup-json">دریافت پشتیبان کامل (JSON)</button>':'<span class="meta">دریافت فایل فقط داخل claude.ai فعال است.</span>'}</div>
+   ${table(["مجموعه","تعداد رکورد",""],Object.entries(sets).map(([k,v])=>`<tr>${td("مجموعه",`<code>${esc(k)}</code>`,"t")}${td("تعداد",faNum(v.length))}${td("",S.downloads&&v.length?`<button class="btn sm ghost" data-act="backup-csv" data-k="${esc(k)}">CSV</button>`:"")}</tr>`))}
+   <p class="note">گزارش‌ها و حضور و غیاب پس از بارگذاری مدیر (چند ثانیه پس از ورود) در فایل می‌آیند: ${S.allLoaded?"بارگذاری شده":"در حال بارگذاری…"}</p>`;
+};
+async function backupSave(name,blob){ try{ await S.downloads.save({filename:name,data:blob}); return true; }catch(err){ if(!err||err.code!=="declined") toast("دریافت فایل انجام نشد."); return false; } }
+async function backupJson(){
+  if(!S.downloads) return; await loadAllReports();
+  const data={exported:new Date().toISOString(),by:S.me.id,app:"petro-pala-toos-hub",collections:BACKUP_SETS()};
+  if(await backupSave(`ppt-backup-${today()}.json`,new Blob([JSON.stringify(data)],{type:"application/json"}))) await save("settings/company",{...S.settings,last_backup:new Date().toISOString()},"پشتیبان دریافت شد");
+}
+async function backupCsv(k){
+  const rows=BACKUP_SETS()[k]||[]; if(!rows.length) return;
+  const cols=[...new Set(rows.flatMap(r=>Object.keys(r)))];
+  await backupSave(`ppt-${k}-${today()}.csv`,new Blob(["﻿"+[cols.join(","),...rows.map(r=>cols.map(c=>csvCell(r[c])).join(","))].join("\n")],{type:"text/csv"}));
+}
+
 // ================================================================== actions
 document.addEventListener("click", async e => {
   const b=e.target.closest("[data-act]"); if(!b) return;
@@ -656,10 +1102,36 @@ document.addEventListener("click", async e => {
   if(a==="close-scrim" && e.target!==b) return;
   switch(a){
     case "mod": S.mod=b.dataset.k; S.sub=SUBS[S.mod][0][0]; S.q=""; render(); break;
-    case "sub": S.sub=b.dataset.k; render(); break;
-    case "close": case "close-scrim": closeForm(); if(S.mod==="letters"&&S.sub==="new"){S.sub="list";render()} break;
-    case "track": { const t=S.tracking[id]||{}; openForm({title:"پیگیری پروژه",values:{stage:"identified",...t},fields:[{k:"owner",label:"مسئول پیگیری",type:"select",options:Object.fromEntries([["","—"],...S.members.map(m=>[m.id,m.full_name])])},{k:"stage",label:"مرحله‌ی پیگیری",type:"select",options:STAGES},{k:"next_action",label:"اقدام بعدی"},{k:"next_date",label:"تاریخ اقدام بعدی",type:"date"},{k:"note",label:"یادداشت",type:"textarea"}],
-      onSave:v=>save(`tracking/${id}`,{...v,log:[...(t.log||[]),{at:new Date().toISOString(),by:S.me.id,stage:v.stage,note:v.note}].slice(-40),updated:new Date().toISOString(),updated_by:S.me.id})}); break; }
+    case "sub": S.sub=b.dataset.k; S.forceFull=true; render(); if(S.mod==="bpms"&&S.sub==="rarchive"&&isAdmin()) loadAllReports(); break;
+    case "close": case "close-scrim": closeForm(); break;
+    case "track": { const t=S.tracking[id]||{};
+      const locked = t.owner && t.owner!==S.me.id && !isAdmin(); // only the owner or an admin may hand a taken project to someone else
+      const ownerField = locked ? [] : [{k:"owner",label:"مسئول پیگیری",type:"select",options:Object.fromEntries([["","—"],...S.members.map(m=>[m.id,m.full_name])])}];
+      openForm({title:"پیگیری پروژه",extra:locked?`<p class="note">مسئول این پروژه ${esc(memberName(t.owner))} است و فقط خود او یا مدیر می‌تواند مسئول را تغییر دهد.</p>`:"",values:{stage:"identified",...t},fields:[...ownerField,{k:"stage",label:"مرحله‌ی پیگیری",type:"select",options:STAGES},{k:"next_action",label:"اقدام بعدی"},{k:"next_date",label:"تاریخ اقدام بعدی",type:"date"},
+        {k:"value_usd",label:"ارزش تخمینی قرارداد (دلار)",type:"number"},{k:"prob",label:"احتمال برد (۰ تا ۱۰۰؛ خالی = بر اساس مرحله)",type:"number"},
+        {k:"outcome",label:"نتیجه‌ی نهایی",type:"select",options:OUTCOME,hint:"با ثبت نتیجه، مورد از قیف خارج و به حافظه‌ی یادگیری ایجنت اضافه می‌شود."},{k:"outcome_reason",label:"دلیل نتیجه (برای یادگیری ایجنت)",type:"textarea"},{k:"note",label:"یادداشت",type:"textarea"}],
+      onSave:v=>{ if(v.outcome&&!v.outcome_reason){toast("دلیل نتیجه را بنویسید؛ ایجنت از آن یاد می‌گیرد.");return false}
+        return save(`tracking/${id}`,{...t,...v,...(locked?{owner:t.owner}:{}),log:[...(t.log||[]),{at:new Date().toISOString(),by:S.me.id,stage:v.stage,note:v.note}].slice(-40),updated:new Date().toISOString(),updated_by:S.me.id}); }}); break; }
+    case "claim": { if(!myMember()){toast("ابتدا از BPMS ← اعضا و ثبت‌نام ثبت‌نام کنید.");break}
+      // first come, first served: hold a short lease on the doc, re-read it from the store, claim only if still unowned
+      b.disabled=true;
+      try{
+        const ref=S.db.doc(`tracking/${id}`);
+        const lease=await ref.acquire({holder:S.me.id,ttlMs:5000});
+        if(!lease.acquired){toast("هم‌زمان عضو دیگری در حال گرفتن این مورد است؛ چند ثانیه بعد دوباره نگاه کنید.");b.disabled=false;break}
+        const snap=await ref.get(); const t=snap.exists?snap.data():{};
+        if(t.owner&&t.owner!==S.me.id){toast(`این مورد را ${memberName(t.owner)} برعهده گرفته است.`);break}
+        const {lease:_l,...rest}=t;
+        await save(`tracking/${id}`,{stage:"identified",...rest,owner:S.me.id,log:[...(t.log||[]),{at:new Date().toISOString(),by:S.me.id,note:"مسئولیت پذیرفته شد"}].slice(-40),updated:new Date().toISOString(),updated_by:S.me.id},"مسئولیت ثبت شد؛ مورد از فهرست باز برداشته شد");
+      }catch(err){ toast("ثبت مسئولیت انجام نشد؛ دوباره تلاش کنید."); b.disabled=false; }
+      break; }
+    case "unclaim": { const t=S.tracking[id]||{}; if(t.owner&&t.owner!==S.me.id&&!isAdmin()){toast("فقط مسئول همین مورد یا مدیر می‌تواند آن را بازگرداند.");break}
+      await save(`tracking/${id}`,{...t,owner:"",log:[...(t.log||[]),{at:new Date().toISOString(),by:S.me.id,note:"به فهرست بازگردانده شد"}].slice(-40),updated:new Date().toISOString(),updated_by:S.me.id},"به فهرست بازگردانده شد"); break; }
+    case "pipe-move": { const t=S.tracking[id]||{}, st=Object.keys(STAGES), i=Math.max(0,st.indexOf(t.stage||"identified"))+Number(b.dataset.d), ns=st[Math.min(st.length-1,Math.max(0,i))];
+      await save(`tracking/${id}`,{stage:"identified",...t,stage:ns,log:[...(t.log||[]),{at:new Date().toISOString(),by:S.me.id,stage:ns,note:"جابه‌جایی در قیف"}].slice(-40),updated:new Date().toISOString(),updated_by:S.me.id},"مرحله به‌روز شد"); break; }
+    case "cal-ics": calIcs(); break;
+    case "backup-json": backupJson(); break;
+    case "backup-csv": backupCsv(b.dataset.k); break;
     case "product-new": productForm(); break;
     case "product-edit": productForm(S.products.find(p=>p.id===id)); break;
     case "fin-new": finForm(); break;
@@ -670,23 +1142,36 @@ document.addEventListener("click", async e => {
     case "task-st": { const t=S.tasks.find(x=>x.id===id); if(t) await save(`tasks/${id}`,{...t,status:b.dataset.st,updated:new Date().toISOString()},"وضعیت تسک به‌روز شد"); break; }
     case "checkin": await save(`attendance/${S.me.id}/days/${today()}`,{in:nowHM(),break_min:60},"ورود ثبت شد"); break;
     case "checkout": { const att=S.myAtt.find(x=>x.id===today())||{}; await save(`attendance/${S.me.id}/days/${today()}`,{...att,out:nowHM()},"خروج ثبت شد"); break; }
-    case "report-new": reportForm(); break;
+    case "report-new": reportForm(b.dataset.date); break;
+    case "report-view": reportDetail(b.dataset.m,b.dataset.d); break;
+    case "ra-csv": reportsCsv(); break;
     case "reload-reports": loadAllReports(); break;
     case "register": registerForm(); break;
     case "company": companyForm(); break;
     case "letter-view": letterView(id); break;
-    case "letter-edit": letterForm(S.letters.find(l=>l.id===id)); break;
+    case "letter-edit": { const l=S.letters.find(x=>x.id===id); if(!l) break; S.draft={...l,numAuto:false}; S.mod="letters"; S.sub="new"; S.forceFull=true; closeForm(); render(); window.scrollTo(0,0); break; }
+    case "compose-go": composeSubmit(); break;
+    case "compose-reset": S.draft=null; S.forceFull=true; render(); break;
+    case "arch-new": archForm(); break;
+    case "arch-edit": archForm(S.lettersArchive.find(x=>x.id===id)); break;
+    case "arch-progress": archProgress(S.lettersArchive.find(x=>x.id===id)); break;
+    case "arch-f": S.archF=b.dataset.k; renderView(); break;
     case "sign-office": { const l=S.letters.find(x=>x.id===id); if(l&&await save(`letters/${id}`,{...l,office_sig:{by:S.me.id,at:new Date().toISOString()}},"امضای مسئول دفتر ثبت شد")) letterView(id); break; }
     case "sign-ceo": { const l=S.letters.find(x=>x.id===id); if(l&&await save(`letters/${id}`,{...l,ceo_sig:{by:S.me.id,at:new Date().toISOString(),asset:S.settings.ceo_sig_asset||(myMember()||{}).signature_asset||null}},"امضای مدیرعامل ثبت شد")) letterView(id); break; }
-    case "letter-dl": { const l=S.letters.find(x=>x.id===id); if(!l) break;
-      const html=`<html dir="rtl"><head><meta charset="utf-8"><style>body{font-family:Tahoma,Vazirmatn,sans-serif;line-height:2}</style></head><body>${letterSheet(l).replace(/src="\/_blob\//g,`src="${location.origin}/_blob/`)}</body></html>`;
-      try{ await S.downloads.save({filename:`${l.number}.doc`,data:new Blob(["﻿"+html],{type:"application/msword"})}); }catch(err){ if(err.code!=="cancelled") toast("دریافت فایل انجام نشد."); } break; }
+    case "letter-dl": { const l=S.letters.find(x=>x.id===id); if(l) await downloadLetter(l); break; }
     case "patent-new": patentForm(); break;
     case "patent-edit": patentForm(S.patents.find(p=>p.id===id)); break;
     case "inbox": { const items=myInbox(); items.forEach(i=>S.seenTasks.add(i.id)); try{localStorage.setItem("ppt-seen",JSON.stringify([...S.seenTasks].slice(-500)))}catch(err){}
       $("#layer").innerHTML=`<div class="scrim" data-act="close-scrim"><div class="drawer"><div class="row"><h3 style="flex:1;margin:0">اعلان‌ها</h3><button class="btn ghost sm" data-act="close">بستن</button></div>${items.length?`<div class="stack" style="margin-top:12px">${items.map(i=>`<div class="card">${esc(i.text)}${i.task.due?`<br><span class="meta">مهلت: ${faDate(i.task.due)}</span>`:""}</div>`).join("")}</div>`:'<p class="empty">اعلان تازه‌ای ندارید.</p>'}<p class="note">اعلان موبایل و ایمیل با همگام‌سازی روزانه‌ی ایجنت ارسال می‌شود.</p></div></div>`; paintBell(); break; }
   }
 });
+
+document.addEventListener("input", e => { const el=e.target.closest("[data-c]"); if(!el) return;
+  const d=getDraft(); d[el.dataset.c]=el.value; if(el.dataset.c==="number") d.numAuto=false;
+  if(el.dataset.c==="identity"){ if(d.numAuto) d.number=nextLetterNo(d.identity); S.forceFull=true; renderView(); return; }
+  const p=$("#cprev"); if(p) p.innerHTML=letterSheet(draftLetter()); });
+document.addEventListener("change", e => { const cal=e.target.closest("[data-cal]"); if(cal){ if(cal.dataset.cal==="mine") S.calMine=cal.checked; else S.calTypes=cal.value?new Set([cal.value]):null; renderView(); return; }
+  const el=e.target.closest("[data-ra]"); if(!el) return; S.ra[el.dataset.ra]=el.value; renderView(); });
 
 // ================================================================== boot
 async function boot(){
@@ -696,10 +1181,11 @@ async function boot(){
   const [db,user,assets,sample,downloads] = await Promise.all(["db","user","assets","sample","downloads"].map(n=>c.use(n).catch(()=>null)));
   S.db=db; S.user=user; S.assets=assets; S.sample=sample; S.downloads=downloads;
   if(user){ const me=await user.me(); S.me={id:me.id,isOwner:me.isOwner,canEdit:me.canEdit}; S.canWrite=await user.can("data.write");
-    $("#meChip").textContent = me.name || (me.isOwner?"مالک سامانه":"کاربر"); }
+    S.userName=me.name||""; $("#meChip").textContent = me.name || (me.isOwner?"مالک سامانه":"کاربر"); }
   else $("#meChip").textContent="مهمان";
   if(!db){ $("#view").innerHTML=`<p class="empty">پایگاه داده برای این نما در دسترس نیست. با حساب claude.ai وارد شوید.</p>`; return; }
   subscribe();
+  setTimeout(maybeWelcome, 4000); // fallback if the members snapshot is slow
   setTimeout(()=>{ if(isAdmin()) loadAllReports(); }, 2500);
 }
 boot();

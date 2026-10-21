@@ -111,8 +111,9 @@ DIRECT_SCHEMA = {
 
 
 class Analyst:
-    def __init__(self, cfg, profile_text):
+    def __init__(self, cfg, profile_text, lessons=""):
         self.cfg = cfg
+        self.lessons = lessons
         self.model = cfg["llm"]["model"]
         self.profile_text = profile_text
         self.client = anthropic.Anthropic(max_retries=4)
@@ -120,7 +121,7 @@ class Analyst:
     # -------------------------------------------------------------- helpers
     def _system(self):
         # Stable prefix (rules + company profile) is cached across all tenders in a run.
-        return [{"type": "text", "text": SYSTEM + "\n\nCOMPANY PROFILE\n" + self.profile_text,
+        return [{"type": "text", "text": SYSTEM + "\n\nCOMPANY PROFILE\n" + self.profile_text + self.lessons,
                  "cache_control": {"type": "ephemeral"}}]
 
     def _structured(self, prompt, schema, effort):

@@ -262,6 +262,15 @@ python -m agent dashboard       # ساخت دوباره‌ی داشبورد
 
 ---
 
+## نامه‌نگاری و گزارش عملکرد در پلتفرم (پترو پالا توس)
+
+- **Letters ← نامه‌ی جدید:** موضوع، گیرنده و متن را وارد می‌کنید؛ سربرگ شرکت (لوگو، نام، نشانی)، شماره، تاریخ و جای امضا خودکار در یک فایل **Word (.docx)** آماده‌ی ارسال قرار می‌گیرد. امضای مسئول دفتر و مدیرعامل از فهرست نامه‌ها ثبت می‌شود و با دریافت دوباره‌ی فایل، امضای مدیرعامل روی نامه می‌نشیند.
+- **Letters ← بایگانی نامه‌های پیشین و پیگیری:** بخشی کاملاً جدا برای نامه‌هایی که بدون ایجنت ارسال شده‌اند. هر نامه مرحله دارد (ارسال شد ← دبیرخانه‌ی گیرنده ← در دست بررسی ← پاسخ ← جلسه ← نتیجه‌گیری)، وضعیت (در جریان / متوقف / بسته)، مسئول، اقدام بعدی و تاریخچه‌ی پیشرفت؛ موارد سررسیده یا بدون پیگیری بیش از ۱۴ روز هشدار می‌گیرند.
+- **BPMS ← بایگانی گزارش‌ها:** بایگانی روزانه‌ی گزارش عملکرد هر عضو (مدیر همه را می‌بیند، عضو فقط خودش را)، با روزهای ثبت‌نشده، ثبت گزارش با تأخیر و خروجی CSV.
+- **اعلان گزارش ثبت‌نشده:** عضو در پلتفرم هشدار و اعلان می‌بیند؛ مدیر هم فهرست اعضای بدون گزارش را. برای اعلان تلگرام، اسناد `members` و `reports` را با ArtifactData در یک پوشه ذخیره کنید و اجرا کنید: `python -m agent remind-reports <پوشه>` (هر عضو با شناسه‌ی تلگرام خود پیام می‌گیرد و مالک یک خلاصه).
+
+---
+
 ## ۹. هزینه
 
 - استخراج، غربالگری، داشبورد و GitHub Actions: **رایگان**.
@@ -316,3 +325,13 @@ python -m agent dashboard       # ساخت دوباره‌ی داشبورد
 **Commands.** `python -m agent run | list | status <id> <status> | redo <id> | dashboard`.
 
 **Compliance.** The agent states product maturity honestly, never invents references, flags IP-ownership checks and sanctions/eligibility risks in every analysis, and never suggests concealing ownership or origin. Seek legal advice before the first submission.
+
+## Platform additions (Go/No-Go, pipeline, memory, calendar, backup)
+
+- **Go / No-Go** (Market tables): one score per analysed tender (relevance 40, eligibility 25, time 15, foreign access 10, compliance 10) with the reasons listed under "دلایل"; hard stops for infeasible, expired or foreign-closed tenders.
+- **Pipeline** (Market): one Kanban over the tracking stages with value (USD), win probability and a weighted forecast.
+- **Team Memory** (Market): outcome + reason recorded on a tracked item (`tracking/<id>.outcome`, `outcome_reason`). `python -m agent` merges them via `platform_sync.import_tracking` and `agent/memory.py` appends the last 25 decided tenders to the analyst's system prompt.
+- **Calendar** (BPMS): tender deadlines, events, follow-ups, tasks, finance dues, letter follow-ups and meetings, ICS export, reminders in the bell.
+- **Backup** (ERP): full JSON and per-collection CSV export for admins, weekly reminder banner.
+- **International identity**: letters can be written as *Parsa International Group* (English, Istanbul letterhead, `PIG-<year>-<n>` numbering); company data in "مشخصات شرکت".
+- New members are asked to register as soon as they open the platform.

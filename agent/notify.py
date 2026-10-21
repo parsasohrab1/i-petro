@@ -7,8 +7,8 @@ import requests
 from .config import env
 
 
-def telegram(text, log):
-    token, chat = env("TELEGRAM_BOT_TOKEN"), env("TELEGRAM_CHAT_ID")
+def telegram(text, log, chat=None):
+    token, chat = env("TELEGRAM_BOT_TOKEN"), chat or env("TELEGRAM_CHAT_ID")
     if not (token and chat):
         return False
     for i in range(0, len(text), 3900):  # Telegram message limit is 4096 chars
