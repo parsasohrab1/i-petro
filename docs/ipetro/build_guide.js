@@ -3,7 +3,7 @@
 const { chromium } = require(process.env.PW_MODULE || "playwright");
 const fs = require("fs"), path = require("path");
 const ROOT = path.resolve(__dirname, "../.."), OUT = __dirname;
-const html = fs.readFileSync(path.join(ROOT, "platform/index.html"), "utf8");
+const html = fs.readFileSync(process.env.HTML_PATH || path.join(ROOT, "platform/index.html"), "utf8");   // HTML_PATH: build from another copy of the page
 // Put the official company logo at docs/ipetro/logo.png (PNG, transparent background preferred); without it the cover shows the wordmark only.
 const LOGO = path.join(OUT, "logo.png"), logoB64 = fs.existsSync(LOGO) ? fs.readFileSync(LOGO).toString("base64") : "";
 const TOUR = eval(html.match(/const TOUR = (\[[\s\S]*?\n\]);/)[1]);
@@ -33,7 +33,7 @@ const store = {
  "patentops/data/items":{o1:{product_name:"پایش هوشمند توربین گاز",claim:"ترکیب سیگنال ارتعاش و دما برای پیش‌بینی",prior_art:"چند سابقه‌ی نزدیک",verdict:"قابل ثبت",verdict_code:"patentable",date:"2026-10-21",sources:["#"]}},
  finance:{f1:{title:"بیمه‌ی تأمین اجتماعی مهر",type:"insurance",period:"مهر ۱۴۰۵",amount:42000000,due:"2026-10-25",status:"unpaid"}},
  clients:{c1:{client:"کارفرمای نمونه",product:"p1",stage:"demo",value:1800000000,next:"ارائه‌ی دمو",next_date:"2026-10-28"}},
- members:{me1:{full_name:"سارا نمونه",role:"manager",team:"ai",staff_type:"product",office_days:["sat","mon","wed"],start_time:"08:30",joined:"2026-10-20",telegram:""},
+ members:{me1:{full_name:"سارا نمونه",role:"manager",team:"ai",staff_type:"product",office_days:["sat","mon","wed"],start_time:"08:30",joined:"2026-10-20",telegram:"",fingerprint_asset:"fp",nda_version:"1",nda_at:"2026-10-20T08:00:00Z"},
   u2:{full_name:"علی نمونه",role:"member",team:"web",staff_type:"trainee_web",office_days:["sun","tue"],start_time:"09:00",joined:"2026-10-01"}},
  tasks:{k1:{title:"تکمیل داشبورد دموی توربین",desc:"نسخه‌ی مشتری",assignee:"me1",created_by:"me1",team:"ai",due:"2026-10-24",priority:"high",status:"doing",points:8,type:"story",sprint:"s1",updated:"1"},
   k2:{title:"سئوی صفحه‌ی محصولات",assignee:"u2",created_by:"me1",team:"web",due:"2026-10-27",priority:"normal",status:"todo",points:3,type:"task",sprint:"s1",updated:"2"},
@@ -110,7 +110,7 @@ const shot = async (pg) => "data:image/png;base64," + (await pg.screenshot()).to
   @page{size:A4;margin:16mm 14mm 16mm}
   body{font:12.5px/1.9 Vazirmatn,"DejaVu Sans",sans-serif;color:#171515;margin:0}
   .cover{height:255mm;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;border:3px solid #d12a1f;border-radius:14px;page-break-after:always}
-  .cover img{width:300px}.cover h1{font-size:64px;margin:14px 0 0;letter-spacing:2px}.cover h2{font-weight:500;margin:6px 0;font-size:22px}.cover p{color:#615b59;margin:2px}
+  .cover img{width:230px}.cover h1{font-size:64px;margin:14px 0 0;letter-spacing:2px}.cover h2{font-weight:500;margin:6px 0;font-size:22px}.cover p{color:#615b59;margin:2px}
   h2{font-size:21px;border-bottom:3px solid #d12a1f;padding-bottom:4px;margin:0 0 8px}h3{font-size:15px;margin:0 0 2px}
   .mod{page-break-before:always}.tab{page-break-inside:avoid;margin:14px 0 18px}
   figure{margin:6px 0 0}figure img{width:100%;border:1px solid #cfcac7;border-radius:6px}figcaption{font-size:10.5px;color:#615b59;text-align:center}
