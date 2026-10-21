@@ -7,7 +7,7 @@ const html = fs.readFileSync(process.env.HTML_PATH || path.join(ROOT, "platform/
 // Put the official company logo at docs/ipetro/logo.png (PNG, transparent background preferred); without it the cover shows the wordmark only.
 const LOGO = path.join(OUT, "logo.png"), logoB64 = fs.existsSync(LOGO) ? fs.readFileSync(LOGO).toString("base64") : "";
 const TOUR = eval(html.match(/const TOUR = (\[[\s\S]*?\n\]);/)[1]);
-const MODS = {market:"Market – بازار",events:"Events – رویدادها",erp:"ERP – مدیریت شرکت",bpms:"BPMS – کار روزانه",letters:"Letters – نامه‌نگاری",patent:"Patent – پتنت"};
+const MODS = {market:"Market – بازار",events:"Events – رویدادها",erp:"ERP – مدیریت شرکت",bpms:"BPMS – کار روزانه",letters:"Letters – نامه‌نگاری",patent:"Patent – پتنت",articles:"Articles – مقاله‌ها"};
 
 // ---------------------------------------------------------------- sample data (fictional)
 const T = (id,o) => [id,{source:"نمونه",status:"analysed",line:"ai",market:"international",...o}];
@@ -92,6 +92,7 @@ const shot = async (pg) => "data:image/png;base64," + (await pg.screenshot()).to
   await pg.click("[data-act=mod][data-k=letters]"); await pg.click("[data-act=sub][data-k=new]"); await pg.selectOption("#c_identity", "intl");
   await pg.fill("[data-c=recipient]", "Mr. John Smith\nProcurement Manager\nExample Energy Co."); await pg.fill("[data-c=subject]", "Proposal for predictive maintenance services");
   await pg.fill("[data-c=body]", "We would like to introduce our AI-based predictive maintenance platform.\nWe would welcome a short call to discuss your requirements."); await pg.waitForTimeout(200); const intl = await shot(pg);
+  await pg.click("[data-act=mod][data-k=articles]"); await pg.waitForTimeout(300); const artShot = await shot(pg);
   const pg2 = await open(browser, true);
   const reg = await shot(pg2); await pg2.fill("#f_full_name", "کاربر جدید");
   await pg2.evaluate(() => document.querySelector("#drawer").requestSubmit()); await pg2.waitForTimeout(1200);
@@ -102,7 +103,7 @@ const shot = async (pg) => "data:image/png;base64," + (await pg.screenshot()).to
   let toc = "", body = "", n = 0, lastMod = "";
   for (const st of TOUR) {
     if (st.mod && !st.sub) { n++; lastMod = st.mod; toc += `<li>${E(MODS[st.mod])}</li>`;
-      body += `<section class="mod"><h2>${E(MODS[st.mod])}</h2><p>${E(st.text)}</p></section>`; continue; }
+      body += `<section class="mod"><h2>${E(MODS[st.mod])}</h2><p>${E(st.text)}</p>${st.mod === "articles" ? img(artShot, "تصویر نمونه با داده‌ی فرضی") : ""}</section>`; continue; }
     if (st.mod && st.sub) body += `<section class="tab"><h3>${E(st.title)}</h3><p>${E(st.text)}</p>${img(shots[st.mod + "." + st.sub], "تصویر نمونه با داده‌ی فرضی")}</section>`;
   }
   const firstSteps = TOUR[TOUR.length - 1].text, bell = TOUR.find(s => s.sel === "#bell");
@@ -118,7 +119,7 @@ const shot = async (pg) => "data:image/png;base64," + (await pg.screenshot()).to
   li{margin:2px 0}.pb{page-break-before:always}</style></head><body>
   <div class="cover">${logoB64 ? `<img src="data:image/png;base64,${logoB64}" alt="logo">` : ""}<h1>iPetro</h1><h2>راهنمای کار با سامانه</h2><p>پترو پالا توس · Petro Pala Toos</p><p>نسخه‌ی ۱ · ${new Intl.DateTimeFormat("fa-IR-u-ca-persian", { year: "numeric", month: "long", day: "numeric" }).format(new Date())}</p></div>
   <h2>iPetro چیست؟</h2><p>${E(TOUR[0].text.replace(/^iPetro /, "iPetro "))}</p>
-  <div class="box"><b>شش بخش اصلی:</b><ol>${toc}</ol></div>
+  <div class="box"><b>هفت بخش اصلی:</b><ol>${toc}</ol></div>
   <h3>ورود و ثبت‌نام</h3><p>بار نخست که با حساب claude.ai وارد می‌شوید، فرم ثبت‌نام باز می‌شود. نام، تیم، نوع نیرو، روزهای حضور، ساعت ورود، ایمیل، شناسه‌ی تلگرام و تصویر امضا را وارد کنید. پس از ثبت، آموزش گام‌به‌گام خودکار شروع می‌شود.</p>${img(reg, "فرم ثبت‌نام هنگام ورود")}
   <h3 class="pb">آموزش درون سامانه</h3><p>آموزش هر بخش و هر تب را یک‌به‌یک نشان می‌دهد و تب مربوط را نشان‌دار می‌کند. هر زمان از دکمه‌ی «راهنما» بالای صفحه دوباره قابل اجراست.</p>${img(tour, "کارت آموزش پایین صفحه")}
   <h3>${E(bell.title)}</h3><p>${E(bell.text)}</p>${img(inbox, "پنجره‌ی اعلان‌ها")}
