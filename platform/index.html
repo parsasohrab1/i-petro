@@ -146,7 +146,7 @@ const MODULES = [
   ["market","Market"],["events","Events"],["erp","ERP"],["bpms","BPMS"],["letters","Letters"],["patent","Patent"]];
 const SUBS = {
   market:[["iran","Iran AI Projects"],["overseas","Overseas AI Projects"],["web","Web Design & SEO"],["investors","AI Investors & Accelerators"],["tracking","Project Tracking"]],
-  events:[["iran","ایران"],["world","جهان"],["all","همه"]],
+  events:[["iran","ایران"],["world","جهان"],["all","همه"],["taken","در دست پیگیری"]],
   erp:[["overview","نمای کلی"],["domains","حوزه‌های فعالیت"],["products","توسعه‌ی محصول هوشمند"],["people","نیروی انسانی"],["finance","مالی"],["clients","مشتریان و قراردادها"]],
   bpms:[["myday","روز من"],["tasks","تسک‌ها"],["reports","گزارش عملکرد"],["rarchive","بایگانی گزارش‌ها"],["teams","تیم‌ها"],["process","فرایندها"],["members","اعضا و ثبت‌نام"]],
   letters:[["new","نامه‌ی جدید (ساخت فایل Word)"],["archive","بایگانی نامه‌های پیشین و پیگیری"]],
@@ -230,7 +230,7 @@ async function loadAllReports(){ // admins read every member's reports and atten
 async function save(path, data, okMsg="ذخیره شد"){
   if(!S.db){ toast("اتصال به پایگاه داده برقرار نیست."); return false; }
   try{ await S.db.doc(path).set(data); toast(okMsg); return true; }
-  catch(e){ toast(e.code==="invalid_argument" ? "اجازه‌ی ثبت این مورد را ندارید یا داده نامعتبر است." : e.code==="quota_exceeded" ? "ظرفیت پایگاه داده پر است؛ موارد قدیمی را حذف کنید." : "ذخیره نشد؛ دوباره تلاش کنید."); return false; }
+  catch(e){ console.error("save", path, e); toast(e.code==="invalid_argument" ? (S.canWrite===false ?"دسترسی شما به این سامانه «Contributor» نیست؛ از مالک سامانه بخواهید در منوی Share سطح دسترسی شما را Contributor کند." : "این بخش برای سطح دسترسی شما مجاز نیست یا داده نامعتبر است: " + (e.message||"")) : e.code==="quota_exceeded" ? "ظرفیت پایگاه داده پر است؛ موارد قدیمی را حذف کنید." : "ذخیره نشد؛ دوباره تلاش کنید."); return false; }
 }
 async function remove(path){ try{ await S.db.doc(path).delete(); toast("حذف شد"); }catch(e){ toast("حذف نشد"); } }
 const newId = () => Date.now().toString(36) + Math.random().toString(36).slice(2,6);
@@ -338,26 +338,36 @@ const VIEWS = {};
 // ---------- MARKET
 function tenderCond(t){const f=t.facts||{},c=(t.analysis||{}).conditions||{};return{price:c.price_fa||f.price||"—",guarantee:c.guarantee_fa||f.guarantee||"—",experience:c.experience_fa||f.experience||"—",intl:c.international_fa||f.international||"—"}}
 function dl(t){ const d=t.days_left; const s = d==null?"نامشخص":(d<=7?`<span class="p-bad">${faNum(d)} روز</span>`:`${faNum(d)} روز`); return `${esc(t.deadline_fa||t.deadline||"؟")} (${s})`; }
+// an item someone has taken responsibility for leaves the open lists and lives in the tracking views
+const owned = key => !!(S.tracking[key]||{}).owner;
+const claimBtn = key => `<button class="btn sm" data-act="claim" data-id="${esc(key)}">مسئولیت را می‌گیرم</button>`;
 function tenderTable(list){
-  return table(["عنوان","کشور / خریدار","بخش","مهلت","قیمت","ضمانت‌نامه","رزومه و رفرنس","پذیرش شرکت‌ها","وضعیت"], list.map(t=>{const k=tenderCond(t);return `<tr>
+  return table(["عنوان","کشور / خریدار","بخش","مهلت","قیمت","ضمانت‌نامه","رزومه و رفرنس","پذیرش شرکت‌ها","وضعیت",""], list.map(t=>{const k=tenderCond(t);return `<tr>
     ${td("عنوان",`${link(t.url,t.title)}<br><span class="meta">${esc(t.source)}${t.setad_number?` · <span class="mono">${esc(t.setad_number)}</span>`:""}</span>${(t.analysis||{}).summary_fa?`<details><summary>تحلیل</summary>${esc(t.analysis.summary_fa)}</details>`:""}`,"t")}
     ${td("کشور",`${esc(t.country)}<br><span class="meta">${esc(t.buyer)}</span>`)}${td("بخش",esc(t.sector||"—"))}${td("مهلت",dl(t))}
     ${td("قیمت",esc(k.price))}${td("ضمانت‌نامه",esc(k.guarantee))}${td("رزومه",esc(k.experience))}${td("پذیرش",esc(k.intl))}
-    ${td("وضعیت",`<span class="pill p-info">${esc(T_STATUS[t.status]||t.status)}</span>`)}</tr>`}), "هنوز داده‌ای از ایجنت بازار همگام نشده است. همگام‌سازی روزانه این بخش را پر می‌کند.");
+    ${td("وضعیت",`<span class="pill p-info">${esc(T_STATUS[t.status]||t.status)}</span>`)}${td("",claimBtn(t.id))}</tr>`}), "موردِ بدون مسئولی باقی نمانده است. موارد واگذارشده در «Project Tracking» هستند.");
 }
 const mk = filter => () => {
-  const list = S.m.tenders.filter(filter).filter(t=>ACTIVE.has(t.status)).filter(t=>match(t.title,t.country,t.buyer,t.source,t.sector));
+  const list = S.m.tenders.filter(filter).filter(t=>ACTIVE.has(t.status)&&!owned(t.id)).filter(t=>match(t.title,t.country,t.buyer,t.source,t.sector));
   const soon = list.filter(t=>t.days_left!=null&&t.days_left<=7).length;
   return kpis([["فرصت فعال",faNum(list.length)],["مهلت ≤ ۷ روز",faNum(soon),soon>0],["دولتی",faNum(list.filter(t=>(t.sector||"").startsWith("دولتی")).length)],["شرکت دولتی / عمومی",faNum(list.filter(t=>(t.sector||"").includes("شرکت")).length)]]) + tenderTable(list);
 };
 VIEWS["market.iran"] = mk(t=>t.market==="domestic"&&t.line!=="web");
 VIEWS["market.overseas"] = mk(t=>(t.market||"international")==="international"&&t.line!=="web");
 VIEWS["market.web"] = () => {
-  const list = S.m.tenders.filter(t=>t.line==="web"&&ACTIVE.has(t.status)).filter(t=>match(t.title,t.country));
-  const leads = S.m.leads.filter(l=>match(l.name,l.activity,l.city));
+  const list = S.m.tenders.filter(t=>t.line==="web"&&ACTIVE.has(t.status)&&!owned(t.id)).filter(t=>match(t.title,t.country));
+  const leads = S.m.leads.filter(l=>!owned("ld_"+l.id)&&match(l.name,l.activity,l.city));
+  const takenLeads = S.m.leads.filter(l=>owned("ld_"+l.id)&&match(l.name,l.activity,l.city));
+  const takenWeb = S.m.tenders.filter(t=>t.line==="web"&&ACTIVE.has(t.status)&&owned(t.id));
   return `<h2>درخواست‌های طراحی سایت و سئو</h2><p class="note">پیشنهاد پیش‌فرض برای مشتریان داخلی: طراحی سایت + سئو.</p>${tenderTable(list)}
    <h2>تولیدکنندگان بدون سایت (تماس تلفنی)</h2><p class="note">فقط اطلاعاتی که آگهی‌دهنده خودش منتشر کرده است. اگر مخاطب نخواست، او را از فهرست حذف کنید.</p>`+
-   table(["نام / مسئول","حوزه‌ی فعالیت","شهر","شماره تماس","منبع"], leads.map(l=>`<tr>${td("نام",esc(l.name||"—"),"t")}${td("فعالیت",esc(l.activity))}${td("شهر",esc(l.city||"—"))}${td("تماس",l.phone?`<span class="mono">${esc(l.phone)}</span>`:`<span class="meta">${esc(l.contact_note_fa||"—")}</span>`)}${td("منبع",link(l.url,l.source))}</tr>`));
+   table(["نام / مسئول","حوزه‌ی فعالیت","شهر","شماره تماس","منبع"], leads.map(l=>`<tr>${td("نام",esc(l.name||"—"),"t")}${td("فعالیت",esc(l.activity))}${td("شهر",esc(l.city||"—"))}${td("تماس",l.phone?`<span class="mono">${esc(l.phone)}</span>`:`<span class="meta">${esc(l.contact_note_fa||"—")}</span>`)}${td("منبع",link(l.url,l.source))}${td("",claimBtn("ld_"+l.id))}</tr>`), "تولیدکننده‌ی بدون مسئولی باقی نمانده است.")+
+   `<h2>در دست پیگیری</h2><p class="note">مواردی که کسی مسئولیتشان را گرفته از فهرست‌های بالا برداشته شده‌اند. مسئول یا مدیر می‌تواند مورد را به فهرست بازگرداند.</p>`+
+   table(["مورد","نوع","مسئول",""], [
+     ...takenWeb.map(t=>{const tr=S.tracking[t.id]||{};return `<tr>${td("مورد",link(t.url,t.title),"t")}${td("نوع","درخواست طراحی سایت")}${td("مسئول",esc(memberName(tr.owner)))}${td("",tr.owner===S.me.id||isAdmin()?`<button class="btn sm ghost" data-act="unclaim" data-id="${esc(t.id)}">بازگرداندن به فهرست</button>`:"")}</tr>`}),
+     ...takenLeads.map(l=>{const key="ld_"+l.id,tr=S.tracking[key]||{};return `<tr>${td("مورد",`${esc(l.name||"—")}${l.phone?` · <span class="mono">${esc(l.phone)}</span>`:""}`,"t")}${td("نوع","تماس با تولیدکننده")}${td("مسئول",esc(memberName(tr.owner)))}${td("",tr.owner===S.me.id||isAdmin()?`<button class="btn sm ghost" data-act="unclaim" data-id="${esc(key)}">بازگرداندن به فهرست</button>`:"")}</tr>`})
+   ], "هنوز کسی مسئولیت موردی از طراحی سایت را نگرفته است.");
 };
 VIEWS["market.investors"] = () => {
   const list=S.m.investors.filter(v=>match(v.name,v.hq,v.focus_fa));
@@ -379,12 +389,15 @@ VIEWS["market.tracking"] = () => {
 
 // ---------- EVENTS
 VIEWS.events = () => {
-  const list = S.m.events.filter(e=>{const end=e.end||e.start;return !end||end>=today()}).filter(e=>S.sub==="all"||e.region===S.sub).filter(e=>match(e.name,e.name_fa,e.city,e.country))
+  const taken = S.sub==="taken";
+  const list = S.m.events.filter(e=>{const end=e.end||e.start;return !end||end>=today()}).filter(e=>taken ? owned("ev_"+e.id) : !owned("ev_"+e.id)&&(S.sub==="all"||e.region===S.sub)).filter(e=>match(e.name,e.name_fa,e.city,e.country))
     .sort((a,b)=>(a.start||"9999").localeCompare(b.start||"9999"));
-  return table(["رویداد","محل","تاریخ","حوزه","چرا مهم است","نحوه‌ی مشارکت"], list.map(e=>{const g=e.start?`${e.start}${e.end&&e.end!==e.start?" تا "+e.end:""}`:"";
+  const last = e => { const key="ev_"+e.id, tr=S.tracking[key]||{};
+    return taken ? td("مسئول",`${esc(memberName(tr.owner))}${tr.owner===S.me.id||isAdmin()?`<br><button class="btn sm ghost" data-act="unclaim" data-id="${esc(key)}">بازگرداندن به فهرست</button>`:""}`) : td("",claimBtn(key)); };
+  return table(["رویداد","محل","تاریخ","حوزه","چرا مهم است","نحوه‌ی مشارکت",taken?"مسئول":""], list.map(e=>{const g=e.start?`${e.start}${e.end&&e.end!==e.start?" تا "+e.end:""}`:"";
     const d=e.date_fa?`<b>${esc(e.date_fa)}</b>${g?`<br><span class="meta mono">${g}</span>`:""}`:(g?`${faDate(e.start)}${e.end&&e.end!==e.start?" تا "+faDate(e.end):""}<br><span class="meta mono">${g}</span>`:`<span class="meta">اعلام نشده – ${esc(e.usual_period_fa||"")}</span>`);
-    return `<tr>${td("رویداد",`${link(e.url,e.name_fa||e.name)}<br><span class="meta">${esc(e.name)}</span>`,"t")}${td("محل",`${esc(e.city)}، ${esc(e.country)}`)}${td("تاریخ",d+(e.source?`<br>${link(e.source,"منبع تاریخ")}`:""))}${td("حوزه",esc((e.categories||[]).map(x=>LABELS[x]||x).join("، ")))}${td("اهمیت",esc(e.why_fa))}${td("مشارکت",esc(e.participation_fa))}</tr>`}),
-    "رویدادها پس از نخستین همگام‌سازی نمایش داده می‌شوند.");
+    return `<tr>${td("رویداد",`${link(e.url,e.name_fa||e.name)}<br><span class="meta">${esc(e.name)}</span>`,"t")}${td("محل",`${esc(e.city)}، ${esc(e.country)}`)}${td("تاریخ",d+(e.source?`<br>${link(e.source,"منبع تاریخ")}`:""))}${td("حوزه",esc((e.categories||[]).map(x=>LABELS[x]||x).join("، ")))}${td("اهمیت",esc(e.why_fa))}${td("مشارکت",esc(e.participation_fa))}${last(e)}</tr>`}),
+    taken ? "هنوز کسی مسئولیت رویدادی را نگرفته است." : "رویداد بدون مسئولی باقی نمانده است. رویدادهای واگذارشده در «در دست پیگیری» هستند.");
 };
 
 // ---------- ERP
@@ -643,6 +656,7 @@ VIEWS["bpms.members"] = () => {
 };
 function registerForm(){
   if(!S.me.id){toast("برای ثبت‌نام باید با حساب claude.ai وارد شده باشید.");return}
+  if(S.canWrite===false){toast("دسترسی شما فقط مشاهده است؛ از مالک سامانه بخواهید در منوی Share سطح دسترسی شما را Contributor کند.");return}
   const m=myMember()||{};
   openForm({title:"ثبت‌نام عضو",values:m,fields:[{k:"full_name",label:"نام و نام خانوادگی"},{k:"role_title",label:"عنوان شغلی"},{k:"role",label:"نقش در سامانه",type:"select",options:ROLES,hint:"نقش «مسئول دفتر» و «مدیرعامل» را مدیر سامانه تأیید می‌کند."},{k:"team",label:"تیم",type:"select",options:TEAMS},{k:"staff_type",label:"نوع نیرو",type:"select",options:STAFF},
    {k:"office_days",label:"روزهای حضور در شرکت",type:"days"},{k:"start_time",label:"ساعت ورود",type:"time"},{k:"email",label:"ایمیل (برای اعلان)",dir:"ltr"},{k:"telegram",label:"شناسه‌ی چت تلگرام (برای اعلان موبایل)",dir:"ltr"},
@@ -924,8 +938,26 @@ document.addEventListener("click", async e => {
     case "mod": S.mod=b.dataset.k; S.sub=SUBS[S.mod][0][0]; S.q=""; render(); break;
     case "sub": S.sub=b.dataset.k; S.forceFull=true; render(); if(S.mod==="bpms"&&S.sub==="rarchive"&&isAdmin()) loadAllReports(); break;
     case "close": case "close-scrim": closeForm(); break;
-    case "track": { const t=S.tracking[id]||{}; openForm({title:"پیگیری پروژه",values:{stage:"identified",...t},fields:[{k:"owner",label:"مسئول پیگیری",type:"select",options:Object.fromEntries([["","—"],...S.members.map(m=>[m.id,m.full_name])])},{k:"stage",label:"مرحله‌ی پیگیری",type:"select",options:STAGES},{k:"next_action",label:"اقدام بعدی"},{k:"next_date",label:"تاریخ اقدام بعدی",type:"date"},{k:"note",label:"یادداشت",type:"textarea"}],
-      onSave:v=>save(`tracking/${id}`,{...v,log:[...(t.log||[]),{at:new Date().toISOString(),by:S.me.id,stage:v.stage,note:v.note}].slice(-40),updated:new Date().toISOString(),updated_by:S.me.id})}); break; }
+    case "track": { const t=S.tracking[id]||{};
+      const locked = t.owner && t.owner!==S.me.id && !isAdmin(); // only the owner or an admin may hand a taken project to someone else
+      const ownerField = locked ? [] : [{k:"owner",label:"مسئول پیگیری",type:"select",options:Object.fromEntries([["","—"],...S.members.map(m=>[m.id,m.full_name])])}];
+      openForm({title:"پیگیری پروژه",extra:locked?`<p class="note">مسئول این پروژه ${esc(memberName(t.owner))} است و فقط خود او یا مدیر می‌تواند مسئول را تغییر دهد.</p>`:"",values:{stage:"identified",...t},fields:[...ownerField,{k:"stage",label:"مرحله‌ی پیگیری",type:"select",options:STAGES},{k:"next_action",label:"اقدام بعدی"},{k:"next_date",label:"تاریخ اقدام بعدی",type:"date"},{k:"note",label:"یادداشت",type:"textarea"}],
+      onSave:v=>save(`tracking/${id}`,{...t,...v,...(locked?{owner:t.owner}:{}),log:[...(t.log||[]),{at:new Date().toISOString(),by:S.me.id,stage:v.stage,note:v.note}].slice(-40),updated:new Date().toISOString(),updated_by:S.me.id})}); break; }
+    case "claim": { if(!myMember()){toast("ابتدا از BPMS ← اعضا و ثبت‌نام ثبت‌نام کنید.");break}
+      // first come, first served: hold a short lease on the doc, re-read it from the store, claim only if still unowned
+      b.disabled=true;
+      try{
+        const ref=S.db.doc(`tracking/${id}`);
+        const lease=await ref.acquire({holder:S.me.id,ttlMs:5000});
+        if(!lease.acquired){toast("هم‌زمان عضو دیگری در حال گرفتن این مورد است؛ چند ثانیه بعد دوباره نگاه کنید.");b.disabled=false;break}
+        const snap=await ref.get(); const t=snap.exists?snap.data():{};
+        if(t.owner&&t.owner!==S.me.id){toast(`این مورد را ${memberName(t.owner)} برعهده گرفته است.`);break}
+        const {lease:_l,...rest}=t;
+        await save(`tracking/${id}`,{stage:"identified",...rest,owner:S.me.id,log:[...(t.log||[]),{at:new Date().toISOString(),by:S.me.id,note:"مسئولیت پذیرفته شد"}].slice(-40),updated:new Date().toISOString(),updated_by:S.me.id},"مسئولیت ثبت شد؛ مورد از فهرست باز برداشته شد");
+      }catch(err){ toast("ثبت مسئولیت انجام نشد؛ دوباره تلاش کنید."); b.disabled=false; }
+      break; }
+    case "unclaim": { const t=S.tracking[id]||{}; if(t.owner&&t.owner!==S.me.id&&!isAdmin()){toast("فقط مسئول همین مورد یا مدیر می‌تواند آن را بازگرداند.");break}
+      await save(`tracking/${id}`,{...t,owner:"",log:[...(t.log||[]),{at:new Date().toISOString(),by:S.me.id,note:"به فهرست بازگردانده شد"}].slice(-40),updated:new Date().toISOString(),updated_by:S.me.id},"به فهرست بازگردانده شد"); break; }
     case "product-new": productForm(); break;
     case "product-edit": productForm(S.products.find(p=>p.id===id)); break;
     case "fin-new": finForm(); break;
