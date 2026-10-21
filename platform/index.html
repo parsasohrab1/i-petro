@@ -115,6 +115,8 @@ a{color:var(--brand)}
 .kanban{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(250px,1fr);gap:10px;overflow-x:auto;padding-bottom:8px;align-items:start}
 .kcol{background:var(--sunken);border-radius:var(--r);padding:8px;min-width:0}
 .kcol h4{margin:0 0 6px;font-size:13px;display:flex;justify-content:space-between;gap:6px}
+.kcol.drop{outline:2px dashed var(--signal);outline-offset:-2px}
+.kcard[draggable=true]{cursor:grab}
 .kcard{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:8px 10px;margin-bottom:8px;font-size:12.5px;line-height:1.6}
 .cal-day{margin-top:14px;font-weight:700;border-bottom:1px solid var(--line);padding-bottom:2px}
 .cal-item{display:flex;gap:8px;align-items:baseline;padding:4px 0;flex-wrap:wrap}
@@ -164,7 +166,7 @@ const SUBS = {
   market:[["iran","Iran AI Projects"],["overseas","Overseas AI Projects"],["web","Web Design & SEO"],["investors","AI Investors & Accelerators"],["tracking","Project Tracking"],["pipeline","Pipeline"],["memory","Team Memory"]],
   events:[["iran","ایران"],["world","جهان"],["all","همه"],["taken","در دست پیگیری"]],
   erp:[["overview","نمای کلی"],["domains","حوزه‌های فعالیت"],["products","توسعه‌ی محصول هوشمند"],["people","نیروی انسانی"],["finance","مالی"],["clients","مشتریان و قراردادها"],["backup","پشتیبان‌گیری"]],
-  bpms:[["myday","روز من"],["tasks","تسک‌ها"],["reports","گزارش عملکرد"],["rarchive","بایگانی گزارش‌ها"],["teams","تیم‌ها"],["process","فرایندها"],["calendar","تقویم"],["members","اعضا و ثبت‌نام"]],
+  bpms:[["myday","روز من"],["board","تخته‌ی اسکرام"],["backlog","بک‌لاگ و برنامه‌ریزی"],["sprints","اسپرینت‌ها"],["tasks","فهرست تسک‌ها"],["reports","گزارش عملکرد"],["rarchive","بایگانی گزارش‌ها"],["teams","تیم‌ها"],["process","فرایندها"],["calendar","تقویم"],["members","اعضا و ثبت‌نام"]],
   letters:[["new","نامه‌ی جدید (ساخت فایل Word)"],["archive","بایگانی نامه‌های پیشین و پیگیری"]],
   patent:[["home","پتنت‌ها"],["ops","فرصت‌های ثبت اختراع"],["products","محصولات ریپو"]]
 };
@@ -175,7 +177,11 @@ const WEEKDAYS = [["sat","شنبه"],["sun","یکشنبه"],["mon","دوشنبه
 const STAGES = {identified:"شناسایی",documents:"دریافت مدارک",partner_email:"ارسال ایمیل به شریک تجاری",partner_meeting:"پاسخ / جلسه با شریک",mou:"امضای تفاهم‌نامه",proposal:"تهیه‌ی پروپوزال",submitted:"ارسال پیشنهاد",result:"اعلام نتیجه"};
 const T_STATUS = {new:"جدید",analysed:"تحلیل شده",partner_search:"در جست‌وجوی شریک",bid_prep:"آماده‌سازی پیشنهاد",mou_negotiation:"مذاکره تفاهم‌نامه",proposal_drafting:"نگارش پروپوزال",submitted:"ارسال شده",won:"برنده",lost:"بازنده",skipped:"کنار گذاشته شد",expired:"منقضی"};
 const ACTIVE = new Set(["new","analysed","partner_search","bid_prep","mou_negotiation","proposal_drafting","submitted"]);
-const TASK_ST = {todo:"انجام نشده",doing:"در حال انجام",done:"انجام شد",approved:"تأیید مدیر"};
+const TASK_ST = {todo:"جهت انجام",doing:"در حال انجام",done:"انجام شده",approved:"تأیید مدیر"};
+const COLS3 = [["todo","جهت انجام"],["doing","در حال انجام"],["done","انجام شده"]];   // Scrum board columns
+const SPRINT_ST = {planned:"برنامه‌ریزی‌شده",active:"در جریان",closed:"بسته‌شده"};
+const TASK_TYPE = {story:"ویژگی (Story)",bug:"باگ",task:"کار فنی",research:"پژوهش"};
+const POINTS = {"":"برآورد نشده",1:"۱",2:"۲",3:"۳",5:"۵",8:"۸",13:"۱۳"};   // Fibonacci story points
 const PRIORITY = {high:"فوری",normal:"عادی",low:"کم"};
 const CLIENT_STAGES = {intro:"معرفی",demo:"دموی نرم‌افزار با داده‌ی مصنوعی",initial:"قرارداد اولیه",data:"دریافت داده‌ی واقعی",trl:"ارتقای TRL",main:"قرارداد اصلی"};
 const OUTCOME = {"":"— (در جریان)",won:"برنده شدیم",lost:"نبردیم",dropped:"انصراف دادیم"};
@@ -190,7 +196,7 @@ const S = {mod:"market", sub:"iran", q:"", db:null, user:null, assets:null, samp
   me:{id:null,isOwner:false,canEdit:false}, canWrite:null,
   m:{tenders:[],events:[],investors:[],leads:[],partners:[]}, opsList:[],
   settings:{}, members:[], tasks:[], letters:[], lettersArchive:[], draft:null, archF:"all", ra:{member:null,from:"",to:""}, repLoaded:false, allLoaded:false, forceFull:false, products:[], patents:[], finance:[], clients:[], tracking:{},
-  myAtt:[], myReports:[], allReports:[], allAtt:[], loaded:false, tour:null, got:new Set(), welcomed:false, calMine:false, calTypes:null, seenTasks:new Set()};
+  myAtt:[], myReports:[], allReports:[], allAtt:[], loaded:false, sprints:[], boardMine:false, tour:null, got:new Set(), welcomed:false, calMine:false, calTypes:null, seenTasks:new Set()};
 try{const v=JSON.parse(localStorage.getItem("ppt-view")||"{}");if(v.mod&&SUBS[v.mod]){S.mod=v.mod;S.sub=SUBS[v.mod].some(x=>x[0]===v.sub)?v.sub:SUBS[v.mod][0][0]}}catch(e){}
 try{S.seenTasks=new Set(JSON.parse(localStorage.getItem("ppt-seen")||"[]"))}catch(e){}
 
@@ -220,7 +226,7 @@ const COLS = {
   "market/data/tenders":"m.tenders","market/data/events":"m.events","market/data/investors":"m.investors",
   "market/data/leads":"m.leads","market/data/partners":"m.partners","patentops/data/items":"opsList",
   members:"members", tasks:"tasks", letters:"letters", letters_archive:"lettersArchive", products:"products", patents:"patents",
-  finance:"finance", clients:"clients"
+  finance:"finance", clients:"clients", sprints:"sprints"
 };
 function setPath(key, val){ const [a,b]=key.split("."); if(b) S[a][b]=val; else S[a]=val; }
 function subscribe(){
@@ -549,17 +555,147 @@ const toMin = t => { const [h,m]=(t||"0:0").split(":").map(Number); return h*60+
 const nowHM = () => new Date().toTimeString().slice(0,5);
 function taskTable(list){
   return table(["تسک","تیم","مسئول","تعریف‌کننده","مهلت","اولویت","وضعیت",""], list.map(t=>`<tr>${td("تسک",`${esc(t.title)}${t.desc?`<br><span class="meta">${esc(t.desc)}</span>`:""}`,"t")}${td("تیم",esc(TEAMS[t.team]||"—"))}${td("مسئول",esc(memberName(t.assignee)))}${td("تعریف‌کننده",esc(memberName(t.created_by)))}${td("مهلت",t.due?`<span class="${t.due<today()&&!["done","approved"].includes(t.status)?"p-bad":""}">${faDate(t.due)}</span>`:"—")}${td("اولویت",esc(PRIORITY[t.priority]||"—"))}${td("وضعیت",`<span class="pill ${t.status==="approved"?"p-ok":t.status==="done"?"p-info":t.status==="doing"?"p-warn":"p-mute"}">${esc(TASK_ST[t.status])}</span>`)}
-   ${td("",[t.assignee===S.me.id&&t.status==="todo"?`<button class="btn sm ghost" data-act="task-st" data-id="${t.id}" data-st="doing">شروع</button>`:"",t.assignee===S.me.id&&t.status==="doing"?`<button class="btn sm" data-act="task-st" data-id="${t.id}" data-st="done">انجام شد</button>`:"",(t.created_by===S.me.id||isAdmin())&&t.status==="done"?`<button class="btn sm sig" data-act="task-st" data-id="${t.id}" data-st="approved">تأیید</button>`:""].join(" "))}</tr>`), "تسکی وجود ندارد.");
+   ${td("",[t.assignee===S.me.id&&t.status==="todo"?`<button class="btn sm ghost" data-act="task-st" data-id="${t.id}" data-st="doing">شروع</button>`:"",t.assignee===S.me.id&&t.status==="doing"?`<button class="btn sm" data-act="task-st" data-id="${t.id}" data-st="done">انجام شد</button>`:"",(t.created_by===S.me.id||isAdmin())&&t.status==="done"?`<button class="btn sm sig" data-act="task-st" data-id="${t.id}" data-st="approved">تأیید</button>`:"",taskCan(t)?`<button class="btn sm ghost" data-act="task-edit" data-id="${t.id}">ویرایش</button>`:""].join(" "))}</tr>`), "تسکی وجود ندارد.");
 }
+// ---------- SCRUM: backlog -> sprint -> board (جهت انجام / در حال انجام / انجام شده), burndown, velocity, retrospective
+const canSprint = () => isAdmin() || ["manager","ceo"].includes((myMember()||{}).role);   // Scrum Master / Product Owner duties
+const activeSprint = () => S.sprints.find(x=>x.status==="active");
+const sprintTasks = id => S.tasks.filter(t=>t.sprint===id);
+const pts = t => Number(t.points)||0;
+const isDone = t => t.status==="done"||t.status==="approved";
+const sumPts = list => list.reduce((a,t)=>a+pts(t),0);
+const PRI_RANK = {high:0,normal:1,low:2};
+const closedSprints = () => S.sprints.filter(x=>x.status==="closed").sort((a,b)=>(a.end||"").localeCompare(b.end||""));
+const avgVelocity = () => { const c=closedSprints().slice(-3); return c.length?Math.round(c.reduce((a,x)=>a+(Number(x.completed)||0),0)/c.length):null; };
+const nowIso = () => new Date().toISOString();
+const taskCan = t => t.assignee===S.me.id||t.created_by===S.me.id||isAdmin()||canSprint();
+async function moveTask(id, st){
+  const t=S.tasks.find(x=>x.id===id); if(!t||t.status===st) return;
+  if(!taskCan(t)){ toast("فقط مسئول تسک، تعریف‌کننده یا مدیر می‌تواند آن را جابه‌جا کند."); return; }
+  if(st==="approved"&&!(t.created_by===S.me.id||isAdmin()||canSprint())){ toast("تأیید نهایی با مدیر یا تعریف‌کننده‌ی تسک است."); return; }
+  if(t.status==="approved"&&st!=="approved"&&!isAdmin()){ toast("تسک تأییدشده را فقط مدیر سامانه برمی‌گرداند."); return; }
+  const {id:_i,...rec}=t; rec.status=st; rec.updated=nowIso();
+  rec.done_at = isDone(rec) ? (t.done_at||nowIso()) : null;
+  await save(`tasks/${id}`,rec,"وضعیت تسک به‌روز شد");
+}
+function taskForm(t={}){ if(!S.me.id){toast("برای تعریف تسک وارد شوید.");return}
+  const sprints=Object.fromEntries([["","بک‌لاگ (بدون اسپرینت)"],...S.sprints.filter(x=>x.status!=="closed"||x.id===t.sprint).map(x=>[x.id,`${x.name} (${SPRINT_ST[x.status]})`])]);
+  openForm({title:t.id?"ویرایش تسک":"تعریف تسک",values:{assignee:S.me.id,team:(myMember()||{}).team||"ai",priority:"normal",due:today(),type:"task",blocked:"no",sprint:"",...t,points:t.points==null?"":String(t.points),blocked:t.blocked?"yes":"no"},
+   fields:[{k:"title",label:"عنوان تسک"},{k:"desc",label:"شرح و معیار پذیرش (Definition of Done)",type:"textarea",hint:"قالب پیشنهادی: «به‌عنوان … می‌خواهم … تا …» و بعد چند معیار پذیرش که انجام‌شدن کار را قابل بررسی می‌کند."},
+    {k:"type",label:"نوع",type:"select",options:TASK_TYPE},{k:"points",label:"امتیاز داستان (Story Point)",type:"select",options:POINTS,hint:"اندازه‌ی نسبی کار، نه ساعت؛ ۱ کوچک‌ترین و ۱۳ بسیار بزرگ (بهتر است کار بزرگ را بشکنید)."},
+    {k:"sprint",label:"اسپرینت",type:"select",options:sprints},{k:"priority",label:"اولویت",type:"select",options:PRIORITY},
+    {k:"assignee",label:"مسئول",type:"select",options:Object.fromEntries(S.members.map(m=>[m.id,m.full_name]))},{k:"team",label:"تیم",type:"select",options:TEAMS},{k:"due",label:"مهلت",type:"date"},
+    {k:"blocked",label:"مانع دارد؟",type:"select",options:{no:"خیر",yes:"بله"}},{k:"blocker_note",label:"شرح مانع (برای Daily Scrum)",type:"textarea"}],
+   onSave:v=>{ if(!v.title){toast("عنوان تسک را بنویسید.");return false}
+    const {id:_i,...base}=t; const now=nowIso();
+    return save(`tasks/${t.id||newId()}`,{...base,...v,points:v.points===""||v.points==null?null:Number(v.points),blocked:v.blocked==="yes",status:t.status||"todo",created_by:t.created_by||S.me.id,created:t.created||now,updated:now},t.id?"تسک به‌روز شد":"تسک ثبت شد و اعلان آن برای مسئول نمایش داده می‌شود"); }}); }
+
 VIEWS["bpms.tasks"] = () => {
   const list=S.tasks.filter(t=>match(t.title,memberName(t.assignee),TEAMS[t.team])).sort((a,b)=>(a.due||"9").localeCompare(b.due||"9"));
-  return `<div class="toolbar"><button class="btn" data-act="task-new">تعریف تسک</button><span class="meta">تسکی که عضو برای خودش تعریف کند به مدیر اعلان می‌شود؛ تسکی که مدیر تعریف کند به عضو اعلان می‌شود.</span></div>`+
-  kpis([["کل",faNum(list.length)],["انجام نشده",faNum(list.filter(t=>t.status==="todo").length)],["در حال انجام",faNum(list.filter(t=>t.status==="doing").length)],["عقب‌افتاده",faNum(list.filter(t=>t.due&&t.due<today()&&!["done","approved"].includes(t.status)).length),true]])+taskTable(list);
+  return `<div class="toolbar"><button class="btn" data-act="task-new">تعریف تسک</button><span class="meta">فهرست کامل همه‌ی تسک‌ها. کار روزانه‌ی تیم روی «تخته‌ی اسکرام» انجام می‌شود. تسکی که عضو برای خودش تعریف کند به مدیر اعلان می‌شود؛ تسکی که مدیر تعریف کند به عضو.</span></div>`+
+  kpis([["کل",faNum(list.length)],["جهت انجام",faNum(list.filter(t=>t.status==="todo").length)],["در حال انجام",faNum(list.filter(t=>t.status==="doing").length)],["عقب‌افتاده",faNum(list.filter(t=>t.due&&t.due<today()&&!isDone(t)).length),true]])+taskTable(list);
 };
-function taskForm(){ if(!S.me.id){toast("برای تعریف تسک وارد شوید.");return}
-  openForm({title:"تعریف تسک",values:{assignee:S.me.id,team:(myMember()||{}).team||"ai",priority:"normal",due:today()},fields:[{k:"title",label:"عنوان تسک"},{k:"desc",label:"شرح",type:"textarea"},
-   {k:"assignee",label:"مسئول",type:"select",options:Object.fromEntries(S.members.map(m=>[m.id,m.full_name]))},{k:"team",label:"تیم",type:"select",options:TEAMS},{k:"due",label:"مهلت",type:"date"},{k:"priority",label:"اولویت",type:"select",options:PRIORITY}],
-   onSave:v=>{ if(!v.title){toast("عنوان تسک را بنویسید.");return false} return save(`tasks/${newId()}`,{...v,status:"todo",created_by:S.me.id,created:new Date().toISOString(),updated:new Date().toISOString()},"تسک ثبت شد و اعلان آن برای مسئول نمایش داده می‌شود"); }}); }
+
+function burndownSvg(sp){
+  const tasks=sprintTasks(sp.id), T=sumPts(tasks), n=Math.max(1,daysBetween(sp.start,sp.end));
+  const last=Math.min(n,Math.max(0,daysBetween(sp.start,today())));
+  const doneBy=d=>tasks.filter(isDone).reduce((a,t)=>a+(((t.done_at||t.updated||"").slice(0,10))<=d?pts(t):0),0);
+  const W=440,H=170,P=32, X=i=>P+i*(W-2*P)/n, Y=v=>T?H-P-(v/T)*(H-2*P):H-P;
+  const actual=[]; for(let i=0;i<=last;i++) actual.push([X(i),Y(T-doneBy(addDays(sp.start,i)))]);
+  const line=pts2=>pts2.map(q=>q.map(v=>v.toFixed(1)).join(",")).join(" ");
+  return `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="نمودار Burndown" style="width:100%;max-width:560px;background:var(--surface);border:1px solid var(--line);border-radius:8px">
+   <line x1="${P}" y1="${H-P}" x2="${W-P}" y2="${H-P}" stroke="var(--line)"/><line x1="${P}" y1="${P-8}" x2="${P}" y2="${H-P}" stroke="var(--line)"/>
+   <polyline points="${line([[X(0),Y(T)],[X(n),Y(0)]])}" fill="none" stroke="var(--muted)" stroke-dasharray="5 4"/>
+   <polyline points="${line(actual)}" fill="none" stroke="var(--signal)" stroke-width="2.5"/>${actual.length?`<circle cx="${actual[actual.length-1][0]}" cy="${actual[actual.length-1][1]}" r="4" fill="var(--signal)"/>`:""}
+   <text x="${P-4}" y="${P-1}" font-size="10" fill="var(--muted)" text-anchor="end">${T}</text><text x="${P-4}" y="${H-P+4}" font-size="10" fill="var(--muted)" text-anchor="end">0</text>
+   <text x="${P}" y="${H-10}" font-size="10" fill="var(--muted)">${esc(faDate(sp.start))}</text><text x="${W-P}" y="${H-10}" font-size="10" fill="var(--muted)" text-anchor="end">${esc(faDate(sp.end))}</text>
+   <text x="${W/2}" y="14" font-size="11" fill="var(--ink)" text-anchor="middle">Burndown – امتیاز باقی‌مانده (خط چین: مسیر ایده‌آل)</text></svg>`;
+}
+function taskCard(t){
+  const late=t.due&&t.due<today()&&!isDone(t), can=taskCan(t);
+  const order=["todo","doing","done"], cur=t.status==="approved"?2:order.indexOf(t.status);
+  return `<div class="kcard" draggable="${can}" data-task="${esc(t.id)}">
+   <b>${esc(t.title)}</b> ${pts(t)?`<span class="pill p-info mono" title="امتیاز داستان">${faNum(pts(t))}</span>`:'<span class="pill p-mute" title="برآورد نشده">؟</span>'}<br>
+   <span class="meta">${esc(memberName(t.assignee))}${t.type&&t.type!=="task"?` · ${esc(TASK_TYPE[t.type]||t.type)}`:""}${t.priority==="high"?' · <span class="p-bad">فوری</span>':""}${t.due?` · <span class="${late?"p-bad":""}">${faDate(t.due)}</span>`:""}</span>
+   ${t.blocked?`<br><span class="pill p-bad">مانع</span> <span class="meta">${esc(t.blocker_note||"")}</span>`:""}${t.status==="approved"?'<br><span class="pill p-ok">تأیید مدیر</span>':""}
+   <div class="row" style="margin-top:4px">${cur>0&&can&&t.status!=="approved"?`<button class="btn sm ghost" data-act="task-st" data-id="${esc(t.id)}" data-st="${order[cur-1]}" title="ستون قبل">›</button>`:""}${cur<2&&can?`<button class="btn sm ghost" data-act="task-st" data-id="${esc(t.id)}" data-st="${order[cur+1]}" title="ستون بعد">‹</button>`:""}
+    ${t.status==="done"&&(t.created_by===S.me.id||isAdmin()||canSprint())?`<button class="btn sm sig" data-act="task-st" data-id="${esc(t.id)}" data-st="approved">تأیید</button>`:""}${can?`<button class="btn sm ghost" data-act="task-edit" data-id="${esc(t.id)}">ویرایش</button>`:""}</div></div>`;
+}
+VIEWS["bpms.board"] = () => {
+  const sp=activeSprint();
+  if(!sp) return `<div class="banner">اسپرینت فعالی وجود ندارد. تخته‌ی اسکرام کار اسپرینت جاری را نشان می‌دهد.</div><p class="note">ابتدا از «بک‌لاگ و برنامه‌ریزی» آیتم‌ها را برآورد کنید، سپس در «اسپرینت‌ها» یک اسپرینت بسازید و شروع کنید.</p>`+(canSprint()?`<button class="btn sig" data-act="sprint-new">ساخت اسپرینت</button> `:"")+`<button class="btn ghost" data-act="goto" data-mod="bpms" data-sub="backlog">رفتن به بک‌لاگ</button>`;
+  const all=sprintTasks(sp.id), list=all.filter(t=>(!S.boardMine||t.assignee===S.me.id)&&match(t.title,memberName(t.assignee)));
+  const total=sumPts(all), done=sumPts(all.filter(isDone)), left=Math.max(0,daysBetween(today(),sp.end));
+  const doing={}; all.filter(t=>t.status==="doing").forEach(t=>doing[t.assignee]=(doing[t.assignee]||0)+1);
+  const over=Object.entries(doing).filter(([,n])=>n>3), blocked=all.filter(t=>t.blocked&&!isDone(t));
+  const col=(k,l)=>{ const items=list.filter(t=>k==="done"?isDone(t):t.status===k);
+    return `<div class="kcol" data-col="${k}"><h4><span>${l}</span><span class="meta">${faNum(items.length)} تسک، ${faNum(sumPts(items))} امتیاز</span></h4>${items.map(taskCard).join("")||'<p class="meta">—</p>'}</div>`; };
+  const members=[...new Set(all.map(t=>t.assignee).filter(Boolean))];
+  const day=today(), recent=t=>isDone(t)&&(t.done_at||t.updated||"").slice(0,10)>=addDays(day,-1);
+  return `<div class="row"><h2 style="margin:0">${esc(sp.name)}</h2><span class="pill p-info">${esc(faDate(sp.start))} تا ${esc(faDate(sp.end))}</span><span class="grow"></span>
+    <label class="chip"><input type="checkbox" data-bm="1"${S.boardMine?" checked":""}> فقط تسک‌های من</label><button class="btn" data-act="task-new" data-sprint="${esc(sp.id)}">افزودن تسک به اسپرینت</button></div>
+   ${sp.goal?`<p class="note" style="max-width:none"><b>هدف اسپرینت:</b> ${esc(sp.goal)}</p>`:""}
+   ${over.length?`<div class="banner">محدودیت کار هم‌زمان (WIP): ${over.map(([m,n])=>`${esc(memberName(m))} ${faNum(n)} تسک در حال انجام دارد`).join("، ")}. بهتر است حداکثر ۳ تسک هم‌زمان باز باشد؛ اول یکی را تمام کنید.</div>`:""}
+   ${kpis([["امتیاز اسپرینت",faNum(total)],["انجام‌شده",faNum(done)],["باقی‌مانده",faNum(total-done)],["روز باقی‌مانده",faNum(left),left<=2&&total>done],["مانع‌دار",faNum(blocked.length),blocked.length>0]])}
+   <div class="kanban" style="grid-auto-columns:minmax(260px,1fr)">${COLS3.map(([k,l])=>col(k,l)).join("")}</div>
+   <div class="grid2" style="margin-top:12px"><div><h3>Burndown</h3>${burndownSvg(sp)}</div>
+   <div class="card"><h3 style="margin-top:0">Daily Scrum</h3><p class="note">هر عضو سه پرسش را پاسخ می‌دهد: دیروز چه کردم؟ امروز چه می‌کنم؟ چه مانعی دارم؟</p>
+    ${members.map(m=>{const mt=all.filter(t=>t.assignee===m);return `<div style="margin-bottom:6px"><b>${esc(memberName(m))}</b><br><span class="meta">دیروز/امروز انجام شد:</span> ${esc(mt.filter(recent).map(t=>t.title).join("، ")||"—")}<br><span class="meta">در حال انجام:</span> ${esc(mt.filter(t=>t.status==="doing").map(t=>t.title).join("، ")||"—")}<br><span class="meta">مانع:</span> ${mt.filter(t=>t.blocked&&!isDone(t)).map(t=>`<span class="p-bad">${esc(t.title)}${t.blocker_note?` (${esc(t.blocker_note)})`:""}</span>`).join("، ")||"—"}</div>`}).join("")||'<p class="meta">تسکی در اسپرینت نیست.</p>'}</div></div>
+   <p class="note">تسک‌ها را بکشید و رها کنید یا از دکمه‌های ‹ › استفاده کنید. تأیید نهایی تسک انجام‌شده با مدیر یا تعریف‌کننده است.</p>`;
+};
+
+VIEWS["bpms.backlog"] = () => {
+  const items=S.tasks.filter(t=>!t.sprint&&!isDone(t)&&match(t.title,memberName(t.assignee),TASK_TYPE[t.type])).sort((a,b)=>(PRI_RANK[a.priority]??1)-(PRI_RANK[b.priority]??1)||(a.created||"").localeCompare(b.created||""));
+  const open=S.sprints.filter(x=>x.status!=="closed"), vel=avgVelocity();
+  const opts=id=>`<select data-spassign="${esc(id)}"><option value="">— انتخاب اسپرینت —</option>${open.map(x=>`<option value="${esc(x.id)}">${esc(x.name)} (${SPRINT_ST[x.status]})</option>`).join("")}</select>`;
+  return `<p class="note">بک‌لاگ محصول فهرست مرتب‌شده‌ی همه‌ی کارهای آینده است: اول اولویت، بعد زمان ثبت. هر آیتم را برآورد کنید (امتیاز داستان)، بعد در برنامه‌ریزی اسپرینت به یک اسپرینت ببرید.</p>`+
+  kpis([["آیتم بک‌لاگ",faNum(items.length)],["مجموع امتیاز",faNum(sumPts(items))],["بدون برآورد",faNum(items.filter(t=>!pts(t)).length),items.some(t=>!pts(t))],["میانگین سرعت (۳ اسپرینت)",vel==null?"—":faNum(vel)]])+
+  `<div class="toolbar"><button class="btn" data-act="task-new">افزودن آیتم به بک‌لاگ</button></div>`+
+  (open.length?`<h3>برنامه‌ریزی اسپرینت (Sprint Planning)</h3>`+kpis(open.map(x=>{const c=sumPts(sprintTasks(x.id)); return [`${x.name} – متعهد (امتیاز)${vel!=null?` از ظرفیت ≈${faNum(vel)}`:""}`,faNum(c),vel!=null&&c>vel*1.2];})):`<div class="banner">اسپرینتی برای برنامه‌ریزی نیست. از «اسپرینت‌ها» یک اسپرینت بسازید.</div>`)+
+  table(["آیتم","نوع","امتیاز","اولویت","مسئول","به اسپرینت ببر",""], items.map(t=>`<tr>${td("آیتم",`${esc(t.title)}${t.desc?`<br><span class="meta">${esc(t.desc.slice(0,140))}</span>`:""}`,"t")}${td("نوع",esc(TASK_TYPE[t.type]||"—"))}${td("امتیاز",pts(t)?`<span class="mono">${faNum(pts(t))}</span>`:'<span class="p-warn">برآورد نشده</span>')}${td("اولویت",esc(PRIORITY[t.priority]||"—"))}${td("مسئول",esc(memberName(t.assignee)))}${td("اسپرینت",open.length&&canSprint()?opts(t.id):'<span class="meta">—</span>')}${td("",`<button class="btn sm ghost" data-act="task-edit" data-id="${esc(t.id)}">ویرایش</button>`)}</tr>`),"بک‌لاگ خالی است.");
+};
+
+function sprintForm(sp={}){
+  const n=S.sprints.length+1;
+  openForm({title:sp.id?"ویرایش اسپرینت":"اسپرینت جدید",values:{name:`اسپرینت ${faNum(n)}`,start:today(),end:addDays(today(),13),...sp},
+   fields:[{k:"name",label:"نام اسپرینت"},{k:"goal",label:"هدف اسپرینت (یک جمله: در پایان چه چیزی به دست می‌آید؟)",type:"textarea"},{k:"start",label:"شروع",type:"date"},{k:"end",label:"پایان (معمولاً دو هفته)",type:"date"}],
+   onSave:v=>{ if(!v.name||!v.start||!v.end||v.end<v.start){toast("نام و بازه‌ی تاریخ را درست وارد کنید.");return false}
+     const {id:_i,...base}=sp; return save(`sprints/${sp.id||newId()}`,{status:"planned",...base,...v,created_by:sp.created_by||S.me.id,created:sp.created||nowIso()},"اسپرینت ذخیره شد"); }});
+}
+async function sprintStart(id){
+  const sp=S.sprints.find(x=>x.id===id); if(!sp) return;
+  if(activeSprint()){ toast("هم‌زمان فقط یک اسپرینت می‌تواند فعال باشد؛ اول اسپرینت جاری را ببندید."); return; }
+  const c=sumPts(sprintTasks(id)); if(!sprintTasks(id).length){ toast("ابتدا چند آیتم از بک‌لاگ به این اسپرینت ببرید."); return; }
+  const {id:_i,...rec}=sp; await save(`sprints/${id}`,{...rec,status:"active",committed:c,started_at:nowIso()},"اسپرینت شروع شد"); S.mod="bpms"; S.sub="board"; S.forceFull=true; render();
+}
+function sprintClose(id){
+  const sp=S.sprints.find(x=>x.id===id); if(!sp) return;
+  const tasks=sprintTasks(id), left=tasks.filter(t=>!isDone(t)), next=S.sprints.filter(x=>x.status==="planned"&&x.id!==id);
+  openForm({title:`بستن ${sp.name}`,values:{move_to:""},extra:`<p class="note">انجام‌شده: ${faNum(sumPts(tasks.filter(isDone)))} از ${faNum(sumPts(tasks))} امتیاز. ${left.length?`${faNum(left.length)} تسک ناتمام مانده است؛ مقصد آن‌ها را انتخاب کنید.`:"همه‌ی تسک‌ها تمام شده‌اند."}</p>`,
+   fields:left.length?[{k:"move_to",label:"تسک‌های ناتمام به کجا بروند؟",type:"select",options:Object.fromEntries([["","بازگشت به بک‌لاگ"],...next.map(x=>[x.id,x.name])])}]:[],
+   onSave: async v=>{ const now=nowIso(); const {id:_i,...rec}=sp; const completed=sumPts(tasks.filter(isDone));
+     for(const t of left){ const {id:_t,...tr}=t; if(!await save(`tasks/${t.id}`,{...tr,sprint:v.move_to||"",updated:now},"")) return false; }
+     const ok=await save(`sprints/${id}`,{...rec,status:"closed",closed_at:now,completed,final_total:sumPts(tasks),velocity:completed},"اسپرینت بسته شد");
+     if(ok) setTimeout(()=>retroForm(id),300); return ok; }});
+}
+function retroForm(id){
+  const sp=S.sprints.find(x=>x.id===id); if(!sp) return; const r=sp.retro||{};
+  openForm({title:`بازنگری (Retrospective) – ${sp.name}`,values:r,extra:`<p class="note">بازنگری یعنی یاد گرفتن از اسپرینت، نه سرزنش. سه پرسش را کوتاه پاسخ دهید.</p>`,
+   fields:[{k:"went_well",label:"چه چیزهایی خوب پیش رفت؟",type:"textarea"},{k:"improve",label:"چه چیزهایی بهتر می‌شد؟",type:"textarea"},{k:"actions",label:"برای اسپرینت بعد چه کاری انجام می‌دهیم؟",type:"textarea"}],
+   onSave:v=>{ const {id:_i,...rec}=sp; return save(`sprints/${id}`,{...rec,retro:{...v,by:S.me.id,at:nowIso()}},"بازنگری ثبت شد"); }});
+}
+VIEWS["bpms.sprints"] = () => {
+  const list=[...S.sprints].sort((a,b)=>(b.start||"").localeCompare(a.start||"")), closed=closedSprints(), vel=avgVelocity();
+  const max=Math.max(1,...closed.map(x=>Number(x.completed)||0));
+  return `<p class="note">اسپرینت یک بازه‌ی زمانی ثابت (معمولاً دو هفته) با هدف مشخص است. چرخه: برنامه‌ریزی ← اجرا با Daily Scrum ← بستن ← بازنگری.</p>`+
+  `<div class="toolbar">${canSprint()?'<button class="btn sig" data-act="sprint-new">ساخت اسپرینت</button>':'<span class="meta">ساخت و شروع اسپرینت با مدیر تیم یا مدیر سامانه است.</span>'}</div>`+
+  kpis([["اسپرینت‌ها",faNum(list.length)],["بسته‌شده",faNum(closed.length)],["میانگین سرعت (Velocity)",vel==null?"—":faNum(vel)],["اسپرینت فعال",activeSprint()?activeSprint().name:"—"]])+
+  (closed.length?`<h3>سرعت تیم (امتیاز انجام‌شده در هر اسپرینت)</h3><div class="card">${closed.map(x=>`<div class="row"><span style="width:110px">${esc(x.name)}</span><span style="height:12px;background:var(--brand);border-radius:2px;width:${Math.round(100*(Number(x.completed)||0)/max)}%;max-width:60%"></span><b class="mono">${faNum(Number(x.completed)||0)}</b><span class="meta">از ${faNum(Number(x.final_total)||0)}</span></div>`).join("")}</div>`:"")+
+  table(["اسپرینت","بازه","هدف","وضعیت","متعهد / انجام‌شده","بازنگری",""], list.map(x=>{const ts=sprintTasks(x.id), c=x.status==="closed"?`${faNum(x.final_total||0)} / ${faNum(x.completed||0)}`:`${faNum(x.committed!=null?x.committed:sumPts(ts))} / ${faNum(sumPts(ts.filter(isDone)))}`;
+    return `<tr>${td("اسپرینت",esc(x.name),"t")}${td("بازه",`${faDate(x.start)}<br><span class="meta">تا ${faDate(x.end)}</span>`)}${td("هدف",esc(x.goal||"—"))}${td("وضعیت",`<span class="pill ${x.status==="active"?"p-ok":x.status==="closed"?"p-mute":"p-info"}">${esc(SPRINT_ST[x.status])}</span>`)}${td("امتیاز",`<span class="mono">${c}</span><br><span class="meta">${faNum(ts.length)} تسک</span>`)}
+     ${td("بازنگری",x.retro?`<details><summary>مشاهده</summary><span class="meta"><b>خوب:</b> ${esc(x.retro.went_well||"—")}<br><b>بهبود:</b> ${esc(x.retro.improve||"—")}<br><b>اقدام:</b> ${esc(x.retro.actions||"—")}</span></details>`:(x.status!=="planned"?'<span class="meta">ثبت نشده</span>':"—"))}
+     ${td("",canSprint()?`<div class="row">${x.status==="planned"?`<button class="btn sm sig" data-act="sprint-start" data-id="${esc(x.id)}">شروع</button>`:""}${x.status==="active"?`<button class="btn sm" data-act="sprint-close" data-id="${esc(x.id)}">بستن</button>`:""}${x.status!=="planned"?`<button class="btn sm ghost" data-act="sprint-retro" data-id="${esc(x.id)}">بازنگری</button>`:""}<button class="btn sm ghost" data-act="sprint-edit" data-id="${esc(x.id)}">ویرایش</button></div>`:"")}</tr>`}),"هنوز اسپرینتی ساخته نشده است.");
+};
 VIEWS["bpms.reports"] = () => {
   const src = isAdmin()? S.allReports : S.myReports.map(r=>({...r,member:S.me.id}));
   const list = src.filter(r=>match(memberName(r.member),r.text)).sort((a,b)=>(b.date||"").localeCompare(a.date||""));
@@ -1136,7 +1272,10 @@ const TOUR = [
  {mod:"erp",sub:"backup",title:"پشتیبان‌گیری",text:"فقط مدیران: دریافت فایل کامل JSON و CSV هر مجموعه. هر هفته یک بار پشتیبان بگیرید؛ در غیر این صورت هشدار می‌آید."},
  {mod:"bpms",title:"BPMS – کار روزانه",text:"فرایند روزانه‌ی هر عضو: ورود، تسک‌ها، خروج، گزارش عملکرد. هر روز حضور ۸ ساعت کار خالص به‌علاوه‌ی ۱ ساعت استراحت است."},
  {mod:"bpms",sub:"myday",title:"روز من",text:"ورود و خروج امروز را اینجا ثبت کنید، ساعت کار خالص را ببینید، تسک‌های بازتان را بررسی کنید و گزارش عملکرد امروز را بنویسید."},
- {mod:"bpms",sub:"tasks",title:"تسک‌ها",text:"تعریف و پیگیری تسک. تسکی که برای خودتان تعریف کنید به مدیر اعلان می‌شود و تسکی که مدیر بدهد به شما. بعد از «انجام شد»، مدیر آن را تأیید می‌کند."},
+ {mod:"bpms",sub:"board",title:"تخته‌ی اسکرام (Agile)",text:"مدیریت کار در iPetro بر پایه‌ی روش چابک (Agile) و چارچوب Scrum است. کار اسپرینت جاری در سه ستون: جهت انجام، در حال انجام، انجام شده. کارت را بکشید و رها کنید یا از دکمه‌های ‹ › استفاده کنید. روی هر کارت امتیاز، مسئول و مهلت هست. بالای تخته هدف اسپرینت و نمودار Burndown و پایین آن Daily Scrum تیم را می‌بینید. بیش از ۳ تسک هم‌زمان برای یک نفر هشدار WIP می‌دهد."},
+ {mod:"bpms",sub:"backlog",title:"بک‌لاگ و برنامه‌ریزی",text:"فهرست مرتب‌شده‌ی همه‌ی کارهای آینده. هر آیتم را با امتیاز داستان (۱، ۲، ۳، ۵، ۸، ۱۳) برآورد کنید، بعد در برنامه‌ریزی اسپرینت آن را از لیست «به اسپرینت ببر» به یک اسپرینت بدهید. جدول بالا نشان می‌دهد چند امتیاز متعهد شده‌اید و میانگین سرعت تیم چقدر است."},
+ {mod:"bpms",sub:"sprints",title:"اسپرینت‌ها",text:"هر اسپرینت یک بازه‌ی ثابت (معمولاً دو هفته) با هدف مشخص است. مدیر تیم اسپرینت را می‌سازد، شروع و در پایان می‌بندد؛ کارهای ناتمام به بک‌لاگ یا اسپرینت بعد می‌روند. سرعت تیم و بازنگری (Retrospective) هر اسپرینت اینجا ثبت می‌شود."},
+ {mod:"bpms",sub:"tasks",title:"فهرست تسک‌ها",text:"همه‌ی تسک‌ها در یک جدول با جست‌وجو، مهلت و وضعیت. تعریف و ویرایش تسک از اینجا هم ممکن است. تسکی که برای خودتان تعریف کنید به مدیر اعلان می‌شود و تسکی که مدیر بدهد به شما."},
  {mod:"bpms",sub:"reports",title:"گزارش عملکرد",text:"شرح کارهای روز، موانع و برنامه‌ی فردا را بنویسید. Claude سخت‌گیرانه از ۱۰۰ نمره می‌دهد و بازخورد فارسی می‌نویسد. چراغ سبز ≥ ۷۰، زرد ۴۰ تا ۶۹ و نارنجی زیر ۴۰."},
  {mod:"bpms",sub:"rarchive",title:"بایگانی گزارش‌ها",text:"یک ردیف برای هر روز حضور شما. روز بدون گزارش «ثبت نشد» است و تا ثبت گزارش اعلان می‌گیرید. می‌توانید گزارش روز گذشته را با برچسب «با تأخیر» ثبت کنید. مدیر گزارش همه را می‌بیند."},
  {mod:"bpms",sub:"teams",title:"تیم‌ها",text:"پنج تیم شرکت (مالی، اداری، طراحی سایت، هوش مصنوعی، تولید محتوا) با اعضا، تسک‌های باز و وظایف هر تیم."},
@@ -1236,8 +1375,15 @@ document.addEventListener("click", async e => {
     case "fin-edit": finForm(S.finance.find(f=>f.id===id)); break;
     case "client-new": clientForm(); break;
     case "client-edit": clientForm(S.clients.find(c=>c.id===id)); break;
-    case "task-new": taskForm(); break;
-    case "task-st": { const t=S.tasks.find(x=>x.id===id); if(t) await save(`tasks/${id}`,{...t,status:b.dataset.st,updated:new Date().toISOString()},"وضعیت تسک به‌روز شد"); break; }
+    case "task-new": taskForm(b.dataset.sprint?{sprint:b.dataset.sprint}:{}); break;
+    case "task-edit": taskForm(S.tasks.find(x=>x.id===id)); break;
+    case "task-st": await moveTask(id,b.dataset.st); break;
+    case "sprint-new": sprintForm(); break;
+    case "sprint-edit": sprintForm(S.sprints.find(x=>x.id===id)); break;
+    case "sprint-start": sprintStart(id); break;
+    case "sprint-close": sprintClose(id); break;
+    case "sprint-retro": retroForm(id); break;
+    case "goto": S.mod=b.dataset.mod; S.sub=b.dataset.sub; S.forceFull=true; render(); break;
     case "checkin": await save(`attendance/${S.me.id}/days/${today()}`,{in:nowHM(),break_min:60},"ورود ثبت شد"); break;
     case "checkout": { const att=S.myAtt.find(x=>x.id===today())||{}; await save(`attendance/${S.me.id}/days/${today()}`,{...att,out:nowHM()},"خروج ثبت شد"); break; }
     case "report-new": reportForm(b.dataset.date); break;
@@ -1268,8 +1414,16 @@ document.addEventListener("input", e => { const el=e.target.closest("[data-c]");
   const d=getDraft(); d[el.dataset.c]=el.value; if(el.dataset.c==="number") d.numAuto=false;
   if(el.dataset.c==="identity"){ if(d.numAuto) d.number=nextLetterNo(d.identity); S.forceFull=true; renderView(); return; }
   const p=$("#cprev"); if(p) p.innerHTML=letterSheet(draftLetter()); });
-document.addEventListener("change", e => { const cal=e.target.closest("[data-cal]"); if(cal){ if(cal.dataset.cal==="mine") S.calMine=cal.checked; else S.calTypes=cal.value?new Set([cal.value]):null; renderView(); return; }
+document.addEventListener("change", async e => { const bm=e.target.closest("[data-bm]"); if(bm){ S.boardMine=bm.checked; renderView(); return; }
+  const sa=e.target.closest("[data-spassign]"); if(sa){ const t=S.tasks.find(x=>x.id===sa.dataset.spassign); if(t&&sa.value){ const {id:_i,...rec}=t; await save(`tasks/${t.id}`,{...rec,sprint:sa.value,updated:nowIso()},"آیتم به اسپرینت رفت"); } return; }
+  const cal=e.target.closest("[data-cal]"); if(cal){ if(cal.dataset.cal==="mine") S.calMine=cal.checked; else S.calTypes=cal.value?new Set([cal.value]):null; renderView(); return; }
   const el=e.target.closest("[data-ra]"); if(!el) return; S.ra[el.dataset.ra]=el.value; renderView(); });
+
+// drag a card to another column of the sprint board
+document.addEventListener("dragstart", e => { const c=e.target.closest&&e.target.closest("[data-task]"); if(!c) return; e.dataTransfer.setData("text/plain",c.dataset.task); e.dataTransfer.effectAllowed="move"; });
+document.addEventListener("dragover", e => { const col=e.target.closest&&e.target.closest("[data-col]"); if(!col) return; e.preventDefault(); col.classList.add("drop"); });
+document.addEventListener("dragleave", e => { const col=e.target.closest&&e.target.closest("[data-col]"); if(col&&!col.contains(e.relatedTarget)) col.classList.remove("drop"); });
+document.addEventListener("drop", e => { const col=e.target.closest&&e.target.closest("[data-col]"); if(!col) return; e.preventDefault(); col.classList.remove("drop"); const id=e.dataTransfer.getData("text/plain"); if(id) moveTask(id,col.dataset.col); });
 
 // ================================================================== boot
 async function boot(){
