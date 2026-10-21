@@ -1,4 +1,4 @@
-<title>Petro Pala Toos Hub</title>
+<title>iPetro</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -119,6 +119,11 @@ a{color:var(--brand)}
 .cal-day{margin-top:14px;font-weight:700;border-bottom:1px solid var(--line);padding-bottom:2px}
 .cal-item{display:flex;gap:8px;align-items:baseline;padding:4px 0;flex-wrap:wrap}
 .sheet.ltr{direction:ltr;text-align:left}.sheet.ltr .sig{text-align:left}.sheet.ltr .sig img{margin-right:0}
+.tour{position:fixed;inset-inline:0;bottom:0;z-index:70;display:flex;justify-content:center;padding:12px max(16px,env(safe-area-inset-left,0px)) calc(12px + env(safe-area-inset-bottom,0px))}
+.tour .card{max-width:680px;width:100%;box-shadow:0 8px 30px rgba(0,0,0,.28);border-color:var(--signal)}
+.tour h3{margin:0 0 4px}.tour p{margin:4px 0}
+.tour .bar2{height:4px;background:var(--line);border-radius:2px;margin-bottom:8px}.tour .bar2 i{display:block;height:4px;background:var(--signal);border-radius:2px}
+.tour-hl{outline:3px solid var(--signal)!important;outline-offset:2px;border-radius:6px}
 @media (prefers-reduced-motion:no-preference){.drawer{animation:slide .18s ease-out}@keyframes slide{from{transform:translateX(-24px);opacity:.6}}}
 </style>
 
@@ -127,10 +132,12 @@ a{color:var(--brand)}
     <div class="bar">
       <div class="brand">
         <div class="logo" id="logo">pTq</div>
-        <div><b id="coName">پترو پالا توس</b><span id="coSub">بازار · ERP · BPMS · نامه‌ها · پتنت</span></div>
+        <div><b id="coName">iPetro</b><span id="coSub">پترو پالا توس · بازار · ERP · BPMS · نامه‌ها · پتنت</span></div>
       </div>
       <div class="grow"></div>
       <div class="who">
+        <span class="chip" id="helpBtn" data-act="tour-start" role="button" tabindex="0" title="آموزش گام‌به‌گام سامانه" style="cursor:pointer">راهنما</span>
+        <span class="chip" data-act="guide-pdf" role="button" tabindex="0" title="دریافت راهنمای کامل iPetro (PDF)" style="cursor:pointer">راهنمای PDF</span>
         <span class="chip bell" id="bell" data-act="inbox" title="اعلان‌ها">اعلان‌ها<i id="bellN" hidden>0</i></span>
         <span class="chip" id="meChip">در حال اتصال…</span>
       </div>
@@ -145,9 +152,11 @@ a{color:var(--brand)}
   <div id="view"><p class="empty">در حال بارگذاری داده‌ها از پایگاه مشترک…</p></div>
 </main>
 <div id="layer"></div>
+<div id="tour" class="tour" hidden></div>
 
 <script>
 (() => {
+document.documentElement.lang="fa"; document.documentElement.dir="rtl"; // the layout is designed right-to-left
 // ------------------------------------------------------------------ constants
 const MODULES = [
   ["market","Market"],["events","Events"],["erp","ERP"],["bpms","BPMS"],["letters","Letters"],["patent","Patent"]];
@@ -181,7 +190,7 @@ const S = {mod:"market", sub:"iran", q:"", db:null, user:null, assets:null, samp
   me:{id:null,isOwner:false,canEdit:false}, canWrite:null,
   m:{tenders:[],events:[],investors:[],leads:[],partners:[]}, opsList:[],
   settings:{}, members:[], tasks:[], letters:[], lettersArchive:[], draft:null, archF:"all", ra:{member:null,from:"",to:""}, repLoaded:false, allLoaded:false, forceFull:false, products:[], patents:[], finance:[], clients:[], tracking:{},
-  myAtt:[], myReports:[], allReports:[], allAtt:[], loaded:false, got:new Set(), welcomed:false, calMine:false, calTypes:null, seenTasks:new Set()};
+  myAtt:[], myReports:[], allReports:[], allAtt:[], loaded:false, tour:null, got:new Set(), welcomed:false, calMine:false, calTypes:null, seenTasks:new Set()};
 try{const v=JSON.parse(localStorage.getItem("ppt-view")||"{}");if(v.mod&&SUBS[v.mod]){S.mod=v.mod;S.sub=SUBS[v.mod].some(x=>x[0]===v.sub)?v.sub:SUBS[v.mod][0][0]}}catch(e){}
 try{S.seenTasks=new Set(JSON.parse(localStorage.getItem("ppt-seen")||"[]"))}catch(e){}
 
@@ -248,7 +257,7 @@ const newId = () => Date.now().toString(36) + Math.random().toString(36).slice(2
 // ------------------------------------------------------------------ brand
 function paintBrand(){
   const st=S.settings;
-  $("#coName").textContent = st.name_fa || "پترو پالا توس";
+  $("#coName").textContent = "iPetro"; $("#coSub").textContent = (st.name_fa||"پترو پالا توس")+" · بازار · ERP · BPMS · نامه‌ها · پتنت";
   if(st.logo_asset){ $("#logo").outerHTML = `<img class="logo" id="logo" alt="لوگوی شرکت" src="${esc(blobUrl(st.logo_asset))}">`; }
 }
 
@@ -296,6 +305,7 @@ function paintNav(){
     + `<input id="search" placeholder="جست‌وجو…" value="${esc(S.q)}" style="margin-inline-start:auto;min-width:160px">`;
   $("#search").oninput = e => { S.q = e.target.value.trim().toLowerCase(); renderView(); };
   try{localStorage.setItem("ppt-view",JSON.stringify({mod:S.mod,sub:S.sub}))}catch(e){}
+  if(S.tour) tourHighlight();
 }
 function render(){ paintNav(); renderBanners(); renderView(); paintBell(); }
 function renderView(){
@@ -692,6 +702,7 @@ VIEWS["bpms.members"] = () => {
    <p class="note">هر عضو با حساب claude.ai خود وارد می‌شود و فقط مشخصات خودش را ویرایش می‌کند. تصویر امضا برای امضای الکترونیک نامه‌ها استفاده می‌شود. برای اعلان موبایل، شناسه‌ی چت تلگرام را وارد کنید.</p>`+
    table(["نام","نقش","تیم","نوع نیرو","روزهای حضور","امضا"], S.members.map(m=>`<tr>${td("نام",esc(m.full_name),"t")}${td("نقش",esc(ROLES[m.role]||"—"))}${td("تیم",esc(TEAMS[m.team]||"—"))}${td("نوع",esc(STAFF[m.staff_type]||"—"))}${td("روزها",esc((m.office_days||[]).map(d=>(WEEKDAYS.find(w=>w[0]===d)||[])[1]).join("، ")))}${td("امضا",m.signature_asset?`<img src="${esc(blobUrl(m.signature_asset))}" alt="امضا" style="max-height:34px">`:'<span class="meta">ثبت نشده</span>')}</tr>`),"هنوز عضوی ثبت‌نام نکرده است.");
 };
+function maybeTourAfterSignup(){ setTimeout(()=>{ if(!S.tour) tourStart(); }, 400); }
 function maybeWelcome(){ // a new person is asked to register the moment the members list has loaded
   if(S.welcomed||!S.me.id||S.canWrite===false||!S.got.has("members")||myMember()) return;
   S.welcomed=true; registerForm(true);
@@ -706,7 +717,9 @@ function registerForm(first=false){
    onSave: async v => { if(!v.full_name){toast("نام را وارد کنید.");return false}
      const {signature,...rest}=v; let sig=m.signature_asset||null;
      if(signature){ const id=await uploadImage(signature); if(id) sig=id; }
-     return save(`members/${S.me.id}`,{...m,...rest,signature_asset:sig,joined:m.joined||today(),updated:new Date().toISOString()},"مشخصات شما ثبت شد"); }});
+     const ok=await save(`members/${S.me.id}`,{...m,...rest,signature_asset:sig,joined:m.joined||today(),updated:new Date().toISOString()},"مشخصات شما ثبت شد");
+     if(ok&&first) maybeTourAfterSignup();
+     return ok; }});
 }
 function companyForm(){
   const st=S.settings;
@@ -1095,6 +1108,84 @@ async function backupCsv(k){
   await backupSave(`ppt-${k}-${today()}.csv`,new Blob(["﻿"+[cols.join(","),...rows.map(r=>cols.map(c=>csvCell(r[c])).join(","))].join("\n")],{type:"text/csv"}));
 }
 
+
+// ================================================================== TOUR (guided walkthrough for new members)
+// One step per module and per tab, in the order of the top bar; the page switches to the tab while it is explained.
+const TOUR = [
+ {title:"به iPetro خوش آمدید",text:"iPetro سامانه‌ی یکپارچه‌ی پترو پالا توس است و کار روزانه‌ی تیم را در یک جا جمع می‌کند: پیدا کردن فرصت‌های بازار، مدیریت شرکت، کار روزانه‌ی اعضا، نامه‌نگاری و پتنت. آموزش را قدم‌به‌قدم می‌بینید؛ هر مرحله خودش به همان تب می‌رود. هر زمان بخواهید از دکمه‌ی «راهنما» بالای صفحه دوباره شروع کنید."},
+ {mod:"market",title:"Market – بازار",text:"همه‌ی فرصت‌های بیرونی شرکت اینجاست. ایجنت هر روز بازار را می‌گردد و فرصت‌ها را می‌آورد؛ شما مسئولیت می‌گیرید و پیگیری می‌کنید."},
+ {mod:"market",sub:"iran",title:"Iran AI Projects",text:"مناقصه‌ها و فراخوان‌های هوش مصنوعی و پژوهشی داخل ایران. هر ردیف مهلت، قیمت، ضمانت‌نامه، شرط رزومه و ستون Go/No-Go دارد. دکمه‌ی «مسئولیت را می‌گیرم» مورد را به نام شما ثبت می‌کند و از فهرست باز بر می‌دارد."},
+ {mod:"market",sub:"overseas",title:"Overseas AI Projects",text:"همان فهرست برای مناقصه‌های بین‌المللی. پیشنهاد به نام Parsa International Group (استانبول) ارسال می‌شود. زیر «دلایل» ستون Go/No-Go می‌بینید چرا ایجنت پیشنهاد «برو» یا «نرو» داده است."},
+ {mod:"market",sub:"web",title:"Web Design & SEO",text:"درخواست‌های طراحی سایت و سئو، و تولیدکنندگانی که سایت ندارند و می‌توان با آن‌ها تماس گرفت. آنچه کسی برداشته در پایین صفحه، بخش «در دست پیگیری» است."},
+ {mod:"market",sub:"investors",title:"AI Investors & Accelerators",text:"فهرست صندوق‌های سرمایه‌گذاری و شتاب‌دهنده‌های هوش مصنوعی همراه با مرحله، مبلغ، حوزه‌ی علاقه، راه ارتباط و ملاحظات انطباق."},
+ {mod:"market",sub:"tracking",title:"Project Tracking",text:"پیگیری همه‌ی پروژه‌ها. برای هر پروژه مسئول، مرحله، اقدام بعدی و تاریخ آن را از «ویرایش» وارد کنید تا برای همه ذخیره شود. اقدام‌های سررسیده قرمز می‌شوند و در زنگ اعلان شما می‌آیند."},
+ {mod:"market",sub:"pipeline",title:"Pipeline – قیف فروش",text:"همه‌ی فرصت‌ها روی یک تخته به تفکیک مرحله. ارزش تخمینی (دلار) و احتمال برد را در «ویرایش» وارد کنید؛ بالای صفحه ارزش کل و پیش‌بینی وزنی را می‌بینید. با دکمه‌های کارت، مرحله را جابه‌جا کنید."},
+ {mod:"market",sub:"memory",title:"Team Memory – حافظه‌ی یادگیری",text:"وقتی فرصتی تمام شد (برنده، نبردیم، انصراف) نتیجه و دلیلش را در «Project Tracking ← ویرایش» می‌نویسید. این دلیل‌ها اینجا جمع می‌شود و ایجنت در تحلیل‌های بعدی از آن‌ها یاد می‌گیرد."},
+ {mod:"events",title:"Events – رویدادها",text:"نمایشگاه‌ها و کنفرانس‌های مهم برای شرکت، با تاریخ، دلیل اهمیت و نحوه‌ی مشارکت."},
+ {mod:"events",sub:"iran",title:"رویدادهای ایران",text:"رویدادهای داخل کشور با تاریخ شمسی. اگر مسئول یک رویداد شدید، دکمه‌ی «مسئولیت را می‌گیرم» را بزنید."},
+ {mod:"events",sub:"world",title:"رویدادهای جهان",text:"رویدادهای خارج از ایران. تاریخ‌هایی که هنوز اعلام نشده‌اند با «اعلام نشده» و دوره‌ی معمول برگزاری نمایش داده می‌شوند."},
+ {mod:"events",sub:"all",title:"همه",text:"هر دو فهرست یک‌جا، به ترتیب نزدیک‌ترین تاریخ."},
+ {mod:"events",sub:"taken",title:"در دست پیگیری",text:"رویدادهایی که کسی مسئولیتشان را گرفته. مسئول یا مدیر می‌تواند رویداد را به فهرست بازگرداند."},
+ {mod:"erp",title:"ERP – مدیریت شرکت",text:"تصویر کلی شرکت: محصولات، نیروها، مالی و مشتریان. شرکت هنوز پیش از درآمد است و این بخش مسیر رسیدن به اولین قرارداد را دنبال می‌کند."},
+ {mod:"erp",sub:"overview",title:"نمای کلی",text:"شمار محصولات، میانگین TRL (سطح آمادگی فناوری)، نیروهای ثبت‌شده، مشتریان در قیف و تعهدات مالی پرداخت‌نشده."},
+ {mod:"erp",sub:"domains",title:"حوزه‌های فعالیت",text:"حوزه‌هایی که شرکت در آن‌ها محصول هوشمند می‌سازد (نفت و گاز، پزشکی، هسته‌ای، هوا و فضا و …) و محصولات هر حوزه."},
+ {mod:"erp",sub:"products",title:"توسعه‌ی محصول هوشمند",text:"کارت هر محصول: TRL، کارفرما، بازخورد جلسه‌ها، فناوری‌ها، الگوریتم‌ها، تجهیزات پیاده‌سازی، نمونه‌های مشابه و قابلیت ثبت اختراع. هر عضو می‌تواند اطلاعات را کامل کند."},
+ {mod:"erp",sub:"people",title:"نیروی انسانی",text:"فهرست اعضا با تیم، نقش، روزهای حضور و ساعت ورود. ثبت‌نام اعضا در BPMS انجام می‌شود."},
+ {mod:"erp",sub:"finance",title:"مالی",text:"تعهدات بیمه، مالیات، حقوق و اجاره با مبلغ و سررسید. فقط مدیران آن را می‌بینند و ویرایش می‌کنند."},
+ {mod:"erp",sub:"clients",title:"مشتریان و قراردادها",text:"قیف مشتری: معرفی ← دمو با داده‌ی مصنوعی ← قرارداد اولیه ← داده‌ی واقعی ← ارتقای TRL ← قرارداد اصلی. برای هر مشتری ارزش قرارداد و اقدام بعدی را ثبت کنید."},
+ {mod:"erp",sub:"backup",title:"پشتیبان‌گیری",text:"فقط مدیران: دریافت فایل کامل JSON و CSV هر مجموعه. هر هفته یک بار پشتیبان بگیرید؛ در غیر این صورت هشدار می‌آید."},
+ {mod:"bpms",title:"BPMS – کار روزانه",text:"فرایند روزانه‌ی هر عضو: ورود، تسک‌ها، خروج، گزارش عملکرد. هر روز حضور ۸ ساعت کار خالص به‌علاوه‌ی ۱ ساعت استراحت است."},
+ {mod:"bpms",sub:"myday",title:"روز من",text:"ورود و خروج امروز را اینجا ثبت کنید، ساعت کار خالص را ببینید، تسک‌های بازتان را بررسی کنید و گزارش عملکرد امروز را بنویسید."},
+ {mod:"bpms",sub:"tasks",title:"تسک‌ها",text:"تعریف و پیگیری تسک. تسکی که برای خودتان تعریف کنید به مدیر اعلان می‌شود و تسکی که مدیر بدهد به شما. بعد از «انجام شد»، مدیر آن را تأیید می‌کند."},
+ {mod:"bpms",sub:"reports",title:"گزارش عملکرد",text:"شرح کارهای روز، موانع و برنامه‌ی فردا را بنویسید. Claude سخت‌گیرانه از ۱۰۰ نمره می‌دهد و بازخورد فارسی می‌نویسد. چراغ سبز ≥ ۷۰، زرد ۴۰ تا ۶۹ و نارنجی زیر ۴۰."},
+ {mod:"bpms",sub:"rarchive",title:"بایگانی گزارش‌ها",text:"یک ردیف برای هر روز حضور شما. روز بدون گزارش «ثبت نشد» است و تا ثبت گزارش اعلان می‌گیرید. می‌توانید گزارش روز گذشته را با برچسب «با تأخیر» ثبت کنید. مدیر گزارش همه را می‌بیند."},
+ {mod:"bpms",sub:"teams",title:"تیم‌ها",text:"پنج تیم شرکت (مالی، اداری، طراحی سایت، هوش مصنوعی، تولید محتوا) با اعضا، تسک‌های باز و وظایف هر تیم."},
+ {mod:"bpms",sub:"process",title:"فرایندها",text:"نمودار فرایند اصلی کسب‌وکار، فرایند نامه و فرایند روزانه‌ی هر عضو."},
+ {mod:"bpms",sub:"calendar",title:"تقویم",text:"مهلت مناقصه‌ها، رویدادها، اقدام‌های بعدی، تسک‌ها، سررسیدهای مالی و پیگیری نامه‌ها در یک فهرست زمانی. با «فقط موارد من» فیلتر کنید و فایل ICS را به تقویم گوشی ببرید."},
+ {mod:"bpms",sub:"members",title:"اعضا و ثبت‌نام",text:"مشخصات خودتان را هر زمان ویرایش کنید: روزهای حضور، ایمیل، شناسه‌ی تلگرام برای اعلان موبایل و تصویر امضا. مدیر مشخصات شرکت، لوگو و هویت بین‌المللی را هم از همین‌جا تنظیم می‌کند."},
+ {mod:"letters",title:"Letters – نامه‌نگاری",text:"ساخت نامه‌ی رسمی روی سربرگ و پیگیری نامه‌های پیشین."},
+ {mod:"letters",sub:"new",title:"نامه‌ی جدید",text:"گیرنده، موضوع و متن را بنویسید؛ سربرگ، شماره و تاریخ خودکار است و فایل Word آماده‌ی ارسال می‌شود. هویت فرستنده را انتخاب کنید: ایران (فارسی) یا بین‌المللی (انگلیسی، Parsa International Group). مسئول دفتر و مدیرعامل از «مشاهده و امضا» امضا می‌کنند."},
+ {mod:"letters",sub:"archive",title:"بایگانی نامه‌های پیشین و پیگیری",text:"نامه‌هایی که قبلاً بدون ایجنت فرستاده شده‌اند. برای هر نامه مرحله، آخرین وضعیت و اقدام بعدی ثبت می‌شود؛ نامه‌ای که بیش از ۱۴ روز پیگیری نشده یا اقدامش سررسید شده علامت می‌خورد."},
+ {mod:"patent",title:"Patent – پتنت",text:"هدف شرکت ثبت اختراع بیشتر است. اینجا اختراع‌های ثبت‌شده و فرصت‌های تازه را دنبال می‌کنید."},
+ {mod:"patent",sub:"home",title:"پتنت‌ها",text:"فهرست اختراع‌های ثبت‌شده، در دست داوری، اظهارنامه‌ها و پیش‌نویس‌ها. اختراع جدید را با «ثبت اختراع / اظهارنامه» وارد کنید. نتایج نظر حقوقی نیستند."},
+ {mod:"patent",sub:"ops",title:"فرصت‌های ثبت اختراع",text:"ایجنت هر روز محصولات را با سوابق اختراع مقایسه می‌کند و ادعاهای قابل ثبت را با منبع می‌آورد."},
+ {mod:"patent",sub:"products",title:"محصولات ریپو",text:"محصولات به تفکیک TRL، حوزه، لینک ریپو، شمار اختراع‌های ما و نتیجه‌ی بررسی قابلیت ثبت."},
+ {sel:"#bell",title:"زنگ اعلان",text:"تسک‌های سپرده‌شده به شما، اقدام‌های بعدی و مهلت‌های نزدیک پروژه‌هایتان، پیگیری نامه‌ها و گزارش‌های ثبت‌نشده اینجا می‌آید. عدد قرمز تعداد اعلان‌های خوانده‌نشده است."},
+ {title:"شروع کنید",text:"سه کار اول: ۱) از BPMS ← روز من ورود را ثبت کنید. ۲) از Market یک فرصت مرتبط با تخصص‌تان را با «مسئولیت را می‌گیرم» بردارید. ۳) پایان روز گزارش عملکرد بنویسید. هر زمان خواستید از «راهنما» همین آموزش را دوباره ببینید یا با «راهنمای PDF» فایل کامل راهنمای iPetro را دریافت کنید."}
+];
+function tourHighlight(){
+  document.querySelectorAll(".tour-hl").forEach(el=>el.classList.remove("tour-hl"));
+  if(!S.tour) return;
+  const st=TOUR[S.tour.i], pick=q=>{ const el=document.querySelector(q); if(el) el.classList.add("tour-hl"); return el; };
+  if(st.sel) pick(st.sel);
+  else { if(st.mod) pick(`[data-act=mod][data-k=${st.mod}]`); if(st.sub) pick(`[data-act=sub][data-k=${st.sub}]`); }
+}
+function tourPaint(){
+  const box=$("#tour"); if(!S.tour){ box.hidden=true; box.innerHTML=""; tourHighlight(); return; }
+  const i=S.tour.i, st=TOUR[i];
+  box.hidden=false;
+  box.innerHTML=`<div class="card" role="dialog" aria-label="آموزش سامانه"><div class="bar2"><i style="width:${Math.round(100*(i+1)/TOUR.length)}%"></i></div>
+   <div class="row"><h3 style="flex:1">${esc(st.title)}</h3><span class="meta mono">${faNum(i+1)} / ${faNum(TOUR.length)}</span></div><p>${esc(st.text)}</p>
+   <div class="row" style="margin-top:8px"><button class="btn ghost sm" data-act="tour-prev"${i===0?" disabled":""}>قبلی</button>
+    <button class="btn sig sm" data-act="tour-next">${i===TOUR.length-1?"پایان آموزش":"بعدی"}</button><span class="grow"></span><button class="btn ghost sm" data-act="tour-skip">رد کردن آموزش</button></div></div>`;
+  tourHighlight();
+}
+function tourGo(i){
+  if(!S.tour) return;
+  S.tour.i=Math.max(0,Math.min(TOUR.length-1,i)); const st=TOUR[S.tour.i];
+  if(st.mod){ S.mod=st.mod; S.sub=st.sub||SUBS[st.mod][0][0]; S.q=""; S.forceFull=true; }
+  closeForm(); render(); tourPaint();
+  const el=document.querySelector(".tour-hl"); if(el&&el.scrollIntoView) el.scrollIntoView({block:"nearest",inline:"center"});
+}
+function tourStart(){ S.tour={i:0}; tourGo(0); }
+async function tourEnd(finished){
+  S.tour=null; tourPaint();
+  try{ localStorage.setItem("ppt-tour","1"); }catch(e){}
+  const me=myMember();
+  if(me&&!me.tour_done&&S.db){ try{ await S.db.doc(`members/${me.id}`).set({...me,tour_done:new Date().toISOString()}); }catch(e){} }
+  toast(finished?"آموزش تمام شد؛ هر زمان خواستید از «راهنما» دوباره ببینید.":"آموزش بسته شد؛ از دکمه‌ی «راهنما» می‌توانید به آن برگردید.");
+}
+
 // ================================================================== actions
 document.addEventListener("click", async e => {
   const b=e.target.closest("[data-act]"); if(!b) return;
@@ -1127,6 +1218,13 @@ document.addEventListener("click", async e => {
       break; }
     case "unclaim": { const t=S.tracking[id]||{}; if(t.owner&&t.owner!==S.me.id&&!isAdmin()){toast("فقط مسئول همین مورد یا مدیر می‌تواند آن را بازگرداند.");break}
       await save(`tracking/${id}`,{...t,owner:"",log:[...(t.log||[]),{at:new Date().toISOString(),by:S.me.id,note:"به فهرست بازگردانده شد"}].slice(-40),updated:new Date().toISOString(),updated_by:S.me.id},"به فهرست بازگردانده شد"); break; }
+    case "tour-start": tourStart(); break;
+    case "guide-pdf": { try{ const r=await fetch("iPetro-User-Guide.pdf"); if(!r.ok) throw 0; const blob=await r.blob();
+      if(S.downloads) await S.downloads.save({filename:"iPetro-User-Guide.pdf",data:blob}); else window.open(URL.createObjectURL(blob),"_blank"); }
+      catch(err){ if(!err||err.code!=="declined") toast("فایل راهنما در این نما در دسترس نیست."); } break; }
+    case "tour-next": if(S.tour){ if(S.tour.i>=TOUR.length-1) tourEnd(true); else tourGo(S.tour.i+1); } break;
+    case "tour-prev": if(S.tour) tourGo(S.tour.i-1); break;
+    case "tour-skip": tourEnd(false); break;
     case "pipe-move": { const t=S.tracking[id]||{}, st=Object.keys(STAGES), i=Math.max(0,st.indexOf(t.stage||"identified"))+Number(b.dataset.d), ns=st[Math.min(st.length-1,Math.max(0,i))];
       await save(`tracking/${id}`,{stage:"identified",...t,stage:ns,log:[...(t.log||[]),{at:new Date().toISOString(),by:S.me.id,stage:ns,note:"جابه‌جایی در قیف"}].slice(-40),updated:new Date().toISOString(),updated_by:S.me.id},"مرحله به‌روز شد"); break; }
     case "cal-ics": calIcs(); break;
