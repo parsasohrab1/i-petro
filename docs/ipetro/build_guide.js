@@ -110,7 +110,7 @@ const shot = async (pg) => "data:image/png;base64," + (await pg.screenshot()).to
   @page{size:A4;margin:16mm 14mm 16mm}
   body{font:12.5px/1.9 Vazirmatn,"DejaVu Sans",sans-serif;color:#171515;margin:0}
   .cover{height:255mm;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;border:3px solid #d12a1f;border-radius:14px;page-break-after:always}
-  .cover img{width:300px}.cover h1{font-size:64px;margin:14px 0 0;letter-spacing:2px}.cover h2{font-weight:500;margin:6px 0;font-size:22px}.cover p{color:#615b59;margin:2px}
+  .cover img{width:230px}.cover h1{font-size:64px;margin:14px 0 0;letter-spacing:2px}.cover h2{font-weight:500;margin:6px 0;font-size:22px}.cover p{color:#615b59;margin:2px}
   h2{font-size:21px;border-bottom:3px solid #d12a1f;padding-bottom:4px;margin:0 0 8px}h3{font-size:15px;margin:0 0 2px}
   .mod{page-break-before:always}.tab{page-break-inside:avoid;margin:14px 0 18px}
   figure{margin:6px 0 0}figure img{width:100%;border:1px solid #cfcac7;border-radius:6px}figcaption{font-size:10.5px;color:#615b59;text-align:center}
