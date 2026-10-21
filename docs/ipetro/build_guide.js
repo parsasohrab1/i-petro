@@ -35,8 +35,16 @@ const store = {
  clients:{c1:{client:"کارفرمای نمونه",product:"p1",stage:"demo",value:1800000000,next:"ارائه‌ی دمو",next_date:"2026-10-28"}},
  members:{me1:{full_name:"سارا نمونه",role:"manager",team:"ai",staff_type:"product",office_days:["sat","mon","wed"],start_time:"08:30",joined:"2026-10-20",telegram:""},
   u2:{full_name:"علی نمونه",role:"member",team:"web",staff_type:"trainee_web",office_days:["sun","tue"],start_time:"09:00",joined:"2026-10-01"}},
- tasks:{k1:{title:"تکمیل داشبورد دموی توربین",desc:"نسخه‌ی مشتری",assignee:"me1",created_by:"me1",team:"ai",due:"2026-10-24",priority:"high",status:"doing",updated:"1"},
-  k2:{title:"سئوی صفحه‌ی محصولات",assignee:"u2",created_by:"me1",team:"web",due:"2026-10-27",priority:"normal",status:"todo",updated:"2"}},
+ tasks:{k1:{title:"تکمیل داشبورد دموی توربین",desc:"نسخه‌ی مشتری",assignee:"me1",created_by:"me1",team:"ai",due:"2026-10-24",priority:"high",status:"doing",points:8,type:"story",sprint:"s1",updated:"1"},
+  k2:{title:"سئوی صفحه‌ی محصولات",assignee:"u2",created_by:"me1",team:"web",due:"2026-10-27",priority:"normal",status:"todo",points:3,type:"task",sprint:"s1",updated:"2"},
+  k3:{title:"نوشتن آزمون‌های واحد ماژول پایش",assignee:"me1",created_by:"me1",team:"ai",due:"2026-10-23",priority:"normal",status:"done",points:5,type:"task",sprint:"s1",done_at:"2026-10-20T10:00:00Z",updated:"3"},
+  k4:{title:"اتصال داده‌ی OPC-UA آزمایشی",assignee:"u2",created_by:"me1",team:"ai",due:"2026-10-26",priority:"high",status:"doing",points:5,type:"story",sprint:"s1",blocked:true,blocker_note:"منتظر دسترسی شبکه",updated:"4"},
+  k5:{title:"تهیه‌ی پروپوزال مناقصه‌ی کنیا",assignee:"me1",created_by:"me1",team:"content",priority:"high",status:"todo",points:null,type:"story",sprint:"",created:"2026-10-19T08:00:00Z",updated:"5"},
+  k6:{title:"طراحی لندینگ iPetro",assignee:"u2",created_by:"me1",team:"web",priority:"normal",status:"todo",points:5,type:"task",sprint:"",created:"2026-10-19T09:00:00Z",updated:"6"},
+  k0:{title:"راه‌اندازی داشبورد اولیه",assignee:"me1",created_by:"me1",team:"ai",priority:"normal",status:"approved",points:13,type:"story",sprint:"s0",done_at:"2026-10-07T10:00:00Z",updated:"0"}},
+ sprints:{s0:{name:"اسپرینت ۱",goal:"داشبورد اولیه آماده‌ی دمو",start:"2026-09-24",end:"2026-10-07",status:"closed",committed:16,final_total:13,completed:13,velocity:13,retro:{went_well:"دمو به‌موقع آماده شد",improve:"برآورد کارها دقیق‌تر باشد",actions:"برآورد با Planning Poker"}},
+  s1:{name:"اسپرینت ۲",goal:"دموی توربین و ارتباط OPC-UA",start:"2026-10-15",end:"2026-10-28",status:"active",committed:21},
+  s2:{name:"اسپرینت ۳",goal:"",start:"2026-10-29",end:"2026-11-11",status:"planned"}},
  letters:{n1:{number:"PPT-1405-0001",date:"2026-10-20",recipient:"جناب آقای دکتر رضایی\nمدیرعامل شرکت نمونه",subject:"درخواست جلسه‌ی معرفی",body:"با سلام\nبدین‌وسیله درخواست جلسه‌ی معرفی محصولات هوشمند را اعلام می‌داریم.",office_sig:{by:"me1",at:"2026-10-20T08:00:00Z"}}},
  letters_archive:{a1:{number:"PPT-1405-0000",date:"2026-10-10",subject:"پیشنهاد همکاری فناورانه",recipient:"مدیرعامل شرکت نمونه",channel:"automation",stage:"review",status:"active",owner:"me1",next_action:"تماس برای پیگیری",next_date:"2026-10-23",log:[{at:"2026-10-12T09:00:00Z",by:"me1",stage:"review",note:"نامه در دست بررسی است"}],employer_no:"1405/1234"}},
  tracking:{t1:{owner:"me1",stage:"partner_email",value_usd:400000,next_action:"پیگیری ایمیل شریک",next_date:"2026-10-22"},t2:{owner:"u2",stage:"proposal",value_usd:250000},"ev_e1":{owner:"me1"}},
@@ -48,7 +56,7 @@ if (!logoB64) delete store["settings/company"].logo_asset;
 const mock = `(()=>{ const store=${JSON.stringify(store)}; if(window.__noMe) delete store.members.me1;
  const docs=p=>Object.entries(store[p]||{}).map(([id,v])=>({id,data:()=>v}));
  const col=p=>({onSnapshot(cb){setTimeout(()=>cb({docs:docs(p)}),10)},get:()=>Promise.resolve({docs:docs(p)})});
- const db={collection:col,doc(p){const v=store[p];return{onSnapshot(cb){cb({exists:!!v,data:()=>v||{}})},async set(){},async update(){},async get(){return{exists:!!v,data:()=>v||{}}},async delete(){},async acquire(){return{acquired:true}}}}};
+ const db={collection:col,doc(p){const v=store[p];return{onSnapshot(cb){cb({exists:!!v,data:()=>v||{}})},async set(d){(window.__saved=window.__saved||[]).push([p,d])},async update(){},async get(){return{exists:!!v,data:()=>v||{}}},async delete(){},async acquire(){return{acquired:true}}}}};
  window.claude={use:async n=>n==="db"?db:n==="user"?{me:async()=>({id:"me1",isOwner:true,canEdit:true,name:"سارا نمونه"}),can:async()=>true}:n==="downloads"?{save:async()=>{}}:n==="assets"?{upload:async()=>({id:"x"})}:{}};})();`;
 
 const E = s => String(s).replace(/[&<>]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]));
