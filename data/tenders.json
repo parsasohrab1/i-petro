@@ -286,7 +286,18 @@
      "at": "2026-10-19T13:28:54",
      "status": "new"
     }
-   ]
+   ],
+   "tracking": {
+    "log": [
+     {
+      "at": "2026-10-20T15:16:41.495Z",
+      "by": "u_5Cy5Q7RjalcewZXqBHSIeA",
+      "note": "مسئولیت پذیرفته شد"
+     }
+    ],
+    "owner": "u_5Cy5Q7RjalcewZXqBHSIeA",
+    "stage": "identified"
+   }
   },
   "SATE-q5Hcg1scPs": {
    "id": "SATE-q5Hcg1scPs",
@@ -358,7 +369,18 @@
      "at": "2026-10-19T13:28:54",
      "status": "new"
     }
-   ]
+   ],
+   "tracking": {
+    "log": [
+     {
+      "at": "2026-10-20T14:37:04.567Z",
+      "by": "u_3czIynzDj3Ni9EAS_R637g",
+      "note": "مسئولیت پذیرفته شد"
+     }
+    ],
+    "owner": "u_3czIynzDj3Ni9EAS_R637g",
+    "stage": "identified"
+   }
   },
   "SATE-wZ0ZrLLt9YI": {
    "id": "SATE-wZ0ZrLLt9YI",
