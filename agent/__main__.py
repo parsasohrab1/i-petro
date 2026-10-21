@@ -21,7 +21,7 @@ import sys
 
 from pathlib import Path
 
-from . import dashboard, events, investors, leads, partners, platform_sync, store
+from . import dashboard, events, investors, leads, memory, partners, platform_sync, store
 from .config import ROOT, load_config
 
 
@@ -172,7 +172,7 @@ def main(argv=None):
         rec = state["tenders"].get(a.tender_id)
         if not rec:
             sys.exit(f"unknown tender {a.tender_id}")
-        analyst = Analyst(cfg, profile_text(cfg, build_profile(cfg)))
+        analyst = Analyst(cfg, profile_text(cfg, build_profile(cfg)), memory.lessons_text(state))
         process_candidate(analyst, cfg, rec, True, {"partner": 1}, print)
         store.save(state)
         dashboard.render(cfg, state)

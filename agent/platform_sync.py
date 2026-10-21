@@ -84,7 +84,7 @@ def import_tracking(folder):
         if not rec:
             continue
         tr = rec.setdefault("tracking", {"log": []})
-        for k in ("owner", "stage", "next_action", "next_date"):
+        for k in ("owner", "stage", "next_action", "next_date", "value_usd", "prob", "outcome", "outcome_reason"):
             if body.get(k) is not None:
                 tr[k] = body[k]
         tr["log"] = body.get("log", tr.get("log", []))

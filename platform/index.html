@@ -112,6 +112,13 @@ a{color:var(--brand)}
   .rows td[data-l]::before{content:attr(data-l) ": ";color:var(--muted);font-weight:600}
   .sheet{padding:18px}
 }
+.kanban{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(250px,1fr);gap:10px;overflow-x:auto;padding-bottom:8px;align-items:start}
+.kcol{background:var(--sunken);border-radius:var(--r);padding:8px;min-width:0}
+.kcol h4{margin:0 0 6px;font-size:13px;display:flex;justify-content:space-between;gap:6px}
+.kcard{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:8px 10px;margin-bottom:8px;font-size:12.5px;line-height:1.6}
+.cal-day{margin-top:14px;font-weight:700;border-bottom:1px solid var(--line);padding-bottom:2px}
+.cal-item{display:flex;gap:8px;align-items:baseline;padding:4px 0;flex-wrap:wrap}
+.sheet.ltr{direction:ltr;text-align:left}.sheet.ltr .sig{text-align:left}.sheet.ltr .sig img{margin-right:0}
 @media (prefers-reduced-motion:no-preference){.drawer{animation:slide .18s ease-out}@keyframes slide{from{transform:translateX(-24px);opacity:.6}}}
 </style>
 
@@ -145,10 +152,10 @@ a{color:var(--brand)}
 const MODULES = [
   ["market","Market"],["events","Events"],["erp","ERP"],["bpms","BPMS"],["letters","Letters"],["patent","Patent"]];
 const SUBS = {
-  market:[["iran","Iran AI Projects"],["overseas","Overseas AI Projects"],["web","Web Design & SEO"],["investors","AI Investors & Accelerators"],["tracking","Project Tracking"]],
+  market:[["iran","Iran AI Projects"],["overseas","Overseas AI Projects"],["web","Web Design & SEO"],["investors","AI Investors & Accelerators"],["tracking","Project Tracking"],["pipeline","Pipeline"],["memory","Team Memory"]],
   events:[["iran","ایران"],["world","جهان"],["all","همه"],["taken","در دست پیگیری"]],
-  erp:[["overview","نمای کلی"],["domains","حوزه‌های فعالیت"],["products","توسعه‌ی محصول هوشمند"],["people","نیروی انسانی"],["finance","مالی"],["clients","مشتریان و قراردادها"]],
-  bpms:[["myday","روز من"],["tasks","تسک‌ها"],["reports","گزارش عملکرد"],["rarchive","بایگانی گزارش‌ها"],["teams","تیم‌ها"],["process","فرایندها"],["members","اعضا و ثبت‌نام"]],
+  erp:[["overview","نمای کلی"],["domains","حوزه‌های فعالیت"],["products","توسعه‌ی محصول هوشمند"],["people","نیروی انسانی"],["finance","مالی"],["clients","مشتریان و قراردادها"],["backup","پشتیبان‌گیری"]],
+  bpms:[["myday","روز من"],["tasks","تسک‌ها"],["reports","گزارش عملکرد"],["rarchive","بایگانی گزارش‌ها"],["teams","تیم‌ها"],["process","فرایندها"],["calendar","تقویم"],["members","اعضا و ثبت‌نام"]],
   letters:[["new","نامه‌ی جدید (ساخت فایل Word)"],["archive","بایگانی نامه‌های پیشین و پیگیری"]],
   patent:[["home","پتنت‌ها"],["ops","فرصت‌های ثبت اختراع"],["products","محصولات ریپو"]]
 };
@@ -162,6 +169,9 @@ const ACTIVE = new Set(["new","analysed","partner_search","bid_prep","mou_negoti
 const TASK_ST = {todo:"انجام نشده",doing:"در حال انجام",done:"انجام شد",approved:"تأیید مدیر"};
 const PRIORITY = {high:"فوری",normal:"عادی",low:"کم"};
 const CLIENT_STAGES = {intro:"معرفی",demo:"دموی نرم‌افزار با داده‌ی مصنوعی",initial:"قرارداد اولیه",data:"دریافت داده‌ی واقعی",trl:"ارتقای TRL",main:"قرارداد اصلی"};
+const OUTCOME = {"":"— (در جریان)",won:"برنده شدیم",lost:"نبردیم",dropped:"انصراف دادیم"};
+const OUTCOME_PILL = {won:"p-ok",lost:"p-bad",dropped:"p-mute"};
+const STAGE_PROB = {identified:5,documents:10,partner_email:15,partner_meeting:25,mou:40,proposal:55,submitted:70,result:90};
 const PAT_ST = {granted:"ثبت‌شده",review:"در دست داوری",filed:"اظهارنامه ارسال شد",draft:"پیش‌نویس"};
 const LABELS = {energy:"انرژی",medical:"پزشکی",aviation:"هوانوردی",nuclear:"هسته‌ای",urban:"شهری",ai_cross_cutting:"هوش مصنوعی",web:"طراحی سایت"};
 const FIN_TYPES = {insurance:"بیمه",tax:"مالیات",payroll:"حقوق و دستمزد",rent:"اجاره",other:"سایر"};
@@ -171,7 +181,7 @@ const S = {mod:"market", sub:"iran", q:"", db:null, user:null, assets:null, samp
   me:{id:null,isOwner:false,canEdit:false}, canWrite:null,
   m:{tenders:[],events:[],investors:[],leads:[],partners:[]}, opsList:[],
   settings:{}, members:[], tasks:[], letters:[], lettersArchive:[], draft:null, archF:"all", ra:{member:null,from:"",to:""}, repLoaded:false, allLoaded:false, forceFull:false, products:[], patents:[], finance:[], clients:[], tracking:{},
-  myAtt:[], myReports:[], allReports:[], allAtt:[], loaded:false, seenTasks:new Set()};
+  myAtt:[], myReports:[], allReports:[], allAtt:[], loaded:false, got:new Set(), welcomed:false, calMine:false, calTypes:null, seenTasks:new Set()};
 try{const v=JSON.parse(localStorage.getItem("ppt-view")||"{}");if(v.mod&&SUBS[v.mod]){S.mod=v.mod;S.sub=SUBS[v.mod].some(x=>x[0]===v.sub)?v.sub:SUBS[v.mod][0][0]}}catch(e){}
 try{S.seenTasks=new Set(JSON.parse(localStorage.getItem("ppt-seen")||"[]"))}catch(e){}
 
@@ -208,7 +218,7 @@ function subscribe(){
   for(const [path,key] of Object.entries(COLS)){
     S.db.collection(path).onSnapshot(snap => {
       setPath(key, snap.docs.map(d => ({id:d.id, ...d.data()})));
-      S.loaded = true; render();
+      S.loaded = true; S.got.add(key); render(); if(key==="members") maybeWelcome();
     }, () => {});
   }
   S.db.collection("tracking").onSnapshot(snap => { const t={}; snap.docs.forEach(d=>t[d.id]=d.data()); S.tracking=t; render(); }, ()=>{});
@@ -243,7 +253,7 @@ function paintBrand(){
 }
 
 // ------------------------------------------------------------------ drawer forms
-function openForm({title, fields, values={}, onSave, extra=""}){
+function openForm({title, fields, values={}, onSave, extra="", required=false}){
   const f = fields.map(fd => {
     const v = values[fd.k] ?? fd.value ?? "";
     const id = "f_"+fd.k;
@@ -255,8 +265,8 @@ function openForm({title, fields, values={}, onSave, extra=""}){
     else ctl = `<input id="${id}" type="${fd.type||"text"}" value="${esc(v)}" ${fd.dir?`dir="${fd.dir}"`:""}>`;
     return `<div class="field"><label for="${id}">${esc(fd.label)}</label>${ctl}${fd.hint?`<span class="meta">${esc(fd.hint)}</span>`:""}</div>`;
   }).join("");
-  $("#layer").innerHTML = `<div class="scrim" data-act="close-scrim"><form class="drawer" id="drawer"><h3>${esc(title)}</h3>${extra}${f}
-    <div class="row"><button class="btn" type="submit">ذخیره</button><button class="btn ghost" type="button" data-act="close">انصراف</button></div></form></div>`;
+  $("#layer").innerHTML = `<div class="scrim"${required?"":' data-act="close-scrim"'}><form class="drawer" id="drawer"><h3>${esc(title)}</h3>${extra}${f}
+    <div class="row"><button class="btn" type="submit">${required?"ثبت‌نام و ورود به سامانه":"ذخیره"}</button>${required?"":'<button class="btn ghost" type="button" data-act="close">انصراف</button>'}</div></form></div>`;
   $("#drawer").addEventListener("submit", async ev => {
     ev.preventDefault();
     const out = {};
@@ -290,7 +300,7 @@ function paintNav(){
 function render(){ paintNav(); renderBanners(); renderView(); paintBell(); }
 function renderView(){
   if(S.mod==="letters"&&S.sub==="new"&&$("#composer")&&!S.forceFull){ // live data arrived: refresh only the ledger, never the form being typed in
-    const d=S.draft; if(d&&d.numAuto){ d.number=nextLetterNo(); const el=$("[data-c=number]"); if(el&&document.activeElement!==el) el.value=d.number; const p=$("#cprev"); if(p) p.innerHTML=letterSheet(draftLetter()); }
+    const d=S.draft; if(d&&d.numAuto){ d.number=nextLetterNo(d.identity); const el=$("[data-c=number]"); if(el&&document.activeElement!==el) el.value=d.number; const p=$("#cprev"); if(p) p.innerHTML=letterSheet(draftLetter()); }
     const lg=$("#ledger"); if(lg) lg.innerHTML=letterLedger(); return;
   }
   S.forceFull=false;
@@ -308,6 +318,11 @@ function myInbox(){
     if(t.created_by===me && t.assignee!==me && t.status==="done") items.push({id:"d"+t.id+t.updated, text:`«${t.title}» توسط ${memberName(t.assignee)} انجام شد؛ تأیید کنید`, task:t});
     if(isAdmin() && t.created_by===t.assignee && t.created_by!==me && t.status==="todo") items.push({id:"s"+t.id, text:`${memberName(t.created_by)} برای خود تسک «${t.title}» تعریف کرد`, task:t});
   }
+  const soon=addDays(today(),1);
+  for(const [k,tr] of Object.entries(S.tracking)) if(tr.owner===me&&tr.next_date&&tr.next_date<=soon&&!tr.outcome) items.push({id:"tn"+k+tr.next_date,sticky:tr.next_date<=today(),text:`اقدام بعدی «${tr.next_action||"پیگیری"}» برای «${trackTitle(k)}» ${relDay(tr.next_date)} است.`,task:{}});
+  for(const t of S.m.tenders) { const tr=S.tracking[t.id]||{}; if(tr.owner===me&&!tr.outcome&&ACTIVE.has(t.status)&&t.days_left!=null&&t.days_left>=0&&t.days_left<=3) items.push({id:"dl"+t.id+t.days_left,sticky:true,text:`مهلت «${t.title}» ${t.days_left===0?"امروز":faNum(t.days_left)+" روز دیگر"} است.`,task:{}}); }
+  for(const a of S.lettersArchive) if(a.owner===me&&a.status!=="closed"&&a.next_date&&a.next_date<=soon) items.push({id:"an"+a.id+a.next_date,sticky:a.next_date<=today(),text:`پیگیری نامه‌ی «${a.subject}»: ${a.next_action||"اقدام بعدی"} (${relDay(a.next_date)})`,task:{}});
+  for(const t of S.tasks) if(t.assignee===me&&t.due&&t.due<=soon&&!["done","approved"].includes(t.status)) items.push({id:"td"+t.id+t.due,sticky:t.due<=today(),text:`مهلت تسک «${t.title}» ${relDay(t.due)} است.`,task:{}});
   missingReportDays(myMember()).forEach(d=>items.push({id:"r"+d,sticky:true,text:`گزارش عملکرد ${faDate(d)} را ثبت نکرده‌اید؛ لطفاً هرچه زودتر ثبت کنید.`,task:{}}));
   if(isAdmin()&&S.allLoaded&&new Date().getHours()>=16) S.members.filter(m=>m.id!==me&&isOfficeDay(m,today())&&!S.allReports.some(r=>r.member===m.id&&(r.date||r.id)===today())).forEach(m=>items.push({id:"ar"+m.id+today(),sticky:true,text:`${m.full_name} گزارش عملکرد امروز را ثبت نکرده است.`,task:{}}));
   return items;
@@ -328,7 +343,7 @@ function renderBanners(){
     const low = S.myReports.filter(r=>r.score!=null).sort((a,b)=>(b.date||"").localeCompare(a.date||""))[0];
     if(low && low.score<40) out.push(`<div class="banner bad"><b>تذکر بهره‌وری:</b> نمره‌ی آخرین گزارش شما ${faNum(low.score)} از ۱۰۰ است. با این بهره‌وری احتمال قطع همکاری وجود دارد؛ روی بهره‌وری خود وقت بگذارید.</div>`);
   }
-  if(S.db===null && S.loaded===false) {}
+  if(isAdmin()&&S.got.has("members")&&(!S.settings.last_backup||dayDiff(S.settings.last_backup)<=-7)) out.push(`<div class="banner">${S.settings.last_backup?"بیش از ۷ روز از آخرین پشتیبان گذشته است.":"هنوز پشتیبان‌گیری نشده است."} از <b>ERP ← پشتیبان‌گیری</b> فایل کامل را دریافت کنید.</div>`);
   $("#banners").innerHTML = out.join("");
 }
 
@@ -338,15 +353,38 @@ const VIEWS = {};
 // ---------- MARKET
 function tenderCond(t){const f=t.facts||{},c=(t.analysis||{}).conditions||{};return{price:c.price_fa||f.price||"—",guarantee:c.guarantee_fa||f.guarantee||"—",experience:c.experience_fa||f.experience||"—",intl:c.international_fa||f.international||"—"}}
 function dl(t){ const d=t.days_left; const s = d==null?"نامشخص":(d<=7?`<span class="p-bad">${faNum(d)} روز</span>`:`${faNum(d)} روز`); return `${esc(t.deadline_fa||t.deadline||"؟")} (${s})`; }
+// Go / No-Go: one transparent score per analysed tender (relevance 40, eligibility 25, time 15, foreign access 10, compliance 10)
+const GNG = {go:["Go","p-ok"],maybe:["بررسی","p-warn"],nogo:["No-Go","p-bad"],wait:["در انتظار تحلیل","p-mute"]};
+function pastIn(country){ if(!country) return 0; return S.m.tenders.filter(x=>x.country===country&&["lost","dropped"].includes((S.tracking[x.id]||{}).outcome||({lost:"lost",skipped:"dropped"})[x.status])).length; }
+function goNoGo(t){
+  const a=t.analysis; if(!a) return {v:"wait",score:null,why:["این مورد هنوز توسط ایجنت تحلیل نشده است."]};
+  const why=[], rel=Number(a.relevance_score)||0, d=t.days_left;
+  const elig={direct:100,partner_required:60,not_feasible:0}[a.eligibility]??50;
+  const time=d==null?50:d<0?0:d>=21?100:d>=14?75:d>=7?45:15;
+  const intl=(a.conditions||{}).international_fa||"", intlMarket=(t.market||"international")==="international";
+  const closed=intlMarket&&/مجاز نیست|نمی‌?پذیر|ممنوع|فقط شرکت‌?های (داخلی|محلی|ایرانی)/.test(intl);
+  const flags=(a.compliance_flags_fa||[]).length, comp=Math.max(0,100-flags*25);
+  const score=Math.round(.40*rel+.25*elig+.15*time+.10*(closed?0:80)+.10*comp);
+  why.push(`تطابق با محصولات: ${faNum(rel)} از ۱۰۰`);
+  why.push({direct:"می‌توانیم مستقیم پیشنهاد دهیم",partner_required:"به شریک محلی نیاز داریم",not_feasible:"با شرایط فعلی شرکت شدنی نیست"}[a.eligibility]||"وضعیت صلاحیت نامشخص");
+  if(d!=null) why.push(d<0?"مهلت گذشته است":`${faNum(d)} روز تا مهلت`);
+  if(closed) why.push("پذیرش شرکت‌های خارجی محدود به نظر می‌رسد");
+  if(flags) why.push(`${faNum(flags)} نکته‌ی انطباق و تحریم باید بررسی شود`);
+  const past=pastIn(t.country); if(past) why.push(`سابقه: ${faNum(past)} مورد باخت یا انصراف در همین کشور (حافظه‌ی تیم)`);
+  let v=score>=65?"go":score>=45?"maybe":"nogo";
+  if(a.eligibility==="not_feasible"||(d!=null&&d<0)||closed) v="nogo";
+  return {v,score,why};
+}
+const gngCell = t => { const g=goNoGo(t), [l,c]=GNG[g.v]; return `<span class="pill ${c}">${l}</span>${g.score!=null?` <b class="mono">${faNum(g.score)}</b>`:""}<details><summary>دلایل</summary><span class="meta">${g.why.map(esc).join("<br>")}</span></details>`; };
 // an item someone has taken responsibility for leaves the open lists and lives in the tracking views
 const owned = key => !!(S.tracking[key]||{}).owner;
 const claimBtn = key => `<button class="btn sm" data-act="claim" data-id="${esc(key)}">مسئولیت را می‌گیرم</button>`;
 function tenderTable(list){
-  return table(["عنوان","کشور / خریدار","بخش","مهلت","قیمت","ضمانت‌نامه","رزومه و رفرنس","پذیرش شرکت‌ها","وضعیت",""], list.map(t=>{const k=tenderCond(t);return `<tr>
+  return table(["عنوان","کشور / خریدار","بخش","مهلت","قیمت","ضمانت‌نامه","رزومه و رفرنس","پذیرش شرکت‌ها","Go / No-Go","وضعیت",""], list.map(t=>{const k=tenderCond(t);return `<tr>
     ${td("عنوان",`${link(t.url,t.title)}<br><span class="meta">${esc(t.source)}${t.setad_number?` · <span class="mono">${esc(t.setad_number)}</span>`:""}</span>${(t.analysis||{}).summary_fa?`<details><summary>تحلیل</summary>${esc(t.analysis.summary_fa)}</details>`:""}`,"t")}
     ${td("کشور",`${esc(t.country)}<br><span class="meta">${esc(t.buyer)}</span>`)}${td("بخش",esc(t.sector||"—"))}${td("مهلت",dl(t))}
     ${td("قیمت",esc(k.price))}${td("ضمانت‌نامه",esc(k.guarantee))}${td("رزومه",esc(k.experience))}${td("پذیرش",esc(k.intl))}
-    ${td("وضعیت",`<span class="pill p-info">${esc(T_STATUS[t.status]||t.status)}</span>`)}${td("",claimBtn(t.id))}</tr>`}), "موردِ بدون مسئولی باقی نمانده است. موارد واگذارشده در «Project Tracking» هستند.");
+    ${td("Go/No-Go",gngCell(t))}${td("وضعیت",`<span class="pill p-info">${esc(T_STATUS[t.status]||t.status)}</span>`)}${td("",claimBtn(t.id))}</tr>`}), "موردِ بدون مسئولی باقی نمانده است. موارد واگذارشده در «Project Tracking» هستند.");
 }
 const mk = filter => () => {
   const list = S.m.tenders.filter(filter).filter(t=>ACTIVE.has(t.status)&&!owned(t.id)).filter(t=>match(t.title,t.country,t.buyer,t.source,t.sector));
@@ -654,11 +692,15 @@ VIEWS["bpms.members"] = () => {
    <p class="note">هر عضو با حساب claude.ai خود وارد می‌شود و فقط مشخصات خودش را ویرایش می‌کند. تصویر امضا برای امضای الکترونیک نامه‌ها استفاده می‌شود. برای اعلان موبایل، شناسه‌ی چت تلگرام را وارد کنید.</p>`+
    table(["نام","نقش","تیم","نوع نیرو","روزهای حضور","امضا"], S.members.map(m=>`<tr>${td("نام",esc(m.full_name),"t")}${td("نقش",esc(ROLES[m.role]||"—"))}${td("تیم",esc(TEAMS[m.team]||"—"))}${td("نوع",esc(STAFF[m.staff_type]||"—"))}${td("روزها",esc((m.office_days||[]).map(d=>(WEEKDAYS.find(w=>w[0]===d)||[])[1]).join("، ")))}${td("امضا",m.signature_asset?`<img src="${esc(blobUrl(m.signature_asset))}" alt="امضا" style="max-height:34px">`:'<span class="meta">ثبت نشده</span>')}</tr>`),"هنوز عضوی ثبت‌نام نکرده است.");
 };
-function registerForm(){
+function maybeWelcome(){ // a new person is asked to register the moment the members list has loaded
+  if(S.welcomed||!S.me.id||S.canWrite===false||!S.got.has("members")||myMember()) return;
+  S.welcomed=true; registerForm(true);
+}
+function registerForm(first=false){
   if(!S.me.id){toast("برای ثبت‌نام باید با حساب claude.ai وارد شده باشید.");return}
   if(S.canWrite===false){toast("دسترسی شما فقط مشاهده است؛ از مالک سامانه بخواهید در منوی Share سطح دسترسی شما را Contributor کند.");return}
-  const m=myMember()||{};
-  openForm({title:"ثبت‌نام عضو",values:m,fields:[{k:"full_name",label:"نام و نام خانوادگی"},{k:"role_title",label:"عنوان شغلی"},{k:"role",label:"نقش در سامانه",type:"select",options:ROLES,hint:"نقش «مسئول دفتر» و «مدیرعامل» را مدیر سامانه تأیید می‌کند."},{k:"team",label:"تیم",type:"select",options:TEAMS},{k:"staff_type",label:"نوع نیرو",type:"select",options:STAFF},
+  const m=myMember()||(first&&S.userName?{full_name:S.userName}:{});
+  openForm({title:first?"خوش آمدید؛ ثبت‌نام عضو جدید":"ثبت‌نام عضو",required:first,extra:first?`<p class="note">برای استفاده از سامانه ابتدا مشخصات خود را ثبت کنید. نام، تیم، روزهای حضور و امضای شما برای تسک‌ها، گزارش عملکرد و امضای الکترونیک نامه‌ها لازم است.</p>`:"",values:m,fields:[{k:"full_name",label:"نام و نام خانوادگی"},{k:"role_title",label:"عنوان شغلی"},{k:"role",label:"نقش در سامانه",type:"select",options:ROLES,hint:"نقش «مسئول دفتر» و «مدیرعامل» را مدیر سامانه تأیید می‌کند."},{k:"team",label:"تیم",type:"select",options:TEAMS},{k:"staff_type",label:"نوع نیرو",type:"select",options:STAFF},
    {k:"office_days",label:"روزهای حضور در شرکت",type:"days"},{k:"start_time",label:"ساعت ورود",type:"time"},{k:"email",label:"ایمیل (برای اعلان)",dir:"ltr"},{k:"telegram",label:"شناسه‌ی چت تلگرام (برای اعلان موبایل)",dir:"ltr"},
    {k:"signature",label:"تصویر امضا (PNG با زمینه‌ی سفید یا شفاف)",type:"file"}],
    onSave: async v => { if(!v.full_name){toast("نام را وارد کنید.");return false}
@@ -669,7 +711,7 @@ function registerForm(){
 function companyForm(){
   const st=S.settings;
   openForm({title:"مشخصات شرکت",values:st,fields:[{k:"name_fa",label:"نام شرکت"},{k:"name_en",label:"نام لاتین",dir:"ltr"},{k:"reg_no",label:"شماره‌ی ثبت شرکت"},{k:"national_id",label:"شناسه‌ی ملی"},{k:"address",label:"نشانی"},{k:"phone",label:"تلفن",dir:"ltr"},
-   {k:"ceo_member",label:"مدیرعامل",type:"select",options:Object.fromEntries([["","—"],...S.members.map(m=>[m.id,m.full_name])])},{k:"logo",label:"لوگوی شرکت",type:"file"},{k:"ceo_sig",label:"تصویر امضای مدیرعامل",type:"file"}],
+   {k:"ceo_member",label:"مدیرعامل",type:"select",options:Object.fromEntries([["","—"],...S.members.map(m=>[m.id,m.full_name])])},{k:"intl_name",label:"هویت بین‌المللی – نام شرکت (برای پیشنهادهای خارجی)",dir:"ltr",value:INTL_DEFAULT.name},{k:"intl_address",label:"هویت بین‌المللی – نشانی",dir:"ltr",value:INTL_DEFAULT.address},{k:"intl_website",label:"وب‌سایت",dir:"ltr",value:INTL_DEFAULT.website},{k:"intl_email",label:"ایمیل رسمی",dir:"ltr",value:INTL_DEFAULT.email},{k:"intl_signatory",label:"امضاکننده‌ی نامه‌های بین‌المللی",dir:"ltr",value:INTL_DEFAULT.signatory},{k:"intl_title",label:"سمت امضاکننده",dir:"ltr",value:INTL_DEFAULT.title},{k:"logo",label:"لوگوی شرکت",type:"file"},{k:"ceo_sig",label:"تصویر امضای مدیرعامل",type:"file"}],
    onSave: async v => { const {logo,ceo_sig,...rest}=v; const out={...st,...rest};
      if(logo){const id=await uploadImage(logo); if(id) out.logo_asset=id;}
      if(ceo_sig){const id=await uploadImage(ceo_sig); if(id) out.ceo_sig_asset=id;}
@@ -699,45 +741,49 @@ function zipStore(files){
 }
 const WX = s => String(s ?? "").replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F]/g,"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const WLTR = s => s ? "‪"+s+"‬" : "";   // keep Latin ids like PPT-1405-0001 in reading order inside RTL text
-const wRun = (text,{b=false,sz=24,color=""}={}) => `<w:r><w:rPr><w:rFonts w:ascii="Tahoma" w:hAnsi="Tahoma" w:cs="B Nazanin"/>${b?"<w:b/><w:bCs/>":""}${color?`<w:color w:val="${color}"/>`:""}<w:sz w:val="${sz}"/><w:szCs w:val="${sz+2}"/><w:rtl/></w:rPr><w:t xml:space="preserve">${WX(text)}</w:t></w:r>`;
+const WD = {ltr:false};   // direction of the letter being built: false = Persian RTL letterhead, true = English (international identity)
+const wRun = (text,{b=false,sz=24,color=""}={}) => `<w:r><w:rPr><w:rFonts w:ascii="Tahoma" w:hAnsi="Tahoma" w:cs="B Nazanin"/>${b?"<w:b/><w:bCs/>":""}${color?`<w:color w:val="${color}"/>`:""}<w:sz w:val="${sz}"/><w:szCs w:val="${sz+2}"/>${WD.ltr?"":"<w:rtl/>"}</w:rPr><w:t xml:space="preserve">${WX(text)}</w:t></w:r>`;
 // jc: omitted = start (visual right in RTL), "both" = justified, "right" = end (visual left in RTL), "center"
-const wPara = (inner,{jc="",before=0,after=0,line=0,border=null}={}) => `<w:p><w:pPr>${border?`<w:pBdr><w:${border.side} w:val="single" w:sz="${border.sz}" w:space="4" w:color="${border.color}"/></w:pBdr>`:""}<w:bidi/><w:spacing w:before="${before}" w:after="${after}"${line?` w:line="${line}" w:lineRule="auto"`:""}/>${jc?`<w:jc w:val="${jc}"/>`:""}</w:pPr>${inner}</w:p>`;
+const wPara = (inner,{jc="",before=0,after=0,line=0,border=null}={}) => `<w:p><w:pPr>${border?`<w:pBdr><w:${border.side} w:val="single" w:sz="${border.sz}" w:space="4" w:color="${border.color}"/></w:pBdr>`:""}${WD.ltr?"":"<w:bidi/>"}<w:spacing w:before="${before}" w:after="${after}"${line?` w:line="${line}" w:lineRule="auto"`:""}/>${jc?`<w:jc w:val="${jc}"/>`:""}</w:pPr>${inner}</w:p>`;
 const wImg = (rid,n,cx,cy) => `<w:r><w:drawing><wp:inline distT="0" distB="0" distL="0" distR="0"><wp:extent cx="${cx}" cy="${cy}"/><wp:docPr id="${n}" name="img${n}"/><a:graphic xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main"><a:graphicData uri="http://schemas.openxmlformats.org/drawingml/2006/picture"><pic:pic xmlns:pic="http://schemas.openxmlformats.org/drawingml/2006/picture"><pic:nvPicPr><pic:cNvPr id="${n}" name="img${n}.png"/><pic:cNvPicPr/></pic:nvPicPr><pic:blipFill><a:blip r:embed="${rid}"/><a:stretch><a:fillRect/></a:stretch></pic:blipFill><pic:spPr><a:xfrm><a:off x="0" y="0"/><a:ext cx="${cx}" cy="${cy}"/></a:xfrm><a:prstGeom prst="rect"><a:avLst/></a:prstGeom></pic:spPr></pic:pic></a:graphicData></a:graphic></wp:inline></w:drawing></w:r>`;
 const W_NS = 'xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships" xmlns:wp="http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing"';
 const RELNS = "http://schemas.openxmlformats.org/officeDocument/2006/relationships";
 const imgSize = (im,hCm) => { const cy=Math.round(hCm*360000); return [Math.round(cy*im.w/im.h), cy]; };
 
 // L: {number,dateFa,recipient,subject,body,attachments,cc}; C: {nameFa,nameEn,footer,ceoName,ceoTitle}; logo/sig: {bytes,w,h}|null
-function buildLetterDocx(L, C, logo, sig){
+function buildLetterDocx(L, C, logo, sig, ltr=false){
+  WD.ltr=ltr; const END=ltr?"":"right";
+  const T=ltr?{no:"Ref: ",date:"Date: ",att:"Enclosures: ",none:"None",subj:"Subject: ",hello:"Dear Sir or Madam,",thanks:"Thank you for your time and consideration.",cc:"cc: ",bye:"Yours sincerely,"}:{no:"شماره: ",date:"تاریخ: ",att:"پیوست: ",none:"ندارد",subj:"موضوع: ",hello:"با سلام و احترام،",thanks:"پیشاپیش از حسن توجه جنابعالی سپاسگزاریم.",cc:"رونوشت: ",bye:""};
   const lines = s => String(s||"").split(/\r?\n/).map(x=>x.trim()).filter(Boolean);
   // header = letterhead
   const names = wPara(wRun(C.nameFa||"",{b:true,sz:32}),{after:20}) + (C.nameEn?wPara(wRun(WLTR(C.nameEn),{sz:20,color:"555555"})):"");
   let hdrTbl;
   if(logo){ const [cx,cy]=imgSize(logo,1.8);
-    hdrTbl = `<w:tbl><w:tblPr><w:tblW w:w="5000" w:type="pct"/><w:bidiVisual/><w:tblLayout w:type="fixed"/></w:tblPr><w:tblGrid><w:gridCol w:w="2400"/><w:gridCol w:w="7238"/></w:tblGrid><w:tr>`+
+    hdrTbl = `<w:tbl><w:tblPr><w:tblW w:w="5000" w:type="pct"/>${ltr?"":"<w:bidiVisual/>"}<w:tblLayout w:type="fixed"/></w:tblPr><w:tblGrid><w:gridCol w:w="2400"/><w:gridCol w:w="7238"/></w:tblGrid><w:tr>`+
       `<w:tc><w:tcPr><w:tcW w:w="2400" w:type="dxa"/><w:vAlign w:val="center"/></w:tcPr>${wPara(wImg("rIdLogo",1,cx,cy))}</w:tc>`+
       `<w:tc><w:tcPr><w:tcW w:w="7238" w:type="dxa"/><w:vAlign w:val="center"/></w:tcPr>${names}</w:tc></w:tr></w:tbl>`;
-  } else hdrTbl = `<w:tbl><w:tblPr><w:tblW w:w="5000" w:type="pct"/><w:bidiVisual/><w:tblLayout w:type="fixed"/></w:tblPr><w:tblGrid><w:gridCol w:w="9638"/></w:tblGrid><w:tr><w:tc><w:tcPr><w:tcW w:w="9638" w:type="dxa"/></w:tcPr>${names}</w:tc></w:tr></w:tbl>`;
+  } else hdrTbl = `<w:tbl><w:tblPr><w:tblW w:w="5000" w:type="pct"/>${ltr?"":"<w:bidiVisual/>"}<w:tblLayout w:type="fixed"/></w:tblPr><w:tblGrid><w:gridCol w:w="9638"/></w:tblGrid><w:tr><w:tc><w:tcPr><w:tcW w:w="9638" w:type="dxa"/></w:tcPr>${names}</w:tc></w:tr></w:tbl>`;
   const header = `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><w:hdr ${W_NS}>${hdrTbl}${wPara("",{after:0,border:{side:"bottom",sz:12,color:"D12A1F"}})}</w:hdr>`;
   const footer = `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><w:ftr ${W_NS}>${wPara(wRun(C.footer||"",{sz:17,color:"555555"}),{jc:"center",border:{side:"top",sz:4,color:"BBBBBB"}})}</w:ftr>`;
   // body
   const b=[];
-  b.push(wPara(wRun("شماره: "+WLTR(L.number),{sz:22}),{jc:"right"}));
-  b.push(wPara(wRun("تاریخ: "+L.dateFa,{sz:22}),{jc:"right"}));
-  b.push(wPara(wRun("پیوست: "+(L.attachments||"ندارد"),{sz:22}),{jc:"right",after:240}));
+  b.push(wPara(wRun(T.no+WLTR(L.number),{sz:22}),{jc:END}));
+  b.push(wPara(wRun(T.date+L.dateFa,{sz:22}),{jc:END}));
+  b.push(wPara(wRun(T.att+(L.attachments||T.none),{sz:22}),{jc:END,after:240}));
   lines(L.recipient).forEach(t=>b.push(wPara(wRun(t,{b:true}),{line:300})));
-  b.push(wPara(wRun("موضوع: ",{b:true})+wRun(L.subject||""),{before:160,after:160,line:300}));
-  b.push(wPara(wRun("با سلام و احترام،"),{after:120,line:360}));
+  b.push(wPara(wRun(T.subj,{b:true})+wRun(L.subject||""),{before:160,after:160,line:300}));
+  b.push(wPara(wRun(T.hello),{after:120,line:360}));
   lines(L.body).forEach(t=>b.push(wPara(wRun(t),{jc:"both",after:120,line:360})));
-  b.push(wPara(wRun("پیشاپیش از حسن توجه جنابعالی سپاسگزاریم."),{before:120,after:120,line:360}));
+  b.push(wPara(wRun(T.thanks),{before:120,after:120,line:360}));
+  if(ltr) b.push(wPara(wRun(T.bye),{after:0,line:360}));
   const sigRun = sig ? (([cx,cy])=>wImg("rIdSig",2,cx,cy))(imgSize(sig,2.2)) : "";
-  b.push(wPara(sigRun,{jc:"right",before:sig?240:720}));
-  if(C.ceoName) b.push(wPara(wRun(C.ceoName,{b:true}),{jc:"right"}));
-  b.push(wPara(wRun(C.ceoTitle||"مدیرعامل"),{jc:"right",after:240}));
-  if(L.cc) b.push(wPara(wRun("رونوشت: "+L.cc,{sz:20,color:"444444"}),{line:300}));
-  const sect = `<w:sectPr><w:headerReference w:type="default" r:id="rIdHdr"/><w:footerReference w:type="default" r:id="rIdFtr"/><w:pgSz w:w="11906" w:h="16838"/><w:pgMar w:top="2268" w:right="1134" w:bottom="1418" w:left="1134" w:header="567" w:footer="567" w:gutter="0"/><w:bidi/></w:sectPr>`;
+  b.push(wPara(sigRun,{jc:END,before:sig?240:720}));
+  if(C.ceoName) b.push(wPara(wRun(C.ceoName,{b:true}),{jc:END}));
+  b.push(wPara(wRun(C.ceoTitle||"مدیرعامل"),{jc:END,after:240}));
+  if(L.cc) b.push(wPara(wRun(T.cc+L.cc,{sz:20,color:"444444"}),{line:300}));
+  const sect = `<w:sectPr><w:headerReference w:type="default" r:id="rIdHdr"/><w:footerReference w:type="default" r:id="rIdFtr"/><w:pgSz w:w="11906" w:h="16838"/><w:pgMar w:top="2268" w:right="1134" w:bottom="1418" w:left="1134" w:header="567" w:footer="567" w:gutter="0"/>${ltr?"":"<w:bidi/>"}</w:sectPr>`;
   const doc = `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><w:document ${W_NS}><w:body>${b.join("")}${sect}</w:body></w:document>`;
-  const styles = `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><w:styles xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"><w:docDefaults><w:rPrDefault><w:rPr><w:rFonts w:ascii="Tahoma" w:hAnsi="Tahoma" w:cs="B Nazanin"/><w:sz w:val="24"/><w:szCs w:val="26"/><w:lang w:val="en-US" w:bidi="fa-IR"/></w:rPr></w:rPrDefault><w:pPrDefault><w:pPr><w:bidi/></w:pPr></w:pPrDefault></w:docDefaults><w:style w:type="paragraph" w:default="1" w:styleId="Normal"><w:name w:val="Normal"/><w:qFormat/></w:style></w:styles>`;
+  const styles = `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><w:styles xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"><w:docDefaults><w:rPrDefault><w:rPr><w:rFonts w:ascii="Tahoma" w:hAnsi="Tahoma" w:cs="B Nazanin"/><w:sz w:val="24"/><w:szCs w:val="26"/><w:lang w:val="en-US" w:bidi="fa-IR"/></w:rPr></w:rPrDefault><w:pPrDefault><w:pPr>${ltr?"":"<w:bidi/>"}</w:pPr></w:pPrDefault></w:docDefaults><w:style w:type="paragraph" w:default="1" w:styleId="Normal"><w:name w:val="Normal"/><w:qFormat/></w:style></w:styles>`;
   const ct = `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Default Extension="png" ContentType="image/png"/><Override PartName="/word/document.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml"/><Override PartName="/word/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.styles+xml"/><Override PartName="/word/header1.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.header+xml"/><Override PartName="/word/footer1.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.footer+xml"/></Types>`;
   const rels = (items) => `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">${items.map(([id,t,tg])=>`<Relationship Id="${id}" Type="${RELNS}/${t}" Target="${tg}"/>`).join("")}</Relationships>`;
   const files = [
@@ -772,6 +818,9 @@ async function makeLetterDocx(l){
   const st=S.settings, ceo=S.members.find(m=>m.id===st.ceo_member);
   const sigId = l.ceo_sig ? (l.ceo_sig.asset||st.ceo_sig_asset) : null;
   const [logo,sig] = await Promise.all([st.logo_asset?prepImage(st.logo_asset,700):null, sigId?prepImage(sigId,600):null]);
+  if(l.identity==="intl"){ const I=intlId();
+    return buildLetterDocx({number:l.number,dateFa:enDate(l.date),recipient:l.recipient,subject:l.subject,body:l.body,attachments:l.attachments,cc:l.cc},
+      {nameFa:I.name,nameEn:"",footer:[I.address,I.website,I.email].filter(Boolean).join(" · "),ceoName:I.signatory,ceoTitle:I.title}, logo, sig, true); }
   const footer=[st.address, st.phone&&`تلفن: ${st.phone}`, st.reg_no&&`شماره‌ی ثبت: ${st.reg_no}`, st.national_id&&`شناسه‌ی ملی: ${st.national_id}`].filter(Boolean).join(" · ");
   return buildLetterDocx({number:l.number,dateFa:faDate(l.date),recipient:l.recipient,subject:l.subject,body:l.body,attachments:l.attachments,cc:l.cc},
     {nameFa:st.name_fa||"پترو پالا توس",nameEn:st.name_en||"",footer,ceoName:ceo?ceo.full_name:"",ceoTitle:`مدیرعامل ${st.name_fa||""}`.trim()}, logo, sig);
@@ -785,7 +834,12 @@ async function downloadLetter(l){
   }catch(err){ if(!err||err.code!=="declined"){ toast("ساخت یا دریافت فایل Word انجام نشد."); console.error(err); } }
 }
 
-function nextLetterNo(){ const y=new Intl.DateTimeFormat("en-u-ca-persian",{year:"numeric"}).format(new Date()).replace(/\D/g,""); const n=S.letters.filter(l=>(l.number||"").includes(`-${y}-`)).length+1; return `PPT-${y}-${String(n).padStart(4,"0")}`; }
+// International proposals go out under the company's foreign identity (Istanbul), in English; Iranian letters keep the Persian letterhead.
+const INTL_DEFAULT = {name:"Parsa International Group",address:"Istanbul, Türkiye",website:"parsaint.group",email:"info@parsaint.group",signatory:"Narges Farahani",title:"AI Sector, Parsa International Group"};
+const intlId = () => { const st=S.settings; return {name:st.intl_name||INTL_DEFAULT.name,address:st.intl_address||INTL_DEFAULT.address,website:st.intl_website||INTL_DEFAULT.website,email:st.intl_email||INTL_DEFAULT.email,signatory:st.intl_signatory||INTL_DEFAULT.signatory,title:st.intl_title||INTL_DEFAULT.title}; };
+const enDate = d => { try{ return new Intl.DateTimeFormat("en-GB",{day:"numeric",month:"long",year:"numeric"}).format(new Date((d||today())+"T12:00:00")); }catch(e){ return d||""; } };
+function nextLetterNo(identity){ if(identity==="intl"){ const y=new Date().getFullYear(); const n=S.letters.filter(l=>(l.number||"").startsWith(`PIG-${y}-`)).length+1; return `PIG-${y}-${String(n).padStart(4,"0")}`; }
+  const y=new Intl.DateTimeFormat("en-u-ca-persian",{year:"numeric"}).format(new Date()).replace(/\D/g,""); const n=S.letters.filter(l=>(l.number||"").includes(`PPT-${y}-`)).length+1; return `PPT-${y}-${String(n).padStart(4,"0")}`; }
 function getDraft(){ if(!S.draft) S.draft={number:nextLetterNo(),date:today(),numAuto:true}; return S.draft; }
 function draftLetter(){ return {...getDraft()}; }
 
@@ -797,6 +851,8 @@ VIEWS["letters.new"] = () => {
   return `${!st.name_fa&&!st.logo_asset?`<div class="banner">سربرگ هنوز کامل نیست: از <b>BPMS ← اعضا و ثبت‌نام ← مشخصات شرکت</b> نام، نشانی، لوگو و امضای مدیرعامل را ثبت کنید تا روی فایل Word بیاید.</div>`:""}
   <div class="compose"><div class="card" id="composer"><h3>${d.id?"ویرایش نامه":"نوشتن نامه‌ی جدید"}</h3>
    <p class="note">فقط محتوا را وارد کنید؛ سربرگ (لوگو، نام و نشانی شرکت)، شماره، تاریخ و جای امضا به‌صورت خودکار در فایل Word قرار می‌گیرد.</p>
+   ${fld("identity","هویت فرستنده",`<select id="c_identity" data-c="identity"><option value="ir"${d.identity!=="intl"?" selected":""}>ایران – پترو پالا توس (فارسی، سربرگ داخلی)</option><option value="intl"${d.identity==="intl"?" selected":""}>بین‌المللی – ${esc(intlId().name)} (English)</option></select>`)}
+   ${d.identity==="intl"?`<p class="note">نامه به انگلیسی و با سربرگ ${esc(intlId().name)} (${esc(intlId().address)}) ساخته می‌شود؛ گیرنده، موضوع و متن را هم انگلیسی بنویسید. شماره با پیشوند PIG است.</p>`:""}
    <div class="grid2" style="gap:0 12px">${inp("number","شماره‌ی نامه","text","ltr")}${inp("date","تاریخ نامه","date")}</div>
    ${ta("recipient","گیرنده (هر سطر یک خط: نام، سمت، سازمان)",3)}${inp("subject","موضوع نامه")}${ta("body","متن نامه (هر پاراگراف در یک سطر جدا)",12)}
    <div class="grid2" style="gap:0 12px">${inp("attachments","پیوست‌ها (در صورت وجود)")}${inp("cc","رونوشت (در صورت وجود)")}</div>
@@ -816,19 +872,30 @@ function letterLedger(){
 async function composeSubmit(){
   const d=getDraft(); const v=k=>String(d[k]||"").trim();
   if(!v("subject")||!v("recipient")||!v("body")){ toast("گیرنده، موضوع و متن نامه را وارد کنید."); return; }
-  if(d.numAuto) d.number=nextLetterNo();
+  if(d.numAuto) d.number=nextLetterNo(d.identity);
   if(!v("number")){ toast("شماره‌ی نامه را وارد کنید."); return; }
   if(S.letters.some(l=>l.number===d.number&&l.id!==d.id)){ toast("این شماره قبلاً برای نامه‌ی دیگری ثبت شده است."); return; }
   const old=d.id?S.letters.find(x=>x.id===d.id):null;
   const id=d.id||newId();
-  const rec={...(old||{}),number:v("number"),date:d.date||today(),recipient:v("recipient"),subject:v("subject"),body:v("body"),attachments:v("attachments"),cc:v("cc"),updated:new Date().toISOString(),created_by:(old&&old.created_by)||S.me.id};
+  const rec={...(old||{}),identity:d.identity==="intl"?"intl":"ir",number:v("number"),date:d.date||today(),recipient:v("recipient"),subject:v("subject"),body:v("body"),attachments:v("attachments"),cc:v("cc"),updated:new Date().toISOString(),created_by:(old&&old.created_by)||S.me.id};
   if(old&&(old.body!==rec.body||old.subject!==rec.subject||old.recipient!==rec.recipient)){ rec.office_sig=null; rec.ceo_sig=null; } // edited content needs fresh signatures
   delete rec.id;
   if(!await save(`letters/${id}`,rec,"نامه ثبت شد")) return;
   S.draft=null; S.forceFull=true; render();
   await downloadLetter({...rec,id});
 }
+function letterSheetIntl(l){
+  const I=intlId(), st=S.settings, sigId=l.ceo_sig?(l.ceo_sig.asset||st.ceo_sig_asset):null;
+  return `<div class="sheet ltr" id="sheet"><div class="lh"><div>${st.logo_asset?`<img src="${esc(blobUrl(st.logo_asset))}" alt="logo">`:""}<div class="meta3"><b style="font-size:17px">${esc(I.name)}</b></div></div>
+   <div class="meta3" style="text-align:right">Ref: ${esc(l.number)}<br>Date: ${enDate(l.date)}<br>Enclosures: ${esc(l.attachments||"None")}</div></div>
+   <p><b>${esc(l.recipient||"").replace(/\n/g,"<br>")}</b></p><p><b>Subject:</b> ${esc(l.subject)}</p><p>Dear Sir or Madam,</p>
+   <div style="white-space:pre-wrap">${esc(l.body||"")}</div><p>Thank you for your time and consideration.</p><p>Yours sincerely,</p>
+   <div class="sig">${sigId?`<img src="${esc(blobUrl(sigId))}" alt="signature">`:""}<b>${esc(I.signatory)}</b><br>${esc(I.title)}</div>
+   ${l.cc?`<p class="meta" style="margin-top:14px">cc: ${esc(l.cc)}</p>`:""}
+   <div class="foot">${[I.address,I.website,I.email].filter(Boolean).map(esc).join(" · ")}</div></div>`;
+}
 function letterSheet(l){
+  if(l.identity==="intl") return letterSheetIntl(l);
   const st=S.settings, ceo=S.members.find(m=>m.id===st.ceo_member);
   const ceoSig = l.ceo_sig ? (l.ceo_sig.asset||st.ceo_sig_asset) : null;
   const meeting = l.meeting_mode&&l.meeting_mode!=="none"&&l.meeting_date ? `<p><b>جلسه‌ی پیرو:</b> ${l.meeting_mode==="online"?"آنلاین":"حضوری"}، ${faDate(l.meeting_date)}، ساعت ${esc(l.meeting_time||"—")}${l.meeting_place?`، ${esc(l.meeting_place)}`:""}</p>`:"";
@@ -929,6 +996,105 @@ VIEWS["patent.ops"] = () => {
 };
 VIEWS["patent.products"] = () => table(["محصول","TRL","حوزه","گیت‌هاب","اختراع‌های ما","قابلیت ثبت"], S.products.filter(p=>match(p.name)).map(p=>`<tr>${td("محصول",esc(p.name),"t")}${td("TRL",`<span class="mono">${esc(p.trl??"—")}</span>`)}${td("حوزه",esc((p.domains||[]).map(d=>LABELS[d]||d).join("، ")))}${td("گیت‌هاب",p.github?link(p.github,"ریپو"):"—")}${td("اختراع",faNum(S.patents.filter(x=>x.product===p.id).length))}${td("قابلیت",esc((p.patentability||"در انتظار جست‌وجو").slice(0,140)))}</tr>`),"محصولی همگام نشده است.");
 
+
+// ---------- PIPELINE (unified sales funnel for every tracked opportunity)
+const trackTitle = key => { const t=S.m.tenders.find(x=>x.id===key); if(t) return t.title;
+  if(key.startsWith("ev_")){ const e=S.m.events.find(x=>"ev_"+x.id===key); return e?`رویداد: ${e.name_fa||e.name}`:key; }
+  if(key.startsWith("ld_")){ const l=S.m.leads.find(x=>"ld_"+x.id===key); return l?`تماس: ${l.name||l.activity}`:key; }
+  return key; };
+const prob = tr => tr.prob!=null&&tr.prob!==""?Number(tr.prob):(STAGE_PROB[tr.stage||"identified"]||5);
+const usd = n => "$"+faNum(Math.round(n||0));
+VIEWS["market.pipeline"] = () => {
+  const st=Object.keys(STAGES);
+  const list=S.m.tenders.filter(t=>ACTIVE.has(t.status)&&!(S.tracking[t.id]||{}).outcome).filter(t=>match(t.title,t.country,t.buyer,(S.tracking[t.id]||{}).owner));
+  const val=t=>Number((S.tracking[t.id]||{}).value_usd)||0, wt=t=>val(t)*prob(S.tracking[t.id]||{})/100;
+  const total=list.reduce((a,t)=>a+val(t),0), weighted=list.reduce((a,t)=>a+wt(t),0);
+  const go=list.filter(t=>goNoGo(t).v==="go").length;
+  const cols=st.map(k=>{ const items=list.filter(t=>((S.tracking[t.id]||{}).stage||"identified")===k).sort((a,b)=>(a.days_left??999)-(b.days_left??999));
+    const i=st.indexOf(k);
+    return `<div class="kcol"><h4><span>${esc(STAGES[k])}</span><span class="meta">${faNum(items.length)} · ${usd(items.reduce((a,t)=>a+val(t),0))}</span></h4>${items.map(t=>{const tr=S.tracking[t.id]||{},g=goNoGo(t),[gl,gc]=GNG[g.v];
+      return `<div class="kcard"><b>${link(t.url,t.title)}</b><br><span class="meta">${esc(t.country||"")} · ${esc(memberName(tr.owner)!=="—"?memberName(tr.owner):"بدون مسئول")} · ${dl(t)}</span><br>
+       <span class="pill ${gc}">${gl}${g.score!=null?" "+faNum(g.score):""}</span> <span class="mono">${usd(val(t))}</span> <span class="meta">× ${faNum(prob(tr))}٪</span>
+       <div class="row" style="margin-top:4px">${i>0?`<button class="btn sm ghost" data-act="pipe-move" data-id="${esc(t.id)}" data-d="-1" title="مرحله‌ی قبل">›</button>`:""}${i<st.length-1?`<button class="btn sm ghost" data-act="pipe-move" data-id="${esc(t.id)}" data-d="1" title="مرحله‌ی بعد">‹</button>`:""}<button class="btn sm ghost" data-act="track" data-id="${esc(t.id)}">ویرایش</button></div></div>`}).join("")||'<p class="meta">—</p>'}</div>`}).join("");
+  const cl=S.clients, cst=Object.keys(CLIENT_STAGES);
+  return `<p class="note">همه‌ی فرصت‌های در دست پیگیری در یک قیف. ارزش و احتمال برد را از «ویرایش» وارد کنید؛ اگر احتمال خالی باشد، درصد پیش‌فرض هر مرحله به‌کار می‌رود. با ثبت نتیجه‌ی نهایی، مورد از قیف خارج و وارد «Team Memory» می‌شود.</p>`+
+  kpis([["فرصت در قیف",faNum(list.length)],["پیشنهاد Go",faNum(go)],["ارزش کل (دلار)",usd(total)],["پیش‌بینی وزنی (دلار)",usd(weighted)],["بدون مسئول",faNum(list.filter(t=>!(S.tracking[t.id]||{}).owner).length),true]])+
+  `<div class="kanban">${cols}</div><h3>قراردادهای مشتری (ERP)</h3>`+kpis(cst.map(k=>[CLIENT_STAGES[k],faNum(cl.filter(c=>c.stage===k).length)]))+
+  `<p class="meta">ارزش قراردادهای مشتری به ریال در «ERP ← مشتریان و قراردادها» ثبت می‌شود: ${faNum(cl.reduce((a,c)=>a+(Number(c.value)||0),0))} ریال.</p>`;
+};
+
+// ---------- TEAM MEMORY (what the agent learns from)
+VIEWS["market.memory"] = () => {
+  const rows=S.m.tenders.map(t=>{const tr=S.tracking[t.id]||{}; const o=tr.outcome||({won:"won",lost:"lost",skipped:"dropped"})[t.status]; return o?{t,tr,o}:null;}).filter(Boolean).filter(r=>match(r.t.title,r.t.country,r.tr.outcome_reason));
+  const c=k=>rows.filter(r=>r.o===k).length, decided=c("won")+c("lost");
+  return `<p class="note">نتیجه و دلیل هر فرصت که تیم ثبت می‌کند، در اجرای بعدی به ایجنت داده می‌شود تا امتیاز تطابق و صلاحیت را با سابقه‌ی واقعی شرکت تنظیم کند. این خلاصه تنها با همگام‌سازی روزانه به ایجنت می‌رسد.</p>`+
+  kpis([["برنده",faNum(c("won"))],["نبردیم",faNum(c("lost"))],["انصراف",faNum(c("dropped"))],["نرخ برد",decided?faNum(Math.round(100*c("won")/decided))+"٪":"—"]])+
+  table(["فرصت","کشور","نتیجه","دلیل","Go/No-Go هنگام ثبت","ثبت‌کننده"], rows.map(({t,tr,o})=>`<tr>${td("فرصت",link(t.url,t.title),"t")}${td("کشور",esc(t.country||"—"))}${td("نتیجه",`<span class="pill ${OUTCOME_PILL[o]}">${esc(OUTCOME[o])}</span>`)}${td("دلیل",esc(tr.outcome_reason||"ثبت نشده"))}${td("Go/No-Go",gngCell(t))}${td("ثبت‌کننده",esc(memberName(tr.updated_by)))}</tr>`),"هنوز نتیجه‌ای ثبت نشده است. از «Project Tracking ← ویرایش» نتیجه و دلیل را وارد کنید.");
+};
+
+// ---------- CALENDAR (deadlines, events, follow-ups, tasks, finance, letters)
+const CAL_T = {tender:"مهلت مناقصه",event:"رویداد",followup:"اقدام بعدی پروژه",task:"تسک",finance:"سررسید مالی",letter:"پیگیری نامه",meeting:"جلسه"};
+const isoOk = d => /^\d{4}-\d{2}-\d{2}/.test(d||"");
+const dayDiff = iso => Math.round((Date.parse(iso.slice(0,10)+"T00:00:00Z")-Date.parse(today()+"T00:00:00Z"))/864e5);
+function calEntries(){
+  const me=S.me.id, out=[];
+  S.m.tenders.filter(t=>ACTIVE.has(t.status)).forEach(t=>{ const tr=S.tracking[t.id]||{}; if(tr.outcome) return;
+    const d=isoOk(t.deadline)?t.deadline.slice(0,10):(t.days_left!=null?addDays(today(),t.days_left):null);
+    if(d) out.push({date:d,type:"tender",title:t.title,url:t.url,owner:tr.owner||"",stop:true});
+    if(tr.next_date) out.push({date:tr.next_date,type:"followup",title:`${tr.next_action||"اقدام بعدی"} – ${t.title}`,owner:tr.owner||""}); });
+  Object.entries(S.tracking).forEach(([k,tr])=>{ if(!tr.next_date||S.m.tenders.some(t=>t.id===k)||tr.outcome) return; out.push({date:tr.next_date,type:"followup",title:`${tr.next_action||"اقدام بعدی"} – ${trackTitle(k)}`,owner:tr.owner||""}); });
+  S.m.events.forEach(e=>{ const tr=S.tracking["ev_"+e.id]||{}; if(isoOk(e.start)&&e.start>=addDays(today(),-1)) out.push({date:e.start.slice(0,10),type:"event",title:e.name_fa||e.name,url:e.url,owner:tr.owner||"",stop:true}); });
+  S.tasks.filter(t=>t.due&&!["done","approved"].includes(t.status)).forEach(t=>out.push({date:t.due,type:"task",title:t.title,owner:t.assignee||""}));
+  if(isAdmin()) S.finance.filter(f=>f.due&&f.status!=="paid").forEach(f=>out.push({date:f.due,type:"finance",title:`${f.title} – ${faNum(f.amount||0)} ریال`,owner:""}));
+  S.lettersArchive.filter(a=>a.next_date&&a.status!=="closed").forEach(a=>out.push({date:a.next_date,type:"letter",title:`${a.next_action||"پیگیری"} – ${a.subject}`,owner:a.owner||""}));
+  S.letters.filter(l=>l.meeting_mode&&l.meeting_mode!=="none"&&isoOk(l.meeting_date)).forEach(l=>out.push({date:l.meeting_date,type:"meeting",title:`جلسه‌ی پیرو نامه‌ی ${l.number}${l.meeting_time?` – ساعت ${l.meeting_time}`:""}`,owner:l.created_by||"",stop:true}));
+  return out.filter(x=>isoOk(x.date)).sort((a,b)=>a.date.localeCompare(b.date));
+}
+const relDay = d => { const n=dayDiff(d); return n===0?"امروز":n===1?"فردا":n===-1?"دیروز":n<0?`${faNum(-n)} روز پیش`:`${faNum(n)} روز دیگر`; };
+VIEWS["bpms.calendar"] = () => {
+  const all=calEntries().filter(x=>!S.calMine||x.owner===S.me.id).filter(x=>!S.calTypes||S.calTypes.has(x.type)).filter(x=>match(x.title,CAL_T[x.type]));
+  const late=all.filter(x=>!x.stop&&x.date<today()), upcoming=all.filter(x=>x.date>=today()&&x.date<=addDays(today(),60));
+  const days=[...new Set(upcoming.map(x=>x.date))];
+  const row=x=>`<div class="cal-item"><span class="pill p-info">${esc(CAL_T[x.type])}</span> ${x.url?link(x.url,x.title):esc(x.title)}${x.owner?` <span class="meta">· ${esc(memberName(x.owner))}</span>`:""}</div>`;
+  return `<div class="toolbar"><label class="chip"><input type="checkbox" data-cal="mine"${S.calMine?" checked":""}> فقط موارد من</label>
+    <select data-cal="type"><option value="">همه‌ی انواع</option>${Object.entries(CAL_T).map(([k,l])=>`<option value="${k}"${S.calTypes&&S.calTypes.has(k)?" selected":""}>${esc(l)}</option>`).join("")}</select>
+    ${S.downloads?'<button class="btn ghost" data-act="cal-ics">دریافت فایل تقویم (ICS)</button>':""}<span class="meta">۶۰ روز آینده؛ یادآوری موارد من در زنگ اعلان می‌آید.</span></div>`+
+  kpis([["عقب‌افتاده",faNum(late.length),late.length>0],["امروز",faNum(upcoming.filter(x=>x.date===today()).length)],["۷ روز آینده",faNum(upcoming.filter(x=>x.date<=addDays(today(),7)).length)],["۶۰ روز آینده",faNum(upcoming.length)]])+
+  (late.length?`<div class="cal-day p-bad">عقب‌افتاده</div>${late.map(x=>`<div class="cal-item"><span class="meta">${faDate(x.date)}</span> ${row(x)}</div>`).join("")}`:"")+
+  (days.length?days.map(d=>`<div class="cal-day">${faDate(d)} <span class="meta">· ${relDay(d)}</span></div>${upcoming.filter(x=>x.date===d).map(row).join("")}`).join(""):'<p class="empty">موردی در ۶۰ روز آینده ثبت نشده است.</p>');
+};
+async function calIcs(){
+  if(!S.downloads){ toast("دریافت فایل فقط داخل claude.ai فعال است."); return; }
+  const ics=x=>String(x).replace(/[\;,]/g,m=>"\\"+m).replace(/\r?\n/g," ");
+  const ev=calEntries().filter(x=>!S.calMine||x.owner===S.me.id).filter(x=>x.date>=addDays(today(),-7));
+  const body=["BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//Petro Pala Toos//Hub//FA","CALSCALE:GREGORIAN",...ev.flatMap((x,i)=>["BEGIN:VEVENT",`UID:ppt-${i}-${x.date}@hub`,`DTSTAMP:${new Date().toISOString().replace(/[-:]|\.\d+/g,"")}`,`DTSTART;VALUE=DATE:${x.date.replace(/-/g,"")}`,`DTEND;VALUE=DATE:${addDays(x.date,1).replace(/-/g,"")}`,`SUMMARY:${ics(CAL_T[x.type]+": "+x.title)}`,"BEGIN:VALARM","TRIGGER:-P1D","ACTION:DISPLAY","DESCRIPTION:Reminder","END:VALARM","END:VEVENT"]),"END:VCALENDAR"].join("\r\n");
+  try{ await S.downloads.save({filename:"ppt-calendar.ics",data:new Blob([body],{type:"text/calendar"})}); }catch(err){ if(!err||err.code!=="declined") toast("ساخت فایل تقویم انجام نشد."); }
+}
+
+// ---------- BACKUP / EXPORT
+const BACKUP_SETS = () => ({settings:[S.settings],members:S.members,tasks:S.tasks,letters:S.letters,letters_archive:S.lettersArchive,products:S.products,patents:S.patents,finance:isAdmin()?S.finance:[],clients:S.clients,
+  tracking:Object.entries(S.tracking).map(([id,v])=>({id,...v})),reports:S.allReports,attendance:S.allAtt,tenders:S.m.tenders,events:S.m.events,investors:S.m.investors,leads:S.m.leads,partners:S.m.partners,patent_ops:S.opsList});
+const csvCell = v => { const t=v==null?"":typeof v==="object"?JSON.stringify(v):String(v); return /[",\n]/.test(t)?`"${t.replace(/"/g,'""')}"`:t; };
+VIEWS["erp.backup"] = () => {
+  if(!isAdmin()) return `<p class="empty">پشتیبان‌گیری فقط برای مدیران است.</p>`;
+  const sets=BACKUP_SETS(), last=S.settings.last_backup;
+  return `<div class="banner">${last?`آخرین پشتیبان: <b>${faDate(last.slice(0,10))}</b>`:"هنوز پشتیبان‌گیری نشده است."} پیشنهاد: هفته‌ای یک بار فایل JSON کامل را دریافت و در جای امن (مثلاً Google Drive شرکت) نگه دارید. داده‌ها فقط در پایگاه همین سامانه نگه‌داری می‌شوند.</div>
+   <div class="toolbar">${S.downloads?'<button class="btn sig" data-act="backup-json">دریافت پشتیبان کامل (JSON)</button>':'<span class="meta">دریافت فایل فقط داخل claude.ai فعال است.</span>'}</div>
+   ${table(["مجموعه","تعداد رکورد",""],Object.entries(sets).map(([k,v])=>`<tr>${td("مجموعه",`<code>${esc(k)}</code>`,"t")}${td("تعداد",faNum(v.length))}${td("",S.downloads&&v.length?`<button class="btn sm ghost" data-act="backup-csv" data-k="${esc(k)}">CSV</button>`:"")}</tr>`))}
+   <p class="note">گزارش‌ها و حضور و غیاب پس از بارگذاری مدیر (چند ثانیه پس از ورود) در فایل می‌آیند: ${S.allLoaded?"بارگذاری شده":"در حال بارگذاری…"}</p>`;
+};
+async function backupSave(name,blob){ try{ await S.downloads.save({filename:name,data:blob}); return true; }catch(err){ if(!err||err.code!=="declined") toast("دریافت فایل انجام نشد."); return false; } }
+async function backupJson(){
+  if(!S.downloads) return; await loadAllReports();
+  const data={exported:new Date().toISOString(),by:S.me.id,app:"petro-pala-toos-hub",collections:BACKUP_SETS()};
+  if(await backupSave(`ppt-backup-${today()}.json`,new Blob([JSON.stringify(data)],{type:"application/json"}))) await save("settings/company",{...S.settings,last_backup:new Date().toISOString()},"پشتیبان دریافت شد");
+}
+async function backupCsv(k){
+  const rows=BACKUP_SETS()[k]||[]; if(!rows.length) return;
+  const cols=[...new Set(rows.flatMap(r=>Object.keys(r)))];
+  await backupSave(`ppt-${k}-${today()}.csv`,new Blob(["﻿"+[cols.join(","),...rows.map(r=>cols.map(c=>csvCell(r[c])).join(","))].join("\n")],{type:"text/csv"}));
+}
+
 // ================================================================== actions
 document.addEventListener("click", async e => {
   const b=e.target.closest("[data-act]"); if(!b) return;
@@ -941,8 +1107,11 @@ document.addEventListener("click", async e => {
     case "track": { const t=S.tracking[id]||{};
       const locked = t.owner && t.owner!==S.me.id && !isAdmin(); // only the owner or an admin may hand a taken project to someone else
       const ownerField = locked ? [] : [{k:"owner",label:"مسئول پیگیری",type:"select",options:Object.fromEntries([["","—"],...S.members.map(m=>[m.id,m.full_name])])}];
-      openForm({title:"پیگیری پروژه",extra:locked?`<p class="note">مسئول این پروژه ${esc(memberName(t.owner))} است و فقط خود او یا مدیر می‌تواند مسئول را تغییر دهد.</p>`:"",values:{stage:"identified",...t},fields:[...ownerField,{k:"stage",label:"مرحله‌ی پیگیری",type:"select",options:STAGES},{k:"next_action",label:"اقدام بعدی"},{k:"next_date",label:"تاریخ اقدام بعدی",type:"date"},{k:"note",label:"یادداشت",type:"textarea"}],
-      onSave:v=>save(`tracking/${id}`,{...t,...v,...(locked?{owner:t.owner}:{}),log:[...(t.log||[]),{at:new Date().toISOString(),by:S.me.id,stage:v.stage,note:v.note}].slice(-40),updated:new Date().toISOString(),updated_by:S.me.id})}); break; }
+      openForm({title:"پیگیری پروژه",extra:locked?`<p class="note">مسئول این پروژه ${esc(memberName(t.owner))} است و فقط خود او یا مدیر می‌تواند مسئول را تغییر دهد.</p>`:"",values:{stage:"identified",...t},fields:[...ownerField,{k:"stage",label:"مرحله‌ی پیگیری",type:"select",options:STAGES},{k:"next_action",label:"اقدام بعدی"},{k:"next_date",label:"تاریخ اقدام بعدی",type:"date"},
+        {k:"value_usd",label:"ارزش تخمینی قرارداد (دلار)",type:"number"},{k:"prob",label:"احتمال برد (۰ تا ۱۰۰؛ خالی = بر اساس مرحله)",type:"number"},
+        {k:"outcome",label:"نتیجه‌ی نهایی",type:"select",options:OUTCOME,hint:"با ثبت نتیجه، مورد از قیف خارج و به حافظه‌ی یادگیری ایجنت اضافه می‌شود."},{k:"outcome_reason",label:"دلیل نتیجه (برای یادگیری ایجنت)",type:"textarea"},{k:"note",label:"یادداشت",type:"textarea"}],
+      onSave:v=>{ if(v.outcome&&!v.outcome_reason){toast("دلیل نتیجه را بنویسید؛ ایجنت از آن یاد می‌گیرد.");return false}
+        return save(`tracking/${id}`,{...t,...v,...(locked?{owner:t.owner}:{}),log:[...(t.log||[]),{at:new Date().toISOString(),by:S.me.id,stage:v.stage,note:v.note}].slice(-40),updated:new Date().toISOString(),updated_by:S.me.id}); }}); break; }
     case "claim": { if(!myMember()){toast("ابتدا از BPMS ← اعضا و ثبت‌نام ثبت‌نام کنید.");break}
       // first come, first served: hold a short lease on the doc, re-read it from the store, claim only if still unowned
       b.disabled=true;
@@ -958,6 +1127,11 @@ document.addEventListener("click", async e => {
       break; }
     case "unclaim": { const t=S.tracking[id]||{}; if(t.owner&&t.owner!==S.me.id&&!isAdmin()){toast("فقط مسئول همین مورد یا مدیر می‌تواند آن را بازگرداند.");break}
       await save(`tracking/${id}`,{...t,owner:"",log:[...(t.log||[]),{at:new Date().toISOString(),by:S.me.id,note:"به فهرست بازگردانده شد"}].slice(-40),updated:new Date().toISOString(),updated_by:S.me.id},"به فهرست بازگردانده شد"); break; }
+    case "pipe-move": { const t=S.tracking[id]||{}, st=Object.keys(STAGES), i=Math.max(0,st.indexOf(t.stage||"identified"))+Number(b.dataset.d), ns=st[Math.min(st.length-1,Math.max(0,i))];
+      await save(`tracking/${id}`,{stage:"identified",...t,stage:ns,log:[...(t.log||[]),{at:new Date().toISOString(),by:S.me.id,stage:ns,note:"جابه‌جایی در قیف"}].slice(-40),updated:new Date().toISOString(),updated_by:S.me.id},"مرحله به‌روز شد"); break; }
+    case "cal-ics": calIcs(); break;
+    case "backup-json": backupJson(); break;
+    case "backup-csv": backupCsv(b.dataset.k); break;
     case "product-new": productForm(); break;
     case "product-edit": productForm(S.products.find(p=>p.id===id)); break;
     case "fin-new": finForm(); break;
@@ -994,8 +1168,10 @@ document.addEventListener("click", async e => {
 
 document.addEventListener("input", e => { const el=e.target.closest("[data-c]"); if(!el) return;
   const d=getDraft(); d[el.dataset.c]=el.value; if(el.dataset.c==="number") d.numAuto=false;
+  if(el.dataset.c==="identity"){ if(d.numAuto) d.number=nextLetterNo(d.identity); S.forceFull=true; renderView(); return; }
   const p=$("#cprev"); if(p) p.innerHTML=letterSheet(draftLetter()); });
-document.addEventListener("change", e => { const el=e.target.closest("[data-ra]"); if(!el) return; S.ra[el.dataset.ra]=el.value; renderView(); });
+document.addEventListener("change", e => { const cal=e.target.closest("[data-cal]"); if(cal){ if(cal.dataset.cal==="mine") S.calMine=cal.checked; else S.calTypes=cal.value?new Set([cal.value]):null; renderView(); return; }
+  const el=e.target.closest("[data-ra]"); if(!el) return; S.ra[el.dataset.ra]=el.value; renderView(); });
 
 // ================================================================== boot
 async function boot(){
@@ -1005,10 +1181,11 @@ async function boot(){
   const [db,user,assets,sample,downloads] = await Promise.all(["db","user","assets","sample","downloads"].map(n=>c.use(n).catch(()=>null)));
   S.db=db; S.user=user; S.assets=assets; S.sample=sample; S.downloads=downloads;
   if(user){ const me=await user.me(); S.me={id:me.id,isOwner:me.isOwner,canEdit:me.canEdit}; S.canWrite=await user.can("data.write");
-    $("#meChip").textContent = me.name || (me.isOwner?"مالک سامانه":"کاربر"); }
+    S.userName=me.name||""; $("#meChip").textContent = me.name || (me.isOwner?"مالک سامانه":"کاربر"); }
   else $("#meChip").textContent="مهمان";
   if(!db){ $("#view").innerHTML=`<p class="empty">پایگاه داده برای این نما در دسترس نیست. با حساب claude.ai وارد شوید.</p>`; return; }
   subscribe();
+  setTimeout(maybeWelcome, 4000); // fallback if the members snapshot is slow
   setTimeout(()=>{ if(isAdmin()) loadAllReports(); }, 2500);
 }
 boot();

@@ -2,7 +2,7 @@
 import json
 from datetime import date, timedelta
 
-from . import dashboard, documents, events, investors, leads, mailbox, notify, partners, store
+from . import dashboard, documents, events, investors, leads, mailbox, memory, notify, partners, store
 from .analyst import Analyst, llm_available
 from .config import OUTPUT_DIR, env, load_config
 from .portfolio import build_profile, profile_text
@@ -169,7 +169,7 @@ def run(use_llm=True, use_mail=True, send_notification=True):
     ev_state, pt_state, inv_state, investors_added = events.load(), partners.load(), investors.load(), 0
     analyst = None
     if use_llm and llm_available():
-        analyst = Analyst(cfg, profile_text(cfg, profile))
+        analyst = Analyst(cfg, profile_text(cfg, profile), memory.lessons_text(state))
         # Claude analysis and drafting run for the international market; domestic notices are listed from Setad data.
         queue = sorted((r for r in state["tenders"].values()
                         if r["status"] == "new" and r.get("market", "international") == "international"
