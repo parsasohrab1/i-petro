@@ -240,13 +240,14 @@ const COLS = {
 function setPath(key, val){ const [a,b]=key.split("."); if(b) S[a][b]=val; else S[a]=val; }
 function subscribe(){
   for(const [path,key] of Object.entries(COLS)){
+    if(key==="schol"&&!isOwnerOnly()) continue;
     S.db.collection(path).onSnapshot(snap => {
       setPath(key, snap.docs.map(d => ({id:d.id, ...d.data()})));
       S.loaded = true; S.got.add(key); render(); if(key==="members") maybeWelcome();
     }, () => {});
   }
   S.db.collection("tracking").onSnapshot(snap => { const t={}; snap.docs.forEach(d=>t[d.id]=d.data()); S.tracking=t; render(); }, ()=>{});
-  S.db.doc("settings/scholar").onSnapshot(d => { S.sp = d.exists ? d.data() : SP_DEFAULT; render(); }, ()=>{});
+  if(isOwnerOnly()) S.db.doc("settings/scholar").onSnapshot(d => { S.sp = d.exists ? d.data() : SP_DEFAULT; render(); }, ()=>{});
   S.db.doc("settings/company").onSnapshot(d => { S.settings = d.exists ? d.data() : {}; paintBrand(); render(); }, ()=>{});
   if(S.me.id){
     S.db.collection(`attendance/${S.me.id}/days`).onSnapshot(s=>{S.myAtt=s.docs.map(d=>({id:d.id,...d.data()}));render()},()=>{});
@@ -315,8 +316,11 @@ async function uploadImage(file){
 }
 
 // ------------------------------------------------------------------ navigation
+const isOwnerOnly = () => !!S.me.isOwner;   // Scholarship holds the owner's personal applications
+const visibleModules = () => MODULES.filter(([k])=>k!=="scholar"||isOwnerOnly());
 function paintNav(){
-  $("#mods").innerHTML = MODULES.map(([k,l])=>`<button role="tab" aria-selected="${k===S.mod}" data-act="mod" data-k="${k}">${l}</button>`).join("");
+  if(S.mod==="scholar"&&!isOwnerOnly()){ S.mod="market"; S.sub=SUBS.market[0][0]; }
+  $("#mods").innerHTML = visibleModules().map(([k,l])=>`<button role="tab" aria-selected="${k===S.mod}" data-act="mod" data-k="${k}">${l}</button>`).join("");
   $("#subs").innerHTML = SUBS[S.mod].map(([k,l])=>`<button role="tab" aria-selected="${k===S.sub}" data-act="sub" data-k="${k}">${esc(l)}</button>`).join("")
     + `<input id="search" placeholder="جست‌وجو…" value="${esc(S.q)}" style="margin-inline-start:auto;min-width:160px">`;
   $("#search").oninput = e => { S.q = e.target.value.trim().toLowerCase(); renderView(); };
@@ -1023,17 +1027,7 @@ async function trainingSign(){
 }
 
 // ------------------------------------------------------------------ Scholarship (fully funded Master / PhD)
-const SP_DEFAULT = {
-  name_en:"Mohammad Parsa Sohrabi", email:"oil.ms.sohrabi@gmail.com", phone:"+98 912 334 4295", nationality:"Iranian", affiliation:"Parsa International Group, Türkiye",
-  target:"both", field:"Petroleum Engineering (Drilling) / AI for Oil & Gas", gpa:"", ielts:"", pubs:"", work:"",
-  interests:"Drilling engineering and formation damage control; AI, digital twins and reinforcement learning for oil and gas operations; predictive maintenance and intelligent monitoring of gas compressors and gas turbines; technology commercialization.",
-  education:"Professional Doctorate (DBA) in Business Management – University of Tehran\nM.Sc. in Petroleum Engineering (Drilling) – University of Research Sciences, Tehran\nB.Sc. in Petroleum Engineering (Exploitation of Oil Resources) – Iran",
-  products:"Inventor and applicant on 23 patent applications filed in Iran (2025–2026), plus 4 petrochemical software products filed for registration, across six domains:\n- Formation damage control in drilling (3 applications)\n- Digital twins for gas compressors and gas turbines (4 applications)\n- Intelligent control and monitoring of oil and gas fields (5 applications)\n- Health and neuroscience AI (5 applications)\n- AI for biotechnology and life sciences (6 applications)\n- Petrochemical process intelligence (4 products)\nTechnical details are available on request under a confidentiality agreement.",
-  pubs_text:"23 patent applications filed in Iran (2025–2026), plus 4 further petrochemical products filed for registration (see Developed Products). Seven conference papers submitted (under review).\nConference papers (submitted, under review):\n- NeuroPredict-AI: An Explainable Multimodal Clinical Decision Support Framework for Neurodegenerative Disease Risk Assessment – Global Summit on Allied, Digital Health & Healthcare Innovation 2027, London, UK\n- INEsCape: An Open-Source AI Platform for Esophageal Cancer Risk Prediction and Clinical Decision Support – AIMed Global Forum 2027, Krakow, Poland\n- Intelligent Diagnostic Kit Analysis Platform: AI-Assisted qPCR Data Analysis and Quality Control – IOCH 2027 – 2nd International Online Conference on Healthcare (online)\n- An Integrated Health Informatics Platform for Heterogeneous Clinical Data Integration and Big Data Analytics – HEALTHINFO 2027 – 12th International Conference on Informatics and Assistive Technologies for Health-Care, Medical Support and Wellbeing, Nice, France\n- An Explainable Platform for Designing and Simulating Personalized CAR-T Cell Therapies – ISCT 2027 Annual Meeting, Toronto, Canada\n- An Intelligent Energy and Carbon Management Platform for Petrochemical Plants – Asia Pacific CCUS Conference 2027, Kuala Lumpur, Malaysia\n- Adaptive Multi-Criteria Data Routing System for Heterogeneous Telecommunication Infrastructures in Oil and Gas Fields – SPE Offshore Europe Conference & Exhibition 2027, Aberdeen, UK\nResearch proposals: GTL refinery feasibility and needs assessment (Ministry of Oil, 2015; 2016); blockchain in financial applications (National Bank, 2016).",
-  experience:"CEO (previously Marketing and Sales Manager) – Petro Pala Toos, knowledge-based startup; accelerator license from the Vice Presidency for Science and Technology (2021)\nFounder – Hiva Filter Makers, Eco, and Tara Hoosh Asia startups\nManager, Ahvaz Operational Workshop Office and Secretariat – Ramoz Road Construction Company\nMarket Development Manager – Servat Newspaper\nSupplied API-standard pumps, compressors, blowers and generator packages to oil, gas and petrochemical projects (e.g., Pasargad Oil, Persian Gulf Star Refinery, South Pars phases 15–16)\nTrainer in business model design and entrepreneurship – Cultural Heritage Research Institute, Kharazmi University Growth Center; English teacher (15 years, IELTS preparation since 2022)",
-  skills:"Reservoir and well simulation; casing and drill-string design; bit selection and analysis; MS Project; Comfar and Excel for techno-economic evaluation; ICDL (seven skills); Photoshop and Corel; ERP/CRM familiarity\nCertificates: HSEMS (oil industry), ISO 9001/14001/45001/29001 awareness; Member, Society of Petroleum Engineers (SPE)",
-  languages:"English – C2 (all skills)\nFrench – B1 writing, C1 speaking and listening, B2 reading\nTurkish – A2 to B2\nPersian – native"
-};
+const SP_DEFAULT = {target:"both"};   // the owner's profile lives in settings/scholar (owner-only rules), never in the page source
 const SCH_COMMON = [
   {k:"c1",t:"بررسی شرایط، مهلت و فهرست مدارک از سایت رسمی برنامه",by:"ai"},
   {k:"c2",t:"ساخت رزومه‌ی آکادمیک ویژه‌ی همین برنامه",by:"ai"},
@@ -1123,9 +1117,10 @@ function schList(page){
    kpis(Object.entries(SCH_ST).map(([k,l])=>[l,faNum(SCH.filter(p=>(schState(p.id).status||"todo")===k).length),false]))+
    (list.length?list.map(p=>schCard(p,page)).join(""):'<p class="empty">موردی در این صفحه نیست.</p>');
 }
-VIEWS["scholar.applied"]=()=>schList("applied");
-VIEWS["scholar.doing"]=()=>schList("doing");
-VIEWS["scholar.todo"]=()=>schList("todo");
+const schOnly = fn => () => isOwnerOnly() ? fn() : `<p class="empty">این بخش فقط برای مالک سامانه است.</p>`;
+VIEWS["scholar.applied"]=schOnly(()=>schList("applied"));
+VIEWS["scholar.doing"]=schOnly(()=>schList("doing"));
+VIEWS["scholar.todo"]=schOnly(()=>schList("todo"));
 const SCH_DOCS = ["رزومه‌ی آکادمیک (CV)","انگیزه‌نامه (SOP)","پیشنهاد پژوهشی (برای دکتری)","ریز نمرات و مدرک تحصیلی با ترجمه‌ی رسمی","مدرک زبان (IELTS/TOEFL)","۲ تا ۳ توصیه‌نامه","پاسپورت","مقالات و سوابق پژوهشی (در صورت وجود)","گواهی سابقه‌ی کار (در صورت نیاز)"];
 function schCv(){
   const q=S.sp||{}; const L=(t,v)=>v?`<h4>${t}</h4><p style="white-space:pre-wrap">${esc(v)}</p>`:"";
@@ -1134,13 +1129,13 @@ function schCv(){
    <p>${esc([q.email,q.phone,q.nationality].filter(Boolean).join(" · "))}</p>
    ${L("Research Interests",q.interests)}${L("Education",q.education)}${L("Developed Products and Patent Applications (filed)",q.products)}${L("Research & Publications",q.pubs_text)}${L("Professional Experience",q.experience)}${L("Skills",q.skills)}${L("Languages",q.languages)}</div>`;
 }
-VIEWS["scholar.profile"]=()=>{
+VIEWS["scholar.profile"]=schOnly(()=>{
   const q=S.sp||{};
   return `<div class="toolbar"><button class="btn sig" data-act="sch-profile">ویرایش مشخصات و رزومه</button><button class="btn ghost" data-act="print-sheet" data-sel="#cvSheet">چاپ / ذخیره PDF رزومه</button></div>
   <p class="note">این مشخصات برای تخمین «شانس من» و ساخت رزومه‌ی آکادمیک استفاده می‌شود. هرچه کامل‌تر باشد، تخمین دقیق‌تر است.</p>
   <div class="card"><h3>مدارک عمومی لازم برای اقدام</h3><p>${SCH_DOCS.map(esc).join(" · ")}</p></div>
   <div class="card"><p>رشته‌ی فعلی: <b>${esc(q.field||"—")}</b> · مقطع هدف: <b>${esc({master:"ارشد",phd:"دکتری",both:"هر دو"}[q.target||"both"])}</b> · معدل از ۲۰: <b>${esc(q.gpa||"—")}</b> · IELTS: <b>${esc(q.ielts||"—")}</b> · مقاله: <b>${esc(q.pubs||"—")}</b> · سابقه‌ی کار (سال): <b>${esc(q.work||"—")}</b></p></div>`+schCv();
-};
+});
 function schProfileForm(){
   const q=S.sp||{};
   openForm({title:"مشخصات و رزومه‌ی من برای اپلای",values:q,fields:[
@@ -1859,6 +1854,7 @@ async function boot(){
   if(user){ const me=await user.me(); S.me={id:me.id,isOwner:me.isOwner,canEdit:me.canEdit}; S.canWrite=await user.can("data.write");
     S.userName=me.name||""; $("#meChip").textContent = me.name || (me.isOwner?"مالک سامانه":"کاربر"); }
   else $("#meChip").textContent="مهمان";
+  render();
   if(!db){ $("#view").innerHTML=`<p class="empty">پایگاه داده برای این نما در دسترس نیست. با حساب claude.ai وارد شوید.</p>`; return; }
   subscribe();
   setTimeout(()=>{ const mm=myMember(); if(needsNda(mm)&&!ndaSigned(mm)&&!S.ndaShown&&!$("#layer").innerHTML){ S.ndaShown=true; ndaView(mm.id); } else if(needsTraining(mm)&&!trainingDone(mm)&&!S.ndaShown&&!$("#layer").innerHTML){ S.ndaShown=true; trainingView(mm.id); } }, 6000);
