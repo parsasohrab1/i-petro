@@ -5,11 +5,12 @@ plus a manifest of batches (max 50 writes each) that Claude applies with the Art
 `import_tracking` takes the tracking documents read back from the platform and merges them into
 data/tenders.json so the daily Telegram reminders use the team's edits.
 """
+import datetime
 import json
 import re
 import shutil
 
-from . import events, investors, leads, partners, store
+from . import events, investors, leads, notify, partners, store
 from .config import DATA_DIR, ROOT
 
 EXPORT_DIR = DATA_DIR / "platform_export"
@@ -90,3 +91,36 @@ def import_tracking(folder):
         n += 1
     store.save(state)
     return n
+
+
+WEEKDAY_KEYS = ["mon", "tue", "wed", "thu", "fri", "sat", "sun"]  # date.weekday() order, same keys as the platform
+
+
+def _docs(folder, pattern):
+    for f in sorted(folder.glob(pattern)):
+        doc = json.loads(f.read_text(encoding="utf-8"))
+        yield f, doc.get("data", doc)
+
+
+def report_reminders(folder, log=print, today=None, send=True):
+    """Telegram nudge to every member who has an office day today and no performance report yet.
+
+    `folder` holds the members and reports documents read back from the platform with ArtifactData
+    (members/<id>.json, reports/<id>/items/<date>.json). Members reach their own chat through the
+    `telegram` field of their profile; the owner gets one summary of who is missing.
+    """
+    today = today or datetime.date.today()
+    iso = today.isoformat()
+    submitted = {f.parent.parent.name for f, body in _docs(folder, "**/reports/*/items/*.json")
+                 if (body.get("date") or f.stem) == iso}
+    missing = []
+    for f, m in _docs(folder, "**/members/*.json"):
+        if WEEKDAY_KEYS[today.weekday()] not in (m.get("office_days") or []) or f.stem in submitted:
+            continue
+        missing.append(m.get("full_name") or f.stem)
+        chat = (m.get("telegram") or "").strip()
+        if send and chat:
+            notify.telegram(f"یادآوری: گزارش عملکرد امروز ({iso}) هنوز ثبت نشده است. لطفاً در سامانه ثبت کنید.", log, chat=chat)
+    if missing and send:
+        notify.telegram("گزارش عملکرد امروز ثبت نشده: " + "، ".join(missing), log)
+    return missing

@@ -12,13 +12,16 @@
   python -m agent lead <lead-id> <status>                    called | interested | proposal | won | not_interested | do_not_call
   python -m agent track <tender-id> [--owner NAME] [--stage STAGE] [--next TEXT] [--date YYYY-MM-DD] [--note TEXT]
       stages: identified | documents | partner_email | partner_meeting | mou | proposal | submitted | result
+  python -m agent remind-reports <folder>                    Telegram reminder to members without today's performance report
   python -m agent investor <investor-id> <status>            researching | contacted | meeting | due_diligence | term_sheet | declined
 """
 import json
 import argparse
 import sys
 
-from . import dashboard, events, investors, leads, partners, store
+from pathlib import Path
+
+from . import dashboard, events, investors, leads, partners, platform_sync, store
 from .config import ROOT, load_config
 
 
@@ -57,6 +60,8 @@ def main(argv=None):
     tk.add_argument("--next", dest="next_action")
     tk.add_argument("--date", dest="next_date")
     tk.add_argument("--note", default="")
+    rr = sub.add_parser("remind-reports")
+    rr.add_argument("folder")
     ld = sub.add_parser("lead")
     ld.add_argument("lead_id")
     ld.add_argument("status", choices=list(leads.STATUSES))
@@ -119,6 +124,10 @@ def main(argv=None):
         store.save(state)
         dashboard.render(cfg, state)
         print(f"{a.tender_id}: {tr.get('owner') or '-'} | {store.STAGES[tr['stage']]} | {tr.get('next_action') or '-'} {tr.get('next_date') or ''}")
+        return
+    if a.cmd == "remind-reports":
+        missing = platform_sync.report_reminders(Path(a.folder), log=print)
+        print("Missing today: " + (", ".join(missing) if missing else "nobody"))
         return
     if a.cmd == "lead":
         ls_ = leads.load()
