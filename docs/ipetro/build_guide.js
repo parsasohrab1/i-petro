@@ -3,7 +3,7 @@
 const { chromium } = require(process.env.PW_MODULE || "playwright");
 const fs = require("fs"), path = require("path");
 const ROOT = path.resolve(__dirname, "../.."), OUT = __dirname;
-const html = fs.readFileSync(path.join(ROOT, "platform/index.html"), "utf8");
+const html = fs.readFileSync(process.env.HTML_PATH || path.join(ROOT, "platform/index.html"), "utf8");   // HTML_PATH: build from another copy of the page
 // Put the official company logo at docs/ipetro/logo.png (PNG, transparent background preferred); without it the cover shows the wordmark only.
 const LOGO = path.join(OUT, "logo.png"), logoB64 = fs.existsSync(LOGO) ? fs.readFileSync(LOGO).toString("base64") : "";
 const TOUR = eval(html.match(/const TOUR = (\[[\s\S]*?\n\]);/)[1]);
