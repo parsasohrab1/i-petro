@@ -33,7 +33,7 @@ const store = {
  "patentops/data/items":{o1:{product_name:"پایش هوشمند توربین گاز",claim:"ترکیب سیگنال ارتعاش و دما برای پیش‌بینی",prior_art:"چند سابقه‌ی نزدیک",verdict:"قابل ثبت",verdict_code:"patentable",date:"2026-10-21",sources:["#"]}},
  finance:{f1:{title:"بیمه‌ی تأمین اجتماعی مهر",type:"insurance",period:"مهر ۱۴۰۵",amount:42000000,due:"2026-10-25",status:"unpaid"}},
  clients:{c1:{client:"کارفرمای نمونه",product:"p1",stage:"demo",value:1800000000,next:"ارائه‌ی دمو",next_date:"2026-10-28"}},
- members:{me1:{full_name:"سارا نمونه",role:"manager",team:"ai",staff_type:"product",office_days:["sat","mon","wed"],start_time:"08:30",joined:"2026-10-20",telegram:""},
+ members:{me1:{full_name:"سارا نمونه",role:"manager",team:"ai",staff_type:"product",office_days:["sat","mon","wed"],start_time:"08:30",joined:"2026-10-20",telegram:"",fingerprint_asset:"fp",nda_version:"1",nda_at:"2026-10-20T08:00:00Z"},
   u2:{full_name:"علی نمونه",role:"member",team:"web",staff_type:"trainee_web",office_days:["sun","tue"],start_time:"09:00",joined:"2026-10-01"}},
  tasks:{k1:{title:"تکمیل داشبورد دموی توربین",desc:"نسخه‌ی مشتری",assignee:"me1",created_by:"me1",team:"ai",due:"2026-10-24",priority:"high",status:"doing",points:8,type:"story",sprint:"s1",updated:"1"},
   k2:{title:"سئوی صفحه‌ی محصولات",assignee:"u2",created_by:"me1",team:"web",due:"2026-10-27",priority:"normal",status:"todo",points:3,type:"task",sprint:"s1",updated:"2"},
