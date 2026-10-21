@@ -25,7 +25,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": 2,
+   "days_left": 1,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -61,7 +61,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": 1,
+   "days_left": 0,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -97,7 +97,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": 2,
+   "days_left": 1,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -133,7 +133,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": 2,
+   "days_left": 1,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -169,7 +169,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": 2,
+   "days_left": 1,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -205,7 +205,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": 3,
+   "days_left": 2,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -241,7 +241,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": 4,
+   "days_left": 3,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -277,7 +277,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": 8,
+   "days_left": 7,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -286,18 +286,7 @@
      "at": "2026-10-19T13:28:54",
      "status": "new"
     }
-   ],
-   "tracking": {
-    "log": [
-     {
-      "at": "2026-10-20T15:16:41.495Z",
-      "by": "u_5Cy5Q7RjalcewZXqBHSIeA",
-      "note": "مسئولیت پذیرفته شد"
-     }
-    ],
-    "owner": "u_5Cy5Q7RjalcewZXqBHSIeA",
-    "stage": "identified"
-   }
+   ]
   },
   "SATE-q5Hcg1scPs": {
    "id": "SATE-q5Hcg1scPs",
@@ -324,7 +313,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": 8,
+   "days_left": 7,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -360,7 +349,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": 9,
+   "days_left": 8,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -369,18 +358,7 @@
      "at": "2026-10-19T13:28:54",
      "status": "new"
     }
-   ],
-   "tracking": {
-    "log": [
-     {
-      "at": "2026-10-20T14:37:04.567Z",
-      "by": "u_3czIynzDj3Ni9EAS_R637g",
-      "note": "مسئولیت پذیرفته شد"
-     }
-    ],
-    "owner": "u_3czIynzDj3Ni9EAS_R637g",
-    "stage": "identified"
-   }
+   ]
   },
   "SATE-wZ0ZrLLt9YI": {
    "id": "SATE-wZ0ZrLLt9YI",
@@ -407,7 +385,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": 9,
+   "days_left": 8,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -443,7 +421,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": 11,
+   "days_left": 10,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -479,7 +457,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": 12,
+   "days_left": 11,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -513,7 +491,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 13,
+   "days_left": 12,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -548,7 +526,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 16,
+   "days_left": 15,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -583,7 +561,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 21,
+   "days_left": 20,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -618,7 +596,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 23,
+   "days_left": 22,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -652,7 +630,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 27,
+   "days_left": 26,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -686,7 +664,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 29,
+   "days_left": 28,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -721,7 +699,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 41,
+   "days_left": 40,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -756,7 +734,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 49,
+   "days_left": 48,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -791,7 +769,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 7,
+   "days_left": 6,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -826,7 +804,7 @@
     "ai_cross_cutting",
     "medical"
    ],
-   "days_left": 27,
+   "days_left": 26,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -862,7 +840,7 @@
     "energy",
     "urban"
    ],
-   "days_left": 34,
+   "days_left": 33,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -896,7 +874,7 @@
    "domains": [
     "urban"
    ],
-   "days_left": 31,
+   "days_left": 30,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-20T09:40:22",
@@ -930,7 +908,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 84,
+   "days_left": 83,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-20T09:40:22",
@@ -1005,6 +983,211 @@
    "history": [
     {
      "at": "2026-10-20T09:40:22",
+     "status": "new"
+    }
+   ]
+  },
+  "TED-728525-2026": {
+   "id": "TED-728525-2026",
+   "source": "TED (EU)",
+   "market": "international",
+   "title": "Austria – Aviation kerosene – Flugturbinentreibstoff Jet A-1",
+   "description": "Gegenstand dieser Rahmenvereinbarung ist im Los 1 die Lieferung und Betankung von Luftfahrzeugen von bzw. mit Flugturbinentreibstoff Jet A-1 inklusive aller in derRahmenvereinbarung und in den Leistungsverzeichnissen definierten Leistungs- und Lieferkonditionen in der Region Linz/Hörsching. Gegenstand dieser Rahmenvereinbarung ist im Los 2 die Lieferung und die Betankung von Luftfahrzeugen von bzw. mit Flugturbinentreibstoff Jet A-1 inklusive aller in der Rahmenvereinbarung und in den Leistungsverzeichnissen definierten Leistungs- und Lieferkonditionen in der Region Salzburg. Gegenstand dieser Rahmenvereinbarung ist im Los 3 die Lieferung, die Betankung von Luftfahrzeugen und die Bereitstellung zur Befüllung von Flugfeldtankwagen von bzw. mit Flugturbinentreibstoff Jet A-1 inklusive aller in der Rahmenvereinbarung und in den Leistungsverzeichnissen definierten Leistungs- und Lieferkonditionen in der Region Innsbruck. Gegenstand dieser Rahmenvereinbarung ist im Los 4 die Lieferung und die Betankung von Luftfahrzeugen von bzw. mit Flugturbinentreibstoff Jet A-1 inklusive aller in der Rahmenvereinbarung und in den Leistungsverzeichnissen definierten Leistungs- und Lieferkonditionen in der Region Graz/Thalerhof. Gegenstand dieser Rahmenvereinbarung ist im Los 5 die Lieferung, die Betankung von Luftfahrzeugen und die Bereitstellung zur Befüllung von Flugfeldtankwagen von bzw. mit Flugturbinentreibstoff Jet A-1 inklusive aller in der Rahmenvereinbarung und in den Leistungsverzeichnissen definierten Leistungs- und Lieferkonditionen in der Region Klagenfurt. Gegenstand dieser Rahmenvereinbarung ist im Los 6 die Lieferung mit Eisenbahnkesselwagen und die Bereitstellung zur (Selbst)Abholung von bzw. mit Flugturbinentreibstoff Jet A-1 inklusive aller in der Rahmenvereinbarung und in den Leistungsverzeichnissen definierten Leistungs- und Lieferkonditionen in der Region Zeltweg. Gegenstand dieser Rahmenvereinbarung ist im Los 7 die Lieferung mit Eisenbahnkesselwagen von bzw. mit Flugturbinentreibstoff Jet A-1 inklusive aller in der Rahmenvereinbarung und in den Leistungsverzeichnissen definierten Leistungs- und Lieferkonditionen in der Region Hörsching (Linz). Gegenstand dieser Rahmenvereinbarung ist im Los 8 die Lieferung mit Eisenbahnkesselwagen und die Bereitstellung zur (Selbst)Abholung von bzw. mit Flugturbinentreibstoff Jet A-1 inklusive aller in der Rahmenvereinbarung und in den Leistungsverzeichnissen definierten Leistungs- und Lieferkonditionen in der Region Langenlebarn. Gegenstand dieser Rahmenvereinbarung ist im Los 9 die Lieferung Frei Haus mit Tankwagen an den jeweiligen Lieferort von Flugturbinentreibstoff Jet A-1 inklusive aller in der Rahmenvereinbarung und in den Leistungsverzeichnissen definierten Leistungs- und Lieferkonditionen in ganz Österreich.",
+   "buyer": "Auftraggeber ist die Republik Österreich (Bund), vertreten durch die Bundesministerin für Landesverteidigung, sowie durch den Bundesminister für Inneres. Bundesbeschaffung GmbH",
+   "country": "AUT",
+   "deadline": "2026-10-28",
+   "published": "2026-10-21",
+   "url": "https://ted.europa.eu/en/notice/-/detail/728525-2026",
+   "notice_type": "cn-standard",
+   "sector": "دولتی",
+   "facts": {
+    "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "رویه‌ی باز اتحادیه اروپا – شرکت‌های خارج از EU معمولاً مجازند مگر محدودیت صریح در اسناد"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "aviation"
+   ],
+   "days_left": 7,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-10-21T09:36:20",
+   "history": [
+    {
+     "at": "2026-10-21T09:36:20",
+     "status": "new"
+    }
+   ]
+  },
+  "TED-726475-2026": {
+   "id": "TED-726475-2026",
+   "source": "TED (EU)",
+   "market": "international",
+   "title": "Germany – Tanks, reservoirs, containers and pressure vessels – Auffangwanne zur Dekontamination von Einsatzkräften",
+   "description": "Die Höchstmenge der Rahmenvereinbarung beträgt 1121 Sätze Aufanngwannen und 1050 Stück Schutzeinlagen, diese Höchstmengen entsprichen der geschätzten Gesamtbedarfsmenge. Aus der Rahmenvereinbarung kann bis zu diesen Höchstmengen abgerufen werden. Die Höchstmenge der Rahmenvereinbarung beträgt 1071 Sätze Aufanngwannen und 1000 Stück Schutzeinlagen, diese Höchstmengen entsprichen der geschätzten Gesamtbedarfsmenge. Aus der Rahmenvereinbarung kann bis zu diesen Höchstmengen abgerufen werden. Die Höchstmenge der Rahmenvereinbarung beträgt 1069 Sätze Aufanngwannen und 1000 Stück Schutzeinlagen, diese Höchstmengen entsprichen der geschätzten Gesamtbedarfsmenge. Aus der Rahmenvereinbarung kann bis zu diesen Höchstmengen abgerufen werden.",
+   "buyer": "Bundesrepublik Deutschland, vertreten durch das Bundesministerium des Innern, vertreten durch das Beschaffungsamt des BMI",
+   "country": "DEU",
+   "deadline": "2026-11-02",
+   "published": "2026-10-21",
+   "url": "https://ted.europa.eu/en/notice/-/detail/726475-2026",
+   "notice_type": "cn-standard",
+   "sector": "دولتی",
+   "facts": {
+    "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "رویه‌ی باز اتحادیه اروپا – شرکت‌های خارج از EU معمولاً مجازند مگر محدودیت صریح در اسناد"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "energy"
+   ],
+   "days_left": 12,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-10-21T09:36:20",
+   "history": [
+    {
+     "at": "2026-10-21T09:36:20",
+     "status": "new"
+    }
+   ]
+  },
+  "WB-OP00476001": {
+   "id": "WB-OP00476001",
+   "source": "World Bank",
+   "market": "international",
+   "title": "The selection of Digital Transformation Senior Coordinator",
+   "description": "Jordan: Modernizing Education, Skills, and Administrative Reforms (MASAR) Operation. Ministry of Education and Human Resources Development Modernizing Education, Skills, and Administrative Reforms (MASAR) Program Terms of Reference for: Digital Transformation Senior Coordinator Reference No.: JO-MOE-566807-CS-INDV Program Background: The Modernizing Education, Skills, and Administrative Reforms (MASAR) Program for Results (PforR) is a transformative, system-wide reform initiative anchored in Jordan’s Economic Modernization Vision (EMV). The MASAR Operation is designed to support the Ministry of Education and Human Resources Development in addressing foundational bottlenecks in access, quality, and relevance of education, with a dual emphasis on equity and efficiency. The operation aims to strengthen institutional capacity while enabling measurable improvements in learning outcomes and employability, particularly through early childhood education and labor market-aligned technical and vocational education and training (TVET), and digital transformation in education. The program became effective in 2024, with a total financing envelope of USD 400 million, supported by the International Bank for Reconstruction and Development (IBRD). It comprises two core components: Program-for-Results (PforR) : the principal financing instrument that disburses against verified achievement of results tied to government reform priorities. Investment Project Financing (IPF) : a complementary technical assistance (TA) component aimed at supporting the implementation of system-strengthening activities and accelerating the achievement of Disbursement Linked Indicators (DLIs). MASAR is structured around four interlinked Results Areas (RAs) that are strategically aligned with key education-sector transition points and cross-cutting governance reforms: RA1: Home to School – Expanding Access to Foundational Learning. This includes (i) increasing equitable access to KG2, particularly in under-served districts and refugee-hosting communities; (ii) enhancing the quality of early childhood education through a revised KG1-KG2 curriculum and quality assurance mechanisms; and (iii) improving foundational literacy skills for Grades 1–3 through targeted pedagogical interventions and a comprehensive implementation plan. RA2: School to Work – Increasing Access to Labor Market-Relevant TVET. MASAR seeks to improve the alignment of TVET with private sector needs by institutionalizing public-private partnerships, scaling apprenticeships, and expanding career guidance and employment pathways. This is complemented by the operationalization of an equivalency system that supports the portability and recognition of TVET qualifications, and enhanced use of learner trajectory data to inform student support services. RA3: Strengthening Sector Governance and Efficiency. The program supports the operationalization of a restructured governance model for the education sector and introduces reforms to human resource management, with a particular focus on teacher recruitment, deployment, and professional development policies. RA4: Digital Transformation in Education, to be introduced through the MASAR Additional Financing (AF), supporting digital and AI-enabled learning for students in Grades 4-12 and strengthening the institutional infrastructure needed for national-scale technology integration in education. In addition to its core education objectives, MASAR embeds environmental and social sustainability principles across its implementation. Ultimately, MASAR is designed to deliver measurable, inclusive, and sustainable improvements in Jordan’s education system. It expands access to early learning, strengthens foundational skills, improves graduate employability, strengthens digital skills, technology-enabled learning, and future-ready competencies, and reinforces institutional coherence through evidence-based policymaking. By supporting inclusive education and strengthening scho",
+   "buyer": "Ministry of Education",
+   "country": "",
+   "deadline": "2026-11-03",
+   "published": "2026-10-19",
+   "url": "https://projects.worldbank.org/en/projects-operations/procurement-detail/OP00476001",
+   "notice_type": "Request for Expression of Interest",
+   "procurement_method": "Individual Consultant Selection",
+   "sector": "دولتی (پروژه با تأمین مالی بانک جهانی)",
+   "facts": {
+    "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "طبق آگهی: experience education: a bachelor's degree in education, digital education, ict, computer science, public policy, economics, development studies, engineering, or a related field",
+    "international": "قواعد خرید بانک جهانی: باز برای شرکت‌های همه‌ی کشورهای واجد شرایط (Eligibility rules)"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "ai_cross_cutting"
+   ],
+   "days_left": 13,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-10-21T09:36:20",
+   "history": [
+    {
+     "at": "2026-10-21T09:36:20",
+     "status": "new"
+    }
+   ]
+  },
+  "TED-728006-2026": {
+   "id": "TED-728006-2026",
+   "source": "TED (EU)",
+   "market": "international",
+   "title": "Sweden – Tanks, reservoirs and containers; central-heating radiators and boilers – LIN tappningsstation",
+   "description": "Upphandlingen omfattar komplettering av funktioner till två befintliga manuella fyllningsplatser och installation av en ny plats där det ska gå att fylla både öppna, vanligt kärl med lock och slutna trycksatt kärl, utan lock med ytande nitrogen",
+   "buyer": "Uppsala universitet",
+   "country": "SWE",
+   "deadline": "2026-11-21",
+   "published": "2026-10-21",
+   "url": "https://ted.europa.eu/en/notice/-/detail/728006-2026",
+   "notice_type": "cn-standard",
+   "sector": "دولتی",
+   "facts": {
+    "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "رویه‌ی باز اتحادیه اروپا – شرکت‌های خارج از EU معمولاً مجازند مگر محدودیت صریح در اسناد"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "energy"
+   ],
+   "days_left": 31,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-10-21T09:36:20",
+   "history": [
+    {
+     "at": "2026-10-21T09:36:20",
+     "status": "new"
+    }
+   ]
+  },
+  "TED-728925-2026": {
+   "id": "TED-728925-2026",
+   "source": "TED (EU)",
+   "market": "international",
+   "title": "Norway – IT services: consulting, software development, Internet and support – Framework agreements for consultancy services - web development, web design and project management.",
+   "description": "The agreement shall ensure the contracting authority consultants with experience in: - Development of websites. - Development of internet based applications. - Development of network based services and API. - Implementation and testing The agreement shall ensure the contracting authority consultants with experience in: - Systemic design and service design. - Interaction design (UI / UX) - Content design - Universal design The agreement shall ensure the contracting authority consultants with experience in: - Management of digitalisation and development projects. - Project management, including coordination of multi-disciplinary teams and interested parties. - Alteration work, anchoring and communication. - Flexible work methods and continual improvement.",
+   "buyer": "Statsforvalterens fellestjenester",
+   "country": "NOR",
+   "deadline": "2026-11-23",
+   "published": "2026-10-21",
+   "url": "https://ted.europa.eu/en/notice/-/detail/728925-2026",
+   "notice_type": "cn-standard",
+   "sector": "دولتی",
+   "facts": {
+    "price": "ارزش برآوردی: 150,000,000 NOK (3 بخش)",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "رویه‌ی باز اتحادیه اروپا – شرکت‌های خارج از EU معمولاً مجازند مگر محدودیت صریح در اسناد"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "web"
+   ],
+   "days_left": 33,
+   "line": "web",
+   "status": "new",
+   "first_seen": "2026-10-21T09:36:20",
+   "history": [
+    {
+     "at": "2026-10-21T09:36:20",
+     "status": "new"
+    }
+   ]
+  },
+  "TED-729362-2026": {
+   "id": "TED-729362-2026",
+   "source": "TED (EU)",
+   "market": "international",
+   "title": "Germany – Construction work for oil and gas pipelines – GDRM Lampertheim (Mess- und Analysetechnik)",
+   "description": "Gegenstand der Ausschreibung ist die vollständige Werkplanung, Lieferung, Montage, Inbetriebnahme und betriebsbereite Übergabe der für den Neubau der GDRM-Anlage Lampertheim 5 erforderlichen Anlagen und Systeme. Der Leistungsumfang umfasst die Messanlagen, die Gasanalyse, die Heizgasaufbereitung für die Kesselanlage sowie die gesamte Elektro-, Mess-, Steuerungs- und Regelungstechnik (EMSR). Zum Leistungsumfang gehören insbesondere: - die vollständige EMSR-Technik einschließlich Werkplanung, Koordination, Prüfungen und Abnahmen, - die Lieferung und Errichtung der Niederspannungsanlage, der USV-Anlage sowie aller erforderlichen Energie- und Signalkabel, - die Ausführung der Brandmelde- und Gaswarnanlage, - die Herstellung sämtlicher Kabeltragsysteme, Kabeldurchführungen sowie der Erdungs- und Blitzschutzanlage, - die technische Gebäudeausrüstung, insbesondere Beleuchtungs- und Steckdoseninstallationen, - die Lieferung und Montage von fünf Messstrecken, jeweils bestehend aus zwei Ultra-schallgaszählern, Wärmeübertrager und Regelventil; die Aufstellung erfolgt in einem bauseits bereitgestellten Gebäude, - die Lieferung und Montage der Analysentechnik einschließlich Prozessgaschromatograph (PGC), Auswertetechnik und Einhausung in einem Analysecontainer, - die Lieferung und Montage der Heizgasaufbereitung einschließlich Vorwärmung, Regelventilen und eichpflichtiger Messung sowie sämtlicher Druckregelanlagen gemäß DVGW-Arbeitsblatt G 491; die Aufstellung erfolgt im Messgebäude. Die Gesamtanlage ist als funktionsfähige, betriebsbereite und in sich geschlossene Einheit zu planen, zu liefern, zu montieren und in Betrieb zu nehmen.",
+   "buyer": "GASCADE Gastransport GmbH",
+   "country": "DEU",
+   "deadline": "",
+   "published": "2026-10-21",
+   "url": "https://ted.europa.eu/en/notice/-/detail/729362-2026",
+   "notice_type": "cn-standard",
+   "sector": "نامشخص",
+   "facts": {
+    "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "energy"
+   ],
+   "days_left": null,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-10-21T09:36:20",
+   "history": [
+    {
+     "at": "2026-10-21T09:36:20",
      "status": "new"
     }
    ]
@@ -1188,6 +1371,68 @@
     "TED-723054-2026",
     "TED-723592-2026",
     "TED-725345-2026"
+   ],
+   "actioned_ids": [],
+   "reminders": []
+  },
+  {
+   "at": "2026-10-21T09:36:20",
+   "collected": 287,
+   "matched": 18,
+   "partner_drafts": [],
+   "events_added": 0,
+   "investors_added": 0,
+   "investor_drafts": [
+    "revo",
+    "212",
+    "hub71",
+    "aramco-ventures",
+    "antler-menap",
+    "equinor-ventures",
+    "shell-ventures",
+    "ycombinator",
+    "techstars"
+   ],
+   "leads_added": 0,
+   "events_soon": [
+    {
+     "start": "2026-10-28",
+     "name": "Media Expo 1405 (2nd)",
+     "name_fa": "دومین نمایشگاه مدیا اکسپو (با بخش هوش مصنوعی)",
+     "city": "تهران (برج میلاد)"
+    },
+    {
+     "start": "2026-11-02",
+     "name": "ADIPEC 2026",
+     "name_fa": "نمایشگاه و کنفرانس نفت و گاز ابوظبی",
+     "city": "ابوظبی"
+    },
+    {
+     "start": "2026-11-03",
+     "name": "Smart City Expo World Congress 2026",
+     "name_fa": "کنگره جهانی شهر هوشمند",
+     "city": "بارسلونا"
+    },
+    {
+     "start": "2026-11-09",
+     "name": "Web Summit 2026",
+     "name_fa": "وب سامیت لیسبون",
+     "city": "لیسبون"
+    },
+    {
+     "start": "2026-11-16",
+     "name": "MEDICA 2026",
+     "name_fa": "نمایشگاه تجهیزات و فناوری پزشکی دوسلدورف",
+     "city": "دوسلدورف"
+    }
+   ],
+   "new_ids": [
+    "TED-728525-2026",
+    "TED-726475-2026",
+    "WB-OP00476001",
+    "TED-728006-2026",
+    "TED-728925-2026",
+    "TED-729362-2026"
    ],
    "actioned_ids": [],
    "reminders": []
