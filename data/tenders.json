@@ -25,7 +25,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": 1,
+   "days_left": 0,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -61,14 +61,19 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": 0,
+   "days_left": -1,
    "line": "ai",
-   "status": "new",
+   "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
    "history": [
     {
      "at": "2026-10-19T13:28:54",
      "status": "new"
+    },
+    {
+     "at": "2026-10-22T09:39:52",
+     "status": "expired",
+     "note": ""
     }
    ]
   },
@@ -97,7 +102,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": 1,
+   "days_left": 0,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -133,7 +138,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": 1,
+   "days_left": 0,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -169,7 +174,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": 1,
+   "days_left": 0,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -205,7 +210,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": 2,
+   "days_left": 1,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -241,7 +246,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": 3,
+   "days_left": 2,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -277,7 +282,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": 7,
+   "days_left": 6,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -313,7 +318,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": 7,
+   "days_left": 6,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -349,7 +354,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": 8,
+   "days_left": 7,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -385,7 +390,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": 8,
+   "days_left": 7,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -421,7 +426,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": 10,
+   "days_left": 9,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -457,7 +462,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": 11,
+   "days_left": 10,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -491,7 +496,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 12,
+   "days_left": 11,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -526,7 +531,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 15,
+   "days_left": 14,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -561,7 +566,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 20,
+   "days_left": 19,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -596,7 +601,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 22,
+   "days_left": 21,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -630,7 +635,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 26,
+   "days_left": 25,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -664,7 +669,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 28,
+   "days_left": 27,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -699,7 +704,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 40,
+   "days_left": 39,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -734,7 +739,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 48,
+   "days_left": 47,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -769,7 +774,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 6,
+   "days_left": 5,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -804,7 +809,7 @@
     "ai_cross_cutting",
     "medical"
    ],
-   "days_left": 26,
+   "days_left": 25,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -840,7 +845,7 @@
     "energy",
     "urban"
    ],
-   "days_left": 33,
+   "days_left": 32,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -874,7 +879,7 @@
    "domains": [
     "urban"
    ],
-   "days_left": 30,
+   "days_left": 29,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-20T09:40:22",
@@ -908,7 +913,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 83,
+   "days_left": 82,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-20T09:40:22",
@@ -1010,7 +1015,7 @@
    "domains": [
     "aviation"
    ],
-   "days_left": 7,
+   "days_left": 6,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-21T09:36:20",
@@ -1044,7 +1049,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 12,
+   "days_left": 11,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-21T09:36:20",
@@ -1062,7 +1067,7 @@
    "title": "The selection of Digital Transformation Senior Coordinator",
    "description": "Jordan: Modernizing Education, Skills, and Administrative Reforms (MASAR) Operation. Ministry of Education and Human Resources Development Modernizing Education, Skills, and Administrative Reforms (MASAR) Program Terms of Reference for: Digital Transformation Senior Coordinator Reference No.: JO-MOE-566807-CS-INDV Program Background: The Modernizing Education, Skills, and Administrative Reforms (MASAR) Program for Results (PforR) is a transformative, system-wide reform initiative anchored in Jordan’s Economic Modernization Vision (EMV). The MASAR Operation is designed to support the Ministry of Education and Human Resources Development in addressing foundational bottlenecks in access, quality, and relevance of education, with a dual emphasis on equity and efficiency. The operation aims to strengthen institutional capacity while enabling measurable improvements in learning outcomes and employability, particularly through early childhood education and labor market-aligned technical and vocational education and training (TVET), and digital transformation in education. The program became effective in 2024, with a total financing envelope of USD 400 million, supported by the International Bank for Reconstruction and Development (IBRD). It comprises two core components: Program-for-Results (PforR) : the principal financing instrument that disburses against verified achievement of results tied to government reform priorities. Investment Project Financing (IPF) : a complementary technical assistance (TA) component aimed at supporting the implementation of system-strengthening activities and accelerating the achievement of Disbursement Linked Indicators (DLIs). MASAR is structured around four interlinked Results Areas (RAs) that are strategically aligned with key education-sector transition points and cross-cutting governance reforms: RA1: Home to School – Expanding Access to Foundational Learning. This includes (i) increasing equitable access to KG2, particularly in under-served districts and refugee-hosting communities; (ii) enhancing the quality of early childhood education through a revised KG1-KG2 curriculum and quality assurance mechanisms; and (iii) improving foundational literacy skills for Grades 1–3 through targeted pedagogical interventions and a comprehensive implementation plan. RA2: School to Work – Increasing Access to Labor Market-Relevant TVET. MASAR seeks to improve the alignment of TVET with private sector needs by institutionalizing public-private partnerships, scaling apprenticeships, and expanding career guidance and employment pathways. This is complemented by the operationalization of an equivalency system that supports the portability and recognition of TVET qualifications, and enhanced use of learner trajectory data to inform student support services. RA3: Strengthening Sector Governance and Efficiency. The program supports the operationalization of a restructured governance model for the education sector and introduces reforms to human resource management, with a particular focus on teacher recruitment, deployment, and professional development policies. RA4: Digital Transformation in Education, to be introduced through the MASAR Additional Financing (AF), supporting digital and AI-enabled learning for students in Grades 4-12 and strengthening the institutional infrastructure needed for national-scale technology integration in education. In addition to its core education objectives, MASAR embeds environmental and social sustainability principles across its implementation. Ultimately, MASAR is designed to deliver measurable, inclusive, and sustainable improvements in Jordan’s education system. It expands access to early learning, strengthens foundational skills, improves graduate employability, strengthens digital skills, technology-enabled learning, and future-ready competencies, and reinforces institutional coherence through evidence-based policymaking. By supporting inclusive education and strengthening scho",
    "buyer": "Ministry of Education",
-   "country": "",
+   "country": "Jordan",
    "deadline": "2026-11-03",
    "published": "2026-10-19",
    "url": "https://projects.worldbank.org/en/projects-operations/procurement-detail/OP00476001",
@@ -1079,7 +1084,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": 13,
+   "days_left": 12,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-21T09:36:20",
@@ -1113,7 +1118,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 31,
+   "days_left": 30,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-21T09:36:20",
@@ -1147,7 +1152,7 @@
    "domains": [
     "web"
    ],
-   "days_left": 33,
+   "days_left": 32,
    "line": "web",
    "status": "new",
    "first_seen": "2026-10-21T09:36:20",
@@ -1188,6 +1193,142 @@
    "history": [
     {
      "at": "2026-10-21T09:36:20",
+     "status": "new"
+    }
+   ]
+  },
+  "TED-731803-2026": {
+   "id": "TED-731803-2026",
+   "source": "TED (EU)",
+   "market": "international",
+   "title": "Italy – Services related to the oil and gas industry – CONCESSIONE DISTRIBUTORI CARBURANTI AC MILANO",
+   "description": "CCZ0014L26 - ATTIVITA DI COMMITTENZA AUSILIARIA AI SENSI DELL ART. 62, COMMI 6, LETT. B, 9, 11 E 13 DEL D. LGS. N. 36 2023, FINALIZZATA ALLA STIPULA DI UNA CONCESSIONE AVENTE AD OGGETTO IL SERVIZIO DI GESTIONE DI 12 STAZIONI DI RIFORNIMENTO CARBURANTE URBANE ED EXTRAURBANE DISLOCATE TRA MILANO E L HINTERLAND IN FAVORE DELL AUTOMOBILE CLUB MILANO MEDIANTE INDIZIONE DI UNA PROCEDURA APERTA EX ART. 71 D.LGS. 36 2023",
+   "buyer": "ACI INFORMATICA SPA",
+   "country": "ITA",
+   "deadline": "2026-11-09",
+   "published": "2026-10-22",
+   "url": "https://ted.europa.eu/en/notice/-/detail/731803-2026",
+   "notice_type": "cn-standard",
+   "sector": "دولتی",
+   "facts": {
+    "price": "ارزش برآوردی: 59,450,943 EUR",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "رویه‌ی باز اتحادیه اروپا – شرکت‌های خارج از EU معمولاً مجازند مگر محدودیت صریح در اسناد"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "energy"
+   ],
+   "days_left": 18,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-10-22T09:39:52",
+   "history": [
+    {
+     "at": "2026-10-22T09:39:52",
+     "status": "new"
+    }
+   ]
+  },
+  "TED-730727-2026": {
+   "id": "TED-730727-2026",
+   "source": "TED (EU)",
+   "market": "international",
+   "title": "France – Teaching equipment – ACQUISITION D'EQUIPEMENTS SPECIFIQUES DESTINES A L'EQUIPEMENT D'UN PLATEAU TECHNIQUE PEDAGOGIQUE \"SMART GRID\" AU LYCEE PABLO NERUDA (38)",
+   "description": "Fourniture, installation, raccordement et mise en service d'un ensemble didactique HTA reproduisant un poste de distribution électrique urbain automatisé et communicant. L'ensemble comprend : une cellule secondaire MT à isolement 24 kV de type SM AIRSET IQI ou équivalent, complétée de deux cellules C5 et deux protections P5 pour la simulation d'une boucle de réseau urbain ; une interface de télé conduite intégrant la reconfiguration automatique de boucle (technologie EPAS ou équivalent) avec fonction d'auto-cicatrisation ; un système de contrôle par monitoring thermique (capteurs sans fil type TH110) ; un transformateur HTA/BT sec simulé équipé d'une protection DGPT2 ; un TGBT avec chaîne d'interverrouillage et mallette d'injection primaire/secondaire ; une boucle HTA simulée sous tension BT (400V triphasé) intégrant une protection anti-arc électrique et des capteurs de diagnostic en temps réel. La prestation inclut la formation des enseignants sur site à la prise en main opérationnelle des équipements, ainsi qu'une documentation technique et un dossier pédagogique avec scénarios de TP. Les spécifications techniques détaillées figurent au CCTP, lot n°001. Fourniture, câblage, paramétrage et mise en service d'une zone habitation pédagogique composée de 4 habitations distinctes (chalets ou construction modulaire 3D d'environ 12 m² chacune), interconnectées au réseau smart grid de la plateforme. Chaque habitation met en oeuvre une technologie domotique différente : habitation n°1 sous protocole Zigbee (tableau GTL connecté, détection intrusion, VDI résidentiel, pompe à chaleur air/air, VMC double flux) ; habitation n°2 sous protocole Thread/Matter avec raccordement fibre optique FTTH ; habitation n°3 sous système MyHome (bus SCS, portier vidéo, alarme secourue, chauffe-eau thermodynamique) ; habitation n°4 combinant Zigbee, équipements de sécurité (détecteurs fuite d'eau, fumée, température/humidité) et raccordement fibre optique. Chaque habitation intègre gestion des ouvrants, éclairage piloté, comptage d'énergie et fluides, borne de recharge de véhicule électrique résidentielle, et supervision par tablette tactile. La prestation inclut l'installation, le raccordement, le paramétrage et le câblage complets des 4 habitations, ainsi que la formation des enseignants sur site. Les spécifications techniques détaillées figurent au CCTP, lot n°002. Fourniture, câblage, raccordement et mise en service d'une \"rue connectée \" pédagogique d'environ 18 mètres, interconnectée au réseau smart grid de la plateforme et alimentée depuis un point de raccordement REMBT. L'ensemble comprend : un système d'éclairage public connecté et didactisé (4 mâts LED avec télégestion, supervision, mesure et détection de présence, intégrant borne Wi-Fi, haut-parleur IP et caméra IP en équipements connexes) ; une infrastructure fibre optique en armoire de rue ; deux bornes de recharge de véhicules électriques communicantes (mono 4,6 kW et tri 22 kW, avec coffret de gestion d'énergie et simulation de présence véhicule) ; un système de vidéoprotection urbaine complet (caméras IP, baie d'enregistrement, tiroir optique) ; un système d'affichage dynamique urbain connecté ; une charge résistive mobile de 8 kW permettant de simuler une consommation réelle sur le réseau. La prestation inclut l'installation, le raccordement, le paramétrage, le câblage de l'ensemble des équipements, les développements spécifiques nécessaires ainsi que la formation des enseignants sur site. Les spécifications techniques détaillées figurent au CCTP, lot n°003. Fourniture, installation, raccordement et mise en service d'une zone industrielle pédagogique comprenant un TGBT/TGE communicant assurant la distribution, la protection, le contrôle commande et la mesure de l'énergie électrique (compensation d'énergie réactive, surveillance multi-départs, passerelle Modbus/Ethernet), ainsi que deux systèmes industriels communicants didactiques : un système d'étude, de maintenance et de test de pompes ",
+   "buyer": "Lycee Des Metiers Pablo Neruda",
+   "country": "FRA",
+   "deadline": "2026-11-20",
+   "published": "2026-10-22",
+   "url": "https://ted.europa.eu/en/notice/-/detail/730727-2026",
+   "notice_type": "cn-standard",
+   "sector": "دولتی",
+   "facts": {
+    "price": "ارزش برآوردی: 1,055,700 EUR (7 بخش)",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "رویه‌ی باز اتحادیه اروپا – شرکت‌های خارج از EU معمولاً مجازند مگر محدودیت صریح در اسناد"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "energy"
+   ],
+   "days_left": 29,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-10-22T09:39:52",
+   "history": [
+    {
+     "at": "2026-10-22T09:39:52",
+     "status": "new"
+    }
+   ]
+  },
+  "TED-731812-2026": {
+   "id": "TED-731812-2026",
+   "source": "TED (EU)",
+   "market": "international",
+   "title": "Croatia – Tanks, reservoirs, containers and pressure vessels – Nabava skladišne opreme za potrebe Agrotehnološkog centra za skladištenje i doradu povrtlarskih i voćarskih kultura u Cerni",
+   "description": "Predmet nabave je nabava skladišne opreme za potrebe Agrotehnološkog centra za skladištenje i doradu povrtlarskih i voćarskih kultura u Cerni. Oprema koja se nudi mora biti sukladno tehničkim specifikacijama navedenim u troškovniku.",
+   "buyer": "VUKOVARSKO-SRIJEMSKA ŽUPANIJA",
+   "country": "HRV",
+   "deadline": "2026-11-20",
+   "published": "2026-10-22",
+   "url": "https://ted.europa.eu/en/notice/-/detail/731812-2026",
+   "notice_type": "cn-standard",
+   "sector": "دولتی",
+   "facts": {
+    "price": "ارزش برآوردی: 384,800 EUR",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "رویه‌ی باز اتحادیه اروپا – شرکت‌های خارج از EU معمولاً مجازند مگر محدودیت صریح در اسناد"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "energy"
+   ],
+   "days_left": 29,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-10-22T09:39:52",
+   "history": [
+    {
+     "at": "2026-10-22T09:39:52",
+     "status": "new"
+    }
+   ]
+  },
+  "TED-732964-2026": {
+   "id": "TED-732964-2026",
+   "source": "TED (EU)",
+   "market": "international",
+   "title": "Netherlands – Guidance and counselling services – Support services for CA Energy Efficiency Directive 4",
+   "description": "This tender procedure is started to select a contractor that will support RVO with the activities commonly termed as Communications Activities encompassing meeting logistics, the maintenance and development of the CA EED4 website and communication activities. The estimated value of the Contract is € 1,150,000, excluding VAT.",
+   "buyer": "Ministerie van Economische Zaken",
+   "country": "NLD",
+   "deadline": "2026-11-30",
+   "published": "2026-10-22",
+   "url": "https://ted.europa.eu/en/notice/-/detail/732964-2026",
+   "notice_type": "cn-standard",
+   "sector": "دولتی",
+   "facts": {
+    "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "رویه‌ی باز اتحادیه اروپا – شرکت‌های خارج از EU معمولاً مجازند مگر محدودیت صریح در اسناد"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "energy"
+   ],
+   "days_left": 39,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-10-22T09:39:52",
+   "history": [
+    {
+     "at": "2026-10-22T09:39:52",
      "status": "new"
     }
    ]
@@ -1433,6 +1574,72 @@
     "TED-728006-2026",
     "TED-728925-2026",
     "TED-729362-2026"
+   ],
+   "actioned_ids": [],
+   "reminders": []
+  },
+  {
+   "at": "2026-10-22T09:39:53",
+   "collected": 326,
+   "matched": 21,
+   "partner_drafts": [],
+   "events_added": 0,
+   "investors_added": 0,
+   "investor_drafts": [
+    "revo",
+    "212",
+    "hub71",
+    "aramco-ventures",
+    "antler-menap",
+    "equinor-ventures",
+    "shell-ventures",
+    "ycombinator",
+    "techstars"
+   ],
+   "leads_added": 0,
+   "events_soon": [
+    {
+     "start": "2026-10-28",
+     "name": "Media Expo 1405 (2nd)",
+     "name_fa": "دومین نمایشگاه مدیا اکسپو (با بخش هوش مصنوعی)",
+     "city": "تهران (برج میلاد)"
+    },
+    {
+     "start": "2026-11-02",
+     "name": "ADIPEC 2026",
+     "name_fa": "نمایشگاه و کنفرانس نفت و گاز ابوظبی",
+     "city": "ابوظبی"
+    },
+    {
+     "start": "2026-11-03",
+     "name": "Smart City Expo World Congress 2026",
+     "name_fa": "کنگره جهانی شهر هوشمند",
+     "city": "بارسلونا"
+    },
+    {
+     "start": "2026-11-09",
+     "name": "Web Summit 2026",
+     "name_fa": "وب سامیت لیسبون",
+     "city": "لیسبون"
+    },
+    {
+     "start": "2026-11-16",
+     "name": "MEDICA 2026",
+     "name_fa": "نمایشگاه تجهیزات و فناوری پزشکی دوسلدورف",
+     "city": "دوسلدورف"
+    },
+    {
+     "start": "2026-12-06",
+     "name": "NeurIPS 2026",
+     "name_fa": "کنفرانس NeurIPS (سیدنی / آتلانتا / پاریس)",
+     "city": "سیدنی، آتلانتا، پاریس"
+    }
+   ],
+   "new_ids": [
+    "TED-731803-2026",
+    "TED-730727-2026",
+    "TED-731812-2026",
+    "TED-732964-2026"
    ],
    "actioned_ids": [],
    "reminders": []
