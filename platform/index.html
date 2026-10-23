@@ -170,7 +170,7 @@ const SUBS = {
   events:[["iran","ایران"],["world","جهان"],["all","همه"],["taken","در دست پیگیری"]],
   erp:[["domains","حوزه‌های فعالیت"],["products","توسعه‌ی محصول هوشمند"],["people","نیروی انسانی"],["finance","مالی"],["clients","مشتریان و قراردادها"],["backup","پشتیبان‌گیری"]],
   bpms:[["myday","روز من"],["board","تخته‌ی اسکرام"],["backlog","بک‌لاگ و برنامه‌ریزی"],["sprints","اسپرینت‌ها"],["tasks","فهرست تسک‌ها"],["reports","گزارش عملکرد"],["rarchive","بایگانی گزارش‌ها"],["teams","تیم‌ها"],["process","فرایندها"],["calendar","تقویم"],["members","اعضا و ثبت‌نام"],["nda","قرارداد محرمانگی"],["training","فرم آموزش"]],
-  letters:[["new","نامه‌ی جدید (ساخت فایل Word)"],["archive","بایگانی نامه‌های پیشین و پیگیری"]],
+  letters:[["new","نامه‌ی جدید (ساخت فایل Word)"],["archive","پیگیری و بایگانی نامه‌ها"]],
   scholar:[["applied","اقدام‌شده و در دست بررسی"],["human","مسئول انسانی"],["doing","در دست اقدام"],["todo","اقدام‌نشده"],["profile","مشخصات و رزومه من"]],
   articles:[["applied","اقدام‌شده و در دست بررسی"],["doing","در دست اقدام"],["todo","اقدام‌نشده"],["product","محصول ویژه‌ی مقاله"],["claude","تسک برای Claude"],["evidence","شواهد و داده‌ی واقعی"],["submit","ثبت چکیده و ثبت‌نام (مسئول انسانی)"],["list","فهرست کامل"]],
   patent:[["home","پتنت‌ها"],["human","مسئول انسانی"],["ops","فرصت‌های ثبت اختراع"],["products","محصولات ریپو"]]
@@ -1467,13 +1467,13 @@ const emptyLike = anchor => `<w:p>${paraPPr(anchor)}</w:p>`;
 function fillHeaderMeta(xml, vals){
   let n=0;
   const out=xml.replace(/<w:p(?=[ >])(?:(?!<w:p[ >])[\s\S])*?<\/w:p>/g, p=>{
-    const t=plainText(p).trim(); const lab=/^(شماره|تاریخ|پیوست)\s*:/.exec(t); if(!lab) return p;
-    const runs=p.match(/<w:r(?:\s[^>]*)?>(?:(?!<\/w:r>)[\s\S])*<\/w:r>/g)||[]; if(runs.length<2) return p;
+    const t=plainText(p).trim(); const lab=/^(شماره|تاریخ|پیوست)\s*:(\s?)/.exec(t); if(!lab) return p;
     const key={"شماره":"number","تاریخ":"date","پیوست":"attachments"}[lab[1]];
-    const rpr=(runs[1].match(/<w:rPr>[\s\S]*?<\/w:rPr>/)||[""])[0];
-    const first=p.indexOf(runs[0]), lastRun=runs[runs.length-1], end=p.lastIndexOf(lastRun)+lastRun.length;
+    if(vals[key]==null) return p;                                  // field not to be touched
+    const run=firstTextRun(p); if(!run) return p;                  // the label and the value may be split over several runs: rewrite the whole line in the first run's formatting
+    const rpr=(run.match(/<w:rPr>[\s\S]*?<\/w:rPr>/)||[""])[0];
     n++;
-    return p.slice(0,first+runs[0].length)+`<w:r>${rpr}<w:t xml:space="preserve"> ${WX(vals[key])}</w:t></w:r>`+p.slice(end);
+    return p.match(/^<w:p[^>]*>/)[0]+paraPPr(p)+`<w:r>${rpr}<w:t xml:space="preserve">${lab[1]}:${lab[2]}${WX(vals[key])}</w:t></w:r></w:p>`;
   });
   return {xml:out,n};
 }
@@ -1551,6 +1551,23 @@ async function fillLetterTemplate(entries, L, C, sig){
     return await zipStore(entries);
   } finally { WD.font=true; }
 }
+// A finished letter (its own .docx kept as the master): only the number and date in the header change, optionally the recipient's name line.
+async function restampDocx(entries, number, dateStr, recipientLine){
+  const dec=new TextDecoder(), enc=new TextEncoder(); let n=0;
+  for(const e of entries){
+    if(/^word\/(header|footer)\d*\.xml$/.test(e.name)){ const r=fillHeaderMeta(dec.decode(e.data),{number,date:dateStr,attachments:null}); if(r.n){ e.data=enc.encode(r.xml); n+=r.n; } }
+  }
+  if(recipientLine){
+    const e=entries.find(x=>x.name==="word/document.xml"), doc=dec.decode(e.data), open=doc.match(/<w:body[^>]*>/);
+    const sm=doc.match(/(<w:sectPr(?:(?!<w:sectPr)[\s\S])*<\/w:sectPr>)\s*<\/w:body>/);
+    if(open&&sm){
+      const from=open.index+open[0].length, segs=topSegments(doc.slice(from,sm.index));
+      const i=segs.findIndex(g=>g.p&&/^(?:جناب|سرکار)/.test(plainText(g.xml).replace(/\u200c/g,"").trim()));
+      if(i>=0){ segs[i].xml=withText(segs[i].xml,recipientLine); e.data=enc.encode(doc.slice(0,from)+segs.map(g=>g.xml).join("")+doc.slice(sm.index)); }
+    }
+  }
+  return {bytes:await zipStore(entries), stamped:n};
+}
 /*DOCX-END*/
 const jalaliParts = d => { const f=new Intl.DateTimeFormat("en-u-ca-persian",{year:"numeric",month:"2-digit",day:"2-digit"}).formatToParts(new Date((d||new Date().toISOString().slice(0,10))+"T12:00:00")); const g=t=>String((f.find(p=>p.type===t)||{}).value||"").replace(/\D/g,""); return {y:g("year"),m:g("month").padStart(2,"0"),d:g("day").padStart(2,"0")}; };
 
@@ -1569,7 +1586,17 @@ async function prepImage(assetId, maxPx){ // asset -> PNG bytes + size, so the W
 }
 const b64ToBytes = s => Uint8Array.from(atob(s), c=>c.charCodeAt(0));
 const bytesToB64 = u8 => { let s=""; for(let i=0;i<u8.length;i+=0x8000) s+=String.fromCharCode.apply(null,u8.subarray(i,i+0x8000)); return btoa(s); };
+const letterPacks = {};   // finished letters (their own .docx, kept as base64 inside one JSON asset) are fetched once per page load
+async function packDoc(assetId, key){
+  if(!letterPacks[assetId]) letterPacks[assetId]=fetch(blobUrl(assetId)).then(r=>{ if(!r.ok) throw new Error("pack "+r.status); return r.json(); }).catch(e=>{ delete letterPacks[assetId]; throw e; });
+  const m=await letterPacks[assetId]; if(!m[key]) throw new Error("letter file missing in pack: "+key);
+  return b64ToBytes(m[key]);
+}
 async function makeLetterDocx(l){
+  if(l.src_pack){   // a finished letter prepared in Word: its own file is the master; only number/date (and the recipient's name line) are refreshed
+    const j=jalaliParts(l.date);
+    return (await restampDocx(await unzip(await packDoc(l.src_pack,l.src_key)), l.number, `${j.y}/${j.m}/${j.d}`, String(l.recipient_line||"").trim())).bytes;
+  }
   const st=S.settings, lh=S.lh, ceo=S.members.find(m=>m.id===st.ceo_member);
   const sigId = l.ceo_sig ? (l.ceo_sig.asset||st.ceo_sig_asset) : null;
   const sig = sigId ? await prepImage(sigId,600) : null;
@@ -1578,7 +1605,7 @@ async function makeLetterDocx(l){
     return buildLetterDocx({...L,dateFa:enDate(l.date)},
       {nameFa:I.name,nameEn:"",footer:[I.address,I.website,I.email].filter(Boolean).join(" · "),ceoName:I.signatory,ceoTitle:I.title}, logo, sig, true); }
   const C={nameFa:st.name_fa||"پترو پالا توس",nameEn:st.name_en||"",footer:[st.address, st.phone&&`تلفن: ${st.phone}`, st.reg_no&&`شماره‌ی ثبت: ${st.reg_no}`, st.national_id&&`شناسه‌ی ملی: ${st.national_id}`].filter(Boolean).join(" · "),ceoName:ceo?ceo.full_name:"",ceoTitle:ceo?`مدیرعامل ${st.name_fa||""}`.trim():""};
-  L.dateFa=faDate(l.date); const jp=jalaliParts(l.date); L.dateNum=jp.d+"/"+jp.m+"/"+jp.y;
+  L.dateFa=faDate(l.date); const jp=jalaliParts(l.date); L.dateNum=jp.y+"/"+jp.m+"/"+jp.d;
   if(lh&&lh.kind==="docx"&&(lh.asset||lh.b64)){   // the Word letterhead is kept as a base64 text file in the asset store (a database document is limited to 256 KB)
     const b64 = lh.b64 || (await (await fetch(blobUrl(lh.asset))).text()).trim();
     return fillLetterTemplate(await unzip(b64ToBytes(b64)), L, C, sig); }
@@ -1628,12 +1655,26 @@ VIEWS["letters.new"] = () => {
    <div><h3>پیش‌نمایش روی سربرگ</h3><div id="cprev">${letterSheet(draftLetter())}</div></div></div>
   <h3>نامه‌های تولیدشده با این بخش</h3><div id="ledger">${letterLedger()}</div>`;
 };
+const needsName = l => !!l.needs_name && !String(l.recipient_line||"").trim();
 function letterLedger(){
-  const list=S.letters.filter(l=>match(l.subject,l.recipient,l.number)).sort((a,b)=>(b.date||"").localeCompare(a.date||"")||(b.number||"").localeCompare(a.number||""));
-  return kpis([["کل نامه‌ها",faNum(list.length)],["در انتظار امضای مسئول دفتر",faNum(list.filter(l=>!l.office_sig).length)],["در انتظار امضای مدیرعامل",faNum(list.filter(l=>l.office_sig&&!l.ceo_sig).length)],["امضاشده و آماده‌ی ارسال",faNum(list.filter(l=>l.ceo_sig).length)]])+
-  table(["شماره","تاریخ","موضوع","گیرنده","امضاها",""], list.map(l=>`<tr>${td("شماره",`<span class="mono">${esc(l.number)}</span>`)}${td("تاریخ",faDate(l.date))}${td("موضوع",esc(l.subject),"t")}${td("گیرنده",esc((l.recipient||"").split("\n")[0]))}
-   ${td("امضا",`${l.office_sig?'<span class="pill p-ok">مسئول دفتر</span>':'<span class="pill p-mute">مسئول دفتر</span>'} ${l.ceo_sig?'<span class="pill p-ok">مدیرعامل</span>':'<span class="pill p-mute">مدیرعامل</span>'}`)}
-   ${td("",`<div class="row"><button class="btn sm ghost" data-act="letter-view" data-id="${esc(l.id)}">مشاهده و امضا</button><button class="btn sm ghost" data-act="letter-edit" data-id="${esc(l.id)}">ویرایش</button>${S.downloads?`<button class="btn sm" data-act="letter-dl" data-id="${esc(l.id)}">Word</button>`:""}</div>`)}</tr>`),"هنوز نامه‌ای با این بخش ساخته نشده است.");
+  const list=S.letters.filter(l=>match(l.subject,l.recipient,l.number)).sort((a,b)=>(b.date||"").localeCompare(a.date||"")||(a.number||"").localeCompare(b.number||""));
+  const own=l=>!l.src_pack;
+  return kpis([["کل نامه‌ها",faNum(list.length)],["در انتظار امضای مسئول دفتر",faNum(list.filter(l=>own(l)&&!l.office_sig).length)],["در انتظار امضای مدیرعامل",faNum(list.filter(l=>own(l)&&l.office_sig&&!l.ceo_sig).length)],["امضاشده و آماده‌ی ارسال",faNum(list.filter(l=>l.src_pack?!needsName(l):!!l.ceo_sig).length)],["نام گیرنده ناقص",faNum(list.filter(needsName).length),list.some(needsName)]])+
+  table(["شماره","تاریخ","موضوع","گیرنده","امضاها",""], list.map(l=>`<tr>${td("شماره",`<span class="mono">${esc(l.number)}</span>`)}${td("تاریخ",faDate(l.date))}${td("موضوع",esc(l.subject),"t")}${td("گیرنده",esc(String(l.recipient_line||"").trim()||(l.recipient||"").split("\n")[0])+`<br><span class="meta">${esc((l.recipient||"").split("\n").slice(1).join(" "))}</span>`)}
+   ${td("امضا",l.src_pack?`<span class="pill p-ok">امضا و مهر در فایل</span>${needsName(l)?' <span class="pill p-bad">نام گیرنده ناقص</span>':""}`:`${l.office_sig?'<span class="pill p-ok">مسئول دفتر</span>':'<span class="pill p-mute">مسئول دفتر</span>'} ${l.ceo_sig?'<span class="pill p-ok">مدیرعامل</span>':'<span class="pill p-mute">مدیرعامل</span>'}`)}
+   ${td("",`<div class="row"><button class="btn sm ghost" data-act="letter-view" data-id="${esc(l.id)}">${l.src_pack?"مشاهده":"مشاهده و امضا"}</button>${l.src_pack?`<button class="btn sm ghost" data-act="letter-meta" data-id="${esc(l.id)}">شماره، تاریخ و گیرنده</button>`:`<button class="btn sm ghost" data-act="letter-edit" data-id="${esc(l.id)}">ویرایش</button>`}${S.downloads?`<button class="btn sm" data-act="letter-dl" data-id="${esc(l.id)}">Word</button>`:""}</div>`)}</tr>`),"هنوز نامه‌ای با این بخش ساخته نشده است.");
+}
+function letterMeta(id){
+  const l=S.letters.find(x=>x.id===id); if(!l) return;
+  openForm({title:`نامه‌ی ${l.number} – شماره، تاریخ و گیرنده`,values:{number:l.number,date:l.date,recipient_line:l.recipient_line||""},
+   extra:`<p class="note">فایل Word اصلی نامه (سربرگ، پاورقی، فهرست‌ها، امضا و مهر) همان‌طور که هست می‌ماند؛ فقط شماره و تاریخ هدر و، اگر پر کنید، سطر نام گیرنده عوض می‌شود.</p>${needsName(l)?`<div class="banner">نام مدیرعامل گیرنده در متن این نامه کامل نیست؛ سطر کامل را بنویسید، مثلاً «جناب آقای دکتر … » یا «سرکار خانم …».</div>`:""}`,
+   fields:[{k:"number",label:"شماره‌ی نامه",dir:"ltr"},{k:"date",label:"تاریخ نامه",type:"date"},{k:"recipient_line",label:"سطر نام گیرنده (مثلاً: جناب آقای دکتر … )"}],
+   onSave: async v => { if(!v.number){toast("شماره را وارد کنید.");return false}
+     if(S.letters.some(x=>x.number===v.number&&x.id!==id)){toast("این شماره برای نامه‌ی دیگری ثبت شده است.");return false}
+     const {id:_i,...base}=l; const now=new Date().toISOString();
+     if(!await save(`letters/${id}`,{...base,number:v.number,date:v.date||l.date,recipient_line:v.recipient_line,updated:now},"ذخیره شد")) return false;
+     const ar=S.lettersArchive.find(x=>x.letter_id===id); if(ar){ const {id:_a,...ab}=ar; await save(`letters_archive/${ar.id}`,{...ab,number:v.number,updated:now}); }
+     return true; }});
 }
 async function composeSubmit(){
   const d=getDraft(); const v=k=>String(d[k]||"").trim();
@@ -1709,18 +1750,18 @@ async function saveLetterhead(file){
 function letterView(id){
   const l=S.letters.find(x=>x.id===id); if(!l) return;
   const me=myMember()||{}; const st=S.settings;
-  const canOffice = me.role==="office_manager" && !l.office_sig;
-  const canCeo = (st.ceo_member===S.me.id) && l.office_sig && !l.ceo_sig;
+  const canOffice = me.role==="office_manager" && !l.office_sig && !l.src_pack;
+  const canCeo = (st.ceo_member===S.me.id) && l.office_sig && !l.ceo_sig && !l.src_pack;
   $("#layer").innerHTML = `<div class="scrim" data-act="close-scrim"><div class="drawer" style="width:min(860px,100%)"><div class="row"><h3 style="flex:1;margin:0">نامه‌ی ${esc(l.number)}</h3><button class="btn ghost sm" data-act="close">بستن</button></div>
    <div class="card" style="margin:10px 0"><b>امضای مسئول دفتر:</b> ${l.office_sig?`${esc(memberName(l.office_sig.by))} – ${faDate(l.office_sig.at.slice(0,10))} ${(S.members.find(m=>m.id===l.office_sig.by)||{}).signature_asset?`<img src="${esc(blobUrl(S.members.find(m=>m.id===l.office_sig.by).signature_asset))}" alt="امضا" style="max-height:32px;vertical-align:middle">`:""}`:"ثبت نشده"}<br>
     <b>امضای مدیرعامل:</b> ${l.ceo_sig?`ثبت شد – ${faDate(l.ceo_sig.at.slice(0,10))}`:"ثبت نشده"}</div>
    <div class="row" style="margin-bottom:10px">${canOffice?`<button class="btn" data-act="sign-office" data-id="${esc(l.id)}">امضای الکترونیک مسئول دفتر</button>`:""}${canCeo?`<button class="btn sig" data-act="sign-ceo" data-id="${esc(l.id)}">امضای مدیرعامل</button>`:""}
-    <button class="btn ghost" data-act="letter-edit" data-id="${esc(l.id)}">ویرایش</button>${S.downloads?`<button class="btn" data-act="letter-dl" data-id="${esc(l.id)}">دریافت فایل Word</button>`:""}</div>
+    ${l.src_pack?`<button class="btn ghost" data-act="letter-meta" data-id="${esc(l.id)}">شماره، تاریخ و گیرنده</button>`:`<button class="btn ghost" data-act="letter-edit" data-id="${esc(l.id)}">ویرایش</button>`}${S.downloads?`<button class="btn" data-act="letter-dl" data-id="${esc(l.id)}">دریافت فایل Word</button>`:""}</div>
    <p class="note">امضای مسئول دفتر در سامانه ثبت می‌شود؛ روی برگه‌ی نامه فقط امضای مدیرعامل در پایین صفحه درج می‌شود. هر ویرایش متن، امضاها را باطل می‌کند.</p>${letterSheet(l)}</div></div>`;
 }
 
 // ---------- LETTERS ARCHIVE (letters sent without the agent)
-const ARCH_STAGES = {sent:"ارسال شد",received:"ثبت در دبیرخانه‌ی گیرنده",review:"در دست بررسی",reply:"پاسخ دریافت شد",meeting:"جلسه / مذاکره",done:"نتیجه‌گیری"};
+const ARCH_STAGES = {ready:"آماده‌ی ارسال",sent:"ارسال شد",received:"ثبت در دبیرخانه‌ی گیرنده",review:"در دست بررسی",reply:"پاسخ دریافت شد",meeting:"جلسه / مذاکره",done:"نتیجه‌گیری"};
 const ARCH_ST = {active:"در جریان",stalled:"متوقف / نیازمند پیگیری",closed:"بسته شد"};
 const ARCH_CH = {secretariat:"دبیرخانه / پست",email:"ایمیل",hand:"تحویل حضوری",automation:"اتوماسیون اداری کارفرما",other:"سایر"};
 const ARCH_F = {all:"همه",active:"در جریان",stalled:"متوقف",overdue:"اقدام سررسیده",stale:"بدون پیگیری بیش از ۱۴ روز",closed:"بسته‌شده"};
@@ -1734,7 +1775,7 @@ VIEWS["letters.archive"] = () => {
   const flt={all:()=>true,active:a=>archOpen(a)&&a.status!=="stalled",stalled:a=>archOpen(a)&&a.status==="stalled",overdue:archOverdue,stale:archStale,closed:a=>!archOpen(a)}[S.archF]||(()=>true);
   const list=all.filter(flt).sort((a,b)=>(b.date||"").localeCompare(a.date||""));
   const keys=Object.keys(ARCH_STAGES);
-  return `<div class="banner">این بخش جدا از «نامه‌ی جدید» است: نامه‌هایی که تا امروز بدون کمک ایجنت ارسال شده‌اند و پیگیری‌شان ادامه دارد. برای هر نامه مشخص است در کدام مرحله هستیم، آخرین اقدام چه بوده و گام بعدی کِی است.</div>
+  return `<div class="banner">این بخش جدا از «نامه‌ی جدید» است: نامه‌هایی که ارسال می‌شوند یا ارسال شده‌اند (چه قبلاً بدون ایجنت، چه نامه‌های آماده‌شده در همین سامانه) و پیگیری‌شان. برای هر نامه مشخص است در کدام مرحله هستیم، آخرین اقدام چه بوده و گام بعدی کِی است.</div>
   <div class="toolbar"><button class="btn sig" data-act="arch-new">ثبت نامه‌ی ارسال‌شده‌ی پیشین</button>${Object.entries(ARCH_F).map(([k,l])=>`<button class="btn sm ${S.archF===k?"":"ghost"}" data-act="arch-f" data-k="${k}">${esc(l)}</button>`).join("")}</div>`+
   kpis([["کل نامه‌های بایگانی",faNum(all.length)],["در جریان",faNum(all.filter(a=>archOpen(a)&&a.status!=="stalled").length)],["متوقف",faNum(all.filter(a=>archOpen(a)&&a.status==="stalled").length),all.some(a=>archOpen(a)&&a.status==="stalled")],["اقدام بعدی سررسیده",faNum(all.filter(archOverdue).length),all.some(archOverdue)],["بدون پیگیری بیش از ۱۴ روز",faNum(all.filter(archStale).length),all.some(archStale)],["بسته‌شده",faNum(all.filter(a=>!archOpen(a)).length)]])+
   table(["شماره / تاریخ ارسال","موضوع","گیرنده","پیشرفت","آخرین وضعیت","اقدام بعدی","مسئول",""], list.map(a=>{
@@ -1746,7 +1787,7 @@ VIEWS["letters.archive"] = () => {
      ${td("آخرین وضعیت",`${last&&last.note?esc(last.note):"—"}<br><span class="${archStale(a)?"p-bad":"meta"}">${archLast(a)?`${faDate(archLast(a))}${since!=null&&archOpen(a)?` (${faNum(since)} روز پیش)`:""}`:""}</span>${(a.log||[]).length>1?`<details><summary>تاریخچه (${faNum(a.log.length)})</summary>${[...a.log].reverse().map(e=>`<div class="meta">${faDate((e.at||"").slice(0,10))} · ${esc(ARCH_STAGES[e.stage]||"")} · ${esc(e.note||"")} <i>(${esc(memberName(e.by))})</i></div>`).join("")}</details>`:""}`)}
      ${td("اقدام بعدی",`${esc(a.next_action||"—")}${a.next_date?`<br><span class="${archOverdue(a)?"p-bad":"meta"}">${faDate(a.next_date)}</span>`:""}`)}
      ${td("مسئول",esc(memberName(a.owner)))}
-     ${td("",`<div class="row"><button class="btn sm" data-act="arch-progress" data-id="${esc(a.id)}">به‌روزرسانی پیشرفت</button><button class="btn sm ghost" data-act="arch-edit" data-id="${esc(a.id)}">ویرایش</button></div>`)}</tr>`}),
+     ${td("",`<div class="row"><button class="btn sm" data-act="arch-progress" data-id="${esc(a.id)}">به‌روزرسانی پیشرفت</button><button class="btn sm ghost" data-act="arch-edit" data-id="${esc(a.id)}">ویرایش</button>${a.letter_id&&S.downloads?`<button class="btn sm ghost" data-act="letter-dl" data-id="${esc(a.letter_id)}">Word</button>`:""}</div>`)}</tr>`}),
    "هنوز نامه‌ای در بایگانی ثبت نشده است. نامه‌های ارسال‌شده‌ی پیشین را با «ثبت نامه‌ی ارسال‌شده‌ی پیشین» وارد کنید.");
 };
 const memberOpts = () => Object.fromEntries([["","—"],...S.members.map(m=>[m.id,m.full_name])]);
@@ -2230,7 +2271,7 @@ const TOUR = [
  {mod:"bpms",sub:"members",title:"اعضا و ثبت‌نام",text:"مشخصات خودتان را هر زمان ویرایش کنید: روزهای حضور، ایمیل، شناسه‌ی تلگرام برای اعلان موبایل و تصویر امضا. مدیر مشخصات شرکت، لوگو و هویت بین‌المللی را هم از همین‌جا تنظیم می‌کند."},
  {mod:"letters",title:"Letters – نامه‌نگاری",text:"ساخت نامه‌ی رسمی روی سربرگ و پیگیری نامه‌های پیشین."},
  {mod:"letters",sub:"new",title:"نامه‌ی جدید",text:"گیرنده، موضوع و متن را بنویسید؛ سربرگ، شماره و تاریخ خودکار است و فایل Word آماده‌ی ارسال می‌شود. هویت فرستنده را انتخاب کنید: ایران (فارسی) یا بین‌المللی (انگلیسی، Parsa International Group). مسئول دفتر و مدیرعامل از «مشاهده و امضا» امضا می‌کنند."},
- {mod:"letters",sub:"archive",title:"بایگانی نامه‌های پیشین و پیگیری",text:"نامه‌هایی که قبلاً بدون ایجنت فرستاده شده‌اند. برای هر نامه مرحله، آخرین وضعیت و اقدام بعدی ثبت می‌شود؛ نامه‌ای که بیش از ۱۴ روز پیگیری نشده یا اقدامش سررسید شده علامت می‌خورد."},
+ {mod:"letters",sub:"archive",title:"پیگیری و بایگانی نامه‌ها",text:"نامه‌هایی که قبلاً بدون ایجنت فرستاده شده‌اند. برای هر نامه مرحله، آخرین وضعیت و اقدام بعدی ثبت می‌شود؛ نامه‌ای که بیش از ۱۴ روز پیگیری نشده یا اقدامش سررسید شده علامت می‌خورد."},
  {mod:"patent",title:"Patent – پتنت",text:"هدف شرکت ثبت اختراع بیشتر است. اینجا اختراع‌های ثبت‌شده و فرصت‌های تازه را دنبال می‌کنید."},
  {mod:"patent",sub:"home",title:"پتنت‌ها",text:"فهرست اختراع‌های ثبت‌شده، در دست داوری، اظهارنامه‌ها و پیش‌نویس‌ها. اختراع جدید را با «ثبت اختراع / اظهارنامه» وارد کنید. نتایج نظر حقوقی نیستند."},
  {mod:"patent",sub:"ops",title:"فرصت‌های ثبت اختراع",text:"ایجنت هر روز محصولات را با سوابق اختراع مقایسه می‌کند و ادعاهای قابل ثبت را با منبع می‌آورد."},
@@ -2379,6 +2420,7 @@ document.addEventListener("click", async e => {
     case "letter-view": letterView(id); break;
     case "letter-edit": { const l=S.letters.find(x=>x.id===id); if(!l) break; S.draft={...l,numAuto:false}; S.mod="letters"; S.sub="new"; S.forceFull=true; closeForm(); render(); window.scrollTo(0,0); break; }
     case "compose-go": composeSubmit(); break;
+    case "letter-meta": letterMeta(id); break;
     case "lh-del": await save("settings/letterhead",{kind:"none",updated:new Date().toISOString()},"سربرگ پیش‌فرض فعال شد."); break;
     case "compose-reset": S.draft=null; S.forceFull=true; render(); break;
     case "arch-new": archForm(); break;
