@@ -350,7 +350,7 @@ function paintNav(){
 function render(){ paintNav(); renderBanners(); renderView(); paintBell(); }
 function renderView(){
   if(S.mod==="letters"&&S.sub==="new"&&$("#composer")&&!S.forceFull){ // live data arrived: refresh only the ledger, never the form being typed in
-    const d=S.draft; if(d&&d.numAuto){ d.number=nextLetterNo(d.identity); const el=$("[data-c=number]"); if(el&&document.activeElement!==el) el.value=d.number; const p=$("#cprev"); if(p) p.innerHTML=letterSheet(draftLetter()); }
+    const d=S.draft; if(d&&d.numAuto){ d.number=nextLetterNo(d.identity,d.date); const el=$("[data-c=number]"); if(el&&document.activeElement!==el) el.value=d.number; const p=$("#cprev"); if(p) p.innerHTML=letterSheet(draftLetter()); }
     const lg=$("#ledger"); if(lg) lg.innerHTML=letterLedger(); const lc=$("#lhcard"); if(lc) lc.innerHTML=letterheadCard(); const pv=$("#cprev"); if(pv) pv.innerHTML=letterSheet(draftLetter()); return;
   }
   S.forceFull=false;
@@ -1369,7 +1369,7 @@ const isHeadingLine = t => (t.length<=90&&/^\d+(?:[-.]\d+)*[-.\s]/.test(t)) || (
 const cleanAtt = s => String(s||"").replace(/^\s*(?:پیوست|Enclosures?)\s*[:：]?\s*/i,"").trim();
 
 // Body of the letter as WordprocessingML paragraphs. meta=false when the template already carries the number/date/attachments fields.
-function letterBodyXml(L, C, P, sigRef, sigImg, meta){
+function letterBodyXml(L, C, P, sigRef, sigImg, meta, opts){
   const ltr=WD.ltr, END=ltr?"":"right";
   const T=ltr?{no:"Ref: ",date:"Date: ",att:"Enclosures: ",none:"None",subj:"Subject: ",hello:"Dear Sir or Madam,",cc:"cc: ",bye:"Yours sincerely,",annex:"Enclosure"}:{no:"شماره: ",date:"تاریخ: ",att:"پیوست: ",none:"ندارد",subj:"موضوع: ",hello:"با سلام و احترام،",cc:"رونوشت: ",bye:"با تجدید احترام",annex:"پیوست"};
   const lines = s => String(s||"").split(/\r?\n/).map(x=>x.trim()).filter(Boolean);
@@ -1390,10 +1390,14 @@ function letterBodyXml(L, C, P, sigRef, sigImg, meta){
   if(name) b.push(wPara(wRun(name,{b:true}),{jc:END,keep:true}));
   if(C.ceoName&&C.ceoTitle) b.push(wPara(wRun(C.ceoTitle),{jc:END}));
   if(L.cc) b.push(wPara(wRun(T.cc+L.cc,{sz:20,color:"444444"}),{before:240,line:300}));
-  if(P.annexLines.length){
-    b.push(wPara(wRun(T.annex+(att?": "+att:""),{b:true,sz:26}),{pb:true,after:200,line:340}));
-    P.annexLines.forEach(t=>b.push(isHeadingLine(t)?wPara(wRun(t,{b:true,sz:23}),{before:160,after:60,line:340,keep:true}):wPara(wRun(t,{sz:22}),{jc:"both",after:80,line:340})));
-  }
+  if(!(opts&&opts.noAnnex)) b.push(annexXml(L,P));
+  return b.join("");
+}
+// the attachment text on its own page (title + paragraphs; numbered/short lines as headings)
+function annexXml(L,P){
+  if(!P.annexLines.length) return "";
+  const att=cleanAtt(L.attachments), b=[wPara(wRun((WD.ltr?"Enclosure":"پیوست")+(att?": "+att:""),{b:true,sz:26}),{pb:true,after:200,line:340})];
+  P.annexLines.forEach(t=>b.push(isHeadingLine(t)?wPara(wRun(t,{b:true,sz:23}),{before:160,after:60,line:340,keep:true}):wPara(wRun(t,{sz:22}),{jc:"both",after:80,line:340})));
   return b.join("");
 }
 const relsXml = items => `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">${items.map(([id,t,tg])=>`<Relationship Id="${id}" Type="${RELNS}/${t}" Target="${tg}"/>`).join("")}</Relationships>`;
@@ -1442,6 +1446,60 @@ async function buildLetterDocx(L, C, logo, sig, ltr=false, lh=null){
   return await zipStore(files);
 }
 
+
+// ---- template helpers: fill a letterhead that already contains a sample letter ("جناب آقای / سرکار خانم...", "موضوع: ...", "...") and number/date/attachment fields in its header
+const plainText = x => (x.match(/<w:t(?:\s[^>]*)?>([^<]*)<\/w:t>/g)||[]).map(t=>t.replace(/<[^>]+>/g,"")).join("");
+function topSegments(inner){ // split WordprocessingML into top-level paragraphs and "other" chunks (tables, bookmarks...), keeping nested text-box paragraphs inside their parent
+  const out=[], re=/<w:p(?=[ >\/])|<\/w:p>/g; let depth=0, start=0, last=0, m;
+  while((m=re.exec(inner))){
+    if(m[0]==="</w:p>"){ depth--; if(depth===0){ const end=m.index+6; out.push({p:true,xml:inner.slice(start,end)}); last=end; } }
+    else { if(depth===0){ if(m.index>last) out.push({p:false,xml:inner.slice(last,m.index)}); start=m.index; } depth++; }
+  }
+  if(last<inner.length) out.push({p:false,xml:inner.slice(last)});
+  return out;
+}
+const paraPPr = x => (x.match(/<w:pPr>[\s\S]*?<\/w:pPr>/)||[""])[0];
+const firstTextRun = x => { const runs=x.match(/<w:r(?:\s[^>]*)?>(?:(?!<\/w:r>)[\s\S])*<\/w:r>/g)||[]; return runs.find(r=>/<w:t[\s>]/.test(r)&&plainText(r).trim())||runs.find(r=>/<w:t[\s>]/.test(r))||""; };
+// a clean copy of an anchor paragraph (same paragraph + run formatting, no ids) carrying other text
+const withText = (anchor, text) => { const run=firstTextRun(anchor), rpr=(run.match(/<w:rPr>[\s\S]*?<\/w:rPr>/)||[""])[0]; return `<w:p>${paraPPr(anchor)}<w:r>${rpr}<w:t xml:space="preserve">${WX(text)}</w:t></w:r></w:p>`; };
+const emptyLike = anchor => `<w:p>${paraPPr(anchor)}</w:p>`;
+// number / date / attachments written as plain text labels in a header or footer ("شماره: 14050714001")
+function fillHeaderMeta(xml, vals){
+  let n=0;
+  const out=xml.replace(/<w:p(?=[ >])(?:(?!<w:p[ >])[\s\S])*?<\/w:p>/g, p=>{
+    const t=plainText(p).trim(); const lab=/^(شماره|تاریخ|پیوست)\s*:/.exec(t); if(!lab) return p;
+    const runs=p.match(/<w:r(?:\s[^>]*)?>(?:(?!<\/w:r>)[\s\S])*<\/w:r>/g)||[]; if(runs.length<2) return p;
+    const key={"شماره":"number","تاریخ":"date","پیوست":"attachments"}[lab[1]];
+    const rpr=(runs[1].match(/<w:rPr>[\s\S]*?<\/w:rPr>/)||[""])[0];
+    const first=p.indexOf(runs[0]), lastRun=runs[runs.length-1], end=p.lastIndexOf(lastRun)+lastRun.length;
+    n++;
+    return p.slice(0,first+runs[0].length)+`<w:r>${rpr}<w:t xml:space="preserve"> ${WX(vals[key])}</w:t></w:r>`+p.slice(end);
+  });
+  return {xml:out,n};
+}
+function smartBody(doc, sm, L, P){ // null when the template has no recognisable sample letter
+  const open=doc.match(/<w:body[^>]*>/); if(!open) return null;
+  const from=open.index+open[0].length, to=sm?sm.index:doc.lastIndexOf("</w:body>");
+  const segs=topSegments(doc.slice(from,to)), txt=i=>plainText(segs[i].xml).replace(/‌/g,"").trim();
+  const find=(pred,s0=0)=>{ for(let i=s0;i<segs.length;i++) if(segs[i].p&&pred(txt(i))) return i; return -1; };
+  const iRec=find(t=>/^(?:جناب|سرکار|آقای|خانم)/.test(t)||/سرکار\s*خانم/.test(t));
+  const iSub=iRec<0?-1:find(t=>/^موضوع\s*:/.test(t),iRec+1);
+  const iBody=iSub<0?-1:find(t=>/^[.…]{1,6}$/.test(t),iSub+1);
+  const iClose=iBody<0?-1:find(t=>t.replace(/[.…\s]/g,"").length>3,iBody+1);
+  if(iClose<0) return null;
+  const out=[];
+  for(let i=0;i<iRec;i++) out.push(segs[i].xml);
+  String(L.recipient||"").split(/\r?\n/).map(x=>x.trim()).filter(Boolean).forEach(line=>out.push(withText(segs[iRec].xml,line)));
+  // subject: the run that holds "..." gets the subject text, the "موضوع:" label stays
+  out.push("<w:p>"+paraPPr(segs[iSub].xml)+(segs[iSub].xml.match(/<w:r(?:\s[^>]*)?>(?:(?!<\/w:r>)[\s\S])*<\/w:r>/g)||[]).map(r=>/^[.…]+$/.test(plainText(r).trim())?r.replace(/<w:t(?:\s[^>]*)?>[^<]*<\/w:t>/,`<w:t xml:space="preserve">${WX(P.subject)}</w:t>`):r).join("")+"</w:p>");
+  for(let i=iSub+1;i<iBody;i++) out.push(segs[i].xml);                 // the template's own greeting stays
+  const lines=P.hello&&P.bodyLines[0]&&P.bodyLines[0].length<=80?P.bodyLines.slice(1):P.bodyLines;   // a greeting typed in the letter would repeat it
+  lines.forEach(line=>out.push(withText(segs[iBody].xml,line)));
+  out.push(emptyLike(segs[iBody].xml));
+  for(let i=iClose;i<segs.length;i++) out.push(segs[i].xml);            // closing sentence, "با تجدید احترام", signer, signature and stamp stay as designed
+  return out.join("");
+}
+
 // The company's own Word letterhead (.docx/.dotx entries from unzip): keep its header, footer, margins and styles, put the letter inside it.
 // {{number}} {{date}} {{attachments}} {{subject}} typed in the template are filled in; {{body}} marks where the text goes.
 async function fillLetterTemplate(entries, L, C, sig){
@@ -1451,28 +1509,37 @@ async function fillLetterTemplate(entries, L, C, sig){
     const get=n=>entries.find(e=>e.name===n), txt=n=>{const e=get(n);return e?dec.decode(e.data):null};
     const set=(n,s)=>{const e=get(n); const d=enc.encode(s); if(e) e.data=d; else entries.push({name:n,data:d})};
     if(!get("word/document.xml")) throw new Error("template has no word/document.xml");
-    const vals={number:WLTR(L.number),date:L.dateFa,attachments:cleanAtt(L.attachments)||"ندارد",subject:P.subject};
+    const att=cleanAtt(L.attachments);   // the header box is narrow: a long attachment title goes on the attachment page, the box only says that there is one
+    const vals={number:WLTR(L.number),date:L.dateNum||L.dateFa,attachments:att&&att.length<=18?att:(att||P.annexLines.length?"دارد":"ندارد"),subject:P.subject};
     const TOK=/\{\{(number|date|attachments|subject)\}\}/g;
     let tokensIn=false, doc=txt("word/document.xml");
     for(const e of entries){ if(/^word\/(header|footer)\d*\.xml$/.test(e.name)){ const x=dec.decode(e.data); if(TOK.test(x)){ tokensIn=true; TOK.lastIndex=0; set(e.name,x.replace(TOK,(m,k)=>WX(vals[k]))); } TOK.lastIndex=0; } }
     const docTokens=TOK.test(doc); TOK.lastIndex=0;
     if(docTokens){ tokensIn=true; doc=doc.replace(TOK,(m,k)=>WX(vals[k])); }
+    for(const e of entries){ if(/^word\/(header|footer)\d*\.xml$/.test(e.name)){ const r=fillHeaderMeta(dec.decode(e.data),vals); if(r.n){ tokensIn=true; set(e.name,r.xml); } } }   // "شماره: …" / "تاریخ: …" / "پیوست: …" written as plain labels
     const sigRef="rIdPptSig";
-    const bodyXml=letterBodyXml(L,C,P,sigRef,sig,!tokensIn);
     const sm=doc.match(/(<w:sectPr(?:(?!<w:sectPr)[\s\S])*<\/w:sectPr>)\s*<\/w:body>/);
     const sect=sm?sm[1]:'<w:sectPr><w:pgSz w:w="11906" w:h="16838"/><w:pgMar w:top="2268" w:right="1134" w:bottom="1418" w:left="1134" w:header="567" w:footer="567" w:gutter="0"/></w:sectPr>';
-    const bi=doc.indexOf("{{body}}");
-    if(bi>=0){
-      const ps=Math.max(doc.lastIndexOf("<w:p>",bi),doc.lastIndexOf("<w:p ",bi)), pe=doc.indexOf("</w:p>",bi)+6;
-      doc=doc.slice(0,ps)+bodyXml+doc.slice(pe);
+    const bi=doc.indexOf("{{body}}"), open=doc.match(/<w:body[^>]*>/); if(!open) throw new Error("template has no body");
+    let usedSmart=false;
+    const inner = bi<0&&!docTokens ? smartBody(doc,sm,L,P) : null;
+    if(inner!==null){   // the template carries its own sample letter: keep its design, signature and stamp, fill the blanks
+      usedSmart=true;
+      const tail=(L.cc?wPara(wRun("رونوشت: "+L.cc,{sz:20,color:"444444"}),{before:240,line:300}):"")+annexXml(L,P);
+      doc=doc.slice(0,open.index+open[0].length)+inner+tail+(sm?doc.slice(sm.index):sect+"</w:body></w:document>");
     } else {
-      const open=doc.match(/<w:body[^>]*>/); if(!open) throw new Error("template has no body");
-      const head=doc.slice(0,open.index+open[0].length);
-      const keep = docTokens ? doc.slice(open.index+open[0].length, sm?sm.index:doc.lastIndexOf("</w:body>")) : "";
-      doc=head+keep+bodyXml+sect+"</w:body></w:document>";
+      const bodyXml=letterBodyXml(L,C,P,sigRef,sig,!tokensIn);
+      if(bi>=0){
+        const ps=Math.max(doc.lastIndexOf("<w:p>",bi),doc.lastIndexOf("<w:p ",bi)), pe=doc.indexOf("</w:p>",bi)+6;
+        doc=doc.slice(0,ps)+bodyXml+doc.slice(pe);
+      } else {
+        const head=doc.slice(0,open.index+open[0].length);
+        const keep = docTokens ? doc.slice(open.index+open[0].length, sm?sm.index:doc.lastIndexOf("</w:body>")) : "";
+        doc=head+keep+bodyXml+sect+"</w:body></w:document>";
+      }
     }
     set("word/document.xml",doc);
-    if(sig){
+    if(sig&&!usedSmart){
       let rels=txt("word/_rels/document.xml.rels")||relsXml([]);
       rels=rels.replace("</Relationships>",`<Relationship Id="${sigRef}" Type="${RELNS}/image" Target="media/ppt_sig.png"/></Relationships>`);
       set("word/_rels/document.xml.rels",rels); set("word/media/ppt_sig.png",sig.bytes);
@@ -1485,6 +1552,7 @@ async function fillLetterTemplate(entries, L, C, sig){
   } finally { WD.font=true; }
 }
 /*DOCX-END*/
+const jalaliParts = d => { const f=new Intl.DateTimeFormat("en-u-ca-persian",{year:"numeric",month:"2-digit",day:"2-digit"}).formatToParts(new Date((d||new Date().toISOString().slice(0,10))+"T12:00:00")); const g=t=>String((f.find(p=>p.type===t)||{}).value||"").replace(/\D/g,""); return {y:g("year"),m:g("month").padStart(2,"0"),d:g("day").padStart(2,"0")}; };
 
 async function prepImage(assetId, maxPx){ // asset -> PNG bytes + size, so the Word file never depends on the original format
   try{
@@ -1510,8 +1578,10 @@ async function makeLetterDocx(l){
     return buildLetterDocx({...L,dateFa:enDate(l.date)},
       {nameFa:I.name,nameEn:"",footer:[I.address,I.website,I.email].filter(Boolean).join(" · "),ceoName:I.signatory,ceoTitle:I.title}, logo, sig, true); }
   const C={nameFa:st.name_fa||"پترو پالا توس",nameEn:st.name_en||"",footer:[st.address, st.phone&&`تلفن: ${st.phone}`, st.reg_no&&`شماره‌ی ثبت: ${st.reg_no}`, st.national_id&&`شناسه‌ی ملی: ${st.national_id}`].filter(Boolean).join(" · "),ceoName:ceo?ceo.full_name:"",ceoTitle:ceo?`مدیرعامل ${st.name_fa||""}`.trim():""};
-  L.dateFa=faDate(l.date);
-  if(lh&&lh.kind==="docx"&&lh.b64) return fillLetterTemplate(await unzip(b64ToBytes(lh.b64)), L, C, sig);
+  L.dateFa=faDate(l.date); const jp=jalaliParts(l.date); L.dateNum=jp.d+"/"+jp.m+"/"+jp.y;
+  if(lh&&lh.kind==="docx"&&(lh.asset||lh.b64)){   // the Word letterhead is kept as a base64 text file in the asset store (a database document is limited to 256 KB)
+    const b64 = lh.b64 || (await (await fetch(blobUrl(lh.asset))).text()).trim();
+    return fillLetterTemplate(await unzip(b64ToBytes(b64)), L, C, sig); }
   if(lh&&lh.kind==="image"&&lh.asset){ const img=await prepImage(lh.asset,1800); if(img) return buildLetterDocx(L,C,null,sig,false,{img,top_cm:Number(lh.top_cm)||0,bottom_cm:Number(lh.bottom_cm)||0}); }
   return buildLetterDocx(L,C,await prepImage(st.logo_asset||"default",700),sig);
 }
@@ -1528,9 +1598,12 @@ async function downloadLetter(l){
 const INTL_DEFAULT = {name:"Parsa International Group",address:"Istanbul, Türkiye",website:"parsaint.group",email:"info@parsaint.group",signatory:"Narges Farahani",title:"AI Sector, Parsa International Group"};
 const intlId = () => { const st=S.settings; return {name:st.intl_name||INTL_DEFAULT.name,address:st.intl_address||INTL_DEFAULT.address,website:st.intl_website||INTL_DEFAULT.website,email:st.intl_email||INTL_DEFAULT.email,signatory:st.intl_signatory||INTL_DEFAULT.signatory,title:st.intl_title||INTL_DEFAULT.title}; };
 const enDate = d => { try{ return new Intl.DateTimeFormat("en-GB",{day:"numeric",month:"long",year:"numeric"}).format(new Date((d||today())+"T12:00:00")); }catch(e){ return d||""; } };
-function nextLetterNo(identity){ if(identity==="intl"){ const y=new Date().getFullYear(); const n=S.letters.filter(l=>(l.number||"").startsWith(`PIG-${y}-`)).length+1; return `PIG-${y}-${String(n).padStart(4,"0")}`; }
-  const y=new Intl.DateTimeFormat("en-u-ca-persian",{year:"numeric"}).format(new Date()).replace(/\D/g,""); const n=S.letters.filter(l=>(l.number||"").includes(`PPT-${y}-`)).length+1; return `PPT-${y}-${String(n).padStart(4,"0")}`; }
-function getDraft(){ if(!S.draft) S.draft={number:nextLetterNo(),date:today(),numAuto:true}; return S.draft; }
+function nextLetterNo(identity,date){
+  if(identity==="intl"){ const y=new Date().getFullYear(); const n=S.letters.filter(l=>(l.number||"").startsWith(`PIG-${y}-`)).length+1; return `PIG-${y}-${String(n).padStart(4,"0")}`; }
+  const j=jalaliParts(date||today()), prefix=j.y+j.m+j.d, n=S.letters.filter(l=>String(l.number||"").startsWith(prefix)).length+1;
+  return prefix+String(n).padStart(3,"0");   // e.g. 14050714001: Jalali year, month, day and a 3-digit serial
+}
+function getDraft(){ if(!S.draft) S.draft={number:nextLetterNo("ir",today()),date:today(),numAuto:true}; return S.draft; }
 function draftLetter(){ return {...getDraft()}; }
 
 VIEWS["letters.new"] = () => {
@@ -1565,7 +1638,7 @@ function letterLedger(){
 async function composeSubmit(){
   const d=getDraft(); const v=k=>String(d[k]||"").trim();
   if(!v("subject")||!v("recipient")||!v("body")){ toast("گیرنده، موضوع و متن نامه را وارد کنید."); return; }
-  if(d.numAuto) d.number=nextLetterNo(d.identity);
+  if(d.numAuto) d.number=nextLetterNo(d.identity,d.date);
   if(!v("number")){ toast("شماره‌ی نامه را وارد کنید."); return; }
   if(S.letters.some(l=>l.number===d.number&&l.id!==d.id)){ toast("این شماره قبلاً برای نامه‌ی دیگری ثبت شده است."); return; }
   const old=d.id?S.letters.find(x=>x.id===d.id):null;
@@ -1616,16 +1689,17 @@ function letterheadCard(){
   return `<div class="card" style="margin-bottom:12px"><div class="row"><b>سربرگ نامه‌ها:</b> <span>${cur}</span>
    ${adm?`<label class="btn sm" style="cursor:pointer">بارگذاری سربرگ شرکت (Word یا تصویر)<input type="file" data-lh="file" accept=".docx,.dotx,image/*" hidden></label>${has?`<button class="btn sm ghost" data-act="lh-del">بازگشت به سربرگ پیش‌فرض</button>`:""}`:`<span class="meta">بارگذاری فقط برای مدیر سامانه است.</span>`}</div>
    ${adm&&lh&&lh.kind==="image"?`<div class="row" style="margin-top:6px"><label class="meta">فاصله‌ی متن از بالای صفحه (سانتی‌متر) <input type="number" step="0.1" min="0" style="width:80px" data-lh="top" value="${esc(lh.top_cm||"")}" placeholder="خودکار"></label><label class="meta">از پایین صفحه <input type="number" step="0.1" min="0" style="width:80px" data-lh="bottom" value="${esc(lh.bottom_cm||"")}" placeholder="خودکار"></label></div>`:""}
-   <p class="note">بهترین حالت: فایل Word سربرگ خودتان (.docx) را بارگذاری کنید؛ سربرگ، پانویس و حاشیه‌ها همان‌طور که هست می‌ماند و نامه داخل آن قرار می‌گیرد. اگر در فایل سربرگ عبارت‌های <code>{{number}}</code> (شماره)، <code>{{date}}</code> (تاریخ)، <code>{{attachments}}</code> (پیوست) یا <code>{{body}}</code> (محل متن) را بنویسید، دقیقاً همان‌جا پر می‌شوند. سربرگ تصویری (JPG/PNG) هم می‌تواند تمام‌صفحه یا نواری باشد.</p></div>`;
+   <p class="note">بهترین حالت: فایل Word سربرگ خودتان (.docx) را بارگذاری کنید؛ سربرگ، پانویس، حاشیه‌ها، امضا و مهر همان‌طور که هست می‌ماند و نامه داخل آن قرار می‌گیرد. اگر فایل شامل نامه‌ی نمونه است (گیرنده، «موضوع: ...»، متن «...»)، همان قالب حفظ می‌شود و فقط جاهای خالی پر می‌شود و شماره، تاریخ و پیوست داخل هدر عوض می‌شود. اگر در فایل سربرگ عبارت‌های <code>{{number}}</code> (شماره)، <code>{{date}}</code> (تاریخ)، <code>{{attachments}}</code> (پیوست) یا <code>{{body}}</code> (محل متن) را بنویسید، دقیقاً همان‌جا پر می‌شوند. سربرگ تصویری (JPG/PNG) هم می‌تواند تمام‌صفحه یا نواری باشد.</p></div>`;
 }
 async function saveLetterhead(file){
   try{
     const n=(file.name||"").toLowerCase();
     if(/\.(docx|dotx)$/.test(n)){
-      if(file.size>700*1024){ toast("فایل سربرگ بزرگ است (بیش از ۷۰۰ کیلوبایت)؛ تصاویر داخل آن را کم‌حجم کنید."); return; }
+      if(file.size>5*1024*1024){ toast("فایل سربرگ بزرگ است (بیش از ۵ مگابایت)؛ تصاویر داخل آن را کم‌حجم کنید."); return; }
       const bytes=new Uint8Array(await file.arrayBuffer()); const entries=await unzip(bytes);
       if(!entries.some(e=>e.name==="word/document.xml")){ toast("این فایل Word معتبر نیست."); return; }
-      await save("settings/letterhead",{kind:"docx",name:file.name,size:file.size,b64:bytesToB64(bytes),updated:new Date().toISOString()},"سربرگ Word ذخیره شد؛ نامه‌ها از این پس داخل آن ساخته می‌شوند.");
+      const id=await uploadImage(new File([bytesToB64(bytes)],"letterhead.b64.txt",{type:"text/plain"})); if(!id) return;
+      await save("settings/letterhead",{kind:"docx",name:file.name,size:file.size,asset:id,updated:new Date().toISOString()},"سربرگ Word ذخیره شد؛ نامه‌ها از این پس داخل آن ساخته می‌شوند.");
     } else if((file.type||"").startsWith("image/")){
       const id=await uploadImage(file); if(!id) return;
       await save("settings/letterhead",{kind:"image",name:file.name,asset:id,top_cm:0,bottom_cm:0,updated:new Date().toISOString()},"سربرگ تصویری ذخیره شد.");
@@ -2323,7 +2397,8 @@ document.addEventListener("click", async e => {
 
 document.addEventListener("input", e => { const el=e.target.closest("[data-c]"); if(!el) return;
   const d=getDraft(); d[el.dataset.c]=el.value; if(el.dataset.c==="number") d.numAuto=false;
-  if(el.dataset.c==="identity"){ if(d.numAuto) d.number=nextLetterNo(d.identity); S.forceFull=true; renderView(); return; }
+  if(el.dataset.c==="identity"){ if(d.numAuto) d.number=nextLetterNo(d.identity,d.date); S.forceFull=true; renderView(); return; }
+  if(el.dataset.c==="date"&&d.numAuto){ d.number=nextLetterNo(d.identity,d.date); const nf=$("[data-c=number]"); if(nf) nf.value=d.number; }
   const p=$("#cprev"); if(p) p.innerHTML=letterSheet(draftLetter()); });
 document.addEventListener("change", async e => { const af=e.target.closest("[data-af]"); if(af){ S.artF[af.dataset.af]=af.type==="checkbox"?af.checked:af.value; renderView(); return; }
   const bm=e.target.closest("[data-bm]"); if(bm){ S.boardMine=bm.checked; renderView(); return; }
