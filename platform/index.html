@@ -114,6 +114,7 @@ a{color:var(--brand)}
   .sheet{padding:18px}
 }
 @media print{body.print-sheet>*:not(#printCopy){display:none!important}body.print-sheet #printCopy .sheet{border:0;max-width:none}}
+th.rownum,td.rownum{width:44px;min-width:44px;text-align:center;color:var(--muted);font-family:var(--f-mono)}
 .kanban{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(250px,1fr);gap:10px;overflow-x:auto;padding-bottom:8px;align-items:start}
 .kcol{background:var(--sunken);border-radius:var(--r);padding:8px;min-width:0}
 .kcol h4{margin:0 0 6px;font-size:13px;display:flex;justify-content:space-between;gap:6px}
@@ -167,12 +168,12 @@ const MODULES = [
 const SUBS = {
   market:[["iran","Iran AI Projects"],["overseas","Overseas AI Projects"],["web","Web Design & SEO"],["investors","AI Investors & Accelerators"],["tracking","Project Tracking"],["pipeline","Pipeline"],["memory","Team Memory"]],
   events:[["iran","ایران"],["world","جهان"],["all","همه"],["taken","در دست پیگیری"]],
-  erp:[["overview","نمای کلی"],["domains","حوزه‌های فعالیت"],["products","توسعه‌ی محصول هوشمند"],["people","نیروی انسانی"],["finance","مالی"],["clients","مشتریان و قراردادها"],["backup","پشتیبان‌گیری"]],
+  erp:[["domains","حوزه‌های فعالیت"],["products","توسعه‌ی محصول هوشمند"],["people","نیروی انسانی"],["finance","مالی"],["clients","مشتریان و قراردادها"],["backup","پشتیبان‌گیری"]],
   bpms:[["myday","روز من"],["board","تخته‌ی اسکرام"],["backlog","بک‌لاگ و برنامه‌ریزی"],["sprints","اسپرینت‌ها"],["tasks","فهرست تسک‌ها"],["reports","گزارش عملکرد"],["rarchive","بایگانی گزارش‌ها"],["teams","تیم‌ها"],["process","فرایندها"],["calendar","تقویم"],["members","اعضا و ثبت‌نام"],["nda","قرارداد محرمانگی"],["training","فرم آموزش"]],
   letters:[["new","نامه‌ی جدید (ساخت فایل Word)"],["archive","بایگانی نامه‌های پیشین و پیگیری"]],
-  scholar:[["applied","اقدام‌شده و در دست بررسی"],["doing","در دست اقدام"],["todo","اقدام‌نشده"],["profile","مشخصات و رزومه من"]],
-  articles:[["list","ژورنال‌ها و کنفرانس‌ها"]],
-  patent:[["home","پتنت‌ها"],["ops","فرصت‌های ثبت اختراع"],["products","محصولات ریپو"]]
+  scholar:[["applied","اقدام‌شده و در دست بررسی"],["human","مسئول انسانی"],["doing","در دست اقدام"],["todo","اقدام‌نشده"],["profile","مشخصات و رزومه من"]],
+  articles:[["applied","اقدام‌شده و در دست بررسی"],["doing","در دست اقدام"],["todo","اقدام‌نشده"],["product","محصول ویژه‌ی مقاله"],["claude","تسک برای Claude"],["evidence","شواهد و داده‌ی واقعی"],["submit","ثبت چکیده و ثبت‌نام (مسئول انسانی)"],["list","فهرست کامل"]],
+  patent:[["home","پتنت‌ها"],["human","مسئول انسانی"],["ops","فرصت‌های ثبت اختراع"],["products","محصولات ریپو"]]
 };
 const TEAMS = {finance:"مالی",admin:"اداری",ai:"هوش مصنوعی"};
 const STAFF_FORM = {ai_trainee:"هوش مصنوعی – کارآموز",ai_junior:"هوش مصنوعی – جونیور",ai_senior:"هوش مصنوعی – سنیور",fin_trainee:"مالی – کارآموز",fin_assistant:"مالی – کمک حسابدار",fin_accountant:"مالی – حسابدار",adm_trainee:"امور اداری – کارآموز",adm_employee:"امور اداری – کارمند",product:"سبد محصولات هوشمند"};
@@ -204,7 +205,7 @@ const logoSrc = () => S.settings.logo_asset ? blobUrl(S.settings.logo_asset) : D
 const S = {mod:"market", sub:"iran", q:"", db:null, user:null, assets:null, sample:null, downloads:null,
   me:{id:null,isOwner:false,canEdit:false}, canWrite:null,
   m:{tenders:[],events:[],investors:[],leads:[],partners:[]}, opsList:[],
-  settings:{}, members:[], tasks:[], letters:[], lettersArchive:[], draft:null, archF:"all", ra:{member:null,from:"",to:""}, repLoaded:false, allLoaded:false, forceFull:false, products:[], patents:[], finance:[], clients:[], tracking:{}, schol:[], sp:{}, arts:[], artF:{field:"",mode:"",type:"",past:false},
+  settings:{}, members:[], tasks:[], letters:[], lettersArchive:[], lh:null, draft:null, archF:"all", ra:{member:null,from:"",to:""}, repLoaded:false, allLoaded:false, forceFull:false, products:[], patents:[], finance:[], clients:[], tracking:{}, schol:[], sp:{}, arts:[], artProd:{}, artSt:{}, ct:[], artF:{field:"",mode:"",type:"",past:false},
   myAtt:[], myReports:[], allReports:[], allAtt:[], loaded:false, sprints:[], boardMine:false, tour:null, got:new Set(), welcomed:false, calMine:false, calTypes:null, seenTasks:new Set()};
 try{const v=JSON.parse(localStorage.getItem("ppt-view")||"{}");if(v.mod&&SUBS[v.mod]){S.mod=v.mod;S.sub=SUBS[v.mod].some(x=>x[0]===v.sub)?v.sub:SUBS[v.mod][0][0]}}catch(e){}
 try{S.seenTasks=new Set(JSON.parse(localStorage.getItem("ppt-seen")||"[]"))}catch(e){}
@@ -219,11 +220,13 @@ const faNum = n => { try{return new Intl.NumberFormat("fa-IR").format(n)}catch(e
 const blobUrl = id => id ? "/_blob/" + id : "";
 const memberName = id => (S.members.find(m=>m.id===id)||{}).full_name || "—";
 const isAdmin = () => S.me.isOwner || S.me.canEdit;
+const seeAllReports = () => !!S.me.isOwner;   // performance reports and their scores: only the person and the owner
 function toast(t){const d=document.createElement("div");d.className="toast";d.textContent=t;document.body.appendChild(d);setTimeout(()=>d.remove(),2600)}
 function kpis(items){return `<div class="kpis">${items.map(([l,v,a])=>`<div class="kpi${a?" alert":""}"><b>${esc(v)}</b><span>${esc(l)}</span></div>`).join("")}</div>`}
 function table(head, rows, empty="موردی ثبت نشده است."){
   if(!rows.length) return `<p class="empty">${esc(empty)}</p>`;
-  return `<div class="tablewrap rows"><table><thead><tr>${head.map(h=>`<th>${esc(h)}</th>`).join("")}</tr></thead><tbody>${rows.join("")}</tbody></table></div>`;
+  const numbered = head[0]==="ردیف" ? rows : rows.map((r,i)=>String(r).replace(/<tr([^>]*)>/, (m,a)=>`<tr${a}><td data-l="ردیف" class="rownum">${faNum(i+1)}</td>`));
+  return `<div class="tablewrap rows"><table><thead><tr>${head[0]==="ردیف"?"":'<th class="rownum">ردیف</th>'}${head.map(h=>`<th>${esc(h)}</th>`).join("")}</tr></thead><tbody>${numbered.join("")}</tbody></table></div>`;
 }
 const td = (l, html, cls="") => `<td data-l="${esc(l)}"${cls?` class="${cls}"`:""}>${html}</td>`;
 function light(score){ if(score==null) return `<span class="meta">در انتظار نمره</span>`;
@@ -247,8 +250,13 @@ function subscribe(){
     }, () => {});
   }
   S.db.collection("tracking").onSnapshot(snap => { const t={}; snap.docs.forEach(d=>t[d.id]=d.data()); S.tracking=t; render(); }, ()=>{});
+  S.db.doc("settings/claude_tasks").onSnapshot(d => { S.ct = d.exists ? (d.data().list||[]) : []; render(); }, ()=>{});
+  S.db.doc("settings/paper_evidence").onSnapshot(d => { S.pev = d.exists ? d.data() : {list:[]}; render(); }, ()=>{});
+  S.db.doc("settings/article_status").onSnapshot(d => { S.artSt = d.exists ? (d.data().map||{}) : {}; render(); }, ()=>{});
+  S.db.doc("settings/article_product").onSnapshot(d => { S.artProd = d.exists ? d.data() : {}; render(); }, ()=>{});
   if(isOwnerOnly()) S.db.doc("settings/scholar").onSnapshot(d => { S.sp = d.exists ? d.data() : SP_DEFAULT; render(); }, ()=>{});
   S.db.doc("settings/company").onSnapshot(d => { S.settings = d.exists ? d.data() : {}; paintBrand(); render(); }, ()=>{});
+  S.db.doc("settings/letterhead").onSnapshot(d => { S.lh = d.exists ? d.data() : null; render(); }, ()=>{});
   if(S.me.id){
     S.db.collection(`attendance/${S.me.id}/days`).onSnapshot(s=>{S.myAtt=s.docs.map(d=>({id:d.id,...d.data()}));render()},()=>{});
     S.db.collection(`reports/${S.me.id}/items`).onSnapshot(s=>{S.myReports=s.docs.map(d=>({id:d.id,...d.data()}));S.repLoaded=true;render()},()=>{});
@@ -261,7 +269,7 @@ async function loadAllReports(){ // admins read every member's reports and atten
     try{ const r=await S.db.collection(`reports/${m.id}/items`).get(); r.docs.forEach(d=>all.push({member:m.id,id:d.id,...d.data()})); }catch(e){}
     try{ const a=await S.db.collection(`attendance/${m.id}/days`).get(); a.docs.forEach(d=>att.push({member:m.id,id:d.id,...d.data()})); }catch(e){}
   }
-  S.allReports=all; S.allAtt=att; S.allLoaded=true; render();
+  S.allReports=S.me.isOwner?all:[]; S.allAtt=att; S.allLoaded=true; render();
 }
 async function save(path, data, okMsg="ذخیره شد"){
   if(!S.db){ toast("اتصال به پایگاه داده برقرار نیست."); return false; }
@@ -317,11 +325,23 @@ async function uploadImage(file){
 
 // ------------------------------------------------------------------ navigation
 const isOwnerOnly = () => !!S.me.isOwner;   // Scholarship holds the owner's personal applications
-const visibleModules = () => MODULES.filter(([k])=>k!=="scholar"||isOwnerOnly());
+// Letters are visible only to administrative staff and the owner (UI-level; the database cannot restrict by team)
+const canSeeLetters = () => { if(S.me.isOwner) return true; const m=(S.members||[]).find(x=>x.id===S.me.id)||{}; return m.team==="admin"||["adm_trainee","adm_employee","admin"].includes(m.staff_type)||m.role==="office_manager"; };
+// Patent, Scholarship and Articles: only the owner, plus a person who has a task assigned in that area (who then sees just their own tasks)
+const VIEWS = {};   // declared before the first view is registered (patent/scholar/articles 'mine' views come early)
+const AREA_KINDS = {patent:["human_patent"], scholar:["human_scholar"], articles:["submit"]};
+const areaTasks = mod => (S.tasks||[]).filter(t=>t.assignee===S.me.id&&(AREA_KINDS[mod]||[]).includes(t.kind));
+const areaAccess = mod => S.me.isOwner?"full":areaTasks(mod).length?"mine":"none";
+const visibleModules = () => MODULES.filter(([k])=>(!AREA_KINDS[k]||areaAccess(k)!=="none")&&(k!=="letters"||canSeeLetters()));
+const areaMineView = mod => { const ts=areaTasks(mod).sort((a,b)=>(a.due||"9999").localeCompare(b.due||"9999"));
+  return `<p class="note">فقط تسک‌هایی که برای شما تعریف شده در این بخش دیده می‌شود. وضعیت تسک را از «BPMS ← روز من» یا «تخته‌ی اسکرام» تغییر دهید.</p>`+
+   table(["تسک","مهلت","وضعیت","شرح"],ts.map(t=>`<tr>${td("تسک",esc(t.title),"t")}${td("مهلت",t.due?faDate(t.due):"—")}${td("وضعیت",`<span class="pill ${t.status==="done"||t.status==="approved"?"p-ok":t.status==="doing"?"p-info":"p-warn"}">${esc(TASK_ST[t.status]||t.status)}</span>`)}${td("شرح",`<span style="white-space:pre-wrap">${esc(t.desc||"")}</span>`)}</tr>`),"تسکی برای شما تعریف نشده است."); };
+VIEWS["patent.mine"]=()=>areaMineView("patent"); VIEWS["scholar.mine"]=()=>areaMineView("scholar"); VIEWS["articles.mine"]=()=>areaMineView("articles");
 function paintNav(){
-  if(S.mod==="scholar"&&!isOwnerOnly()){ S.mod="market"; S.sub=SUBS.market[0][0]; }
+  if((AREA_KINDS[S.mod]&&areaAccess(S.mod)==="none")||(S.mod==="letters"&&!canSeeLetters())){ S.mod="market"; S.sub=SUBS.market[0][0]; }
+  else if(AREA_KINDS[S.mod]&&areaAccess(S.mod)==="mine") S.sub="mine";
   $("#mods").innerHTML = visibleModules().map(([k,l])=>`<button role="tab" aria-selected="${k===S.mod}" data-act="mod" data-k="${k}">${l}</button>`).join("");
-  $("#subs").innerHTML = SUBS[S.mod].map(([k,l])=>`<button role="tab" aria-selected="${k===S.sub}" data-act="sub" data-k="${k}">${esc(l)}</button>`).join("")
+  $("#subs").innerHTML = ((AREA_KINDS[S.mod]&&areaAccess(S.mod)==="mine")?[["mine","تسک‌های من"]]:SUBS[S.mod]).map(([k,l])=>`<button role="tab" aria-selected="${k===S.sub}" data-act="sub" data-k="${k}">${esc(l)}</button>`).join("")
     + `<input id="search" placeholder="جست‌وجو…" value="${esc(S.q)}" style="margin-inline-start:auto;min-width:160px">`;
   $("#search").oninput = e => { S.q = e.target.value.trim().toLowerCase(); renderView(); };
   try{localStorage.setItem("ppt-view",JSON.stringify({mod:S.mod,sub:S.sub}))}catch(e){}
@@ -331,7 +351,7 @@ function render(){ paintNav(); renderBanners(); renderView(); paintBell(); }
 function renderView(){
   if(S.mod==="letters"&&S.sub==="new"&&$("#composer")&&!S.forceFull){ // live data arrived: refresh only the ledger, never the form being typed in
     const d=S.draft; if(d&&d.numAuto){ d.number=nextLetterNo(d.identity); const el=$("[data-c=number]"); if(el&&document.activeElement!==el) el.value=d.number; const p=$("#cprev"); if(p) p.innerHTML=letterSheet(draftLetter()); }
-    const lg=$("#ledger"); if(lg) lg.innerHTML=letterLedger(); return;
+    const lg=$("#ledger"); if(lg) lg.innerHTML=letterLedger(); const lc=$("#lhcard"); if(lc) lc.innerHTML=letterheadCard(); const pv=$("#cprev"); if(pv) pv.innerHTML=letterSheet(draftLetter()); return;
   }
   S.forceFull=false;
   const fn = VIEWS[S.mod+"."+S.sub] || VIEWS[S.mod];
@@ -351,14 +371,14 @@ function myInbox(){
   const soon=addDays(today(),1);
   for(const [k,tr] of Object.entries(S.tracking)) if(tr.owner===me&&tr.next_date&&tr.next_date<=soon&&!tr.outcome) items.push({id:"tn"+k+tr.next_date,sticky:tr.next_date<=today(),text:`اقدام بعدی «${tr.next_action||"پیگیری"}» برای «${trackTitle(k)}» ${relDay(tr.next_date)} است.`,task:{}});
   for(const t of S.m.tenders) { const tr=S.tracking[t.id]||{}; if(tr.owner===me&&!tr.outcome&&ACTIVE.has(t.status)&&t.days_left!=null&&t.days_left>=0&&t.days_left<=3) items.push({id:"dl"+t.id+t.days_left,sticky:true,text:`مهلت «${t.title}» ${t.days_left===0?"امروز":faNum(t.days_left)+" روز دیگر"} است.`,task:{}}); }
-  for(const a of S.lettersArchive) if(a.owner===me&&a.status!=="closed"&&a.next_date&&a.next_date<=soon) items.push({id:"an"+a.id+a.next_date,sticky:a.next_date<=today(),text:`پیگیری نامه‌ی «${a.subject}»: ${a.next_action||"اقدام بعدی"} (${relDay(a.next_date)})`,task:{}});
+  for(const a of (canSeeLetters()?S.lettersArchive:[])) if(a.owner===me&&a.status!=="closed"&&a.next_date&&a.next_date<=soon) items.push({id:"an"+a.id+a.next_date,sticky:a.next_date<=today(),text:`پیگیری نامه‌ی «${a.subject}»: ${a.next_action||"اقدام بعدی"} (${relDay(a.next_date)})`,task:{}});
   for(const t of S.tasks) if(t.assignee===me&&t.due&&t.due<=soon&&!["done","approved"].includes(t.status)) items.push({id:"td"+t.id+t.due,sticky:t.due<=today(),text:`مهلت تسک «${t.title}» ${relDay(t.due)} است.`,task:{}});
   { const mm=myMember(); if(needsNda(mm)&&!ndaSigned(mm)) items.push({id:"nda"+NDA_VERSION,sticky:true,text:"امضای قرارداد محرمانگی الزامی است. از BPMS ← قرارداد محرمانگی، متن را بخوانید و امضا کنید.",task:{}}); }
   { const mm=myMember(); if(needsTraining(mm)&&!trainingDone(mm)) items.push({id:"trn"+TRAIN_VERSION,sticky:true,text:"فرم آموزش شما هنوز تأیید و امضا نشده است. از BPMS ← فرم آموزش، مشخصات را بررسی و تأیید کنید.",task:{}}); }
   { const mm=myMember(); if(mm&&!mm.fingerprint_asset) items.push({id:"fp1",sticky:true,text:"لطفاً اثر انگشت خود را کنار امضایتان مجدداً عکس بگیرید و از BPMS ← اعضا و ثبت‌نام ← ویرایش مشخصات من بارگذاری کنید.",task:{}}); }
   if(isAdmin()) for(const pr of S.products) for(const mid of Object.keys(pr.edit_requests||{})) items.push({id:"pr"+pr.id+mid,sticky:true,text:`${memberName(mid)} درخواست اجازه‌ی کار روی محصول «${pr.name}» دارد؛ از ERP ← توسعه‌ی محصول هوشمند تأیید کنید.`,task:{}});
   missingReportDays(myMember()).forEach(d=>items.push({id:"r"+d,sticky:true,text:`گزارش عملکرد ${faDate(d)} را ثبت نکرده‌اید؛ لطفاً هرچه زودتر ثبت کنید.`,task:{}}));
-  if(isAdmin()&&S.allLoaded&&new Date().getHours()>=16) S.members.filter(m=>m.id!==me&&isOfficeDay(m,today())&&!S.allReports.some(r=>r.member===m.id&&(r.date||r.id)===today())).forEach(m=>items.push({id:"ar"+m.id+today(),sticky:true,text:`${m.full_name} گزارش عملکرد امروز را ثبت نکرده است.`,task:{}}));
+  if(seeAllReports()&&S.allLoaded&&new Date().getHours()>=16) S.members.filter(m=>m.id!==me&&isOfficeDay(m,today())&&!S.allReports.some(r=>r.member===m.id&&(r.date||r.id)===today())).forEach(m=>items.push({id:"ar"+m.id+today(),sticky:true,text:`${m.full_name} گزارش عملکرد امروز را ثبت نکرده است.`,task:{}}));
   return items;
 }
 function paintBell(){ const n=myInbox().filter(i=>i.sticky||!S.seenTasks.has(i.id)).length; const b=$("#bellN"); b.hidden=!n; b.textContent=faNum(n); }
@@ -387,7 +407,6 @@ function renderBanners(){
 }
 
 // ================================================================== VIEWS
-const VIEWS = {};
 
 // ---------- MARKET
 function tenderCond(t){const f=t.facts||{},c=(t.analysis||{}).conditions||{};return{price:c.price_fa||f.price||"—",guarantee:c.guarantee_fa||f.guarantee||"—",experience:c.experience_fa||f.experience||"—",intl:c.international_fa||f.international||"—"}}
@@ -451,14 +470,22 @@ VIEWS["market.investors"] = () => {
   return kpis([["کل",faNum(list.length)],["صندوق خطرپذیر",faNum(list.filter(v=>v.type==="vc").length)],["سرمایه‌گذار شرکتی",faNum(list.filter(v=>v.type==="cvc").length)],["شتاب‌دهنده",faNum(list.filter(v=>v.type==="accelerator").length)]])+
   table(["سرمایه‌گذار","مقر","مرحله و مبلغ","اندازه‌ی صندوق","سرمایه‌گذاری‌ها","علاقه‌مندی","ارتباط","ملاحظات"], list.map(v=>`<tr>${td("نام",esc(v.name),"t")}${td("مقر",esc(v.hq))}${td("مرحله",`${esc(v.stage_fa)}<br><span class="meta">${esc(v.ticket_fa)}</span>`)}${td("صندوق",esc(v.fund_fa))}${td("سرمایه‌گذاری‌ها",esc(v.investments_fa))}${td("علاقه‌مندی",esc(v.focus_fa))}${td("ارتباط",`${link(v.website,"وب‌سایت")}${v.apply&&v.apply!==v.website?" · "+link(v.apply,"ارائه‌ی طرح"):""}${v.email?`<br><span class="mono">${esc(v.email)}</span>`:""}`)}${td("ملاحظات",esc(v.compliance_fa||"—"))}</tr>`));
 };
+// inline owner picker for Project Tracking: admins pick anyone; a member may take an unowned project or release their own
+const ownerSelect = (id,tr) => { const cur=tr.owner||"", locked=!isAdmin()&&cur&&cur!==S.me.id;
+  const ms=isAdmin()?S.members:S.members.filter(m=>m.id===S.me.id||m.id===cur);
+  if(locked) return esc(memberName(cur));
+  return `<select data-trkowner="${esc(id)}" aria-label="مسئول پیگیری"><option value="">— تعیین نشده —</option>${ms.map(m=>`<option value="${esc(m.id)}"${m.id===cur?" selected":""}>${esc(m.full_name||m.id)}</option>`).join("")}</select>`; };
+async function trackSetOwner(id,who){ const t=S.tracking[id]||{}; const {lease:_l,...rest}=t;
+  return save(`tracking/${id}`,{stage:"identified",...rest,owner:who,log:[...(t.log||[]),{at:nowIso(),by:S.me.id,note:who?`مسئول: ${memberName(who)}`:"مسئول برداشته شد"}].slice(-40),updated:nowIso(),updated_by:S.me.id},who?`مسئول: ${memberName(who)}`:"مسئول برداشته شد"); }
 VIEWS["market.tracking"] = () => {
   const list=S.m.tenders.filter(t=>ACTIVE.has(t.status)).filter(t=>match(t.title,t.country,(S.tracking[t.id]||{}).owner));
   const st=Object.keys(STAGES);
   return `<p class="note">مسئول، مرحله و اقدام بعدی هر پروژه را مستقیم از همین‌جا ویرایش کنید؛ تغییرات برای همه‌ی اعضا ذخیره می‌شود.</p>`+
+  (isAdmin()?`<div class="card" style="margin-bottom:8px"><div class="row"><label for="trkWho"><b>یک مسئول برای همه‌ی پروژه‌های بدون مسئول:</b></label><select id="trkWho" data-trkwho><option value="">— انتخاب فرد —</option>${S.members.map(m=>`<option value="${esc(m.id)}"${S.trkWho===m.id?" selected":""}>${esc(m.full_name||m.id)}</option>`).join("")}</select><button class="btn sig" data-act="trk-all">تخصیص به همه</button></div></div>`:"")+
   kpis([["پروژه‌ی فعال",faNum(list.length)],["بدون مسئول",faNum(list.filter(t=>!(S.tracking[t.id]||{}).owner).length),true],["سررسیدشده",faNum(list.filter(t=>{const n=(S.tracking[t.id]||{}).next_date;return n&&n<=today()}).length),true]])+
   table(["پروژه","بازار","مهلت","مسئول پیگیری","مرحله‌ی پیگیری","اقدام بعدی",""], list.map(t=>{const tr=S.tracking[t.id]||{},s=tr.stage||"identified",i=st.indexOf(s);
     return `<tr>${td("پروژه",`${link(t.url,t.title)}<br><code>${esc(t.id)}</code>`,"t")}${td("بازار",t.line==="web"?"طراحی سایت":t.market==="domestic"?"ایران":"بین‌المللی")}${td("مهلت",dl(t))}
-    ${td("مسئول",tr.owner?esc(memberName(tr.owner)!=="—"?memberName(tr.owner):tr.owner):`<span class="p-bad">تعیین نشده</span>`)}
+    ${td("مسئول",ownerSelect(t.id,tr))}
     ${td("مرحله",`<b>${esc(STAGES[s])}</b><div class="steps">${st.map((k,j)=>`<span class="${j<=i?"on":""}"></span>`).join("")}</div>`)}
     ${td("اقدام بعدی",`${esc(tr.next_action||"—")}${tr.next_date?`<br><span class="${tr.next_date<=today()?"p-bad":"meta"}">${faDate(tr.next_date)}</span>`:""}`)}
     ${td("",`<button class="btn sm ghost" data-act="track" data-id="${esc(t.id)}">ویرایش</button>`)}</tr>`}));
@@ -735,7 +762,7 @@ VIEWS["bpms.sprints"] = () => {
      ${td("",canSprint()?`<div class="row">${x.status==="planned"?`<button class="btn sm sig" data-act="sprint-start" data-id="${esc(x.id)}">شروع</button>`:""}${x.status==="active"?`<button class="btn sm" data-act="sprint-close" data-id="${esc(x.id)}">بستن</button>`:""}${x.status!=="planned"?`<button class="btn sm ghost" data-act="sprint-retro" data-id="${esc(x.id)}">بازنگری</button>`:""}<button class="btn sm ghost" data-act="sprint-edit" data-id="${esc(x.id)}">ویرایش</button></div>`:"")}</tr>`}),"هنوز اسپرینتی ساخته نشده است.");
 };
 VIEWS["bpms.reports"] = () => {
-  const src = isAdmin()? S.allReports : S.myReports.map(r=>({...r,member:S.me.id}));
+  const src = seeAllReports()? S.allReports : S.myReports.map(r=>({...r,member:S.me.id}));
   const list = src.filter(r=>match(memberName(r.member),r.text)).sort((a,b)=>(b.date||"").localeCompare(a.date||""));
   const byMember = {}; list.forEach(r=>{ if(r.score!=null){(byMember[r.member]=byMember[r.member]||[]).push(r.score)} });
   const summary = Object.entries(byMember).map(([m,s])=>{const avg=Math.round(s.reduce((a,b)=>a+b,0)/s.length);return `<tr>${td("عضو",esc(memberName(m)),"t")}${td("تعداد گزارش",faNum(s.length))}${td("میانگین",light(avg))}${td("وضعیت",avg<40?'<span class="p-bad">تذکر: احتمال قطع همکاری</span>':avg<70?'<span class="p-warn">نیاز به بهبود</span>':'<span class="p-ok">مطلوب</span>')}</tr>`});
@@ -816,7 +843,7 @@ Return JSON only: {"score": <integer 0-100>, "feedback_fa": "<2-3 short Persian 
 }
 // ---------- REPORT ARCHIVE: one row per day for each person; missed office days are visible and flagged
 function raDays(){
-  const admin=isAdmin(), ids=admin?S.members.map(m=>m.id):[S.me.id], ra=S.ra;
+  const admin=seeAllReports(), ids=admin?S.members.map(m=>m.id):[S.me.id], ra=S.ra;
   if(!ra.member||!ids.includes(ra.member)) ra.member=ids.includes(S.me.id)?S.me.id:ids[0];
   if(!ra.to) ra.to=today(); if(!ra.from) ra.from=addDays(today(),-29);
   const m=S.members.find(x=>x.id===ra.member);
@@ -833,7 +860,7 @@ function raDays(){
 }
 VIEWS["bpms.rarchive"] = () => {
   if(!S.me.id) return `<p class="empty">برای استفاده از این بخش باید با حساب claude.ai وارد شده باشید.</p>`;
-  const {ids,m,rows}=raDays(), admin=isAdmin(), ra=S.ra;
+  const {ids,m,rows}=raDays(), admin=seeAllReports(), ra=S.ra;
   const done=rows.filter(x=>x.state==="ok"), missing=rows.filter(x=>x.state==="missing"), scored=done.filter(x=>x.r.score!=null);
   const avg=scored.length?Math.round(scored.reduce((s,x)=>s+x.r.score,0)/scored.length):null;
   const todayBox = admin && S.allLoaded ? (()=>{
@@ -851,7 +878,7 @@ VIEWS["bpms.rarchive"] = () => {
    "در این بازه روز حضور یا گزارشی برای این عضو ثبت نشده است.");
 };
 function reportDetail(member,date){
-  const r=(isAdmin()?S.allReports.filter(x=>x.member===member):S.myReports).find(x=>(x.date||x.id)===date); if(!r) return;
+  const r=(seeAllReports()?S.allReports.filter(x=>x.member===member):S.myReports).find(x=>(x.date||x.id)===date); if(!r) return;
   $("#layer").innerHTML=`<div class="scrim" data-act="close-scrim"><div class="drawer"><div class="row"><h3 style="flex:1;margin:0">گزارش ${esc(memberName(member))} – ${faDate(date)}</h3><button class="btn ghost sm" data-act="close">بستن</button></div>
    <p>${light(r.score)} ${r.late?'<span class="pill p-warn">با تأخیر ثبت شده</span>':""}</p><p class="meta">ساعت کار خالص: ${esc(r.hours??"ثبت نشده")}</p>
    <div class="card"><b>نام کامل:</b> ${esc(r.name||memberName(member))} · <b>تیم:</b> ${esc(TEAMS[r.team]||TEAMS[(S.members.find(x=>x.id===member)||{}).team]||"—")} · <b>تاریخ عضویت در تیم:</b> ${r.joined?faDate(r.joined):"—"} · <b>تاریخ گزارش:</b> ${faDate(date)} · <b>شماره:</b> ${esc(r.no||"—")}</div>
@@ -1071,9 +1098,44 @@ const SCH = [
  {id:"monash",field:"Faculty of Engineering (Chemical, Civil & Petroleum-related)، Faculty of Information Technology (AI)",uni:"Monash University",country:"استرالیا",city:"ملبورن (Clayton)",levels:["phd","master"],kind:"Monash Graduate Research Scholarship + International Tuition Scholarship (MGRS + MITS)",support:"شهریه کامل + حقوق ماهیانه (حدود ۴۰ هزار دلار استرالیا در سال) + بیمه سلامت",deadline:"2026-10-31",dl_note:"دو دوره‌ی سالانه؛ تأیید شود",url:"https://www.monash.edu/graduate-research/future-students/scholarships",diff:4,ielts:6.5,extra:[{t:"گرفتن موافقت استاد راهنما (supervisor) پیش از اقدام",by:"me"}]},
  {id:"auckland",field:"Faculty of Engineering (Chemical & Materials Engineering، Engineering Science)، Faculty of Science (Computer Science)",uni:"The University of Auckland",country:"نیوزیلند",city:"اوکلند",levels:["phd"],kind:"University of Auckland Doctoral Scholarship",support:"شهریه + حقوق ماهیانه (حدود ۳۵ هزار دلار نیوزیلند در سال)",deadline:"2027-02-01",dl_note:"چند دوره در سال؛ تأیید شود",url:"https://www.auckland.ac.nz/en/study/scholarships-and-awards.html",diff:3,ielts:6.5,extra:[{t:"گرفتن موافقت استاد راهنما",by:"me"}]},
  {id:"melbourne",field:"Melbourne School of Engineering (Chemical Engineering، Computing and Information Systems)",uni:"The University of Melbourne",country:"استرالیا",city:"ملبورن (Parkville)",levels:["phd","master"],kind:"Melbourne Research Scholarship / Melbourne International Research Scholarship",support:"شهریه + حقوق ماهیانه (حدود ۴۰ هزار دلار استرالیا در سال) + بیمه",deadline:"2026-10-31",dl_note:"معمولاً ۳۱ اکتبر؛ تأیید شود",url:"https://scholarships.unimelb.edu.au",diff:5,ielts:7,extra:[{t:"گرفتن موافقت استاد راهنما",by:"me"}]}
+,
+ {id:"decodes",status0:"applied",field:"Computational genomics / RNA splicing in human disease – مسیر محاسباتی: هوش مصنوعی و یادگیری ماشین برای ژنومیک و چندـاومیکس (۱۵ موقعیت دکتری شامل زیست‌شناسی ساختاری، سرطان، نوروبیولوژی و RNA therapeutics)",uni:"University of Santiago de Compostela (هماهنگ‌کننده) و دانشگاه‌ها و مؤسسات شریک شبکه‌ی DECODES (Spain، Switzerland، UK، Italy، France و …)",country:"اسپانیا و شرکای اروپایی",city:"سانتیاگو د کومپوستلا",levels:["phd"],kind:"MSCA Doctoral Network (Horizon Europe) – salaried PhD",support:"قرارداد ۳۶ ماهه + حقوق ماهیانه (living allowance حدود ۴٬۰۱۰ یورو + mobility حدود ۷۱۰ یورو، قبل از ضرایب کشوری و مالیات) + کمک‌هزینه‌ی خانواده در صورت وجود",deadline:"2026-10-01",dl_note:"۳۰ سپتامبر یا ۱ اکتبر ۲۰۲۶؛ اقدام انجام و ارسال شد",url:"https://www.applykite.com/positions/15-fully-funded-phd-positions-in-rna-splicing-genomics-cancer-and-rna-therapeutics-decodes-msca-doctoral-network-u3ukj6nxpk",diff:5,ielts:6.5,extra:[]}
 ];
+const SCH_SPEC = {
+ csc:{uni:"China University of Petroleum (Beijing) – College of Petroleum Engineering؛ Tsinghua University – Department of Computer Science and Technology؛ Zhejiang University",field:"Petroleum Engineering (Oil and Gas Well Engineering / Drilling) – China University of Petroleum؛ Artificial Intelligence – Tsinghua / Zhejiang"},
+ turkiye:{uni:"Middle East Technical University (METU) – Department of Petroleum and Natural Gas Engineering؛ Istanbul Technical University (İTÜ) – Petroleum and Natural Gas Engineering / Artificial Intelligence and Data Engineering",field:"Petroleum and Natural Gas Engineering (Drilling)؛ Artificial Intelligence and Data Engineering"},
+ daad_epos:{uni:"TU Clausthal – Institute of Subsurface Energy Systems؛ TU Bergakademie Freiberg – Faculty of Geosciences, Geoengineering and Mining",field:"Energy / Petroleum-related EPOS programmes (Subsurface Energy Systems، Geoenergy)؛ برنامه‌ی دقیق باید در پایگاه DAAD EPOS تأیید شود"},
+ daad_phd:{uni:"RWTH Aachen University – Faculty of Georesources and Materials Engineering؛ TU Clausthal – Institute of Subsurface Energy Systems؛ TU Bergakademie Freiberg؛ Technical University of Munich",field:"PhD in Petroleum / Drilling Engineering؛ Machine Learning for Subsurface and Energy Systems"},
+ erasmus:{uni:"کنسرسیوم‌های Erasmus Mundus Joint Master – مثال: Big Data Management and Analytics (BDMA – ULB، UPC، CentraleSupélec، TU Berlin …)؛ SELECT – Environomical Pathways for Sustainable Energy Systems",field:"Big Data Management and Analytics؛ Sustainable Energy Systems؛ Artificial Intelligence (برنامه‌ی دقیق از کاتالوگ رسمی EACEA انتخاب شود)"},
+ si:{uni:"KTH Royal Institute of Technology؛ Chalmers University of Technology؛ Lund University",field:"Machine Learning (KTH)؛ Data Science and AI (Chalmers)؛ Energy and Environment / Engineering (Lund)"},
+ kaust:{uni:"King Abdullah University of Science and Technology (KAUST) – Physical Science and Engineering Division / Computer, Electrical and Mathematical Science and Engineering Division",field:"Energy Resources and Petroleum Engineering (ERPE)؛ Computer Science – Artificial Intelligence"},
+ mext:{uni:"Kyushu University – Faculty of Engineering, Earth Resources Engineering؛ Akita University – Graduate School of International Resource Sciences؛ The University of Tokyo – Graduate School of Engineering",field:"Earth Resources / Petroleum Engineering؛ AI-related engineering (Systems Innovation)"},
+ gks:{uni:"Seoul National University (SNU) – Department of Energy Resources Engineering؛ KAIST – Kim Jaechul Graduate School of AI؛ POSTECH",field:"Energy Resources Engineering (Petroleum)؛ Artificial Intelligence"},
+ hungary:{uni:"University of Miskolc – Faculty of Earth Science and Engineering (Petroleum Engineering)؛ Budapest University of Technology and Economics (BME)",field:"Petroleum Engineering (MSc/PhD)؛ Computer Science / Artificial Intelligence"},
+ eth:{uni:"ETH Zurich – Department of Mechanical and Process Engineering / Department of Computer Science",field:"MSc Energy Science and Technology؛ MSc Computational Science and Engineering؛ MSc Data Science"},
+ eiffel:{uni:"IFP School (Rueil-Malmaison) – Petroleum / Energy؛ Université Paris-Saclay – Computer Science",field:"Petroleum Engineering / Energy and Powertrain؛ Artificial Intelligence (Eiffel Excellence)"},
+ russia:{uni:"Gubkin Russian State University of Oil and Gas (Moscow)؛ Tomsk Polytechnic University – School of Earth Sciences and Engineering",field:"Drilling of Oil and Gas Wells؛ Petroleum Engineering"},
+ gates:{uni:"University of Cambridge – Department of Engineering / Department of Computer Science and Technology",field:"MPhil / PhD Engineering (Energy, Fluids and Turbomachinery)؛ Computer Science – Machine Learning"},
+ chevening:{uni:"Heriot-Watt University – Institute of GeoEnergy Engineering (Edinburgh)؛ Imperial College London – Department of Earth Science and Engineering؛ University of Aberdeen",field:"MSc Petroleum Engineering؛ MSc Drilling and Well Engineering"},
+ hbku:{uni:"Hamad Bin Khalifa University (HBKU) – College of Science and Engineering",field:"MS / PhD Sustainable Energy؛ Computer Science and Engineering؛ Data Science and Engineering (AI)"},
+ tum:{uni:"Technical University of Munich – TUM School of Engineering and Design؛ TUM School of Computation, Information and Technology",field:"PhD / MSc Energy and Process Engineering؛ Informatics (Machine Learning)"},
+ norway:{uni:"University of Stavanger (UiS) – Faculty of Science and Technology (Petroleum Engineering)؛ NTNU – Department of Geoscience and Petroleum؛ University of Oslo؛ University of Bergen",field:"PhD in Petroleum Engineering؛ Petroleum Geoscience؛ Machine Learning for Subsurface"},
+ edinburgh:{uni:"The University of Edinburgh – School of Geosciences؛ School of Informatics",field:"PhD Subsurface / Reservoir Geoscience and Energy؛ Informatics – Artificial Intelligence"},
+ netherlands:{uni:"Delft University of Technology – Faculty of Civil Engineering and Geosciences (Geoscience and Engineering)؛ University of Twente؛ TU Eindhoven",field:"PhD Petroleum / Reservoir Engineering؛ Data Science and AI"},
+ crick:{uni:"The Francis Crick Institute (مدرک از UCL / Imperial / King's College London)",field:"PhD Computational Biology / AI in Biomedicine؛ Cancer، Neuroscience، Genomics"},
+ commonwealth:{uni:"Heriot-Watt University؛ Imperial College London؛ University of Aberdeen (از طریق Commonwealth Scholarship Commission)",field:"MSc / PhD Petroleum Engineering؛ Artificial Intelligence"},
+ eskas:{uni:"ETH Zurich – Department of Earth Sciences / Computer Science؛ EPFL – School of Engineering",field:"PhD Energy Science؛ Computer Science (AI)؛ Earth Sciences – Subsurface"},
+ singa:{uni:"A*STAR Graduate Academy با National University of Singapore (NUS) – Chemical and Biomolecular Engineering؛ Nanyang Technological University (NTU)؛ A*STAR I2R / IHPC",field:"PhD Artificial Intelligence and Machine Learning؛ Engineering Science (Process / Energy systems)"},
+ aus_awards:{uni:"University of Adelaide – Australian School of Petroleum and Energy Resources؛ Curtin University – WA School of Mines (Petroleum Engineering)؛ UNSW",field:"MSc / PhD Petroleum Engineering"},
+ monash:{uni:"Monash University – Faculty of Engineering (Chemical and Biological Engineering)؛ Faculty of Information Technology",field:"PhD Chemical Engineering (Process / Subsurface fluids)؛ PhD Artificial Intelligence / Data Science"},
+ auckland:{uni:"The University of Auckland – Faculty of Engineering (Department of Chemical and Materials Engineering؛ Engineering Science)؛ School of Computer Science",field:"PhD Chemical and Materials Engineering؛ Engineering Science (Machine Learning)"},
+ melbourne:{uni:"The University of Melbourne – Melbourne School of Engineering (Chemical Engineering)؛ School of Computing and Information Systems",field:"PhD Chemical Engineering؛ Artificial Intelligence / Computing and Information Systems"},
+ austria:{field:"هنوز مشخص نیست – پس از باز شدن لینک ارسالی تکمیل می‌شود"}
+};
+SCH.forEach(p=>Object.assign(p,SCH_SPEC[p.id]||{}));
 const SCH_LV = {master:"ارشد",phd:"دکتری"};
 const SCH_ST = {todo:"اقدام‌نشده",doing:"در دست اقدام",applied:"اقدام‌شده و در دست بررسی"};
+const schStatus = p => schState(p.id).status || p.status0 || "todo";
 const schState = id => S.schol.find(x=>x.id===id)||{id};
 const schItems = p => [...SCH_COMMON,...(p.extra||[]).map((e,i)=>({k:"x"+i,t:e.t,by:e.by}))];
 function schChance(p){
@@ -1102,22 +1164,23 @@ function schCard(p,page){
   return `<div class="card" style="margin-bottom:12px">
   <div class="row" style="align-items:flex-start;gap:10px;flex-wrap:wrap"><h3 style="flex:1;margin:0;min-width:220px">${esc(p.uni)}</h3>${p.levels.map(l=>`<span class="pill p-mute">${SCH_LV[l]}</span>`).join("")}${ch?`<span class="pill ${ch.pct>=55?"p-ok":"p-mute"}" title="تخمین ساده بر اساس مشخصات شما">شانس من: ${esc(ch.label)} (${faNum(ch.pct)}٪)</span>`:`<span class="pill p-mute">شانس من: ابتدا مشخصات را کامل کنید</span>`}</div>
   <table style="width:100%;margin-top:6px"><tbody>
-  <tr><td style="width:26%;color:var(--muted)">رشته</td><td>${esc(p.field)}</td></tr>
+  <tr><td style="width:26%;color:var(--muted)">رشته‌ی درسی</td><td>${esc(p.field)}</td></tr>
   <tr><td style="color:var(--muted)">کشور و شهر</td><td>${esc(p.country)} – ${esc(p.city)}</td></tr>
   <tr><td style="color:var(--muted)">شرایط حمایت</td><td><b>${esc(p.kind)}</b> · ${esc(p.support)}</td></tr>
   <tr><td style="color:var(--muted)">مهلت ثبت‌نام</td><td>${schDeadline(p)}</td></tr>
   <tr><td style="color:var(--muted)">سایت رسمی</td><td>${link(p.url)}</td></tr></tbody></table>${p.warn?`<div class="banner bad" style="margin:6px 0">${esc(p.warn)}</div>`:""}
-  <div class="row" style="margin:8px 0;gap:10px;flex-wrap:wrap">${page!=="applied"?`<label><input type="checkbox" data-act="sch-set" data-id="${esc(p.id)}" data-st="applied"> قبلاً اقدام شده است</label>`:`<span class="pill p-ok">اقدام شده – در دست بررسی</span>`}${move}<button class="btn sm ghost" data-act="sch-copy" data-id="${esc(p.id)}">کپی دستور برای Claude</button></div>
+  <div class="row" style="margin:8px 0;gap:10px;flex-wrap:wrap">${page!=="applied"?`<label><input type="checkbox" data-act="sch-set" data-id="${esc(p.id)}" data-st="applied"> قبلاً اقدام شده است</label>`:`<span class="pill p-ok">اقدام شده – در دست بررسی</span>`}${move}<button class="btn sm sig" data-act="sch-task" data-id="${esc(p.id)}">ثبت تسک برای Claude</button><button class="btn sm ghost" data-act="sch-copy" data-id="${esc(p.id)}">کپی دستور</button>${st.claude_task?`<span class="pill ${st.claude_task.status==="open"?"p-warn":"p-ok"}">${st.claude_task.status==="open"?"تسک Claude در انتظار انجام":"تسک Claude انجام شد"}</span>`:""}</div>
   <details${page==="doing"?" open":""}><summary><b>مدارک و کارها</b> – ${faNum(done)} از ${faNum(items.length)} (${faNum(pct)}٪)</summary>
    <div class="grid2" style="margin-top:8px"><div><h4>Claude انجام می‌دهد</h4>${items.filter(i=>i.by==="ai").map(row).join("")}</div><div><h4>خودتان باید انجام دهید</h4>${items.filter(i=>i.by==="me").map(row).join("")}</div></div></details></div>`;
 }
 function schList(page){
-  const list=SCH.filter(p=>(schState(p.id).status||"todo")===page).filter(p=>match(p.uni,p.country,p.city,p.field,p.kind)).sort((a,b)=>a.deadline.localeCompare(b.deadline));
+  const list=SCH.filter(p=>schStatus(p)===page).filter(p=>match(p.uni,p.country,p.city,p.field,p.kind)).sort((a,b)=>a.deadline.localeCompare(b.deadline));
   return `<p class="note">فهرست بورسیه‌های کامل ارشد و دکتری که شهریه را پوشش می‌دهند و حقوق ماهیانه دارند. مهلت‌ها تقریبی‌اند؛ پیش از اقدام در سایت رسمی تأیید شوند.</p>`+
-   kpis(Object.entries(SCH_ST).map(([k,l])=>[l,faNum(SCH.filter(p=>(schState(p.id).status||"todo")===k).length),false]))+
+   kpis(Object.entries(SCH_ST).map(([k,l])=>[l,faNum(SCH.filter(p=>schStatus(p)===k).length),false]))+
    (list.length?list.map(p=>schCard(p,page)).join(""):'<p class="empty">موردی در این صفحه نیست.</p>');
 }
 const schOnly = fn => () => isOwnerOnly() ? fn() : `<p class="empty">این بخش فقط برای مالک سامانه است.</p>`;
+VIEWS["scholar.human"] = schOnly(() => humView("scholar"));
 VIEWS["scholar.applied"]=schOnly(()=>schList("applied"));
 VIEWS["scholar.doing"]=schOnly(()=>schList("doing"));
 VIEWS["scholar.todo"]=schOnly(()=>schList("todo"));
@@ -1148,10 +1211,25 @@ function schProfileForm(){
 async function schSave(id,patch){
   const {id:_,...cur}=schState(id); return save(`scholarships/${id}`,{...cur,...patch},"ذخیره شد");
 }
-function schCopyPrompt(id){
+function schPromptText(id){
   const p=SCH.find(x=>x.id===id), q=S.sp||{};
-  const t=`برای بورسیه «${p.kind}» در ${p.uni} (${p.country}) برنامه‌ی اقدام بساز: رزومه‌ی آکادمیک، پیش‌نویس SOP و ایمیل به استاد. مشخصات من: رشته ${q.field||"—"}، مقطع ${q.target||"—"}، معدل ${q.gpa||"—"}، IELTS ${q.ielts||"—"}، مقاله ${q.pubs||"—"}. مهلت تقریبی: ${p.deadline}.`;
-  try{ navigator.clipboard.writeText(t); toast("دستور کپی شد؛ در گفتگو با Claude بچسبانید."); }catch(e){ toast(t); }
+  return `برای بورسیه «${p.kind}» در ${p.uni} (${p.country}) رشته‌ی ${p.field} برنامه‌ی اقدام بساز: رزومه‌ی آکادمیک، پیش‌نویس SOP و ایمیل به استاد. مشخصات من: رشته ${q.field||"—"}، مقطع ${q.target||"—"}، معدل ${q.gpa||"—"}، IELTS ${q.ielts||"—"}، مقاله ${q.pubs||"—"}. مهلت تقریبی: ${p.deadline}.`;
+}
+function schShowText(t){ // clipboard API is blocked inside the artifact frame: show the text selected so Ctrl+C always works
+  $("#layer").innerHTML=`<div class="scrim" data-act="close-scrim"><div class="drawer"><h3>دستور برای Claude</h3><p class="note">متن انتخاب شده است؛ با Ctrl+C کپی کنید و در گفتگو با Claude بچسبانید.</p><textarea id="schTxt" style="width:100%;min-height:180px" readonly>${esc(t)}</textarea><div class="row" style="margin-top:8px"><button class="btn ghost" data-act="close">بستن</button></div></div></div>`;
+  const el=$("#schTxt"); if(el){ el.focus(); el.select(); }
+}
+async function schCopyPrompt(id){
+  const t=schPromptText(id);
+  try{ await navigator.clipboard.writeText(t); toast("دستور کپی شد؛ در گفتگو با Claude بچسبانید."); return; }catch(e){}
+  schShowText(t);
+  try{ if(document.execCommand("copy")) toast("دستور کپی شد."); }catch(e){}
+}
+async function schClaudeTask(id){
+  const cur=schState(id);
+  if(cur.claude_task&&cur.claude_task.status==="open"){ toast("این تسک از قبل برای Claude ثبت شده است."); return; }
+  await schSave(id,{claude_task:{text:schPromptText(id),at:new Date().toISOString(),by:S.me.id,status:"open"}});
+  toast("تسک برای Claude ثبت شد؛ در گفتگو بنویسید «تسک‌های اسکالرشیپ را انجام بده».");
 }
 function printSheet(sel){
   const el=document.querySelector(sel); if(!el) return;
@@ -1207,16 +1285,20 @@ function companyForm(){
 // Two separate sections: "new" composes a letter on the company letterhead and produces a ready-to-send Word file;
 // "archive" tracks letters that were sent before the agent existed and where each one stands now.
 /*DOCX-START*/
-// Minimal dependency-free .docx writer: stored ZIP + WordprocessingML (RTL, letterhead in header/footer).
+// Dependency-free .docx tools: stored-ZIP writer, ZIP reader, letter text clean-up, built-in letterhead, and filling the company's own Word letterhead template.
 const CRC_T = (()=>{const t=new Uint32Array(256);for(let n=0;n<256;n++){let c=n;for(let k=0;k<8;k++)c=c&1?0xEDB88320^(c>>>1):c>>>1;t[n]=c>>>0}return t})();
 function crc32(b){let c=0xFFFFFFFF;for(let i=0;i<b.length;i++)c=CRC_T[(c^b[i])&255]^(c>>>8);return (c^0xFFFFFFFF)>>>0}
-function zipStore(files){
+async function deflateRaw(u8){ return new Uint8Array(await new Response(new Blob([u8]).stream().pipeThrough(new CompressionStream("deflate-raw"))).arrayBuffer()); }
+async function zipStore(files){   // deflate when the browser can, so the .docx stays small
   const enc=new TextEncoder(), parts=[], central=[]; let off=0;
   const u16=n=>[n&255,(n>>8)&255], u32=n=>[n&255,(n>>8)&255,(n>>16)&255,(n>>>24)&255];
   for(const f of files){
-    const name=enc.encode(f.name), data=typeof f.data==="string"?enc.encode(f.data):f.data, crc=crc32(data), sz=data.length;
-    const lh=Uint8Array.from([0x50,0x4b,3,4,...u16(20),...u16(0x0800),...u16(0),...u16(0),...u16(0x21),...u32(crc),...u32(sz),...u32(sz),...u16(name.length),...u16(0)]);
-    const ch=Uint8Array.from([0x50,0x4b,1,2,...u16(20),...u16(20),...u16(0x0800),...u16(0),...u16(0),...u16(0x21),...u32(crc),...u32(sz),...u32(sz),...u16(name.length),...u16(0),...u16(0),...u16(0),...u16(0),...u32(0),...u32(off)]);
+    const name=enc.encode(f.name), raw=typeof f.data==="string"?enc.encode(f.data):f.data, crc=crc32(raw), usz=raw.length;
+    let data=raw, method=0;
+    if(typeof CompressionStream!=="undefined"&&usz>256){ try{ const c=await deflateRaw(raw); if(c.length<usz){ data=c; method=8; } }catch(e){} }
+    const sz=data.length;
+    const lh=Uint8Array.from([0x50,0x4b,3,4,...u16(20),...u16(0x0800),...u16(method),...u16(0),...u16(0x21),...u32(crc),...u32(sz),...u32(usz),...u16(name.length),...u16(0)]);
+    const ch=Uint8Array.from([0x50,0x4b,1,2,...u16(20),...u16(20),...u16(0x0800),...u16(method),...u16(0),...u16(0x21),...u32(crc),...u32(sz),...u32(usz),...u16(name.length),...u16(0),...u16(0),...u16(0),...u16(0),...u32(0),...u32(off)]);
     parts.push(lh,name,data); central.push(ch,name); off+=lh.length+name.length+sz;
   }
   const cdSize=central.reduce((s,c)=>s+c.length,0);
@@ -1224,65 +1306,183 @@ function zipStore(files){
   const all=[...parts,...central,end], out=new Uint8Array(all.reduce((s,c)=>s+c.length,0)); let p=0;
   for(const c of all){out.set(c,p);p+=c.length} return out;
 }
+async function unzip(bytes){ // [{name,data}] from a zip (stored or deflate)
+  const dv=new DataView(bytes.buffer,bytes.byteOffset,bytes.byteLength), dec=new TextDecoder(), out=[];
+  let e=bytes.length-22; while(e>=0&&dv.getUint32(e,true)!==0x06054b50) e--;
+  if(e<0) throw new Error("not a zip file");
+  const n=dv.getUint16(e+10,true); let p=dv.getUint32(e+16,true);
+  for(let i=0;i<n;i++){
+    const method=dv.getUint16(p+10,true), csz=dv.getUint32(p+20,true), nl=dv.getUint16(p+28,true), el=dv.getUint16(p+30,true), cl=dv.getUint16(p+32,true), lo=dv.getUint32(p+42,true);
+    const name=dec.decode(bytes.subarray(p+46,p+46+nl));
+    const ds=lo+30+dv.getUint16(lo+26,true)+dv.getUint16(lo+28,true), raw=bytes.subarray(ds,ds+csz);
+    if(!name.endsWith("/")){
+      let data;
+      if(method===0) data=raw.slice();
+      else if(method===8) data=new Uint8Array(await new Response(new Blob([raw]).stream().pipeThrough(new DecompressionStream("deflate-raw"))).arrayBuffer());
+      else throw new Error("unsupported zip method "+method);
+      out.push({name,data});
+    }
+    p+=46+nl+el+cl;
+  }
+  return out;
+}
 const WX = s => String(s ?? "").replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F]/g,"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const WLTR = s => s ? "‪"+s+"‬" : "";   // keep Latin ids like PPT-1405-0001 in reading order inside RTL text
-const WD = {ltr:false};   // direction of the letter being built: false = Persian RTL letterhead, true = English (international identity)
-const wRun = (text,{b=false,sz=24,color=""}={}) => `<w:r><w:rPr><w:rFonts w:ascii="Tahoma" w:hAnsi="Tahoma" w:cs="B Nazanin"/>${b?"<w:b/><w:bCs/>":""}${color?`<w:color w:val="${color}"/>`:""}<w:sz w:val="${sz}"/><w:szCs w:val="${sz+2}"/>${WD.ltr?"":"<w:rtl/>"}</w:rPr><w:t xml:space="preserve">${WX(text)}</w:t></w:r>`;
+const WD = {ltr:false, font:true};   // ltr: English letter (international identity); font:false = inherit the template's own fonts
+const wRun = (text,{b=false,sz=24,color=""}={}) => `<w:r><w:rPr>${WD.font?'<w:rFonts w:ascii="Tahoma" w:hAnsi="Tahoma" w:cs="B Nazanin"/>':""}${b?"<w:b/><w:bCs/>":""}${color?`<w:color w:val="${color}"/>`:""}<w:sz w:val="${sz}"/><w:szCs w:val="${sz+2}"/>${WD.ltr?"":"<w:rtl/>"}</w:rPr><w:t xml:space="preserve">${WX(text)}</w:t></w:r>`;
 // jc: omitted = start (visual right in RTL), "both" = justified, "right" = end (visual left in RTL), "center"
-const wPara = (inner,{jc="",before=0,after=0,line=0,border=null}={}) => `<w:p><w:pPr>${border?`<w:pBdr><w:${border.side} w:val="single" w:sz="${border.sz}" w:space="4" w:color="${border.color}"/></w:pBdr>`:""}${WD.ltr?"":"<w:bidi/>"}<w:spacing w:before="${before}" w:after="${after}"${line?` w:line="${line}" w:lineRule="auto"`:""}/>${jc?`<w:jc w:val="${jc}"/>`:""}</w:pPr>${inner}</w:p>`;
-const wImg = (rid,n,cx,cy) => `<w:r><w:drawing><wp:inline distT="0" distB="0" distL="0" distR="0"><wp:extent cx="${cx}" cy="${cy}"/><wp:docPr id="${n}" name="img${n}"/><a:graphic xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main"><a:graphicData uri="http://schemas.openxmlformats.org/drawingml/2006/picture"><pic:pic xmlns:pic="http://schemas.openxmlformats.org/drawingml/2006/picture"><pic:nvPicPr><pic:cNvPr id="${n}" name="img${n}.png"/><pic:cNvPicPr/></pic:nvPicPr><pic:blipFill><a:blip r:embed="${rid}"/><a:stretch><a:fillRect/></a:stretch></pic:blipFill><pic:spPr><a:xfrm><a:off x="0" y="0"/><a:ext cx="${cx}" cy="${cy}"/></a:xfrm><a:prstGeom prst="rect"><a:avLst/></a:prstGeom></pic:spPr></pic:pic></a:graphicData></a:graphic></wp:inline></w:drawing></w:r>`;
-const W_NS = 'xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships" xmlns:wp="http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing"';
-const RELNS = "http://schemas.openxmlformats.org/officeDocument/2006/relationships";
+const wPara = (inner,{jc="",before=0,after=0,line=0,border=null,pb=false,keep=false}={}) => `<w:p><w:pPr>${keep?"<w:keepNext/>":""}${pb?"<w:pageBreakBefore/>":""}${border?`<w:pBdr><w:${border.side} w:val="single" w:sz="${border.sz}" w:space="4" w:color="${border.color}"/></w:pBdr>`:""}${WD.ltr?"":"<w:bidi/>"}<w:spacing w:before="${before}" w:after="${after}"${line?` w:line="${line}" w:lineRule="auto"`:""}/>${jc?`<w:jc w:val="${jc}"/>`:""}</w:pPr>${inner}</w:p>`;
+const WNS_WP = "http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing", WNS_R = "http://schemas.openxmlformats.org/officeDocument/2006/relationships";
+const wPic = (rid,n,cx,cy) => `<a:graphic xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main"><a:graphicData uri="http://schemas.openxmlformats.org/drawingml/2006/picture"><pic:pic xmlns:pic="http://schemas.openxmlformats.org/drawingml/2006/picture"><pic:nvPicPr><pic:cNvPr id="${n}" name="img${n}.png"/><pic:cNvPicPr/></pic:nvPicPr><pic:blipFill><a:blip xmlns:r="${WNS_R}" r:embed="${rid}"/><a:stretch><a:fillRect/></a:stretch></pic:blipFill><pic:spPr><a:xfrm><a:off x="0" y="0"/><a:ext cx="${cx}" cy="${cy}"/></a:xfrm><a:prstGeom prst="rect"><a:avLst/></a:prstGeom></pic:spPr></pic:pic></a:graphicData></a:graphic>`;
+const wImg = (rid,n,cx,cy) => `<w:r><w:drawing><wp:inline xmlns:wp="${WNS_WP}" distT="0" distB="0" distL="0" distR="0"><wp:extent cx="${cx}" cy="${cy}"/><wp:docPr id="${n}" name="img${n}"/>${wPic(rid,n,cx,cy)}</wp:inline></w:drawing></w:r>`;
+// picture anchored to the page corner and placed behind the text (a letterhead image used as the page background)
+const wBack = (rid,n,cx,cy) => `<w:r><w:drawing><wp:anchor xmlns:wp="${WNS_WP}" distT="0" distB="0" distL="0" distR="0" simplePos="0" relativeHeight="0" behindDoc="1" locked="0" layoutInCell="1" allowOverlap="1"><wp:simplePos x="0" y="0"/><wp:positionH relativeFrom="page"><wp:posOffset>0</wp:posOffset></wp:positionH><wp:positionV relativeFrom="page"><wp:posOffset>0</wp:posOffset></wp:positionV><wp:extent cx="${cx}" cy="${cy}"/><wp:effectExtent l="0" t="0" r="0" b="0"/><wp:wrapNone/><wp:docPr id="${n}" name="letterhead${n}"/><wp:cNvGraphicFramePr/>${wPic(rid,n,cx,cy)}</wp:anchor></w:drawing></w:r>`;
+const W_NS = `xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main" xmlns:r="${WNS_R}" xmlns:wp="${WNS_WP}"`;
+const RELNS = WNS_R;
 const imgSize = (im,hCm) => { const cy=Math.round(hCm*360000); return [Math.round(cy*im.w/im.h), cy]; };
 
-// L: {number,dateFa,recipient,subject,body,attachments,cc}; C: {nameFa,nameEn,footer,ceoName,ceoTitle}; logo/sig: {bytes,w,h}|null
-function buildLetterDocx(L, C, logo, sig, ltr=false){
-  WD.ltr=ltr; const END=ltr?"":"right";
-  const T=ltr?{no:"Ref: ",date:"Date: ",att:"Enclosures: ",none:"None",subj:"Subject: ",hello:"Dear Sir or Madam,",thanks:"Thank you for your time and consideration.",cc:"cc: ",bye:"Yours sincerely,"}:{no:"شماره: ",date:"تاریخ: ",att:"پیوست: ",none:"ندارد",subj:"موضوع: ",hello:"با سلام و احترام،",thanks:"پیشاپیش از حسن توجه جنابعالی سپاسگزاریم.",cc:"رونوشت: ",bye:""};
+// Turn what was typed or pasted into a clean letter: no duplicated "موضوع:", greeting, sign-off or signature,
+// and anything written after the sign-off becomes the attachment (own page).
+function prepLetter(L){
+  const norm = s => String(s||"").replace(/\r/g,"").replace(/\t/g," ").replace(/[  ]{2,}/g," ");
+  const subject = norm(L.subject).replace(/\s*\n\s*/g," ").replace(/^\s*(?:موضوع|Subject)\s*[:：]\s*/i,"").trim();
+  const lines = norm(L.body).split("\n").map(x=>x.trim());
+  const annexIn = norm(L.annex).split("\n").map(x=>x.trim());
+  const byeRe = /^(?:با\s*(?:تجدید\s*)?احترام|ارادتمند|با\s*تشکر|Yours\s+(?:sincerely|faithfully)|Sincerely|Best\s+regards|Kind\s+regards)\s*[،,.!]*$/i;
+  let body = lines, rest = [], signer = String(L.signer||"").trim(), split = false;
+  const k = lines.findIndex(x=>byeRe.test(x));
+  if(k>=0){
+    let j=k+1; while(j<lines.length&&!lines[j]) j++;
+    const words = (lines[j]||"").split(/\s+/).length;
+    const isName = j<lines.length && lines[j].length<=70 && words<=7 && !lines[j+1];   // a short line followed by a blank/end is the typed signature
+    if(isName){ signer = lines[j]; j++; }
+    body = lines.slice(0,k); rest = lines.slice(j);
+    split = rest.some(Boolean) || isName;
+  }
+  const nonEmpty = a => a.filter(Boolean);
+  const annexLines = nonEmpty([...rest, ...annexIn]);
+  const bodyLines = nonEmpty(body);
+  return {subject, bodyLines, annexLines, signer, split, hello:/سلام|^(?:Dear|Hello)\b/i.test((bodyLines[0]||"").slice(0,120)),
+    bodyText:bodyLines.join("\n"), annexText:annexLines.join("\n")};
+}
+const isHeadingLine = t => (t.length<=90&&/^\d+(?:[-.]\d+)*[-.\s]/.test(t)) || (t.length<=60&&/[:：]$/.test(t));
+const cleanAtt = s => String(s||"").replace(/^\s*(?:پیوست|Enclosures?)\s*[:：]?\s*/i,"").trim();
+
+// Body of the letter as WordprocessingML paragraphs. meta=false when the template already carries the number/date/attachments fields.
+function letterBodyXml(L, C, P, sigRef, sigImg, meta){
+  const ltr=WD.ltr, END=ltr?"":"right";
+  const T=ltr?{no:"Ref: ",date:"Date: ",att:"Enclosures: ",none:"None",subj:"Subject: ",hello:"Dear Sir or Madam,",cc:"cc: ",bye:"Yours sincerely,",annex:"Enclosure"}:{no:"شماره: ",date:"تاریخ: ",att:"پیوست: ",none:"ندارد",subj:"موضوع: ",hello:"با سلام و احترام،",cc:"رونوشت: ",bye:"با تجدید احترام",annex:"پیوست"};
   const lines = s => String(s||"").split(/\r?\n/).map(x=>x.trim()).filter(Boolean);
-  // header = letterhead
-  const names = wPara(wRun(C.nameFa||"",{b:true,sz:32}),{after:20}) + (C.nameEn?wPara(wRun(WLTR(C.nameEn),{sz:20,color:"555555"})):"");
-  let hdrTbl;
-  if(logo){ const [cx,cy]=imgSize(logo,1.8);
-    hdrTbl = `<w:tbl><w:tblPr><w:tblW w:w="5000" w:type="pct"/>${ltr?"":"<w:bidiVisual/>"}<w:tblLayout w:type="fixed"/></w:tblPr><w:tblGrid><w:gridCol w:w="2400"/><w:gridCol w:w="7238"/></w:tblGrid><w:tr>`+
-      `<w:tc><w:tcPr><w:tcW w:w="2400" w:type="dxa"/><w:vAlign w:val="center"/></w:tcPr>${wPara(wImg("rIdLogo",1,cx,cy))}</w:tc>`+
-      `<w:tc><w:tcPr><w:tcW w:w="7238" w:type="dxa"/><w:vAlign w:val="center"/></w:tcPr>${names}</w:tc></w:tr></w:tbl>`;
-  } else hdrTbl = `<w:tbl><w:tblPr><w:tblW w:w="5000" w:type="pct"/>${ltr?"":"<w:bidiVisual/>"}<w:tblLayout w:type="fixed"/></w:tblPr><w:tblGrid><w:gridCol w:w="9638"/></w:tblGrid><w:tr><w:tc><w:tcPr><w:tcW w:w="9638" w:type="dxa"/></w:tcPr>${names}</w:tc></w:tr></w:tbl>`;
-  const header = `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><w:hdr ${W_NS}>${hdrTbl}${wPara("",{after:0,border:{side:"bottom",sz:12,color:"D12A1F"}})}</w:hdr>`;
-  const footer = `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><w:ftr ${W_NS}>${wPara(wRun(C.footer||"",{sz:17,color:"555555"}),{jc:"center",border:{side:"top",sz:4,color:"BBBBBB"}})}</w:ftr>`;
-  // body
-  const b=[];
-  b.push(wPara(wRun(T.no+WLTR(L.number),{sz:22}),{jc:END}));
-  b.push(wPara(wRun(T.date+L.dateFa,{sz:22}),{jc:END}));
-  b.push(wPara(wRun(T.att+(L.attachments||T.none),{sz:22}),{jc:END,after:240}));
+  const att=cleanAtt(L.attachments), b=[];
+  if(meta){
+    b.push(wPara(wRun(T.no+WLTR(L.number),{sz:22}),{jc:END}));
+    b.push(wPara(wRun(T.date+L.dateFa,{sz:22}),{jc:END}));
+    b.push(wPara(wRun(T.att+(att||T.none),{sz:22}),{jc:END,after:240}));
+  }
   lines(L.recipient).forEach(t=>b.push(wPara(wRun(t,{b:true}),{line:300})));
-  b.push(wPara(wRun(T.subj,{b:true})+wRun(L.subject||""),{before:160,after:160,line:300}));
-  b.push(wPara(wRun(T.hello),{after:120,line:360}));
-  lines(L.body).forEach(t=>b.push(wPara(wRun(t),{jc:"both",after:120,line:360})));
-  b.push(wPara(wRun(T.thanks),{before:120,after:120,line:360}));
-  if(ltr) b.push(wPara(wRun(T.bye),{after:0,line:360}));
-  const sigRun = sig ? (([cx,cy])=>wImg("rIdSig",2,cx,cy))(imgSize(sig,2.2)) : "";
-  b.push(wPara(sigRun,{jc:END,before:sig?240:720}));
-  if(C.ceoName) b.push(wPara(wRun(C.ceoName,{b:true}),{jc:END}));
-  b.push(wPara(wRun(C.ceoTitle||"مدیرعامل"),{jc:END,after:240}));
-  if(L.cc) b.push(wPara(wRun(T.cc+L.cc,{sz:20,color:"444444"}),{line:300}));
-  const sect = `<w:sectPr><w:headerReference w:type="default" r:id="rIdHdr"/><w:footerReference w:type="default" r:id="rIdFtr"/><w:pgSz w:w="11906" w:h="16838"/><w:pgMar w:top="2268" w:right="1134" w:bottom="1418" w:left="1134" w:header="567" w:footer="567" w:gutter="0"/>${ltr?"":"<w:bidi/>"}</w:sectPr>`;
-  const doc = `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><w:document ${W_NS}><w:body>${b.join("")}${sect}</w:body></w:document>`;
+  b.push(wPara(wRun(T.subj,{b:true})+wRun(P.subject),{before:160,after:160,line:300}));
+  if(!P.hello) b.push(wPara(wRun(T.hello),{after:120,line:360}));
+  P.bodyLines.forEach(t=>b.push(wPara(wRun(t),{jc:"both",after:120,line:360})));
+  b.push(wPara(wRun(T.bye),{before:120,after:0,line:360,keep:true}));
+  const sig = sigImg ? (([cx,cy])=>wImg(sigRef,2,cx,cy))(imgSize(sigImg,2.2)) : "";
+  b.push(wPara(sig,{jc:END,before:sigImg?120:600,keep:true}));
+  const name = C.ceoName || P.signer;
+  if(name) b.push(wPara(wRun(name,{b:true}),{jc:END,keep:true}));
+  if(C.ceoName&&C.ceoTitle) b.push(wPara(wRun(C.ceoTitle),{jc:END}));
+  if(L.cc) b.push(wPara(wRun(T.cc+L.cc,{sz:20,color:"444444"}),{before:240,line:300}));
+  if(P.annexLines.length){
+    b.push(wPara(wRun(T.annex+(att?": "+att:""),{b:true,sz:26}),{pb:true,after:200,line:340}));
+    P.annexLines.forEach(t=>b.push(isHeadingLine(t)?wPara(wRun(t,{b:true,sz:23}),{before:160,after:60,line:340,keep:true}):wPara(wRun(t,{sz:22}),{jc:"both",after:80,line:340})));
+  }
+  return b.join("");
+}
+const relsXml = items => `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">${items.map(([id,t,tg])=>`<Relationship Id="${id}" Type="${RELNS}/${t}" Target="${tg}"/>`).join("")}</Relationships>`;
+
+// L: {number,dateFa,recipient,subject,body,annex,signer,attachments,cc}; C: {nameFa,nameEn,footer,ceoName,ceoTitle}; logo/sig: {bytes,w,h}|null
+// lh: optional letterhead picture {img:{bytes,w,h}, top_cm, bottom_cm} used instead of the logo + name header
+async function buildLetterDocx(L, C, logo, sig, ltr=false, lh=null){
+  WD.ltr=ltr; WD.font=true; const P=prepLetter(L);
+  let header, footer, topDxa=2268, botDxa=1418, logoRef=null;
+  if(lh&&lh.img){
+    const a4r=29.7/21, r=lh.img.h/lh.img.w, full=r>1.2;
+    const wCm=21, hCm=full?29.7:Math.min(29.7,wCm*r);
+    const pic=wBack("rIdLogo",1,Math.round(wCm*360000),Math.round(hCm*360000));
+    header=`<?xml version="1.0" encoding="UTF-8" standalone="yes"?><w:hdr ${W_NS}>${wPara(pic)}</w:hdr>`;
+    footer=`<?xml version="1.0" encoding="UTF-8" standalone="yes"?><w:ftr ${W_NS}>${wPara("")}</w:ftr>`;
+    topDxa=Math.round((lh.top_cm||(full?4.5:Math.min(hCm+0.8,9)))*567); botDxa=Math.round((lh.bottom_cm||(full?3.2:2.5))*567);
+    logo=lh.img;
+  } else {
+    const names = wPara(wRun(C.nameFa||"",{b:true,sz:32}),{after:20}) + (C.nameEn?wPara(wRun(WLTR(C.nameEn),{sz:20,color:"555555"})):"");
+    const tblPr=`<w:tblPr><w:tblW w:w="5000" w:type="pct"/>${ltr?"":"<w:bidiVisual/>"}<w:tblLayout w:type="fixed"/></w:tblPr>`;
+    let hdrTbl;
+    if(logo){ const [cx,cy]=imgSize(logo,1.8);
+      hdrTbl = `<w:tbl>${tblPr}<w:tblGrid><w:gridCol w:w="2400"/><w:gridCol w:w="7238"/></w:tblGrid><w:tr>`+
+        `<w:tc><w:tcPr><w:tcW w:w="2400" w:type="dxa"/><w:vAlign w:val="center"/></w:tcPr>${wPara(wImg("rIdLogo",1,cx,cy))}</w:tc>`+
+        `<w:tc><w:tcPr><w:tcW w:w="7238" w:type="dxa"/><w:vAlign w:val="center"/></w:tcPr>${names}</w:tc></w:tr></w:tbl>`;
+    } else hdrTbl = `<w:tbl>${tblPr}<w:tblGrid><w:gridCol w:w="9638"/></w:tblGrid><w:tr><w:tc><w:tcPr><w:tcW w:w="9638" w:type="dxa"/></w:tcPr>${names}</w:tc></w:tr></w:tbl>`;
+    header = `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><w:hdr ${W_NS}>${hdrTbl}${wPara("",{after:0,border:{side:"bottom",sz:12,color:"D12A1F"}})}</w:hdr>`;
+    footer = `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><w:ftr ${W_NS}>${wPara(wRun(C.footer||"",{sz:17,color:"555555"}),{jc:"center",border:{side:"top",sz:4,color:"BBBBBB"}})}</w:ftr>`;
+  }
+  const body = letterBodyXml(L,C,P,"rIdSig",sig,true);
+  const sect = `<w:sectPr><w:headerReference w:type="default" r:id="rIdHdr"/><w:footerReference w:type="default" r:id="rIdFtr"/><w:pgSz w:w="11906" w:h="16838"/><w:pgMar w:top="${topDxa}" w:right="1134" w:bottom="${botDxa}" w:left="1134" w:header="567" w:footer="567" w:gutter="0"/>${ltr?"":"<w:bidi/>"}</w:sectPr>`;
+  const doc = `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><w:document ${W_NS}><w:body>${body}${sect}</w:body></w:document>`;
   const styles = `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><w:styles xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"><w:docDefaults><w:rPrDefault><w:rPr><w:rFonts w:ascii="Tahoma" w:hAnsi="Tahoma" w:cs="B Nazanin"/><w:sz w:val="24"/><w:szCs w:val="26"/><w:lang w:val="en-US" w:bidi="fa-IR"/></w:rPr></w:rPrDefault><w:pPrDefault><w:pPr>${ltr?"":"<w:bidi/>"}</w:pPr></w:pPrDefault></w:docDefaults><w:style w:type="paragraph" w:default="1" w:styleId="Normal"><w:name w:val="Normal"/><w:qFormat/></w:style></w:styles>`;
   const ct = `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Default Extension="png" ContentType="image/png"/><Override PartName="/word/document.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml"/><Override PartName="/word/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.styles+xml"/><Override PartName="/word/header1.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.header+xml"/><Override PartName="/word/footer1.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.footer+xml"/></Types>`;
-  const rels = (items) => `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">${items.map(([id,t,tg])=>`<Relationship Id="${id}" Type="${RELNS}/${t}" Target="${tg}"/>`).join("")}</Relationships>`;
   const files = [
     {name:"[Content_Types].xml",data:ct},
-    {name:"_rels/.rels",data:rels([["rId1","officeDocument","word/document.xml"]])},
+    {name:"_rels/.rels",data:relsXml([["rId1","officeDocument","word/document.xml"]])},
     {name:"word/document.xml",data:doc},
     {name:"word/styles.xml",data:styles},
     {name:"word/header1.xml",data:header},
     {name:"word/footer1.xml",data:footer},
-    {name:"word/_rels/document.xml.rels",data:rels([["rIdHdr","header","header1.xml"],["rIdFtr","footer","footer1.xml"],["rIdSty","styles","styles.xml"],...(sig?[["rIdSig","image","media/sig.png"]]:[])])},
+    {name:"word/_rels/document.xml.rels",data:relsXml([["rIdHdr","header","header1.xml"],["rIdFtr","footer","footer1.xml"],["rIdSty","styles","styles.xml"],...(sig?[["rIdSig","image","media/sig.png"]]:[])])},
   ];
-  if(logo){ files.push({name:"word/_rels/header1.xml.rels",data:rels([["rIdLogo","image","media/logo.png"]])},{name:"word/media/logo.png",data:logo.bytes}); }
+  if(logo){ files.push({name:"word/_rels/header1.xml.rels",data:relsXml([["rIdLogo","image","media/logo.png"]])},{name:"word/media/logo.png",data:logo.bytes}); }
   if(sig) files.push({name:"word/media/sig.png",data:sig.bytes});
-  return zipStore(files);
+  return await zipStore(files);
+}
+
+// The company's own Word letterhead (.docx/.dotx entries from unzip): keep its header, footer, margins and styles, put the letter inside it.
+// {{number}} {{date}} {{attachments}} {{subject}} typed in the template are filled in; {{body}} marks where the text goes.
+async function fillLetterTemplate(entries, L, C, sig){
+  WD.ltr=false; WD.font=false;
+  try{
+    const P=prepLetter(L), dec=new TextDecoder(), enc=new TextEncoder();
+    const get=n=>entries.find(e=>e.name===n), txt=n=>{const e=get(n);return e?dec.decode(e.data):null};
+    const set=(n,s)=>{const e=get(n); const d=enc.encode(s); if(e) e.data=d; else entries.push({name:n,data:d})};
+    if(!get("word/document.xml")) throw new Error("template has no word/document.xml");
+    const vals={number:WLTR(L.number),date:L.dateFa,attachments:cleanAtt(L.attachments)||"ندارد",subject:P.subject};
+    const TOK=/\{\{(number|date|attachments|subject)\}\}/g;
+    let tokensIn=false, doc=txt("word/document.xml");
+    for(const e of entries){ if(/^word\/(header|footer)\d*\.xml$/.test(e.name)){ const x=dec.decode(e.data); if(TOK.test(x)){ tokensIn=true; TOK.lastIndex=0; set(e.name,x.replace(TOK,(m,k)=>WX(vals[k]))); } TOK.lastIndex=0; } }
+    const docTokens=TOK.test(doc); TOK.lastIndex=0;
+    if(docTokens){ tokensIn=true; doc=doc.replace(TOK,(m,k)=>WX(vals[k])); }
+    const sigRef="rIdPptSig";
+    const bodyXml=letterBodyXml(L,C,P,sigRef,sig,!tokensIn);
+    const sm=doc.match(/(<w:sectPr(?:(?!<w:sectPr)[\s\S])*<\/w:sectPr>)\s*<\/w:body>/);
+    const sect=sm?sm[1]:'<w:sectPr><w:pgSz w:w="11906" w:h="16838"/><w:pgMar w:top="2268" w:right="1134" w:bottom="1418" w:left="1134" w:header="567" w:footer="567" w:gutter="0"/></w:sectPr>';
+    const bi=doc.indexOf("{{body}}");
+    if(bi>=0){
+      const ps=Math.max(doc.lastIndexOf("<w:p>",bi),doc.lastIndexOf("<w:p ",bi)), pe=doc.indexOf("</w:p>",bi)+6;
+      doc=doc.slice(0,ps)+bodyXml+doc.slice(pe);
+    } else {
+      const open=doc.match(/<w:body[^>]*>/); if(!open) throw new Error("template has no body");
+      const head=doc.slice(0,open.index+open[0].length);
+      const keep = docTokens ? doc.slice(open.index+open[0].length, sm?sm.index:doc.lastIndexOf("</w:body>")) : "";
+      doc=head+keep+bodyXml+sect+"</w:body></w:document>";
+    }
+    set("word/document.xml",doc);
+    if(sig){
+      let rels=txt("word/_rels/document.xml.rels")||relsXml([]);
+      rels=rels.replace("</Relationships>",`<Relationship Id="${sigRef}" Type="${RELNS}/image" Target="media/ppt_sig.png"/></Relationships>`);
+      set("word/_rels/document.xml.rels",rels); set("word/media/ppt_sig.png",sig.bytes);
+    }
+    let ct=txt("[Content_Types].xml")||"";
+    ct=ct.replace("wordprocessingml.template.main+xml","wordprocessingml.document.main+xml");
+    if(!/Extension="png"/i.test(ct)) ct=ct.replace("<Types",'<Types').replace(/(<Types[^>]*>)/,'$1<Default Extension="png" ContentType="image/png"/>');
+    set("[Content_Types].xml",ct);
+    return await zipStore(entries);
+  } finally { WD.font=true; }
 }
 /*DOCX-END*/
 
@@ -1299,16 +1499,21 @@ async function prepImage(assetId, maxPx){ // asset -> PNG bytes + size, so the W
     return {bytes:new Uint8Array(await png.arrayBuffer()), w, h};
   }catch(e){ console.error("image prep failed", e); return null; }
 }
+const b64ToBytes = s => Uint8Array.from(atob(s), c=>c.charCodeAt(0));
+const bytesToB64 = u8 => { let s=""; for(let i=0;i<u8.length;i+=0x8000) s+=String.fromCharCode.apply(null,u8.subarray(i,i+0x8000)); return btoa(s); };
 async function makeLetterDocx(l){
-  const st=S.settings, ceo=S.members.find(m=>m.id===st.ceo_member);
+  const st=S.settings, lh=S.lh, ceo=S.members.find(m=>m.id===st.ceo_member);
   const sigId = l.ceo_sig ? (l.ceo_sig.asset||st.ceo_sig_asset) : null;
-  const [logo,sig] = await Promise.all([prepImage(st.logo_asset||"default",700), sigId?prepImage(sigId,600):null]);
-  if(l.identity==="intl"){ const I=intlId();
-    return buildLetterDocx({number:l.number,dateFa:enDate(l.date),recipient:l.recipient,subject:l.subject,body:l.body,attachments:l.attachments,cc:l.cc},
+  const sig = sigId ? await prepImage(sigId,600) : null;
+  const L={number:l.number,recipient:l.recipient,subject:l.subject,body:l.body,annex:l.annex,signer:l.signer,attachments:l.attachments,cc:l.cc};
+  if(l.identity==="intl"){ const I=intlId(); const logo=await prepImage(st.logo_asset||"default",700);
+    return buildLetterDocx({...L,dateFa:enDate(l.date)},
       {nameFa:I.name,nameEn:"",footer:[I.address,I.website,I.email].filter(Boolean).join(" · "),ceoName:I.signatory,ceoTitle:I.title}, logo, sig, true); }
-  const footer=[st.address, st.phone&&`تلفن: ${st.phone}`, st.reg_no&&`شماره‌ی ثبت: ${st.reg_no}`, st.national_id&&`شناسه‌ی ملی: ${st.national_id}`].filter(Boolean).join(" · ");
-  return buildLetterDocx({number:l.number,dateFa:faDate(l.date),recipient:l.recipient,subject:l.subject,body:l.body,attachments:l.attachments,cc:l.cc},
-    {nameFa:st.name_fa||"پترو پالا توس",nameEn:st.name_en||"",footer,ceoName:ceo?ceo.full_name:"",ceoTitle:`مدیرعامل ${st.name_fa||""}`.trim()}, logo, sig);
+  const C={nameFa:st.name_fa||"پترو پالا توس",nameEn:st.name_en||"",footer:[st.address, st.phone&&`تلفن: ${st.phone}`, st.reg_no&&`شماره‌ی ثبت: ${st.reg_no}`, st.national_id&&`شناسه‌ی ملی: ${st.national_id}`].filter(Boolean).join(" · "),ceoName:ceo?ceo.full_name:"",ceoTitle:ceo?`مدیرعامل ${st.name_fa||""}`.trim():""};
+  L.dateFa=faDate(l.date);
+  if(lh&&lh.kind==="docx"&&lh.b64) return fillLetterTemplate(await unzip(b64ToBytes(lh.b64)), L, C, sig);
+  if(lh&&lh.kind==="image"&&lh.asset){ const img=await prepImage(lh.asset,1800); if(img) return buildLetterDocx(L,C,null,sig,false,{img,top_cm:Number(lh.top_cm)||0,bottom_cm:Number(lh.bottom_cm)||0}); }
+  return buildLetterDocx(L,C,await prepImage(st.logo_asset||"default",700),sig);
 }
 async function downloadLetter(l){
   if(!S.downloads){ toast("دریافت فایل فقط داخل claude.ai فعال است."); return; }
@@ -1334,13 +1539,16 @@ VIEWS["letters.new"] = () => {
   const inp=(k,label,type="text",dir="")=>fld(k,label,`<input id="c_${k}" data-c="${k}" type="${type}" value="${esc(d[k]||"")}" ${dir?`dir="${dir}"`:""}>`);
   const ta=(k,label,rows)=>fld(k,label,`<textarea id="c_${k}" data-c="${k}" rows="${rows}" style="min-height:${rows*28}px">${esc(d[k]||"")}</textarea>`);
   return `${!st.name_fa&&!st.logo_asset?`<div class="banner">سربرگ هنوز کامل نیست: از <b>BPMS ← اعضا و ثبت‌نام ← مشخصات شرکت</b> نام، نشانی، لوگو و امضای مدیرعامل را ثبت کنید تا روی فایل Word بیاید.</div>`:""}
+  <div id="lhcard">${letterheadCard()}</div>
   <div class="compose"><div class="card" id="composer"><h3>${d.id?"ویرایش نامه":"نوشتن نامه‌ی جدید"}</h3>
    <p class="note">فقط محتوا را وارد کنید؛ سربرگ (لوگو، نام و نشانی شرکت)، شماره، تاریخ و جای امضا به‌صورت خودکار در فایل Word قرار می‌گیرد.</p>
    ${fld("identity","هویت فرستنده",`<select id="c_identity" data-c="identity"><option value="ir"${d.identity!=="intl"?" selected":""}>ایران – پترو پالا توس (فارسی، سربرگ داخلی)</option><option value="intl"${d.identity==="intl"?" selected":""}>بین‌المللی – ${esc(intlId().name)} (English)</option></select>`)}
    ${d.identity==="intl"?`<p class="note">نامه به انگلیسی و با سربرگ ${esc(intlId().name)} (${esc(intlId().address)}) ساخته می‌شود؛ گیرنده، موضوع و متن را هم انگلیسی بنویسید. شماره با پیشوند PIG است.</p>`:""}
    <div class="grid2" style="gap:0 12px">${inp("number","شماره‌ی نامه","text","ltr")}${inp("date","تاریخ نامه","date")}</div>
-   ${ta("recipient","گیرنده (هر سطر یک خط: نام، سمت، سازمان)",3)}${inp("subject","موضوع نامه")}${ta("body","متن نامه (هر پاراگراف در یک سطر جدا)",12)}
-   <div class="grid2" style="gap:0 12px">${inp("attachments","پیوست‌ها (در صورت وجود)")}${inp("cc","رونوشت (در صورت وجود)")}</div>
+   ${ta("recipient","گیرنده (هر سطر یک خط: نام، سمت، سازمان)",3)}${inp("subject","موضوع نامه")}${ta("body","متن نامه (هر پاراگراف در یک سطر جدا؛ «با سلام»، «موضوع:» و امضا را نیاورید)",12)}
+   <div class="grid2" style="gap:0 12px">${inp("attachments","عنوان پیوست (در صورت وجود)")}${inp("cc","رونوشت (در صورت وجود)")}</div>
+   ${ta("annex","متن پیوست (اختیاری؛ در صفحه‌ی جداگانه‌ی انتهای نامه می‌آید)",5)}
+   <p class="note">اگر نامه را همراه امضا و پیوست در همین کادر چسبانده‌اید، همه‌چیز بعد از «با تجدید احترام» و نام امضاکننده خودکار به صفحه‌ی پیوست منتقل می‌شود و سلام، موضوع و امضا تکرار نمی‌شوند.</p>
    <div class="row"><button class="btn sig" data-act="compose-go">ثبت نامه و ساخت فایل Word</button><button class="btn ghost" data-act="compose-reset">فرم تازه</button></div>
    ${S.downloads?"":`<p class="note">فایل Word فقط داخل claude.ai ساخته می‌شود؛ در این نما نامه فقط ثبت می‌شود.</p>`}
    <p class="note">پس از ثبت، امضای مسئول دفتر و مدیرعامل از «مشاهده» در فهرست زیر انجام می‌شود و با دریافت دوباره‌ی فایل، امضای مدیرعامل روی نامه می‌نشیند.</p></div>
@@ -1362,9 +1570,11 @@ async function composeSubmit(){
   if(S.letters.some(l=>l.number===d.number&&l.id!==d.id)){ toast("این شماره قبلاً برای نامه‌ی دیگری ثبت شده است."); return; }
   const old=d.id?S.letters.find(x=>x.id===d.id):null;
   const id=d.id||newId();
-  const rec={...(old||{}),identity:d.identity==="intl"?"intl":"ir",number:v("number"),date:d.date||today(),recipient:v("recipient"),subject:v("subject"),body:v("body"),attachments:v("attachments"),cc:v("cc"),updated:new Date().toISOString(),created_by:(old&&old.created_by)||S.me.id};
+  const rec={...(old||{}),identity:d.identity==="intl"?"intl":"ir",number:v("number"),date:d.date||today(),recipient:v("recipient"),subject:v("subject"),body:v("body"),attachments:v("attachments"),cc:v("cc"),annex:v("annex"),signer:v("signer"),updated:new Date().toISOString(),created_by:(old&&old.created_by)||S.me.id};
   if(old&&(old.body!==rec.body||old.subject!==rec.subject||old.recipient!==rec.recipient)){ rec.office_sig=null; rec.ceo_sig=null; } // edited content needs fresh signatures
   delete rec.id;
+  const P=prepLetter(rec); rec.subject=P.subject; rec.body=P.bodyText; rec.annex=P.annexText; rec.signer=P.signer||"";
+  if(P.split) toast("امضا و متن بعد از «با تجدید احترام» از متن نامه جدا شد؛ متن پس از آن به صفحه‌ی پیوست رفت.");
   if(!await save(`letters/${id}`,rec,"نامه ثبت شد")) return;
   S.draft=null; S.forceFull=true; render();
   await downloadLetter({...rec,id});
@@ -1381,17 +1591,46 @@ function letterSheetIntl(l){
 }
 function letterSheet(l){
   if(l.identity==="intl") return letterSheetIntl(l);
-  const st=S.settings, ceo=S.members.find(m=>m.id===st.ceo_member);
+  const st=S.settings, lh=S.lh, P=prepLetter(l), ceo=S.members.find(m=>m.id===st.ceo_member), att=cleanAtt(l.attachments);
   const ceoSig = l.ceo_sig ? (l.ceo_sig.asset||st.ceo_sig_asset) : null;
   const meeting = l.meeting_mode&&l.meeting_mode!=="none"&&l.meeting_date ? `<p><b>جلسه‌ی پیرو:</b> ${l.meeting_mode==="online"?"آنلاین":"حضوری"}، ${faDate(l.meeting_date)}، ساعت ${esc(l.meeting_time||"—")}${l.meeting_place?`، ${esc(l.meeting_place)}`:""}</p>`:"";
-  return `<div class="sheet" id="sheet"><div class="lh"><div><img src="${esc(logoSrc())}" alt="لوگو"><div class="meta3">${esc(st.name_fa||"")}${st.name_en?`<br><span dir="ltr">${esc(st.name_en)}</span>`:""}</div></div>
-   <div class="meta3">شماره: <span dir="ltr">${esc(l.number)}</span><br>تاریخ: ${faDate(l.date)}<br>${l.employer_no?`شماره‌ی کارفرما: <span dir="ltr">${esc(l.employer_no)}</span><br>`:""}پیوست: ${esc(l.attachments||"ندارد")}</div></div>
-   <p><b>${esc(l.recipient||"").replace(/\n/g,"<br>")}</b></p><p><b>موضوع:</b> ${esc(l.subject)}</p><p>با سلام و احترام،</p>
-   <div style="white-space:pre-wrap">${esc(l.body||"")}</div>${meeting}
-   <p>پیشاپیش از حسن توجه جنابعالی سپاسگزاریم.</p>
-   <div class="sig">${ceoSig?`<img src="${esc(blobUrl(ceoSig))}" alt="امضای مدیرعامل">`:""}<b>${esc(ceo?ceo.full_name:"")}</b><br>مدیرعامل ${esc(st.name_fa||"")}</div>
+  const meta = `<div class="meta3">شماره: <span dir="ltr">${esc(l.number)}</span><br>تاریخ: ${faDate(l.date)}<br>${l.employer_no?`شماره‌ی کارفرما: <span dir="ltr">${esc(l.employer_no)}</span><br>`:""}پیوست: ${esc(att||"ندارد")}</div>`;
+  const head = lh&&lh.kind==="image"&&lh.asset ? `<img src="${esc(blobUrl(lh.asset))}" alt="سربرگ" style="width:100%;display:block;margin-bottom:10px">${meta}`
+    : lh&&lh.kind==="docx" ? `<div class="banner" style="margin:0 0 10px">سربرگ Word شما («${esc(lh.name||"")}») روی فایل خروجی اعمال می‌شود؛ این پیش‌نمایش فقط محتوای نامه را نشان می‌دهد.</div>${meta}`
+    : `<div class="lh"><div><img src="${esc(logoSrc())}" alt="لوگو"><div class="meta3">${esc(st.name_fa||"")}${st.name_en?`<br><span dir="ltr">${esc(st.name_en)}</span>`:""}</div></div>${meta}</div>`;
+  const name = ceo?ceo.full_name:P.signer;
+  return `<div class="sheet" id="sheet">${head}
+   <p><b>${esc(l.recipient||"").replace(/\n/g,"<br>")}</b></p><p><b>موضوع:</b> ${esc(P.subject)}</p>${P.hello?"":"<p>با سلام و احترام،</p>"}
+   ${P.bodyLines.map(t=>`<p style="margin:0 0 8px">${esc(t)}</p>`).join("")}${meeting}
+   <p>با تجدید احترام</p>
+   <div class="sig">${ceoSig?`<img src="${esc(blobUrl(ceoSig))}" alt="امضای مدیرعامل">`:""}<b>${esc(name||"")}</b>${ceo?`<br>مدیرعامل ${esc(st.name_fa||"")}`:""}</div>
    ${l.cc?`<p class="meta" style="margin-top:14px">رونوشت: ${esc(l.cc)}</p>`:""}
-   <div class="foot">${esc(st.address||"")}${st.phone?` · تلفن: <span dir="ltr">${esc(st.phone)}</span>`:""}${st.reg_no?` · شماره‌ی ثبت: ${esc(st.reg_no)}`:""}${st.national_id?` · شناسه‌ی ملی: ${esc(st.national_id)}`:""}</div></div>`;
+   ${P.annexLines.length?`<div class="meta" style="margin-top:14px;border-top:1px dashed var(--line);padding-top:8px">پیوست در صفحه‌ی جدا (${faNum(P.annexLines.length)} پاراگراف): «${esc(P.annexLines[0].slice(0,70))}…»</div>`:""}
+   ${lh&&(lh.kind==="image"||lh.kind==="docx")?"":`<div class="foot">${esc(st.address||"")}${st.phone?` · تلفن: <span dir="ltr">${esc(st.phone)}</span>`:""}${st.reg_no?` · شماره‌ی ثبت: ${esc(st.reg_no)}`:""}${st.national_id?` · شناسه‌ی ملی: ${esc(st.national_id)}`:""}</div>`}</div>`;
+}
+const kb = n => faNum(Math.max(1,Math.round(n/1024)))+" کیلوبایت";
+function letterheadCard(){
+  const lh=S.lh, adm=isAdmin();
+  const cur = lh&&lh.kind==="docx" ? `فایل Word «${esc(lh.name||"")}» (${kb(lh.size||0)})` : lh&&lh.kind==="image" ? `تصویر «${esc(lh.name||"")}»` : "پیش‌فرض (لوگو و نام شرکت)";
+  const has = lh&&(lh.kind==="docx"||lh.kind==="image");
+  return `<div class="card" style="margin-bottom:12px"><div class="row"><b>سربرگ نامه‌ها:</b> <span>${cur}</span>
+   ${adm?`<label class="btn sm" style="cursor:pointer">بارگذاری سربرگ شرکت (Word یا تصویر)<input type="file" data-lh="file" accept=".docx,.dotx,image/*" hidden></label>${has?`<button class="btn sm ghost" data-act="lh-del">بازگشت به سربرگ پیش‌فرض</button>`:""}`:`<span class="meta">بارگذاری فقط برای مدیر سامانه است.</span>`}</div>
+   ${adm&&lh&&lh.kind==="image"?`<div class="row" style="margin-top:6px"><label class="meta">فاصله‌ی متن از بالای صفحه (سانتی‌متر) <input type="number" step="0.1" min="0" style="width:80px" data-lh="top" value="${esc(lh.top_cm||"")}" placeholder="خودکار"></label><label class="meta">از پایین صفحه <input type="number" step="0.1" min="0" style="width:80px" data-lh="bottom" value="${esc(lh.bottom_cm||"")}" placeholder="خودکار"></label></div>`:""}
+   <p class="note">بهترین حالت: فایل Word سربرگ خودتان (.docx) را بارگذاری کنید؛ سربرگ، پانویس و حاشیه‌ها همان‌طور که هست می‌ماند و نامه داخل آن قرار می‌گیرد. اگر در فایل سربرگ عبارت‌های <code>{{number}}</code> (شماره)، <code>{{date}}</code> (تاریخ)، <code>{{attachments}}</code> (پیوست) یا <code>{{body}}</code> (محل متن) را بنویسید، دقیقاً همان‌جا پر می‌شوند. سربرگ تصویری (JPG/PNG) هم می‌تواند تمام‌صفحه یا نواری باشد.</p></div>`;
+}
+async function saveLetterhead(file){
+  try{
+    const n=(file.name||"").toLowerCase();
+    if(/\.(docx|dotx)$/.test(n)){
+      if(file.size>700*1024){ toast("فایل سربرگ بزرگ است (بیش از ۷۰۰ کیلوبایت)؛ تصاویر داخل آن را کم‌حجم کنید."); return; }
+      const bytes=new Uint8Array(await file.arrayBuffer()); const entries=await unzip(bytes);
+      if(!entries.some(e=>e.name==="word/document.xml")){ toast("این فایل Word معتبر نیست."); return; }
+      await save("settings/letterhead",{kind:"docx",name:file.name,size:file.size,b64:bytesToB64(bytes),updated:new Date().toISOString()},"سربرگ Word ذخیره شد؛ نامه‌ها از این پس داخل آن ساخته می‌شوند.");
+    } else if((file.type||"").startsWith("image/")){
+      const id=await uploadImage(file); if(!id) return;
+      await save("settings/letterhead",{kind:"image",name:file.name,asset:id,top_cm:0,bottom_cm:0,updated:new Date().toISOString()},"سربرگ تصویری ذخیره شد.");
+    } else toast("فقط فایل Word (.docx) یا تصویر پذیرفته می‌شود.");
+  }catch(err){ console.error(err); toast("بارگذاری سربرگ انجام نشد."); }
 }
 function letterView(id){
   const l=S.letters.find(x=>x.id===id); if(!l) return;
@@ -1531,8 +1770,8 @@ function calEntries(){
   S.m.events.forEach(e=>{ const tr=S.tracking["ev_"+e.id]||{}; if(isoOk(e.start)&&e.start>=addDays(today(),-1)) out.push({date:e.start.slice(0,10),type:"event",title:e.name_fa||e.name,url:e.url,owner:tr.owner||"",stop:true}); });
   S.tasks.filter(t=>t.due&&!["done","approved"].includes(t.status)).forEach(t=>out.push({date:t.due,type:"task",title:t.title,owner:t.assignee||""}));
   if(isAdmin()) S.finance.filter(f=>f.due&&f.status!=="paid").forEach(f=>out.push({date:f.due,type:"finance",title:`${f.title} – ${faNum(f.amount||0)} ریال`,owner:""}));
-  S.lettersArchive.filter(a=>a.next_date&&a.status!=="closed").forEach(a=>out.push({date:a.next_date,type:"letter",title:`${a.next_action||"پیگیری"} – ${a.subject}`,owner:a.owner||""}));
-  S.letters.filter(l=>l.meeting_mode&&l.meeting_mode!=="none"&&isoOk(l.meeting_date)).forEach(l=>out.push({date:l.meeting_date,type:"meeting",title:`جلسه‌ی پیرو نامه‌ی ${l.number}${l.meeting_time?` – ساعت ${l.meeting_time}`:""}`,owner:l.created_by||"",stop:true}));
+  (canSeeLetters()?S.lettersArchive:[]).filter(a=>a.next_date&&a.status!=="closed").forEach(a=>out.push({date:a.next_date,type:"letter",title:`${a.next_action||"پیگیری"} – ${a.subject}`,owner:a.owner||""}));
+  (canSeeLetters()?S.letters:[]).filter(l=>l.meeting_mode&&l.meeting_mode!=="none"&&isoOk(l.meeting_date)).forEach(l=>out.push({date:l.meeting_date,type:"meeting",title:`جلسه‌ی پیرو نامه‌ی ${l.number}${l.meeting_time?` – ساعت ${l.meeting_time}`:""}`,owner:l.created_by||"",stop:true}));
   return out.filter(x=>isoOk(x.date)).sort((a,b)=>a.date.localeCompare(b.date));
 }
 const relDay = d => { const n=dayDiff(d); return n===0?"امروز":n===1?"فردا":n===-1?"دیروز":n<0?`${faNum(-n)} روز پیش`:`${faNum(n)} روز دیگر`; };
@@ -1607,13 +1846,35 @@ const ARTICLES_SEED = [
  {id:"s_quantics",field:"quantum",name:"QUANTICS 2027 – Quantum Information, Computing, Communications and Simulation",type:"conf",impact:"—",deadline:"2027-03-25",dl_note:"طبق فهرست aggregator",details:"۲۱ ژوئیه ۲۰۲۷.",present:"unknown",country:"ایتالیا",city:"رم",url:"https://www.myhuiban.com/conference/5877",ver:false},
  {id:"s_icqe",field:"quantum",name:"ICQE 2027 – International Conference on Quantum Energy (MIT)",type:"conf",impact:"—",deadline:"2027-04-01",dl_note:"چکیده؛ تا ساعت ۲۳:۵۹ به وقت شرق آمریکا",details:"۱۳–۱۶ ژوئن ۲۰۲۷؛ کوانتوم و انرژی – برای حوزه‌ی انرژی ما مرتبط است.",present:"inperson",present_note:"گزینه‌ی آنلاین تأیید نشد",country:"ایالات متحده",city:"کمبریج، ماساچوست (MIT)",url:"https://icqe.mit.edu/?p=2234",ver:true},
  {id:"s_front_nuc",field:"nuclear",name:"Frontiers – Research Topic: Advances in AI and Machine Learning for Nuclear Applications",type:"special",impact:"—",impact_note:"IF تأیید نشد (Frontiers)",deadline:"",dl_note:"ددلاین پیدا نشد؛ در صفحه‌ی رسمی ببینید",details:"دوقلوی دیجیتال راکتور، هوش مصنوعی توضیح‌پذیر، نگهداری پیش‌بینانه و سامانه‌های همجوشی.",present:"none",country:"سوئیس",city:"لوزان (ناشر Frontiers)",url:"https://www.frontiersin.org/research-topics/68478/advances-in-ai-and-machine-learning-for-nuclear-applications",ver:false},
- {id:"s_hydro",field:"water",name:"Hydrology (MDPI) – ویژه‌شماره‌ی AI و ML در هیدرولوژی و مدیریت یکپارچه‌ی منابع آب",type:"special",impact:"—",impact_note:"IF تأیید نشد",deadline:"2026-12-31",details:"هوش مصنوعی و یادگیری ماشین برای هیدرولوژی و منابع آب؛ هزینه‌ی انتشار (APC) دارد.",present:"none",country:"سوئیس",city:"بازل (ناشر MDPI)",url:"https://www.mdpi.com/journal/hydrology/special_issues/Q08X1J1YZ1",ver:false}
+ {id:"s_hydro",field:"water",name:"Hydrology (MDPI) – ویژه‌شماره‌ی AI و ML در هیدرولوژی و مدیریت یکپارچه‌ی منابع آب",type:"special",impact:"—",impact_note:"IF تأیید نشد",deadline:"2026-12-31",details:"هوش مصنوعی و یادگیری ماشین برای هیدرولوژی و منابع آب؛ هزینه‌ی انتشار (APC) دارد.",present:"none",country:"سوئیس",city:"بازل (ناشر MDPI)",url:"https://www.mdpi.com/journal/hydrology/special_issues/Q08X1J1YZ1",ver:false},
+ {id:"p_gs",status0:"applied",field:"medical",name:"Global Summit on Allied, Digital Health & Healthcare Innovation 2027",type:"conf",impact:"—",deadline:"",dl_note:"ارسال شد",details:"مقاله‌ی ارسالی: NeuroPredict-AI: An Explainable Multimodal Clinical Decision Support Framework for Neurodegenerative Disease Risk Assessment",present:"unknown",country:"بریتانیا",city:"لندن",url:"",ver:true},
+ {id:"p_aimed",status0:"applied",field:"medical",name:"AIMed Global Forum 2027",type:"conf",impact:"—",deadline:"",dl_note:"ارسال شد",details:"مقاله‌ی ارسالی: INEsCape: An Open-Source AI Platform for Esophageal Cancer Risk Prediction and Clinical Decision Support",present:"inperson",country:"لهستان",city:"کراکوف",url:"",ver:true},
+ {id:"p_ioch",status0:"applied",field:"medical",name:"IOCH 2027 – 2nd International Online Conference on Healthcare",type:"conf",impact:"—",deadline:"",dl_note:"ارسال شد",details:"مقاله‌ی ارسالی: Intelligent Diagnostic Kit Analysis Platform: AI-Assisted qPCR Data Analysis and Quality Control",present:"online",country:"آنلاین",city:"—",url:"",ver:true},
+ {id:"p_healthinfo",status0:"applied",field:"medical",name:"HEALTHINFO 2027 – 12th International Conference on Informatics and Assistive Technologies for Health-Care, Medical Support and Wellbeing",type:"conf",impact:"—",deadline:"",dl_note:"ارسال شد",details:"مقاله‌ی ارسالی: An Integrated Health Informatics Platform for Heterogeneous Clinical Data Integration and Big Data Analytics",present:"inperson",country:"فرانسه",city:"نیس",url:"",ver:true},
+ {id:"p_isct",status0:"applied",field:"medical",name:"ISCT 2027 Annual Meeting",type:"conf",impact:"—",deadline:"",dl_note:"ارسال شد",details:"مقاله‌ی ارسالی: An Explainable Platform for Designing and Simulating Personalized CAR-T Cell Therapies",present:"inperson",country:"کانادا",city:"تورنتو",url:"",ver:true},
+ {id:"p_ccus",status0:"applied",field:"energy",name:"Asia Pacific CCUS Conference 2027",type:"conf",impact:"—",deadline:"",dl_note:"ارسال شد",details:"مقاله‌ی ارسالی: An Intelligent Energy and Carbon Management Platform for Petrochemical Plants",present:"unknown",country:"مالزی",city:"کوالالامپور",url:"",ver:true},
+ {id:"p_spe",status0:"applied",field:"oil_gas",name:"SPE Offshore Europe Conference & Exhibition 2027",type:"conf",impact:"—",deadline:"",dl_note:"ارسال شد (شناسه‌ی 27OE-P-17-SPE)",details:"مقاله‌ی ارسالی: Adaptive Multi-Criteria Data Routing System for Heterogeneous Telecommunication Infrastructures in Oil and Gas Fields",present:"unknown",country:"بریتانیا (اسکاتلند)",city:"آبردین",url:"",ver:true}
 ];
 const artAll = () => [...ARTICLES_SEED, ...S.arts.map(a=>({...a,mine:true}))];
 const artOpen = a => !a.deadline || a.deadline>=today();
-VIEWS["articles.list"] = () => {
+const artStatus = a => (S.artSt[a.id]||{}).status || a.status0 || "todo";
+async function artSetStatus(id,st){
+  if(!isAdmin()){ toast("تغییر وضعیت فقط با owner است."); return; }
+  await save("settings/article_status",{map:{...S.artSt,[id]:{status:st,at:new Date().toISOString(),by:S.me.id}}},"وضعیت ذخیره شد");
+}
+function artActions(a){
+  const st=artStatus(a), id=esc(a.id), b=[];
+  if(isAdmin()){
+    if(st==="todo") b.push(`<label><input type="checkbox" data-act="art-st" data-id="${id}" data-st="applied"> قبلاً اقدام شده</label>`,`<button class="btn sm sig" data-act="art-st" data-id="${id}" data-st="doing">شروع اقدام</button>`);
+    else if(st==="doing") b.push(`<label><input type="checkbox" data-act="art-st" data-id="${id}" data-st="applied"> ارسال شد</label>`,`<button class="btn sm ghost" data-act="art-st" data-id="${id}" data-st="todo">بازگشت</button>`);
+    else b.push(`<span class="pill p-ok">اقدام شده – در دست بررسی</span>`,`<button class="btn sm ghost" data-act="art-st" data-id="${id}" data-st="doing">بازگردانی به در دست اقدام</button>`);
+  }
+  if(a.mine) b.push(`<button class="btn sm ghost" data-act="art-edit" data-id="${id}">ویرایش</button><button class="btn sm ghost" data-act="art-del" data-id="${id}">حذف</button>`);
+  return `<div class="row" style="gap:6px;flex-wrap:wrap">${b.join("")}</div>`;
+}
+function artView(page){
   const f=S.artF, all=artAll();
-  const rows=all.filter(a=>(f.past||artOpen(a))&&(!f.field||a.field===f.field)&&(!f.mode||(f.mode==="any"?a.present!=="none":a.present===f.mode))&&(!f.type||a.type===f.type))
+  const rows=all.filter(a=>(page==="all"||artStatus(a)===page)&&(f.past||page==="applied"||artOpen(a))&&(!f.field||a.field===f.field)&&(!f.mode||(f.mode==="any"?a.present!=="none":a.present===f.mode))&&(!f.type||a.type===f.type))
     .filter(a=>match(a.name,a.city,a.country,a.details,ART_FIELDS[a.field]))
     .sort((a,b)=>(a.deadline||"9999").localeCompare(b.deadline||"9999")||a.name.localeCompare(b.name));
   const open=all.filter(artOpen), dated=open.filter(a=>a.deadline), soon=dated.filter(a=>dayDiff(a.deadline)<=45).length;
@@ -1631,7 +1892,221 @@ VIEWS["articles.list"] = () => {
      ${td("جزئیات",esc(a.details||"—"))}
      ${td("ارائه",`<b>${esc(ART_PRES[a.present]||"—")}</b>${a.present_note?`<br><span class="meta">${esc(a.present_note)}</span>`:""}`)}
      ${td("کشور",`${esc(a.country||"—")}<br><span class="meta">${esc(a.city||"")}</span>`)}
-     ${td("",a.mine?`<div class="row"><button class="btn sm ghost" data-act="art-edit" data-id="${esc(a.id)}">ویرایش</button><button class="btn sm ghost" data-act="art-del" data-id="${esc(a.id)}">حذف</button></div>`:"")}</tr>`}),"با این فیلترها موردی با ددلاین باز پیدا نشد.");
+     ${td("",artActions(a))}</tr>`}),"با این فیلترها موردی در این صفحه نیست.");
+}
+VIEWS["articles.list"]=()=>artView("all");
+VIEWS["articles.applied"]=()=>artView("applied");
+VIEWS["articles.doing"]=()=>artView("doing");
+VIEWS["articles.todo"]=()=>artView("todo");
+
+// ---- smart product picker for papers: pick a basket product not yet introduced anywhere, or suggest a new one, then queue a task for Claude
+async function ctAdd(text,meta={}){
+  if(!isAdmin()){ toast("فقط owner می‌تواند تسک برای Claude ثبت کند."); return false; }
+  if(meta.product&&S.ct.some(t=>t.product===meta.product&&t.venue!==meta.venue)){ toast("این محصول قبلاً برای مقصد دیگری رزرو شده است؛ یک محصول فقط برای یک مقاله."); return false; }
+  if(meta.venue&&S.ct.some(t=>t.venue===meta.venue&&t.status==="open")){ toast("برای این مقصد تسک در انتظار وجود دارد."); return false; }
+  return save("settings/claude_tasks",{list:[...S.ct,{id:newId(),text,at:new Date().toISOString(),by:S.me.id,status:"open",...meta}]},"تسک برای Claude ثبت شد");
+}
+VIEWS["articles.claude"] = () => {
+  const open=S.ct.filter(t=>t.status==="open").length;
+  return `<p class="note">هر کاری که می‌خواهید Claude انجام دهد را اینجا بنویسید و ثبت کنید. لازم نیست آن را در گفتگو تکرار کنید؛ فقط بنویسید «تسک‌ها را انجام بده» تا همه‌ی تسک‌های «در انتظار» یک‌جا اجرا شوند و نتیجه‌شان همین‌جا بیاید.</p>`+
+   kpis([["در انتظار",faNum(open),open>0],["انجام‌شده",faNum(S.ct.filter(t=>t.status==="done").length)]])+
+   (isAdmin()?`<div class="card"><div class="field"><label for="ctText">تسک جدید برای Claude</label><textarea id="ctText" style="min-height:110px" placeholder="مثلاً: برای محصول OGIM اسکافلد و ریپوی مقاله بساز"></textarea></div><button class="btn sig" data-act="ct-add">ثبت تسک</button></div>`:"")+
+   table(["تسک","وضعیت","تاریخ","نتیجه",""],[...S.ct].reverse().map(t=>`<tr>${td("تسک",`<span style="white-space:pre-wrap">${esc(t.text)}</span>`,"t")}${td("وضعیت",t.status==="open"?'<span class="pill p-warn">در انتظار</span>':'<span class="pill p-ok">انجام شد</span>')}${td("تاریخ",faDate((t.at||"").slice(0,10)))}${td("نتیجه",`<span style="white-space:pre-wrap">${esc(t.result||"—")}</span>`)}${td("",isAdmin()?`<button class="btn sm ghost" data-act="ct-del" data-id="${esc(t.id)}">حذف</button>`:"")}</tr>`),"هنوز تسکی ثبت نشده است.");
+};
+// ---- human tasks: abstract submission + registration per venue, assigned to a member (one pick can assign all)
+const SUBMIT_DESC = (a,t) => `ثبت چکیده و ثبت‌نام در «${a.name}»${a.deadline?` (ددلاین ${a.deadline})`:""}.\n\nمعیار پذیرش:\n۱) پیش‌نویس چکیده در پوشه‌ی paper-drafts بازبینی و نهایی شود.\n۲) بازبینی وکیل ثبت اختراع انجام شده و تأیید کتبی دارد (پیش از هر ارسال الزامی است).\n۳) قالب، شکل‌ها، فرم‌ها، وابستگی نویسنده و اظهار منافع طبق راهنمای مقصد آماده شود${a.url?` (${a.url})`:""}.\n۴) چکیده با حساب شخصی در سامانه‌ی مقصد ثبت و ثبت‌نام انجام شود؛ رسید یا شماره‌ی پیگیری در همین تسک یادداشت شود.\n${t&&t.result?`\nنتیجه‌ی کار Claude:\n${t.result}`:""}`;
+const submitVenues = () => { const seen=new Set(), out=[]; for(const t of S.ct){ if(!t.venue||seen.has(t.venue)) continue; seen.add(t.venue); const a=artAll().find(x=>x.id===t.venue); if(a) out.push({a,ct:t}); } return out.sort((x,y)=>(x.a.deadline||"9999").localeCompare(y.a.deadline||"9999")); };
+const submitTaskOf = vid => S.tasks.find(t=>t.kind==="submit"&&t.venue===vid);
+async function submitAssign(who, only){
+  if(!isAdmin()){ toast("فقط مدیر می‌تواند تسک تعریف یا واگذار کند."); return false; }
+  if(!who){ toast("ابتدا یک نفر را انتخاب کنید."); return false; }
+  const list=submitVenues().filter(v=>!only||v.a.id===only); let n=0, now=nowIso();
+  for(const {a,ct} of list){
+    const ex=submitTaskOf(a.id);
+    if(ex){ if(ex.assignee===who||ex.status==="done"||ex.status==="approved") continue; const {id:_i,...rec}=ex; if(!await save(`tasks/${ex.id}`,{...rec,assignee:who,updated:now},"")) return false; n++; }
+    else { const m=S.members.find(x=>x.id===who)||{};
+      if(!await save(`tasks/${newId()}`,{title:`ثبت چکیده و ثبت‌نام – ${a.name.split("–")[0].trim()}`,desc:SUBMIT_DESC(a,ct),type:"task",points:null,sprint:"",priority:"high",assignee:who,team:m.team||"ai",due:a.deadline||today(),blocked:false,blocker_note:"",status:"todo",kind:"submit",venue:a.id,created_by:S.me.id,created:now,updated:now},"")) return false; n++; }
+  }
+  toast(n?`${faNum(n)} تسک برای ${memberName(who)} تعریف/واگذار شد و اعلان آن به او نمایش داده می‌شود.`:"همه‌ی تسک‌ها از قبل به همین فرد سپرده شده یا انجام‌شده‌اند.");
+  return true;
+}
+VIEWS["articles.submit"] = () => {
+  const vs=submitVenues(), done=vs.filter(v=>{const t=submitTaskOf(v.a.id);return t&&(t.status==="done"||t.status==="approved")}).length, def=vs.filter(v=>submitTaskOf(v.a.id)).length;
+  const opts=`<option value="">— انتخاب مسئول —</option>${S.members.map(m=>`<option value="${esc(m.id)}"${S.stkWho===m.id?" selected":""}>${esc(m.full_name||m.id)}</option>`).join("")}`;
+  return `<p class="note">Claude چکیده و بسته‌ی ارسال را آماده می‌کند، اما ثبت چکیده و ثبت‌نام نهایی با حساب شخصی را فرد انسانی انجام می‌دهد. یک نفر را انتخاب کنید و با «تخصیص به همه» برای همه‌ی مقصدها تسک تعریف و واگذار شود؛ یا برای هر مقصد جداگانه مسئول بگذارید. تسک‌ها در «تخته‌ی اسکرام» و «روز من» و اعلان‌های مسئول دیده می‌شوند.</p>`+
+   kpis([["مقصد در جریان",faNum(vs.length)],["تسک تعریف‌شده",faNum(def)],["بدون تسک",faNum(vs.length-def),vs.length-def>0],["انجام‌شده",faNum(done)]])+
+   (isAdmin()?`<div class="card"><div class="row"><label for="stkWho"><b>مسئول:</b></label><select id="stkWho" data-stkwho>${opts}</select><button class="btn sig" data-act="stk-all">تخصیص به همه (تعریف تسک برای همه‌ی مقصدها)</button></div><p class="meta" style="margin:6px 0 0">تسک‌های موجود که انجام نشده‌اند به همین فرد منتقل می‌شوند؛ تسک‌های انجام‌شده تغییر نمی‌کنند.</p></div>`:`<div class="banner">فقط مدیر می‌تواند تسک تعریف یا واگذار کند.</div>`)+
+   table(["مقصد","ددلاین","مسئول","وضعیت",""],vs.map(({a})=>{ const t=submitTaskOf(a.id);
+     return `<tr>${td("مقصد",esc(a.name),"t")}${td("ددلاین",a.deadline?faDate(a.deadline):"—")}${td("مسئول",t?esc(memberName(t.assignee)):'<span class="meta">تعریف نشده</span>')}${td("وضعیت",t?`<span class="pill ${t.status==="done"||t.status==="approved"?"p-ok":t.status==="doing"?"p-info":"p-warn"}">${esc(TASK_ST[t.status]||t.status)}</span>`:'<span class="pill p-mute">—</span>')}${td("",isAdmin()?`<button class="btn sm ghost" data-act="stk-one" data-id="${esc(a.id)}">${t?"واگذاری به مسئول انتخاب‌شده":"تعریف تسک برای مسئول انتخاب‌شده"}</button>`:"")}</tr>`; }),"هنوز مقصدی در صف Claude نیست.");
+};
+for(const k of ["letters.new","letters.archive"]){ const f=VIEWS[k]; VIEWS[k]=()=>canSeeLetters()?f():`<p class="empty">بخش نامه‌ها فقط برای کارکنان اداری و مالک سامانه قابل مشاهده است.</p>`; }
+// ---- human owner (مسئول انسانی) for Patent and Scholarship: one pick can be assigned to every item; tasks land in the BPMS board
+const HUM = {
+  patent:{label:"اختراع‌های در جریان",kind:"human_patent",items:()=>S.patents.filter(p=>p.status!=="granted").map(p=>({id:p.id,name:p.title||"—",sub:`${PAT_ST[p.status]||""}${p.number?" · "+p.number:""}`,due:p.next_date||"",
+      title:`پیگیری ثبت اختراع – ${p.title||p.id}`,desc:`پیگیری پرونده‌ی «${p.title||""}»${p.number?` (شماره ${p.number})`:""}؛ وضعیت فعلی: ${PAT_ST[p.status]||"—"}.\nمعیار پذیرش: ۱) مدارک و ادعانامه‌ی مورد نیاز کامل و به‌روز باشد. ۲) پاسخ به اخطارها و پرداخت‌های مهلت‌دار پیگیری شود. ۳) هر اقدام و شماره‌ی پیگیری در همین تسک یادداشت شود.`}))},
+  scholar:{label:"بورسیه‌های در جریان",kind:"human_scholar",items:()=>SCH.filter(p=>schStatus(p)!=="applied").map(p=>({id:p.id,name:`${p.uni||""} – ${p.kind||""}`,sub:`${p.country||""} · ${p.deadline?faDate(p.deadline):""}`,due:p.deadline||"",
+      title:`اقدام بورسیه – ${p.uni||p.id}`,desc:`آماده‌سازی و ثبت درخواست بورسیه‌ی «${p.uni||""}»${p.kind?` (${p.kind})`:""}${p.deadline?`؛ مهلت تقریبی ${p.deadline}`:""}.\nمعیار پذیرش: ۱) فهرست مدارک سایت مقصد جمع شود (CV، SOP، ریزنمرات، زبان، توصیه‌نامه). ۲) درخواست با حساب شخصی ثبت شود. ۳) رسید یا شماره‌ی پیگیری یادداشت شود.`}))}
+};
+const humTaskOf = (k,id) => S.tasks.find(t=>t.kind===HUM[k].kind&&t.ref===id);
+async function humAssign(k,who,only){
+  if(!isAdmin()){ toast("فقط مدیر می‌تواند تسک تعریف یا واگذار کند."); return false; }
+  if(!who){ toast("ابتدا یک نفر را انتخاب کنید."); return false; }
+  let n=0; const now=nowIso(), m=S.members.find(x=>x.id===who)||{};
+  for(const it of HUM[k].items().filter(x=>!only||x.id===only)){
+    const ex=humTaskOf(k,it.id);
+    if(ex){ if(ex.assignee===who||ex.status==="done"||ex.status==="approved") continue; const {id:_i,...rec}=ex; if(!await save(`tasks/${ex.id}`,{...rec,assignee:who,updated:now},"")) return false; n++; }
+    else { if(!await save(`tasks/${newId()}`,{title:it.title,desc:it.desc,type:"task",points:null,sprint:"",priority:"normal",assignee:who,team:m.team||"ai",due:it.due||addDays(today(),7),blocked:false,blocker_note:"",status:"todo",kind:HUM[k].kind,ref:it.id,created_by:S.me.id,created:now,updated:now},"")) return false; n++; }
+  }
+  toast(n?`${faNum(n)} تسک برای ${memberName(who)} تعریف/واگذار شد.`:"همه‌ی تسک‌ها از قبل به همین فرد سپرده شده یا انجام‌شده‌اند."); return true;
+}
+function humView(k){
+  const H=HUM[k], items=H.items(), def=items.filter(i=>humTaskOf(k,i.id)).length;
+  const opts=`<option value="">— انتخاب مسئول —</option>${S.members.map(m=>`<option value="${esc(m.id)}"${(S.humWho||{})[k]===m.id?" selected":""}>${esc(m.full_name||m.id)}</option>`).join("")}`;
+  return `<p class="note">برای هر مورد یک مسئول انسانی تعیین کنید یا با یک انتخاب همه را به یک نفر بسپارید. برای هر مورد یک تسک در تخته‌ی اسکرام ساخته می‌شود و مسئول آن را در «روز من» و اعلان‌هایش می‌بیند.${k==="scholar"?" <b>توجه:</b> متن تسک (نام بورسیه و مهلت) برای مسئول انتخاب‌شده دیده می‌شود؛ اطلاعات شخصی و رزومه‌ی شما با او به‌اشتراک گذاشته نمی‌شود.":""}</p>`+
+   kpis([[H.label,faNum(items.length)],["تسک تعریف‌شده",faNum(def)],["بدون تسک",faNum(items.length-def),items.length-def>0]])+
+   (isAdmin()?`<div class="card"><div class="row"><label><b>مسئول:</b></label><select data-humwho="${k}">${opts}</select><button class="btn sig" data-act="hum-all" data-k="${k}">تخصیص به همه</button></div></div>`:`<div class="banner">فقط مدیر می‌تواند تسک تعریف یا واگذار کند.</div>`)+
+   table(["مورد","شرح","مسئول","وضعیت",""],items.map(i=>{const t=humTaskOf(k,i.id);
+     return `<tr>${td("مورد",esc(i.name),"t")}${td("شرح",`<span class="meta">${esc(i.sub)}</span>`)}${td("مسئول",t?esc(memberName(t.assignee)):'<span class="meta">تعریف نشده</span>')}${td("وضعیت",t?`<span class="pill ${t.status==="done"||t.status==="approved"?"p-ok":t.status==="doing"?"p-info":"p-warn"}">${esc(TASK_ST[t.status]||t.status)}</span>`:'<span class="pill p-mute">—</span>')}${td("",isAdmin()?`<button class="btn sm ghost" data-act="hum-one" data-k="${k}" data-id="${esc(i.id)}">${t?"واگذاری به مسئول انتخاب‌شده":"تعریف تسک برای مسئول انتخاب‌شده"}</button>`:"")}</tr>`;}),"موردی نیست.");
+}
+VIEWS["patent.human"] = () => humView("patent");
+VIEWS["articles.evidence"] = () => {
+  const ev=(S.pev&&S.pev.list)||[], real=ev.filter(e=>String(e.real).startsWith("بله")).length;
+  const pill=e=>{const r=String(e.real); return `<span class="pill ${r.startsWith("بله")?"p-ok":r.startsWith("جزئی")?"p-warn":r.startsWith("خیر")?"p-bad":"p-mute"}">${esc(r)}</span>`;};
+  return `<div class="banner">${esc((S.pev&&S.pev.legend)||"")}</div>`+
+   kpis([["محصول",faNum(ev.length)],["اعتبارسنجی افزونه با داده‌ی واقعی",faNum(real)],["بدون داده‌ی واقعی",faNum(ev.filter(e=>String(e.real).startsWith("خیر")).length),true],["هنوز انجام نشده",faNum(ev.filter(e=>!String(e.status).startsWith("انجام")).length),true]])+
+   table(["محصول","TRL","مقصد","وضعیت","داده‌ی واقعی؟","مجموعه‌داده و منبع دانلود","محاسبه","ملاحظات"],ev.filter(e=>match(e.name,e.dataset,e.venue)).map(e=>
+    `<tr>${td("محصول",`${esc(e.name)}<br><span class="meta">${esc(e.kind)} · ${esc(e.repo||"")}</span>`,"t")}${td("TRL",`<b class="mono">${esc(e.trl)}</b>`)}${td("مقصد",esc(e.venue))}${td("وضعیت",esc(e.status))}${td("داده‌ی واقعی",pill(e))}
+     ${td("مجموعه‌داده",`${esc(e.dataset)}${e.url?`<br><a href="${esc(e.url)}" target="_blank" rel="noopener noreferrer" class="mono">${esc(e.url)}</a>`:""}<br><span class="meta">مجوز: ${esc(e.license||"—")}</span>`)}${td("محاسبه",`<span class="meta">${esc(e.compute||"")}</span>`)}${td("ملاحظات",esc(e.note||"—"))}</tr>`),"هنوز موردی ثبت نشده است.");
+};
+const AP_SUBMITTED = ["neuropredict","inescape","diagnostic kit","qpcr","health informatics","car-t","energy and carbon","carbon management","data routing"];
+const AP_SUGGEST = [
+ {id:"rul",name:"Attention-LSTM RUL – پیش‌بینی عمر باقی‌مانده‌ی کمپرسور گاز",title:"Explainable Attention-LSTM Remaining Useful Life Prediction for Industrial Gas Compressors",why:"از ۲۳ اختراع شما یکی از قوی‌ترین حوزه‌هاست (RUL و دوقلوی دیجیتال)، هنوز مقاله‌ای برایش ارسال نشده و با کنفرانس‌های نگهداری پیش‌بینانه‌ی فهرست مقالات می‌خواند.",venues:["IAI2027 (ددلاین ۳۱ دسامبر ۲۰۲۶)","IEEE ISIE 2027 (ددلاین ۱۵ دسامبر ۲۰۲۶)","MIMAR2027"],stack:"Python، PyTorch، FastAPI، MLflow، داده‌ی سنتتیک سنسور کمپرسور (ارتعاش، دما، فشار)، Docker"},
+ {id:"fidps",name:"FIDPS – داشبرد پیش‌بینی و پیشگیری آسیب سازند در حفاری",title:"A Causal-Inference Dashboard for Predicting and Preventing Formation Damage While Drilling",why:"مستقیم از تخصص حفاری شماست (ارشد نفت – حفاری) و سه اختراع دارد؛ برای ژورنال‌های نفتی فهرست مقالات مناسب است.",venues:["Petroleum Science (KeAi)","Energy Geoscience – ویژه‌شماره‌ی AI (ددلاین ۳۱ اکتبر ۲۰۲۶)","Petroleum (KeAi)"],stack:"Python، FastAPI، مدل علّی (DoWhy / causal discovery)، داده‌ی سنتتیک حفاری، React داشبورد، Docker"},
+ {id:"edgeai",name:"Edge-AI – تشخیص آنومالی لبه با خوداصلاحی داده‌ای",title:"Edge-AI Anomaly Detection with Data Self-Correction for Gas Compressor Digital Twins",why:"هم‌حوزه با RUL ولی تأکید بر لبه و کیفیت داده؛ برای مسیر Industrial AI مناسب است.",venues:["IAI2027","IEEE ISIE 2027"],stack:"Python، PyTorch (autoencoder/LSTM)، MQTT/OPC-UA شبیه‌ساز، FastAPI، Docker"},
+ {id:"ics",name:"امنیت سایبری شبکه‌ی کنترل صنعتی – تشخیص آنومالی چندلایه",title:"Multilayer Anomaly Detection for Industrial Control Networks in Bandwidth-Limited Oil and Gas Fields",why:"از پنج اختراع DOF؛ مقاله‌ای برایش ارسال نشده و برای کنفرانس‌های صنعتی/نفتی می‌خورد.",venues:["IEEE ISIE 2027","SPE-نوع کنفرانس‌های دیجیتال میدان"],stack:"Python، scikit-learn/PyTorch، شبیه‌ساز ترافیک Modbus، FastAPI، Docker"}
+];
+const apNorm = v => String(v||"").toLowerCase();
+const AP_DONE_IDS = ["neuropredict","inescape","diagkits","healthdata","cart","iems"]; // products already presented in the 7 submitted conference papers
+const apIntroduced = p => !!p.introduced_in || AP_DONE_IDS.includes(p.id) || AP_SUBMITTED.some(k=>apNorm(p.name).includes(k));
+const apCandidates = () => S.products.filter(p=>!apIntroduced(p)).sort((a,b)=>(b.trl||0)-(a.trl||0)||(b.updated||"").localeCompare(a.updated||""));
+function apTaskText(kind,item){
+  const venues=(item.venues||[]).join("؛ ");
+  if(kind==="candidate"&&item.github) return `برای مقاله: محصول «${item.name}» از قبل پیاده‌سازی و ریپو دارد (${item.github}). اسکافلد یا ریپوی جدید نساز. فقط مقاله را آماده کن: خواندن ریپو، استخراج معماری و نتایج قابل‌گزارش، پیشنهاد عنوان و مقصد مقاله، پیش‌نویس چکیده و فهرست آزمایش‌ها و داده‌های لازم. TRL فعلی: ${item.trl||"—"}; الگوریتم‌ها: ${item.algorithms||"—"}.`;
+  return `برای مقاله: یک اسکافلد و ریپوی توسعه بساز برای محصول «${item.name}»${item.title?` (عنوان پیشنهادی مقاله: ${item.title})`:""}. شامل: ساختار پروژه، سرویس FastAPI، تولیدکننده‌ی داده‌ی سنتتیک، آموزش و ارزیابی مدل با نتایج قابل گزارش، تست، Dockerfile/docker-compose، README (انگلیسی) و پیش‌نویس چکیده‌ی مقاله. ${item.stack?`پشته‌ی پیشنهادی: ${item.stack}. `:""}${venues?`مقصد مقاله: ${venues}. `:""}${kind==="candidate"?`TRL فعلی محصول: ${item.trl||"—"}; الگوریتم‌ها: ${item.algorithms||"—"}.`:""}`;
+}
+async function apPick(kind,key){
+  if(!isAdmin()){ toast("فقط owner می‌تواند تسک برای Claude ثبت کند."); return; }
+  const item = kind==="candidate" ? S.products.find(p=>p.id===key) : AP_SUGGEST.find(x=>x.id===key);
+  if(!item) return;
+  const rec={mode:kind,key,name:item.name,title:item.title||"",trl:item.trl||null,
+    claude_task:{text:apTaskText(kind,item),at:new Date().toISOString(),by:S.me.id,status:"open"}};
+  await save("settings/article_product",rec,kind==="candidate"&&item.github?"تسک آماده‌سازی مقاله برای Claude ثبت شد":"تسک اسکافلد و ریپو برای Claude ثبت شد");
+  await ctAdd(rec.claude_task.text,{kind:"article_product",name:item.name});
+}
+const apPapers = () => artAll().filter(a=>a.status0==="applied"&&String(a.id).startsWith("p_"));
+function apKpis(cand){
+  const tile=(k,label,n,alert)=>`<button class="kpi${alert?" alert":""}" data-act="ap-show" data-k="${k}" title="برای دیدن فهرست کلیک کنید" style="font:inherit;color:inherit;background:var(--surface);border:1px solid var(--line);cursor:pointer;text-align:start;${S.apShow===k?"outline:2px solid var(--signal);":""}"><b>${esc(faNum(n))}</b><span>${esc(label)} ▾</span></button>`;
+  return `<div class="kpis">${tile("basket","محصول در سبد",S.products.length)}${tile("intro","معرفی‌نشده در مقاله",cand.length,cand.length>0)}${tile("papers","مقاله‌ی ثبت‌شده (کنفرانس)",apPapers().length)}</div>`;
+}
+function apPanel(cand){
+  const k=S.apShow; if(!k) return `<p class="note">روی هر کادر بالا کلیک کنید تا فهرستش نمایش داده شود.</p>`;
+  const gh=p=>p.github?link(p.github,p.github.replace("https://github.com/","")):"—";
+  if(k==="basket") return `<div class="card"><h3>همه‌ی محصولات سبد (${faNum(S.products.length)})</h3>`+table(["محصول","TRL","مخزن","وضعیت"],[...S.products].sort((a,b)=>(b.trl||0)-(a.trl||0)).map(p=>`<tr>${td("محصول",esc(p.name),"t")}${td("TRL",`<span class="mono">${esc(p.trl??"—")}</span>`)}${td("مخزن",gh(p))}${td("وضعیت",apIntroduced(p)?'<span class="pill p-ok">معرفی‌شده در مقاله</span>':'<span class="pill p-warn">معرفی‌نشده</span>')}</tr>`),"سبد محصولات خالی است.")+`</div>`;
+  if(k==="intro") return `<div class="card"><h3>محصولات معرفی‌نشده در مقاله (${faNum(cand.length)})</h3>`+table(["محصول","TRL","الگوریتم‌ها","مخزن",""],cand.map(p=>`<tr>${td("محصول",esc(p.name),"t")}${td("TRL",`<span class="mono">${esc(p.trl??"—")}</span>`)}${td("الگوریتم‌ها",esc(p.algorithms||"—"))}${td("مخزن",gh(p))}${td("",isAdmin()?`<button class="btn sm sig" data-act="ap-pick" data-kind="candidate" data-id="${esc(p.id)}">انتخاب و ثبت تسک برای Claude</button>`:"")}</tr>`),"همه‌ی محصولات در مقاله‌ای معرفی شده‌اند.")+`</div>`;
+  return `<div class="card"><h3>مقاله‌های ثبت‌شده در کنفرانس‌ها (${faNum(apPapers().length)})</h3>`+table(["مقاله","کنفرانس","شهر و کشور","ارائه","وضعیت"],apPapers().map(a=>`<tr>${td("مقاله",`<span dir="ltr" style="text-align:left;display:block">${esc(String(a.details||"").replace(/^مقاله‌ی ارسالی:\s*/,""))}</span>`,"t")}${td("کنفرانس",esc(a.name))}${td("کشور",`${esc(a.country||"—")}${a.city&&a.city!=="—"?" – "+esc(a.city):""}`)}${td("ارائه",esc(ART_PRES[a.present]||"—"))}${td("وضعیت",'<span class="pill p-ok">ارسال‌شده – در دست بررسی</span>')}</tr>`),"مقاله‌ای ثبت نشده است.")+`</div>`;
+}
+VIEWS["articles.product"] = () => {
+  const cand=apCandidates(), cur=S.artProd||{}, task=cur.claude_task;
+  const taskBox = task ? `<div class="card" style="border-color:var(--signal)"><h3 style="margin:0 0 6px">تسک ثبت‌شده برای Claude</h3><p><b>${esc(cur.name||"")}</b> ${cur.title?`– <span dir="ltr">${esc(cur.title)}</span>`:""}</p>
+    <p><span class="pill ${task.status==="open"?"p-warn":"p-ok"}">${task.status==="open"?"در انتظار انجام":"انجام شد"}</span> <span class="meta">${faDate((task.at||"").slice(0,10))}</span></p>
+    <p class="note" style="white-space:pre-wrap">${esc(task.text)}</p>
+    ${task.status==="open"?`<p class="note">برای اجرا در گفتگو با Claude بنویسید: «تسک محصول مقاله را انجام بده» تا اسکافلد و ریپو ساخته شود.</p>`:`<p class="note"><b>نتیجه:</b> ${esc(task.result||"انجام شد")}</p>`}
+    <div class="row"><button class="btn sm ghost" data-act="ap-clear">پاک کردن تسک</button></div></div>` : "";
+  const candHtml = cand.length ? `<h3>کاندید از سبد محصولات شما (هنوز در مقاله‌ای معرفی نشده)</h3>`+cand.slice(0,5).map((p,i)=>`<div class="card" style="margin-bottom:8px"><div class="row" style="align-items:center;gap:8px;flex-wrap:wrap"><b style="flex:1">${i===0?"⭐ ":""}${esc(p.name)}</b><span class="pill p-info mono">TRL ${esc(p.trl??"—")}</span></div>
+      <p class="meta">${esc(p.algorithms||"")}</p><div class="row" style="gap:8px"><button class="btn sm sig" data-act="ap-pick" data-kind="candidate" data-id="${esc(p.id)}">انتخاب و ثبت تسک برای Claude</button><button class="btn sm ghost" data-act="ap-intro" data-id="${esc(p.id)}">قبلاً معرفی شده</button></div></div>`).join("")
+    : `<div class="card"><p>همه‌ی محصولات سبد شما یا قبلاً در مقاله‌ای معرفی شده‌اند یا سبد هنوز خالی است. محصول‌های پیشنهادی زیر را ببینید.</p></div>`;
+  const sugHtml = `<h3>${cand.length?"محصول پیشنهادی (اگر کاندیدای بالا را نمی‌خواهید)":"محصول پیشنهادی من"}</h3>`+AP_SUGGEST.map((x,i)=>`<div class="card" style="margin-bottom:8px"><div class="row" style="align-items:center;gap:8px;flex-wrap:wrap"><b style="flex:1">${(!cand.length&&i===0)?"⭐ ":""}${esc(x.name)}</b></div>
+      <p dir="ltr" style="text-align:left" class="meta">${esc(x.title)}</p><p>${esc(x.why)}</p><p class="meta"><b>مقصد مقاله:</b> ${esc(x.venues.join("؛ "))}<br><b>پشته‌ی اسکافلد:</b> ${esc(x.stack)}</p>
+      <button class="btn sm sig" data-act="ap-pick" data-kind="suggest" data-id="${esc(x.id)}">انتخاب و ثبت تسک برای Claude</button></div>`).join("");
+  return `<p class="note">این بخش محصولات سبد شما را بررسی می‌کند. محصولی که هنوز در هیچ مقاله‌ای معرفی نشده، کاندید می‌شود؛ اگر چنین محصولی نباشد، محصول جدید پیشنهاد می‌دهد. با «ثبت تسک برای Claude» یک تسک ساخت اسکافلد و ریپوی توسعه‌ی محصول ثبت می‌شود. تسک‌ها را هر زمان در گفتگو با Claude اعلام کنید، اجرا می‌شود.</p>`+
+   apKpis(cand)+apPanel(cand)+taskBox+candHtml+sugHtml;
+};
+// ---- redesigned "product for paper" page: every open venue + best overlapping product (or a new-product task)
+const AP_MATCH = {
+  oil_gas: p => (p.domains_fa||[]).includes("oil_gas"),
+  ai_industry: p => ((p.domains_fa||[]).some(d=>["oil_gas","aerospace","nuclear"].includes(d))) && /RUL|دوقلو|پیش‌بینی|ناهنجاری|نگهداری|یادگیری/.test((p.name||"")+" "+(p.algorithms||"")),
+  medical: p => (p.domains_fa||[]).includes("medical"),
+  quantum: p => /کوانتوم|quantum|VQC|VQE/i.test((p.name||"")+" "+(p.algorithms||"")),
+  aerospace: p => (p.domains_fa||[]).includes("aerospace"),
+  nuclear: p => (p.domains_fa||[]).includes("nuclear"),
+  energy: p => (p.domains||[]).includes("energy") || /انرژی|کربن/.test(p.name||""),
+  water: p => /آب|هیدرولوژی/.test((p.name||"")+" "+(p.algorithms||""))
+};
+function apBestFor(a){
+  const fn=AP_MATCH[a.field]||(()=>false);
+  const all=S.products.filter(fn).sort((x,y)=>(y.trl||0)-(x.trl||0));
+  const fresh=all.filter(p=>!apIntroduced(p));
+  return {all,fresh,best:fresh[0]||null};
+}
+const apQuickText = (a,p) => `Write a 200-word conference abstract for ${a.name}${a.deadline?` (deadline ${a.deadline})`:""}, based on a product called "${p.name}" (${String(p.algorithms||"").slice(0,160)}). Important: the product is in the patent process, so do not describe any novel method in detail; stay at the level of the problem, the evaluation approach and expected contribution, and mark every result as [to be measured].`;
+const apQuickNewText = a => `Suggest three product ideas for a paper at ${a.name} (field: ${ART_FIELDS[a.field]||a.field}). The ideas must be generic extensions that do not overlap with patented methods, each with a one-line contribution, an evaluation plan and the data needed.`;
+function apAssign(venues){ // each product goes to exactly one venue: queued tasks are fixed, the rest greedily by earliest deadline
+  const taken=new Map(), used=new Set();
+  for(const t of S.ct) if(t.kind==="paper_submit"&&t.venue&&t.product){ const pr=S.products.find(x=>x.id===t.product); if(pr){ taken.set(t.venue,pr); used.add(pr.id); } }
+  const order=[...venues].sort((x,y)=>(x.deadline||"9999").localeCompare(y.deadline||"9999")||x.name.localeCompare(y.name));
+  for(const v of order){ if(taken.has(v.id)) continue; const fn=AP_MATCH[v.field]||(()=>false);
+    const c=S.products.filter(pr=>fn(pr)&&!apIntroduced(pr)&&!used.has(pr.id)).sort((a,b)=>(b.trl||0)-(a.trl||0))[0];
+    if(c){ taken.set(v.id,c); used.add(c.id); } }
+  return taken;
+}
+const apClaudeLink = text => "https://claude.ai/new?q="+encodeURIComponent(text);
+const apVenueLabel = a => `«${a.name}»${a.deadline?` (ددلاین ${a.deadline})`:""}`;
+function apSubmitText(a,p){
+  return `برای ارسال مقاله به ${apVenueLabel(a)} از محصول «${p.name}» (TRL ${p.trl||"—"}${p.github?`، ریپو: ${p.github}`:""}) استفاده کن. کارها: ۱) خواندن ریپو و استخراج معماری، الگوریتم‌ها و نتایج قابل‌گزارش؛ ۲) نگارش چکیده و در صورت نیاز مقاله‌ی کامل مطابق قالب و محدودیت‌های این مقصد (${a.url||"لینک رسمی در صفحه"}); ۳) فهرست و تجمیع همه‌ی مدارک لازم (قالب، شکل‌ها، فرم‌ها، وابستگی نویسنده، لینک کد، اظهار منافع)؛ ۴) آماده‌کردن بسته‌ی ارسال و راهنمای گام‌به‌گام ثبت در سامانه‌ی مقصد. ثبت نهایی با حساب شخصی را خودم انجام می‌دهم. قاعده‌ی ثبت اختراع (الزامی): همه‌ی محصولات در مسیر ثبت اختراع‌اند. ابتدا به ریپوی موجود محصول وصل شو (clone) و یک شاخه‌ی جدا برای مقاله بساز؛ ادعانامه‌های ثبت‌شده‌ی محصول را بخوان؛ مقاله را فقط روی قابلیت یا تغییر تازه‌ای بنویس که در ادعاها نیست و آن را در ریپو پیاده کن؛ روش یا ادعای ثبت‌شده را در مقاله و چکیده فاش نکن؛ فهرست «نباید فاش شود» را در مستندات ریپو بنویس؛ پیش از ارسال بازبینی وکیل ثبت اختراع لازم است.`;
+}
+function apNewText(a,hasRelated){
+  return `برای ${apVenueLabel(a)} (حوزه: ${ART_FIELDS[a.field]||a.field}) ${hasRelated?"همه‌ی محصولات مرتبط سبد قبلاً در مقاله معرفی شده‌اند":"محصول مناسبی در سبد نیست"}. تسک: ۱) یک محصول نو تعریف کن (مسئله، نوآوری، داده‌ها، TRL هدف) که با موضوع این مقصد بخواند و با ۳۷ اختراع ثبت‌شده‌ی من هم‌پوشانی علمی داشته باشد؛ ۲) یک ریپوی جدید (محلی با git) و اسکافلد توسعه‌ی محصول بساز؛ ۳) توسعه‌ی اولیه و آزمایش‌هایی که نتایج مقاله را بدهد؛ ۴) چکیده و بسته‌ی ارسال را آماده کن. قاعده‌ی ثبت اختراع (الزامی): همه‌ی محصولات در مسیر ثبت اختراع‌اند. ابتدا به ریپوی موجود محصول وصل شو (clone) و یک شاخه‌ی جدا برای مقاله بساز؛ ادعانامه‌های ثبت‌شده‌ی محصول را بخوان؛ مقاله را فقط روی قابلیت یا تغییر تازه‌ای بنویس که در ادعاها نیست و آن را در ریپو پیاده کن؛ روش یا ادعای ثبت‌شده را در مقاله و چکیده فاش نکن؛ فهرست «نباید فاش شود» را در مستندات ریپو بنویس؛ پیش از ارسال بازبینی وکیل ثبت اختراع لازم است.`;
+}
+function avKpis(all,assign){
+  const need=all.length-all.filter(a=>assign.has(a.id)).length, nt=S.ct.filter(t=>t.venue).length;
+  const tile=(k,label,n,alert)=>`<button class="kpi${alert?" alert":""}" data-act="av-show" data-k="${k}" title="برای دیدن فهرست کلیک کنید" style="font:inherit;color:inherit;background:var(--surface);border:1px solid var(--line);cursor:pointer;text-align:start;${S.avShow===k?"outline:2px solid var(--signal);":""}"><b>${esc(faNum(n))}</b><span>${esc(label)} ▾</span></button>`;
+  return `<div class="kpis">${tile("open","مقصد باز",all.length)}${tile("withp","دارای محصول مناسب",all.length-need)}${tile("need","نیازمند محصول جدید",need,need>0)}${tile("tasks","تسک ثبت‌شده",nt)}</div>`;
+}
+function avPanel(all,assign){
+  const k=S.avShow; if(!k) return `<p class="note">روی هر کادر بالا کلیک کنید تا فهرستش نمایش داده شود.</p>`;
+  const sorted=[...all].sort((a,b)=>(a.deadline||"9999").localeCompare(b.deadline||"9999")||a.name.localeCompare(b.name));
+  const dl=a=>a.deadline?`${faDate(a.deadline)} <span class="meta">(${esc(a.dl_note||"")})</span>`:`<span class="meta">${esc(a.dl_note||"بدون ددلاین")}</span>`;
+  const venue=a=>`${a.url?link(a.url,a.name):esc(a.name)}<br><span class="pill p-mute">${esc(ART_TYPE[a.type]||"")}</span> <span class="meta">${esc(ART_FIELDS[a.field]||"")}</span>`;
+  if(k==="open") return `<div class="card"><h3>مقصدهای باز (${faNum(all.length)})</h3>`+table(["مقصد","ایمپکت","ددلاین","کشور و شهر","ارائه"],sorted.map(a=>`<tr>${td("مقصد",venue(a),"t")}${td("IF",`<span class="mono">${esc(a.impact||"—")}</span>`)}${td("ددلاین",dl(a))}${td("کشور",`${esc(a.country||"—")}${a.city&&a.city!=="—"?" – "+esc(a.city):""}`)}${td("ارائه",esc(ART_PRES[a.present]||"—"))}</tr>`),"مقصد بازی نیست.")+`</div>`;
+  if(k==="withp"){ const rows=sorted.filter(a=>assign.has(a.id)); return `<div class="card"><h3>مقصدهای دارای محصول مناسب (${faNum(rows.length)})</h3>`+table(["مقصد","محصول تخصیص‌یافته","TRL","ددلاین"],rows.map(a=>{const pr=assign.get(a.id);return `<tr>${td("مقصد",venue(a),"t")}${td("محصول",`<b>${esc(pr.name)}</b><br><span class="meta">${esc(pr.algorithms||"")}</span>`)}${td("TRL",`<span class="mono">${esc(pr.trl??"—")}</span>`)}${td("ددلاین",dl(a))}</tr>`}),"محصولی تخصیص نیافته است.")+`</div>`; }
+  if(k==="need"){ const rows=sorted.filter(a=>!assign.has(a.id)); return `<div class="card"><h3>مقصدهای نیازمند محصول جدید (${faNum(rows.length)})</h3>`+table(["مقصد","دلیل","ددلاین",""],rows.map(a=>{const m0=apBestFor(a);return `<tr>${td("مقصد",venue(a),"t")}${td("دلیل",m0.all.length?"محصولات مرتبط یا قبلاً در مقاله معرفی شده‌اند یا برای مقصد دیگری رزرو شده‌اند":"در سبد محصولی در این حوزه نیست")}${td("ددلاین",dl(a))}${td("",isAdmin()?`<button class="btn sm sig" data-act="av-new" data-v="${esc(a.id)}">📥 ثبت در صف: تعریف محصول + ریپوی جدید</button>`:"")}</tr>`}),"همه‌ی مقصدها محصول دارند.")+`</div>`; }
+  const tl=S.ct.filter(t=>t.venue);
+  return `<div class="card"><h3>تسک‌های ثبت‌شده برای مقصدها (${faNum(tl.length)})</h3>`+table(["تسک","وضعیت","تاریخ","نتیجه"],[...tl].reverse().map(t=>`<tr>${td("تسک",`<b>${esc(t.name||"")}</b><br><span class="meta" style="white-space:pre-wrap">${esc(String(t.text||"").slice(0,220))}…</span>`,"t")}${td("وضعیت",t.status==="open"?'<span class="pill p-warn">در صف Claude Code</span>':'<span class="pill p-ok">انجام شد</span>')}${td("تاریخ",faDate((t.at||"").slice(0,10)))}${td("نتیجه",`<span style="white-space:pre-wrap">${esc(t.result||"—")}</span>`)}</tr>`),"هنوز تسکی برای مقصدها ثبت نشده است.")+`</div>`;
+}
+VIEWS["articles.product"] = () => {
+  const f=S.artF, all=artAll().filter(a=>artOpen(a)&&a.status0!=="applied");
+  const rows=all.filter(a=>(!f.field||a.field===f.field)&&(!f.type||a.type===f.type)).filter(a=>match(a.name,a.details,a.city,a.country,ART_FIELDS[a.field]))
+    .sort((a,b)=>(a.deadline||"9999").localeCompare(b.deadline||"9999")||a.name.localeCompare(b.name));
+  const assign=apAssign(all), withP=all.filter(a=>assign.has(a.id)).length;
+  const taskOf=a=>S.ct.find(t=>t.venue===a.id);
+  const sel=(k,opts,all0)=>`<select data-af="${k}"><option value="">${all0}</option>${Object.entries(opts).map(([v,l])=>`<option value="${v}"${f[k]===v?" selected":""}>${esc(l)}</option>`).join("")}</select>`;
+  return `<div class="banner"><b>قاعده‌ی ثبت اختراع:</b> همه‌ی محصولات در مسیر ثبت اختراع‌اند. مقاله فقط روی قابلیت تازه‌ای نوشته می‌شود که در ادعانامه‌ها نیست، روی ریپوی موجود و در شاخه‌ی جدا ساخته می‌شود و روش ادعاشده در آن فاش نمی‌شود. پیش از ارسال، وکیل متن را بررسی کند.</div><p class="note">همه‌ی ژورنال‌ها، ویژه‌شماره‌ها و کنفرانس‌های باز فهرست مقالات اینجا هستند. برای هر کدام، محصولِ سبد که با موضوعش هم‌پوشانی دارد و هنوز در مقاله‌ای معرفی نشده پیشنهاد می‌شود. با «تسک برای Claude» نگارش چکیده، تجمیع مدارک و آماده‌سازی بسته‌ی ارسال سفارش داده می‌شود (ثبت نهایی با حساب شخصی شماست). اگر محصول مناسبی نباشد، تسک «تعریف محصول، ساخت ریپوی جدید و اسکافلد» ثبت می‌شود. هر ردیف دو راه جدا دارد: «۱) سفارش کامل» تسک را در صف Claude Code می‌گذارد تا روی ریپو و ادعانامه‌های شما اجرا شود؛ «۲) پیش‌نویس سریع» فقط یک گفتگوی تازه در claude.ai باز می‌کند و ریپو یا فایل‌های شما را نمی‌بیند.</p>`+
+   avKpis(all,assign)+avPanel(all,assign)+
+   `<div class="card" style="margin-bottom:8px"><b>تخصیص محصول به مقصد (هر محصول فقط برای یک مقاله):</b> ${assign.size?[...assign.entries()].map(([vid,pr])=>{const v=all.find(x=>x.id===vid); return `<span class="pill p-info" title="${esc(v?v.name:"")}">${esc(pr.name.split("–")[0].trim())} ← ${esc(v?v.name.split("–")[0].trim().slice(0,38):"")}</span>`}).join(" "):'<span class="meta">محصولی تخصیص نیافته است</span>'}</div>`+
+   `<div class="toolbar">${sel("field",ART_FIELDS,"همه‌ی حوزه‌ها")}${sel("type",ART_TYPE,"همه‌ی انواع")}<button class="btn ghost" data-act="sub" data-k="claude">تسک‌های Claude</button></div>`+
+   table(["حوزه","ژورنال / کنفرانس","ایمپکت و ددلاین","محصول پیشنهادی از سبد","اقدام"],rows.map(a=>{
+     const m0=apBestFor(a), m={all:m0.all,fresh:m0.fresh,best:assign.get(a.id)||null}, t=taskOf(a);
+     const prod = m.best ? `<b>${esc(m.best.name)}</b> <span class="pill p-info mono">TRL ${esc(m.best.trl??"—")}</span><br><span class="meta">${esc((m.best.algorithms||"").slice(0,90))}</span>`
+       : `<span class="pill p-warn">محصول مناسب ندارد</span><br><span class="meta">${m.all.length?"محصولات مرتبط یا قبلاً در مقاله معرفی شده‌اند یا برای مقصد دیگری رزرو شده‌اند":"در سبد محصولی در این حوزه نیست"}</span>`;
+     const quick = m.best ? apQuickText(a,m.best) : apQuickNewText(a);
+     const queued = t ? `<span class="pill ${t.status==="open"?"p-warn":"p-ok"}">${t.status==="open"?"در صف Claude Code":"انجام شد"}</span>` : "";
+     const act = isAdmin() ? `<div style="border-inline-start:3px solid var(--signal);padding-inline-start:8px;margin-bottom:8px"><div class="meta"><b>۱) سفارش کامل</b> – روی ریپو، در Claude Code ${queued}</div>
+        <button class="btn sm sig" data-act="${m.best?"av-task":"av-new"}" data-v="${esc(a.id)}"${m.best?` data-p="${esc(m.best.id)}"`:""}>📥 ${m.best?"ثبت در صف: چکیده + مدارک + بسته‌ی ارسال":"ثبت در صف: تعریف محصول + ریپوی جدید"}</button></div>
+       <div style="border-inline-start:3px solid var(--line);padding-inline-start:8px"><div class="meta"><b>۲) پیش‌نویس سریع</b> – گفتگوی تازه در claude.ai، بدون دسترسی به ریپو</div>
+        <a class="btn sm ghost" href="${esc(apClaudeLink(quick))}" target="_blank" rel="noopener" title="فقط متن چکیده یا ایده می‌دهد؛ ریپو و فایل‌های شما را نمی‌بیند">↗ ${m.best?"پیش‌نویس چکیده":"ایده‌پردازی محصول"}</a></div>` : `<span class="meta">فقط owner</span>`;
+     return `<tr>${td("حوزه",esc(ART_FIELDS[a.field]||a.field||"—"))}${td("نام",`${a.url?link(a.url,a.name):esc(a.name)}<br><span class="pill p-mute">${esc(ART_TYPE[a.type]||"")}</span> ${a.ver?'<span class="pill p-ok">منبع رسمی</span>':'<span class="pill p-warn">تأیید شود</span>'}<br><span class="meta">${esc(a.details||"")}</span><br><span class="meta">${esc(a.country||"")}${a.city&&a.city!=="—"?" – "+esc(a.city):""} · ${esc(ART_PRES[a.present]||"")}</span>`,"t")}
+       ${td("IF",`<b class="mono">${esc(a.impact||"—")}</b><br>${a.deadline?`<b>${faDate(a.deadline)}</b><br><span class="meta">${esc(a.dl_note||"")}</span>`:`<span class="meta">${esc(a.dl_note||"بدون ددلاین")}</span>`}`)}
+       ${td("محصول",prod)}${td("",act)}</tr>`;}),"مقصد بازی با این فیلترها نیست.");
 };
 function artForm(a={}){
   openForm({title:a.id?"ویرایش ردیف":"افزودن ژورنال یا کنفرانس",values:{field:"oil_gas",type:"journal",present:"none",...a},fields:[
@@ -1661,7 +2136,6 @@ const TOUR = [
  {mod:"events",sub:"all",title:"همه",text:"هر دو فهرست یک‌جا، به ترتیب نزدیک‌ترین تاریخ."},
  {mod:"events",sub:"taken",title:"در دست پیگیری",text:"رویدادهایی که کسی مسئولیتشان را گرفته. مسئول یا مدیر می‌تواند رویداد را به فهرست بازگرداند."},
  {mod:"erp",title:"ERP – مدیریت شرکت",text:"تصویر کلی شرکت: محصولات، نیروها، مالی و مشتریان. شرکت هنوز پیش از درآمد است و این بخش مسیر رسیدن به اولین قرارداد را دنبال می‌کند."},
- {mod:"erp",sub:"overview",title:"نمای کلی",text:"شمار محصولات، میانگین TRL (سطح آمادگی فناوری)، نیروهای ثبت‌شده، مشتریان در قیف و تعهدات مالی پرداخت‌نشده."},
  {mod:"erp",sub:"domains",title:"حوزه‌های فعالیت",text:"حوزه‌هایی که شرکت در آن‌ها محصول هوشمند می‌سازد (نفت و گاز، پزشکی، هسته‌ای، هوا و فضا و …) و محصولات هر حوزه."},
  {mod:"erp",sub:"products",title:"توسعه‌ی محصول هوشمند",text:"کارت هر محصول: TRL، کارفرما، بازخورد جلسه‌ها، فناوری‌ها، الگوریتم‌ها، تجهیزات پیاده‌سازی، نمونه‌های مشابه و قابلیت ثبت اختراع. هر عضو می‌تواند اطلاعات را کامل کند."},
  {mod:"erp",sub:"people",title:"نیروی انسانی",text:"فهرست اعضا با تیم، نقش، روزهای حضور و ساعت ورود. ثبت‌نام اعضا در BPMS انجام می‌شود."},
@@ -1757,6 +2231,23 @@ document.addEventListener("click", async e => {
     case "unclaim": { const t=S.tracking[id]||{}; if(t.owner&&t.owner!==S.me.id&&!isAdmin()){toast("فقط مسئول همین مورد یا مدیر می‌تواند آن را بازگرداند.");break}
       await save(`tracking/${id}`,{...t,owner:"",log:[...(t.log||[]),{at:new Date().toISOString(),by:S.me.id,note:"به فهرست بازگردانده شد"}].slice(-40),updated:new Date().toISOString(),updated_by:S.me.id},"به فهرست بازگردانده شد"); break; }
     case "art-new": artForm(); break;
+    case "ct-add": { const el=$("#ctText"); const v=(el&&el.value||"").trim(); if(!v){toast("متن تسک را بنویسید.");break;} if(await ctAdd(v,{kind:"free"})&&el) el.value=""; break; }
+    case "stk-all": { const w=($("#stkWho")||{}).value||S.stkWho; await submitAssign(w,null); break; }
+    case "stk-one": { const w=($("#stkWho")||{}).value||S.stkWho; await submitAssign(w,id); break; }
+    case "trk-all": { const w=($("#trkWho")||{}).value||S.trkWho; if(!isAdmin()||!w){toast("یک نفر را انتخاب کنید.");break}
+      const ids=S.m.tenders.filter(t=>ACTIVE.has(t.status)&&!(S.tracking[t.id]||{}).owner).map(t=>t.id); let n=0;
+      for(const i of ids){ if(await trackSetOwner(i,w)) n++; } toast(n?`${faNum(n)} پروژه به ${memberName(w)} سپرده شد.`:"پروژه‌ی بدون مسئولی نبود."); break; }
+    case "hum-all": { const w=(document.querySelector(`[data-humwho="${b.dataset.k}"]`)||{}).value; await humAssign(b.dataset.k,w,null); break; }
+    case "hum-one": { const w=(document.querySelector(`[data-humwho="${b.dataset.k}"]`)||{}).value; await humAssign(b.dataset.k,w,id); break; }
+    case "ct-del": if(isAdmin()) await save("settings/claude_tasks",{list:S.ct.filter(t=>t.id!==id)},"تسک حذف شد"); break;
+    case "art-st": if(b.type==="checkbox"&&!b.checked) break; await artSetStatus(id,b.dataset.st); break;
+    case "av-task": { const a=artAll().find(x=>x.id===b.dataset.v), pr=S.products.find(x=>x.id===b.dataset.p); if(a&&pr) await ctAdd(apSubmitText(a,pr),{kind:"paper_submit",venue:a.id,product:pr.id,name:pr.name+" → "+a.name}); break; }
+    case "av-new": { const a=artAll().find(x=>x.id===b.dataset.v); if(a){ const m=apBestFor(a); await ctAdd(apNewText(a,m.all.length>0),{kind:"new_product",venue:a.id,name:"محصول جدید → "+a.name}); } break; }
+    case "av-show": S.avShow=(S.avShow===b.dataset.k)?"":b.dataset.k; render(); break;
+    case "ap-show": S.apShow=(S.apShow===b.dataset.k)?"":b.dataset.k; render(); break;
+    case "ap-pick": await apPick(b.dataset.kind,id); break;
+    case "ap-clear": if(isAdmin()) await save("settings/article_product",{},"تسک پاک شد"); break;
+    case "ap-intro": { const pr=S.products.find(x=>x.id===id); if(!pr||!isAdmin()) break; openForm({title:"قبلاً در کجا معرفی شده؟",values:{venue:pr.introduced_in||""},fields:[{k:"venue",label:"نام مقاله یا کنفرانس"}],onSave:v=>{ if(!v.venue){toast("نام را وارد کنید.");return false} return save(`products/${id}`,{...pr,introduced_in:v.venue},"ثبت شد"); }}); break; }
     case "art-edit": artForm(S.arts.find(x=>x.id===id)); break;
     case "art-del": if(confirm("این ردیف حذف شود؟")) await remove(`articles/${id}`); break;
     case "tour-start": tourStart(); break;
@@ -1799,7 +2290,8 @@ document.addEventListener("click", async e => {
     case "register": registerForm(); break;
     case "print-sheet": printSheet(b.dataset.sel); break;
     case "sch-profile": schProfileForm(); break;
-    case "sch-copy": schCopyPrompt(b.dataset.id); break;
+    case "sch-copy": await schCopyPrompt(b.dataset.id); break;
+    case "sch-task": await schClaudeTask(b.dataset.id); break;
     case "sch-set": { const st=b.dataset.st; if(b.type==="checkbox"&&!b.checked) break; await schSave(b.dataset.id,{status:st,status_at:new Date().toISOString(),status_by:S.me.id}); break; }
     case "sch-done": { const cur=schState(b.dataset.id), it={...(cur.items||{})}; it[b.dataset.k]={...(it[b.dataset.k]||{}),done:b.checked}; await schSave(b.dataset.id,{items:it}); break; }
     case "sch-claim": { const cur=schState(b.dataset.id), it={...(cur.items||{})}; if(!S.me.id){toast("ابتدا وارد شوید.");break;} it[b.dataset.k]={...(it[b.dataset.k]||{}),owner:S.me.id}; await schSave(b.dataset.id,{items:it}); break; }
@@ -1813,6 +2305,7 @@ document.addEventListener("click", async e => {
     case "letter-view": letterView(id); break;
     case "letter-edit": { const l=S.letters.find(x=>x.id===id); if(!l) break; S.draft={...l,numAuto:false}; S.mod="letters"; S.sub="new"; S.forceFull=true; closeForm(); render(); window.scrollTo(0,0); break; }
     case "compose-go": composeSubmit(); break;
+    case "lh-del": await save("settings/letterhead",{kind:"none",updated:new Date().toISOString()},"سربرگ پیش‌فرض فعال شد."); break;
     case "compose-reset": S.draft=null; S.forceFull=true; render(); break;
     case "arch-new": archForm(); break;
     case "arch-edit": archForm(S.lettersArchive.find(x=>x.id===id)); break;
@@ -1834,6 +2327,10 @@ document.addEventListener("input", e => { const el=e.target.closest("[data-c]");
   const p=$("#cprev"); if(p) p.innerHTML=letterSheet(draftLetter()); });
 document.addEventListener("change", async e => { const af=e.target.closest("[data-af]"); if(af){ S.artF[af.dataset.af]=af.type==="checkbox"?af.checked:af.value; renderView(); return; }
   const bm=e.target.closest("[data-bm]"); if(bm){ S.boardMine=bm.checked; renderView(); return; }
+  const to=e.target.closest("[data-trkowner]"); if(to){ const id0=to.dataset.trkowner; if(!await trackSetOwner(id0,to.value)) renderView(); return; }
+  const tw=e.target.closest("[data-trkwho]"); if(tw){ S.trkWho=tw.value; return; }
+  const hw=e.target.closest("[data-humwho]"); if(hw){ (S.humWho=S.humWho||{})[hw.dataset.humwho]=hw.value; return; }
+  const sw=e.target.closest("[data-stkwho]"); if(sw){ S.stkWho=sw.value; return; }
   const sa=e.target.closest("[data-spassign]"); if(sa){ const t=S.tasks.find(x=>x.id===sa.dataset.spassign); if(t&&sa.value){ const {id:_i,...rec}=t; await save(`tasks/${t.id}`,{...rec,sprint:sa.value,updated:nowIso()},"آیتم به اسپرینت رفت"); } return; }
   const cal=e.target.closest("[data-cal]"); if(cal){ if(cal.dataset.cal==="mine") S.calMine=cal.checked; else S.calTypes=cal.value?new Set([cal.value]):null; renderView(); return; }
   const el=e.target.closest("[data-ra]"); if(!el) return; S.ra[el.dataset.ra]=el.value; renderView(); });
@@ -1843,6 +2340,10 @@ document.addEventListener("dragstart", e => { const c=e.target.closest&&e.target
 document.addEventListener("dragover", e => { const col=e.target.closest&&e.target.closest("[data-col]"); if(!col) return; e.preventDefault(); col.classList.add("drop"); });
 document.addEventListener("dragleave", e => { const col=e.target.closest&&e.target.closest("[data-col]"); if(col&&!col.contains(e.relatedTarget)) col.classList.remove("drop"); });
 document.addEventListener("drop", e => { const col=e.target.closest&&e.target.closest("[data-col]"); if(!col) return; e.preventDefault(); col.classList.remove("drop"); const id=e.dataTransfer.getData("text/plain"); if(id) moveTask(id,col.dataset.col); });
+
+document.addEventListener("change", async e => { const el=e.target.closest("[data-lh]"); if(!el) return;
+  if(el.dataset.lh==="file"){ const f=el.files&&el.files[0]; el.value=""; if(f) await saveLetterhead(f); return; }
+  if(S.lh&&S.lh.kind==="image"){ const v=Number(el.value)||0; await save("settings/letterhead",{...S.lh,[el.dataset.lh==="top"?"top_cm":"bottom_cm"]:v,updated:new Date().toISOString()},"ذخیره شد"); } });
 
 // ================================================================== boot
 async function boot(){
