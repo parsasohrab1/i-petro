@@ -25,14 +25,19 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": 0,
+   "days_left": -1,
    "line": "ai",
-   "status": "new",
+   "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
    "history": [
     {
      "at": "2026-10-19T13:28:54",
      "status": "new"
+    },
+    {
+     "at": "2026-10-23T09:35:00",
+     "status": "expired",
+     "note": ""
     }
    ]
   },
@@ -61,7 +66,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": -1,
+   "days_left": -2,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -102,14 +107,19 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": 0,
+   "days_left": -1,
    "line": "ai",
-   "status": "new",
+   "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
    "history": [
     {
      "at": "2026-10-19T13:28:54",
      "status": "new"
+    },
+    {
+     "at": "2026-10-23T09:35:00",
+     "status": "expired",
+     "note": ""
     }
    ]
   },
@@ -138,14 +148,19 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": 0,
+   "days_left": -1,
    "line": "ai",
-   "status": "new",
+   "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
    "history": [
     {
      "at": "2026-10-19T13:28:54",
      "status": "new"
+    },
+    {
+     "at": "2026-10-23T09:35:00",
+     "status": "expired",
+     "note": ""
     }
    ]
   },
@@ -174,14 +189,19 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": 0,
+   "days_left": -1,
    "line": "ai",
-   "status": "new",
+   "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
    "history": [
     {
      "at": "2026-10-19T13:28:54",
      "status": "new"
+    },
+    {
+     "at": "2026-10-23T09:35:00",
+     "status": "expired",
+     "note": ""
     }
    ]
   },
@@ -210,7 +230,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": 1,
+   "days_left": 0,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -246,7 +266,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": 2,
+   "days_left": 1,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -282,7 +302,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": 6,
+   "days_left": 5,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -318,7 +338,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": 6,
+   "days_left": 5,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -354,7 +374,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": 7,
+   "days_left": 6,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -390,7 +410,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": 7,
+   "days_left": 6,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -426,7 +446,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": 9,
+   "days_left": 8,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -462,7 +482,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": 10,
+   "days_left": 9,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -496,7 +516,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 11,
+   "days_left": 10,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -531,7 +551,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 14,
+   "days_left": 13,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -566,7 +586,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 19,
+   "days_left": 18,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -601,7 +621,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 21,
+   "days_left": 20,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -635,7 +655,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 25,
+   "days_left": 24,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -669,7 +689,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 27,
+   "days_left": 26,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -704,7 +724,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 39,
+   "days_left": 38,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -739,7 +759,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 47,
+   "days_left": 46,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -774,7 +794,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 5,
+   "days_left": 4,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -809,7 +829,7 @@
     "ai_cross_cutting",
     "medical"
    ],
-   "days_left": 25,
+   "days_left": 24,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -845,7 +865,7 @@
     "energy",
     "urban"
    ],
-   "days_left": 32,
+   "days_left": 31,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -879,7 +899,7 @@
    "domains": [
     "urban"
    ],
-   "days_left": 29,
+   "days_left": 28,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-20T09:40:22",
@@ -913,7 +933,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 82,
+   "days_left": 81,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-20T09:40:22",
@@ -1015,7 +1035,7 @@
    "domains": [
     "aviation"
    ],
-   "days_left": 6,
+   "days_left": 5,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-21T09:36:20",
@@ -1049,7 +1069,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 11,
+   "days_left": 10,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-21T09:36:20",
@@ -1084,7 +1104,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": 12,
+   "days_left": 11,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-21T09:36:20",
@@ -1118,7 +1138,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 30,
+   "days_left": 29,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-21T09:36:20",
@@ -1152,7 +1172,7 @@
    "domains": [
     "web"
    ],
-   "days_left": 32,
+   "days_left": 31,
    "line": "web",
    "status": "new",
    "first_seen": "2026-10-21T09:36:20",
@@ -1220,7 +1240,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 18,
+   "days_left": 17,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-22T09:39:52",
@@ -1254,7 +1274,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 29,
+   "days_left": 28,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-22T09:39:52",
@@ -1288,7 +1308,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 29,
+   "days_left": 28,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-22T09:39:52",
@@ -1322,13 +1342,183 @@
    "domains": [
     "energy"
    ],
-   "days_left": 39,
+   "days_left": 38,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-22T09:39:52",
    "history": [
     {
      "at": "2026-10-22T09:39:52",
+     "status": "new"
+    }
+   ]
+  },
+  "TED-735144-2026": {
+   "id": "TED-735144-2026",
+   "source": "TED (EU)",
+   "market": "international",
+   "title": "Czechia – Aircraft maintenance services – Providing the maintenance of aircrafts, their aircraft parts and equipment (AMO), the supply of spare parts and the provision of a continuing airworthiness management service (CAMO) of Beechcraft B300 aircrafts",
+   "description": "Předmětem plnění tohoto zadávacího řízení je uzavření rámcové dohody na údržbu letounů Beechcraft B300 v období 2026-3/2028 po ukončení kontraktu s předcházejícím dodavatelem a zároveň po ukončení záruční doby včetně zabezpečení dodávek náhradních dílů a dále zabezpečení služby řízení letové způsobilosti (CAMO).",
+   "buyer": "Řízení letového provozu České republiky, státní podnik (ŘLP ČR, s.p.)",
+   "country": "CZE",
+   "deadline": "2026-11-25",
+   "published": "2026-10-23",
+   "url": "https://ted.europa.eu/en/notice/-/detail/735144-2026",
+   "notice_type": "cn-standard",
+   "sector": "دولتی",
+   "facts": {
+    "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "رویه‌ی باز اتحادیه اروپا – شرکت‌های خارج از EU معمولاً مجازند مگر محدودیت صریح در اسناد"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "aviation"
+   ],
+   "days_left": 33,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-10-23T09:35:00",
+   "history": [
+    {
+     "at": "2026-10-23T09:35:00",
+     "status": "new"
+    }
+   ]
+  },
+  "TED-736144-2026": {
+   "id": "TED-736144-2026",
+   "source": "TED (EU)",
+   "market": "international",
+   "title": "Greece – Medical imaging services – ΥΠΗΡΕΣΙΑ ΑΠΟΜΑΚΡΥΣΜΕΝΗΣ ΔΙΑΓΝΩΣΗΣ ΑΞΟΝΙΚΩΝ ΚΑΙ ΕΠΙΣΤΡΟΦΗ ΠΟΡΙΣΜΑΤΩΝ ΣΤΟ RIS-PACS ΤΟΥ ΝΟΣΟΚΟΜΕΙΟΥ ΜΕ ΧΡΟΝΙΚΗ ΔΙΑΡΚΕΙΑ ΤΑ ΔΥΟ (2) ΕΤΗ ΚΑΙ ΜΕ ΔΥΝΑΤΟΤΗΤΑ ΑΝΑΝΕΩΣΗΣ ΓΙΑ ΑΚΟΜΑ ΕΝΑ (1) ΕΤΟΣ",
+   "description": "Αντικείμενο της σύμβασης είναι η παροχή υπηρεσίας απομακρυσμένης διάγνωσης αξονικών και επιστροφή πορισμάτων στο RIS-PACS του νοσοκομείου με χρονική διάρκεια τα δύο (2) έτη και με δυνατότητα ανανέωσης για ακόμα ένα (1) έτος.",
+   "buyer": "Γ.Ν.Α. \"Ο ΕΥΑΓΓΕΛΙΣΜΟΣ-ΠΟΛΥΚΛΙΝΙΚΗ\" Ν.Π.Δ.Δ.",
+   "country": "GRC",
+   "deadline": "2026-12-01",
+   "published": "2026-10-23",
+   "url": "https://ted.europa.eu/en/notice/-/detail/736144-2026",
+   "notice_type": "cn-standard",
+   "sector": "دولتی",
+   "facts": {
+    "price": "ارزش برآوردی: 330,000 EUR",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "رویه‌ی باز اتحادیه اروپا – شرکت‌های خارج از EU معمولاً مجازند مگر محدودیت صریح در اسناد"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "medical"
+   ],
+   "days_left": 39,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-10-23T09:35:00",
+   "history": [
+    {
+     "at": "2026-10-23T09:35:00",
+     "status": "new"
+    }
+   ]
+  },
+  "TED-734074-2026": {
+   "id": "TED-734074-2026",
+   "source": "TED (EU)",
+   "market": "international",
+   "title": "Moldova – Engineering services – Supervision of energy efficiency improvement and rehabilitation works for the Oncology Institute",
+   "description": "The procurement concerns consulting services for the supervision of energy efficiency improvement and rehabilitation works for the Oncology Institute in Chisinau, Republic of Moldova, under the Moldova Energy Efficiency Project. The Consultant shall provide pre-construction services, day-to-day construction supervision, contract administration, quality and cost control, monitoring of progress and compliance with environmental, social, health and safety requirements, and services during the Defects Notification Period, as specified in the Terms of Reference.",
+   "buyer": "Moldova Energy Projects Implementation Unit",
+   "country": "MDA",
+   "deadline": "2026-12-04",
+   "published": "2026-10-23",
+   "url": "https://ted.europa.eu/en/notice/-/detail/734074-2026",
+   "notice_type": "cn-standard",
+   "sector": "دولتی",
+   "facts": {
+    "price": "ارزش برآوردی: 440,000 EUR",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "رویه‌ی باز اتحادیه اروپا – شرکت‌های خارج از EU معمولاً مجازند مگر محدودیت صریح در اسناد"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "energy"
+   ],
+   "days_left": 42,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-10-23T09:35:00",
+   "history": [
+    {
+     "at": "2026-10-23T09:35:00",
+     "status": "new"
+    }
+   ]
+  },
+  "TED-735933-2026": {
+   "id": "TED-735933-2026",
+   "source": "TED (EU)",
+   "market": "international",
+   "title": "Finland – Tanks, reservoirs, containers and pressure vessels – Hybridiakun hankinta",
+   "description": "Turku Energia kilpailuttaa kaukolämpö- ja kaukojäähdytysveden varastointiin käytettävän vesisäiliön (Hybridiakku) hankinnan. Kyseessä on tavaran hankinta, johon sisältyy asennus ja käyttöönotto. Turku Energialla on parhaillaan käynnissä erillinen kilpailutus akun tarkemmasta sijoittamisesta ja perustamisurakasta. Turku Energia on Varsinais-Suomen johtava energiayhtiö ja yksi Suomen suurimmista alan yhtiöistä. Tarkempia tietoja toiminnastamme löytyy nettisivuiltamme, www.turkuenergia.fi. Hankinnan kohde on kuvattu tarkemmin hankinta-asiakirjoissa.",
+   "buyer": "Oy Turku Energia - Åbo Energi Ab",
+   "country": "FIN",
+   "deadline": "",
+   "published": "2026-10-23",
+   "url": "https://ted.europa.eu/en/notice/-/detail/735933-2026",
+   "notice_type": "cn-standard",
+   "sector": "نامشخص",
+   "facts": {
+    "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "energy"
+   ],
+   "days_left": null,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-10-23T09:35:00",
+   "history": [
+    {
+     "at": "2026-10-23T09:35:00",
+     "status": "new"
+    }
+   ]
+  },
+  "TED-733779-2026": {
+   "id": "TED-733779-2026",
+   "source": "TED (EU)",
+   "market": "international",
+   "title": "Spain – Event services – Rfp Event Venue – EIT Urban Mobility Community Days 2027",
+   "description": "By the present procurement procedure, EIT Urban Mobility, hereinafter being referred to as “EIT UM”, is aiming to identify an Event Venue, hereinafter being referred to as “The Venue” or “Venue, based in Brussels to host our Community Days 2027 events and provide catering, furniture, staff, branding and audiovisual support. This document, along with its annexes, constitutes a Request for Proposal (RFP) issued by EIT Urban Mobility for a potential procurement of services in the field of events. Community Days 2027 will comprise a series of strategic meetings and stakeholder engagement activities. Community Days: The 2027 edition of EIT Urban Mobility Community Days will take place in Brussels (Belgium) on 16th and 17th March 2027. EIT UM intends to gather all partners from different European locations under one roof and organize a 2-day event designed just for them. Exact timings are still to be decided. It will be held as an in-person by invitation-only event, and we are expecting to have approximately 250 participants. RAPTOR Summit: The RAPTOR Cities session is planned as a dedicated meeting within the wider Community Days event, bringing together representatives of cities and startups/SMEs participating in the RAPTOR programme. Integrating the Summit into Community Days allows RAPTOR participants to meet in person to exchange experiences, discuss pilot results and lessons learned, and explore opportunities for continuation and replication, while also participating in and benefiting from the broader Community Days programme. Supervisory Board Meeting: The Supervisory Board is the highest governing and oversight body of the EIT Urban Mobility legal entity. As part of its mandate, the Board is responsible for supervising the activities, performance, and strategic direction of the KIC Legal Entity, as well as overseeing the work of the Management Team. City Club Advisory Group Meeting: The City Club Advisory Group (CCAG) brings together representatives of Leading Cities within the EIT Urban Mobility community to provide strategic advice and a city perspective on EIT Urban Mobility’s activities, priorities and future direction. The group provides a structured forum for cities to exchange experiences and best practices, discuss common urban mobility challenges and emerging priorities, and contribute insights that can inform the development of EIT Urban Mobility’s activities and engagement with public authorities.",
+   "buyer": "EIT KIC URBAN MOBILITY S.L.U",
+   "country": "ESP",
+   "deadline": "",
+   "published": "2026-10-23",
+   "url": "https://ted.europa.eu/en/notice/-/detail/733779-2026",
+   "notice_type": "cn-standard",
+   "sector": "نامشخص",
+   "facts": {
+    "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "urban"
+   ],
+   "days_left": null,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-10-23T09:35:00",
+   "history": [
+    {
+     "at": "2026-10-23T09:35:00",
      "status": "new"
     }
    ]
@@ -1640,6 +1830,79 @@
     "TED-730727-2026",
     "TED-731812-2026",
     "TED-732964-2026"
+   ],
+   "actioned_ids": [],
+   "reminders": []
+  },
+  {
+   "at": "2026-10-23T09:35:01",
+   "collected": 329,
+   "matched": 24,
+   "partner_drafts": [],
+   "events_added": 0,
+   "investors_added": 0,
+   "investor_drafts": [
+    "revo",
+    "212",
+    "hub71",
+    "aramco-ventures",
+    "antler-menap",
+    "equinor-ventures",
+    "shell-ventures",
+    "ycombinator",
+    "techstars"
+   ],
+   "leads_added": 0,
+   "events_soon": [
+    {
+     "start": "2026-10-28",
+     "name": "Media Expo 1405 (2nd)",
+     "name_fa": "دومین نمایشگاه مدیا اکسپو (با بخش هوش مصنوعی)",
+     "city": "تهران (برج میلاد)"
+    },
+    {
+     "start": "2026-11-02",
+     "name": "ADIPEC 2026",
+     "name_fa": "نمایشگاه و کنفرانس نفت و گاز ابوظبی",
+     "city": "ابوظبی"
+    },
+    {
+     "start": "2026-11-03",
+     "name": "Smart City Expo World Congress 2026",
+     "name_fa": "کنگره جهانی شهر هوشمند",
+     "city": "بارسلونا"
+    },
+    {
+     "start": "2026-11-09",
+     "name": "Web Summit 2026",
+     "name_fa": "وب سامیت لیسبون",
+     "city": "لیسبون"
+    },
+    {
+     "start": "2026-11-16",
+     "name": "MEDICA 2026",
+     "name_fa": "نمایشگاه تجهیزات و فناوری پزشکی دوسلدورف",
+     "city": "دوسلدورف"
+    },
+    {
+     "start": "2026-12-06",
+     "name": "NeurIPS 2026",
+     "name_fa": "کنفرانس NeurIPS (سیدنی / آتلانتا / پاریس)",
+     "city": "سیدنی، آتلانتا، پاریس"
+    },
+    {
+     "start": "2026-12-07",
+     "name": "GITEX Global 2026",
+     "name_fa": "جیتکس دبی",
+     "city": "دبی (Expo City)"
+    }
+   ],
+   "new_ids": [
+    "TED-735144-2026",
+    "TED-736144-2026",
+    "TED-734074-2026",
+    "TED-735933-2026",
+    "TED-733779-2026"
    ],
    "actioned_ids": [],
    "reminders": []
