@@ -345,16 +345,16 @@
   "s_ps": {
    "profile": "keai",
    "product": "process_twin",
-   "title": "Soft Sensing of Melt Index in Multi-Grade Polyethylene Production: A Negative Result against the Last-Laboratory-Value Baseline",
-   "abstract": "Soft sensors that estimate the melt index of polyethylene online are proposed to replace delayed laboratory results, but they must beat the simplest possible baseline. We evaluate soft sensors on the public industrial SRMG multi-grade polyethylene data (331 samples; research use only, after Liu, Gao and Chen, 2013). Linear models failed the validity checks, tree-based models reached an R² of about 0.3, and none of the models beat the baseline that repeats the last laboratory value of the same grade, which had an RMSE of 0.262. We report this as a negative result: with this small data set a soft sensor is not better than the information already available from the laboratory. Rolling-origin evaluation, just-in-time learning, a comparison with published SRMG results and the clarification of the adjacent filing 3869 are [to be measured]. The study gives plant engineers a clear benchmark that any proposed soft sensor for grade transitions should be required to beat.",
+   "title": "Soft Sensing of Melt Index in Multi-Grade Polyethylene Production: Benchmarking against the Last-Laboratory-Value Baseline",
+   "abstract": "Soft sensors that estimate the melt index of polyethylene online are proposed to replace delayed laboratory results, but to be useful they must beat the simplest possible baseline. We plan to evaluate soft sensors for a multi-grade polyethylene process on the public industrial SRMG data (research use only, after Liu, Gao and Chen, 2013), comparing linear models, tree-based models and just-in-time learning with a baseline that repeats the last laboratory value of the same grade. Models will be assessed by rolling-origin evaluation, with RMSE, R² and MAPE reported per grade and for grade transitions, and compared with published SRMG results. The number of samples used, the validity of the linear models, the error of every model and of the baseline, and whether any model beats the baseline are [to be measured]. The overlap with the adjacent filing 3869 is [to be checked]. The study aims to give plant engineers a clear benchmark that any proposed soft sensor for grade transitions should be required to beat.",
    "keywords": [
     "soft sensor",
     "melt index",
     "polyethylene",
     "grade transition",
-    "negative result"
+    "benchmark"
    ],
-   "draft_note": "Numbers are the results recorded for this venue in the page database (owner's own runs). Check them against the paper-drafts before use; anything marked [to be measured] has not been measured. The claim document of the product was not found; filing 3869 is adjacent. The data licence allows academic research only."
+   "draft_note": "Reverted to a design-only abstract on the owner's instruction: every result is [to be measured]. The earlier numbers (owner's own SRMG runs recorded in the page database) were removed and must be re-run before any result is stated. The product repository (inno-Khalij-AryaSasol...) now has a TRL 4 scaffold on synthetic data only; no plant data. The claim document of the product was not found; filing 3869 is adjacent. The SRMG data licence allows academic research only."
   }
  },
  "products": {
