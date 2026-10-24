@@ -134,16 +134,17 @@
   "s_isie": {
    "profile": "ieee",
    "product": "apexasset",
-   "title": "Uncertainty-Aware Remaining-Useful-Life Prediction as an Add-On to an Asset Life-Cycle Digital Twin",
-   "abstract": "Digital twins of industrial assets use remaining useful life (RUL) predictions to plan maintenance, but a single predicted value hides how reliable it is. This paper studies uncertainty-aware RUL prediction as an add-on to an asset life-cycle digital twin. The add-on is separate from the twin itself: it takes the RUL estimate of the twin and returns an interval with a calibrated coverage, so that maintenance can be planned on a conservative bound. We plan to evaluate it on a public run-to-failure data set other than C-MAPSS, for example the NASA IMS bearing data or the NASA battery data, chosen after a check of size and licence, and to compare it with simple baselines such as a constant-life prediction and a regression on time. The fractions of late and early warnings, the interval coverage and its confidence intervals, and the cost of the added conservatism are [to be measured]. No result is claimed in this abstract, and the final version will report any negative result as such. The method is designed for implementation on industrial edge hardware.",
+   "title": "A Conservative Lower Bound on Remaining Useful Life as an Add-On to an Asset Digital Twin: Validation on NASA IMS Bearing Failures",
+   "abstract": "Digital twins of industrial assets use remaining useful life (RUL) predictions to plan maintenance, but a single predicted value hides how often it is too optimistic. This paper studies a conservative lower bound on RUL as an add-on to an asset life-cycle digital twin. The add-on subtracts from the RUL estimate a calibrated quantile of its past overestimation errors, obtained by leave-one-bearing-out prediction on the training machines, and it does not depend on how the estimate itself is produced. We evaluated it on the four documented failures of the NASA IMS (Intelligent Maintenance Systems) bearing run-to-failure experiments, holding out one failure at a time and comparing it with a constant-life baseline and with the uncorrected estimate from a monotone map of a vibration health index. In the last 48 hours before failure, the uncorrected estimate overestimated the remaining life 66% of the time on average, whereas the lower bound at a 90% target never did in any of the four held-out failures. Over the whole life the lower bound overestimated 18% of the time instead of 48%, which is above the 10% target and reached 55% in one failure. The price of the conservatism was early alerts: 23% of the time the bound signalled less than 48 hours of remaining life while more than 192 hours remained, mainly for the longest-lived bearing. With only four failures the results are indicative only. A second run-to-failure data set and a comparison with learned RUL models are [to be measured].",
    "keywords": [
-    "digital twin",
     "remaining useful life",
+    "digital twin",
     "predictive maintenance",
-    "uncertainty",
-    "condition monitoring"
+    "bearing failure",
+    "conservative prediction",
+    "uncertainty"
    ],
-   "draft_note": "Development of this product for the venue is still open in the page task list, so no result exists yet; the abstract must be rewritten after the experiments."
+   "draft_note": "Numbers were measured with the research/s_isie_apexasset module on the four NASA IMS failures (feature tables from a public GitHub mirror, MIT licence; cite Lee et al. 2007 and Hora & Rezapour). Results file: research/s_isie_apexasset/results.json. The add-on is independent of the product's claimed functions; a patent attorney must still review before submission."
   },
   "s_hydro": {
    "profile": "mdpi",
