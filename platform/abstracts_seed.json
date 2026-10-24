@@ -230,12 +230,12 @@
    "profile": "poster",
    "product": "stretchwatch",
    "title": "StretchWatch: How Good Is the Hartree–Fock Starting Point for VQE Along Bond-Stretching Curves?",
-   "abstract": "The variational quantum eigensolver (VQE) is usually started from the Hartree–Fock (HF) state, but HF becomes a poor approximation of the ground state when bonds are stretched and electron correlation grows. We quantify this effect for small molecules, H2, HeH+ and LiH, in the STO-3G basis with the Jordan–Wigner mapping. For each bond length we compute the exact ground state by full configuration interaction, the overlap between the HF state and the ground state, and the entanglement entropy of the natural orbitals, and we combine overlap and entropy into a starting-point quality index. From these curves we determine the bond length beyond which HF is no longer a suitable starting state and we test an automatic switch to an alternative reference state such as CISD. The overlap fell below [X] at a bond length of [Y] Å for [molecule], and the quality index predicted the number of VQE iterations needed to reach chemical accuracy with a correlation of [Z]. The poster will show the curves, the threshold and the switching rule, and the code is released for reproduction. The study is a methodological benchmark on simulators and makes no claim of quantum advantage.",
+   "abstract": "The variational quantum eigensolver (VQE) is usually started from the Hartree–Fock (HF) state, but HF becomes a poor approximation of the ground state when bonds are stretched and electron correlation grows. We quantify this effect for small molecules, H2, HeH+ and LiH, in the STO-3G basis. For each bond length we compute the exact ground state by full configuration interaction, the overlap between the HF determinant and the ground state, and the entropy of the natural-orbital occupations, and we combine overlap and entropy into a starting-point quality index. From these curves we determine the bond length beyond which HF is no longer a suitable starting state, defined by a squared overlap below a chosen threshold, and we test an automatic switch to an alternative reference state such as CISD. The squared overlap fell below [τ] at a bond length of [X] Å for [molecule], the quality index ranked the bond lengths by HF energy error with a Spearman correlation of [Y], and the CISD reference reached an overlap of [Z]. HeH+ serves as a negative control because it dissociates into closed-shell fragments. The poster will show the curves, the threshold and the switching rule, and the code is released for reproduction. The study is a methodological benchmark on exact classical calculations and makes no claim of quantum advantage.",
    "keywords": [
     "VQE",
     "Hartree–Fock",
     "bond stretching",
-    "entanglement entropy",
+    "natural-orbital entropy",
     "quantum chemistry"
    ]
   },
