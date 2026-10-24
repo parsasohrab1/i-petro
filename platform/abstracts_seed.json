@@ -164,7 +164,7 @@
    "profile": "springer",
    "product": "fidps",
    "title": "Log Zonation by Change-Point Segmentation for Drilling and Completion Data: A Neutral Result on Eight SEG 2016 Wells",
-   "abstract": "Industrial AI for drilling and completion depends on dividing continuous log data into zones before further analysis, and change-point segmentation is a natural candidate. This paper evaluates a log-zonation module that was added next to a formation-integrity damage prevention system and is independent of its claimed functions. We tested it on the well logs of eight Kansas wells of the SEG 2016 data set, comparing change-point segmentation with a simple gradient-based baseline using an F1 score for zone boundaries. The change-point method did not outperform the baseline: the F1 score was 0.55 against 0.62. No real formation-damage data were available, so no claim is made about damage prediction. We report this neutral result because it shows that, on public wells, a simple baseline is hard to beat for this task. Real drilling or damage data (for example the Volve data after a licence check), a redefinition of the contribution towards formation integrity and a comparison on more wells are [to be measured].",
+   "abstract": "Industrial AI for drilling and completion depends on dividing continuous log data into zones before further analysis, and change-point segmentation is a natural candidate. This paper evaluates a log-zonation module that was added next to a formation-integrity damage prevention system and is independent of its claimed functions. We tested PELT change-point segmentation against a smoothed-gradient peak baseline on 62 wells of the public FORCE 2020 data set (gamma ray, density, neutron porosity and sonic logs), using stratigraphic group boundaries as a surrogate ground truth, a tolerance of 15 m and one tuning parameter per method chosen on half of the wells. On the other half, the F1 score for boundaries was 0.33 for PELT, 0.30 for the baseline and 0.09 for random boundaries over five splits by well. The advantage of 0.03 is small and no significance test was done; both methods over-segmented, with 9 and 13 predicted boundaries per well against 5 true ones. An earlier test on the SEG 2016 wells had favoured the baseline (0.62 against 0.55), so the ranking depends on the data. We report this neutral result because it shows that, on public wells, a simple baseline is hard to beat for this task. No real formation-damage data were available, so no claim is made about damage prediction. Real drilling or damage data (for example the Volve data after a licence check), a redefinition of the contribution towards formation integrity and significance tests are [to be measured].",
    "keywords": [
     "log zonation",
     "change-point detection",
@@ -172,7 +172,7 @@
     "drilling data",
     "industrial AI"
    ],
-   "draft_note": "Numbers are the results recorded for this venue in the page database (owner's own runs). Check them against the paper-drafts before use; anything marked [to be measured] has not been measured. The owner's task list also asks for the full claim documents (7533, 9411, 9412) to be read by a patent attorney before submission."
+   "draft_note": "Measured in research/s_iai_fidps (private repo, branch research-real-data-validation) on FORCE 2020 (62 wells); surrogate ground truth = group boundaries; verify FORCE licence. Re-run before submission."
   },
   "s_iqicsa": {
    "profile": "easychair",
