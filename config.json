@@ -350,5 +350,9 @@
   },
   "team": [
     "Narges Farahani"
-  ]
+  ],
+  "papers": {
+    "update_every_days": 3,
+    "horizon_months": 9
+  }
 }
