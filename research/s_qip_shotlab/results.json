@@ -1,0 +1,106 @@
+[
+ {
+  "mol": "H2",
+  "qubits": 4,
+  "pauli_terms": 14,
+  "e_ground": -1.1372838344884992,
+  "n_terms_nonzero_expectation": 14,
+  "budgets": {
+   "1000": {
+    "rmse_Ha": {
+     "uniform": 0.01484107066007554,
+     "weighted_abs_c": 0.019985067365885227,
+     "oracle_abs_c_sigma": 0.011170443628548656
+    },
+    "rel_to_uniform": {
+     "uniform": 1.0,
+     "weighted_abs_c": 1.3466054992681709,
+     "oracle_abs_c_sigma": 0.7526710090127553
+    }
+   },
+   "10000": {
+    "rmse_Ha": {
+     "uniform": 0.004693158620133727,
+     "weighted_abs_c": 0.006319833206809898,
+     "oracle_abs_c_sigma": 0.0035324044340729627
+    },
+    "rel_to_uniform": {
+     "uniform": 1.0,
+     "weighted_abs_c": 1.346605499268171,
+     "oracle_abs_c_sigma": 0.7526710090127554
+    }
+   },
+   "100000": {
+    "rmse_Ha": {
+     "uniform": 0.0014841070660075542,
+     "weighted_abs_c": 0.001998506736588523,
+     "oracle_abs_c_sigma": 0.0011170443628548657
+    },
+    "rel_to_uniform": {
+     "uniform": 1.0,
+     "weighted_abs_c": 1.346605499268171,
+     "oracle_abs_c_sigma": 0.7526710090127554
+    }
+   }
+  },
+  "shadows": {
+   "budget": 10000,
+   "rmse_Ha": 0.014305239591994466,
+   "bias_Ha": -0.0005358535460959768,
+   "seconds": 274.06352162361145,
+   "rel_to_uniform_same_budget": 3.048104858554057
+  }
+ },
+ {
+  "mol": "LiH",
+  "qubits": 12,
+  "pauli_terms": 630,
+  "e_ground": -7.882324378883498,
+  "n_terms_nonzero_expectation": 630,
+  "budgets": {
+   "10000": {
+    "rmse_Ha": {
+     "uniform": 0.06918572922759543,
+     "weighted_abs_c": 0.05943812538105268,
+     "oracle_abs_c_sigma": 0.0392151001581231
+    },
+    "rel_to_uniform": {
+     "uniform": 1.0,
+     "weighted_abs_c": 0.8591096176138182,
+     "oracle_abs_c_sigma": 0.5668090890408908
+    }
+   },
+   "100000": {
+    "rmse_Ha": {
+     "uniform": 0.021878448593888353,
+     "weighted_abs_c": 0.018795985605479005,
+     "oracle_abs_c_sigma": 0.012400903517129818
+    },
+    "rel_to_uniform": {
+     "uniform": 1.0,
+     "weighted_abs_c": 0.8591096176138183,
+     "oracle_abs_c_sigma": 0.5668090890408909
+    }
+   },
+   "1000000": {
+    "rmse_Ha": {
+     "uniform": 0.006918572922759543,
+     "weighted_abs_c": 0.005943812538105268,
+     "oracle_abs_c_sigma": 0.003921510015812309
+    },
+    "rel_to_uniform": {
+     "uniform": 1.0,
+     "weighted_abs_c": 0.8591096176138183,
+     "oracle_abs_c_sigma": 0.5668090890408908
+    }
+   }
+  },
+  "shadows": {
+   "budget": 10000,
+   "rmse_Ha": 0.21696999482607368,
+   "bias_Ha": 0.025265783662383967,
+   "seconds": 433.5302073955536,
+   "rel_to_uniform_same_budget": 3.136051281794295
+  }
+ }
+]

@@ -107,7 +107,7 @@
    "profile": "poster",
    "product": "qshot",
    "title": "Shot-Budget Allocation for Pauli-Sum Observables: A Simulation Study of Weighted Allocation and Classical Shadows",
-   "abstract": "Estimating the expectation value of a Hamiltonian on a quantum computer requires many repeated measurements, and the way a fixed budget of shots is divided among the Pauli terms determines the accuracy of the estimate. We compare uniform allocation, allocation weighted by coefficient magnitude and classical shadows for Pauli-sum observables of small molecular Hamiltonians, using simulation at equal total shot budget and reporting root-mean-square error and bias against the exact value. The Hamiltonians are computed in the STO-3G basis and not measured on a device, because no public hardware measurement data set was found. In simulation, weighted allocation and classical shadows gave about 11–12% lower RMSE than uniform allocation. Confidence intervals, further molecules (for example BeH2 with a sparse method) and the grouping of commuting terms are [to be measured]. The poster will show the protocol, the comparison and the limits of a simulation-only study, and we make no claim about performance on hardware.",
+   "abstract": "Estimating the expectation value of a Hamiltonian on a quantum computer requires many repeated measurements, and the way a fixed budget of shots is divided among the Pauli terms determines the accuracy of the estimate. We compare uniform allocation, allocation weighted by coefficient magnitude and random-Pauli classical shadows at equal total shot budget for the ground states of H2 (4 qubits, 14 Pauli terms) and LiH (12 qubits, 630 terms) in the STO-3G basis. The Hamiltonians are computed with PySCF and OpenFermion and not measured on a device, because no public hardware measurement data set was found. Variances of the term-wise allocations were computed exactly and those of the shadows by Monte Carlo. Relative to uniform allocation, weighting by coefficient magnitude lowered the root-mean-square error by 14% for LiH but raised it by 35% for H2, and classical shadows gave about three times the error of uniform allocation for both molecules. An oracle allocation that uses the unknown state reached 0.57 (LiH) and 0.75 (H2) of the uniform error, and no scheme without grouping reached chemical accuracy (1.6 mHa) for LiH at 10^6 shots (best: 5.9 mHa without the oracle). The poster will show the protocol, this negative result for shadows and the limits of a simulation-only study. Grouping of commuting terms, larger molecules and hardware noise are [to be measured]; we make no claim about performance on hardware.",
    "keywords": [
     "shot budget",
     "Pauli observables",
@@ -115,7 +115,7 @@
     "measurement allocation",
     "quantum simulation"
    ],
-   "draft_note": "Numbers are the results recorded for this venue in the page database (owner's own runs). Check them against the paper-drafts before use; anything marked [to be measured] has not been measured."
+   "draft_note": "Measured in research/s_qip_shotlab (private repo, branch research-real-data-validation) with PySCF/OpenFermion Hamiltonians; replaces the earlier claim of 11-12% lower RMSE for weighted allocation and shadows, which the exact variances do not support. Re-run before submission."
   },
   "s_icmhi": {
    "profile": "easychair",
