@@ -178,7 +178,7 @@
    "profile": "easychair",
    "product": "qgridpart",
    "title": "QAOA for Splitting a Power Network into Two Islands: A Comparison with Greedy and Spectral Partitioning on the IEEE 14-Bus Case",
-   "abstract": "Splitting a power network into two islands can be written as a weighted MaxCut problem on the network graph, and it has been proposed as an application of the quantum approximate optimisation algorithm (QAOA). We compare QAOA, simulated exactly with state vectors, with greedy local search and spectral bisection on the IEEE 14-bus topology (MATPOWER), reporting the approximation ratio against the best known cut together with the quantum resources used. For circuit depths p = 1, 2 and 3 QAOA reached ratios of 0.817, 0.870 and 0.904, but it did not outperform greedy search (0.985) or spectral bisection (0.949). We report this as a neutral result at this network size: the quantum method does not improve on cheap classical baselines. Larger networks (30 and 57 buses) with matrix-product-state or classical-only simulation, a noise model, depths up to p = 5, a balanced min-cut objective with a generation–load constraint and hardware data are [to be measured]. The framework is provided as a transparent benchmark for power-system applications of quantum optimisation.",
+   "abstract": "Splitting a power network into two islands can be written as a combinatorial optimisation problem and has been proposed as an application of the quantum approximate optimisation algorithm (QAOA). We compare QAOA, simulated exactly with state vectors, with greedy local search and a spectral heuristic on two IEEE test systems (9 and 14 buses; MATPOWER data distributed with pandapower), with edge weights equal to the active-power flows of an AC power flow. For weighted MaxCut at depths p = 1, 2 and 3, QAOA reached approximation ratios of 0.742, 0.797 and 0.714 on the 9-bus system and 0.760, 0.820 and 0.753 on the 14-bus system, whereas greedy search found the optimum in both (1.00) and the spectral heuristic reached 1.00 and 0.62. The ratio did not increase monotonically with depth, which points to the classical optimiser as the limit. For an islanding objective that adds the power imbalance of an island and requires at least three buses per island, QAOA's expected cost remained close to that of random splits (normalised score 0.10 to 0.31) while single-flip descent found the exact optimum. We report this as a neutral result at this size: the quantum method does not improve on cheap classical baselines. Larger networks (30 buses and more) with tensor-network simulation, noise models, other optimisers and hardware data are [to be measured].",
    "keywords": [
     "QAOA",
     "power system islanding",
@@ -186,7 +186,7 @@
     "IEEE 14-bus",
     "quantum optimisation"
    ],
-   "draft_note": "Numbers are the results recorded for this venue in the page database (owner's own runs). Check them against the paper-drafts before use; anything marked [to be measured] has not been measured."
+   "draft_note": "Measured in research/s_iqicsa_qgrid (private repo, branch research-real-data-validation) on pandapower-bundled IEEE case9/case14 with AC power-flow weights; replaces the owner's unit-weight case14 run. Re-run before submission."
   },
   "s_mimar": {
    "profile": "springer",
