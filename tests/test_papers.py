@@ -52,3 +52,17 @@ def test_same_call_not_added_twice(tmp_path, monkeypatch):
 def test_due_every_three_days():
     assert papers.due({"updated": ""}, {}) is True
     assert papers.due({"updated": papers.datetime.now().isoformat()}, {}) is False
+
+
+def test_used_product_is_never_reused(tmp_path, monkeypatch):
+    monkeypatch.setattr(papers, "STATE_FILE", tmp_path / "p.json")
+    st = papers.load(); cfg = {"papers": {"used_product_ids": ["ilift"]}}
+    added = papers.update(cfg, FakeAnalyst([call("Lift conference", product="ilift")]), st, lambda *_: None)
+    assert added[0]["no_product"] is True and added[0]["product_id"] == "none" and "قبلاً" in added[0]["fit_fa"]
+
+
+def test_one_product_one_call_within_a_run(tmp_path, monkeypatch):
+    monkeypatch.setattr(papers, "STATE_FILE", tmp_path / "p.json")
+    st = papers.load()
+    added = papers.update({"papers": {}}, FakeAnalyst([call("First iems call", product="iems"), call("Second iems call", product="iems")]), st, lambda *_: None)
+    assert [c["no_product"] for c in added] == [False, True]

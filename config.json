@@ -353,6 +353,28 @@
   ],
   "papers": {
     "update_every_days": 3,
-    "horizon_months": 9
+    "horizon_months": 9,
+    "used_product_ids": [
+      "ilift",
+      "apexasset",
+      "hqca",
+      "fidps",
+      "gas_turbine",
+      "ipind",
+      "lnp",
+      "terminals",
+      "process_twin",
+      "nuclear",
+      "pgx",
+      "stratguard",
+      "qgrid",
+      "stretchwatch",
+      "qshot-lab",
+      "wearshift",
+      "readmitcal",
+      "hydrogate",
+      "explainguard",
+      "qrng-audit"
+    ]
   }
 }
