@@ -48,7 +48,7 @@ def build(vid, v, a):
             ("Product", prod["name"]),
             ("Repository", GH + prod["repo"] + ("" if prod["new"] else "/tree/" + data["branch"])),
             ("Repository status", "New repository created for this article." if prod["new"] else f'Existing product; content for the article is on branch "{data["branch"]}".'),
-            ("To do before submitting", "Replace every [bracketed] placeholder with the team's own measured values; add author names; confirm the limits in the venue's author guidelines (they are typical values for the venue family, not copied from the call)." + ("  " + a["draft_note"] if a.get("draft_note") else ""))]
+            ("To do before submitting", "Replace every [bracketed] placeholder with the team's own measured values; add author names; confirm the limits in the venue's author guidelines (they are typical values for the venue family, not copied from the call). Patent rule: do not disclose methods covered by the product's filed claims; a patent attorney must review before submission." + ("  " + a["draft_note"] if a.get("draft_note") else ""))]
     t = doc.add_table(rows=0, cols=2); t.style = "Table Grid"
     for k, val in rows:
         c = t.add_row().cells; c[0].width = Cm(4.2); c[1].width = Cm(11.8)
