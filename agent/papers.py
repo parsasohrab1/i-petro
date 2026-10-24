@@ -77,6 +77,15 @@ def products_text(cfg):
     return "\n".join(lines)
 
 
+def used_products(cfg):
+    """Product ids already used for another paper: one product is used for one paper only (no duplicate/salami publication)."""
+    return set(cfg.get("papers", {}).get("used_product_ids", [])) | {c["product_id"] for c in LOADED_CALLS.values()
+                                                                    if c.get("product_id") not in ("", "none", None)}
+
+
+LOADED_CALLS = {}
+
+
 def no_product(c):
     return c.get("product_id") in ("", "none", None)
 
@@ -87,6 +96,8 @@ def update(cfg, analyst, state, log):
     known = {_norm(s["name"]) for s in seed} | {_norm(c["name"]) for c in state["calls"].values()}
     known_text = "; ".join(sorted({s["name"][:60] for s in seed} | {c["name"][:60] for c in state["calls"].values()}))
     horizon = cfg.get("papers", {}).get("horizon_months", 9)
+    LOADED_CALLS.clear(); LOADED_CALLS.update(state["calls"])
+    used = used_products(cfg)
     research = analyst._research(
         f"Today is {date.today().isoformat()}. Search the web for NEW open calls for papers with a submission deadline in the "
         f"next {horizon} months (or rolling calls of special issues) that suit a company building AI products for: oil and "
@@ -99,7 +110,8 @@ def update(cfg, analyst, state, log):
         return []
     found = analyst._structured(
         f"Convert this research into calls. Keep only calls whose deadline is empty or on/after {date.today().isoformat()}. "
-        "For each call pick product_id from this list, or 'none' when no product genuinely fits:\n" + products_text(cfg)
+        "For each call pick product_id from this list, or 'none' when no product genuinely fits. NEVER pick a product that is "
+        "already used for another paper (one product, one paper): " + ", ".join(sorted(used)) + "\n" + products_text(cfg)
         + "\n\nResearch:\n" + research, CALL_SCHEMA, "medium")["calls"]
     added = []
     for c in found:
@@ -108,11 +120,16 @@ def update(cfg, analyst, state, log):
         key = _slug(c["name"], c["deadline"])
         if key in state["calls"]:
             continue
+        if c.get("product_id") in used:                       # a used product is never reused: ask for a new product instead
+            c = {**c, "fit_fa": f"محصول «{c['product_id']}» قبلاً برای مقاله‌ی دیگری مصرف شده است؛ محصول یا ماژول مستقل جدید لازم است. " + c["fit_fa"],
+                 "product_id": "none"}
         rec = {**c, "id": key, "found": date.today().isoformat(), "ver": bool(c.get("source") and c["source"] == c.get("url")),
                "no_product": no_product(c), "ack": False}
         state["calls"][key] = rec
         added.append(rec)
         known.add(_norm(c["name"]))
+        if not no_product(c):
+            used.add(c["product_id"])                         # also unique within this run
     state["updated"] = datetime.now().isoformat(timespec="seconds")
     log(f"Papers update: {len(added)} new calls, {sum(1 for a in added if a['no_product'])} without a product")
     return added
