@@ -2,7 +2,7 @@
 import json
 from datetime import date, timedelta
 
-from . import dashboard, documents, events, investors, leads, mailbox, memory, notify, partners, store
+from . import dashboard, documents, events, investors, leads, mailbox, memory, notify, papers, partners, store
 from .analyst import Analyst, llm_available
 from .config import OUTPUT_DIR, env, load_config
 from .portfolio import build_profile, profile_text
@@ -127,6 +127,7 @@ def summary_text(cfg, run, state):
             lines.append(f"• {e['start']} | {e['name_fa'] or e['name']} – {e['city']}")
     if run.get("events_added"):
         lines.append(f"• {run['events_added']} رویداد جدید به فهرست اضافه شد")
+    lines.extend(run.get("papers_lines") or [])
     if run.get("leads_added"):
         lines.append(f"\n📞 {run['leads_added']} تولیدکننده‌ی بدون سایت برای تماس تلفنی (Web Design & SEO Projects)")
     if run.get("investor_drafts"):
@@ -165,7 +166,8 @@ def run(use_llm=True, use_mail=True, send_notification=True):
         elif rec["status"] in store.ACTIVE - {"new"} and rec["days_left"] in REMIND_AT:
             reminders.append(rec["id"])
 
-    actioned, partner_drafts, events_added = [], [], 0
+    actioned, partner_drafts, events_added, papers_lines = [], [], 0, []
+    pp_state = papers.load()
     ev_state, pt_state, inv_state, investors_added = events.load(), partners.load(), investors.load(), 0
     analyst = None
     if use_llm and llm_available():
@@ -190,6 +192,11 @@ def run(use_llm=True, use_mail=True, send_notification=True):
                 events_added = events.update(cfg, analyst, ev_state, log)
         except Exception as exc:
             log(f"Events update failed: {exc}")
+        try:
+            if papers.due(pp_state, cfg):
+                papers_lines = papers.notification_lines(papers.update(cfg, analyst, pp_state, log))
+        except Exception as exc:
+            log(f"Papers update failed: {exc}")
         try:
             if investors.due(inv_state, cfg):
                 investors_added = investors.update(cfg, analyst, inv_state, log)
@@ -219,6 +226,7 @@ def run(use_llm=True, use_mail=True, send_notification=True):
     except Exception as exc:
         log(f"Investor outreach failed: {exc}")
     events.save(ev_state)
+    papers.save(pp_state)
     partners.save(pt_state)
     investors.save(inv_state)
     today, soon = date.today().isoformat(), (date.today() + timedelta(days=45)).isoformat()
@@ -226,7 +234,7 @@ def run(use_llm=True, use_mail=True, send_notification=True):
                           if e.get("start") and today <= e["start"] <= soon and e.get("status") != "skipped"),
                          key=lambda e: e["start"])
     run_info = {"at": store.now(), "collected": len(tenders), "matched": len(candidates),
-                "partner_drafts": partner_drafts, "events_added": events_added, "investors_added": investors_added, "investor_drafts": investor_drafts, "leads_added": leads_added,
+                "partner_drafts": partner_drafts, "events_added": events_added, "investors_added": investors_added, "investor_drafts": investor_drafts, "leads_added": leads_added, "papers_lines": papers_lines,
                 "events_soon": [{k: e.get(k, "") for k in ("start", "name", "name_fa", "city")} for e in events_soon],
                 "new_ids": new_ids, "actioned_ids": actioned, "reminders": reminders}
     state["runs"] = (state.get("runs", []) + [run_info])[-60:]
