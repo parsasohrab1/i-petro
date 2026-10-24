@@ -78,22 +78,22 @@
   "s_iqim": {
    "profile": "easychair",
    "product": "hqca",
-   "title": "Distribution-Free Uncertainty Intervals for Binding-Affinity Predictions: Global versus Mondrian Conformal Calibration on COX-2",
-   "abstract": "Reliable use of machine-learning predictions in drug discovery requires an estimate of how far a predicted binding affinity can be trusted. We add distribution-free uncertainty intervals to the affinity predictions of a hybrid quantum–classical drug-discovery platform, treating the platform's predictor as a black box. Split conformal prediction gives intervals with a guaranteed marginal coverage, and a Mondrian variant calibrates separately within strata of molecules to approach coverage that also holds inside each stratum. We evaluate both on 4,392 COX-2 molecules with measured activity from ChEMBL, using random calibration and test splits. For a nominal coverage of 0.90 the empirical coverage was between 0.88 and 0.90, and the Mondrian variant improved stratum-level coverage only marginally compared with global calibration. We report this as a negative result: stratified calibration did not change the practical reliability of the intervals on this target. A second target (for example EGFR), at least ten random seeds and confidence intervals for the coverage are [to be measured]. The study gives a reproducible baseline for uncertainty reporting in affinity prediction and a template for checking whether stratification is worth its added complexity.",
+   "title": "Distribution-Free Uncertainty Intervals for Binding-Affinity Predictions: Global versus Mondrian Conformal Calibration on COX-2 and EGFR",
+   "abstract": "Reliable use of machine-learning predictions in drug discovery requires an estimate of how far a predicted binding affinity can be trusted. We add distribution-free uncertainty intervals to the affinity predictions of a hybrid quantum–classical drug-discovery platform, treating the platform's predictor as a black box. Split conformal prediction gives intervals with a guaranteed marginal coverage, and a Mondrian variant calibrates separately within strata of the predicted value. We evaluated both on two real targets with measured activity from ChEMBL: 4,392 COX-2 molecules, where the empirical coverage for a nominal 0.90 was between 0.88 and 0.90, and 3,884 EGFR molecules, with ten random seeds and both random and scaffold-based splits. On EGFR the coverage was 0.896 (95% interval ± 0.009) for a random split and 0.894 (± 0.014) when whole chemical scaffolds were held out, so the marginal guarantee held under chemical-series shift. The Mondrian variant did not improve it: worst-stratum coverage was 0.870 against 0.868 for the global variant on a random split. Coverage within groups of true activity was weaker, with the worst group at 0.83 for a random split and 0.78 for the scaffold split for both variants, and the intervals were wide (about 2.8 pIC50 units, 3.3 under scaffold shift). We report this as a negative result for stratification and a caution for activity-conditional claims. Further targets and a comparison with the platform's own predictor are [to be measured].",
    "keywords": [
     "conformal prediction",
     "binding affinity",
     "uncertainty quantification",
-    "drug discovery",
-    "ChEMBL"
+    "ChEMBL",
+    "drug discovery"
    ],
-   "draft_note": "Numbers are the results recorded for this venue in the page database (owner's own runs). Check them against the paper-drafts before use; anything marked [to be measured] has not been measured."
+   "draft_note": "COX-2 numbers come from the owner's earlier local run; EGFR numbers were measured with research/s_iqim_hqca (ChEMBL 25 data from a public GitHub copy, CC BY 4.0), results in research/s_iqim_hqca/results.json. The uncertainty layer treats the predictor as a black box and does not disclose any claimed method; a patent attorney must still review before submission."
   },
   "s_eg": {
    "profile": "keai",
    "product": "stratguard",
-   "title": "Certified Facies Sets from Well Logs: Conformal Coverage, Per-Well Reliability and Stratigraphic Decoding on the SEG 2016 Hugoton Data",
-   "abstract": "Machine-learning facies interpretation from well logs rarely states how uncertain each depth is. We present StratGuard, a framework that returns, for every depth, a calibrated set of admissible facies using split conformal prediction, decodes the facies sequence with a stratigraphic transition grammar, and refers depths with large sets to a geologist. We evaluated it on nine Kansas wells of the SEG 2016 Hugoton data set with well-level splits. Average empirical coverage reached the 0.90 target, but coverage in the worst well was only 0.75, which shows that a marginal guarantee does not hold well by well. Constrained decoding improved accuracy by only about one percentage point compared with the base classifier. The effect of a referral policy that is stricter near reservoir boundaries, per-class coverage and additional wells (for example FORCE 2020, after a licence check) are [to be measured]. The results are modest and are reported as they are: certified sets make the uncertainty of facies interpretation explicit and auditable, but coverage varies strongly between wells, so per-well calibration or more wells are needed before the sets are used in subsurface decisions.",
+   "title": "Certified Facies Sets from Well Logs: Conformal Coverage, Per-Well Reliability and Stratigraphic Decoding on the SEG 2016 and FORCE 2020 Data",
+   "abstract": "Machine-learning facies interpretation from well logs rarely states how uncertain each depth is. We present StratGuard, a framework that returns, for every depth, a calibrated set of admissible facies using split conformal prediction, decodes the facies sequence with a learned stratigraphic transition grammar, and refers uncertain depths to a geologist. We evaluated it on two public data sets with splits by well: SEG 2016 (10 Kansas wells, 9 facies) and FORCE 2020 (81 North Sea wells, lithology). With a 0.90 target, mean coverage was 0.904 and 0.889, but coverage in the worst well was only 0.735 and 0.599, and 19 of 81 FORCE wells fell below 0.85, so the marginal guarantee does not hold well by well. Decoding removed all grammar-violating transitions (80 and 726 to zero) but changed accuracy only from 0.531 to 0.547 on SEG 2016 and lowered it from 0.689 to 0.666 on FORCE. Referral worked on FORCE (61.6% of depths referred, accuracy on retained depths 0.855; 40.8% with a boundary-aware rule, 0.796) but was impractical on SEG 2016, where mean set size was 3.3 and 89% of depths were referred. Certified sets make facies uncertainty explicit and auditable, but per-well calibration is needed before they support subsurface decisions. Per-class coverage and the FORCE licence check are [to be measured].",
    "keywords": [
     "facies interpretation",
     "well logs",
@@ -101,7 +101,7 @@
     "uncertainty quantification",
     "subsurface engineering"
    ],
-   "draft_note": "Numbers are the results recorded for this venue in the page database (owner's own runs). Check them against the paper-drafts before use; anything marked [to be measured] has not been measured."
+   "draft_note": "Numbers measured in research/s_eg_stratguard (private repo, branch research-real-data-validation) on SEG 2016 + FORCE 2020; verify FORCE licence; re-run before submission."
   },
   "s_qip": {
    "profile": "poster",
