@@ -326,7 +326,7 @@ async function uploadImage(file){
 // ------------------------------------------------------------------ navigation
 const isOwnerOnly = () => !!S.me.isOwner;   // Scholarship holds the owner's personal applications
 // Letters are visible only to administrative staff and the owner (UI-level; the database cannot restrict by team)
-const canSeeLetters = () => { if(S.me.isOwner) return true; const m=(S.members||[]).find(x=>x.id===S.me.id)||{}; return m.team==="admin"||["adm_trainee","adm_employee","admin"].includes(m.staff_type)||m.role==="office_manager"; };
+const canSeeLetters = () => { if(S.me.isOwner) return true; const m=(S.members||[]).find(x=>x.id===S.me.id)||{}; return /اداری|دفتر|دبیرخانه/.test(m.role_title||"")||m.team==="admin"||["adm_trainee","adm_employee","admin"].includes(m.staff_type)||m.role==="office_manager"; };
 // Patent, Scholarship and Articles: only the owner, plus a person who has a task assigned in that area (who then sees just their own tasks)
 const VIEWS = {};   // declared before the first view is registered (patent/scholar/articles 'mine' views come early)
 const AREA_KINDS = {patent:["human_patent"], scholar:["human_scholar"], articles:["submit"]};
