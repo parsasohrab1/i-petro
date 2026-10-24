@@ -1,0 +1,32 @@
+{
+ "SEG2016": {
+  "n_wells": 10,
+  "coverage_mean": 0.904,
+  "coverage_worst_well": 0.735,
+  "coverage_wells_below_0.85": 1,
+  "set_size": 3.33,
+  "acc_base": 0.531,
+  "acc_decoded": 0.547,
+  "violations_base": 80.0,
+  "violations_decoded": 0.0,
+  "referral_plain": 0.889,
+  "acc_kept_plain": 0.572,
+  "referral_cost_aware": 0.831,
+  "acc_kept_cost_aware": 0.574
+ },
+ "FORCE2020": {
+  "n_wells": 81,
+  "coverage_mean": 0.889,
+  "coverage_worst_well": 0.599,
+  "coverage_wells_below_0.85": 19,
+  "set_size": 2.02,
+  "acc_base": 0.689,
+  "acc_decoded": 0.666,
+  "violations_base": 726.0,
+  "violations_decoded": 0.0,
+  "referral_plain": 0.616,
+  "acc_kept_plain": 0.855,
+  "referral_cost_aware": 0.408,
+  "acc_kept_cost_aware": 0.796
+ }
+}

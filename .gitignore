@@ -2,3 +2,4 @@
 __pycache__/
 *.pyc
 data/platform_export/
+.pytest_cache/

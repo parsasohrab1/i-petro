@@ -1,0 +1,110 @@
+[
+ {
+  "case": "case9",
+  "n_buses": 9,
+  "n_branches": 9,
+  "total_gen_MW": 319.9547015811169,
+  "maxcut": {
+   "opt": 637.6883314559943,
+   "mean_random": 318.84416572799717,
+   "greedy": 1.0,
+   "spectral": 1.0,
+   "qaoa": {
+    "1": {
+     "ratio": 0.7417814986393751,
+     "prob_optimum": 0.05439996850524656,
+     "evaluations": 708
+    },
+    "2": {
+     "ratio": 0.7966450662759564,
+     "prob_optimum": 0.1487028603346714,
+     "evaluations": 549
+    },
+    "3": {
+     "ratio": 0.7139839402712497,
+     "prob_optimum": 0.05932788129382447,
+     "evaluations": 529
+    }
+   }
+  },
+  "islanding": {
+   "opt": 59.834414441301924,
+   "mean_random": 603.7701757829391,
+   "local_descent_gap": 0.0,
+   "qaoa": {
+    "1": {
+     "expected_cost": 435.7520757168571,
+     "score": 0.30889327749228923,
+     "prob_optimum": 0.02287228993459003,
+     "evaluations": 139
+    },
+    "2": {
+     "expected_cost": 517.6007699361128,
+     "score": 0.1584183500534812,
+     "prob_optimum": 0.0011697716337925833,
+     "evaluations": 189
+    },
+    "3": {
+     "expected_cost": 486.635635934323,
+     "score": 0.21534627464040887,
+     "prob_optimum": 0.0028625103810700197,
+     "evaluations": 381
+    }
+   }
+  }
+ },
+ {
+  "case": "case14",
+  "n_buses": 14,
+  "n_branches": 20,
+  "total_gen_MW": 250.69327235161214,
+  "maxcut": {
+   "opt": 570.6975050181215,
+   "mean_random": 331.311299423436,
+   "greedy": 1.0,
+   "spectral": 0.6196800935291824,
+   "qaoa": {
+    "1": {
+     "ratio": 0.7603571222907493,
+     "prob_optimum": 0.0016876874882874172,
+     "evaluations": 981
+    },
+    "2": {
+     "ratio": 0.8202353162036782,
+     "prob_optimum": 0.003712527775034776,
+     "evaluations": 502
+    },
+    "3": {
+     "ratio": 0.753454565817749,
+     "prob_optimum": 0.000889395759202791,
+     "evaluations": 368
+    }
+   }
+  },
+  "islanding": {
+   "opt": 25.08082945195736,
+   "mean_random": 461.95958455878315,
+   "local_descent_gap": 0.0,
+   "qaoa": {
+    "1": {
+     "expected_cost": 398.86478676736687,
+     "score": 0.14442175787648065,
+     "prob_optimum": 0.00015579407249940823,
+     "evaluations": 323
+    },
+    "2": {
+     "expected_cost": 381.98066492407577,
+     "score": 0.18306891488726867,
+     "prob_optimum": 0.0007419478822778938,
+     "evaluations": 223
+    },
+    "3": {
+     "expected_cost": 418.6080184177267,
+     "score": 0.09923019976207376,
+     "prob_optimum": 6.106127171467435e-05,
+     "evaluations": 389
+    }
+   }
+  }
+ }
+]

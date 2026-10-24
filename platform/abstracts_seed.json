@@ -78,22 +78,22 @@
   "s_iqim": {
    "profile": "easychair",
    "product": "hqca",
-   "title": "Distribution-Free Uncertainty Intervals for Binding-Affinity Predictions: Global versus Mondrian Conformal Calibration on COX-2",
-   "abstract": "Reliable use of machine-learning predictions in drug discovery requires an estimate of how far a predicted binding affinity can be trusted. We add distribution-free uncertainty intervals to the affinity predictions of a hybrid quantum–classical drug-discovery platform, treating the platform's predictor as a black box. Split conformal prediction gives intervals with a guaranteed marginal coverage, and a Mondrian variant calibrates separately within strata of molecules to approach coverage that also holds inside each stratum. We evaluate both on 4,392 COX-2 molecules with measured activity from ChEMBL, using random calibration and test splits. For a nominal coverage of 0.90 the empirical coverage was between 0.88 and 0.90, and the Mondrian variant improved stratum-level coverage only marginally compared with global calibration. We report this as a negative result: stratified calibration did not change the practical reliability of the intervals on this target. A second target (for example EGFR), at least ten random seeds and confidence intervals for the coverage are [to be measured]. The study gives a reproducible baseline for uncertainty reporting in affinity prediction and a template for checking whether stratification is worth its added complexity.",
+   "title": "Distribution-Free Uncertainty Intervals for Binding-Affinity Predictions: Global versus Mondrian Conformal Calibration on COX-2 and EGFR",
+   "abstract": "Reliable use of machine-learning predictions in drug discovery requires an estimate of how far a predicted binding affinity can be trusted. We add distribution-free uncertainty intervals to the affinity predictions of a hybrid quantum–classical drug-discovery platform, treating the platform's predictor as a black box. Split conformal prediction gives intervals with a guaranteed marginal coverage, and a Mondrian variant calibrates separately within strata of the predicted value. We evaluated both on two real targets with measured activity from ChEMBL: 4,392 COX-2 molecules, where the empirical coverage for a nominal 0.90 was between 0.88 and 0.90, and 3,884 EGFR molecules, with ten random seeds and both random and scaffold-based splits. On EGFR the coverage was 0.896 (95% interval ± 0.009) for a random split and 0.894 (± 0.014) when whole chemical scaffolds were held out, so the marginal guarantee held under chemical-series shift. The Mondrian variant did not improve it: worst-stratum coverage was 0.870 against 0.868 for the global variant on a random split. Coverage within groups of true activity was weaker, with the worst group at 0.83 for a random split and 0.78 for the scaffold split for both variants, and the intervals were wide (about 2.8 pIC50 units, 3.3 under scaffold shift). We report this as a negative result for stratification and a caution for activity-conditional claims. Further targets and a comparison with the platform's own predictor are [to be measured].",
    "keywords": [
     "conformal prediction",
     "binding affinity",
     "uncertainty quantification",
-    "drug discovery",
-    "ChEMBL"
+    "ChEMBL",
+    "drug discovery"
    ],
-   "draft_note": "Numbers are the results recorded for this venue in the page database (owner's own runs). Check them against the paper-drafts before use; anything marked [to be measured] has not been measured."
+   "draft_note": "COX-2 numbers come from the owner's earlier local run; EGFR numbers were measured with research/s_iqim_hqca (ChEMBL 25 data from a public GitHub copy, CC BY 4.0), results in research/s_iqim_hqca/results.json. The uncertainty layer treats the predictor as a black box and does not disclose any claimed method; a patent attorney must still review before submission."
   },
   "s_eg": {
    "profile": "keai",
    "product": "stratguard",
-   "title": "Certified Facies Sets from Well Logs: Conformal Coverage, Per-Well Reliability and Stratigraphic Decoding on the SEG 2016 Hugoton Data",
-   "abstract": "Machine-learning facies interpretation from well logs rarely states how uncertain each depth is. We present StratGuard, a framework that returns, for every depth, a calibrated set of admissible facies using split conformal prediction, decodes the facies sequence with a stratigraphic transition grammar, and refers depths with large sets to a geologist. We evaluated it on nine Kansas wells of the SEG 2016 Hugoton data set with well-level splits. Average empirical coverage reached the 0.90 target, but coverage in the worst well was only 0.75, which shows that a marginal guarantee does not hold well by well. Constrained decoding improved accuracy by only about one percentage point compared with the base classifier. The effect of a referral policy that is stricter near reservoir boundaries, per-class coverage and additional wells (for example FORCE 2020, after a licence check) are [to be measured]. The results are modest and are reported as they are: certified sets make the uncertainty of facies interpretation explicit and auditable, but coverage varies strongly between wells, so per-well calibration or more wells are needed before the sets are used in subsurface decisions.",
+   "title": "Certified Facies Sets from Well Logs: Conformal Coverage, Per-Well Reliability and Stratigraphic Decoding on the SEG 2016 and FORCE 2020 Data",
+   "abstract": "Machine-learning facies interpretation from well logs rarely states how uncertain each depth is. We present StratGuard, a framework that returns, for every depth, a calibrated set of admissible facies using split conformal prediction, decodes the facies sequence with a learned stratigraphic transition grammar, and refers uncertain depths to a geologist. We evaluated it on two public data sets with splits by well: SEG 2016 (10 Kansas wells, 9 facies) and FORCE 2020 (81 North Sea wells, lithology). With a 0.90 target, mean coverage was 0.904 and 0.889, but coverage in the worst well was only 0.735 and 0.599, and 19 of 81 FORCE wells fell below 0.85, so the marginal guarantee does not hold well by well. Decoding removed all grammar-violating transitions (80 and 726 to zero) but changed accuracy only from 0.531 to 0.547 on SEG 2016 and lowered it from 0.689 to 0.666 on FORCE. Referral worked on FORCE (61.6% of depths referred, accuracy on retained depths 0.855; 40.8% with a boundary-aware rule, 0.796) but was impractical on SEG 2016, where mean set size was 3.3 and 89% of depths were referred. Certified sets make facies uncertainty explicit and auditable, but per-well calibration is needed before they support subsurface decisions. Per-class coverage and the FORCE licence check are [to be measured].",
    "keywords": [
     "facies interpretation",
     "well logs",
@@ -101,13 +101,13 @@
     "uncertainty quantification",
     "subsurface engineering"
    ],
-   "draft_note": "Numbers are the results recorded for this venue in the page database (owner's own runs). Check them against the paper-drafts before use; anything marked [to be measured] has not been measured."
+   "draft_note": "Numbers measured in research/s_eg_stratguard (private repo, branch research-real-data-validation) on SEG 2016 + FORCE 2020; verify FORCE licence; re-run before submission."
   },
   "s_qip": {
    "profile": "poster",
    "product": "qshot",
    "title": "Shot-Budget Allocation for Pauli-Sum Observables: A Simulation Study of Weighted Allocation and Classical Shadows",
-   "abstract": "Estimating the expectation value of a Hamiltonian on a quantum computer requires many repeated measurements, and the way a fixed budget of shots is divided among the Pauli terms determines the accuracy of the estimate. We compare uniform allocation, allocation weighted by coefficient magnitude and classical shadows for Pauli-sum observables of small molecular Hamiltonians, using simulation at equal total shot budget and reporting root-mean-square error and bias against the exact value. The Hamiltonians are computed in the STO-3G basis and not measured on a device, because no public hardware measurement data set was found. In simulation, weighted allocation and classical shadows gave about 11–12% lower RMSE than uniform allocation. Confidence intervals, further molecules (for example BeH2 with a sparse method) and the grouping of commuting terms are [to be measured]. The poster will show the protocol, the comparison and the limits of a simulation-only study, and we make no claim about performance on hardware.",
+   "abstract": "Estimating the expectation value of a Hamiltonian on a quantum computer requires many repeated measurements, and the way a fixed budget of shots is divided among the Pauli terms determines the accuracy of the estimate. We compare uniform allocation, allocation weighted by coefficient magnitude and random-Pauli classical shadows at equal total shot budget for the ground states of H2 (4 qubits, 14 Pauli terms) and LiH (12 qubits, 630 terms) in the STO-3G basis. The Hamiltonians are computed with PySCF and OpenFermion and not measured on a device, because no public hardware measurement data set was found. Variances of the term-wise allocations were computed exactly and those of the shadows by Monte Carlo. Relative to uniform allocation, weighting by coefficient magnitude lowered the root-mean-square error by 14% for LiH but raised it by 35% for H2, and classical shadows gave about three times the error of uniform allocation for both molecules. An oracle allocation that uses the unknown state reached 0.57 (LiH) and 0.75 (H2) of the uniform error, and no scheme without grouping reached chemical accuracy (1.6 mHa) for LiH at 10^6 shots (best: 5.9 mHa without the oracle). The poster will show the protocol, this negative result for shadows and the limits of a simulation-only study. Grouping of commuting terms, larger molecules and hardware noise are [to be measured]; we make no claim about performance on hardware.",
    "keywords": [
     "shot budget",
     "Pauli observables",
@@ -115,7 +115,7 @@
     "measurement allocation",
     "quantum simulation"
    ],
-   "draft_note": "Numbers are the results recorded for this venue in the page database (owner's own runs). Check them against the paper-drafts before use; anything marked [to be measured] has not been measured."
+   "draft_note": "Measured in research/s_qip_shotlab (private repo, branch research-real-data-validation) with PySCF/OpenFermion Hamiltonians; replaces the earlier claim of 11-12% lower RMSE for weighted allocation and shadows, which the exact variances do not support. Re-run before submission."
   },
   "s_icmhi": {
    "profile": "easychair",
@@ -134,16 +134,17 @@
   "s_isie": {
    "profile": "ieee",
    "product": "apexasset",
-   "title": "Uncertainty-Aware Remaining-Useful-Life Prediction as an Add-On to an Asset Life-Cycle Digital Twin",
-   "abstract": "Digital twins of industrial assets use remaining useful life (RUL) predictions to plan maintenance, but a single predicted value hides how reliable it is. This paper studies uncertainty-aware RUL prediction as an add-on to an asset life-cycle digital twin. The add-on is separate from the twin itself: it takes the RUL estimate of the twin and returns an interval with a calibrated coverage, so that maintenance can be planned on a conservative bound. We plan to evaluate it on a public run-to-failure data set other than C-MAPSS, for example the NASA IMS bearing data or the NASA battery data, chosen after a check of size and licence, and to compare it with simple baselines such as a constant-life prediction and a regression on time. The fractions of late and early warnings, the interval coverage and its confidence intervals, and the cost of the added conservatism are [to be measured]. No result is claimed in this abstract, and the final version will report any negative result as such. The method is designed for implementation on industrial edge hardware.",
+   "title": "A Conservative Lower Bound on Remaining Useful Life as an Add-On to an Asset Digital Twin: Validation on NASA IMS Bearing Failures",
+   "abstract": "Digital twins of industrial assets use remaining useful life (RUL) predictions to plan maintenance, but a single predicted value hides how often it is too optimistic. This paper studies a conservative lower bound on RUL as an add-on to an asset life-cycle digital twin. The add-on subtracts from the RUL estimate a calibrated quantile of its past overestimation errors, obtained by leave-one-bearing-out prediction on the training machines, and it does not depend on how the estimate itself is produced. We evaluated it on the four documented failures of the NASA IMS (Intelligent Maintenance Systems) bearing run-to-failure experiments, holding out one failure at a time and comparing it with a constant-life baseline and with the uncorrected estimate from a monotone map of a vibration health index. In the last 48 hours before failure, the uncorrected estimate overestimated the remaining life 66% of the time on average, whereas the lower bound at a 90% target never did in any of the four held-out failures. Over the whole life the lower bound overestimated 18% of the time instead of 48%, which is above the 10% target and reached 55% in one failure. The price of the conservatism was early alerts: 23% of the time the bound signalled less than 48 hours of remaining life while more than 192 hours remained, mainly for the longest-lived bearing. With only four failures the results are indicative only. A second run-to-failure data set and a comparison with learned RUL models are [to be measured].",
    "keywords": [
-    "digital twin",
     "remaining useful life",
+    "digital twin",
     "predictive maintenance",
-    "uncertainty",
-    "condition monitoring"
+    "bearing failure",
+    "conservative prediction",
+    "uncertainty"
    ],
-   "draft_note": "Development of this product for the venue is still open in the page task list, so no result exists yet; the abstract must be rewritten after the experiments."
+   "draft_note": "Numbers were measured with the research/s_isie_apexasset module on the four NASA IMS failures (feature tables from a public GitHub mirror, MIT licence; cite Lee et al. 2007 and Hora & Rezapour). Results file: research/s_isie_apexasset/results.json. The add-on is independent of the product's claimed functions; a patent attorney must still review before submission."
   },
   "s_hydro": {
    "profile": "mdpi",
@@ -163,7 +164,7 @@
    "profile": "springer",
    "product": "fidps",
    "title": "Log Zonation by Change-Point Segmentation for Drilling and Completion Data: A Neutral Result on Eight SEG 2016 Wells",
-   "abstract": "Industrial AI for drilling and completion depends on dividing continuous log data into zones before further analysis, and change-point segmentation is a natural candidate. This paper evaluates a log-zonation module that was added next to a formation-integrity damage prevention system and is independent of its claimed functions. We tested it on the well logs of eight Kansas wells of the SEG 2016 data set, comparing change-point segmentation with a simple gradient-based baseline using an F1 score for zone boundaries. The change-point method did not outperform the baseline: the F1 score was 0.55 against 0.62. No real formation-damage data were available, so no claim is made about damage prediction. We report this neutral result because it shows that, on public wells, a simple baseline is hard to beat for this task. Real drilling or damage data (for example the Volve data after a licence check), a redefinition of the contribution towards formation integrity and a comparison on more wells are [to be measured].",
+   "abstract": "Industrial AI for drilling and completion depends on dividing continuous log data into zones before further analysis, and change-point segmentation is a natural candidate. This paper evaluates a log-zonation module that was added next to a formation-integrity damage prevention system and is independent of its claimed functions. We tested PELT change-point segmentation against a smoothed-gradient peak baseline on 62 wells of the public FORCE 2020 data set (gamma ray, density, neutron porosity and sonic logs), using stratigraphic group boundaries as a surrogate ground truth, a tolerance of 15 m and one tuning parameter per method chosen on half of the wells. On the other half, the F1 score for boundaries was 0.33 for PELT, 0.30 for the baseline and 0.09 for random boundaries over five splits by well. The advantage of 0.03 is small and no significance test was done; both methods over-segmented, with 9 and 13 predicted boundaries per well against 5 true ones. An earlier test on the SEG 2016 wells had favoured the baseline (0.62 against 0.55), so the ranking depends on the data. We report this neutral result because it shows that, on public wells, a simple baseline is hard to beat for this task. No real formation-damage data were available, so no claim is made about damage prediction. Real drilling or damage data (for example the Volve data after a licence check), a redefinition of the contribution towards formation integrity and significance tests are [to be measured].",
    "keywords": [
     "log zonation",
     "change-point detection",
@@ -171,13 +172,13 @@
     "drilling data",
     "industrial AI"
    ],
-   "draft_note": "Numbers are the results recorded for this venue in the page database (owner's own runs). Check them against the paper-drafts before use; anything marked [to be measured] has not been measured. The owner's task list also asks for the full claim documents (7533, 9411, 9412) to be read by a patent attorney before submission."
+   "draft_note": "Measured in research/s_iai_fidps (private repo, branch research-real-data-validation) on FORCE 2020 (62 wells); surrogate ground truth = group boundaries; verify FORCE licence. Re-run before submission."
   },
   "s_iqicsa": {
    "profile": "easychair",
    "product": "qgridpart",
    "title": "QAOA for Splitting a Power Network into Two Islands: A Comparison with Greedy and Spectral Partitioning on the IEEE 14-Bus Case",
-   "abstract": "Splitting a power network into two islands can be written as a weighted MaxCut problem on the network graph, and it has been proposed as an application of the quantum approximate optimisation algorithm (QAOA). We compare QAOA, simulated exactly with state vectors, with greedy local search and spectral bisection on the IEEE 14-bus topology (MATPOWER), reporting the approximation ratio against the best known cut together with the quantum resources used. For circuit depths p = 1, 2 and 3 QAOA reached ratios of 0.817, 0.870 and 0.904, but it did not outperform greedy search (0.985) or spectral bisection (0.949). We report this as a neutral result at this network size: the quantum method does not improve on cheap classical baselines. Larger networks (30 and 57 buses) with matrix-product-state or classical-only simulation, a noise model, depths up to p = 5, a balanced min-cut objective with a generation–load constraint and hardware data are [to be measured]. The framework is provided as a transparent benchmark for power-system applications of quantum optimisation.",
+   "abstract": "Splitting a power network into two islands can be written as a combinatorial optimisation problem and has been proposed as an application of the quantum approximate optimisation algorithm (QAOA). We compare QAOA, simulated exactly with state vectors, with greedy local search and a spectral heuristic on two IEEE test systems (9 and 14 buses; MATPOWER data distributed with pandapower), with edge weights equal to the active-power flows of an AC power flow. For weighted MaxCut at depths p = 1, 2 and 3, QAOA reached approximation ratios of 0.742, 0.797 and 0.714 on the 9-bus system and 0.760, 0.820 and 0.753 on the 14-bus system, whereas greedy search found the optimum in both (1.00) and the spectral heuristic reached 1.00 and 0.62. The ratio did not increase monotonically with depth, which points to the classical optimiser as the limit. For an islanding objective that adds the power imbalance of an island and requires at least three buses per island, QAOA's expected cost remained close to that of random splits (normalised score 0.10 to 0.31) while single-flip descent found the exact optimum. We report this as a neutral result at this size: the quantum method does not improve on cheap classical baselines. Larger networks (30 buses and more) with tensor-network simulation, noise models, other optimisers and hardware data are [to be measured].",
    "keywords": [
     "QAOA",
     "power system islanding",
@@ -185,7 +186,7 @@
     "IEEE 14-bus",
     "quantum optimisation"
    ],
-   "draft_note": "Numbers are the results recorded for this venue in the page database (owner's own runs). Check them against the paper-drafts before use; anything marked [to be measured] has not been measured."
+   "draft_note": "Measured in research/s_iqicsa_qgrid (private repo, branch research-real-data-validation) on pandapower-bundled IEEE case9/case14 with AC power-flow weights; replaces the owner's unit-weight case14 run. Re-run before submission."
   },
   "s_mimar": {
    "profile": "springer",
@@ -247,7 +248,7 @@
    "profile": "easychair",
    "product": "stretchwatch",
    "title": "StretchWatch: Loss of the Hartree–Fock Reference along Bond-Stretching Curves, with Relevance to Quantum Energy Materials",
-   "abstract": "Quantum algorithms for energy materials, such as battery and fuel molecules, often start from the Hartree–Fock (HF) state, but HF becomes a poor approximation of the ground state when bonds are stretched. We quantify this for small molecules in the STO-3G basis, using computed (not measured) Hamiltonians, and combine the overlap of the HF state with the ground state and the entropy of the natural-orbital occupations into a starting-point quality index. For LiH the squared overlap falls from 0.98 near the equilibrium geometry to 0.008 at a bond length of 8 Å, and H2 is checked against the literature energy of −1.1373 Ha. The novelty of the study is low and no patentable claim is made. BeH2 and H2O with an active space, the 6-31G basis, validation against CCSD reference values from PySCF and a motivating link to energy materials with references are [to be measured]. The study offers a simple, reproducible check of when an HF start is unsuitable and a basis for a later comparison with alternative reference states in quantum-energy applications.",
+   "abstract": "Quantum algorithms for energy materials, such as battery and fuel molecules, often start from the Hartree–Fock (HF) state, but HF becomes a poor approximation of the ground state when bonds are stretched. We quantify this for H2, LiH, BeH2 and H2O in the STO-3G basis (and LiH in 6-31G) with Hamiltonians computed in PySCF, not measured, and compare the squared overlap of the HF determinant with the full-configuration-interaction (FCI) ground state and the entropy of the natural-orbital occupations as indicators of starting-point quality. H2 at 0.74 Å reproduces the literature energy of −1.1373 Ha. The squared overlap falls from 0.98 near equilibrium to 0.50 for H2 at 4 Å, 0.56 for LiH at 4 Å, 0.38 for BeH2 at 3.5 Å and 0.36 for H2O at 2.2 Å. Within each molecule, overlap and entropy were almost perfectly rank-anticorrelated (Spearman −0.99 to −1.0), so combining them in one index adds little information. CCSD(T) agreed with FCI to better than 1 mHa near equilibrium and failed at long distances, where a restricted HF calculation can also converge to a wrong ionic solution; five such points are flagged and excluded, including the extreme LiH distance reported earlier. The study offers a simple, reproducible check of when an HF start is unsuitable. Active spaces for larger molecules, other reference states and a link to specific energy materials with references are [to be measured].",
    "keywords": [
     "Hartree–Fock",
     "VQE",
@@ -255,7 +256,7 @@
     "quantum energy",
     "natural-orbital entropy"
    ],
-   "draft_note": "Numbers are the results recorded for this venue in the page database (owner's own runs). Check them against the paper-drafts before use; anything marked [to be measured] has not been measured. The 0.98→0.008 overlap values are the owner's recorded numbers; check them against the repository."
+   "draft_note": "Measured in research/s_icqe_stretchwatch (private repo, branch research-real-data-validation) with PySCF FCI/CCSD(T); replaces the earlier LiH 8 A overlap 0.008, which was an SCF artefact. Re-run before submission."
   },
   "s_cmi": {
    "profile": "bentham",
@@ -330,8 +331,8 @@
   "s_pet": {
    "profile": "keai",
    "product": "ilift",
-   "title": "Conformal Alarm Thresholds for Oil-Well Fault Detection on Real Petrobras 3W Data: Detection Rate versus Warning Time",
-   "abstract": "Fault detection in oil wells must keep false alarms low while warning early enough to act. We study conformal alarm thresholds as an add-on to an artificial-lift management system, using the public Petrobras 3W data (82 normal and 32 real fault instances). The conformal threshold kept the false-alarm rate at 0.12 for a target of 0.10. Faults were detected in 75% to 100% of the instances, depending on the fault type, but a warning before the start of the event was given in only 25% to 47% of them. The study therefore shows that a controlled false-alarm rate is attainable on real well data, while early warning remains the limiting factor. More 3W instances, a comparison with Isolation Forest and CUSUM, ROC and delay curves, and the identification of the product's filed claims (claim 1566 on drilling anomaly detection is adjacent) are [to be measured]. Conformal alarms of this kind have been published before, so the novelty of the study is low.",
+   "title": "Conformal Alarm Thresholds for Oil-Well Fault Detection on Real Petrobras 3W Data: A Well-Level Evaluation of False-Alarm Control and Detection",
+   "abstract": "Fault detection in oil wells must keep false alarms low while still detecting faults. We study a conformal alarm threshold as an add-on to an artificial-lift management system, using the public Petrobras 3W data, version 2: 1,119 real instances from 40 wells (594 normal, 525 faults of nine types). A robust z-score statistic is computed from seven sensors against a reference taken at the start of each instance, and the threshold is the conformal quantile of the maxima of normal calibration instances at a target false-alarm rate of 0.10. Wells were split between calibration and test in 20 random repetitions. The false-alarm rate on unseen wells was 0.147 on average, but ranged from 0.009 to 0.551 between splits and exceeded the target in half of them; fixed thresholds of z = 5, 10 and 20 gave 0.195, 0.103 and 0.067. Hence the instance-level guarantee does not transfer to new wells, because instances of one well are not exchangeable with those of others. From the labelled onset, alarms were raised for 87% and 96% of the instances of two fault types but for only 9% of the 343 instances of the largest class, which these sensors barely reveal. Alarms before the onset cannot be distinguished from false alarms and are not counted as early warning. Calibration by well and fault-specific sensors are needed. A comparison with Isolation Forest and CUSUM is [to be measured].",
    "keywords": [
     "artificial lift",
     "fault detection",
@@ -339,7 +340,7 @@
     "alarm threshold",
     "Petrobras 3W"
    ],
-   "draft_note": "Numbers are the results recorded for this venue in the page database (owner's own runs). Check them against the paper-drafts before use; anything marked [to be measured] has not been measured. The claim document of the product was not found; the attorney must review claim 1566."
+   "draft_note": "Measured in research/s_pet_intellilift (private repo, branch research-real-data-validation) on 3W v2 real instances; replaces the owner's earlier 114-instance run. Check the 3W version/licence citation and re-run before submission."
   },
   "s_ps": {
    "profile": "keai",
