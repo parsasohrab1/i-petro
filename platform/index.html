@@ -2092,8 +2092,8 @@ VIEWS["articles.evidence"] = () => {
   const pill=e=>{const r=String(e.real); return `<span class="pill ${r.startsWith("بله")?"p-ok":r.startsWith("جزئی")?"p-warn":r.startsWith("خیر")?"p-bad":"p-mute"}">${esc(r)}</span>`;};
   return `<div class="banner">${esc((S.pev&&S.pev.legend)||"")}</div>`+
    kpis([["محصول",faNum(ev.length)],["اعتبارسنجی افزونه با داده‌ی واقعی",faNum(real)],["بدون داده‌ی واقعی",faNum(ev.filter(e=>String(e.real).startsWith("خیر")).length),true],["هنوز انجام نشده",faNum(ev.filter(e=>!String(e.status).startsWith("انجام")).length),true]])+
-   table(["محصول","TRL","مقصد","وضعیت","داده‌ی واقعی؟","مجموعه‌داده و منبع دانلود","محاسبه","ملاحظات"],ev.filter(e=>match(e.name,e.dataset,e.venue)).map(e=>
-    `<tr>${td("محصول",`${esc(e.name)}<br><span class="meta">${esc(e.kind)} · ${esc(e.repo||"")}</span>`,"t")}${td("TRL",`<b class="mono">${esc(e.trl)}</b>`)}${td("مقصد",esc(e.venue))}${td("وضعیت",esc(e.status))}${td("داده‌ی واقعی",pill(e))}
+   table(["محصول","TRL","مقصد","وضعیت","مناسب ژورنال؟","داده‌ی واقعی؟","مجموعه‌داده و منبع دانلود","محاسبه","ملاحظات"],ev.filter(e=>match(e.name,e.dataset,e.venue)).map(e=>
+    `<tr>${td("محصول",`${esc(e.name)}<br><span class="meta">${esc(e.kind)} · ${esc(e.repo||"")}</span>`,"t")}${td("TRL",`<b class="mono">${esc(e.trl)}</b>`)}${td("مقصد",esc(e.venue))}${td("وضعیت",esc(e.status))}${td("مناسب ژورنال",`<b>${esc(e.journal_fit||"—")}</b><br><span class="meta">${esc(e.journal_fit_note||"")}</span>`)}${td("داده‌ی واقعی",pill(e))}
      ${td("مجموعه‌داده",`${esc(e.dataset)}${e.url?`<br><a href="${esc(e.url)}" target="_blank" rel="noopener noreferrer" class="mono">${esc(e.url)}</a>`:""}<br><span class="meta">مجوز: ${esc(e.license||"—")}</span>`)}${td("محاسبه",`<span class="meta">${esc(e.compute||"")}</span>`)}${td("ملاحظات",esc(e.note||"—"))}</tr>`),"هنوز موردی ثبت نشده است.");
 };
 const AP_SUBMITTED = ["neuropredict","inescape","diagnostic kit","qpcr","health informatics","car-t","energy and carbon","carbon management","data routing"];
