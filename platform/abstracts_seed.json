@@ -331,8 +331,8 @@
   "s_pet": {
    "profile": "keai",
    "product": "ilift",
-   "title": "Conformal Alarm Thresholds for Oil-Well Fault Detection on Real Petrobras 3W Data: Detection Rate versus Warning Time",
-   "abstract": "Fault detection in oil wells must keep false alarms low while warning early enough to act. We study conformal alarm thresholds as an add-on to an artificial-lift management system, using the public Petrobras 3W data (82 normal and 32 real fault instances). The conformal threshold kept the false-alarm rate at 0.12 for a target of 0.10. Faults were detected in 75% to 100% of the instances, depending on the fault type, but a warning before the start of the event was given in only 25% to 47% of them. The study therefore shows that a controlled false-alarm rate is attainable on real well data, while early warning remains the limiting factor. More 3W instances, a comparison with Isolation Forest and CUSUM, ROC and delay curves, and the identification of the product's filed claims (claim 1566 on drilling anomaly detection is adjacent) are [to be measured]. Conformal alarms of this kind have been published before, so the novelty of the study is low.",
+   "title": "Conformal Alarm Thresholds for Oil-Well Fault Detection on Real Petrobras 3W Data: A Well-Level Evaluation of False-Alarm Control and Detection",
+   "abstract": "Fault detection in oil wells must keep false alarms low while still detecting faults. We study a conformal alarm threshold as an add-on to an artificial-lift management system, using the public Petrobras 3W data, version 2: 1,119 real instances from 40 wells (594 normal, 525 faults of nine types). A robust z-score statistic is computed from seven sensors against a reference taken at the start of each instance, and the threshold is the conformal quantile of the maxima of normal calibration instances at a target false-alarm rate of 0.10. Wells were split between calibration and test in 20 random repetitions. The false-alarm rate on unseen wells was 0.147 on average, but ranged from 0.009 to 0.551 between splits and exceeded the target in half of them; fixed thresholds of z = 5, 10 and 20 gave 0.195, 0.103 and 0.067. Hence the instance-level guarantee does not transfer to new wells, because instances of one well are not exchangeable with those of others. From the labelled onset, alarms were raised for 87% and 96% of the instances of two fault types but for only 9% of the 343 instances of the largest class, which these sensors barely reveal. Alarms before the onset cannot be distinguished from false alarms and are not counted as early warning. Calibration by well and fault-specific sensors are needed. A comparison with Isolation Forest and CUSUM is [to be measured].",
    "keywords": [
     "artificial lift",
     "fault detection",
@@ -340,7 +340,7 @@
     "alarm threshold",
     "Petrobras 3W"
    ],
-   "draft_note": "Numbers are the results recorded for this venue in the page database (owner's own runs). Check them against the paper-drafts before use; anything marked [to be measured] has not been measured. The claim document of the product was not found; the attorney must review claim 1566."
+   "draft_note": "Measured in research/s_pet_intellilift (private repo, branch research-real-data-validation) on 3W v2 real instances; replaces the owner's earlier 114-instance run. Check the 3W version/licence citation and re-run before submission."
   },
   "s_ps": {
    "profile": "keai",
