@@ -336,7 +336,8 @@ const areaAccess = mod => S.me.isOwner?"full":areaTasks(mod).length?"mine":"none
 const visibleModules = () => MODULES.filter(([k])=>(!AREA_KINDS[k]||areaAccess(k)!=="none")&&(k!=="letters"||canSeeLetters()));
 const areaMineView = mod => { const ts=areaTasks(mod).sort((a,b)=>(a.due||"9999").localeCompare(b.due||"9999"));
   return `<p class="note">فقط تسک‌هایی که برای شما تعریف شده در این بخش دیده می‌شود. وضعیت تسک را از «BPMS ← روز من» یا «تخته‌ی اسکرام» تغییر دهید.</p>`+
-   table(["تسک","مهلت","وضعیت","شرح"],ts.map(t=>`<tr>${td("تسک",esc(t.title),"t")}${td("مهلت",t.due?faDate(t.due):"—")}${td("وضعیت",`<span class="pill ${t.status==="done"||t.status==="approved"?"p-ok":t.status==="doing"?"p-info":"p-warn"}">${esc(TASK_ST[t.status]||t.status)}</span>`)}${td("شرح",`<span style="white-space:pre-wrap">${esc(t.desc||"")}</span>`)}</tr>`),"تسکی برای شما تعریف نشده است."); };
+   (mod==="articles"&&S.downloads&&ts.some(t=>t.venue&&absOf(t.venue))?`<div class="toolbar"><button class="btn sig" data-act="art-abs-mine">چکیده‌های تسک‌های من (ZIP)</button><span class="meta">چکیده‌ی هر مقصد طبق قالب همان ژورنال یا کنفرانس؛ [داخل کروشه] هنوز اندازه‌گیری نشده است.</span></div>`:"")+
+   table(["تسک","مهلت","وضعیت","شرح",""],ts.map(t=>`<tr>${td("تسک",esc(t.title),"t")}${td("مهلت",t.due?faDate(t.due):"—")}${td("وضعیت",`<span class="pill ${t.status==="done"||t.status==="approved"?"p-ok":t.status==="doing"?"p-info":"p-warn"}">${esc(TASK_ST[t.status]||t.status)}</span>`)}${td("شرح",`<span style="white-space:pre-wrap">${esc(t.desc||"")}</span>`)}${td("",mod==="articles"&&t.venue&&absOf(t.venue)&&S.downloads?`<button class="btn sm" data-act="art-abs" data-id="${esc(t.venue)}" title="چکیده طبق قالب همین ژورنال یا کنفرانس (فایل Word)">چکیده (Word)</button>`:"")}</tr>`),"تسکی برای شما تعریف نشده است."); };
 VIEWS["patent.mine"]=()=>areaMineView("patent"); VIEWS["scholar.mine"]=()=>areaMineView("scholar"); VIEWS["articles.mine"]=()=>areaMineView("articles");
 function paintNav(){
   if((AREA_KINDS[S.mod]&&areaAccess(S.mod)==="none")||(S.mod==="letters"&&!canSeeLetters())){ S.mod="market"; S.sub=SUBS.market[0][0]; }
@@ -2023,6 +2024,14 @@ async function downloadAbstract(id){
   try{ await S.downloads.save({filename:absFile(id),data:new Blob([await buildAbstractDocx(v,a)],{type:ABS_DOCX})}); }
   catch(err){ if(!err||err.code!=="declined"){ toast("ساخت یا دریافت فایل Word انجام نشد."); console.error(err); } }
 }
+async function downloadMyAbstracts(){
+  if(!S.downloads){ toast("دریافت فایل فقط داخل claude.ai فعال است."); return; }
+  try{ const ids=[...new Set(areaTasks("articles").map(t=>t.venue).filter(v=>v&&absOf(v)))], files=[];
+    for(const v of artAll().filter(x=>ids.includes(x.id))) files.push({name:absFile(v.id),data:await buildAbstractDocx(v,absOf(v.id))});
+    if(!files.length){ toast("برای تسک‌های شما چکیده‌ای آماده نیست."); return; }
+    await S.downloads.save({filename:`ppt-my-abstracts-${today()}.zip`,data:new Blob([await zipStore(files)],{type:"application/zip"})}); }
+  catch(err){ if(!err||err.code!=="declined"){ toast("ساخت فایل ZIP انجام نشد."); console.error(err); } }
+}
 async function downloadAllAbstracts(){
   if(!S.downloads){ toast("دریافت فایل فقط داخل claude.ai فعال است."); return; }
   try{ const files=[]; for(const v of artAll().filter(x=>absOf(x.id))) files.push({name:absFile(v.id),data:await buildAbstractDocx(v,absOf(v.id))});
@@ -2406,6 +2415,7 @@ document.addEventListener("click", async e => {
     case "art-new": artForm(); break;
     case "art-abs": await downloadAbstract(id); break;
     case "art-abs-all": await downloadAllAbstracts(); break;
+    case "art-abs-mine": await downloadMyAbstracts(); break;
     case "ct-add": { const el=$("#ctText"); const v=(el&&el.value||"").trim(); if(!v){toast("متن تسک را بنویسید.");break;} if(await ctAdd(v,{kind:"free"})&&el) el.value=""; break; }
     case "stk-all": { const w=($("#stkWho")||{}).value||S.stkWho; await submitAssign(w,null); break; }
     case "stk-one": { const w=($("#stkWho")||{}).value||S.stkWho; await submitAssign(w,id); break; }
