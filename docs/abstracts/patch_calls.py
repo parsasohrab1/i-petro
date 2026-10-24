@@ -20,7 +20,7 @@ once('  S.db.doc("settings/article_product").onSnapshot(',
      '  S.db.doc("settings/article_product").onSnapshot(')
 once('const artAll = () => [...ARTICLES_SEED, ...S.arts.map(a=>({...a,mine:true}))];',
      'const callsList = () => { const seed=new Set(ARTICLES_SEED.map(x=>x.id)); return Object.values(S.calls||{}).filter(c=>c&&c.id&&c.name&&!seed.has(c.id)).map(c=>({present:"unknown",ver:false,field:"ai_industry",type:"conf",...c,call:true})); };\n'
-     'const callNoProduct = c => c.no_product===true || (c.product_hint==null && apBestFor(c).all.length===0);\n'
+     'const callNoProduct = c => c.no_product!=null ? !!c.no_product : apBestFor(c).all.length===0;\n'
      'const callIsNew = c => c.found && dayDiff(c.found) >= -21;\n'
      'const artAll = () => [...ARTICLES_SEED, ...callsList(), ...S.arts.map(a=>({...a,mine:true}))];')
 once('${a.mine?\' <span class="pill p-info">افزوده‌ی تیم</span>\':""}`,"t")}',

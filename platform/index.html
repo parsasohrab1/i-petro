@@ -1978,7 +1978,7 @@ const ARTICLES_SEED = [
  {id:"p_spe",status0:"applied",field:"oil_gas",name:"SPE Offshore Europe Conference & Exhibition 2027",type:"conf",impact:"—",deadline:"",dl_note:"ارسال شد (شناسه‌ی 27OE-P-17-SPE)",details:"مقاله‌ی ارسالی: Adaptive Multi-Criteria Data Routing System for Heterogeneous Telecommunication Infrastructures in Oil and Gas Fields",present:"unknown",country:"بریتانیا (اسکاتلند)",city:"آبردین",url:"",ver:true}
 ];
 const callsList = () => { const seed=new Set(ARTICLES_SEED.map(x=>x.id)); return Object.values(S.calls||{}).filter(c=>c&&c.id&&c.name&&!seed.has(c.id)).map(c=>({present:"unknown",ver:false,field:"ai_industry",type:"conf",...c,call:true})); };
-const callNoProduct = c => c.no_product===true || (c.product_hint==null && apBestFor(c).all.length===0);
+const callNoProduct = c => c.no_product!=null ? !!c.no_product : apBestFor(c).all.length===0;
 const callIsNew = c => c.found && dayDiff(c.found) >= -21;
 const artAll = () => [...ARTICLES_SEED, ...callsList(), ...S.arts.map(a=>({...a,mine:true}))];
 const artOpen = a => !a.deadline || a.deadline>=today();
