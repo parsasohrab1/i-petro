@@ -248,7 +248,7 @@
    "profile": "easychair",
    "product": "stretchwatch",
    "title": "StretchWatch: Loss of the Hartree–Fock Reference along Bond-Stretching Curves, with Relevance to Quantum Energy Materials",
-   "abstract": "Quantum algorithms for energy materials, such as battery and fuel molecules, often start from the Hartree–Fock (HF) state, but HF becomes a poor approximation of the ground state when bonds are stretched. We quantify this for small molecules in the STO-3G basis, using computed (not measured) Hamiltonians, and combine the overlap of the HF state with the ground state and the entropy of the natural-orbital occupations into a starting-point quality index. For LiH the squared overlap falls from 0.98 near the equilibrium geometry to 0.008 at a bond length of 8 Å, and H2 is checked against the literature energy of −1.1373 Ha. The novelty of the study is low and no patentable claim is made. BeH2 and H2O with an active space, the 6-31G basis, validation against CCSD reference values from PySCF and a motivating link to energy materials with references are [to be measured]. The study offers a simple, reproducible check of when an HF start is unsuitable and a basis for a later comparison with alternative reference states in quantum-energy applications.",
+   "abstract": "Quantum algorithms for energy materials, such as battery and fuel molecules, often start from the Hartree–Fock (HF) state, but HF becomes a poor approximation of the ground state when bonds are stretched. We quantify this for H2, LiH, BeH2 and H2O in the STO-3G basis (and LiH in 6-31G) with Hamiltonians computed in PySCF, not measured, and compare the squared overlap of the HF determinant with the full-configuration-interaction (FCI) ground state and the entropy of the natural-orbital occupations as indicators of starting-point quality. H2 at 0.74 Å reproduces the literature energy of −1.1373 Ha. The squared overlap falls from 0.98 near equilibrium to 0.50 for H2 at 4 Å, 0.56 for LiH at 4 Å, 0.38 for BeH2 at 3.5 Å and 0.36 for H2O at 2.2 Å. Within each molecule, overlap and entropy were almost perfectly rank-anticorrelated (Spearman −0.99 to −1.0), so combining them in one index adds little information. CCSD(T) agreed with FCI to better than 1 mHa near equilibrium and failed at long distances, where a restricted HF calculation can also converge to a wrong ionic solution; five such points are flagged and excluded, including the extreme LiH distance reported earlier. The study offers a simple, reproducible check of when an HF start is unsuitable. Active spaces for larger molecules, other reference states and a link to specific energy materials with references are [to be measured].",
    "keywords": [
     "Hartree–Fock",
     "VQE",
@@ -256,7 +256,7 @@
     "quantum energy",
     "natural-orbital entropy"
    ],
-   "draft_note": "Numbers are the results recorded for this venue in the page database (owner's own runs). Check them against the paper-drafts before use; anything marked [to be measured] has not been measured. The 0.98→0.008 overlap values are the owner's recorded numbers; check them against the repository."
+   "draft_note": "Measured in research/s_icqe_stretchwatch (private repo, branch research-real-data-validation) with PySCF FCI/CCSD(T); replaces the earlier LiH 8 A overlap 0.008, which was an SCF artefact. Re-run before submission."
   },
   "s_cmi": {
    "profile": "bentham",
