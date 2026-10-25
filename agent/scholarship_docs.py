@@ -344,5 +344,67 @@ def admission_plan_doc(state):
     return d.save("ADMISSION_STRENGTH_PLAN.docx")
 
 
+SKILLS = [  # (skill, evidence in this repository, level)
+    ("Python scientific stack (NumPy, pandas, SciPy)", "همه‌ی ماژول‌های research/s_* (۸ ماژول با تست)", "اثبات‌شده"),
+    ("Supervised ML – gradient boosting (scikit-learn HistGradientBoosting)", "StratGuard، HQCA (research/s_eg_stratguard، s_iqim_hqca)", "اثبات‌شده"),
+    ("Uncertainty quantification – split / Mondrian conformal prediction", "StratGuard: پوشش ۰٫۸۸۹ روی ۸۱ چاه FORCE؛ HQCA: ۳٬۸۸۴ ترکیب ChEMBL", "اثبات‌شده"),
+    ("Evaluation under distribution shift (leave-wells-out، worst-group coverage)", "StratGuard: بدترین چاه ۰٫۵۹۹، ۱۹ چاه زیر ۰٫۸۵", "اثبات‌شده"),
+    ("Sequence decoding with domain constraints (Viterbi / transition grammar)", "StratGuard: ۷۲۶ تخطی گرامر به صفر", "اثبات‌شده"),
+    ("Change-point detection and signal processing (ruptures/PELT, SciPy)", "FIDPS روی FORCE 2020 (۶۲ چاه)", "اثبات‌شده"),
+    ("Prognostics – remaining useful life with isotonic calibration", "ApexAsset روی NASA IMS (۴ خرابی یاتاقان)", "اثبات‌شده"),
+    ("Industrial anomaly / alarm design (false-alarm vs recall trade-off)", "IntelliLift روی Petrobras 3W v2 (۱٬۱۱۹ نمونه)", "اثبات‌شده"),
+    ("Cheminformatics (RDKit, scaffold splits)", "HQCA: تقسیم بر پایه‌ی scaffold", "اثبات‌شده"),
+    ("Quantum chemistry and quantum algorithms (PySCF, OpenFermion, VQE/QAOA, classical shadows)", "StretchWatch، Shot-Budget Lab، QGrid؛ نتایج منفی سنجیده‌شده", "اثبات‌شده (محاسباتی)"),
+    ("Power-systems optimisation (pandapower AC power flow, IEEE 9/14 bus)", "QGrid-Part", "اثبات‌شده"),
+    ("Software engineering for research (unit tests, CI, reproducible repos, TRL documentation)", "۱۵ مخزن با سند TRL؛ مثلاً i-drill ۸۸ تست و ۱۱ CI", "اثبات‌شده"),
+    ("Productising AI (digital twins, dashboards, ERP integration)", "۶۵ مخزن و داشبورد هوشمند؛ بسیاری فقط TRL 4 و سینتتیک", "کاربردی (نمونه‌ی اولیه)"),
+    ("Scientific writing and abstracts for venues", "۲۰ چکیده در outputs/abstracts؛ پذیرش هنوز مشخص نیست", "در جریان"),
+]
+LEARN = [
+    "Deep learning با PyTorch روی یک مسئله‌ی همین سبد (مثلاً چاه‌نگاری) و مقایسه با baseline درختی",
+    "روش‌های عدم قطعیت تکمیلی: Bayesian deep ensembles، conformal تحت تغییر توزیع (weighted/adaptive)",
+    "علیت و تصمیم‌گیری تحت عدم قطعیت (cost-sensitive decision theory)",
+    "MLOps: ردیابی آزمایش (MLflow)، داده‌ی نسخه‌دار (DVC)، Docker برای تکرارپذیری",
+    "نگارش علمی: LaTeX، arXiv، ORCID، Google Scholar",
+]
+
+
+def skills_doc():
+    """Skills section for CV / SOP, grounded only in what this repository can prove."""
+    d = Doc()
+    d.para("مهارت‌های هوش مصنوعی – بر پایه‌ی شواهد مخزن برای رزومه و انگیزه‌نامه", True, 16, (31, 58, 95), 2)
+    d.para(f"تاریخ: {date.today().isoformat()} | هر مهارت فقط با شواهدی که در همین مخزن (کد، تست، نتیجه‌ی اندازه‌گیری‌شده) وجود دارد آمده است. "
+           "رزومه‌ی شخصی شما (سال‌ها، مدارک، مقالات پذیرفته‌شده) در اختیار من نیست؛ آن بخش‌ها با [ ] خالی مانده است.", False, 9, (90, 90, 90), 8)
+    d.h("۱) جدول مهارت و شواهد")
+    d.table(["مهارت", "شاهد", "سطح"], SKILLS, [7.0, 8.0, 3.0],
+            {(i, 2): ("D8EFD8" if s[2].startswith("اثبات") else "FFF2CC") for i, s in enumerate(SKILLS)})
+    d.para("")
+    d.h("۲) برنامه‌ی توسعه‌ی مهارت (۶ تا ۸ هفته؛ نه ادعا در رزومه تا انجام نشده)")
+    d.bullets(LEARN)
+
+    en = Doc(rtl=False)
+    en.para("Technical Skills (CV-ready, English)", True, 14, (31, 58, 95), 4)
+    en.para("Research focus: calibrated uncertainty and honest evaluation of machine learning (including quantum ML) for safety-critical industrial and health decisions.", True, 10)
+    for h, items in [
+        ("Machine learning and uncertainty", ["Gradient-boosted models (scikit-learn); split and Mondrian conformal prediction; group-wise (leave-wells-out) evaluation under distribution shift; worst-group coverage analysis",
+                                              "Sequence decoding with domain grammars (Viterbi); change-point detection (PELT); isotonic calibration for remaining-useful-life estimates"]),
+        ("Domain applications (public real-data studies)", ["Well-log facies classification on SEG 2016 (10 wells) and FORCE 2020 (81 wells); alarm design on Petrobras 3W v2 (1,119 real instances); bearing prognostics on NASA IMS; EGFR bioactivity modelling on ChEMBL (3,884 compounds)"]),
+        ("Quantum computing for science", ["PySCF/OpenFermion Hamiltonians, VQE, QAOA and classical-shadow measurement; benchmark studies reporting negative results against classical baselines"]),
+        ("Engineering practice", ["Python, NumPy/pandas/SciPy; unit tests, CI and reproducible repositories; technology-readiness (TRL) documentation; dashboards and digital-twin prototypes"]),
+        ("Languages and tools", ["[Languages: Persian, English (IELTS [score, date]), Turkish [level]]", "[Add only tools you have used in a project]"]),
+    ]:
+        en.para(h, True, 10, None, 2)
+        for it in items:
+            en.para("• " + it, False, 10, None, 2)
+    en.para("")
+    en.para("Statement bullets for the SOP", True, 11, (31, 58, 95), 3)
+    for b in ["I evaluate models the way deployment will: held-out wells, not random splits. On 81 FORCE wells, average conformal coverage met the 0.90 target (0.889) but the worst well reached only 0.599, which is why I study per-group guarantees.",
+              "I report negative results. On Petrobras 3W the false-alarm rate was 0.147 against a 0.10 target, and quantum shot-allocation methods did not beat uniform allocation in my benchmarks.",
+              "I build reproducible systems: tested code, CI and documented readiness levels, so that findings can be re-run by others."]:
+        en.para("• " + b, False, 10, None, 3)
+    en.save("AI_SKILLS_PROFILE_EN.docx")
+    return d.save("AI_SKILLS_PROFILE.docx")
+
+
 def build_all(state):
-    return [opportunities_doc(state), todo_doc(state), derby_kit_doc(), admission_plan_doc(state)]
+    return [opportunities_doc(state), todo_doc(state), derby_kit_doc(), admission_plan_doc(state), skills_doc()]
