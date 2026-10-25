@@ -315,6 +315,9 @@
     "interval_days": 7,
     "max_countries_per_run": 2
   },
+  "scholarships": {
+    "update_every_days": 1
+  },
   "events": {
     "update_every_days": 1,
     "horizon_months": 12
