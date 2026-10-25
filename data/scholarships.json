@@ -71,9 +71,9 @@
     "master"
    ],
    "field": "مهندسی، انرژی، هوش مصنوعی، محیط‌زیست و …",
-   "support": "شهریه کامل + سفر + حقوق ماهیانه (حدود ۱٬۴۰۰ یورو) + بیمه",
+   "support": "شهریه کامل + حدود ۱٬۴۰۰ یورو در ماه + سفر/بیمه (طبق منابع ثانویه)",
    "deadline": "2027-01-15",
-   "deadline_note": "بسته به برنامه از دسامبر تا فوریه",
+   "deadline_note": "هر برنامه مهلت جدا دارد؛ مهلت‌های تأییدشده از ۱ دسامبر ۲۰۲۶ تا ۱ فوریه ۲۰۲۷؛ ۳۷ برنامه‌ی جدید برای سپتامبر ۲۰۲۷ اعلام شد",
    "url": "https://erasmus-plus.ec.europa.eu/opportunities/opportunities-for-individuals/students/erasmus-mundus-joint-masters",
    "source": "platform seed (researched earlier)",
    "ai_relevant": true,
@@ -1053,6 +1053,83 @@
    "ai_relevant": false,
    "origin": "seed",
    "note": "باز است. برای کشورهای در حال توسعه؛ بازگشت به کشور اقامت الزامی؛ منابع اختلاف دارند که DPhil را شامل می‌شود یا نه (یکی می‌گوید خیر). گزینه را در فرم Oxford انتخاب و Statement جدا بارگذاری کنید",
+   "status": "new"
+  },
+  "emjm_imaging": {
+   "id": "emjm_imaging",
+   "name": "Erasmus Mundus – Joint Master in Imaging (EMJM Imaging)",
+   "uni": "کنسرسیوم دانشگاه‌های اروپایی – تصویربرداری",
+   "field": "تصویربرداری و پردازش تصویر (پزشکی/علمی) با یادگیری ماشین",
+   "support": "شهریه کامل + حدود ۱٬۴۰۰ یورو در ماه (Erasmus Mundus Scholarship؛ تأیید در سایت برنامه)",
+   "deadline": "2027-01-12",
+   "deadline_note": "دور اول: ۲۳ نوامبر ۲۰۲۶ تا ۱۲ ژانویه ۲۰۲۷؛ برای شهروندان غیر EU/EEA هم باز؛ نتیجه آوریل ۲۰۲۷",
+   "url": "https://www.emjm-imaging.eu/",
+   "source": "emjm-imaging.eu (جست‌وجوی ۲۰۲۶-۱۰-۲۵)",
+   "ai_relevant": true,
+   "origin": "seed",
+   "region": "europe",
+   "levels": [
+    "master"
+   ],
+   "country": "چند کشور اروپایی",
+   "status": "new"
+  },
+  "maia": {
+   "id": "maia",
+   "name": "Erasmus Mundus – MAIA: Medical Imaging and Applications (دوره‌ی ۲۰۲۷–۲۰۲۹)",
+   "uni": "University of Girona، Cassino، Burgundy (Dijon)",
+   "field": "تصویربرداری پزشکی و هوش مصنوعی",
+   "support": "شهریه کامل + حدود ۱٬۴۰۰ یورو در ماه (Erasmus Mundus Scholarship؛ تأیید در سایت برنامه)",
+   "deadline": "2027-02-28",
+   "deadline_note": "موقت: فراخوان بورس نوامبر ۲۰۲۶ تا فوریه ۲۰۲۷؛ خودتأمین تا مه ۲۰۲۷؛ سایت رسمی هنوز تأیید نهایی نکرده",
+   "url": "https://maiamaster.udg.edu/admission/",
+   "source": "maiamaster.udg.edu + aggregator",
+   "note": "نسخه‌ی ۲۰۲۶–۲۰۲۸ برگزار نمی‌شود؛ ۲۰۲۷–۲۰۲۹ تمدید شده",
+   "ai_relevant": true,
+   "origin": "seed",
+   "region": "europe",
+   "levels": [
+    "master"
+   ],
+   "country": "چند کشور اروپایی",
+   "status": "new"
+  },
+  "membiomed": {
+   "id": "membiomed",
+   "name": "Erasmus Mundus – MemBioMed (غشاهای زیستی و زیست‌پزشکی)",
+   "uni": "Université Côte d'Azur و دانشگاه‌های شریک",
+   "field": "مهندسی زیست‌پزشکی و غشاهای زیستی (ارتباط AI محدود)",
+   "support": "شهریه کامل + حدود ۱٬۴۰۰ یورو در ماه (Erasmus Mundus Scholarship؛ تأیید در سایت برنامه)",
+   "deadline": "2027-02-28",
+   "deadline_note": "درخواست از ۱ دسامبر ۲۰۲۶؛ کشورهای شریک تا ۲۸ فوریه ۲۰۲۷، کشورهای برنامه تا ۳۱ مارس ۲۰۲۷",
+   "url": "https://life.univ-cotedazur.eu/international/membiomed/how-to-apply",
+   "source": "univ-cotedazur.eu",
+   "ai_relevant": true,
+   "origin": "seed",
+   "region": "europe",
+   "levels": [
+    "master"
+   ],
+   "country": "چند کشور اروپایی",
+   "status": "new"
+  },
+  "emmah": {
+   "id": "emmah",
+   "name": "Erasmus Mundus – EMMaH (فناوری پزشکی و کسب‌وکار سلامت)",
+   "uni": "کنسرسیوم EMMaH",
+   "field": "فناوری پزشکی و مدیریت سلامت (AI کم‌رنگ)",
+   "support": "شهریه کامل + حدود ۱٬۴۰۰ یورو در ماه (Erasmus Mundus Scholarship؛ تأیید در سایت برنامه)",
+   "deadline": "2027-01-31",
+   "deadline_note": "ژانویه ۲۰۲۷ (منبع ثانویه؛ تاریخ دقیق نامشخص)",
+   "url": "https://erasmus-plus.ec.europa.eu/opportunities/opportunities-for-individuals/students/erasmus-mundus-joint-masters",
+   "source": "erasmusscholarship.com (2026-10)",
+   "ai_relevant": true,
+   "origin": "seed",
+   "region": "europe",
+   "levels": [
+    "master"
+   ],
+   "country": "چند کشور اروپایی",
    "status": "new"
   }
  },
