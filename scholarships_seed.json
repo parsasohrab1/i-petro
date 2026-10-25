@@ -909,6 +909,80 @@
    "levels": [
     "phd"
    ]
+  },
+  {
+   "id": "ca_admission",
+   "name": "Canada – PhD با تأمین مالی استاد/دانشگاه (Toronto، McGill، UBC، Alberta، Waterloo)",
+   "uni": "دانشگاه‌های پژوهشی کانادا",
+   "field": "هوش مصنوعی، علوم کامپیوتر، مهندسی نفت و انرژی",
+   "support": "بسته‌ی مالی دانشگاه + منابع استاد (شهریه و حقوق)؛ مبلغ بسته به دانشگاه",
+   "deadline": "2027-01-15",
+   "deadline_note": "معمولاً ۱ دسامبر ۲۰۲۶ تا ۱۵ ژانویه ۲۰۲۷ برای پاییز ۲۰۲۷ (منبع ثانویه؛ هر دانشگاه تأیید شود)",
+   "url": "https://www.univcan.ca/universities/find-a-university/",
+   "source": "pforphd / scholarshippath (2026-10)",
+   "note": "مسیر اصلی برای غیرکانادایی‌ها: ایمیل به استاد + درخواست پذیرش. بورس‌های فدرال (CGRS-D، Vanier) و Trudeau عمدتاً برای شهروند/مقیم دائم یا دانشجوی ثبت‌نام‌شده‌اند و Trudeau فقط علوم انسانی/اجتماعی است",
+   "ai_relevant": true,
+   "origin": "seed",
+   "region": "other",
+   "country": "کانادا",
+   "levels": [
+    "phd"
+   ]
+  },
+  {
+   "id": "mila",
+   "name": "Mila (مونترال) – درخواست استاد راهنما، پاییز ۲۰۲۷",
+   "uni": "Mila – Quebec AI Institute (McGill، Université de Montréal)",
+   "field": "یادگیری ماشین و هوش مصنوعی",
+   "support": "تأمین مالی از طریق استاد/دانشگاه؛ بورس مستقل نیست",
+   "deadline": "2026-12-01",
+   "deadline_note": "۱ دسامبر ۲۰۲۶ – مرحله‌ی تطبیق با استاد، نه بورس",
+   "url": "https://mila.quebec/en/prospective-students/",
+   "source": "mila.quebec (جست‌وجوی ۲۰۲۶-۱۰-۲۵)",
+   "ai_relevant": true,
+   "origin": "seed",
+   "region": "other",
+   "country": "کانادا",
+   "levels": [
+    "phd"
+   ]
+  },
+  {
+   "id": "vector_gsp",
+   "name": "Vector Institute Graduate Student Program (انتاریو)",
+   "uni": "Vector Institute (Toronto، Waterloo و …)",
+   "field": "هوش مصنوعی و یادگیری ماشین",
+   "support": "تأمین مالی تأیید نشده؛ ورودی برنامه‌ی دانشجویی Vector (جایزه‌ی Vector Scholarship ۱۷٬۵۰۰ دلار فقط ارشد است)",
+   "deadline": "2027-01-15",
+   "deadline_note": "۱۵ ژانویه ۲۰۲۷ در پورتال Vector؛ مهلت دانشگاه‌ها ممکن است زودتر باشد",
+   "url": "https://vectorinstitute.ai/research-talent/students/graduate-student-program/",
+   "source": "vectorinstitute.ai",
+   "ai_relevant": true,
+   "origin": "seed",
+   "region": "other",
+   "country": "کانادا",
+   "levels": [
+    "phd"
+   ]
+  },
+  {
+   "id": "nvidia_fellow",
+   "name": "NVIDIA Graduate Fellowship (جهانی، شامل دانشجویان دانشگاه‌های کانادا)",
+   "uni": "دانشجوی دکتری در دانشگاه‌های معتبر",
+   "field": "محاسبات شتاب‌یافته و هوش مصنوعی",
+   "support": "تا ۶۰ هزار دلار برای هر جایزه (طبق منبع ثانویه)",
+   "deadline": "2026-10-30",
+   "deadline_note": "۳۰ اکتبر ۲۰۲۶ (۵ روز دیگر)؛ واجد شرایط بودن دانشجوی ایرانی و نیاز به ثبت‌نام فعلی در دکتری تأیید شود",
+   "url": "https://www.nvidia.com/en-us/research/graduate-fellowships/",
+   "source": "pforphd / aggregator (2026-10)",
+   "note": "معمولاً برای کسانی که همین حالا دانشجوی دکتری‌اند؛ برای متقاضی تازه کاربرد ندارد مگر تأیید شود",
+   "ai_relevant": true,
+   "origin": "seed",
+   "region": "other",
+   "country": "کانادا",
+   "levels": [
+    "phd"
+   ]
   }
  ]
 }
