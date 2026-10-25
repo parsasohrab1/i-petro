@@ -852,6 +852,63 @@
    "ai_relevant": true,
    "note": "",
    "origin": "seed"
+  },
+  {
+   "id": "ucph_phd",
+   "name": "University of Copenhagen (KU) – PhD fellowships (آگهی‌های مستمر)",
+   "uni": "University of Copenhagen – Department of Computer Science / Pioneer Centre for AI",
+   "field": "یادگیری ماشین، هوش مصنوعی، علوم زیستی محاسباتی",
+   "support": "موقعیت دکتری با حقوق و قرارداد کاری (۳ سال)؛ بدون شهریه",
+   "deadline": "",
+   "deadline_note": "هر آگهی مهلت جدا دارد؛ آگهی‌های ML ارسال‌شده قبلی (۲ آگوست و ۱۵ سپتامبر ۲۰۲۶) بسته‌اند؛ پورتال را هفتگی ببینید",
+   "url": "https://employment.ku.dk/phd/",
+   "source": "جست‌وجوی وب ۲۰۲۶-۱۰-۲۵ (academicpositions / aicentre.dk)",
+   "note": "درخواست مستقیم به آگهی؛ رزومه‌ی پژوهشی و توصیه‌نامه ملاک است",
+   "ai_relevant": true,
+   "origin": "seed",
+   "region": "europe",
+   "country": "دانمارک",
+   "levels": [
+    "phd"
+   ]
+  },
+  {
+   "id": "ucph_msca_ai_reg",
+   "name": "KU – PhD Fellowship: Street-level Bureaucracy of Regulatory Implementation for AI (MSCA)",
+   "uni": "University of Copenhagen – Department of Computer Science",
+   "field": "هوش مصنوعی و مقررات (حقوق/سیاست‌گذاری فناوری؛ تناسب با زمینه‌ی مهندسی شما محدود است)",
+   "support": "MSCA Doctoral Network، ۳ سال، حقوق؛ مبلغ در آگهی ذکر نشده",
+   "deadline": "2026-11-22",
+   "deadline_note": "۲۲ نوامبر ۲۰۲۶ ساعت ۲۳:۵۹ (GMT+1)",
+   "url": "https://www.applykite.com/positions/phd-fellowship-in-street-level-bureaucracy-of-regulatory-implementation-for-ai-at-the-university-of-copenhagen-58j8b0o3mh",
+   "source": "applykite (آگهی KU)",
+   "note": "قانون تحرک MSCA را بررسی کنید؛ پیش از درخواست آگهی رسمی KU را بخوانید",
+   "ai_relevant": true,
+   "origin": "seed",
+   "region": "europe",
+   "country": "دانمارک",
+   "levels": [
+    "phd"
+   ]
+  },
+  {
+   "id": "dtu_phd",
+   "name": "DTU (Lyngby، حومه‌ی کپنهاگ) – PhD scholarships in AI/ML",
+   "uni": "Technical University of Denmark (DTU) – DTU Compute / DTU Energy",
+   "field": "یادگیری ماشین، هوش مصنوعی، انرژی و شیمی محاسباتی",
+   "support": "موقعیت دکتری با حقوق؛ بدون شهریه",
+   "deadline": "",
+   "deadline_note": "آگهی‌های AI/ML فعلی (۳۰ سپتامبر و ۱۲ اکتبر ۲۰۲۶) بسته شده‌اند؛ آگهی‌های جدید را در پورتال DTU دنبال کنید",
+   "url": "https://www.dtu.dk/english/about/job-and-career/vacant-positions",
+   "source": "جست‌وجوی وب ۲۰۲۶-۱۰-۲۵ (aggregatorها)",
+   "note": "DTU Energy و DTU Compute با موضوع انرژی و ML به زمینه‌ی شما نزدیک‌اند",
+   "ai_relevant": true,
+   "origin": "seed",
+   "region": "europe",
+   "country": "دانمارک",
+   "levels": [
+    "phd"
+   ]
   }
  ]
 }
