@@ -1,0 +1,902 @@
+{
+ "scholarships": {
+  "turkiye": {
+   "id": "turkiye",
+   "name": "Türkiye Burslari (ترکیه)",
+   "country": "ترکیه",
+   "region": "other",
+   "uni": "دانشگاه‌های ترکیه (ODTÜ، İTÜ، Boğaziçi، Ankara و …)",
+   "levels": [
+    "master",
+    "phd"
+   ],
+   "field": "همه‌ی رشته‌ها",
+   "support": "شهریه کامل + خوابگاه + حقوق ماهیانه + بلیت رفت‌وبرگشت + بیمه + یک سال زبان ترکی",
+   "deadline": "2027-02-20",
+   "deadline_note": "معمولاً اوایل تا اواسط فوریه",
+   "url": "https://turkiyeburslari.gov.tr",
+   "source": "platform seed (researched earlier)",
+   "ai_relevant": true,
+   "note": "",
+   "origin": "seed",
+   "status": "new"
+  },
+  "daad_epos": {
+   "id": "daad_epos",
+   "name": "DAAD EPOS (ارشد، آلمان)",
+   "country": "آلمان",
+   "region": "europe",
+   "uni": "دانشگاه‌های آلمان (برنامه‌های EPOS)",
+   "levels": [
+    "master"
+   ],
+   "field": "رشته‌های مرتبط با توسعه (مهندسی، انرژی، محیط‌زیست، مدیریت و …)",
+   "support": "شهریه + حقوق ماهیانه (حدود ۹۰۰ تا ۱٬۰۰۰ یورو) + بیمه + سفر",
+   "deadline": "2026-10-31",
+   "deadline_note": "بسته به برنامه از اوت تا اکتبر/نوامبر",
+   "url": "https://www2.daad.de/deutschland/studienangebote/",
+   "source": "platform seed (researched earlier)",
+   "ai_relevant": true,
+   "note": "",
+   "origin": "seed",
+   "status": "new"
+  },
+  "daad_phd": {
+   "id": "daad_phd",
+   "name": "DAAD Research Grants (دکتری، آلمان)",
+   "country": "آلمان",
+   "region": "europe",
+   "uni": "دانشگاه‌ها و مؤسسات پژوهشی آلمان",
+   "levels": [
+    "phd"
+   ],
+   "field": "همه‌ی رشته‌ها",
+   "support": "حقوق ماهیانه (حدود ۱٬۲۰۰ یورو) + بیمه + کمک‌هزینه‌ی سفر و پژوهش",
+   "deadline": "2026-11-15",
+   "deadline_note": "معمولاً اوایل تا اواسط نوامبر",
+   "url": "https://www.daad.de/en/study-and-research-in-germany/scholarships/",
+   "source": "platform seed (researched earlier)",
+   "ai_relevant": true,
+   "note": "",
+   "origin": "seed",
+   "status": "new"
+  },
+  "erasmus": {
+   "id": "erasmus",
+   "name": "Erasmus Mundus Joint Masters",
+   "country": "چند کشور اروپایی",
+   "region": "europe",
+   "uni": "کنسرسیوم دانشگاه‌های اروپایی (Erasmus Mundus Joint Masters)",
+   "levels": [
+    "master"
+   ],
+   "field": "مهندسی، انرژی، هوش مصنوعی، محیط‌زیست و …",
+   "support": "شهریه کامل + سفر + حقوق ماهیانه (حدود ۱٬۴۰۰ یورو) + بیمه",
+   "deadline": "2027-01-15",
+   "deadline_note": "بسته به برنامه از دسامبر تا فوریه",
+   "url": "https://erasmus-plus.ec.europa.eu/opportunities/opportunities-for-individuals/students/erasmus-mundus-joint-masters",
+   "source": "platform seed (researched earlier)",
+   "ai_relevant": true,
+   "note": "",
+   "origin": "seed",
+   "status": "new"
+  },
+  "si": {
+   "id": "si",
+   "name": "Swedish Institute Global Professionals / SISGP",
+   "country": "سوئد",
+   "region": "europe",
+   "uni": "دانشگاه‌های سوئد (KTH، Chalmers، Lund، Uppsala و …)",
+   "levels": [
+    "master"
+   ],
+   "field": "همه‌ی رشته‌ها",
+   "support": "شهریه کامل + حقوق ماهیانه (حدود ۱۵٬۰۰۰ کرون) + بیمه + کمک‌هزینه سفر",
+   "deadline": "2027-02-10",
+   "deadline_note": "معمولاً اوایل فوریه؛ واجد شرایط بودن ایران را تأیید کنید",
+   "url": "https://si.se/en/apply/scholarships/",
+   "source": "platform seed (researched earlier)",
+   "ai_relevant": true,
+   "note": "",
+   "origin": "seed",
+   "status": "new"
+  },
+  "kaust": {
+   "id": "kaust",
+   "name": "KAUST Fellowship",
+   "country": "عربستان سعودی",
+   "region": "other",
+   "uni": "KAUST",
+   "levels": [
+    "master",
+    "phd"
+   ],
+   "field": "مهندسی شیمی، نفت، انرژی، علوم کامپیوتر و هوش مصنوعی",
+   "support": "شهریه کامل + حقوق ماهیانه + خوابگاه + بیمه",
+   "deadline": "2027-01-15",
+   "deadline_note": "مهلت اولویت‌دار معمولاً ۱۵ ژانویه",
+   "url": "https://www.kaust.edu.sa/en/study/admissions",
+   "source": "platform seed (researched earlier)",
+   "ai_relevant": true,
+   "note": "",
+   "origin": "seed",
+   "status": "new"
+  },
+  "mext": {
+   "id": "mext",
+   "name": "MEXT Scholarship (ژاپن)",
+   "country": "ژاپن",
+   "region": "other",
+   "uni": "دانشگاه‌های ژاپن (Tokyo، Kyoto، Tohoku، Kyushu و …)",
+   "levels": [
+    "master",
+    "phd"
+   ],
+   "field": "همه‌ی رشته‌ها",
+   "support": "شهریه کامل + حقوق ماهیانه (حدود ۱۴۵٬۰۰۰ ین) + سفر",
+   "deadline": "2027-05-15",
+   "deadline_note": "از طریق سفارت؛ معمولاً اردیبهشت تا خرداد",
+   "url": "https://www.studyinjapan.go.jp/en/",
+   "source": "platform seed (researched earlier)",
+   "ai_relevant": true,
+   "note": "",
+   "origin": "seed",
+   "status": "new"
+  },
+  "gks": {
+   "id": "gks",
+   "name": "Global Korea Scholarship (GKS)",
+   "country": "کره‌ی جنوبی",
+   "region": "other",
+   "uni": "دانشگاه‌های کره‌ی جنوبی (KAIST، SNU، POSTECH و …)",
+   "levels": [
+    "master",
+    "phd"
+   ],
+   "field": "همه‌ی رشته‌ها",
+   "support": "شهریه کامل + حقوق ماهیانه (حدود ۹۰۰٬۰۰۰ وون) + سفر + بیمه + سال زبان کره‌ای",
+   "deadline": "2027-03-10",
+   "deadline_note": "مسیر سفارت یا دانشگاه؛ حدود فوریه تا مارس",
+   "url": "https://www.studyinkorea.go.kr",
+   "source": "platform seed (researched earlier)",
+   "ai_relevant": true,
+   "note": "",
+   "origin": "seed",
+   "status": "new"
+  },
+  "hungary": {
+   "id": "hungary",
+   "name": "Stipendium Hungaricum (مجارستان)",
+   "country": "مجارستان",
+   "region": "europe",
+   "uni": "دانشگاه‌های مجارستان (BME، Debrecen، Szeged و …)",
+   "levels": [
+    "master",
+    "phd"
+   ],
+   "field": "همه‌ی رشته‌ها",
+   "support": "شهریه رایگان + حقوق ماهیانه + خوابگاه/کمک‌هزینه مسکن + بیمه",
+   "deadline": "2027-01-15",
+   "deadline_note": "معمولاً ۱۵ ژانویه",
+   "url": "https://stipendiumhungaricum.hu",
+   "source": "platform seed (researched earlier)",
+   "ai_relevant": true,
+   "note": "",
+   "origin": "seed",
+   "status": "new"
+  },
+  "eth": {
+   "id": "eth",
+   "name": "ETH Zurich Excellence Scholarship (ESOP)",
+   "country": "سوئیس",
+   "region": "europe",
+   "uni": "ETH Zurich (ESOP)",
+   "levels": [
+    "master"
+   ],
+   "field": "مهندسی، علوم کامپیوتر، علوم پایه",
+   "support": "معافیت شهریه + حقوق ماهیانه (حدود ۱۲٬۰۰۰ فرانک در هر ترم برای هزینه‌ی زندگی)",
+   "deadline": "2026-12-15",
+   "deadline_note": "معمولاً ۱۵ دسامبر",
+   "url": "https://ethz.ch/students/en/studies/financial/scholarships/excellence-scholarship.html",
+   "source": "platform seed (researched earlier)",
+   "ai_relevant": true,
+   "note": "",
+   "origin": "seed",
+   "status": "new"
+  },
+  "eiffel": {
+   "id": "eiffel",
+   "name": "Eiffel Excellence (فرانسه)",
+   "country": "فرانسه",
+   "region": "europe",
+   "uni": "مؤسسات آموزش عالی فرانسه (از طریق نامزدی دانشگاه)",
+   "levels": [
+    "master",
+    "phd"
+   ],
+   "field": "مهندسی، اقتصاد/مدیریت، حقوق و علوم",
+   "support": "حقوق ماهیانه (حدود ۱٬۲۰۰ تا ۲٬۰۰۰ یورو) + سفر + بیمه",
+   "deadline": "2027-01-06",
+   "deadline_note": "مهلت دریافت پرونده توسط Campus France: ۶ ژانویه ۲۰۲۷؛ نامزدی را دانشگاه فرانسوی ثبت می‌کند",
+   "url": "https://www.campusfrance.org/en/eiffel-scholarship-program-of-excellence",
+   "source": "platform seed (researched earlier)",
+   "ai_relevant": true,
+   "note": "",
+   "origin": "seed",
+   "status": "new"
+  },
+  "gates": {
+   "id": "gates",
+   "name": "Gates Cambridge",
+   "country": "بریتانیا",
+   "region": "uk",
+   "uni": "University of Cambridge",
+   "levels": [
+    "master",
+    "phd"
+   ],
+   "field": "همه‌ی رشته‌ها",
+   "support": "شهریه کامل + حقوق ماهیانه + سفر + هزینه‌ی خانواده",
+   "deadline": "2026-12-08",
+   "deadline_note": "۸ دسامبر ۲۰۲۶ (برخی دوره‌ها ۶ ژانویه ۲۰۲۷)؛ منابع اختلاف دارند، در سایت رسمی تأیید شود",
+   "url": "https://www.gatescambridge.org",
+   "source": "platform seed (researched earlier)",
+   "ai_relevant": true,
+   "note": "",
+   "origin": "seed",
+   "status": "new"
+  },
+  "chevening": {
+   "id": "chevening",
+   "name": "Chevening (ارشد یک‌ساله)",
+   "country": "بریتانیا",
+   "region": "uk",
+   "uni": "دانشگاه‌های بریتانیا (کارشناسی‌ارشد یک‌ساله)",
+   "levels": [
+    "master"
+   ],
+   "field": "همه‌ی رشته‌ها",
+   "support": "شهریه کامل + حقوق ماهیانه + سفر + ویزا",
+   "deadline": "2026-10-06",
+   "deadline_note": "دور ۲۰۲۷ بسته شد (۶ اکتبر ۲۰۲۶)؛ دور بعد معمولاً از اوت ۲۰۲۷",
+   "url": "https://www.chevening.org",
+   "source": "platform seed (researched earlier)",
+   "ai_relevant": true,
+   "note": "",
+   "origin": "seed",
+   "status": "new"
+  },
+  "hbku": {
+   "id": "hbku",
+   "name": "HBKU Graduate Assistantship (قطر)",
+   "country": "قطر",
+   "region": "other",
+   "uni": "Hamad Bin Khalifa University (HBKU) – College of Science and Engineering",
+   "levels": [
+    "master",
+    "phd"
+   ],
+   "field": "Sustainable Energy، Computer Science & Engineering، Data Science and AI (College of Science and Engineering)",
+   "support": "شهریه کامل + حقوق ماهیانه + مسکن + بیمه + بلیت",
+   "deadline": "2027-01-15",
+   "deadline_note": "دوره‌ی پاییز؛ تقریبی",
+   "url": "https://www.hbku.edu.qa/en/admissions",
+   "source": "platform seed (researched earlier)",
+   "ai_relevant": true,
+   "note": "",
+   "origin": "seed",
+   "status": "new"
+  },
+  "tum": {
+   "id": "tum",
+   "name": "TUM PhD / DAAD–TUM (مونیخ)",
+   "country": "آلمان",
+   "region": "europe",
+   "uni": "Technical University of Munich (TUM)",
+   "levels": [
+    "phd",
+    "master"
+   ],
+   "field": "مهندسی مکانیک/انرژی (TUM School of Engineering and Design)، انفورماتیک و هوش مصنوعی (TUM School of Computation, Information and Technology)",
+   "support": "دکتری: قرارداد کاری با حقوق ماهیانه + بیمه؛ ارشد: بورسیه‌های محدود (DAAD و بنیادها)",
+   "deadline": "2027-01-31",
+   "deadline_note": "دکتری: بسته به آگهی استاد (مستمر)؛ ارشد: بهمن تا اردیبهشت",
+   "url": "https://www.tum.de/en/studies/fees-and-financial-aid/scholarships",
+   "source": "platform seed (researched earlier)",
+   "ai_relevant": true,
+   "note": "",
+   "origin": "seed",
+   "status": "new"
+  },
+  "austria": {
+   "id": "austria",
+   "name": "برنامه‌ی اتریش (از لینک شما – باید تأیید شود)",
+   "country": "اتریش",
+   "region": "europe",
+   "uni": "دانشگاه‌های اتریش (برنامه‌ی لینک ارسالی – tinyurl.com/25yyhz9o)",
+   "levels": [
+    "master",
+    "phd"
+   ],
+   "field": "تعیین نشده – از لینک شما باید مشخص شود",
+   "support": "نام دقیق برنامه و مبلغ حقوق را پس از باز کردن لینک تکمیل می‌کنم؛ لینک از این محیط باز نشد",
+   "deadline": "2027-03-01",
+   "deadline_note": "نامشخص",
+   "url": "https://tinyurl.com/25yyhz9o",
+   "source": "platform seed (researched earlier)",
+   "ai_relevant": true,
+   "note": "",
+   "origin": "seed",
+   "status": "new"
+  },
+  "norway": {
+   "id": "norway",
+   "name": "Norway Salaried PhD (NTNU / UiS / UiO / UiB)",
+   "country": "نروژ",
+   "region": "europe",
+   "uni": "NTNU (Trondheim)، University of Stavanger (UiS)، University of Oslo (UiO)، University of Bergen (UiB)",
+   "levels": [
+    "phd"
+   ],
+   "field": "Petroleum Engineering (University of Stavanger، NTNU)، هوش مصنوعی و علوم داده، مهندسی",
+   "support": "حقوق ماهیانه (حدود ۴۵ تا ۵۰ هزار کرون) + بیمه + بدون شهریه",
+   "deadline": "2026-12-01",
+   "deadline_note": "آگهی‌ها مستمر؛ هر آگهی مهلت جدا دارد",
+   "url": "https://www.jobbnorge.no",
+   "source": "platform seed (researched earlier)",
+   "ai_relevant": true,
+   "note": "",
+   "origin": "seed",
+   "status": "new"
+  },
+  "edinburgh": {
+   "id": "edinburgh",
+   "name": "Edinburgh Global Research Scholarship",
+   "country": "بریتانیا (اسکاتلند)",
+   "region": "uk",
+   "uni": "The University of Edinburgh",
+   "levels": [
+    "phd",
+    "master"
+   ],
+   "field": "School of Engineering (Institute for Infrastructure & Environment، Petroleum/Energy)، School of Informatics (AI)",
+   "support": "شهریه + حقوق ماهیانه (stipend) + هزینه‌ی پژوهش؛ ارشد: بورسیه‌های جزئی",
+   "deadline": "2027-01-15",
+   "deadline_note": "بسته به مدرسه؛ معمولاً ژانویه",
+   "url": "https://www.ed.ac.uk/studying/postgraduate/fees-and-costs/scholarships",
+   "source": "platform seed (researched earlier)",
+   "ai_relevant": true,
+   "note": "",
+   "origin": "seed",
+   "status": "new"
+  },
+  "netherlands": {
+   "id": "netherlands",
+   "name": "Netherlands PhD positions (TU Delft / Twente / TU/e)",
+   "country": "هلند",
+   "region": "europe",
+   "uni": "Delft University of Technology (TU Delft)، University of Twente، Eindhoven University of Technology (TU/e)",
+   "levels": [
+    "phd"
+   ],
+   "field": "Petroleum/Geoscience & Engineering (TU Delft)، Electrical Engineering, Mathematics & Computer Science، Data Science/AI",
+   "support": "حقوق ماهیانه (حدود ۳٬۰۰۰ تا ۴٬۰۰۰ یورو ناخالص) + بیمه + بدون شهریه",
+   "deadline": "2027-01-31",
+   "deadline_note": "آگهی‌ها مستمر؛ هر موقعیت مهلت جدا دارد",
+   "url": "https://www.academictransfer.com",
+   "source": "platform seed (researched earlier)",
+   "ai_relevant": true,
+   "note": "",
+   "origin": "seed",
+   "status": "new"
+  },
+  "crick": {
+   "id": "crick",
+   "name": "Francis Crick Institute PhD",
+   "country": "بریتانیا",
+   "region": "uk",
+   "uni": "The Francis Crick Institute (مدرک از طریق UCL / Imperial / King's College London)",
+   "levels": [
+    "phd"
+   ],
+   "field": "علوم زیستی و پزشکی (زیست‌شناسی محاسباتی، سرطان، نوروساینس، ژنومیک)",
+   "support": "شهریه کامل + حقوق ماهیانه (حدود ۲۷ هزار پوند در سال) + هزینه‌ی پژوهش",
+   "deadline": "2026-11-03",
+   "deadline_note": "اوایل نوامبر؛ تأیید شود",
+   "url": "https://www.crick.ac.uk/study-and-train/phd-programme",
+   "source": "platform seed (researched earlier)",
+   "ai_relevant": true,
+   "note": "",
+   "origin": "seed",
+   "status": "new"
+  },
+  "commonwealth": {
+   "id": "commonwealth",
+   "name": "Commonwealth Scholarships (UK)",
+   "country": "بریتانیا",
+   "region": "uk",
+   "uni": "دانشگاه‌های بریتانیا (از طریق Commonwealth Scholarship Commission)",
+   "levels": [
+    "master",
+    "phd"
+   ],
+   "field": "همه‌ی رشته‌ها (برای شهروندان کشورهای مشترک‌المنافع)",
+   "support": "شهریه کامل + حقوق ماهیانه + سفر",
+   "deadline": "2026-10-20",
+   "deadline_note": "یک منبع ۲۰ اکتبر ۲۰۲۶ را نوشته (احتمالاً بسته شده)؛ فقط کشورهای واجد شرایط",
+   "url": "https://cscuk.fcdo.gov.uk",
+   "source": "platform seed (researched earlier)",
+   "ai_relevant": true,
+   "note": "",
+   "origin": "seed",
+   "status": "new"
+  },
+  "eskas": {
+   "id": "eskas",
+   "name": "Swiss Government Excellence Scholarships (PhD)",
+   "country": "سوئیس",
+   "region": "europe",
+   "uni": "ETH Zurich، EPFL، University of Zurich، University of Bern و سایر دانشگاه‌های سوئیس (Swiss Government Excellence Scholarships – FCS)",
+   "levels": [
+    "phd"
+   ],
+   "field": "پژوهش در همه‌ی رشته‌ها (دکتری و پسادکتری): مهندسی، علوم کامپیوتر، علوم زیستی",
+   "support": "حقوق ماهیانه (حدود ۱٬۹۲۰ فرانک) + بدون شهریه + بیمه + مسکن + سفر",
+   "deadline": "2026-11-15",
+   "deadline_note": "مهلت بر اساس کشور مبدأ؛ از طریق سفارت سوئیس در تهران تأیید شود",
+   "url": "https://www.sbfi.admin.ch/scholarships-eng",
+   "source": "platform seed (researched earlier)",
+   "ai_relevant": true,
+   "note": "",
+   "origin": "seed",
+   "status": "new"
+  },
+  "singa": {
+   "id": "singa",
+   "name": "SINGA A*STAR (سنگاپور)",
+   "country": "سنگاپور",
+   "region": "other",
+   "uni": "A*STAR Graduate Academy (SINGA) با National University of Singapore (NUS)، Nanyang Technological University (NTU)، SUTD، SMU",
+   "levels": [
+    "phd"
+   ],
+   "field": "Engineering Science، Computing & Data/AI، علوم زیستی و پزشکی (مؤسسات A*STAR)",
+   "support": "شهریه کامل + حقوق ماهیانه (حدود ۲٬۷۰۰ دلار سنگاپور) + کمک‌هزینه‌ی مسکن و سفر",
+   "deadline": "2026-12-01",
+   "deadline_note": "دوره‌ی اوت؛ ۱ دسامبر (دوره‌ی ژانویه: ۱ ژوئن)",
+   "url": "https://www.a-star.edu.sg/Scholarships/for-graduate-studies/singapore-international-graduate-award-singa",
+   "source": "platform seed (researched earlier)",
+   "ai_relevant": true,
+   "note": "",
+   "origin": "seed",
+   "status": "new"
+  },
+  "aus_awards": {
+   "id": "aus_awards",
+   "name": "Australia Awards",
+   "country": "استرالیا",
+   "region": "other",
+   "uni": "دانشگاه‌های استرالیا (از طریق Australia Awards – DFAT)",
+   "levels": [
+    "master",
+    "phd"
+   ],
+   "field": "همه‌ی رشته‌ها (برای کشورهای هدف DFAT)",
+   "support": "شهریه کامل + حقوق ماهیانه + سفر + بیمه",
+   "deadline": "2027-04-30",
+   "deadline_note": "معمولاً فوریه تا آوریل",
+   "url": "https://www.dfat.gov.au/people-to-people/australia-awards",
+   "source": "platform seed (researched earlier)",
+   "ai_relevant": true,
+   "note": "",
+   "origin": "seed",
+   "status": "new"
+  },
+  "monash": {
+   "id": "monash",
+   "name": "Monash Graduate Research Scholarship",
+   "country": "استرالیا",
+   "region": "other",
+   "uni": "Monash University",
+   "levels": [
+    "phd",
+    "master"
+   ],
+   "field": "Faculty of Engineering (Chemical, Civil & Petroleum-related)، Faculty of Information Technology (AI)",
+   "support": "شهریه کامل + حقوق ماهیانه (حدود ۴۰ هزار دلار استرالیا در سال) + بیمه سلامت",
+   "deadline": "2026-10-31",
+   "deadline_note": "دو دوره‌ی سالانه؛ تأیید شود",
+   "url": "https://www.monash.edu/graduate-research/future-students/scholarships",
+   "source": "platform seed (researched earlier)",
+   "ai_relevant": true,
+   "note": "",
+   "origin": "seed",
+   "status": "new"
+  },
+  "auckland": {
+   "id": "auckland",
+   "name": "University of Auckland Doctoral Scholarship",
+   "country": "نیوزیلند",
+   "region": "other",
+   "uni": "The University of Auckland",
+   "levels": [
+    "phd"
+   ],
+   "field": "Faculty of Engineering (Chemical & Materials Engineering، Engineering Science)، Faculty of Science (Computer Science)",
+   "support": "شهریه + حقوق ماهیانه (حدود ۳۵ هزار دلار نیوزیلند در سال)",
+   "deadline": "2027-02-01",
+   "deadline_note": "چند دوره در سال؛ تأیید شود",
+   "url": "https://www.auckland.ac.nz/en/study/scholarships-and-awards.html",
+   "source": "platform seed (researched earlier)",
+   "ai_relevant": true,
+   "note": "",
+   "origin": "seed",
+   "status": "new"
+  },
+  "melbourne": {
+   "id": "melbourne",
+   "name": "Melbourne Research Scholarship",
+   "country": "استرالیا",
+   "region": "other",
+   "uni": "The University of Melbourne",
+   "levels": [
+    "phd",
+    "master"
+   ],
+   "field": "Melbourne School of Engineering (Chemical Engineering، Computing and Information Systems)",
+   "support": "شهریه + حقوق ماهیانه (حدود ۴۰ هزار دلار استرالیا در سال) + بیمه",
+   "deadline": "2026-10-31",
+   "deadline_note": "معمولاً ۳۱ اکتبر؛ تأیید شود",
+   "url": "https://scholarships.unimelb.edu.au",
+   "source": "platform seed (researched earlier)",
+   "ai_relevant": true,
+   "note": "",
+   "origin": "seed",
+   "status": "new"
+  },
+  "decodes": {
+   "id": "decodes",
+   "name": "DECODES MSCA Doctoral Network (درخواست ارسال شد)",
+   "country": "اسپانیا و شرکای اروپایی",
+   "region": "europe",
+   "uni": "University of Santiago de Compostela (هماهنگ‌کننده) و دانشگاه‌ها و مؤسسات شریک شبکه‌ی DECODES (Spain، Switzerland، UK، Italy، France و …)",
+   "levels": [
+    "phd"
+   ],
+   "field": "Computational genomics / RNA splicing in human disease – مسیر محاسباتی: هوش مصنوعی و یادگیری ماشین برای ژنومیک و چندـاومیکس (۱۵ موقعیت دکتری شامل زیست‌شناسی ساختاری، سرطان، نوروبیولوژی و RNA therapeutics)",
+   "support": "قرارداد ۳۶ ماهه + حقوق ماهیانه (living allowance حدود ۴٬۰۱۰ یورو + mobility حدود ۷۱۰ یورو، قبل از ضرایب کشوری و مالیات) + کمک‌هزینه‌ی خانواده در صورت وجود",
+   "deadline": "2026-10-01",
+   "deadline_note": "۳۰ سپتامبر یا ۱ اکتبر ۲۰۲۶؛ اقدام انجام و ارسال شد",
+   "url": "https://www.applykite.com/positions/15-fully-funded-phd-positions-in-rna-splicing-genomics-cancer-and-rna-therapeutics-decodes-msca-doctoral-network-u3ukj6nxpk",
+   "source": "platform seed (researched earlier)",
+   "ai_relevant": true,
+   "note": "",
+   "origin": "seed",
+   "status0": "applied",
+   "status": "applied"
+  },
+  "derby_ai_phd": {
+   "id": "derby_ai_phd",
+   "name": "Derby – fully funded PhD studentship in AI (reported by you)",
+   "country": "بریتانیا",
+   "region": "uk",
+   "uni": "University of Derby",
+   "levels": [
+    "phd"
+   ],
+   "field": "هوش مصنوعی (آگهی دقیق باید از صفحه‌ی رسمی Derby تأیید شود)",
+   "support": "Derby PGRS: سه سال، حقوق معاف از مالیات (۲۰٬۷۸۰ پوند در ۲۰۲۵/۲۶ طبق صفحه‌ی رسمی)؛ پوشش شهریه‌ی بین‌المللی (۱۷٬۵۰۰ پوند در ۲۰۲۶/۲۷) را بپرسید",
+   "deadline": "",
+   "deadline_note": "مهلت در آگهی؛ هنوز تأیید نشده",
+   "url": "https://www.derby.ac.uk/research/degrees/applicants/studentship-opportunities/",
+   "source": "گزارش کاربر + صفحه‌ی رسمی Derby",
+   "ai_relevant": true,
+   "note": "جست‌وجوی وب امروز آگهی AI در Derby را تأیید نکرد (تنها آگهی فهرست‌شده: wildlife gardening با مهلت ۲۸ اکتبر ۲۰۲۶، غیر AI). لینک/نام آگهی را بفرستید تا مشخصات ثبت شود.",
+   "origin": "seed",
+   "status": "new"
+  },
+  "ucl_dla": {
+   "id": "ucl_dla",
+   "name": "UCL EPSRC Doctoral Landscape Award",
+   "country": "بریتانیا",
+   "region": "uk",
+   "uni": "University College London",
+   "levels": [
+    "phd"
+   ],
+   "field": "مهندسی، علوم کامپیوتر و هوش مصنوعی (طبق دپارتمان)",
+   "support": "حدود ۵۰ بورس چهارساله: شهریه + حقوق (برآورد ۲۶٬۰۲۲ پوند در ۲۰۲۷/۲۸)",
+   "deadline": "2027-01-08",
+   "deadline_note": "۸ ژانویه ۲۰۲۷ ساعت ۱۲ ظهر به وقت بریتانیا",
+   "url": "https://www.ucl.ac.uk/prospective-students/graduate/research-degrees",
+   "source": "ukscholarships / globalsouthopportunities (2026-10)",
+   "ai_relevant": true,
+   "note": "باز برای متقاضی بین‌المللی طبق منبع؛ در سایت UCL تأیید شود",
+   "origin": "seed",
+   "status": "new"
+  },
+  "imperial_president": {
+   "id": "imperial_president",
+   "name": "Imperial President's PhD Scholarships",
+   "country": "بریتانیا",
+   "region": "uk",
+   "uni": "Imperial College London",
+   "levels": [
+    "phd"
+   ],
+   "field": "همه‌ی رشته‌ها از جمله هوش مصنوعی و مهندسی نفت",
+   "support": "شهریه + حقوق",
+   "deadline": "",
+   "deadline_note": "نوامبر ۲۰۲۶ / ژانویه ۲۰۲۷ / مارس ۲۰۲۷ (بسته به دوره)",
+   "url": "https://www.imperial.ac.uk/study/pg/fees-and-funding/scholarships/presidents-phd-scholarships/",
+   "source": "wemakescholars / pforphd (2026-10)",
+   "ai_relevant": true,
+   "note": "",
+   "origin": "seed",
+   "status": "new"
+  },
+  "imperial_ada": {
+   "id": "imperial_ada",
+   "name": "Imperial Ada Lovelace PhD Scholarship (برای زنان)",
+   "country": "بریتانیا",
+   "region": "uk",
+   "uni": "Imperial College London",
+   "levels": [
+    "phd"
+   ],
+   "field": "علوم محاسباتی و داده، یادگیری ماشین",
+   "support": "شهریه + حقوق",
+   "deadline": "2027-01-11",
+   "deadline_note": "۱۱ ژانویه ۲۰۲۷",
+   "url": "https://www.imperial.ac.uk/study/pg/fees-and-funding/scholarships/",
+   "source": "ukscholarships (2026-10)",
+   "ai_relevant": true,
+   "note": "ویژه‌ی متقاضیان زن",
+   "origin": "seed",
+   "status": "new"
+  },
+  "kcl_hri": {
+   "id": "kcl_hri",
+   "name": "King's College London – Human–Robot Interaction PhD Studentship",
+   "country": "بریتانیا",
+   "region": "uk",
+   "uni": "King's College London",
+   "levels": [
+    "phd"
+   ],
+   "field": "ربات‌های ایمن در مراقبت سلامت (هوش مصنوعی/رباتیک)",
+   "support": "فول‌فاند",
+   "deadline": "2027-01-11",
+   "deadline_note": "۱۱ ژانویه ۲۰۲۷",
+   "url": "https://www.kcl.ac.uk/study/postgraduate/research-degrees",
+   "source": "ukscholarships (2026-10)",
+   "ai_relevant": true,
+   "note": "",
+   "origin": "seed",
+   "status": "new"
+  },
+  "oxford_clarendon": {
+   "id": "oxford_clarendon",
+   "name": "Oxford Clarendon Fund",
+   "country": "بریتانیا",
+   "region": "uk",
+   "uni": "University of Oxford",
+   "levels": [
+    "phd",
+    "master"
+   ],
+   "field": "همه‌ی رشته‌ها",
+   "support": "شهریه + هزینه‌ی زندگی (حدود ۱۵۰ تا ۲۰۰ بورس در سال)",
+   "deadline": "",
+   "deadline_note": "درخواست جدا ندارد؛ با مهلت پذیرش دوره (دسامبر ۲۰۲۶ / ژانویه ۲۰۲۷)",
+   "url": "https://www.ox.ac.uk/admissions/graduate/fees-and-funding/scholarships/clarendon",
+   "source": "truescho / scholarshippath (2026-10)",
+   "ai_relevant": true,
+   "note": "",
+   "origin": "seed",
+   "status": "new"
+  },
+  "oxford_ellison": {
+   "id": "oxford_ellison",
+   "name": "Oxford Ellison Institute Graduate Scholars",
+   "country": "بریتانیا",
+   "region": "uk",
+   "uni": "University of Oxford",
+   "levels": [
+    "phd"
+   ],
+   "field": "پروژه‌های Ellison Institute (انرژی، سلامت، AI)",
+   "support": "فول‌فاند",
+   "deadline": "2026-12-01",
+   "deadline_note": "۱ دسامبر ۲۰۲۶",
+   "url": "https://www.ox.ac.uk/admissions/graduate/fees-and-funding/scholarships",
+   "source": "ukscholarships (2026-10)",
+   "ai_relevant": true,
+   "note": "",
+   "origin": "seed",
+   "status": "new"
+  },
+  "ukri_dtp": {
+   "id": "ukri_dtp",
+   "name": "UKRI / EPSRC Doctoral Training Partnerships (DTP)",
+   "country": "بریتانیا",
+   "region": "uk",
+   "uni": "دانشگاه‌های بریتانیا",
+   "levels": [
+    "phd"
+   ],
+   "field": "مهندسی، فیزیک، هوش مصنوعی",
+   "support": "شهریه + حقوق (حداقل UKRI)؛ بین‌المللی‌ها اکنون واجد شرایط‌اند",
+   "deadline": "",
+   "deadline_note": "ژانویه تا مارس ۲۰۲۷ (هر دانشگاه جدا)",
+   "url": "https://www.ukri.org/what-we-do/developing-people-and-skills/",
+   "source": "pforphd (2026-10)",
+   "ai_relevant": true,
+   "note": "",
+   "origin": "seed",
+   "status": "new"
+  },
+  "cranfield_agentic": {
+   "id": "cranfield_agentic",
+   "name": "Cranfield – PhD Adopting Agentic AI (supply chain resilience)",
+   "country": "بریتانیا",
+   "region": "uk",
+   "uni": "Cranfield University",
+   "levels": [
+    "phd"
+   ],
+   "field": "Agentic AI",
+   "support": "حقوق معاف از مالیات تا ۲۰٬۷۸۰ پوند + شهریه، ۳ سال",
+   "deadline": "",
+   "deadline_note": "در صفحه‌ی آگهی بررسی شود",
+   "url": "https://www.cranfield.ac.uk/research/phd/Adopting-Agentic-Artificial-Intelligence",
+   "source": "Cranfield (جست‌وجو ۲۰۲۶-۱۰-۲۵)",
+   "ai_relevant": true,
+   "note": "شمول شهریه‌ی بین‌المللی را از آگهی بپرسید",
+   "origin": "seed",
+   "status": "new"
+  },
+  "ellis": {
+   "id": "ellis",
+   "name": "ELLIS PhD Program (شروع ۲۰۲۷)",
+   "country": "اروپا (چند کشور)",
+   "region": "europe",
+   "uni": "شبکه‌ی ELLIS (دانشگاه‌ها و مؤسسات اروپایی)",
+   "levels": [
+    "phd"
+   ],
+   "field": "یادگیری ماشین و هوش مصنوعی",
+   "support": "موقعیت دکتری با دو استاد راهنما از دو کشور؛ تأمین مالی را مرکز میزبان تعیین می‌کند",
+   "deadline": "2026-10-31",
+   "deadline_note": "۳۱ اکتبر ۲۰۲۶ ساعت ۲۳:۵۹ AoE؛ درخواست توصیه‌نامه تا ۲۵ نوامبر",
+   "url": "https://ellis.eu/news/ellis-phd-program-call-for-applications-2026",
+   "source": "ellis.eu",
+   "ai_relevant": true,
+   "note": "فول‌فاند بودن هر موقعیت جداگانه تأیید شود",
+   "origin": "seed",
+   "status": "new"
+  },
+  "elle_msca": {
+   "id": "elle_msca",
+   "name": "ELLE MSCA Doctoral Network – Secure & Safe AI (۱۵ موقعیت)",
+   "country": "اروپا (چند کشور)",
+   "region": "europe",
+   "uni": "کنسرسیوم ELLE (از جمله Helsinki)",
+   "levels": [
+    "phd"
+   ],
+   "field": "هوش مصنوعی امن و ایمن، یادگیری ماشین حافظ حریم خصوصی",
+   "support": "قرارداد MSCA (فول‌فاند)",
+   "deadline": "2026-10-31",
+   "deadline_note": "۳۱ اکتبر ۲۰۲۶ از طریق فراخوان ELLIS",
+   "url": "https://ellis.eu/news/ellis-phd-program-call-for-applications-2026",
+   "source": "scholarschapter (2026-10)",
+   "ai_relevant": true,
+   "note": "قانون تحرک MSCA: در ۳۶ ماه گذشته بیش از ۱۲ ماه در کشور میزبان نبوده باشید",
+   "origin": "seed",
+   "status": "new"
+  },
+  "mpi_eth_cls": {
+   "id": "mpi_eth_cls",
+   "name": "Max Planck ETH Center for Learning Systems – PhD",
+   "country": "آلمان / سوئیس",
+   "region": "europe",
+   "uni": "MPI Tübingen + ETH Zurich",
+   "levels": [
+    "phd"
+   ],
+   "field": "یادگیری ماشین و رباتیک",
+   "support": "فول‌فاند",
+   "deadline": "2026-11-02",
+   "deadline_note": "۲ نوامبر ۲۰۲۶",
+   "url": "https://learning-systems.org",
+   "source": "academicpositions (2026-10)",
+   "ai_relevant": true,
+   "note": "",
+   "origin": "seed",
+   "status": "new"
+  },
+  "st_gallen": {
+   "id": "st_gallen",
+   "name": "University of St. Gallen – PhD in AI literacy & regulatory learning",
+   "country": "سوئیس",
+   "region": "europe",
+   "uni": "University of St. Gallen",
+   "levels": [
+    "phd"
+   ],
+   "field": "هوش مصنوعی و مقررات",
+   "support": "موقعیت ۱۰۰٪ با حقوق",
+   "deadline": "2026-11-07",
+   "deadline_note": "۷ نوامبر ۲۰۲۶",
+   "url": "https://www.unisg.ch",
+   "source": "academicpositions (2026-10)",
+   "ai_relevant": true,
+   "note": "",
+   "origin": "seed",
+   "status": "new"
+  },
+  "mps_bioai": {
+   "id": "mps_bioai",
+   "name": "Max Planck School of Biomedical AI",
+   "country": "آلمان",
+   "region": "europe",
+   "uni": "Max Planck School",
+   "levels": [
+    "phd"
+   ],
+   "field": "هوش مصنوعی زیست‌پزشکی",
+   "support": "۲۵ موقعیت فول‌فاند",
+   "deadline": "2026-12-01",
+   "deadline_note": "۱ دسامبر ۲۰۲۶",
+   "url": "https://www.maxplanckschools.de",
+   "source": "academicpositions (2026-10)",
+   "ai_relevant": true,
+   "note": "",
+   "origin": "seed",
+   "status": "new"
+  },
+  "mpi_inf": {
+   "id": "mpi_inf",
+   "name": "Max Planck Institute for Informatics / Saarland – PhD",
+   "country": "آلمان",
+   "region": "europe",
+   "uni": "MPI-INF Saarbrücken",
+   "levels": [
+    "phd"
+   ],
+   "field": "علوم کامپیوتر، هوش مصنوعی",
+   "support": "فول‌فاند، بسیار رقابتی",
+   "deadline": "2026-12-15",
+   "deadline_note": "۱۵ دسامبر ۲۰۲۶",
+   "url": "https://www.mpi-inf.mpg.de",
+   "source": "academicpositions (2026-10)",
+   "ai_relevant": true,
+   "note": "",
+   "origin": "seed",
+   "status": "new"
+  },
+  "eth_robotics": {
+   "id": "eth_robotics",
+   "name": "ETH Zurich – robotics & AI PhD positions",
+   "country": "سوئیس",
+   "region": "europe",
+   "uni": "ETH Zurich",
+   "levels": [
+    "phd"
+   ],
+   "field": "رباتیک و هوش مصنوعی",
+   "support": "موقعیت با حقوق",
+   "deadline": "2026-10-27",
+   "deadline_note": "۲۷ اکتبر ۲۰۲۶ (۲ روز دیگر)",
+   "url": "https://jobs.ethz.ch",
+   "source": "academicpositions (2026-10)",
+   "ai_relevant": true,
+   "note": "",
+   "origin": "seed",
+   "status": "new"
+  }
+ },
+ "updated": ""
+}

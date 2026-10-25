@@ -7,6 +7,7 @@
   python -m agent dashboard                                  rebuild docs/index.html
   python -m agent star <country> / unstar <country>          countries for weekly partner scouting
   python -m agent event <event-id> <status>                  considering | registered | attending | attended | skipped
+  python -m agent scholarship [--no-llm] [--set ID STATUS]     refresh fully funded scholarships and rebuild the Word files
   python -m agent partner <company-key> <status>             sent | replied | meeting | mou | not_interested
   python -m agent select <investor-id> / unselect <investor-id>  investors that get an introduction draft
   python -m agent lead <lead-id> <status>                    called | interested | proposal | won | not_interested | do_not_call
@@ -21,7 +22,7 @@ import sys
 
 from pathlib import Path
 
-from . import dashboard, events, investors, leads, memory, partners, platform_sync, store
+from . import dashboard, events, investors, leads, memory, partners, platform_sync, scholarship_docs, scholarships, store
 from .config import ROOT, load_config
 
 
@@ -50,6 +51,9 @@ def main(argv=None):
     ev = sub.add_parser("event")
     ev.add_argument("event_id")
     ev.add_argument("status", choices=list(events.STATUSES))
+    sc = sub.add_parser("scholarship")
+    sc.add_argument("--no-llm", action="store_true")
+    sc.add_argument("--set", nargs=2, metavar=("ID", "STATUS"))
     pa = sub.add_parser("partner")
     pa.add_argument("key")
     pa.add_argument("status", choices=list(partners.STATUSES))
@@ -103,6 +107,24 @@ def main(argv=None):
         partners.save(ps)
         dashboard.render(cfg, state)
         print(f"{a.key} -> {partners.STATUSES[a.status]}")
+        return
+    if a.cmd == "scholarship":
+        ss = scholarships.load()
+        if a.set:
+            if a.set[0] not in ss["scholarships"]:
+                sys.exit(f"unknown scholarship {a.set[0]}")
+            scholarships.set_status(ss, *a.set)
+        elif not a.no_llm:
+            from .analyst import Analyst, llm_available
+            from .portfolio import build_profile, profile_text
+            if llm_available():
+                analyst = Analyst(cfg, profile_text(cfg, build_profile(cfg)), memory.lessons_text(state))
+                scholarships.update(cfg, analyst, ss, print)
+            else:
+                print("ANTHROPIC_API_KEY not set - rebuilding the Word files from the stored list only.")
+        scholarships.save(ss)
+        for path in scholarship_docs.build_all(ss):
+            print(path)
         return
     if a.cmd in ("select", "unselect"):
         chosen = cfg.setdefault("selected_investors", [])
