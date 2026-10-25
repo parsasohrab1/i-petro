@@ -1034,6 +1034,26 @@
     "phd"
    ],
    "status": "new"
+  },
+  "weidenfeld": {
+   "id": "weidenfeld",
+   "name": "Oxford Weidenfeld-Hoffmann Scholarships and Leadership Programme 2027/28",
+   "country": "بریتانیا",
+   "region": "uk",
+   "uni": "University of Oxford",
+   "levels": [
+    "master"
+   ],
+   "field": "دوره‌های ارشد تمام‌وقت آکسفورد (رهبری و خدمت عمومی؛ بعضی منابع MBA/MFE را هم ذکر می‌کنند)",
+   "support": "۱۰۰٪ شهریه + هزینه‌ی زندگی (حداقل حدود ۲۱٬۸۰۵ پوند؛ یک منبع ۲۰٬۷۸۰) + برنامه‌ی رهبری",
+   "deadline": "2027-01-06",
+   "deadline_note": "۶ ژانویه ۲۰۲۷ (برخی منابع ۸ ژانویه برای MBA/MFE یا دسامبر ۲۰۲۶)؛ مهلت دوره‌ی خودتان را در Oxford ببینید",
+   "url": "https://www.ox.ac.uk/admissions/graduate/fees-and-funding/scholarships/weidenfeld-hoffmann-scholarships-and-leadership-programme",
+   "source": "opportunitydesk / leapscholar (2026-10-16)",
+   "ai_relevant": false,
+   "origin": "seed",
+   "note": "باز است. برای کشورهای در حال توسعه؛ بازگشت به کشور اقامت الزامی؛ منابع اختلاف دارند که DPhil را شامل می‌شود یا نه (یکی می‌گوید خیر). گزینه را در فرم Oxford انتخاب و Statement جدا بارگذاری کنید",
+   "status": "new"
   }
  },
  "updated": ""
