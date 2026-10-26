@@ -162,7 +162,18 @@
      "status": "expired",
      "note": ""
     }
-   ]
+   ],
+   "tracking": {
+    "log": [
+     {
+      "at": "2026-10-22T20:39:39.698Z",
+      "by": "u_wkYVENUWhKHbzAbbeiMiOg",
+      "note": "مسئول: پارسا بابایی"
+     }
+    ],
+    "owner": "u_3czIynzDj3Ni9EAS_R637g",
+    "stage": "identified"
+   }
   },
   "SATE-hJTuANu4pa8": {
    "id": "SATE-hJTuANu4pa8",
@@ -203,7 +214,23 @@
      "status": "expired",
      "note": ""
     }
-   ]
+   ],
+   "tracking": {
+    "log": [
+     {
+      "at": "2026-10-22T20:39:58.321Z",
+      "by": "u_wkYVENUWhKHbzAbbeiMiOg",
+      "note": "مسئول: Niyosha Mansori"
+     },
+     {
+      "at": "2026-10-22T20:40:03.713Z",
+      "by": "u_wkYVENUWhKHbzAbbeiMiOg",
+      "note": "مسئول: Mohammad Parsa Sohrabi"
+     }
+    ],
+    "owner": "u_wkYVENUWhKHbzAbbeiMiOg",
+    "stage": "identified"
+   }
   },
   "SATE-10n1I4Dvhmg": {
    "id": "SATE-10n1I4Dvhmg",
@@ -244,7 +271,34 @@
      "status": "expired",
      "note": ""
     }
-   ]
+   ],
+   "tracking": {
+    "log": [
+     {
+      "at": "2026-10-21T14:24:41.503Z",
+      "by": "u_3czIynzDj3Ni9EAS_R637g",
+      "note": "مسئولیت پذیرفته شد"
+     },
+     {
+      "at": "2026-10-21T14:25:39.092Z",
+      "by": "u_3czIynzDj3Ni9EAS_R637g",
+      "note": "",
+      "stage": "submitted"
+     },
+     {
+      "at": "2026-10-24T06:35:17.903Z",
+      "by": "u_3czIynzDj3Ni9EAS_R637g",
+      "note": "",
+      "stage": "result"
+     }
+    ],
+    "owner": "u_3czIynzDj3Ni9EAS_R637g",
+    "stage": "result",
+    "next_action": "",
+    "next_date": "",
+    "outcome": "",
+    "outcome_reason": ""
+   }
   },
   "SATE-wXGwdPl4": {
    "id": "SATE-wXGwdPl4",
@@ -321,7 +375,18 @@
      "at": "2026-10-19T13:28:54",
      "status": "new"
     }
-   ]
+   ],
+   "tracking": {
+    "log": [
+     {
+      "at": "2026-10-20T15:16:41.495Z",
+      "by": "u_5Cy5Q7RjalcewZXqBHSIeA",
+      "note": "مسئولیت پذیرفته شد"
+     }
+    ],
+    "owner": "u_5Cy5Q7RjalcewZXqBHSIeA",
+    "stage": "identified"
+   }
   },
   "SATE-q5Hcg1scPs": {
    "id": "SATE-q5Hcg1scPs",
@@ -357,7 +422,18 @@
      "at": "2026-10-19T13:28:54",
      "status": "new"
     }
-   ]
+   ],
+   "tracking": {
+    "log": [
+     {
+      "at": "2026-10-22T20:40:14.739Z",
+      "by": "u_wkYVENUWhKHbzAbbeiMiOg",
+      "note": "مسئول: ملیکا شمس"
+     }
+    ],
+    "owner": "u_hFiEZ4GXTfD6uFTxIPtRRw",
+    "stage": "identified"
+   }
   },
   "SATE-VwlBGmr1AWg": {
    "id": "SATE-VwlBGmr1AWg",
@@ -393,7 +469,23 @@
      "at": "2026-10-19T13:28:54",
      "status": "new"
     }
-   ]
+   ],
+   "tracking": {
+    "log": [
+     {
+      "at": "2026-10-20T14:37:04.567Z",
+      "by": "u_3czIynzDj3Ni9EAS_R637g",
+      "note": "مسئولیت پذیرفته شد"
+     },
+     {
+      "at": "2026-10-22T20:39:50.168Z",
+      "by": "u_wkYVENUWhKHbzAbbeiMiOg",
+      "note": "مسئول: کیانوش صالحی"
+     }
+    ],
+    "owner": "u_7t64DnjigXegNeWqfzXOUw",
+    "stage": "identified"
+   }
   },
   "SATE-wZ0ZrLLt9YI": {
    "id": "SATE-wZ0ZrLLt9YI",
@@ -429,7 +521,28 @@
      "at": "2026-10-19T13:28:54",
      "status": "new"
     }
-   ]
+   ],
+   "tracking": {
+    "log": [
+     {
+      "at": "2026-10-24T05:09:40.287Z",
+      "by": "u_3czIynzDj3Ni9EAS_R637g",
+      "note": "مسئولیت پذیرفته شد"
+     },
+     {
+      "at": "2026-10-24T06:34:54.104Z",
+      "by": "u_3czIynzDj3Ni9EAS_R637g",
+      "note": "",
+      "stage": "result"
+     }
+    ],
+    "owner": "u_3czIynzDj3Ni9EAS_R637g",
+    "stage": "result",
+    "next_action": "",
+    "next_date": "",
+    "outcome": "",
+    "outcome_reason": ""
+   }
   },
   "SETAD-1105092288003523": {
    "id": "SETAD-1105092288003523",
