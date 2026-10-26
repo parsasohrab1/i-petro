@@ -25,7 +25,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": -3,
+   "days_left": -4,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -66,7 +66,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": -4,
+   "days_left": -5,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -107,7 +107,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": -3,
+   "days_left": -4,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -148,7 +148,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": -3,
+   "days_left": -4,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -162,18 +162,7 @@
      "status": "expired",
      "note": ""
     }
-   ],
-   "tracking": {
-    "log": [
-     {
-      "at": "2026-10-22T20:39:39.698Z",
-      "by": "u_wkYVENUWhKHbzAbbeiMiOg",
-      "note": "مسئول: پارسا بابایی"
-     }
-    ],
-    "owner": "u_3czIynzDj3Ni9EAS_R637g",
-    "stage": "identified"
-   }
+   ]
   },
   "SATE-hJTuANu4pa8": {
    "id": "SATE-hJTuANu4pa8",
@@ -200,7 +189,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": -3,
+   "days_left": -4,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -214,23 +203,7 @@
      "status": "expired",
      "note": ""
     }
-   ],
-   "tracking": {
-    "log": [
-     {
-      "at": "2026-10-22T20:39:58.321Z",
-      "by": "u_wkYVENUWhKHbzAbbeiMiOg",
-      "note": "مسئول: Niyosha Mansori"
-     },
-     {
-      "at": "2026-10-22T20:40:03.713Z",
-      "by": "u_wkYVENUWhKHbzAbbeiMiOg",
-      "note": "مسئول: Mohammad Parsa Sohrabi"
-     }
-    ],
-    "owner": "u_wkYVENUWhKHbzAbbeiMiOg",
-    "stage": "identified"
-   }
+   ]
   },
   "SATE-10n1I4Dvhmg": {
    "id": "SATE-10n1I4Dvhmg",
@@ -257,7 +230,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": -2,
+   "days_left": -3,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -271,34 +244,7 @@
      "status": "expired",
      "note": ""
     }
-   ],
-   "tracking": {
-    "log": [
-     {
-      "at": "2026-10-21T14:24:41.503Z",
-      "by": "u_3czIynzDj3Ni9EAS_R637g",
-      "note": "مسئولیت پذیرفته شد"
-     },
-     {
-      "at": "2026-10-21T14:25:39.092Z",
-      "by": "u_3czIynzDj3Ni9EAS_R637g",
-      "note": "",
-      "stage": "submitted"
-     },
-     {
-      "at": "2026-10-24T06:35:17.903Z",
-      "by": "u_3czIynzDj3Ni9EAS_R637g",
-      "note": "",
-      "stage": "result"
-     }
-    ],
-    "owner": "u_3czIynzDj3Ni9EAS_R637g",
-    "stage": "result",
-    "next_action": "",
-    "next_date": "",
-    "outcome": "",
-    "outcome_reason": ""
-   }
+   ]
   },
   "SATE-wXGwdPl4": {
    "id": "SATE-wXGwdPl4",
@@ -325,7 +271,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": -1,
+   "days_left": -2,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -366,7 +312,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": 3,
+   "days_left": 2,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -375,18 +321,7 @@
      "at": "2026-10-19T13:28:54",
      "status": "new"
     }
-   ],
-   "tracking": {
-    "log": [
-     {
-      "at": "2026-10-20T15:16:41.495Z",
-      "by": "u_5Cy5Q7RjalcewZXqBHSIeA",
-      "note": "مسئولیت پذیرفته شد"
-     }
-    ],
-    "owner": "u_5Cy5Q7RjalcewZXqBHSIeA",
-    "stage": "identified"
-   }
+   ]
   },
   "SATE-q5Hcg1scPs": {
    "id": "SATE-q5Hcg1scPs",
@@ -413,7 +348,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": 3,
+   "days_left": 2,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -422,18 +357,7 @@
      "at": "2026-10-19T13:28:54",
      "status": "new"
     }
-   ],
-   "tracking": {
-    "log": [
-     {
-      "at": "2026-10-22T20:40:14.739Z",
-      "by": "u_wkYVENUWhKHbzAbbeiMiOg",
-      "note": "مسئول: ملیکا شمس"
-     }
-    ],
-    "owner": "u_hFiEZ4GXTfD6uFTxIPtRRw",
-    "stage": "identified"
-   }
+   ]
   },
   "SATE-VwlBGmr1AWg": {
    "id": "SATE-VwlBGmr1AWg",
@@ -460,7 +384,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": 4,
+   "days_left": 3,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -469,23 +393,7 @@
      "at": "2026-10-19T13:28:54",
      "status": "new"
     }
-   ],
-   "tracking": {
-    "log": [
-     {
-      "at": "2026-10-20T14:37:04.567Z",
-      "by": "u_3czIynzDj3Ni9EAS_R637g",
-      "note": "مسئولیت پذیرفته شد"
-     },
-     {
-      "at": "2026-10-22T20:39:50.168Z",
-      "by": "u_wkYVENUWhKHbzAbbeiMiOg",
-      "note": "مسئول: کیانوش صالحی"
-     }
-    ],
-    "owner": "u_7t64DnjigXegNeWqfzXOUw",
-    "stage": "identified"
-   }
+   ]
   },
   "SATE-wZ0ZrLLt9YI": {
    "id": "SATE-wZ0ZrLLt9YI",
@@ -512,7 +420,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": 4,
+   "days_left": 3,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -521,28 +429,7 @@
      "at": "2026-10-19T13:28:54",
      "status": "new"
     }
-   ],
-   "tracking": {
-    "log": [
-     {
-      "at": "2026-10-24T05:09:40.287Z",
-      "by": "u_3czIynzDj3Ni9EAS_R637g",
-      "note": "مسئولیت پذیرفته شد"
-     },
-     {
-      "at": "2026-10-24T06:34:54.104Z",
-      "by": "u_3czIynzDj3Ni9EAS_R637g",
-      "note": "",
-      "stage": "result"
-     }
-    ],
-    "owner": "u_3czIynzDj3Ni9EAS_R637g",
-    "stage": "result",
-    "next_action": "",
-    "next_date": "",
-    "outcome": "",
-    "outcome_reason": ""
-   }
+   ]
   },
   "SETAD-1105092288003523": {
    "id": "SETAD-1105092288003523",
@@ -569,7 +456,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": 6,
+   "days_left": 5,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -605,7 +492,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": 7,
+   "days_left": 6,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -639,7 +526,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 8,
+   "days_left": 7,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -674,7 +561,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 11,
+   "days_left": 10,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -709,7 +596,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 16,
+   "days_left": 15,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -744,7 +631,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 18,
+   "days_left": 17,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -778,7 +665,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 22,
+   "days_left": 21,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -812,7 +699,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 24,
+   "days_left": 23,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -847,7 +734,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 36,
+   "days_left": 35,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -882,7 +769,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 44,
+   "days_left": 43,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -917,7 +804,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 2,
+   "days_left": 1,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -952,7 +839,7 @@
     "ai_cross_cutting",
     "medical"
    ],
-   "days_left": 22,
+   "days_left": 21,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -988,7 +875,7 @@
     "energy",
     "urban"
    ],
-   "days_left": 29,
+   "days_left": 28,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -1022,7 +909,7 @@
    "domains": [
     "urban"
    ],
-   "days_left": 26,
+   "days_left": 25,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-20T09:40:22",
@@ -1056,7 +943,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 79,
+   "days_left": 78,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-20T09:40:22",
@@ -1158,7 +1045,7 @@
    "domains": [
     "aviation"
    ],
-   "days_left": 3,
+   "days_left": 2,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-21T09:36:20",
@@ -1192,7 +1079,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 8,
+   "days_left": 7,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-21T09:36:20",
@@ -1227,7 +1114,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": 9,
+   "days_left": 8,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-21T09:36:20",
@@ -1261,7 +1148,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 27,
+   "days_left": 26,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-21T09:36:20",
@@ -1295,7 +1182,7 @@
    "domains": [
     "web"
    ],
-   "days_left": 29,
+   "days_left": 28,
    "line": "web",
    "status": "new",
    "first_seen": "2026-10-21T09:36:20",
@@ -1363,7 +1250,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 15,
+   "days_left": 14,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-22T09:39:52",
@@ -1397,7 +1284,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 26,
+   "days_left": 25,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-22T09:39:52",
@@ -1431,7 +1318,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 26,
+   "days_left": 25,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-22T09:39:52",
@@ -1465,7 +1352,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 36,
+   "days_left": 35,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-22T09:39:52",
@@ -1499,7 +1386,7 @@
    "domains": [
     "aviation"
    ],
-   "days_left": 31,
+   "days_left": 30,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-23T09:35:00",
@@ -1533,7 +1420,7 @@
    "domains": [
     "medical"
    ],
-   "days_left": 37,
+   "days_left": 36,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-23T09:35:00",
@@ -1567,7 +1454,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 40,
+   "days_left": 39,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-23T09:35:00",
@@ -1642,6 +1529,177 @@
    "history": [
     {
      "at": "2026-10-23T09:35:00",
+     "status": "new"
+    }
+   ]
+  },
+  "TED-739696-2026": {
+   "id": "TED-739696-2026",
+   "source": "TED (EU)",
+   "market": "international",
+   "title": "Finland – Airport equipment – Rovaniemi Airport Baggage Handling System Modernisation",
+   "description": "The procurement concerns modernizing the existing baggage handling system for departure baggage at Rovaniemi airport. The procurement consists of modifications to the existing baggage handling system to add and integrate one (1) new standard 3 screening machine for departure baggage with its own conveyor line. Modernization of the existing baggage handling system for departure baggage must meet required specifications for baggage flow and redundancy, steel works, structures and other related peripheral devices/systems. The delivery includes designing, manufacturing, shipment, installation, integration of standard 3 screening machine, training and start-up of the Baggage Handling Systems. The procurement contains also fire doors and/or security shutters, low level control system, including SCADA remote monitoring system, SAC (Sort Allocation Controller) and other relevant interfaces and functionalities. On-site installations as well as commissioning are planned to take pace in period between 10/2026 – 11/2027. The successful implementation of the procurement requires cooperation with the contractors executing the necessary changes to the space where the baggage handling system is located and with the contractor installing the new screening machine.",
+   "buyer": "Finavia Oyj",
+   "country": "FIN",
+   "deadline": "",
+   "published": "2026-10-26",
+   "url": "https://ted.europa.eu/en/notice/-/detail/739696-2026",
+   "notice_type": "cn-standard",
+   "sector": "نامشخص",
+   "facts": {
+    "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه"
+   },
+   "keyword_score": 4,
+   "domains": [
+    "aviation",
+    "energy"
+   ],
+   "days_left": null,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-10-26T10:29:22",
+   "history": [
+    {
+     "at": "2026-10-26T10:29:22",
+     "status": "new"
+    }
+   ]
+  },
+  "TED-737355-2026": {
+   "id": "TED-737355-2026",
+   "source": "TED (EU)",
+   "market": "international",
+   "title": "Germany – Instrumentation and control equipment – Leak Detection Devices",
+   "description": "GIZ will announce the specific delivery addresses in Germany once the contract has been awarded. The address will be located within a 200-km radius of Eschborn/German GIZ will announce the specific delivery addresses in Germany once the contract has been awarded. The address will be located within a 200-km radius of Eschborn/German GIZ will announce the specific delivery addresses in Germany once the contract has been awarded. The address will be located within a 200-km radius of Eschborn/German GIZ will announce the specific delivery addresses in Germany once the contract has been awarded. The address will be located within a 200-km radius of Eschborn/German GIZ will announce the specific delivery addresses in Germany once the contract has been awarded. The address will be located within a 200-km radius of Eschborn/German GIZ will announce the specific delivery addresses in Germany once the contract has been awarded. The address will be located within a 200-km radius of Eschborn/German",
+   "buyer": "Deutsche Gesellschaft für Internationale Zusammenarbeit (GIZ) GmbH",
+   "country": "DEU",
+   "deadline": "2026-11-09",
+   "published": "2026-10-26",
+   "url": "https://ted.europa.eu/en/notice/-/detail/737355-2026",
+   "notice_type": "cn-standard",
+   "sector": "شرکت دولتی / عمومی",
+   "facts": {
+    "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "رویه‌ی باز اتحادیه اروپا – شرکت‌های خارج از EU معمولاً مجازند مگر محدودیت صریح در اسناد"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "urban"
+   ],
+   "days_left": 14,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-10-26T10:29:22",
+   "history": [
+    {
+     "at": "2026-10-26T10:29:22",
+     "status": "new"
+    }
+   ]
+  },
+  "TED-737185-2026": {
+   "id": "TED-737185-2026",
+   "source": "TED (EU)",
+   "market": "international",
+   "title": "Norway – IT services: consulting, software development, Internet and support – Platform for strategic traffic analysis - Digital twin",
+   "description": "The contracting authority is holding an open tender contest on a Platform for strategic traffic analysis - Digital twinTrondheim municipality and the collaboration partners in the Environmental Package are facing an increasing complexity in transport planning. With a high number of simultaneous plan processes and road projects, the need for quick access to precise analyses and updated decision making basis is high. The aim of the tender is to procure a modern platform for strategic traffic analyses that shall function as a digital decision-making tool for Trondheim municipality and collaboration partners in The Environment Package. Enables quick testing of alternative measures and scenarios. Visualise consequences for traffic flow, environment (noise/air quality) and area use. Support inter-agency cooperation and decision making by being available to all parties in the Environment Package. It functions as a \"digital laboratory\" where planners and decision makers can simulate, analyse and visualise the consequences of different transport and area measures before they are implemented in real life. The contract includes access to analysis software, as well as the necessary services for integration with the existing infrastructure. The contract will be valid for 1 (one) year calculated from the delivery day. The contract will then be renewed automatically for 1 (one) year at a time, unless 3 (three) months notice is given by the Customer before the renewal date. Tenderers can give notice on the contract with 12 (twelve) months notice before the renewal date. There is no upper limit for the number of contract renewals. See the tender documentation part II, annex 1 for further details on the procurement.",
+   "buyer": "Trondheim kommune",
+   "country": "NOR",
+   "deadline": "2026-11-23",
+   "published": "2026-10-26",
+   "url": "https://ted.europa.eu/en/notice/-/detail/737185-2026",
+   "notice_type": "cn-standard",
+   "sector": "دولتی",
+   "facts": {
+    "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "رویه‌ی باز اتحادیه اروپا – شرکت‌های خارج از EU معمولاً مجازند مگر محدودیت صریح در اسناد"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "energy"
+   ],
+   "days_left": 28,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-10-26T10:29:22",
+   "history": [
+    {
+     "at": "2026-10-26T10:29:22",
+     "status": "new"
+    }
+   ]
+  },
+  "TED-739448-2026": {
+   "id": "TED-739448-2026",
+   "source": "TED (EU)",
+   "market": "international",
+   "title": "Germany – Programming services of application software – Smart City Bamberg 2026 - MoMM-App II",
+   "description": "Ziel dieser Ausschreibung ist mit den vorhandenen Fördermitteln des Programmes „Modellprojekte Smart Cities“ des Bundesministeriums für Wohnen, Stadtentwicklung und Bauen die Beauftragung der Konzeption, Entwicklung, Bereitstellung und des Betriebs einer neuen, in sich geschlossenen mobilen Anwendung (im Folgenden „MoMM-App“), die die Funktionalitäten der barrierefreien Parkplatzsuche/-navigation und des barrierefreien Mobilitäts-Routings in einer einheitlichen Benutzeroberfläche zusammenführt. Bestehende kommunale Insellösungen sollen dadurch mittelfristig abgelöst bzw. konsolidiert und den Nutzenden ein durchgängiges, konsistentes digitales Erlebnis geboten werden.",
+   "buyer": "Stadt Bamberg / Zentrale Beschaffungs- und Vergabestelle im Auftrag von Smart City",
+   "country": "DEU",
+   "deadline": "2026-11-23",
+   "published": "2026-10-26",
+   "url": "https://ted.europa.eu/en/notice/-/detail/739448-2026",
+   "notice_type": "cn-standard",
+   "sector": "دولتی",
+   "facts": {
+    "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "رویه‌ی باز اتحادیه اروپا – شرکت‌های خارج از EU معمولاً مجازند مگر محدودیت صریح در اسناد"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "urban"
+   ],
+   "days_left": 28,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-10-26T10:29:22",
+   "history": [
+    {
+     "at": "2026-10-26T10:29:22",
+     "status": "new"
+    }
+   ]
+  },
+  "TED-740752-2026": {
+   "id": "TED-740752-2026",
+   "source": "TED (EU)",
+   "market": "international",
+   "title": "France – District heating boiler – Conception, fabrication, transport, mise en place sur site, essais et mise en service d’une chaudière biomasse et de ses équipements et accessoires annexes pour le réseau de chaleur de Millau",
+   "description": "Les éléments de dimensionnement explicités ci-dessous sont prévisionnels, les éléments définitifs seront indiqués dans les documents de consultation phase offre. Dalkia est attributaire d'un contrat pour la conception et la réalisation de la chaufferie et du réseau de chaleur urbain sur la ville de Millau. Ces travaux comprennent la réalisation d'une chaufferie. Le présent appel à candidature concerne spécifiquement la fourniture de la chaudière biomasse et prestations associées. Les mission qui seront confiées au prestataire comprennent l'étude de conception, la construction, les transports et livraisons, la mise en place et le montage sur site, les essais, la mise en service d'une chaudière biomasse d'environ 2 MW, y compris équipements et accessoires annexes . L'Acheteur envisage comme équipements annexes : les équipements nécessaires au stockage de la biomasse (hors bâti), les systèmes de convoyage, un économiseur, l'évacuation des cendres et traitement des fumées y compris air comprimé et carneaux de fumées jusqu'à la bride du ventilateur de tirage... Date de début des études: Décembre 2026 Date de livraison prévisionnelle: T4 2027 / T1 2028 Date de mise en service prévisionnelle: Avril 2028",
+   "buyer": "DALKIA (31)",
+   "country": "FRA",
+   "deadline": "",
+   "published": "2026-10-26",
+   "url": "https://ted.europa.eu/en/notice/-/detail/740752-2026",
+   "notice_type": "cn-standard",
+   "sector": "شرکت دولتی / عمومی",
+   "facts": {
+    "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "urban"
+   ],
+   "days_left": null,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-10-26T10:29:22",
+   "history": [
+    {
+     "at": "2026-10-26T10:29:22",
      "status": "new"
     }
    ]
@@ -2162,6 +2220,81 @@
     }
    ],
    "new_ids": [],
+   "actioned_ids": [],
+   "reminders": []
+  },
+  {
+   "at": "2026-10-26T10:29:22",
+   "collected": 280,
+   "matched": 17,
+   "partner_drafts": [],
+   "events_added": 0,
+   "scholarships_added": 0,
+   "investors_added": 0,
+   "investor_drafts": [
+    "revo",
+    "212",
+    "hub71",
+    "aramco-ventures",
+    "antler-menap",
+    "equinor-ventures",
+    "shell-ventures",
+    "ycombinator",
+    "techstars"
+   ],
+   "leads_added": 0,
+   "papers_lines": [],
+   "events_soon": [
+    {
+     "start": "2026-10-28",
+     "name": "Media Expo 1405 (2nd)",
+     "name_fa": "دومین نمایشگاه مدیا اکسپو (با بخش هوش مصنوعی)",
+     "city": "تهران (برج میلاد)"
+    },
+    {
+     "start": "2026-11-02",
+     "name": "ADIPEC 2026",
+     "name_fa": "نمایشگاه و کنفرانس نفت و گاز ابوظبی",
+     "city": "ابوظبی"
+    },
+    {
+     "start": "2026-11-03",
+     "name": "Smart City Expo World Congress 2026",
+     "name_fa": "کنگره جهانی شهر هوشمند",
+     "city": "بارسلونا"
+    },
+    {
+     "start": "2026-11-09",
+     "name": "Web Summit 2026",
+     "name_fa": "وب سامیت لیسبون",
+     "city": "لیسبون"
+    },
+    {
+     "start": "2026-11-16",
+     "name": "MEDICA 2026",
+     "name_fa": "نمایشگاه تجهیزات و فناوری پزشکی دوسلدورف",
+     "city": "دوسلدورف"
+    },
+    {
+     "start": "2026-12-06",
+     "name": "NeurIPS 2026",
+     "name_fa": "کنفرانس NeurIPS (سیدنی / آتلانتا / پاریس)",
+     "city": "سیدنی، آتلانتا، پاریس"
+    },
+    {
+     "start": "2026-12-07",
+     "name": "GITEX Global 2026",
+     "name_fa": "جیتکس دبی",
+     "city": "دبی (Expo City)"
+    }
+   ],
+   "new_ids": [
+    "TED-739696-2026",
+    "TED-737355-2026",
+    "TED-737185-2026",
+    "TED-739448-2026",
+    "TED-740752-2026"
+   ],
    "actioned_ids": [],
    "reminders": []
   }
