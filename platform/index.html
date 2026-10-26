@@ -164,12 +164,14 @@ th.rownum,td.rownum{width:44px;min-width:44px;text-align:center;color:var(--mute
 document.documentElement.lang="fa"; document.documentElement.dir="rtl"; // the layout is designed right-to-left
 // ------------------------------------------------------------------ constants
 const MODULES = [
-  ["market","Market"],["events","Events"],["erp","ERP"],["bpms","BPMS"],["letters","Letters"],["patent","Patent"],["scholar","Scholarship"],["articles","Articles"]];
+  ["market","REQUEST FOR PROPOSALS"],["events","Events"],["erp","ERP"],["bpms","BPMS"],["letters","Letters"],["patent","Patent"],["scholar","Scholarship"],["articles","Articles"],["basket","Products Basket"],["news","News"]];
 const SUBS = {
-  market:[["iran","Iran AI Projects"],["overseas","Overseas AI Projects"],["web","Web Design & SEO"],["investors","AI Investors & Accelerators"],["tracking","Project Tracking"],["pipeline","Pipeline"],["memory","Team Memory"]],
+  basket:[["list","محصولات سبد"],["ideas","محصولات پیشنهادی نو"]],
+  news:[["feed","اخبار هوش مصنوعی"]],
+  market:[["iran","Iran AI Projects"],["docs_ir","مدارک پترو پالاتوس (داخلی)"],["overseas","Overseas AI Projects"],["docs_int","مدارک پارسا اینت (بین‌المللی)"],["partners","شرکای تجاری بین‌المللی"],["web","Web Design & SEO"],["investors","AI Investors & Accelerators"],["tracking","Project Tracking"],["pipeline","Pipeline"],["memory","Team Memory"]],
   events:[["iran","ایران"],["world","جهان"],["all","همه"],["taken","در دست پیگیری"]],
   erp:[["domains","حوزه‌های فعالیت"],["products","توسعه‌ی محصول هوشمند"],["people","نیروی انسانی"],["finance","مالی"],["clients","مشتریان و قراردادها"],["backup","پشتیبان‌گیری"]],
-  bpms:[["myday","روز من"],["board","تخته‌ی اسکرام"],["backlog","بک‌لاگ و برنامه‌ریزی"],["sprints","اسپرینت‌ها"],["tasks","فهرست تسک‌ها"],["reports","گزارش عملکرد"],["rarchive","بایگانی گزارش‌ها"],["teams","تیم‌ها"],["process","فرایندها"],["calendar","تقویم"],["members","اعضا و ثبت‌نام"],["nda","قرارداد محرمانگی"],["training","فرم آموزش"]],
+  bpms:[["home","خانه‌ی BPMS"],["contacts","مخاطبین و ارتباط"],["myday","روز من"],["board","تخته‌ی اسکرام"],["backlog","بک‌لاگ و برنامه‌ریزی"],["sprints","اسپرینت‌ها"],["tasks","فهرست تسک‌ها"],["reports","گزارش عملکرد"],["rarchive","بایگانی گزارش‌ها"],["teams","تیم‌ها"],["process","فرایندها"],["calendar","تقویم"],["members","اعضا و ثبت‌نام"],["nda","قرارداد محرمانگی"],["training","فرم آموزش"]],
   letters:[["new","نامه‌ی جدید (ساخت فایل Word)"],["archive","پیگیری و بایگانی نامه‌ها"]],
   scholar:[["applied","اقدام‌شده و در دست بررسی"],["human","مسئول انسانی"],["doing","در دست اقدام"],["todo","اقدام‌نشده"],["profile","مشخصات و رزومه من"]],
   articles:[["applied","اقدام‌شده و در دست بررسی"],["doing","در دست اقدام"],["todo","اقدام‌نشده"],["product","محصول ویژه‌ی مقاله"],["claude","تسک برای Claude"],["evidence","شواهد و داده‌ی واقعی"],["submit","ثبت چکیده و ثبت‌نام (مسئول انسانی)"],["list","فهرست کامل"]],
@@ -205,7 +207,7 @@ const logoSrc = () => S.settings.logo_asset ? blobUrl(S.settings.logo_asset) : D
 const S = {mod:"market", sub:"iran", q:"", db:null, user:null, assets:null, sample:null, downloads:null,
   me:{id:null,isOwner:false,canEdit:false}, canWrite:null,
   m:{tenders:[],events:[],investors:[],leads:[],partners:[]}, opsList:[],
-  settings:{}, members:[], tasks:[], letters:[], lettersArchive:[], lh:null, draft:null, archF:"all", ra:{member:null,from:"",to:""}, repLoaded:false, allLoaded:false, forceFull:false, products:[], patents:[], finance:[], clients:[], tracking:{}, schol:[], sp:{}, arts:[], artProd:{}, artSt:{}, ct:[], artF:{field:"",mode:"",type:"",past:false},
+  settings:{}, members:[], tasks:[], letters:[], lettersArchive:[], lh:null, draft:null, archF:"all", ra:{member:null,from:"",to:""}, repLoaded:false, allLoaded:false, forceFull:false, products:[], patents:[], finance:[], clients:[], tracking:{}, schol:[], sp:{}, cdocs:{}, ip:{countries:{},drafts:{}}, ipTab:"partners", news:{items:[]}, bi:{list:[]}, arts:[], artProd:{}, artSt:{}, ct:[], artF:{field:"",mode:"",type:"",past:false},
   myAtt:[], myReports:[], allReports:[], allAtt:[], loaded:false, sprints:[], boardMine:false, tour:null, got:new Set(), welcomed:false, calMine:false, calTypes:null, seenTasks:new Set()};
 try{const v=JSON.parse(localStorage.getItem("ppt-view")||"{}");if(v.mod&&SUBS[v.mod]){S.mod=v.mod;S.sub=SUBS[v.mod].some(x=>x[0]===v.sub)?v.sub:SUBS[v.mod][0][0]}}catch(e){}
 try{S.seenTasks=new Set(JSON.parse(localStorage.getItem("ppt-seen")||"[]"))}catch(e){}
@@ -250,6 +252,10 @@ function subscribe(){
     }, () => {});
   }
   S.db.collection("tracking").onSnapshot(snap => { const t={}; snap.docs.forEach(d=>t[d.id]=d.data()); S.tracking=t; render(); }, ()=>{});
+  S.db.doc("settings/intl_partners").onSnapshot(d => { S.ip = d.exists ? d.data() : {countries:{},drafts:{}}; render(); }, ()=>{});
+  S.db.doc("settings/news").onSnapshot(d => { S.news = d.exists ? d.data() : {items:[]}; render(); }, ()=>{});
+  S.db.doc("settings/basket_ideas").onSnapshot(d => { S.bi = d.exists ? d.data() : {list:[]}; render(); }, ()=>{});
+  S.db.doc("settings/company_docs").onSnapshot(d => { S.cdocs = d.exists ? d.data() : {}; render(); }, ()=>{});
   S.db.doc("settings/claude_tasks").onSnapshot(d => { S.ct = d.exists ? (d.data().list||[]) : []; render(); }, ()=>{});
   S.db.doc("settings/paper_evidence").onSnapshot(d => { S.pev = d.exists ? d.data() : {list:[]}; render(); }, ()=>{});
   S.db.doc("settings/article_status").onSnapshot(d => { S.artSt = d.exists ? (d.data().map||{}) : {}; render(); }, ()=>{});
@@ -446,8 +452,122 @@ function tenderTable(list){
     ${td("عنوان",`${link(t.url,t.title)}<br><span class="meta">${esc(t.source)}${t.setad_number?` · <span class="mono">${esc(t.setad_number)}</span>`:""}</span>${(t.analysis||{}).summary_fa?`<details><summary>تحلیل</summary>${esc(t.analysis.summary_fa)}</details>`:""}`,"t")}
     ${td("کشور",`${esc(t.country)}<br><span class="meta">${esc(t.buyer)}</span>`)}${td("بخش",esc(t.sector||"—"))}${td("مهلت",dl(t))}
     ${td("قیمت",esc(k.price))}${td("ضمانت‌نامه",esc(k.guarantee))}${td("رزومه",esc(k.experience))}${td("پذیرش",esc(k.intl))}
-    ${td("Go/No-Go",gngCell(t))}${td("وضعیت",`<span class="pill p-info">${esc(T_STATUS[t.status]||t.status)}</span>`)}${td("",claimBtn(t.id))}</tr>`}), "موردِ بدون مسئولی باقی نمانده است. موارد واگذارشده در «Project Tracking» هستند.");
+    ${td("Go/No-Go",gngCell(t))}${td("وضعیت",`<span class="pill p-info">${esc(T_STATUS[t.status]||t.status)}</span>`)}${td("",claimBtn(t.id)+partnerBtn(t))}</tr>`}), "موردِ بدون مسئولی باقی نمانده است. موارد واگذارشده در «Project Tracking» هستند.");
 }
+
+// ------------------------------------------------------------------ company documents (per company, for RFP work)
+const CDOC_COMPANIES = {
+  ppt:{title:"پترو پالاتوس",scope:"پروژه‌های هوش مصنوعی داخلی (ایران)",view:"docs_ir",rfp:"iran"},
+  parsa:{title:"پارسا اینت (Parsa International Group)",scope:"پروژه‌ها و قراردادهای بین‌المللی",view:"docs_int",rfp:"overseas"}
+};
+const CDOC_SEED = {
+  ppt:[{id:"a2d8c6c6d9dabef86553af4ccf128f29",name:"آخرین روزنامه‌ی رسمی شرکت",kind:"ثبتی"},
+       {id:"5992536efd7b671de0941e8fedd030f8",name:"گواهی تأییدیه‌ی شرکت پترو پالاتوس (دانش‌بنیان)",kind:"گواهی"},
+       {id:"9fde520ff4b313658eefb720d044d967",name:"رزومه‌ی شخصی (مدیرعامل)",kind:"رزومه"},
+       {id:"c819ce8ffa21e8c229db8e2a84015273",name:"رزومه‌ی شخصی – نسخه‌ی دوم",kind:"رزومه"},
+       {id:"2f342d86a74d98ceeb335d817d0f8cde",name:"پورتفولیوی راهکارهای هوش مصنوعی صنعتی – ۱۷ راهکار در ۴ حوزه (۲۶ اسلاید)",kind:"پورتفولیو"}],
+  parsa:[{id:"16cb54f5b08aea4dc15ae9e5cf7d330b",name:"روزنامه‌ی رسمی (News paper) – Parsa International Group",kind:"ثبتی"},
+         {id:"0b09c5b72ee2ef5ee6a002ad3aa2ba1b",name:"İmza Sirküleri (امضاهای مجاز شرکت) – رسید",kind:"امضا"}]
+};
+const cdocList = k => { const extra=(S.cdocs[k]||[]); const gone=new Set((S.cdocs[k+"_removed"]||[])); return [...CDOC_SEED[k].filter(d=>!gone.has(d.id)),...extra]; };
+function cdocTable(k){
+  const list=cdocList(k);
+  return table(["مدرک","نوع","باز کردن","دانلود",""],list.map(d=>`<tr>${td("مدرک",esc(d.name),"t")}${td("نوع",`<span class="pill p-mute">${esc(d.kind||"مدرک")}</span>`)}${td("باز کردن",`<button class="btn sm ghost" data-act="cdoc-view" data-id="${esc(d.id)}">مشاهده</button>`)}${td("دانلود",`<button class="btn sm sig" data-act="cdoc-dl" data-id="${esc(d.id)}">دانلود</button>`)}${td("",isAdmin()?`<button class="btn sm ghost" data-act="cdoc-del" data-c="${k}" data-id="${esc(d.id)}">حذف از فهرست</button>`:"")}</tr>`),"مدرکی ثبت نشده است.");
+}
+function companyDocsView(k){
+  const c=CDOC_COMPANIES[k];
+  if(!isAdmin()) return `<p class="empty">مدارک شرکت فقط برای owner و مدیران سامانه نمایش داده می‌شود.</p>`;
+  return `<p class="note">مدارک شرکت <b>${esc(c.title)}</b> برای ${esc(c.scope)}. این مدارک حساس‌اند (روزنامه‌ی رسمی، امضاها و رزومه)؛ فقط owner و مدیران آن‌ها را می‌بینند. برای ارسال به کارفرما، «دانلود» را بزنید.</p>`+
+    `<div class="toolbar">${isAdmin()?`<button class="btn sig" data-act="cdoc-add" data-c="${k}">افزودن مدرک (بارگذاری)</button>`:""}<button class="btn ghost" data-act="sub" data-k="${c.rfp}" data-mod="market">رفتن به RFPهای ${k==="ppt"?"داخلی":"بین‌المللی"}</button></div>`+cdocTable(k);
+}
+function companyDocsStrip(k){
+  if(!isAdmin()) return "";
+  const c=CDOC_COMPANIES[k], list=cdocList(k);
+  return `<div class="card" style="margin-bottom:10px"><b>مدارک ${esc(c.title)} برای این RFPها:</b> ${list.map(d=>`<button class="pill p-info" data-act="cdoc-dl" data-id="${esc(d.id)}" title="دانلود: ${esc(d.name)}" style="cursor:pointer;border:0">${esc(d.name.length>34?d.name.slice(0,34)+"…":d.name)} ⬇</button>`).join(" ")} <button class="btn sm ghost" data-act="sub" data-k="${c.view}">همه‌ی مدارک ▸</button></div>`;
+}
+VIEWS["market.docs_ir"]=()=>companyDocsView("ppt");
+VIEWS["market.docs_int"]=()=>companyDocsView("parsa");
+async function cdocFetch(id){ const d=[...cdocList("ppt"),...cdocList("parsa")].find(x=>x.id===id)||{name:"document"}; const r=await fetch(blobUrl(id)); if(!r.ok) throw new Error("fetch "+r.status); return {blob:await r.blob(),name:d.name}; }
+async function cdocDownload(id){ try{ const {blob,name}=await cdocFetch(id); const fn=name.replace(/[\/:*?"<>|]+/g,"_")+".pdf"; if(S.downloads) await S.downloads.save({filename:fn,data:blob}); else { const a=document.createElement("a"); a.href=URL.createObjectURL(blob); a.download=fn; a.click(); } }catch(e){ if(!e||e.code!=="declined") toast("دریافت فایل انجام نشد؛ صفحه را داخل claude.ai باز کنید."); } }
+async function cdocView(id){ try{ const {blob}=await cdocFetch(id); const u=URL.createObjectURL(new Blob([blob],{type:"application/pdf"})); const w=window.open(u,"_blank"); if(!w) toast("مرورگر باز شدن را مسدود کرد؛ دکمه‌ی «دانلود» را بزنید."); }catch(e){ toast("باز کردن فایل ممکن نشد؛ دکمه‌ی «دانلود» را بزنید."); } }
+async function cdocAdd(k){
+  openForm({title:"افزودن مدرک – "+CDOC_COMPANIES[k].title,fields:[{k:"name",label:"نام مدرک"},{k:"kind",label:"نوع (ثبتی، گواهی، رزومه، قرارداد …)"},{k:"file",label:"فایل (PDF یا تصویر)",type:"file",accept:"application/pdf,image/*"}],
+   onSave:async v=>{ if(!v.name||!v.file){toast("نام و فایل لازم است.");return false}
+     const id=await uploadImage(v.file); if(!id) return false;
+     const cur=S.cdocs[k]||[]; return save("settings/company_docs",{...S.cdocs,[k]:[...cur,{id,name:v.name,kind:v.kind||"مدرک"}]},"مدرک اضافه شد"); }});
+}
+
+// ------------------------------------------------------------------ INTERNATIONAL PARTNERS: local partner search and two-language outreach emails per tender
+const IP_C = { // country key (as stored on the tender) -> Persian name and the official language(s) of the buyer
+ POL:["لهستان",["pl"]],DEU:["آلمان",["de"]],BEL:["بلژیک",["fr","nl"]],NLD:["هلند",["nl"]],SWE:["سوئد",["sv"]],AUT:["اتریش",["de"]],NOR:["نروژ",["no"]],FRA:["فرانسه",["fr"]],ITA:["ایتالیا",["it"]],HRV:["کرواسی",["hr"]],ESP:["اسپانیا",["es"]],MDA:["مولداوی",["ro"]],CZE:["جمهوری چک",["cs"]],FIN:["فنلاند",["fi"]],GRC:["یونان",["el"]],
+ Pakistan:["پاکستان",["ur"]],Ukraine:["اوکراین",["uk"]],Moldova:["مولداوی",["ro"]],"North Macedonia":["مقدونیه شمالی",["mk"]],Jordan:["اردن",["ar"]]
+};
+const IP_L = {en:"انگلیسی",pl:"لهستانی",de:"آلمانی",fr:"فرانسوی",nl:"هلندی",sv:"سوئدی",no:"نروژی",it:"ایتالیایی",hr:"کرواتی",es:"اسپانیایی",ro:"رومانیایی",cs:"چکی",fi:"فنلاندی",el:"یونانی",ar:"عربی",ur:"اردو",uk:"اوکراینی",mk:"مقدونی"};
+const IP_RTL = new Set(["ar","ur"]);
+const IP_T = {
+ en:{sub:"Partnership proposal for tender: {project}",g:"Dear Sir or Madam,",p1:"I am writing on behalf of {co}, a Türkiye-based company specialised in artificial intelligence, digital twins and predictive maintenance for energy, process industries and health. Our team has developed a portfolio of 22 intelligent products (technology readiness levels 3 to 5) and runs pilots on client data.",p2:"We have identified the tender “{project}” published by {buyer} (deadline: {deadline}; {url}) and would like to take part together with a local partner.",p3:"We provide the technology, software development and technical implementation. We are looking for a partner in your country with relevant references, local registration and the qualification documents required by the tender, who would act as the contracting party or consortium lead.",p4:"If this is of interest, we would be glad to arrange a short call and send our capability statement and references. Thank you for your time.",sig:"Kind regards,"},
+ pl:{sub:"Propozycja współpracy w przetargu: {project}",g:"Szanowni Państwo,",p1:"Piszę w imieniu firmy {co} z siedzibą w Turcji, specjalizującej się w sztucznej inteligencji, cyfrowych bliźniakach i konserwacji predykcyjnej dla sektora energii, przemysłu procesowego i ochrony zdrowia. Opracowaliśmy portfolio 22 inteligentnych produktów (poziomy gotowości technologicznej 3–5) i prowadzimy pilotaże na danych klientów.",p2:"Zidentyfikowaliśmy przetarg „{project}” ogłoszony przez {buyer} (termin: {deadline}; {url}) i chcielibyśmy wziąć w nim udział wspólnie z lokalnym partnerem.",p3:"Zapewniamy technologię, rozwój oprogramowania i wdrożenie techniczne. Poszukujemy partnera w Polsce z odpowiednimi referencjami, lokalną rejestracją i dokumentami kwalifikacyjnymi wymaganymi w przetargu, który mógłby być stroną umowy lub liderem konsorcjum.",p4:"Jeśli propozycja Państwa interesuje, chętnie umówimy krótką rozmowę i prześlemy opis kompetencji oraz referencje. Dziękujemy za poświęcony czas.",sig:"Z poważaniem,"},
+ de:{sub:"Kooperationsanfrage zur Ausschreibung: {project}",g:"Sehr geehrte Damen und Herren,",p1:"ich schreibe im Namen von {co}, einem in der Türkei ansässigen Unternehmen für künstliche Intelligenz, digitale Zwillinge und vorausschauende Wartung in Energie, Prozessindustrie und Gesundheitswesen. Wir haben ein Portfolio aus 22 intelligenten Produkten (Technologiereifegrad 3 bis 5) entwickelt und führen Pilotprojekte mit Kundendaten durch.",p2:"Wir haben die Ausschreibung „{project}“ von {buyer} (Frist: {deadline}; {url}) identifiziert und möchten uns gemeinsam mit einem lokalen Partner beteiligen.",p3:"Wir liefern Technologie, Softwareentwicklung und technische Umsetzung. Wir suchen einen Partner in Deutschland mit passenden Referenzen, lokaler Registrierung und den von der Ausschreibung geforderten Nachweisen, der als Vertragspartner oder Konsortialführer auftritt.",p4:"Bei Interesse vereinbaren wir gern ein kurzes Gespräch und senden Ihnen unser Kompetenzprofil und Referenzen. Vielen Dank für Ihre Zeit.",sig:"Mit freundlichen Grüßen,"},
+ sv:{sub:"Förslag om samarbete i upphandlingen: {project}",g:"Hej,",p1:"Jag skriver å {co}s vägnar, ett turkiskt företag som arbetar med artificiell intelligens, digitala tvillingar och prediktivt underhåll för energi, processindustri och hälso- och sjukvård. Vi har utvecklat en portfölj med 22 intelligenta produkter (teknisk mognadsnivå 3 till 5) och genomför pilotprojekt med kunders data.",p2:"Vi har identifierat upphandlingen ”{project}” från {buyer} (sista dag: {deadline}; {url}) och vill delta tillsammans med en lokal partner.",p3:"Vi bidrar med teknik, programvaruutveckling och teknisk implementering. Vi söker en partner i Sverige med relevanta referenser, lokal registrering och de kvalificeringshandlingar som upphandlingen kräver, som kan vara avtalspart eller konsortieledare.",p4:"Är ni intresserade bokar vi gärna ett kort samtal och skickar vår kompetensbeskrivning och referenser. Tack för er tid.",sig:"Vänliga hälsningar,"},
+ nl:{sub:"Voorstel tot samenwerking voor de aanbesteding: {project}",g:"Geachte heer/mevrouw,",p1:"Ik schrijf namens {co}, een Turks bedrijf gespecialiseerd in kunstmatige intelligentie, digital twins en voorspellend onderhoud voor energie, procesindustrie en gezondheidszorg. Wij hebben een portfolio van 22 intelligente producten ontwikkeld (technologisch rijpheidsniveau 3 tot 5) en voeren pilots uit op klantgegevens.",p2:"Wij hebben de aanbesteding “{project}” van {buyer} (uiterste datum: {deadline}; {url}) gevonden en willen samen met een lokale partner deelnemen.",p3:"Wij leveren de technologie, softwareontwikkeling en technische uitvoering. Wij zoeken een partner in uw land met relevante referenties, lokale registratie en de vereiste kwalificatiedocumenten, die als contractpartij of consortiumleider kan optreden.",p4:"Bij interesse plannen wij graag een kort gesprek en sturen wij ons competentieprofiel en referenties. Hartelijk dank voor uw tijd.",sig:"Met vriendelijke groet,"},
+ fr:{sub:"Proposition de partenariat pour l'appel d'offres : {project}",g:"Madame, Monsieur,",p1:"Je vous écris au nom de {co}, société basée en Turquie spécialisée en intelligence artificielle, jumeaux numériques et maintenance prédictive pour l'énergie, l'industrie de process et la santé. Nous avons développé un portefeuille de 22 produits intelligents (niveaux de maturité technologique 3 à 5) et menons des pilotes sur les données des clients.",p2:"Nous avons repéré l'appel d'offres « {project} » publié par {buyer} (date limite : {deadline} ; {url}) et souhaitons y répondre avec un partenaire local.",p3:"Nous apportons la technologie, le développement logiciel et la mise en œuvre technique. Nous recherchons un partenaire dans votre pays disposant des références pertinentes, de l'immatriculation locale et des pièces de qualification exigées, qui agirait comme contractant ou chef de file du consortium.",p4:"Si cette proposition vous intéresse, nous serions heureux d'organiser un court échange et de vous envoyer notre présentation et nos références. Merci de votre attention.",sig:"Cordialement,"},
+ it:{sub:"Proposta di partnership per la gara: {project}",g:"Gentili Signori,",p1:"Scrivo a nome di {co}, azienda con sede in Turchia specializzata in intelligenza artificiale, gemelli digitali e manutenzione predittiva per energia, industria di processo e sanità. Abbiamo sviluppato un portafoglio di 22 prodotti intelligenti (livelli di maturità tecnologica da 3 a 5) e conduciamo progetti pilota sui dati dei clienti.",p2:"Abbiamo individuato la gara «{project}» pubblicata da {buyer} (scadenza: {deadline}; {url}) e vorremmo partecipare insieme a un partner locale.",p3:"Offriamo tecnologia, sviluppo software e implementazione tecnica. Cerchiamo un partner in Italia con referenze pertinenti, registrazione locale e documenti di qualificazione richiesti dalla gara, che possa agire come contraente o capofila del consorzio.",p4:"Se la proposta è di vostro interesse, saremo lieti di organizzare una breve chiamata e di inviare la presentazione delle competenze e le referenze. Grazie per l'attenzione.",sig:"Cordiali saluti,"},
+ el:{sub:"Πρόταση συνεργασίας για τον διαγωνισμό: {project}",g:"Αξιότιμοι κύριοι/κυρίες,",p1:"Σας γράφω εκ μέρους της {co}, εταιρείας με έδρα την Τουρκία, εξειδικευμένης στην τεχνητή νοημοσύνη, τους ψηφιακούς διδύμους και την προβλεπτική συντήρηση για την ενέργεια, τη βιομηχανία διεργασιών και την υγεία. Έχουμε αναπτύξει χαρτοφυλάκιο 22 έξυπνων προϊόντων (επίπεδα τεχνολογικής ωριμότητας 3 έως 5) και υλοποιούμε πιλοτικά έργα με δεδομένα πελατών.",p2:"Εντοπίσαμε τον διαγωνισμό «{project}» του φορέα {buyer} (προθεσμία: {deadline}· {url}) και θα θέλαμε να συμμετάσχουμε μαζί με τοπικό εταίρο.",p3:"Παρέχουμε την τεχνολογία, την ανάπτυξη λογισμικού και την τεχνική υλοποίηση. Αναζητούμε εταίρο στην Ελλάδα με σχετικές αναφορές, τοπική εγγραφή και τα δικαιολογητικά συμμετοχής που απαιτεί ο διαγωνισμός, ο οποίος θα λειτουργήσει ως συμβαλλόμενος ή επικεφαλής κοινοπραξίας.",p4:"Αν ενδιαφέρεστε, θα χαρούμε να κανονίσουμε μια σύντομη συνομιλία και να στείλουμε το προφίλ δυνατοτήτων και τις αναφορές μας. Σας ευχαριστούμε για τον χρόνο σας.",sig:"Με εκτίμηση,"},
+ no:{sub:"Forslag om samarbeid i anbudet: {project}",g:"Hei,",p1:"Jeg skriver på vegne av {co}, et tyrkisk selskap som jobber med kunstig intelligens, digitale tvillinger og prediktivt vedlikehold for energi, prosessindustri og helse. Vi har utviklet en portefølje på 22 intelligente produkter (teknologisk modenhetsnivå 3 til 5) og gjennomfører piloter på kundedata.",p2:"Vi har funnet anbudet «{project}» fra {buyer} (frist: {deadline}; {url}) og ønsker å delta sammen med en lokal partner.",p3:"Vi leverer teknologi, programvareutvikling og teknisk gjennomføring. Vi søker en partner i Norge med relevante referanser, lokal registrering og kvalifikasjonsdokumentene anbudet krever, som kan være kontraktspart eller konsortieleder.",p4:"Hvis dette er av interesse, avtaler vi gjerne en kort samtale og sender kompetanseprofil og referanser. Takk for tiden dere har brukt.",sig:"Vennlig hilsen,"},
+ cs:{sub:"Návrh spolupráce v zakázce: {project}",g:"Dobrý den,",p1:"píši jménem společnosti {co} se sídlem v Turecku, která se zabývá umělou inteligencí, digitálními dvojčaty a prediktivní údržbou pro energetiku, procesní průmysl a zdravotnictví. Vyvinuli jsme portfolio 22 inteligentních produktů (úrovně technologické připravenosti 3 až 5) a provádíme pilotní projekty na datech zákazníků.",p2:"Zjistili jsme zakázku „{project}“ zadavatele {buyer} (lhůta: {deadline}; {url}) a rádi bychom se jí zúčastnili společně s místním partnerem.",p3:"Zajišťujeme technologii, vývoj softwaru a technickou realizaci. Hledáme partnera v České republice s relevantními referencemi, místní registrací a kvalifikačními doklady požadovanými zakázkou, který by vystupoval jako smluvní strana nebo vedoucí konsorcia.",p4:"Pokud máte zájem, rádi domluvíme krátký hovor a zašleme profil kompetencí a reference. Děkujeme za váš čas.",sig:"S pozdravem,"},
+ fi:{sub:"Yhteistyöehdotus tarjouskilpailuun: {project}",g:"Hyvä vastaanottaja,",p1:"Kirjoitan yrityksen {co} puolesta. Olemme Turkissa toimiva yritys, joka erikoistuu tekoälyyn, digitaalisiin kaksosiin ja ennakoivaan kunnossapitoon energia-alalla, prosessiteollisuudessa ja terveydenhuollossa. Olemme kehittäneet 22 älykkään tuotteen valikoiman (teknologian kypsyystasot 3–5) ja toteutamme pilotteja asiakasdatalla.",p2:"Olemme löytäneet tarjouskilpailun ”{project}” (hankintayksikkö {buyer}, määräaika {deadline}; {url}) ja haluaisimme osallistua yhdessä paikallisen kumppanin kanssa.",p3:"Tuomme mukaan teknologian, ohjelmistokehityksen ja teknisen toteutuksen. Etsimme Suomesta kumppania, jolla on asianmukaiset referenssit, paikallinen rekisteröinti ja tarjouskilpailun edellyttämät kelpoisuusasiakirjat ja joka voi toimia sopimuskumppanina tai konsortion vetäjänä.",p4:"Jos asia kiinnostaa, sovimme mielellämme lyhyen puhelun ja lähetämme osaamiskuvauksen ja referenssit. Kiitos ajastanne.",sig:"Ystävällisin terveisin,"},
+ hr:{sub:"Prijedlog suradnje u nadmetanju: {project}",g:"Poštovani,",p1:"Pišem u ime tvrtke {co} sa sjedištem u Turskoj, specijalizirane za umjetnu inteligenciju, digitalne blizance i prediktivno održavanje u energetici, procesnoj industriji i zdravstvu. Razvili smo portfelj od 22 inteligentna proizvoda (razine tehnološke zrelosti 3 do 5) i provodimo pilot-projekte na podacima klijenata.",p2:"Uočili smo nadmetanje „{project}” naručitelja {buyer} (rok: {deadline}; {url}) i željeli bismo sudjelovati zajedno s lokalnim partnerom.",p3:"Osiguravamo tehnologiju, razvoj softvera i tehničku provedbu. Tražimo partnera u Hrvatskoj s relevantnim referencijama, lokalnom registracijom i dokazima sposobnosti koje traži nadmetanje, koji bi nastupio kao ugovorna strana ili voditelj konzorcija.",p4:"Ako ste zainteresirani, rado ćemo dogovoriti kratak razgovor i poslati profil kompetencija i reference. Hvala na izdvojenom vremenu.",sig:"Srdačan pozdrav,"},
+ es:{sub:"Propuesta de colaboración para la licitación: {project}",g:"Estimados señores:",p1:"Les escribo en nombre de {co}, empresa con sede en Turquía especializada en inteligencia artificial, gemelos digitales y mantenimiento predictivo para energía, industria de proceso y salud. Hemos desarrollado una cartera de 22 productos inteligentes (niveles de madurez tecnológica 3 a 5) y realizamos pilotos con datos de clientes.",p2:"Hemos identificado la licitación «{project}» publicada por {buyer} (plazo: {deadline}; {url}) y nos gustaría participar junto con un socio local.",p3:"Aportamos la tecnología, el desarrollo de software y la implementación técnica. Buscamos un socio en España con referencias pertinentes, registro local y la documentación de cualificación exigida por la licitación, que actúe como contratista o líder del consorcio.",p4:"Si les interesa, con gusto concertaremos una breve llamada y les enviaremos nuestra presentación de capacidades y referencias. Gracias por su tiempo.",sig:"Atentamente,"},
+ ro:{sub:"Propunere de colaborare pentru licitația: {project}",g:"Stimați domni,",p1:"Vă scriu în numele {co}, companie cu sediul în Turcia, specializată în inteligență artificială, gemeni digitali și mentenanță predictivă pentru energie, industria de proces și sănătate. Am dezvoltat un portofoliu de 22 de produse inteligente (niveluri de maturitate tehnologică 3–5) și derulăm proiecte-pilot pe datele clienților.",p2:"Am identificat licitația „{project}” publicată de {buyer} (termen: {deadline}; {url}) și dorim să participăm împreună cu un partener local.",p3:"Oferim tehnologia, dezvoltarea de software și implementarea tehnică. Căutăm un partener în țara dumneavoastră cu referințe relevante, înregistrare locală și documentele de calificare cerute de licitație, care să acționeze ca parte contractantă sau lider de consorțiu.",p4:"Dacă sunteți interesați, vom organiza cu plăcere o scurtă discuție și vă vom trimite prezentarea competențelor și referințele. Vă mulțumim pentru timpul acordat.",sig:"Cu stimă,"},
+ ar:{sub:"مقترح شراكة في المناقصة: {project}",g:"السادة المحترمون،",p1:"أكتب إليكم باسم {co}، وهي شركة مقرها تركيا متخصصة في الذكاء الاصطناعي والتوائم الرقمية والصيانة التنبؤية لقطاعات الطاقة والصناعات العملياتية والصحة. طوّرنا محفظة من 22 منتجاً ذكياً (مستويات نضج تقني من 3 إلى 5) وننفذ مشاريع تجريبية على بيانات العملاء.",p2:"لقد اطلعنا على المناقصة «{project}» الصادرة عن {buyer} (الموعد النهائي: {deadline}؛ {url}) ونود المشاركة فيها مع شريك محلي.",p3:"نوفر التقنية وتطوير البرمجيات والتنفيذ الفني. ونبحث عن شريك في بلدكم لديه مراجع ذات صلة وتسجيل محلي والوثائق التأهيلية التي تطلبها المناقصة، ليكون الطرف المتعاقد أو قائد التحالف.",p4:"إذا كان الأمر يهمكم، يسعدنا ترتيب مكالمة قصيرة وإرسال ملف قدراتنا ومراجعنا. شكراً لوقتكم.",sig:"مع خالص التقدير،"},
+ ur:{sub:"ٹینڈر کے لیے شراکت داری کی تجویز: {project}",g:"محترم جناب/محترمہ،",p1:"میں {co} کی جانب سے لکھ رہا ہوں، جو ترکی میں قائم ایک کمپنی ہے اور توانائی، پراسیس انڈسٹری اور صحت کے لیے مصنوعی ذہانت، ڈیجیٹل ٹوئنز اور پیش گو دیکھ بھال میں مہارت رکھتی ہے۔ ہم نے 22 ذہین مصنوعات (ٹیکنالوجی کی پختگی کی سطح 3 سے 5) تیار کی ہیں اور کلائنٹ کے ڈیٹا پر پائلٹ منصوبے چلاتے ہیں۔",p2:"ہم نے {buyer} کی جانب سے جاری کردہ ٹینڈر «{project}» (آخری تاریخ: {deadline}؛ {url}) دیکھا ہے اور مقامی شراکت دار کے ساتھ اس میں حصہ لینا چاہتے ہیں۔",p3:"ہم ٹیکنالوجی، سافٹ ویئر کی ترقی اور تکنیکی عمل درآمد فراہم کرتے ہیں۔ ہمیں پاکستان میں ایک ایسے شراکت دار کی تلاش ہے جس کے پاس متعلقہ حوالہ جات، مقامی رجسٹریشن اور ٹینڈر کے مطلوبہ اہلیتی دستاویزات ہوں، اور جو معاہدے کا فریق یا کنسورشیم کا قائد بن سکے۔",p4:"اگر آپ دلچسپی رکھتے ہیں تو ہم مختصر کال کا بندوبست کریں گے اور اپنی صلاحیتوں کا تعارف اور حوالہ جات بھیجیں گے۔ آپ کے وقت کا شکریہ۔",sig:"نیک تمناؤں کے ساتھ،"},
+ uk:{sub:"Пропозиція партнерства щодо тендера: {project}",g:"Шановні панове,",p1:"Пишу від імені {co} — компанії, що базується в Туреччині та спеціалізується на штучному інтелекті, цифрових двійниках і предиктивному обслуговуванні для енергетики, процесної промисловості та охорони здоров'я. Ми розробили портфель із 22 інтелектуальних продуктів (рівні технологічної готовності 3–5) і проводимо пілотні проєкти на даних клієнтів.",p2:"Ми знайшли тендер «{project}» замовника {buyer} (крайній термін: {deadline}; {url}) і хотіли б взяти в ньому участь разом із місцевим партнером.",p3:"Ми надаємо технологію, розробку програмного забезпечення та технічне впровадження. Шукаємо в Україні партнера з відповідними референціями, місцевою реєстрацією та кваліфікаційними документами, яких вимагає тендер, який виступив би стороною договору або лідером консорціуму.",p4:"Якщо вас це цікавить, ми з радістю домовимося про коротку розмову та надішлемо опис компетенцій і референції. Дякуємо за ваш час.",sig:"З повагою,"},
+ mk:{sub:"Предлог за соработка за тендерот: {project}",g:"Почитувани,",p1:"Ви пишувам во име на {co}, компанија со седиште во Турција, специјализирана за вештачка интелигенција, дигитални близнаци и предиктивно одржување за енергетиката, процесната индустрија и здравството. Развивме портфолио од 22 интелигентни производи (нивоа на технолошка зрелост од 3 до 5) и спроведуваме пилот-проекти врз податоци на клиентите.",p2:"Го идентификувавме тендерот „{project}“ на {buyer} (рок: {deadline}; {url}) и би сакале да учествуваме заедно со локален партнер.",p3:"Обезбедуваме технологија, развој на софтвер и техничка имплементација. Бараме партнер во Северна Македонија со соодветни референци, локална регистрација и квалификациски документи што ги бара тендерот, кој би настапил како договорна страна или водач на конзорциум.",p4:"Доколку сте заинтересирани, со задоволство ќе договориме краток разговор и ќе испратиме профил на нашите способности и референци. Ви благодариме за времето.",sig:"Со почит,"}
+};
+const IP_CO = "Parsa International Group";
+const ipIsIntl = t => (t.market||"international")==="international";
+const ipKey = t => t.country in IP_C ? t.country : null;
+const ipShort = v => { let x=String(v||"").replace(/^[^–]{2,40}–[^–]{2,60}–\s*/,"").trim(); return x.length>120?x.slice(0,117).trim()+"…":x; };
+function ipCompose(t,lang){
+  const T=IP_T[lang]||IP_T.en, f=x=>String(x).replace(/\{co\}/g,IP_CO).replace(/\{project\}/g,ipShort(t.title)).replace(/\{buyer\}/g,t.buyer||"").replace(/\{deadline\}/g,t.deadline||"—").replace(/\{url\}/g,t.url||"");
+  const sig=T.sig+"\nMohammad Parsa Sohrabi\n"+IP_CO+(lang==="en"?"\nTürkiye":"");
+  return {subject:f(T.sub), body:[f(T.g),"",f(T.p1),"",f(T.p2),"",f(T.p3),"",f(T.p4),"",sig].join("\n")};
+}
+const partnerBtn = t => (ipIsIntl(t)&&isAdmin()) ? ` <button class="btn sm sig" data-act="ip-open" data-id="${esc(t.id)}">شرکای تجاری</button>` : "";
+function ipLangs(t){ const k=ipKey(t); return ["en",...(k?IP_C[k][1]:[])]; }
+function ipOpen(tid,tab){
+  const t=S.m.tenders.find(x=>x.id===tid); if(!t) return;
+  if(tab) S.ipTab=tab; else if(S.ipTid!==tid) S.ipTab="partners"; S.ipTid=tid;
+  const k=ipKey(t), cinfo=k?IP_C[k]:null, rec=(S.ip.countries||{})[k]||{}, partners=rec.partners||[], langs=ipLangs(t);
+  const tabs=[["partners","شرکای تجاری"],...langs.map(l=>["mail_"+l,"ایمیل "+IP_L[l]])];
+  const drafted=(S.ip.drafts||{})[tid];
+  let body="";
+  if(S.ipTab==="partners"){
+    body=`<p class="note">شرکت‌هایی که در ${esc(cinfo?cinfo[0]:t.country)} امکان همکاری با آن‌ها وجود دارد: شریک محلی که سابقه، ثبت شرکت و مدارک مناقصه را دارد و ما فناوری، محصول و کدنویسی را ارائه می‌کنیم. فهرست از جست‌وجوی روزانه بهبود می‌یابد؛ پیش از تماس، علاقه و ظرفیت هر شرکت در سایت رسمی‌اش تأیید شود.</p>`+
+     (rec.note?`<p class="banner">${esc(rec.note)}</p>`:"")+
+     (partners.length?table(["شرکت","شهر","نوع","چرا مناسب است","منبع"],partners.map(x=>`<tr>${td("شرکت",`<b>${esc(x.name)}</b>${x.verified===false?' <span class="pill p-warn">تأیید شود</span>':""}`,"t")}${td("شهر",esc(x.city||"—"))}${td("نوع",esc(x.type||"—"))}${td("چرا",esc(x.why||""))}${td("منبع",x.url?link(x.url,"لینک"):"—")}</tr>`),"شریکی ثبت نشده است."):`<p class="empty">برای این کشور هنوز شریکی ثبت نشده است. جست‌وجوی روزانه تکمیل می‌کند، یا تسک زیر را بزنید.</p>`)+
+     `<div class="row" style="margin-top:8px"><button class="btn sm sig" data-act="ip-task" data-id="${esc(tid)}">📥 ثبت در صف: پیدا کردن شریک برای Claude</button></div>`;
+  } else {
+    const lang=S.ipTab.slice(5), m=ipCompose(t,lang), rtl=IP_RTL.has(lang);
+    body=`<p class="note">پیش‌نویس ایمیل به زبان ${esc(IP_L[lang])}${lang!=="en"?" (زبان رسمی کشور) ":" "}برای ارسال از ایمیل شرکت. گیرنده را از وب‌سایت رسمی شریک بنویسید. ${lang!=="en"?"ترجمه‌ی اولیه است؛ پیش از ارسال یک فرد بومی بازبینی کند.":""}</p>
+     <div class="card"><div class="meta">موضوع</div><p dir="${rtl?"rtl":"ltr"}" style="margin:0 0 8px"><b>${esc(m.subject)}</b></p><textarea id="ipBody" readonly dir="${rtl?"rtl":"ltr"}" style="width:100%;min-height:340px;font-size:14px">${esc(m.body)}</textarea></div>
+     <div class="row" style="margin-top:8px;gap:8px;flex-wrap:wrap"><button class="btn sm sig" data-act="ip-copy">کپی متن</button><a class="btn sm ghost" href="mailto:?subject=${encodeURIComponent(m.subject)}&body=${encodeURIComponent(m.body)}">باز کردن در برنامه‌ی ایمیل</a></div>`;
+  }
+  $("#layer").innerHTML=`<div class="scrim" data-act="close-scrim"><div class="drawer" style="max-width:980px;width:96vw;overflow:auto"><div class="row" style="align-items:center;gap:8px"><h3 style="flex:1;margin:0">شرکای تجاری – ${esc(cinfo?cinfo[0]:t.country)}</h3><button class="btn ghost sm" data-act="close">بستن</button></div>
+   <p class="meta">${esc(t.title)}<br>${esc(t.buyer||"")} · مهلت ${esc(t.deadline||"—")} ${drafted?`<span class="pill p-ok">درفت در Gmail ساخته شد</span>`:""}</p>
+   <div class="row" style="gap:6px;flex-wrap:wrap;margin:8px 0">${tabs.map(([k2,l])=>`<button class="btn sm ${S.ipTab===k2?"sig":"ghost"}" data-act="ip-tab" data-id="${esc(tid)}" data-t="${k2}">${esc(l)}</button>`).join("")}</div>${body}</div></div>`;
+}
+VIEWS["market.partners"] = () => {
+  if(!isAdmin()) return `<p class="empty">این بخش فقط برای owner و مدیران نمایش داده می‌شود.</p>`;
+  const list=S.m.tenders.filter(ipIsIntl).filter(t=>ACTIVE.has(t.status)).filter(t=>match(t.title,t.country,t.buyer));
+  const by={}; list.forEach(t=>{(by[t.country]=by[t.country]||[]).push(t)});
+  const rows=Object.entries(by).sort((a,b)=>b[1].length-a[1].length);
+  return `<p class="note">برای هر پروژه‌ی بین‌المللی به شریک تجاری در کشور یا شهر کارفرما نیاز داریم، چون رزومه‌ی کافی نداریم: شریک مدارک و سابقه را می‌دهد و ما محصول و بخش فنی را. روی «شرکای تجاری» هر پروژه بزنید تا شرکت‌ها و ایمیل دو زبانه (انگلیسی و زبان رسمی کشور) را ببینید. فهرست هر روز تکمیل می‌شود.</p>`+
+   kpis([["پروژه‌ی بین‌المللی",faNum(list.length)],["کشور",faNum(rows.length)],["کشور دارای شریک ثبت‌شده",faNum(rows.filter(([c])=>(((S.ip.countries||{})[c]||{}).partners||[]).length).length)]])+
+   rows.map(([c,ts])=>{const info=IP_C[c], rec=((S.ip.countries||{})[c]||{}), np=(rec.partners||[]).length;
+    return `<div class="card" style="margin-bottom:10px"><div class="row" style="align-items:center;gap:8px;flex-wrap:wrap"><h3 style="margin:0;flex:1">${esc(info?info[0]:c)}</h3><span class="pill p-info">${faNum(ts.length)} پروژه</span><span class="pill ${np?"p-ok":"p-mute"}">${faNum(np)} شریک</span><span class="meta">زبان رسمی: ${esc(info?info[1].map(l=>IP_L[l]).join("، "):"—")}</span></div>
+    ${table(["پروژه","خریدار","مهلت",""],ts.map(t=>`<tr>${td("پروژه",link(t.url,t.title),"t")}${td("خریدار",esc(t.buyer||"—"))}${td("مهلت",esc(t.deadline||"—"))}${td("",`<button class="btn sm sig" data-act="ip-open" data-id="${esc(t.id)}">شرکای تجاری</button>`)}</tr>`))}</div>`}).join("");
+};
 const mk = filter => () => {
   const list = S.m.tenders.filter(filter).filter(t=>ACTIVE.has(t.status)&&!owned(t.id)).filter(t=>match(t.title,t.country,t.buyer,t.source,t.sector));
   const soon = list.filter(t=>t.days_left!=null&&t.days_left<=7).length;
@@ -455,6 +575,7 @@ const mk = filter => () => {
 };
 VIEWS["market.iran"] = mk(t=>t.market==="domestic"&&t.line!=="web");
 VIEWS["market.overseas"] = mk(t=>(t.market||"international")==="international"&&t.line!=="web");
+{ const _mi=VIEWS["market.iran"], _mo=VIEWS["market.overseas"]; VIEWS["market.iran"]=()=>companyDocsStrip("ppt")+_mi(); VIEWS["market.overseas"]=()=>companyDocsStrip("parsa")+_mo(); }
 VIEWS["market.web"] = () => {
   const list = S.m.tenders.filter(t=>t.line==="web"&&ACTIVE.has(t.status)&&!owned(t.id)).filter(t=>match(t.title,t.country));
   const leads = S.m.leads.filter(l=>!owned("ld_"+l.id)&&match(l.name,l.activity,l.city));
@@ -606,6 +727,97 @@ function clientForm(c={}){ openForm({title:"مشتری / قرارداد",values:
 
 // ---------- BPMS
 function myMember(){ return S.members.find(m=>m.id===S.me.id); }
+
+// ------------------------------------------------------------------ BPMS home and contacts (one place to start, one place to reach people)
+VIEWS["bpms.home"] = () => {
+  const me=myMember(), my=S.tasks.filter(t=>t.assignee===S.me.id&&!["done","approved"].includes(t.status)), due=my.filter(t=>t.due&&t.due<=today()), att=S.myAtt.find(a=>a.id===today());
+  const miss=me?missingReportDays(me).length:0;
+  const pend=[]; if(me&&needsNda(me)&&!ndaSigned(me)) pend.push(["nda","قرارداد محرمانگی را امضا کنید"]); if(me&&needsTraining(me)&&!trainingDone(me)) pend.push(["training","فرم آموزش را تأیید کنید"]); if(me&&!hasProof(me)) pend.push(["members","امضا و اثر انگشت خود را ثبت کنید"]);
+  const grp=(title,items)=>`<div class="card"><h3 style="margin:0 0 8px">${title}</h3><div class="row" style="gap:8px;flex-wrap:wrap">${items.map(([k,l,hint])=>`<button class="btn ${k==="__task"||k==="__report"?"sig":"ghost"}" data-act="${k==="__task"?"task-new":k==="__report"?"report-new":"sub"}" data-k="${k}" title="${esc(hint||"")}">${esc(l)}</button>`).join("")}</div></div>`;
+  return `<p class="note">همه‌ی کارهای BPMS از همین صفحه شروع می‌شود. دکمه‌ی قرمز یعنی ساخت چیز جدید؛ دکمه‌ی خاکستری یعنی رفتن به بخش.</p>`+
+   kpis([["تسک‌های باز من",faNum(my.length),my.length>0],["مهلت امروز یا گذشته",faNum(due.length),due.length>0],["گزارش ثبت‌نشده",faNum(miss),miss>0],["ورود امروز",att&&att.in?att.in:"ثبت نشده"]])+
+   (pend.length?`<div class="banner bad"><b>کارهای معوق شما:</b> ${pend.map(([k,l])=>`<button class="btn sm sig" data-act="sub" data-k="${k}">${esc(l)}</button>`).join(" ")}</div>`:"")+
+   `<div class="grid2">`+
+   grp("امروز",[["myday","روز من (ورود و خروج)"],["__report","ثبت گزارش امروز"],["__task","تسک جدید"]])+
+   grp("کار و تسک",[["board","تخته‌ی اسکرام"],["tasks","فهرست تسک‌ها"],["backlog","بک‌لاگ و برنامه‌ریزی"],["sprints","اسپرینت‌ها"]])+
+   grp("گزارش",[["reports","گزارش‌های من"],["rarchive","بایگانی گزارش‌ها"]])+
+   grp("تیم و ارتباط",[["contacts","مخاطبین و ارتباط (تماس، ایمیل، تلگرام)"],["members","اعضا و ثبت‌نام"],["teams","تیم‌ها"],["calendar","تقویم"],["process","فرایندها"]])+
+   grp("اسناد من",[["nda","قرارداد محرمانگی"],["training","فرم آموزش"]])+
+   `</div>`;
+};
+function contactLinks(m){
+  const out=[]; const tg=String(m.telegram||"").trim(), ph=String(m.phone||"").replace(/[^\d+]/g,""), em=String(m.email||"").trim();
+  if(ph) out.push(`<a class="btn sm ghost" href="tel:${esc(ph)}">📞 تماس</a>`);
+  if(ph&&/^0?9\d{9}$/.test(ph.replace(/^\+98/,"0"))) out.push(`<a class="btn sm ghost" target="_blank" rel="noopener" href="https://wa.me/98${esc(ph.replace(/^\+?98/,"").replace(/^0/,""))}">واتس‌اپ</a>`);
+  if(tg&&/^@?[A-Za-z][A-Za-z0-9_]{3,}$/.test(tg)) out.push(`<a class="btn sm ghost" target="_blank" rel="noopener" href="https://t.me/${esc(tg.replace(/^@/,""))}">تلگرام</a>`);
+  if(em) out.push(`<a class="btn sm ghost" href="mailto:${esc(em)}">✉ ایمیل</a>`);
+  return out.join(" ")||'<span class="meta">اطلاعات تماس ثبت نشده</span>';
+}
+VIEWS["bpms.contacts"] = () => {
+  const list=S.members.filter(m=>match(m.full_name,m.role_title,TEAMS[m.team]));
+  return `<p class="note">هر عضو با یک کلیک قابل‌دسترسی است: تماس، واتس‌اپ، تلگرام یا ایمیل، و دکمه‌ی «تسک برای او» برای سپردن کار. اطلاعات تماس از ثبت‌نام هر عضو می‌آید؛ اگر چیزی خالی است از «اعضا و ثبت‌نام» تکمیل شود.</p>`+
+   table(["نام","تیم و نقش","ارتباط","تسک"],list.map(m=>`<tr>${td("نام",esc(m.full_name),"t")}${td("تیم",`${esc(TEAMS[m.team]||"—")}<br><span class="meta">${esc(m.role_title||ROLES[m.role]||"")}</span>`)}${td("ارتباط",contactLinks(m))}${td("",m.id!==S.me.id?`<button class="btn sm sig" data-act="task-for" data-m="${esc(m.id)}">تسک برای او</button>`:"")}</tr>`),"عضوی ثبت‌نام نکرده است.");
+};
+
+// ------------------------------------------------------------------ PRODUCTS BASKET: maturity, market and implementation path per product
+const BASKET_INFO = {
+ ogim:{d:"سامانه‌ی پایش میدان نفت و گاز: جمع‌آوری داده‌ی سرچاهی و تجهیزات، تشخیص ناهنجاری و پیش‌بینی روند تولید در یک داشبورد.",m:"TRL 5: نمونه‌ی نمایشی در میدان مارون (شرکت ملی مناطق نفت‌خیز جنوب). برای رسیدن به TRL 6 باید در یک میدان واقعی چند ماه با داده‌ی زنده اجرا و نتایج ثبت شود.",k:"بازار: شرکت‌های بهره‌بردار میدان، مدیریت تولید و پیمانکاران دیجیتال. روند جهانی: استقرار AI روی ده‌ها دکل و میدان (مثل پلتفرم‌های اعلام‌شده توسط شرکت‌های بزرگ خدمات نفتی).",i:"راهکار پیاده‌سازی: اتصال به SCADA با OPC-UA/MQTT روی چند چاه، ۴ هفته جمع‌آوری داده، سپس هشدار ناهنجاری و گزارش هفتگی؛ قرارداد پایلوت سه‌ماهه."},
+ fidps:{d:"سامانه‌ی پیش‌بینی و پیشگیری از آسیب سازند در حین حفاری، با تحلیل بلادرنگ داده‌ی حفاری.",m:"TRL 4: آزمایش در محیط آزمایشگاهی و با داده‌ی شبیه‌سازی. برای TRL 5 نیاز به داده‌ی واقعی چاه (WITSML) و اعتبارسنجی با گزارش‌های حفاری است.",k:"بازار: شرکت‌های حفاری و مهندسی نفت. آسیب سازند هزینه‌ی مستقیم تولید را بالا می‌برد، پس ارزش اقتصادی روشنی دارد.",i:"راهکار: اتصال به سرور WITSML یک پروژه‌ی حفاری، اجرای ماه‌اول در حالت «فقط هشدار» و مقایسه با سوابق چاه‌های مجاور."},
+ ilift:{d:"داشبورد مدیریت فرازآوری مصنوعی (ESP و پمپ میله‌ای): پیش‌بینی خرابی و بهینه‌سازی نقطه‌ی کار.",m:"TRL 4: مدل و داشبورد آماده، اتصال به کنترلر VSD روی تجهیز واقعی انجام نشده است.",k:"بازار: میدان‌های بالغ با چاه‌های فرازآوری زیاد؛ کاهش توقف چاه و مصرف برق.",i:"راهکار: پایلوت روی ۵ تا ۱۰ چاه ESP با داده‌ی تاریخی، سپس اتصال زنده به Modbus."},
+ cbm_dash:{d:"داشبورد نگهداری مبتنی بر وضعیت برای تجهیزات دوار پالایشگاه و پتروشیمی.",m:"TRL 4: داشبورد آماده، قواعد پایش وضعیت پایه؛ برای TRL 5 باید روی داده‌ی ارتعاش و دمای تجهیز واقعی اجرا شود.",k:"بازار: پالایشگاه‌ها و پتروشیمی‌ها (محصول اختصاصی برای پتروشیمی آبادان و فن‌آوران)؛ رقبا مثل AspenTech Mtell و AVEVA.",i:"راهکار: نصب سنسور ارتعاش بی‌سیم روی ۱۰ تجهیز بحرانی، ۸ هفته داده، گزارش اولین هشدارها."},
+ gas_turbine:{d:"دوقلوی دیجیتال توربین گازی برای پیش‌بینی خرابی و تشخیص ناهنجاری عملکرد.",m:"TRL 4: مدل و دفترچه‌ی تحلیل (Jupyter) آماده؛ اتصال به سامانه‌ی کنترل توربین انجام نشده.",k:"بازار: نیروگاه‌ها، ایستگاه‌های تقویت فشار گاز و پتروشیمی؛ رقبا GE Vernova APM و AspenTech.",i:"راهکار: تحلیل داده‌ی تاریخی یک واحد (۶ ماه)، سپس پایش زنده و گزارش ماهانه‌ی سلامت."},
+ terminals:{d:"مدیریت هوشمند ترمینال‌ها و مخازن: موجودی، تشخیص نشتی و پایش سطح.",m:"TRL 5: برنامه‌ی کامل و داشبورد؛ آماده‌ی استقرار نمایشی با سطح‌سنج واقعی.",k:"بازار: ترمینال‌های نفتی و پتروشیمی، شرکت‌های ذخیره‌سازی.",i:"راهکار: نصب روی ۲ تا ۳ مخزن، مقایسه‌ی تراز موجودی با ثبت دستی، گزارش اختلاف."},
+ gas_grid:{d:"پیش‌بینی تقاضا و بهینه‌سازی عرضه‌ی گاز در شبکه‌ی انتقال.",m:"TRL 3: ایده و مدل اولیه؛ نیازمند داده‌ی مصرف شبکه و اعتبارسنجی با یک منطقه‌ی نمونه.",k:"بازار: شرکت‌های گاز استانی و بهره‌بردار شبکه؛ کاهش ناترازی و جریمه.",i:"راهکار: مطالعه‌ی موردی روی داده‌ی یک شهر/منطقه، سپس مدل پیش‌بینی روزانه."},
+ apexasset:{d:"دوقلوی دیجیتال چرخه‌ی عمر دارایی با پیش‌بینی عمر باقی‌مانده (RUL).",m:"TRL 3: اثبات مفهوم؛ نیاز به داده‌ی دارایی واقعی و ریپوی نمونه با آزمون.",k:"بازار: مدیران دارایی در نفت، انرژی و هوانوردی.",i:"راهکار: انتخاب یک دسته‌ی دارایی (مثلاً پمپ‌ها)، ساخت دوقلو و مقایسه با سوابق تعمیرات."},
+ process_twin:{d:"دوقلوی دیجیتال فرایند پتروشیمی: سنسور مجازی و بهینه‌سازی تغییر گرید.",m:"TRL 4: نمونه‌ی اولیه با داده‌ی نمونه؛ برای TRL 5 نیاز به اتصال به Historian یک واحد پلی‌اتیلن.",k:"بازار: پتروشیمی‌ها (محصول اختصاصی برای اروند، آریاساسول، خلیج فارس آپادانا و جم).",i:"راهکار: اتصال به PI یا Historian، شش ماه داده‌ی تاریخی، سپس توصیه‌ی تغییر گرید بلادرنگ."},
+ iems:{d:"مدیریت انرژی، کربن و پایداری (Scope ۱ تا ۳) با بهینه‌سازی مصرف.",m:"TRL 5: اولین کارفرما پتروشیمی خراسان؛ نسخه‌ی آماده‌ی استقرار نمایشی.",k:"بازار: پتروشیمی و صنایع صادراتی؛ فشار قوانین کربن و گزارش‌دهی پایداری رو به افزایش است.",i:"راهکار: اتصال به کنتورهای برق و گاز، گزارش کربن ماهانه، سپس توصیه‌ی بهینه‌سازی."},
+ dss:{d:"پشتیبان تصمیم و تحول دیجیتال زنجیره‌ی ارزش (سفارش، موجودی، قیمت، لجستیک).",m:"TRL 4: Command Center و ماژول‌ها آماده؛ نیاز به داده‌ی واقعی یک شرکت.",k:"بازار: شرکت‌های پتروشیمی و تولیدی با زنجیره‌ی تأمین پیچیده.",i:"راهکار: پایلوت یک خط محصول، اتصال به ERP، داشبورد OTIF و موجودی."},
+ hvac:{d:"بهینه‌سازی مصرف انرژی ساختمان‌ها (HVAC) با پیش‌بینی بار.",m:"TRL 3: مدل ایده‌ای؛ نیاز به نصب کنترلر BACnet و داده‌ی چند ماهه.",k:"بازار: ساختمان‌های اداری، مجتمع‌های صنعتی و شهرداری‌ها.",i:"راهکار: پایلوت یک ساختمان، مقایسه‌ی قبل و بعد مصرف انرژی."},
+ nuclear:{d:"دوقلوی دیجیتال راکتور و نگهداری پیش‌بینانه با شبکه‌ی عصبی آگاه از فیزیک.",m:"TRL 3: مدل تحقیقاتی؛ حساسیت بالا و نیاز به همکاری با مرجع تخصصی.",k:"بازار: بازار بسیار محدود و حساس؛ بیشتر مناسب پروژه‌ی پژوهشی و همکاری دانشگاهی.",i:"راهکار: همکاری پژوهشی با دانشگاه و اعتبارسنجی روی داده‌ی شبیه‌سازی."},
+ neuropredict:{d:"ارزیابی خطر آلزایمر و پارکینسون با ترکیب MRI، نشانگرهای زیستی و آزمون‌های شناختی و توضیح‌پذیری.",m:"TRL 5: نمونه‌ی کامل با داشبورد؛ مقاله ارسال شده است. برای TRL 6 نیاز به اعتبارسنجی بالینی با داده‌ی بیمار و اخذ تأییدیه‌ی اخلاق.",k:"بازار: کلینیک‌های مغز و اعصاب و مراکز تصویربرداری. روند جهانی: تصمیم‌یار بالینی توضیح‌پذیر و رگولاتوری AI پزشکی (تعداد مجوزهای FDA رو به افزایش است).",i:"راهکار: همکاری با یک بیمارستان، ورود داده‌ی بازنگرانه‌ی ناشناس‌شده، ارزیابی دقت و مسیر مجوز."},
+ inescape:{d:"پلتفرم متن‌باز هوش مصنوعی برای پیش‌بینی خطر و تصمیم‌یاری سرطان مری.",m:"TRL 5: نمونه‌ی کامل، مقاله ارسال شده؛ نیازمند اعتبارسنجی روی داده‌ی بالینی.",k:"بازار: مراکز غربالگری و جراحی دستگاه گوارش؛ سرطان مری در ایران شیوع نسبتاً بالایی دارد.",i:"راهکار: همکاری با مرکز گوارش، مطالعه‌ی بازنگرانه و سپس مطالعه‌ی آینده‌نگر."},
+ diagkits:{d:"تحلیل هوشمند نتایج qPCR و ELISA و کنترل کیفیت داده‌ی کیت‌های تشخیصی.",m:"TRL 5: نمونه‌ی کامل با لبه‌ی آزمایشگاهی؛ برای TRL 6 نیاز به آزمون با داده‌ی چند آزمایشگاه.",k:"بازار: آزمایشگاه‌های تشخیص مولکولی و تولیدکنندگان کیت.",i:"راهکار: پایلوت در یک آزمایشگاه با خروجی دستگاه، گزارش کنترل کیفیت خودکار."},
+ healthdata:{d:"تحلیل کلان‌داده‌ی سلامت: یکپارچه‌سازی منابع، ETL افزایشی و مدل‌های بالینی.",m:"TRL 5: پشته‌ی کامل با FHIR و HL7؛ نیازمند اتصال به HIS واقعی.",k:"بازار: بیمارستان‌ها و بیمه‌ها؛ نیاز به داده‌ی یکپارچه برای تصمیم‌یاری.",i:"راهکار: پایلوت با داده‌ی ناشناس یک بخش بیمارستان، داشبورد شاخص‌ها."},
+ cart:{d:"طراحی شخصی CAR-T و پیش‌بینی پاسخ و سمیت (CRS و عصبی) با توضیح‌پذیری.",m:"TRL 4: مدل‌ها آماده؛ نیاز به داده‌ی بالینی و همکاری با مرکز سلول‌درمانی.",k:"بازار: مراکز سلول‌درمانی و شرکت‌های داروسازی پیشرفته.",i:"راهکار: همکاری پژوهشی روی داده‌ی منتشرشده و سپس داده‌ی مرکز شریک."},
+ lnp:{d:"طراحی ناقل ژن (LNP) و رتبه‌بندی چندمعیاره نامزدها.",m:"TRL 4: خط لوله‌ی طراحی آماده؛ آزمون آزمایشگاهی انجام نشده.",k:"بازار: شرکت‌های ژن‌درمانی و واکسن و داروسازی.",i:"راهکار: همکاری با آزمایشگاه برای اعتبارسنجی چند نامزد اول."},
+ ipind:{d:"طراحی هوشمند نانوحامل دارو با مدل مولد و شبیه‌سازی دینامیک مولکولی.",m:"TRL 4: خط لوله‌ی مدل‌سازی؛ نیاز به GPU و اعتبارسنجی تجربی.",k:"بازار: داروسازی و نانوفناوری دارویی.",i:"راهکار: همکاری با گروه دانشگاهی برای اعتبارسنجی آزمایشگاهی."},
+ pgx:{d:"پلتفرم ژنومیک و فارماکوژنومیک: هم‌ترازی، تماس واریانت و تفسیر دارویی.",m:"TRL 4: خط لوله‌ی کامل؛ برای TRL 5 نیاز به داده‌ی واقعی توالی‌یابی و اعتبارسنجی بالینی.",k:"بازار: مراکز ژنتیک و داروخانه‌های بالینی.",i:"راهکار: پایلوت با نمونه‌های ناشناس‌شده‌ی یک مرکز ژنتیک."},
+ hqca:{d:"کشف دارو با مدل ترکیبی کوانتوم-کلاسیک (VQC و VQE).",m:"TRL 4: ریپو و آزمایش روی شبیه‌ساز؛ مقاله‌ی IQIM در دست نگارش. برتری روی داده‌ی واقعی هنوز اثبات نشده است.",k:"بازار: پژوهشی؛ کاربرد تجاری پس از اثبات مزیت نسبت به روش کلاسیک.",i:"راهکار: مقایسه‌ی دقیق با مدل‌های کلاسیک روی داده‌ی عمومی (ChEMBL)."}
+};
+VIEWS["basket.list"] = () => {
+  const list=[...S.products].filter(p=>match(p.name,p.algorithms,p.client)).sort((a,b)=>(b.trl||0)-(a.trl||0)||String(a.name).localeCompare(String(b.name)));
+  const avg=S.products.length?(S.products.reduce((a,p)=>a+(p.trl||0),0)/S.products.length).toFixed(1):"—";
+  const by=t=>S.products.filter(p=>(p.trl||0)===t).length;
+  return `<p class="note">فهرست همه‌ی محصولات هوشمندسازی با توضیح، سطح بلوغ فناوری (TRL)، بازار هدف و راهکار پیاده‌سازی. اطلاعات «بازار» و «راهکار» ارزیابی تیم است و با پایلوت و بازخورد مشتری اصلاح می‌شود.</p>`+
+   kpis([["محصول",faNum(S.products.length)],["میانگین TRL",faNum(avg)],["TRL ۵",faNum(by(5))],["TRL ۴",faNum(by(4))],["TRL ۳",faNum(by(3))]])+
+   (list.length?`<div class="stack">${list.map((p,i)=>{const b=BASKET_INFO[p.id]||{}; const trl=p.trl||0;
+    return `<div class="card"><div class="row" style="align-items:center;gap:8px;flex-wrap:wrap"><span class="pill p-mute mono">${faNum(i+1)}</span><h3 style="margin:0;flex:1;min-width:220px">${esc(p.name)}</h3><span class="pill ${trl>=5?"p-ok":"p-info"} mono">TRL ${faNum(trl)}</span>${p.github?link(p.github,"ریپو"):""}</div>
+     <div style="margin:6px 0" title="سطح بلوغ از ۱ تا ۹"><div style="height:8px;background:var(--sunken);border-radius:4px"><div style="height:8px;width:${Math.round(trl/9*100)}%;background:var(--signal);border-radius:4px"></div></div></div>
+     <p>${esc(b.d||p.algorithms||"")}</p>
+     <div class="grid2"><div><b>بلوغ فناوری</b><p class="meta">${esc(b.m||"ارزیابی در حال تکمیل")}</p></div><div><b>بازار</b><p class="meta">${esc(b.k||"ارزیابی در حال تکمیل")}</p></div></div>
+     <p><b>راهکار پیاده‌سازی:</b> <span class="meta">${esc(b.i||"ارزیابی در حال تکمیل")}</span></p></div>`}).join("")}</div>`:'<p class="empty">محصولی ثبت نشده است.</p>');
+};
+VIEWS["basket.ideas"] = () => {
+  if(!isAdmin()) return `<p class="empty">این بخش فقط برای owner و مدیران نمایش داده می‌شود.</p>`;
+  const L=(S.bi&&S.bi.list)||[], upd=S.bi&&S.bi.updated?faDate(String(S.bi.updated).slice(0,10)):"—";
+  const AREAS=[...new Set(L.map(x=>x.area))];
+  return `<p class="note">محصولات نو و نوآورانه‌ای که نیاز جهان است، در حال شکل‌گیری است یا بخشی از آن در سبد ما انجام شده و بقیه مانده است. فهرست از جست‌وجوی روند جهانی ساخته می‌شود و روزانه به‌روز می‌شود. آخرین به‌روزرسانی: <b>${upd}</b>. هر ردیف دکمه‌ی «تسک برای Claude» دارد که ساخت اسکافلد و توسعه را سفارش می‌دهد.</p>`+
+   kpis([["ایده‌ی پیشنهادی",faNum(L.length)],["حوزه",faNum(AREAS.length)],["بخشی انجام‌شده",faNum(L.filter(x=>x.existing).length)]])+
+   (L.length?L.map((x,i)=>`<div class="card" style="margin-bottom:10px"><div class="row" style="align-items:center;gap:8px;flex-wrap:wrap"><span class="pill p-mute mono">${faNum(i+1)}</span><h3 style="margin:0;flex:1;min-width:220px">${esc(x.name)}</h3><span class="pill p-info">${esc(x.area)}</span><span class="pill ${x.priority==="بالا"?"p-warn":"p-mute"}">اولویت ${esc(x.priority||"")}</span></div>
+    <p><b>نیاز جهانی:</b> ${esc(x.need)} ${x.url?link(x.url,"منبع"):""}</p>
+    <div class="grid2"><div><b>آنچه در سبد داریم</b><p class="meta">${esc(x.existing||"چیزی نیست؛ محصول تازه")}</p></div><div><b>آنچه باقی مانده</b><p class="meta">${esc(x.remaining||"")}</p></div></div>
+    <p><b>اولین گام:</b> <span class="meta">${esc(x.first||"")}</span></p>
+    ${isAdmin()?`<button class="btn sm sig" data-act="bi-task" data-i="${i}">📥 ثبت در صف: اسکافلد و توسعه برای Claude</button>`:""}</div>`).join(""):'<p class="empty">هنوز فهرستی ثبت نشده است.</p>');
+};
+VIEWS["news.feed"] = () => {
+  const f=S.artF.newsInd||"", items=((S.news&&S.news.items)||[]).filter(n=>!f||n.industry===f).filter(n=>match(n.title_fa,n.summary_fa,n.industry));
+  const inds=[...new Set(((S.news&&S.news.items)||[]).map(n=>n.industry))];
+  const upd=S.news&&S.news.updated?faDate(String(S.news.updated).slice(0,10)):"—";
+  return `<p class="note">اخبار روز هوش مصنوعی در صنایع مختلف دنیا، به فارسی و با منبع. هر روز به‌روز می‌شود. آخرین به‌روزرسانی: <b>${upd}</b>. خبرهای با برچسب «تأیید نشده» از منبع ثانویه‌اند و پیش از استفاده باید در منبع اصلی بررسی شوند.</p>`+
+   kpis([["خبر",faNum(((S.news&&S.news.items)||[]).length)],["صنعت",faNum(inds.length)]])+
+   `<div class="toolbar"><select data-af="newsInd"><option value="">همه‌ی صنایع</option>${inds.map(v=>`<option value="${esc(v)}"${f===v?" selected":""}>${esc(v)}</option>`).join("")}</select></div>`+
+   (items.length?items.map((n,i)=>`<div class="card" style="margin-bottom:10px"><div class="row" style="align-items:center;gap:8px;flex-wrap:wrap"><span class="pill p-mute mono">${faNum(i+1)}</span><b style="flex:1;min-width:220px">${esc(n.title_fa)}</b><span class="pill p-info">${esc(n.industry)}</span>${n.verified===false?'<span class="pill p-warn">تأیید نشده</span>':""}<span class="meta">${n.date?faDate(n.date):""}</span></div><p>${esc(n.summary_fa)}</p>${n.url?`<p class="meta">منبع: ${link(n.url,n.source||n.url)}</p>`:""}</div>`).join(""):'<p class="empty">خبری ثبت نشده است.</p>');
+};
 VIEWS["bpms.myday"] = () => {
   const me=myMember(); if(!S.me.id) return `<p class="empty">برای استفاده از این بخش باید با حساب claude.ai وارد شده باشید.</p>`;
   if(!me) return `<p class="empty">ابتدا از «اعضا و ثبت‌نام» ثبت‌نام کنید.</p>`;
@@ -2462,6 +2674,16 @@ document.addEventListener("click", async e => {
     case "fin-edit": finForm(S.finance.find(f=>f.id===id)); break;
     case "client-new": clientForm(); break;
     case "client-edit": clientForm(S.clients.find(c=>c.id===id)); break;
+    case "cdoc-add": await cdocAdd(b.dataset.c); break;
+    case "cdoc-dl": await cdocDownload(id); break;
+    case "cdoc-view": await cdocView(id); break;
+    case "cdoc-del": { if(!isAdmin()) break; const k=b.dataset.c, d=id, extra=(S.cdocs[k]||[]).filter(x=>x.id!==d); const removed=CDOC_SEED[k].some(x=>x.id===d)?[...(S.cdocs[k+"_removed"]||[]),d]:(S.cdocs[k+"_removed"]||[]); await save("settings/company_docs",{...S.cdocs,[k]:extra,[k+"_removed"]:removed},"از فهرست حذف شد"); break; }
+    case "task-for": taskForm({assignee:b.dataset.m}); break;
+    case "ip-open": ipOpen(id); break;
+    case "ip-tab": ipOpen(id,b.dataset.t); break;
+    case "ip-copy": { const el=$("#ipBody"); if(el){ el.focus(); el.select(); let ok=false; try{ ok=document.execCommand("copy"); }catch(e){} if(!ok){ try{ await navigator.clipboard.writeText(el.value); ok=true; }catch(e){} } toast(ok?"متن کپی شد.":"متن انتخاب شد؛ با Ctrl+C کپی کنید."); } break; }
+    case "ip-task": { const t=S.m.tenders.find(x=>x.id===id); if(!t||!isAdmin()) break; const k=ipKey(t); await ctAdd(`برای پروژه‌ی بین‌المللی «${t.title}» (خریدار: ${t.buyer}، کشور: ${k?IP_C[k][0]:t.country}، مهلت: ${t.deadline||"—"}) شریک تجاری محلی پیدا کن: ۱) با جست‌وجوی وب ۵ شرکت واقعی در همان کشور یا شهر که با موضوع پروژه هم‌خوان‌اند (یکپارچه‌ساز، شرکت مهندسی یا مشاور با سابقه‌ی مشابه) پیدا کن و در سند settings/intl_partners زیر کشور ثبت کن با نام، شهر، نوع، دلیل و لینک منبع؛ ۲) برای هر شرکت ایمیل دو زبانه (انگلیسی و زبان رسمی) را با جای گیرنده خالی در Gmail درفت کن؛ ۳) هیچ ایمیلی ارسال نکن.`,{kind:"partner_search",venue:id,name:"شریک محلی → "+(t.buyer||t.title)}); break; }
+    case "bi-task": { const x=((S.bi&&S.bi.list)||[])[Number(b.dataset.i)]; if(!x||!isAdmin()) break; await ctAdd(`برای ایده‌ی محصول نو «${x.name}» (حوزه: ${x.area}) تسک: ۱) تعریف محصول (مسئله، نوآوری، داده، TRL هدف) بر پایه‌ی نیاز جهانی: ${x.need}؛ ۲) آنچه در سبد داریم: ${x.existing||"چیزی نیست"}؛ باقی‌مانده: ${x.remaining||""}؛ ۳) ساخت ریپوی جدید محلی با git و اسکافلد و توسعه‌ی اولیه با تست؛ ۴) فهرست «نباید فاش شود» برای مسیر ثبت اختراع و چکیده‌ی مقاله‌ی احتمالی. اولین گام: ${x.first||""}. قاعده: همه‌ی محصولات در مسیر ثبت اختراع‌اند؛ روش ادعاشده فاش نشود.`,{kind:"new_product",name:"ایده‌ی نو → "+x.name}); break; }
     case "task-new": taskForm(b.dataset.sprint?{sprint:b.dataset.sprint}:{}); break;
     case "task-edit": taskForm(S.tasks.find(x=>x.id===id)); break;
     case "task-st": await moveTask(id,b.dataset.st); break;
