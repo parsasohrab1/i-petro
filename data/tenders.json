@@ -25,7 +25,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": -4,
+   "days_left": -5,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -66,7 +66,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": -5,
+   "days_left": -6,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -107,7 +107,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": -4,
+   "days_left": -5,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -148,7 +148,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": -4,
+   "days_left": -5,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -189,7 +189,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": -4,
+   "days_left": -5,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -230,7 +230,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": -3,
+   "days_left": -4,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -271,7 +271,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": -2,
+   "days_left": -3,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -312,7 +312,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": 2,
+   "days_left": 1,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -348,7 +348,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": 2,
+   "days_left": 1,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -384,7 +384,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": 3,
+   "days_left": 2,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -420,7 +420,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": 3,
+   "days_left": 2,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -456,7 +456,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": 5,
+   "days_left": 4,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -492,7 +492,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": 6,
+   "days_left": 5,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -526,7 +526,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 7,
+   "days_left": 6,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -561,7 +561,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 10,
+   "days_left": 9,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -596,7 +596,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 15,
+   "days_left": 14,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -631,7 +631,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 17,
+   "days_left": 16,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -665,7 +665,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 21,
+   "days_left": 20,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -699,7 +699,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 23,
+   "days_left": 22,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -734,7 +734,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 35,
+   "days_left": 34,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -769,7 +769,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 43,
+   "days_left": 42,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -804,7 +804,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 1,
+   "days_left": 0,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -839,7 +839,7 @@
     "ai_cross_cutting",
     "medical"
    ],
-   "days_left": 21,
+   "days_left": 20,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -875,7 +875,7 @@
     "energy",
     "urban"
    ],
-   "days_left": 28,
+   "days_left": 27,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -909,7 +909,7 @@
    "domains": [
     "urban"
    ],
-   "days_left": 25,
+   "days_left": 24,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-20T09:40:22",
@@ -943,7 +943,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 78,
+   "days_left": 77,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-20T09:40:22",
@@ -1045,7 +1045,7 @@
    "domains": [
     "aviation"
    ],
-   "days_left": 2,
+   "days_left": 1,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-21T09:36:20",
@@ -1079,7 +1079,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 7,
+   "days_left": 6,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-21T09:36:20",
@@ -1114,7 +1114,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": 8,
+   "days_left": 7,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-21T09:36:20",
@@ -1148,7 +1148,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 26,
+   "days_left": 25,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-21T09:36:20",
@@ -1182,7 +1182,7 @@
    "domains": [
     "web"
    ],
-   "days_left": 28,
+   "days_left": 27,
    "line": "web",
    "status": "new",
    "first_seen": "2026-10-21T09:36:20",
@@ -1250,7 +1250,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 14,
+   "days_left": 13,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-22T09:39:52",
@@ -1284,7 +1284,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 25,
+   "days_left": 24,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-22T09:39:52",
@@ -1318,7 +1318,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 25,
+   "days_left": 24,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-22T09:39:52",
@@ -1352,7 +1352,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 35,
+   "days_left": 34,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-22T09:39:52",
@@ -1386,7 +1386,7 @@
    "domains": [
     "aviation"
    ],
-   "days_left": 30,
+   "days_left": 29,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-23T09:35:00",
@@ -1420,7 +1420,7 @@
    "domains": [
     "medical"
    ],
-   "days_left": 36,
+   "days_left": 35,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-23T09:35:00",
@@ -1454,7 +1454,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 39,
+   "days_left": 38,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-23T09:35:00",
@@ -1591,7 +1591,7 @@
    "domains": [
     "urban"
    ],
-   "days_left": 14,
+   "days_left": 13,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-26T10:29:22",
@@ -1625,7 +1625,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 28,
+   "days_left": 27,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-26T10:29:22",
@@ -1659,7 +1659,7 @@
    "domains": [
     "urban"
    ],
-   "days_left": 28,
+   "days_left": 27,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-26T10:29:22",
@@ -1700,6 +1700,142 @@
    "history": [
     {
      "at": "2026-10-26T10:29:22",
+     "status": "new"
+    }
+   ]
+  },
+  "TED-744614-2026": {
+   "id": "TED-744614-2026",
+   "source": "TED (EU)",
+   "market": "international",
+   "title": "Greece – Pumping station construction work – Modifications, construction of a new pumping station & accompanying infrastructure for the interconnection of Kozani district heating with the unified district heating network of Western Macedonia",
+   "description": "The project concerns the construction of pumping station facilities for the interconnection of Kozani district heating with the new and under construction thermal energy production facilities within the Kardia Thermal Power Plant site through the new thermal energy transfer system under construction, consisting of pipes of nominal diameter DN700mm DN600mm DN450mm with hot/superheated water as the carrier. In detail, it concerns the construction of the following distinct facilities: Installations (pump stations and other equipment) for interconnection in a field granted to DEYAK within the Kardia Thermal Power Plant/PPC referred to as \"KARDIAS PUMP STATION\". The facilities to be implemented with the project include the following main equipment and works: Hot water circulation pumping station for the transport system. Hot water circulation pump station of the production system Heat exchangers for the hydraulic separation of the existing district heating transport systems DEYAK and production. Other auxiliary equipment (pressure regulation and expansion valve reception, water treatment and replenishment, filtration, addition of chemical additives, safety devices, energy meters, etc.) Connection of the new facilities with the existing or new facilities to be implemented (transport pipeline, production facilities) (water supply, sewage, strong and weak currents and others). Automation control and remote management system for the remote monitoring of the Kardias Pumping Station. The system will fully cooperate with the existing control/remote management system of the district heating facilities control center and will essentially be an extension of it. Installations-renovation works at the existing district heating pumping station in the Kasla area of Kozani (replacement of pumping units of pumping station A2 and other equipment, so that the pumping station meets the requirements of the new transmission system as well as modifications to the routing of the transmission pipelines within the pumping station site), hereinafter referred to as \"KASLA PUMP STATION\". The works mainly concern Replacement of the main pumping units of pumping station A2 with their accompanying works Replacement of existing transformers with new ones to cover the increased electrical power requirements due to the new equipment. Replacement of existing speed regulators of pumping units of pumping station A1. Modification of the routing of the pre-insulated pipelines of the transmission system within the district heating installation site. Redesign of the existing operational control automation system of the main pumping stations. Upgrading of the supply lines of strong and weak currents of the new pumping complexes. Control automation and remote management system for the remote monitoring of the Kardia Pumping Station (see above-Kardia Pumping Station) as well as the Drepano valve station. The system will fully cooperate with the existing control/remote management system of the district heating installation control center and will essentially be an extension of it. With the implementation of the installations, the nominal transmission capacity of the system will be 195MWth.",
+   "buyer": "MUNICIPAL WATER, DRAINAGE & DISTRICT HEATING COMPANY OF KOZANI",
+   "country": "GRC",
+   "deadline": "2026-11-10",
+   "published": "2026-10-27",
+   "url": "https://ted.europa.eu/en/notice/-/detail/744614-2026",
+   "notice_type": "cn-standard",
+   "sector": "شرکت دولتی / عمومی",
+   "facts": {
+    "price": "ارزش برآوردی: 13,400,000 EUR",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "رویه‌ی باز اتحادیه اروپا – شرکت‌های خارج از EU معمولاً مجازند مگر محدودیت صریح در اسناد"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "urban"
+   ],
+   "days_left": 14,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-10-27T10:03:26",
+   "history": [
+    {
+     "at": "2026-10-27T10:03:26",
+     "status": "new"
+    }
+   ]
+  },
+  "TED-744643-2026": {
+   "id": "TED-744643-2026",
+   "source": "TED (EU)",
+   "market": "international",
+   "title": "Portugal – Repair and maintenance services of reservoirs – Prestação de serviços de operação, manutenção e conservação de Estações Elevatórias de Águas Residuais e Estações de Tratamento de Águas Residuais – Concelho de Chaves",
+   "description": "Lote I Lote II",
+   "buyer": "Município de Chaves",
+   "country": "PRT",
+   "deadline": "2026-11-23",
+   "published": "2026-10-27",
+   "url": "https://ted.europa.eu/en/notice/-/detail/744643-2026",
+   "notice_type": "cn-standard",
+   "sector": "دولتی",
+   "facts": {
+    "price": "ارزش برآوردی: 397,169 EUR (2 بخش)",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "رویه‌ی باز اتحادیه اروپا – شرکت‌های خارج از EU معمولاً مجازند مگر محدودیت صریح در اسناد"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "energy"
+   ],
+   "days_left": 27,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-10-27T10:03:26",
+   "history": [
+    {
+     "at": "2026-10-27T10:03:26",
+     "status": "new"
+    }
+   ]
+  },
+  "TED-743680-2026": {
+   "id": "TED-743680-2026",
+   "source": "TED (EU)",
+   "market": "international",
+   "title": "Germany – Medical imaging services – Röntgendienstleistung EAE Essen",
+   "description": "In der Erstaufnahmeeinrichtung (EAE) Essen ist der Betrieb einer vom Auftraggeber gestellten, fest installierten Röntgeneinrichtung ´SIEMENS Multix Select DR/ AXD 1872´ unter Berücksichtigung der Vorgaben und Vorschriften der Strahlenschutzverordnung (StrlSchV) in ihrer jeweils aktuellen Fassung, sowie die zugehörige IT syngo.plaza Workstation/ BND 1508, zwecks Ausschlusses von infektiöser Tuberkulose(TBC) von neu ankommenden Flüchtlingen zu erbringen. Bei der EAE Essen handelt es sich um eine Einrichtung des Landes NRW, zu deren Hauptaufgaben die erste medizinische Untersuchung (gemäß § 62 AsylG) sowie die Registrierung der ankommenden Flüchtlinge und Asylsuchenden gehört. Nach erfolgter Untersuchung und Registrierung können die Bewohnerinnen und Bewohner in weiteren Unterbringungseinrichtungen des Landes untergebracht werden. Der Auftragnehmer betreibt die landeseigene Röntgenanlage inkl. Software zwecks Durchführung des TBC-Ausschlusses sämtlicher in der EAE Essen ankommender Flüchtlinge und Asylsuchenden. Vertragspartner des Auftragnehmers wird das Land NRW, vertreten durch die Bezirksregierung Düsseldorf.",
+   "buyer": "Bezirksregierung Düsseldorf",
+   "country": "DEU",
+   "deadline": "2026-11-26",
+   "published": "2026-10-27",
+   "url": "https://ted.europa.eu/en/notice/-/detail/743680-2026",
+   "notice_type": "cn-standard",
+   "sector": "دولتی",
+   "facts": {
+    "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "رویه‌ی باز اتحادیه اروپا – شرکت‌های خارج از EU معمولاً مجازند مگر محدودیت صریح در اسناد"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "medical"
+   ],
+   "days_left": 30,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-10-27T10:03:26",
+   "history": [
+    {
+     "at": "2026-10-27T10:03:26",
+     "status": "new"
+    }
+   ]
+  },
+  "TED-741848-2026": {
+   "id": "TED-741848-2026",
+   "source": "TED (EU)",
+   "market": "international",
+   "title": "Italy – District heating boiler – Fornitura, montaggio e messa in esercizio di un impianto di condensazione per il recupero del calore dalla linea fumi della caldaia a biomassa del teleriscaldamento di Chiusa nonché ottimizzazione della caldaia esistente mediante l’installazione di sistemi di misurazione, regolazione, monitoraggio e sicurezza",
+   "description": "Fornitura impianto condensazione per recupero calore centrale Chiusa",
+   "buyer": "Alperia Ecoplus srl",
+   "country": "ITA",
+   "deadline": "2026-11-27",
+   "published": "2026-10-27",
+   "url": "https://ted.europa.eu/en/notice/-/detail/741848-2026",
+   "notice_type": "cn-standard",
+   "sector": "نامشخص",
+   "facts": {
+    "price": "ارزش برآوردی: 822,380 EUR",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "رویه‌ی باز اتحادیه اروپا – شرکت‌های خارج از EU معمولاً مجازند مگر محدودیت صریح در اسناد"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "urban"
+   ],
+   "days_left": 31,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-10-27T10:03:26",
+   "history": [
+    {
+     "at": "2026-10-27T10:03:26",
      "status": "new"
     }
    ]
@@ -2294,6 +2430,80 @@
     "TED-737185-2026",
     "TED-739448-2026",
     "TED-740752-2026"
+   ],
+   "actioned_ids": [],
+   "reminders": []
+  },
+  {
+   "at": "2026-10-27T10:06:59",
+   "collected": 261,
+   "matched": 16,
+   "partner_drafts": [],
+   "events_added": 0,
+   "scholarships_added": 0,
+   "investors_added": 0,
+   "investor_drafts": [
+    "revo",
+    "212",
+    "hub71",
+    "aramco-ventures",
+    "antler-menap",
+    "equinor-ventures",
+    "shell-ventures",
+    "ycombinator",
+    "techstars"
+   ],
+   "leads_added": 0,
+   "papers_lines": [],
+   "events_soon": [
+    {
+     "start": "2026-10-28",
+     "name": "Media Expo 1405 (2nd)",
+     "name_fa": "دومین نمایشگاه مدیا اکسپو (با بخش هوش مصنوعی)",
+     "city": "تهران (برج میلاد)"
+    },
+    {
+     "start": "2026-11-02",
+     "name": "ADIPEC 2026",
+     "name_fa": "نمایشگاه و کنفرانس نفت و گاز ابوظبی",
+     "city": "ابوظبی"
+    },
+    {
+     "start": "2026-11-03",
+     "name": "Smart City Expo World Congress 2026",
+     "name_fa": "کنگره جهانی شهر هوشمند",
+     "city": "بارسلونا"
+    },
+    {
+     "start": "2026-11-09",
+     "name": "Web Summit 2026",
+     "name_fa": "وب سامیت لیسبون",
+     "city": "لیسبون"
+    },
+    {
+     "start": "2026-11-16",
+     "name": "MEDICA 2026",
+     "name_fa": "نمایشگاه تجهیزات و فناوری پزشکی دوسلدورف",
+     "city": "دوسلدورف"
+    },
+    {
+     "start": "2026-12-06",
+     "name": "NeurIPS 2026",
+     "name_fa": "کنفرانس NeurIPS (سیدنی / آتلانتا / پاریس)",
+     "city": "سیدنی، آتلانتا، پاریس"
+    },
+    {
+     "start": "2026-12-07",
+     "name": "GITEX Global 2026",
+     "name_fa": "جیتکس دبی",
+     "city": "دبی (Expo City)"
+    }
+   ],
+   "new_ids": [
+    "TED-744614-2026",
+    "TED-744643-2026",
+    "TED-743680-2026",
+    "TED-741848-2026"
    ],
    "actioned_ids": [],
    "reminders": []
