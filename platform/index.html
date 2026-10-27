@@ -564,7 +564,7 @@ function ipOpen(tid,tab){
     const lang=S.ipTab.slice(5), m=ipCompose(t,lang), rtl=IP_RTL.has(lang);
     body=`<p class="note">پیش‌نویس ایمیل به زبان ${esc(IP_L[lang])}${lang!=="en"?" (زبان رسمی کشور) ":" "}برای ارسال از ایمیل شرکت. ایمیل گیرنده را ایجنت از وب‌سایت رسمی شریک می‌خواند و در کادر «گیرنده» می‌گذارد؛ اگر خالی بود از سایت شریک وارد کنید. ${lang!=="en"?"ترجمه‌ی اولیه است؛ پیش از ارسال یک فرد بومی بازبینی کند.":""}</p>
      <div class="card"><div class="meta">گیرنده (شریک تجاری)</div><input id="ipTo" dir="ltr" value="${esc(ipRecipient(t))}" placeholder="ایمیل شریک از وب‌سایت رسمی‌اش" style="width:100%;margin:2px 0 8px"><div class="meta">موضوع</div><p dir="${rtl?"rtl":"ltr"}" style="margin:0 0 8px"><b>${esc(m.subject)}</b></p><textarea id="ipBody" readonly dir="${rtl?"rtl":"ltr"}" style="width:100%;min-height:340px;font-size:14px">${esc(m.body)}</textarea></div>
-     <div class="row" style="margin-top:8px;gap:8px;flex-wrap:wrap"><button class="btn sm sig" data-act="ip-copy">کپی متن</button><a class="btn sm ghost" id="ipMailto" href="mailto:${encodeURIComponent(ipRecipient(t))}?subject=${encodeURIComponent(m.subject)}&body=${encodeURIComponent(m.body)}">باز کردن در برنامه‌ی ایمیل</a></div>`;
+     <div class="row" style="margin-top:8px;gap:8px;flex-wrap:wrap"><button class="btn sm sig" data-act="ip-copy">کپی متن</button>${webmailLink("sm sig")}<a class="btn sm ghost" id="ipMailto" href="mailto:${encodeURIComponent(ipRecipient(t))}?subject=${encodeURIComponent(m.subject)}&body=${encodeURIComponent(m.body)}">باز کردن در برنامه‌ی ایمیل</a></div>`;
   }
   $("#layer").innerHTML=`<div class="scrim" data-act="close-scrim"><div class="drawer" style="max-width:980px;width:96vw;overflow:auto"><div class="row" style="align-items:center;gap:8px"><h3 style="flex:1;margin:0">شرکای تجاری – ${esc(cinfo?cinfo[0]:t.country)}</h3><button class="btn ghost sm" data-act="close">بستن</button></div>
    <p class="meta">${esc(t.title)}<br>${esc(t.buyer||"")} · مهلت ${esc(t.deadline||"—")} ${drafted?`<span class="pill p-ok">درفت در Gmail ساخته شد</span>`:""}</p>
@@ -587,8 +587,12 @@ const mk = filter => () => {
   return kpis([["فرصت فعال",faNum(list.length)],["مهلت ≤ ۷ روز",faNum(soon),soon>0],["دولتی",faNum(list.filter(t=>(t.sector||"").startsWith("دولتی")).length)],["شرکت دولتی / عمومی",faNum(list.filter(t=>(t.sector||"").includes("شرکت")).length)]]) + tenderTable(list);
 };
 VIEWS["market.iran"] = mk(t=>t.market==="domestic"&&t.line!=="web");
+const WEBMAIL_DEFAULT = "https://parsaint.group/webmail";   // Parsa International Group corporate mailbox (cPanel); the login form opens there
+const webmailUrl = () => { const u=String((S.settings&&S.settings.webmail_url)||"").trim(); return /^https:\/\//i.test(u)?u:WEBMAIL_DEFAULT; };
+const webmailLink = cls => `<a class="btn ${cls}" href="${esc(webmailUrl())}" target="_blank" rel="noopener noreferrer">رفتن به پرتال ایمیل شرکتی (Parsa International Group)</a>`;
+const webmailBar = () => `<div class="toolbar">${webmailLink("sig")}<span class="meta">پیش‌نویس ایمیل شرکا در Drafts همین وب‌میل ذخیره می‌شود؛ پس از ورود با حساب info@parsaint.group آن را بازبینی و ارسال کنید.</span></div>`;
 VIEWS["market.overseas"] = mk(t=>(t.market||"international")==="international"&&t.line!=="web");
-{ const _mi=VIEWS["market.iran"], _mo=VIEWS["market.overseas"]; VIEWS["market.iran"]=()=>companyDocsStrip("ppt")+_mi(); VIEWS["market.overseas"]=()=>companyDocsStrip("parsa")+_mo(); }
+{ const _mi=VIEWS["market.iran"], _mo=VIEWS["market.overseas"]; VIEWS["market.iran"]=()=>companyDocsStrip("ppt")+_mi(); VIEWS["market.overseas"]=()=>webmailBar()+companyDocsStrip("parsa")+_mo(); }
 VIEWS["market.web"] = () => {
   const list = S.m.tenders.filter(t=>t.line==="web"&&ACTIVE.has(t.status)&&!owned(t.id)).filter(t=>match(t.title,t.country));
   const leads = S.m.leads.filter(l=>!owned("ld_"+l.id)&&match(l.name,l.activity,l.city));
