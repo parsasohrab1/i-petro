@@ -13,11 +13,13 @@ def configured():
     return all(env(k) for k in ("IMAP_HOST", "IMAP_USER", "IMAP_PASSWORD"))
 
 
-def build_message(sender, subject, body, to="", attachments=()):
+def build_message(sender, subject, body, to="", cc="", attachments=()):
     msg = EmailMessage()
     msg["From"] = sender
     if to:
         msg["To"] = to
+    if cc:
+        msg["Cc"] = cc
     msg["Subject"] = subject
     msg["Date"] = formatdate(localtime=True)
     msg["Message-ID"] = make_msgid(domain=sender.split("@")[-1])
@@ -53,3 +55,23 @@ def save_draft(msg, cfg):
         if status != "OK":
             raise RuntimeError(f"IMAP APPEND to {folder} failed: {status}")
         return folder
+
+
+def drafts_from_eml(source):
+    """Yields (name, EmailMessage) for every .eml in a folder or a .zip (e.g. the ZIP the partners tab downloads)."""
+    import zipfile
+    from email import message_from_bytes, policy
+    from pathlib import Path
+    source = Path(source)
+    if source.suffix.lower() == ".zip":
+        with zipfile.ZipFile(source) as z:
+            items = [(n, z.read(n)) for n in sorted(z.namelist()) if n.lower().endswith(".eml")]
+    else:
+        items = [(f.name, f.read_bytes()) for f in sorted(source.glob("*.eml"))] if source.is_dir() else [(source.name, source.read_bytes())]
+    for name, raw in items:
+        msg = message_from_bytes(raw, policy=policy.SMTP)
+        if not msg["Date"]:
+            msg["Date"] = formatdate(localtime=True)
+        if not msg["Message-ID"]:
+            msg["Message-ID"] = make_msgid(domain=(env("IMAP_USER") or "parsaint.group").split("@")[-1])
+        yield name, msg

@@ -14,6 +14,7 @@
   python -m agent track <tender-id> [--owner NAME] [--stage STAGE] [--next TEXT] [--date YYYY-MM-DD] [--note TEXT]
       stages: identified | documents | partner_email | partner_meeting | mou | proposal | submitted | result
   python -m agent remind-reports <folder>                    Telegram reminder to members without today's performance report
+  python -m agent save-drafts <zip|folder|file.eml>          put .eml drafts (e.g. the partners-tab ZIP) into the parsaint.group Drafts folder
   python -m agent investor <investor-id> <status>            researching | contacted | meeting | due_diligence | term_sheet | declined
 """
 import json
@@ -66,6 +67,8 @@ def main(argv=None):
     tk.add_argument("--note", default="")
     rr = sub.add_parser("remind-reports")
     rr.add_argument("folder")
+    sd = sub.add_parser("save-drafts")
+    sd.add_argument("source")
     ld = sub.add_parser("lead")
     ld.add_argument("lead_id")
     ld.add_argument("status", choices=list(leads.STATUSES))
@@ -77,6 +80,18 @@ def main(argv=None):
     if a.cmd == "run":
         from .pipeline import run
         run(use_llm=not a.no_llm, use_mail=not a.no_mail, send_notification=not a.no_notify)
+        return
+
+    if a.cmd == "save-drafts":
+        from . import mailbox
+        if not mailbox.configured():
+            sys.exit("Set IMAP_HOST, IMAP_USER and IMAP_PASSWORD in .env first (see .env.example).")
+        cfg, n = load_config(), 0
+        for name, msg in mailbox.drafts_from_eml(a.source):
+            folder = mailbox.save_draft(msg, cfg)
+            n += 1
+            print(f"{name} -> {folder} (To: {msg['To'] or '-'})")
+        print(f"{n} draft(s) saved to the parsaint.group mailbox. Nothing was sent.")
         return
 
     cfg, state = load_config(), store.load()

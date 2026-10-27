@@ -204,7 +204,8 @@
       "INBOX.Drafts",
       "Drafts",
       "INBOX/Drafts"
-    ]
+    ],
+    "partner_cc": "oil.ms.sohrabi@gmail.com"
   },
   "dashboard": {
     "output": "docs/index.html"
