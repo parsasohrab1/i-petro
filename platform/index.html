@@ -525,14 +525,18 @@ const IP_T = {
  mk:{sub:"Предлог за соработка за тендерот: {project}",g:"Почитувани,",p1:"Ви пишувам во име на {co}, компанија со седиште во Турција, специјализирана за вештачка интелигенција, дигитални близнаци и предиктивно одржување за енергетиката, процесната индустрија и здравството. Развивме портфолио од 22 интелигентни производи (нивоа на технолошка зрелост од 3 до 5) и спроведуваме пилот-проекти врз податоци на клиентите.",p2:"Го идентификувавме тендерот „{project}“ на {buyer} (рок: {deadline}; {url}) и би сакале да учествуваме заедно со локален партнер.",p3:"Обезбедуваме технологија, развој на софтвер и техничка имплементација. Бараме партнер во Северна Македонија со соодветни референци, локална регистрација и квалификациски документи што ги бара тендерот, кој би настапил како договорна страна или водач на конзорциум.",p4:"Доколку сте заинтересирани, со задоволство ќе договориме краток разговор и ќе испратиме профил на нашите способности и референци. Ви благодариме за времето.",sig:"Со почит,"}
 };
 const IP_CO = "Parsa International Group";
+// Sender name = the member who holds the "send partner emails" task of this tender (defined from the partners window); company name until a task exists.
+const ipTask = tid => (S.tasks||[]).filter(x=>x.ip_tender===tid).sort((a,b)=>String(b.created||"").localeCompare(String(a.created||"")))[0];
+const ipSender = tid => { const tk=ipTask(tid), n=tk?memberName(tk.assignee):"—"; return n!=="—"?n:IP_CO; };
+const ipFromHdr = tid => { const n=ipSender(tid); return (/^[ -~]*$/.test(n)?'"'+n.replace(/[\x22\x5c]/g,"")+'"':"=?UTF-8?B?"+btoa(String.fromCharCode(...new TextEncoder().encode(n)))+"?=")+" <"+IP_FROM+">"; };
 const IP_REQ = "Division of work: your company would present the buyer's requirements to us for this tender, including all documents requested in the tender documentation (company registration, references, certificates, guarantees and forms) and the project requirements. {co} would then carry out the software development, coding and technical implementation of the project.";
-const IP_FROM_NAME = "Sonia - R & D section", IP_FROM = "info@parsaint.group", IP_CC = "oil.ms.sohrabi@gmail.com", IP_WEBMAIL = "https://parsaint.group/webmail/";
+const IP_FROM = "info@parsaint.group", IP_CC = "oil.ms.sohrabi@gmail.com", IP_WEBMAIL = "https://parsaint.group/webmail/";
 const ipIsIntl = t => (t.market||"international")==="international";
 const ipKey = t => t.country in IP_C ? t.country : null;
 const ipShort = v => { let x=String(v||"").replace(/^[^–]{2,40}–[^–]{2,60}–\s*/,"").trim(); return x.length>120?x.slice(0,117).trim()+"…":x; };
 function ipCompose(t,lang,partner){
   const T=IP_T[lang]||IP_T.en, f=x=>String(x).replace(/\{co\}/g,IP_CO).replace(/\{project\}/g,ipShort(t.title)).replace(/\{buyer\}/g,t.buyer||"").replace(/\{deadline\}/g,t.deadline||"—").replace(/\{url\}/g,t.url||"");
-  const sig=T.sig+"\n"+IP_FROM_NAME+"\n"+IP_CO+(lang==="en"?"\nTürkiye":"");
+  const sig=T.sig+"\n"+ipSender(t.id)+"\n"+IP_CO+(lang==="en"?"\nTürkiye":"");
   return {subject:f(T.sub), body:[(partner&&partner.name&&lang==="en")?"Dear "+partner.name+" team,":f(T.g),"",f(T.p1),"",f(T.p2),"",f(T.p3),"",f(T.p4),"",f(IP_REQ)+(lang==="en"?"":"\n(English)"),"",sig].join("\n")};
 }
 const ipB64 = str => { const u=new TextEncoder().encode(str); let b=""; u.forEach(c=>b+=String.fromCharCode(c)); return btoa(b); };
@@ -542,7 +546,7 @@ async function ipDrafts(t){
   const CRLF=String.fromCharCode(13,10), files=[]; let noMail=0;
   partners.forEach((x,i)=>{
     const m=ipCompose(t,"en",x), to=(x.email||"").trim(); if(!to) noMail++;
-    const lines=["X-Unsent: 1",'From: "'+IP_FROM_NAME+'" <'+IP_FROM+">","To: "+to,"Cc: "+IP_CC,"Subject: "+ipHdr(m.subject),"MIME-Version: 1.0","Content-Type: text/plain; charset=utf-8","Content-Transfer-Encoding: base64","",(ipB64(m.body).match(/.{1,76}/g)||[]).join(CRLF)];
+    const lines=["X-Unsent: 1","From: "+ipFromHdr(t.id),"To: "+to,"Cc: "+IP_CC,"Subject: "+ipHdr(m.subject),"MIME-Version: 1.0","Content-Type: text/plain; charset=utf-8","Content-Transfer-Encoding: base64","",(ipB64(m.body).match(/.{1,76}/g)||[]).join(CRLF)];
     files.push({name:String(i+1).padStart(2,"0")+"_"+String(x.name||"partner").replace(/[^A-Za-z0-9]+/g,"_").slice(0,40)+".eml",data:lines.join(CRLF)});
   });
   const bytes=await zipStore(files), blob=new Blob([bytes],{type:"application/zip"}), fn=`partner-drafts-${k||"intl"}.zip`;
@@ -555,7 +559,7 @@ async function ipCopyText(text){
 }
 function ipEml(t,lang,to){
   const m=ipCompose(t,lang), CRLF=String.fromCharCode(13,10);
-  const lines=["X-Unsent: 1",'From: "'+IP_FROM_NAME+'" <'+IP_FROM+">","To: "+to,"Cc: "+IP_CC,"Subject: "+ipHdr(m.subject),"MIME-Version: 1.0","Content-Type: text/plain; charset=utf-8","Content-Transfer-Encoding: base64","",(ipB64(m.body).match(/.{1,76}/g)||[]).join(CRLF)];
+  const lines=["X-Unsent: 1","From: "+ipFromHdr(t.id),"To: "+to,"Cc: "+IP_CC,"Subject: "+ipHdr(m.subject),"MIME-Version: 1.0","Content-Type: text/plain; charset=utf-8","Content-Transfer-Encoding: base64","",(ipB64(m.body).match(/.{1,76}/g)||[]).join(CRLF)];
   const blob=new Blob([lines.join(CRLF)],{type:"message/rfc822"}), fn="partner-"+(lang||"en")+".eml";
   if(S.downloads) return S.downloads.save({filename:fn,data:blob}).then(()=>true,(e)=>(e&&e.code==="declined")?false:false);
   const a=document.createElement("a"); a.href=URL.createObjectURL(blob);
@@ -577,10 +581,11 @@ function ipOpen(tid,tab){
   const drafted=(S.ip.drafts||{})[tid];
   let body="";
   if(S.ipTab==="partners"){
-    body=`<p class="note">شرکت‌هایی که در ${esc(cinfo?cinfo[0]:t.country)} امکان همکاری با آن‌ها وجود دارد: شریک محلی که سابقه، ثبت شرکت و مدارک مناقصه را دارد و ما فناوری، محصول و کدنویسی را ارائه می‌کنیم. فهرست از جست‌وجوی روزانه بهبود می‌یابد؛ پیش از تماس، علاقه و ظرفیت هر شرکت در سایت رسمی‌اش تأیید شود.</p>`+
+    const tk=ipTask(tid), who=ipSender(tid);
+    body=`<div class="row" style="gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:8px"><span class="meta">فرستنده‌ی ایمیل‌ها (مسئول تسک):</span><b>${esc(who)}</b>${tk?`<span class="pill p-info">${esc(TASK_ST[tk.status]||tk.status)}</span>`:""}<button class="btn sm ${tk?"ghost":"sig"}" data-act="ip-owner-task" data-id="${esc(tid)}">${tk?"تسک جدید برای فرد دیگر":"تعریف تسک ارسال ایمیل و تعیین فرستنده"}</button></div>`+`<p class="note">شرکت‌هایی که در ${esc(cinfo?cinfo[0]:t.country)} امکان همکاری با آن‌ها وجود دارد: شریک محلی که سابقه، ثبت شرکت و مدارک مناقصه را دارد و ما فناوری، محصول و کدنویسی را ارائه می‌کنیم. فهرست از جست‌وجوی روزانه بهبود می‌یابد؛ پیش از تماس، علاقه و ظرفیت هر شرکت در سایت رسمی‌اش تأیید شود.</p>`+
      (rec.note?`<p class="banner">${esc(rec.note)}</p>`:"")+
      (partners.length?table(["شرکت","شهر","ایمیل","نوع","چرا مناسب است","منبع"],partners.map(x=>`<tr>${td("شرکت",`<b>${esc(x.name)}</b>${x.verified===false?' <span class="pill p-warn">تأیید شود</span>':""}`,"t")}${td("شهر",esc(x.city||"—"))}${td("ایمیل",x.email?`<a dir="ltr" href="mailto:${esc(x.email)}">${esc(x.email)}</a>`:"—")}${td("نوع",esc(x.type||"—"))}${td("چرا",esc(x.why||""))}${td("منبع",x.url?link(x.url,"لینک"):"—")}</tr>`),"شریکی ثبت نشده است."):`<p class="empty">برای این کشور هنوز شریکی ثبت نشده است. جست‌وجوی روزانه تکمیل می‌کند، یا تسک زیر را بزنید.</p>`)+
-     `<div class="row" style="margin-top:8px;gap:8px;flex-wrap:wrap">${partners.length?`<button class="btn sm sig" data-act="ip-drafts" data-id="${esc(tid)}">درفت ایمیل برای همه‌ی شرکا (ZIP، فرستنده: ${esc(IP_FROM_NAME)})</button>`:""}<button class="btn sm sig" data-act="ip-task" data-id="${esc(tid)}">📥 ثبت در صف: پیدا کردن شریک برای Claude</button></div>`;
+     `<div class="row" style="margin-top:8px;gap:8px;flex-wrap:wrap">${partners.length?`<button class="btn sm sig" data-act="ip-drafts" data-id="${esc(tid)}">درفت ایمیل برای همه‌ی شرکا (ZIP، فرستنده: ${esc(ipSender(tid))})</button>`:""}<button class="btn sm sig" data-act="ip-task" data-id="${esc(tid)}">📥 ثبت در صف: پیدا کردن شریک برای Claude</button></div>`;
   } else {
     const lang=S.ipTab.slice(5), m=ipCompose(t,lang), rtl=IP_RTL.has(lang);
     body=`<p class="note">پیش‌نویس ایمیل به زبان ${esc(IP_L[lang])}${lang!=="en"?" (زبان رسمی کشور) ":" "}برای ارسال از ایمیل شرکت (${IP_FROM}). ایمیل گیرنده را از وب‌سایت رسمی شریک وارد کنید؛ نسخه‌ی کپی (CC) برای ایمیل شخصی شما درج شده است. ${lang!=="en"?"ترجمه‌ی اولیه است؛ پیش از ارسال یک فرد بومی بازبینی کند.":""}</p>
@@ -907,7 +912,7 @@ function taskForm(t={}){ if(!S.me.id){toast("برای تعریف تسک وارد
     {k:"blocked",label:"مانع دارد؟",type:"select",options:{no:"خیر",yes:"بله"}},{k:"blocker_note",label:"شرح مانع (برای Daily Scrum)",type:"textarea"}],
    onSave:v=>{ if(!v.title){toast("عنوان تسک را بنویسید.");return false}
     const {id:_i,...base}=t; const now=nowIso();
-    return save(`tasks/${t.id||newId()}`,{...base,...v,points:v.points===""||v.points==null?null:Number(v.points),blocked:v.blocked==="yes",status:t.status||"todo",created_by:t.created_by||S.me.id,created:t.created||now,updated:now},t.id?"تسک به‌روز شد":"تسک ثبت شد و اعلان آن برای مسئول نمایش داده می‌شود"); }}); }
+    return save(`tasks/${t.id||newId()}`,{...base,...v,points:v.points===""||v.points==null?null:Number(v.points),blocked:v.blocked==="yes",status:t.status||"todo",created_by:t.created_by||S.me.id,created:t.created||now,updated:now},t.id?"تسک به‌روز شد":"تسک ثبت شد و اعلان آن برای مسئول نمایش داده می‌شود").then(r=>{ if(base.ip_tender) setTimeout(()=>ipOpen(base.ip_tender),700); return r; }); }}); }
 
 VIEWS["bpms.tasks"] = () => {
   const list=S.tasks.filter(t=>match(t.title,memberName(t.assignee),TEAMS[t.team])).sort((a,b)=>(a.due||"9").localeCompare(b.due||"9"));
@@ -2742,6 +2747,7 @@ document.addEventListener("click", async e => {
         }
       }
       break; }
+    case "ip-owner-task": { const t=S.m.tenders.find(x=>x.id===id); if(!t) break; taskForm({title:"ارسال ایمیل به شرکای تجاری – "+ipShort(t.title), desc:"پروژه: "+t.title+"\nخریدار: "+(t.buyer||"—")+"\nمهلت: "+(t.deadline||"—")+"\nایمیل شرکا را از سایت رسمی هر شرکت پیدا کنید، درفت‌ها را بسازید و از ایمیل شرکت (info@parsaint.group) با CC به ایمیل شخصی ارسال کنید. نام شما به‌عنوان فرستنده در ایمیل‌ها درج می‌شود.", ip_tender:t.id, team:"ai", due:addDays(today(),3)}); break; }
     case "ip-drafts": { const t=S.m.tenders.find(x=>x.id===id); if(!t) break; await ipDrafts(t); break; }
     case "ip-copy": { const el=$("#ipBody"); if(el){ el.focus(); el.select(); let ok=false; try{ ok=document.execCommand("copy"); }catch(e){} if(!ok){ try{ await navigator.clipboard.writeText(el.value); ok=true; }catch(e){} } toast(ok?"متن کپی شد.":"متن انتخاب شد؛ با Ctrl+C کپی کنید."); } break; }
     case "ip-task": { const t=S.m.tenders.find(x=>x.id===id); if(!t||!isAdmin()) break; const k=ipKey(t); await ctAdd(`برای پروژه‌ی بین‌المللی «${t.title}» (خریدار: ${t.buyer}، کشور: ${k?IP_C[k][0]:t.country}، مهلت: ${t.deadline||"—"}) شریک تجاری محلی پیدا کن: ۱) با جست‌وجوی وب ۵ شرکت واقعی در همان کشور یا شهر که با موضوع پروژه هم‌خوان‌اند (یکپارچه‌ساز، شرکت مهندسی یا مشاور با سابقه‌ی مشابه) پیدا کن و در سند settings/intl_partners زیر کشور ثبت کن با نام، شهر، نوع، دلیل و لینک منبع؛ ۲) برای هر شرکت ایمیل دو زبانه (انگلیسی و زبان رسمی) را به‌صورت درفت در صندوق ایمیل شرکت (info@parsaint.group، نه Gmail شخصی) بساز و در آن گیرنده را با ایمیل رسمی همان شرکت پر کن و oil.ms.sohrabi@gmail.com را CC بگذار؛ در متن بنویس که ارائه‌ی نیازمندی‌های کارفرما و مدارک خواسته‌شده با شریک و کدنویسی و اجرای فنی با ماست؛ ۳) هیچ ایمیلی ارسال نکن.`,{kind:"partner_search",venue:id,name:"شریک محلی → "+(t.buyer||t.title)}); break; }
