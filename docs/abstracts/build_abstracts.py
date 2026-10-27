@@ -47,7 +47,7 @@ def build(vid, v, a):
             ("Length of this abstract", f"{n} words (limit {pr['max']})"),
             ("Product", prod["name"]),
             ("Repository", GH + prod["repo"] + ("" if prod["new"] else "/tree/" + data["branch"])),
-            ("Repository status", "New repository created for this article." if prod["new"] else f'Existing product; content for the article is on branch "{data["branch"]}".'),
+            ("Repository status", "New repository created for this article. It is PRIVATE: GitHub shows a 404 page to anyone who is not a collaborator (ask the owner for access; the repository is also hidden from search and from the repository list)." if prod["new"] else f'Existing product; content for the article is on branch "{data["branch"]}".'),
             ("To do before submitting", "Replace every [bracketed] placeholder with the team's own measured values; add author names; confirm the limits in the venue's author guidelines (they are typical values for the venue family, not copied from the call). Patent rule: do not disclose methods covered by the product's filed claims; a patent attorney must review before submission." + ("  " + a["draft_note"] if a.get("draft_note") else ""))]
     t = doc.add_table(rows=0, cols=2); t.style = "Table Grid"
     for k, val in rows:
