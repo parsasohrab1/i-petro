@@ -220,7 +220,7 @@ const today = () => new Date().toISOString().slice(0,10);
 const faDate = d => { if(!d) return ""; try{return new Intl.DateTimeFormat("fa-IR-u-ca-persian",{year:"numeric",month:"long",day:"numeric"}).format(new Date(d+(d.length===10?"T12:00:00":"")))}catch(e){return d} };
 const faNum = n => { try{return new Intl.NumberFormat("fa-IR").format(n)}catch(e){return n} };
 const blobUrl = id => id ? "/_blob/" + id : "";
-const memberName = id => (S.members.find(m=>m.id===id)||{}).full_name || "—";
+const memberName = id => (S.members.find(m=>m.id===id)||{}).full_name || (id&&!isAdmin()?"همکار":"—");
 const isAdmin = () => S.me.isOwner || S.me.canEdit;
 const seeAllReports = () => !!S.me.isOwner;   // performance reports and their scores: only the person and the owner
 function toast(t){const d=document.createElement("div");d.className="toast";d.textContent=t;document.body.appendChild(d);setTimeout(()=>d.remove(),2600)}
@@ -242,12 +242,21 @@ const COLS = {
   members:"members", tasks:"tasks", letters:"letters", letters_archive:"lettersArchive", products:"products", patents:"patents",
   finance:"finance", clients:"clients", sprints:"sprints", scholarships:"schol", articles:"arts"
 };
+// privacy: only admins see other members and their tasks; everyone else gets just their own rows
+const PRIVATE_SUBS = {bpms:["contacts","teams"], erp:["people"]};
+function privateRows(key, rows){
+  if(isAdmin()||!S.me.id) return rows;
+  if(key==="members") return rows.filter(r=>r.id===S.me.id);
+  if(key==="tasks") return rows.filter(r=>r.assignee===S.me.id||r.created_by===S.me.id);
+  return rows;
+}
+const visibleSubs = mod => (SUBS[mod]||[]).filter(([k])=>isAdmin()||!(PRIVATE_SUBS[mod]||[]).includes(k));
 function setPath(key, val){ const [a,b]=key.split("."); if(b) S[a][b]=val; else S[a]=val; }
 function subscribe(){
   for(const [path,key] of Object.entries(COLS)){
     if(key==="schol"&&!isOwnerOnly()) continue;
     S.db.collection(path).onSnapshot(snap => {
-      setPath(key, snap.docs.map(d => ({id:d.id, ...d.data()})));
+      setPath(key, privateRows(key, snap.docs.map(d => ({id:d.id, ...d.data()}))));
       S.loaded = true; S.got.add(key); render(); if(key==="members") maybeWelcome();
     }, () => {});
   }
@@ -349,8 +358,9 @@ VIEWS["patent.mine"]=()=>areaMineView("patent"); VIEWS["scholar.mine"]=()=>areaM
 function paintNav(){
   if((AREA_KINDS[S.mod]&&areaAccess(S.mod)==="none")||(S.mod==="letters"&&!canSeeLetters())){ S.mod="market"; S.sub=SUBS.market[0][0]; }
   else if(AREA_KINDS[S.mod]&&areaAccess(S.mod)==="mine") S.sub="mine";
+  { const vs=visibleSubs(S.mod); if(vs.length&&!vs.some(x=>x[0]===S.sub)&&!(AREA_KINDS[S.mod]&&areaAccess(S.mod)==="mine")) S.sub=vs[0][0]; }
   $("#mods").innerHTML = visibleModules().map(([k,l])=>`<button role="tab" aria-selected="${k===S.mod}" data-act="mod" data-k="${k}">${l}</button>`).join("");
-  $("#subs").innerHTML = ((AREA_KINDS[S.mod]&&areaAccess(S.mod)==="mine")?[["mine","تسک‌های من"]]:SUBS[S.mod]).map(([k,l])=>`<button role="tab" aria-selected="${k===S.sub}" data-act="sub" data-k="${k}">${esc(l)}</button>`).join("")
+  $("#subs").innerHTML = ((AREA_KINDS[S.mod]&&areaAccess(S.mod)==="mine")?[["mine","تسک‌های من"]]:visibleSubs(S.mod)).map(([k,l])=>`<button role="tab" aria-selected="${k===S.sub}" data-act="sub" data-k="${k}">${esc(l)}</button>`).join("")
     + `<input id="search" placeholder="جست‌وجو…" value="${esc(S.q)}" style="margin-inline-start:auto;min-width:160px">`;
   $("#search").oninput = e => { S.q = e.target.value.trim().toLowerCase(); renderView(); };
   try{localStorage.setItem("ppt-view",JSON.stringify({mod:S.mod,sub:S.sub}))}catch(e){}
