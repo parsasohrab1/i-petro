@@ -2213,7 +2213,7 @@ async function buildAbstractDocx(v,a){
   const todo="Replace every [bracketed] placeholder with the team's own measured values; add author names; confirm the limits in the venue's author guidelines (they are typical values for the venue family, not copied from the call). Patent rule: do not disclose methods covered by the product's filed claims; a patent attorney must review before submission."+(a.draft_note?" "+a.draft_note:"");
   const rows=[["Venue",v.name],["Type",type],["Deadline",(v.deadline||"not stated")+(v.dl_note?" – "+v.dl_note:"")],["Official page",v.url||""],
     ["Abstract rule ("+pr.label+")",`${pr.rule} Typical length ${pr.min}–${pr.max} words; keywords ${pr.kw}.`],["Length of this abstract",`${n} words (limit ${pr.max})`],
-    ["Product",prod.name],["Repository",repo],["Repository status",prod.new?"New repository created for this article.":`Existing product; content for the article is on branch "${ABS.branch}".`],["To do before submitting",todo]];
+    ["Product",prod.name],["Repository",repo],["Repository status",prod.new?"New repository created for this article. It is PRIVATE: GitHub shows a 404 page to anyone who is not a collaborator (ask the owner for access; the repository is also hidden from search and from the repository list).":`Existing product; content for the article is on branch "${ABS.branch}".`],["To do before submitting",todo]];
   const bd=t=>`<w:${t} w:val="single" w:sz="4" w:space="0" w:color="999999"/>`;
   const body=[
     par(run(a.title,{b:true,sz:30}),{jc:"center",after:200}),
