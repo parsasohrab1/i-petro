@@ -826,14 +826,30 @@ VIEWS["bpms.myday"] = () => {
   const mine=S.tasks.filter(t=>t.assignee===S.me.id&&t.status!=="approved");
   const rep=S.myReports.find(r=>r.date===today());
   return `<div class="grid2">
-   <div class="card"><h3>حضور امروز – ${faDate(today())}</h3><p class="note">روزهای حضور شما: ${esc((me.office_days||[]).map(d=>(WEEKDAYS.find(w=>w[0]===d)||[])[1]).join("، "))}. هر روز حضور: ۸ ساعت کار + ۱ ساعت استراحت.</p>
+   <div class="card"><h3>حضور امروز – ${faDate(today())}</h3><p class="note">روزهای حضور شما: ${esc((me.office_days||[]).map(d=>(WEEKDAYS.find(w=>w[0]===d)||[])[1]).join("، "))}. هر روز حضور: ۸ ساعت کار + ۱ ساعت استراحت. ثبت ورود و خروج فقط با موقعیت مکانی (GPS گوشی) و داخل محدوده‌ی شرکت ممکن است.</p>
     <div class="row"><button class="btn" data-act="checkin" ${att.in?"disabled":""}>ثبت ورود ${att.in?`(${att.in})`:""}</button><button class="btn ghost" data-act="checkout" ${!att.in||att.out?"disabled":""}>ثبت خروج ${att.out?`(${att.out})`:""}</button></div>
-    ${hours!=null?`<p>ساعت کار خالص: <b class="mono">${hours}</b> از ۸</p>`:""}</div>
+    ${att.in_geo?`<p class="meta">فاصله از دفتر هنگام ورود: ${faNum(att.in_geo.dist)} متر (دقت ±${faNum(att.in_geo.acc)})</p>`:""}${hours!=null?`<p>ساعت کار خالص: <b class="mono">${hours}</b> از ۸</p>`:""}</div>
    <div class="card"><h3>گزارش عملکرد امروز</h3>${rep?`<p>${light(rep.score)}</p><p>${esc(rep.feedback||"")}</p>`:`<p class="note">در پایان روز، کارهای انجام‌شده را بنویسید. Claude با سخت‌گیری از ۱۰۰ نمره می‌دهد.</p><button class="btn sig" data-act="report-new">ثبت گزارش عملکرد</button>`}</div>
   </div><h3>تسک‌های من</h3>`+taskTable(mine);
 };
 const toMin = t => { const [h,m]=(t||"0:0").split(":").map(Number); return h*60+m; };
 const nowHM = () => new Date().toTimeString().slice(0,5);
+// ---- location-verified attendance: entry/exit only from a phone's GPS inside the office radius
+const GEO_MAX_ACC = 150;      // metres; coarse fixes (desktop / IP / Wi-Fi guesses) are rejected
+const GEO_DEF_RADIUS = 200;   // metres, used when the company settings give no radius
+function distM(a,b,c,d){ const R=6371000,r=x=>x*Math.PI/180, dl=r(c-a), dn=r(d-b), h=Math.sin(dl/2)**2+Math.cos(r(a))*Math.cos(r(c))*Math.sin(dn/2)**2; return 2*R*Math.asin(Math.sqrt(h)); }
+function getFix(){ return new Promise((ok,no)=>{ if(!navigator.geolocation) return no({code:0}); navigator.geolocation.getCurrentPosition(p=>ok({lat:p.coords.latitude,lng:p.coords.longitude,acc:Math.round(p.coords.accuracy||0)}),no,{enableHighAccuracy:true,timeout:20000,maximumAge:0}); }); }
+// returns {lat,lng,acc,dist} when the member is inside the office, else null after telling them why
+async function officeFix(){
+  const st=S.settings, lat=Number(st.office_lat), lng=Number(st.office_lng), rad=Number(st.office_radius)||GEO_DEF_RADIUS;
+  if(!st.office_lat||!st.office_lng||isNaN(lat)||isNaN(lng)){ toast("موقعیت دفتر هنوز ثبت نشده است؛ مدیر باید در «مشخصات شرکت» مختصات دفتر را وارد کند."); return null; }
+  toast("در حال دریافت موقعیت مکانی شما …");
+  let f; try{ f=await getFix(); }catch(e){ toast(e&&e.code===1?"دسترسی به موقعیت مکانی مسدود است. GPS گوشی و اجازه‌ی مرورگر را فعال کنید و دوباره تلاش کنید.":"موقعیت مکانی دریافت نشد. با گوشی و در فضای باز یا کنار پنجره تلاش کنید."); return null; }
+  if(f.acc>GEO_MAX_ACC){ toast(`دقت موقعیت کافی نیست (±${faNum(f.acc)} متر). ثبت فقط با GPS گوشی ممکن است؛ GPS را روشن کنید و دوباره تلاش کنید.`); return null; }
+  const dist=Math.round(distM(f.lat,f.lng,lat,lng));
+  if(dist>rad+f.acc){ toast(`شما حدود ${faNum(dist)} متر از دفتر فاصله دارید؛ ثبت ورود و خروج فقط داخل محدوده‌ی شرکت (${faNum(rad)} متر) ممکن است.`); return null; }
+  return {...f,dist};
+}
 function taskTable(list){
   return table(["تسک","تیم","مسئول","تعریف‌کننده","مهلت","اولویت","وضعیت",""], list.map(t=>`<tr>${td("تسک",`${esc(t.title)}${t.desc?`<br><span class="meta">${esc(t.desc)}</span>`:""}`,"t")}${td("تیم",esc(TEAMS[t.team]||"—"))}${td("مسئول",esc(memberName(t.assignee)))}${td("تعریف‌کننده",esc(memberName(t.created_by)))}${td("مهلت",t.due?`<span class="${t.due<today()&&!["done","approved"].includes(t.status)?"p-bad":""}">${faDate(t.due)}</span>`:"—")}${td("اولویت",esc(PRIORITY[t.priority]||"—"))}${td("وضعیت",`<span class="pill ${t.status==="approved"?"p-ok":t.status==="done"?"p-info":t.status==="doing"?"p-warn":"p-mute"}">${esc(TASK_ST[t.status])}</span>`)}
    ${td("",[t.assignee===S.me.id&&t.status==="todo"?`<button class="btn sm ghost" data-act="task-st" data-id="${t.id}" data-st="doing">شروع</button>`:"",t.assignee===S.me.id&&t.status==="doing"?`<button class="btn sm" data-act="task-st" data-id="${t.id}" data-st="done">انجام شد</button>`:"",(t.created_by===S.me.id||isAdmin())&&t.status==="done"?`<button class="btn sm sig" data-act="task-st" data-id="${t.id}" data-st="approved">تأیید</button>`:"",taskCan(t)?`<button class="btn sm ghost" data-act="task-edit" data-id="${t.id}">ویرایش</button>`:""].join(" "))}</tr>`), "تسکی وجود ندارد.");
@@ -1489,11 +1505,12 @@ function registerForm(first=false){
 }
 function companyForm(){
   const st=S.settings;
-  openForm({title:"مشخصات شرکت",values:st,fields:[{k:"name_fa",label:"نام شرکت"},{k:"name_en",label:"نام لاتین",dir:"ltr"},{k:"reg_no",label:"شماره‌ی ثبت شرکت"},{k:"national_id",label:"شناسه‌ی ملی"},{k:"address",label:"نشانی"},{k:"phone",label:"تلفن",dir:"ltr"},
+  openForm({title:"مشخصات شرکت",values:st,extra:`<div class="card" style="margin-bottom:8px"><b>محدوده‌ی ثبت ورود و خروج</b><p class="note">اعضا فقط با GPS گوشی و داخل این محدوده می‌توانند ورود و خروج ثبت کنند. اگر اکنون در دفتر هستید با دکمه‌ی زیر مختصات را پر کنید.</p><button class="btn sm sig" type="button" data-act="office-here">استفاده از موقعیت فعلی من</button></div>`,fields:[{k:"office_lat",label:"عرض جغرافیایی دفتر",dir:"ltr"},{k:"office_lng",label:"طول جغرافیایی دفتر",dir:"ltr"},{k:"office_radius",label:"شعاع مجاز (متر)",dir:"ltr",hint:"پیش‌فرض ۲۰۰ متر"},{k:"name_fa",label:"نام شرکت"},{k:"name_en",label:"نام لاتین",dir:"ltr"},{k:"reg_no",label:"شماره‌ی ثبت شرکت"},{k:"national_id",label:"شناسه‌ی ملی"},{k:"address",label:"نشانی"},{k:"phone",label:"تلفن",dir:"ltr"},
    {k:"ceo_member",label:"مدیرعامل",type:"select",options:Object.fromEntries([["","—"],...S.members.map(m=>[m.id,m.full_name])])},{k:"intl_name",label:"هویت بین‌المللی – نام شرکت (برای پیشنهادهای خارجی)",dir:"ltr",value:INTL_DEFAULT.name},{k:"intl_address",label:"هویت بین‌المللی – نشانی",dir:"ltr",value:INTL_DEFAULT.address},{k:"intl_website",label:"وب‌سایت",dir:"ltr",value:INTL_DEFAULT.website},{k:"intl_email",label:"ایمیل رسمی",dir:"ltr",value:INTL_DEFAULT.email},{k:"intl_signatory",label:"امضاکننده‌ی نامه‌های بین‌المللی",dir:"ltr",value:INTL_DEFAULT.signatory},{k:"intl_title",label:"سمت امضاکننده",dir:"ltr",value:INTL_DEFAULT.title},{k:"logo",label:"لوگوی شرکت",type:"file"},{k:"ceo_sig",label:"تصویر امضای مدیرعامل",type:"file"}],
    onSave: async v => { const {logo,ceo_sig,...rest}=v; const out={...st,...rest};
      if(logo){const id=await uploadImage(logo); if(id) out.logo_asset=id;}
      if(ceo_sig){const id=await uploadImage(ceo_sig); if(id) out.ceo_sig_asset=id;}
+     for(const k of ["office_lat","office_lng","office_radius"]){ const n=parseFloat(String(out[k]??"").replace(",",".")); if(isNaN(n)) delete out[k]; else out[k]=n; }
      return save("settings/company",out,"مشخصات شرکت ذخیره شد"); }});
 }
 
@@ -2693,8 +2710,9 @@ document.addEventListener("click", async e => {
     case "sprint-close": sprintClose(id); break;
     case "sprint-retro": retroForm(id); break;
     case "goto": S.mod=b.dataset.mod; S.sub=b.dataset.sub; S.forceFull=true; render(); break;
-    case "checkin": await save(`attendance/${S.me.id}/days/${today()}`,{in:nowHM(),break_min:60},"ورود ثبت شد"); break;
-    case "checkout": { const att=S.myAtt.find(x=>x.id===today())||{}; await save(`attendance/${S.me.id}/days/${today()}`,{...att,out:nowHM()},"خروج ثبت شد"); break; }
+    case "checkin": { if(b.disabled) break; b.disabled=true; try{ const g=await officeFix(); if(g) await save(`attendance/${S.me.id}/days/${today()}`,{in:nowHM(),break_min:60,in_geo:{lat:g.lat,lng:g.lng,acc:g.acc,dist:g.dist}},"ورود ثبت شد"); } finally{ b.disabled=false; } break; }
+    case "checkout": { if(b.disabled) break; b.disabled=true; try{ const g=await officeFix(); if(g){ const att=S.myAtt.find(x=>x.id===today())||{}; await save(`attendance/${S.me.id}/days/${today()}`,{...att,out:nowHM(),out_geo:{lat:g.lat,lng:g.lng,acc:g.acc,dist:g.dist}},"خروج ثبت شد"); } } finally{ b.disabled=false; } break; }
+    case "office-here": { try{ const f=await getFix(); $("#f_office_lat").value=f.lat.toFixed(6); $("#f_office_lng").value=f.lng.toFixed(6); toast(`موقعیت فعلی در فرم قرار گرفت (دقت ±${faNum(f.acc)} متر)؛ برای اعمال ذخیره کنید.`); }catch(e){ toast("موقعیت دریافت نشد؛ دسترسی GPS را بررسی کنید."); } break; }
     case "report-new": reportForm(b.dataset.date); break;
     case "report-view": reportDetail(b.dataset.m,b.dataset.d); break;
     case "ra-csv": reportsCsv(); break;
