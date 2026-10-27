@@ -171,7 +171,7 @@ const SUBS = {
   market:[["iran","Iran AI Projects"],["docs_ir","مدارک پترو پالاتوس (داخلی)"],["overseas","Overseas AI Projects"],["docs_int","مدارک پارسا اینت (بین‌المللی)"],["partners","شرکای تجاری بین‌المللی"],["web","Web Design & SEO"],["investors","AI Investors & Accelerators"],["tracking","Project Tracking"],["pipeline","Pipeline"],["memory","Team Memory"]],
   events:[["iran","ایران"],["world","جهان"],["all","همه"],["taken","در دست پیگیری"]],
   erp:[["domains","حوزه‌های فعالیت"],["products","توسعه‌ی محصول هوشمند"],["people","نیروی انسانی"],["finance","مالی"],["clients","مشتریان و قراردادها"],["backup","پشتیبان‌گیری"]],
-  bpms:[["home","خانه‌ی BPMS"],["contacts","مخاطبین و ارتباط"],["myday","روز من"],["board","تخته‌ی اسکرام"],["backlog","بک‌لاگ و برنامه‌ریزی"],["sprints","اسپرینت‌ها"],["tasks","فهرست تسک‌ها"],["reports","گزارش عملکرد"],["rarchive","بایگانی گزارش‌ها"],["teams","تیم‌ها"],["process","فرایندها"],["calendar","تقویم"],["members","اعضا و ثبت‌نام"],["nda","قرارداد محرمانگی"],["training","فرم آموزش"]],
+  bpms:[["home","خانه‌ی BPMS"],["contacts","مخاطبین و ارتباط"],["myday","روز من"],["mind","ذهن‌نگار (آزمون خصوصی)"],["board","تخته‌ی اسکرام"],["backlog","بک‌لاگ و برنامه‌ریزی"],["sprints","اسپرینت‌ها"],["tasks","فهرست تسک‌ها"],["reports","گزارش عملکرد"],["rarchive","بایگانی گزارش‌ها"],["teams","تیم‌ها"],["process","فرایندها"],["calendar","تقویم"],["members","اعضا و ثبت‌نام"],["nda","قرارداد محرمانگی"],["training","فرم آموزش"]],
   letters:[["new","نامه‌ی جدید (ساخت فایل Word)"],["archive","پیگیری و بایگانی نامه‌ها"]],
   scholar:[["applied","اقدام‌شده و در دست بررسی"],["human","مسئول انسانی"],["doing","در دست اقدام"],["todo","اقدام‌نشده"],["profile","مشخصات و رزومه من"]],
   articles:[["applied","اقدام‌شده و در دست بررسی"],["doing","در دست اقدام"],["todo","اقدام‌نشده"],["product","محصول ویژه‌ی مقاله"],["claude","تسک برای Claude"],["evidence","شواهد و داده‌ی واقعی"],["submit","ثبت چکیده و ثبت‌نام (مسئول انسانی)"],["list","فهرست کامل"]],
@@ -276,6 +276,7 @@ function subscribe(){
   S.db.doc("settings/letterhead").onSnapshot(d => { S.lh = d.exists ? d.data() : null; render(); }, ()=>{});
   if(S.me.id){
     S.db.collection(`attendance/${S.me.id}/days`).onSnapshot(s=>{S.myAtt=s.docs.map(d=>({id:d.id,...d.data()}));render()},()=>{});
+    S.db.doc(`mindtest/${S.me.id}/items/result`).onSnapshot(d=>{S.myMind=d.exists?d.data():null;render()},()=>{});
     S.db.collection(`reports/${S.me.id}/items`).onSnapshot(s=>{S.myReports=s.docs.map(d=>({id:d.id,...d.data()}));S.repLoaded=true;render()},()=>{});
   }
 }
@@ -286,6 +287,9 @@ async function loadAllReports(){ // admins read every member's reports and atten
     try{ const r=await S.db.collection(`reports/${m.id}/items`).get(); r.docs.forEach(d=>all.push({member:m.id,id:d.id,...d.data()})); }catch(e){}
     try{ const a=await S.db.collection(`attendance/${m.id}/days`).get(); a.docs.forEach(d=>att.push({member:m.id,id:d.id,...d.data()})); }catch(e){}
   }
+  const mind=[];   // MindScope answers: the owner only, never other admins
+  if(S.me.isOwner) for(const m of S.members){ try{ const d=await S.db.doc(`mindtest/${m.id}/items/result`).get(); if(d.exists) mind.push({member:m.id,...d.data()}); }catch(e){} }
+  S.allMind=mind;
   S.allReports=S.me.isOwner?all:[]; S.allAtt=att; S.allLoaded=true; render();
 }
 async function save(path, data, okMsg="ذخیره شد"){
@@ -395,6 +399,7 @@ function myInbox(){
   if(isAdmin()) for(const c of callsList()) if(!c.ack && artOpen(c) && callNoProduct(c)) items.push({id:"cfp"+c.id,sticky:true,text:`فراخوان جدید «${c.name}»${c.deadline?` (ددلاین ${c.deadline})`:""} محصول مرتبط ندارد؛ برای تعریف محصول جدید با هم‌فکری اقدام کنید (تب مقالات ← «محصول جدید»).`,task:{}});
   { const mm=myMember(); if(needsNda(mm)&&!ndaSigned(mm)) items.push({id:"nda"+NDA_VERSION,sticky:true,text:"امضای قرارداد محرمانگی الزامی است. از BPMS ← قرارداد محرمانگی، متن را بخوانید و امضا کنید.",task:{}}); }
   { const mm=myMember(); if(needsTraining(mm)&&!trainingDone(mm)) items.push({id:"trn"+TRAIN_VERSION,sticky:true,text:"فرم آموزش شما هنوز تأیید و امضا نشده است. از BPMS ← فرم آموزش، مشخصات را بررسی و تأیید کنید.",task:{}}); }
+  { const mm=myMember(); if(mindRequired(mm)&&!mindDone()) items.push({id:"mind1",sticky:true,text:"انجام آزمون ذهن‌نگار الزامی است؛ تا آن زمان ثبت ورود و بارگذاری گزارش عملکرد ممکن نیست. از BPMS ← ذهن‌نگار شروع کنید.",task:{}}); }
   { const mm=myMember(); if(mm&&!mm.fingerprint_asset) items.push({id:"fp1",sticky:true,text:"لطفاً اثر انگشت خود را کنار امضایتان مجدداً عکس بگیرید و از BPMS ← اعضا و ثبت‌نام ← ویرایش مشخصات من بارگذاری کنید.",task:{}}); }
   if(isAdmin()) for(const pr of S.products) for(const mid of Object.keys(pr.edit_requests||{})) items.push({id:"pr"+pr.id+mid,sticky:true,text:`${memberName(mid)} درخواست اجازه‌ی کار روی محصول «${pr.name}» دارد؛ از ERP ← توسعه‌ی محصول هوشمند تأیید کنید.`,task:{}});
   missingReportDays(myMember()).forEach(d=>items.push({id:"r"+d,sticky:true,text:`گزارش عملکرد ${faDate(d)} را ثبت نکرده‌اید؛ لطفاً هرچه زودتر ثبت کنید.`,task:{}}));
@@ -409,6 +414,7 @@ function renderBanners(){
     const wd = WEEKDAYS[(new Date().getDay()+1)%7][0];
     const att = S.myAtt.find(a=>a.id===today());
     const hr = new Date().getHours();
+    if(mindRequired(me)&&!mindDone()&&S.myMind!==undefined) out.push(`<div class="banner bad"><b>آزمون ذهن‌نگار الزامی است:</b> تا انجام آن، ثبت ورود و بارگذاری گزارش عملکرد ممکن نیست. <button class="btn sm sig" data-act="goto" data-mod="bpms" data-sub="mind">شروع آزمون</button></div>`);
     if((me.office_days||[]).includes(wd)){
       if(!att && hr>=9) out.push(`<div class="banner">امروز روز حضور شماست و ورود ثبت نشده است. از <b>BPMS ← روز من</b> ورود را ثبت کنید.</div>`);
     }
@@ -1095,6 +1101,7 @@ function rptCompose(r){
 }
 function reportForm(date){
   const me=myMember(); if(!me){toast("ابتدا ثبت‌نام کنید.");return}
+  if(mindGate("بارگذاری گزارش عملکرد")) return;
   const missing=missingReportDays(me);
   const opts={}; [today(),...missing].filter((d,i,a)=>a.indexOf(d)===i&&!S.myReports.some(r=>(r.date||r.id)===d)).sort().reverse().forEach(d=>opts[d]=faDate(d)+(d===today()?" (امروز)":""));
   if(!Object.keys(opts).length){toast("گزارش امروز و روزهای قبل ثبت شده است.");return}
@@ -2594,6 +2601,176 @@ function artForm(a={}){
      const {id:_i,...base}=a; return save(`articles/${a.id||newId()}`,{...base,...v,ver:false,added_by:S.me.id,updated:new Date().toISOString()},"ردیف ذخیره شد"); }});
 }
 
+// ================================================================== ذهن‌نگار (private self-screening: personality type + mental-health screens)
+// Answers are stored per member at mindtest/<member>/items/result and are meant to be readable only by that member and the
+// owner (same pattern as reports/*): the page only ever loads them for the owner, and backups exclude them.
+// It is a screening aid, not a diagnosis. Required before check-in and before submitting a performance report.
+const MIND_START = "2026-10-28", MIND_RELEASE = "2026-10-27";
+const MIND_AGREE = ["کاملاً مخالفم","مخالفم","نظری ندارم","موافقم","کاملاً موافقم"];                    // values 1..5
+const MIND_F2W = ["اصلاً","چند روز","بیش از نیمی از روزها","تقریباً هر روز"];                           // values 0..3, last two weeks
+const MIND_FM = ["هرگز","به‌ندرت","گاهی","اغلب"];                                                      // values 0..3, last month
+const MIND_SEC = [
+ {id:"type",title:"بخش ۱ – تیپ شخصیتی (۴ بعد)",scale:"agree",note:"هر جمله را بر اساس شخصیت همیشگی‌تان پاسخ دهید، نه حال این روزها.",items:[
+  ["EI",0,"در جمع انرژی می‌گیرم و پس از معاشرت طولانی سرحال‌ترم."],["EI",0,"به‌راحتی با آدم‌های تازه گفتگو را شروع می‌کنم."],["EI",0,"فکر کردن را با حرف‌زدن با دیگران پیش می‌برم."],["EI",0,"مرکز توجه‌بودن برایم ناخوشایند نیست."],
+  ["EI",1,"پس از چند ساعت جمع‌بودن، برای شارژ‌شدن به تنهایی نیاز دارم."],["EI",1,"پیش از حرف‌زدن ترجیح می‌دهم مدتی در ذهنم فکر کنم."],["EI",1,"چند دوست صمیمی را به آشنایان فراوان ترجیح می‌دهم."],["EI",1,"کار فردی و آرام را به کار گروهی پرسروصدا ترجیح می‌دهم."],
+  ["SN",0,"به واقعیت‌های مشخص و تجربه‌ی عملی بیش از ایده‌های انتزاعی اعتماد دارم."],["SN",0,"دستورالعمل گام‌به‌گام را به ابداع روش تازه ترجیح می‌دهم."],["SN",0,"بیشتر روی جزئیات و آنچه اکنون هست تمرکز می‌کنم."],["SN",0,"روش‌های امتحان‌شده را به آزمودن راه‌های ناشناخته ترجیح می‌دهم."],
+  ["SN",1,"اغلب به الگوها و معناهای پنهان پشت رویدادها فکر می‌کنم."],["SN",1,"امکان‌های آینده و ایده‌های نو بیش از جزئیات امروز جذبم می‌کند."],["SN",1,"کارهای تکراری زود حوصله‌ام را سر می‌برد."],["SN",1,"بحث درباره‌ی مفاهیم نظری و انتزاعی را دوست دارم."],
+  ["TF",0,"در تصمیم‌گیری، منطق و انصاف را بر احساسات افراد مقدم می‌دارم."],["TF",0,"نقد صریح را به ملایم‌کردن بیش از حد ترجیح می‌دهم."],["TF",0,"وقتی کسی مشکل دارد، بیشتر دنبال راه‌حل‌ام تا همدردی."],["TF",0,"به‌راحتی می‌توانم احساساتم را کنار بگذارم و تحلیل کنم."],
+  ["TF",1,"در تصمیم‌ها نخست به اثر آن بر احساس آدم‌ها فکر می‌کنم."],["TF",1,"حتی وقتی حق با من است، ناراحت‌کردن دیگران برایم سخت است."],["TF",1,"حفظ هماهنگی و رابطه برایم از برنده‌شدن در بحث مهم‌تر است."],["TF",1,"احساس دیگران را زود حس می‌کنم و تحت تأثیر قرار می‌گیرم."],
+  ["JP",0,"برنامه‌ی از پیش تعیین‌شده دارم و به آن پایبندم."],["JP",0,"دوست دارم کارها را زودتر از موعد تمام کنم."],["JP",0,"نظم و فهرست کارها به من آرامش می‌دهد."],["JP",0,"تصمیم قطعی را به باز گذاشتن گزینه‌ها ترجیح می‌دهم."],
+  ["JP",1,"انعطاف و تصمیم لحظه‌ای را به برنامه‌ی سفت ترجیح می‌دهم."],["JP",1,"اغلب کارها را تا نزدیک مهلت عقب می‌اندازم."],["JP",1,"دوست دارم گزینه‌ها تا آخرین لحظه باز بمانند."],["JP",1,"از موقعیت‌های پیش‌بینی‌نشده لذت می‌برم."]]},
+ {id:"mood",title:"بخش ۲ – خلق، اضطراب و انرژی",scale:"f2w",note:"در ۲ هفته‌ی گذشته، چند وقت با هر مورد زیر مواجه بوده‌اید؟",scales:{
+  dep:{name:"افسردگی",bands:[[5,"حداقل","ok"],[10,"خفیف","warn"],[15,"متوسط","warn"],[20,"نسبتاً شدید","bad"],[99,"شدید","bad"]],abs:true},
+  anx:{name:"اضطراب فراگیر",bands:[[5,"حداقل","ok"],[10,"خفیف","warn"],[15,"متوسط","warn"],[99,"شدید","bad"]],abs:true},
+  man:{name:"نشانه‌های شیدایی / دوقطبی",pct:true}},items:[
+  ["dep","علاقه یا لذت کمی از انجام کارها داشته‌ام."],["dep","احساس غمگینی، افسردگی یا ناامیدی داشته‌ام."],["dep","در خوابیدن یا ماندن در خواب مشکل داشته‌ام، یا بیش از حد خوابیده‌ام."],["dep","احساس خستگی یا بی‌انرژی بودن داشته‌ام."],["dep","اشتهایم خیلی کم یا خیلی زیاد شده است."],["dep","نسبت به خودم احساس بدی دارم؛ احساس شکست یا بی‌ارزشی."],["dep","تمرکز روی کارهایی مثل مطالعه یا تماشای تلویزیون برایم دشوار بوده است."],["dep","آن‌قدر کند یا برعکس بی‌قرار بوده‌ام که دیگران متوجه شده‌اند."],["dep","فکر کرده‌ام بهتر است نباشم یا به خودم آسیب بزنم.",1],
+  ["anx","احساس عصبی‌بودن، اضطراب یا تنش داشته‌ام."],["anx","نتوانسته‌ام نگرانی‌هایم را متوقف یا کنترل کنم."],["anx","درباره‌ی چیزهای مختلف بیش از اندازه نگران بوده‌ام."],["anx","آرام‌گرفتن برایم دشوار بوده است."],["anx","آن‌قدر بی‌قرار بوده‌ام که نشستن یک‌جا سخت بوده است."],["anx","به‌راحتی کلافه یا زودرنج شده‌ام."],["anx","ترسیده‌ام که اتفاق بدی بیفتد."],
+  ["man","حال و خلقم به‌طور غیرعادی شاد یا بالا بوده است."],["man","اعتمادبه‌نفسم به‌طور غیرعادی بالا بوده است."],["man","نیاز به خواب کمتر شده بی‌آنکه خسته شوم."],["man","بیش از حد معمول حرف زده‌ام یا نتوانسته‌ام ساکت بمانم."],["man","فعالیت و انرژی‌ام به‌طور غیرعادی زیاد بوده است."]]},
+ {id:"psy",title:"بخش ۳ – تجربه‌های ذهنی و بدگمانی",scale:"fm",note:"در ماه گذشته، این تجربه‌ها چقدر برایتان پیش آمده است؟ (خواب‌آلودگی، تب یا مصرف مواد را در نظر نگیرید.)",scales:{
+  para:{name:"بدگمانی / پارانوئید",pct:true},psy:{name:"تجربه‌های شبه‌روان‌پریشی (طیف اسکیزوفرنی)",pct:true,urgent:true}},items:[
+  ["para","احساس کرده‌ام کسی تعقیبم می‌کند یا تحت نظر هستم."],["para","فکر کرده‌ام دیگران پشت سرم نقشه می‌کشند تا به من آسیب بزنند."],["para","به قصد و نیت دیگران بسیار بدگمان بوده‌ام."],["para","احساس کرده‌ام باید مراقب باشم کسی از حرف‌ها یا کارهایم سوءاستفاده نکند."],
+  ["psy","صدایی شنیده‌ام که دیگران نمی‌شنیدند."],["psy","چیزهایی دیده‌ام که دیگران نمی‌دیدند."],["psy","احساس کرده‌ام رسانه‌ها یا اتفاق‌ها پیام ویژه‌ای برای من دارند."],["psy","احساس کرده‌ام افکارم از بیرون کنترل یا وارد ذهنم می‌شوند."],["psy","احساس کرده‌ام از خودم یا دنیای اطرافم بیگانه و غیرواقعی شده‌ام."]]},
+ {id:"more",title:"بخش ۴ – وسواس، تروما، توجه، اجتماعی، مصرف مواد",scale:"f2w",note:"در ۲ هفته‌ی گذشته، چند وقت با هر مورد زیر مواجه بوده‌اید؟",scales:{
+  ocd:{name:"وسواس فکری-عملی",pct:true},ptsd:{name:"استرس پس از سانحه",pct:true},adhd:{name:"نقص توجه / بیش‌فعالی",pct:true},soc:{name:"اضطراب اجتماعی",pct:true},sub:{name:"مصرف الکل / مواد",pct:true}},items:[
+  ["ocd","افکار ناخواسته و آزاردهنده‌ای داشته‌ام که نمی‌توانستم از ذهنم بیرون کنم."],["ocd","مجبور بوده‌ام کاری را بارها تکرار کنم (شستن، چک‌کردن، شمردن)."],["ocd","اگر کاری را به شکل خاصی انجام نمی‌دادم، آشفته می‌شدم."],["ocd","وقت زیادی (بیش از یک ساعت در روز) صرف این افکار یا رفتارها شده است."],
+  ["ptsd","خاطره یا کابوس‌های ناخواسته از یک اتفاق بسیار ترسناک داشته‌ام."],["ptsd","از موقعیت‌ها یا افکار یادآور آن اتفاق دوری کرده‌ام."],["ptsd","همیشه گوش‌به‌زنگ و مراقب یا به‌راحتی جا‌خورده‌ام."],["ptsd","احساس کرده‌ام از دیگران یا احساساتم جدا و بی‌حس شده‌ام."],["ptsd","خودم یا دیگران را بابت آن اتفاق سرزنش کرده‌ام."],
+  ["adhd","شروع‌کردن کارهایی که تمرکز زیادی می‌خواهند را عقب انداخته‌ام."],["adhd","در جزئیات کارها اشتباه‌های بی‌دقتی داشته‌ام."],["adhd","وسایلم را گم کرده‌ام یا حواسم به قرارها نبوده است."],["adhd","در جلسه‌ها یا گفتگوها به‌راحتی حواسم پرت شده است."],["adhd","بی‌قراری درونی داشته‌ام و نشستن طولانی برایم سخت بوده است."],["adhd","وسط حرف دیگران پریده‌ام یا نتوانسته‌ام نوبت را رعایت کنم."],
+  ["soc","از قضاوت‌شدن توسط دیگران در جمع بسیار ترسیده‌ام."],["soc","از موقعیت‌های اجتماعی یا صحبت‌کردن در جمع پرهیز کرده‌ام."],["soc","پیش یا پس از دیدارهای اجتماعی دچار اضطراب شدید شده‌ام."],
+  ["sub","بیش از آنچه می‌خواستم الکل یا ماده مصرف کرده‌ام."],["sub","دیگران نگران مصرف من بوده‌اند."],["sub","بابت مصرفم احساس گناه کرده‌ام یا خواسته‌ام کمتر کنم."],["sub","برای شروع روز یا آرام‌شدن به مصرف نیاز داشته‌ام."]]},
+ {id:"dark",title:"بخش ۵ – صفات تاریک شخصیت (ماکیاولی، خودشیفتگی، سایکوپاتی)",scale:"agree",note:"این‌ها ویژگی‌های شخصیتی پیوستاری‌اند، نه برچسب اختلال. صادقانه پاسخ دهید.",scales:{
+  mach:{name:"ماکیاولیسم (فریبکاری و منفعت‌طلبی)",dark:true},narc:{name:"خودشیفتگی",dark:true},psyc:{name:"سایکوپاتی (بی‌پروایی و کم‌همدلی)",dark:true}},items:[
+  ["mach","برای رسیدن به هدف، گاهی فریب‌دادن دیگران را موجه می‌دانم."],["mach","مهم است که اطلاعات خصوصی‌ام را از دیگران پنهان کنم تا بعدها به کارم بیاید."],["mach","آدم‌ها را پیش از آنکه به آن‌ها نیاز داشته باشم، با تعریف و ملاطفت جذب می‌کنم."],["mach","هر کس را باید طوری برخورد کرد که به نفع من تمام شود."],["mach","بهتر است نقشه‌هایم را مخفی نگه دارم و بعد اجرا کنم."],["mach","اغلب آدم‌ها را ابزاری برای پیشبرد کارم می‌بینم."],
+  ["narc","فکر می‌کنم از اغلب آدم‌ها خاص‌تر و شایسته‌تر هستم."],["narc","دوست دارم مورد تحسین دیگران باشم و اگر نباشم ناراحت می‌شوم."],["narc","اگر کسی مرا نقد کند، به شدت آزرده می‌شوم."],["narc","معتقدم برای من باید استثنا قائل شد."],["narc","در جمع دوست دارم رهبر و مرکز توجه باشم."],["narc","به موفقیت‌ها و توانایی‌هایم زیاد فکر می‌کنم."],
+  ["psyc","بی‌پروا و بدون فکر به پیامد کارها دست به ریسک می‌زنم."],["psyc","وقتی کسی آسیب می‌بیند، کمتر از دیگران احساس ناراحتی می‌کنم."],["psyc","به‌راحتی از قواعد و قول‌هایم عبور می‌کنم."],["psyc","وقتی کسی را عصبانی می‌کنم، بیشتر از آنکه پشیمان شوم، لذت می‌برم."],["psyc","در دعوا و درگیری فیزیکی یا لفظی راحت وارد می‌شوم."],["psyc","احساس گناه برایم نادر است."]]}
+];
+const MIND_TOTAL = MIND_SEC.reduce((n,s)=>n+s.items.length,0);
+const mindId = (si,ii) => si+"."+ii;
+// members registered before the release must pass from MIND_START; anyone who registers from the release day on, immediately
+const mindRequired = m => !!m && (today()>=MIND_START || (m.joined||"")>=MIND_RELEASE);
+const mindDone = () => !!(S.myMind&&S.myMind.ans&&Object.keys(S.myMind.ans).length>=MIND_TOTAL);
+const mindBlocked = () => { const m=myMember(); return mindRequired(m)&&!mindDone(); };
+function mindGate(what){ if(!mindBlocked()) return false; toast(`برای ${what} ابتدا باید آزمون ذهن‌نگار را کامل کنید.`); S.mod="bpms"; S.sub="mind"; S.forceFull=true; render(); return true; }
+function mindState(){ if(!S.mind) S.mind={step:0,ans:{},active:false}; return S.mind; }
+function mindScore(ans){
+  const out={type:{},scales:[]};
+  const t=MIND_SEC[0]; const sum={}, cnt={};
+  t.items.forEach(([d,p],i)=>{ const v=ans[mindId(0,i)]||3; (sum[d]=sum[d]||0); (cnt[d]=cnt[d]||0); sum[d]+=p===0?v-1:5-v; cnt[d]+=4; });
+  [["EI","E","I"],["SN","S","N"],["TF","T","F"],["JP","J","P"]].forEach(([d,a,b])=>{ const pct=Math.round(100*sum[d]/cnt[d]); out.type[d]={a,b,pct,letter:pct>=50?a:b,strength:Math.abs(pct-50)*2}; });
+  MIND_SEC.slice(1).forEach((sec,k)=>{ const si=k+1;
+    Object.entries(sec.scales).forEach(([key,sc])=>{ let s=0,n=0,flag=0;
+      sec.items.forEach((it,ii)=>{ if(it[0]!==key) return; const v=ans[mindId(si,ii)]; if(v==null) return; n++; s+=v; if(it[2]===1&&v>0) flag=1; });
+      if(!n) return;
+      if(sc.dark){ const m=s/n; out.scales.push({key,name:sc.name,score:faNum(m.toFixed(1))+" از ۵",level:m<2.5?"پایین":m<3.5?"متوسط":"بالا",cls:m<2.5?"ok":m<3.5?"warn":"bad",dark:true}); return; }
+      if(sc.abs){ const b=sc.bands.find(x=>s<x[0]); out.scales.push({key,name:sc.name,score:faNum(s)+" از "+faNum(n*3),level:b[1],cls:b[2],flag,pct:Math.round(100*s/(n*3))}); return; }
+      const pct=Math.round(100*s/(n*3)); out.scales.push({key,name:sc.name,score:faNum(pct)+"٪",level:pct<25?"پایین":pct<50?"متوسط":"بالا",cls:pct<25?"ok":pct<50?"warn":"bad",flag,pct,urgent:!!sc.urgent&&pct>=50}); });
+  });
+  // crisis = signs that call for professional help rather than self-help
+  const by=Object.fromEntries(out.scales.map(x=>[x.key,x]));
+  out.crisis=[]; 
+  if(by.dep&&(by.dep.cls==="bad"||by.dep.flag)) out.crisis.push(by.dep.flag?"افکار مرگ یا آسیب به خود":"افسردگی نسبتاً شدید یا شدید");
+  ["anx","man","para","psy","ocd","ptsd","sub"].forEach(k=>{ if(by[k]&&by[k].cls==="bad") out.crisis.push(by[k].name+" در سطح بالا"); });
+  out.urgent=!!(by.dep&&by.dep.flag)||!!(by.psy&&by.psy.urgent);
+  return out;
+}
+const MIND_NAMES = {E:"برون‌گرا",I:"درون‌گرا",S:"حسی",N:"شهودی",T:"منطقی",F:"احساسی",J:"برنامه‌ریز",P:"انعطاف‌پذیر"};
+// title | portrait | strengths | blind spots | at work | growth
+const MIND_TYPES = {
+ ISTJ:"مسئول و قابل‌اتکا|منظم، واقع‌گرا و پایبند به قول؛ کار را درست و کامل انجام می‌دهد و به سنت و قاعده احترام می‌گذارد.|دقت، پشتکار، قابل‌پیش‌بینی بودن، تعهد|انعطاف کم در برابر تغییر، سختی در ابراز احساس، سخت‌گیری با خود و دیگران|در نقش‌هایی با قاعده‌ی روشن (حسابرسی، مهندسی، مدیریت عملیات) می‌درخشد|تغییرِ کنترل‌شده را تمرین کنید و قدردانی را بلندتر بگویید",
+ ISFJ:"نگهبان مهربان|وفادار، فروتن و مراقب؛ پشت صحنه کار می‌کند و به نیاز اطرافیان حساس است.|همدلی عملی، دقت، وفاداری، حافظه‌ی خوب برای جزئیات آدم‌ها|دشواری نه‌گفتن، فرسودگی از فداکاری، پرهیز از تعارض|در نقش‌های پشتیبانی، درمان، آموزش و مدیریت دفتر عالی است|مرز بگذارید و نیازهای خودتان را هم بیان کنید",
+ INFJ:"راهنمای بصیر|عمیق، آرمان‌گرا و شهودی؛ معنا و جهت می‌جوید و آدم‌ها را خوب می‌فهمد.|بینش، همدلی عمیق، تعهد به ارزش‌ها، نگاه بلندمدت|کمال‌گرایی، تحلیل‌رفتن عاطفی، انزوا هنگام فشار|در مشاوره، پژوهش، طراحی راهبرد و رهبری ارزش‌محور عالی است|استراحت و مرز عاطفی را جدی بگیرید و ایده را به گام‌های کوچک تبدیل کنید",
+ INTJ:"معمار راهبردی|مستقل، تحلیل‌گر و آینده‌نگر؛ الگوهای پیچیده را می‌بیند و برای آن‌ها نقشه می‌کشد.|تفکر سیستمی، استقلال، اراده، استانداردهای بالا|بی‌صبری با کندی، نادیده‌گرفتن احساسات، سخت‌گیری و گاه تکبر فکری|در معماری سیستم، علم داده، پژوهش و راهبرد بهترین است|ارتباط انسانی و بازخورد گرفتن را تمرین کنید",
+ ISTP:"صنعتگر خونسرد|آرام، کنجکاو و عمل‌گرا؛ با دست و ذهن مسائل فنی را تحلیل و حل می‌کند.|حل مسئله‌ی عملی، خونسردی در بحران، انعطاف|بی‌میلی به برنامه‌ی بلندمدت، کم‌گویی احساسی، ریسک‌پذیری ناگهانی|در مهندسی، عیب‌یابی، امنیت و عملیات میدانی عالی است|تعهد بلندمدت و گفت‌وگوی احساسی را تمرین کنید",
+ ISFP:"هنرمند حساس|ملایم، خلاق و ارزش‌محور؛ در لحظه زندگی می‌کند و زیبایی را قدر می‌داند.|خلاقیت، همدلی، انعطاف، اصالت|اجتناب از تعارض، سختی در برنامه‌ریزی و ابراز نیاز، حساسیت به انتقاد|در طراحی، مراقبت و کارهای خلاق و مستقل عالی است|ابراز نظر و پیگیری اهداف بلندمدت را تمرین کنید",
+ INFP:"آرمان‌گرای رویاپرداز|عمیق، دلسوز و اصیل؛ با ارزش‌های درونی‌اش زندگی می‌کند و دنبال معنا است.|خلاقیت، همدلی، وفاداری به ارزش‌ها، نگاه انسانی|بی‌نظمی، خودانتقادی، دلسردی در برخورد با واقعیت خشن، تعلل|در نویسندگی، مشاوره، آموزش و طراحی تجربه‌ی انسانی عالی است|مهلت‌های کوچک و ساختار روزانه بسازید",
+ INTP:"اندیشمند تحلیل‌گر|کنجکاو، منطقی و مفهوم‌ساز؛ عاشق فهمیدن سازوکار چیزهاست.|تحلیل عمیق، خلاقیت نظری، استقلال فکری|اتمام‌نکردن کارها، بی‌توجهی به جزئیات اجرایی و احساس دیگران|در پژوهش، توسعه‌ی نرم‌افزار و علوم نظری عالی است|مهلت و شریکِ اجرا داشته باشید و ارتباط عاطفی را فراموش نکنید",
+ ESTP:"ماجراجوی عملگرا|پرانرژی، واقع‌بین و اهل عمل؛ در بحران تصمیم سریع می‌گیرد.|واکنش سریع، مذاکره، شجاعت، جذابیت اجتماعی|کم‌صبری، بی‌توجهی به پیامد بلندمدت، گریز از کار تشریفاتی|در فروش، عملیات و مدیریت بحران عالی است|پیش از اقدام یک مکث و بررسی پیامد بگذارید",
+ ESFP:"سرگرم‌کننده‌ی گرم|شاد، اجتماعی و خودجوش؛ فضا را زنده و دوستانه می‌کند.|گرمی، انرژی، حس عملی، مهارت ارتباط|دشواری با برنامه‌ی خشک، فرار از موضوع‌های ناخوشایند، تصمیم‌های عجولانه|در خدمات مشتری، آموزش، رویداد و تیم‌سازی عالی است|برنامه‌ریزی مالی و زمانی را تمرین کنید",
+ ENFP:"الهام‌بخش پرشور|خلاق، پرانرژی و آدم‌محور؛ امکان می‌بیند و دیگران را به حرکت می‌آورد.|خلاقیت، همدلی، ارتباط، انگیزه‌دهی|پراکندگی، نیمه‌کاره‌گذاشتن، حساسیت به انتقاد، دشواری در کارهای تکراری|در بازاریابی، کوچینگ، نوآوری و پروژه‌های نو عالی است|اولویت‌بندی و پیگیری تا پایان را با یک شریک منظم تمرین کنید",
+ ENTP:"مناظره‌گر نوآور|سریع، بااعتمادبه‌نفس و ایده‌پرداز؛ چالش و دیدگاه جدید را دوست دارد.|ایده‌پردازی، چابکی ذهنی، متقاعدسازی|ناپایداری تمرکز، مجادله‌ی بی‌جا، بی‌حوصلگی با جزئیات|در کارآفرینی، مشاوره‌ی نوآوری و توسعه‌ی محصول عالی است|روی اجرا و حس شنیده‌شدن دیگران سرمایه‌گذاری کنید",
+ ESTJ:"مدیر منظم|سازمان‌ده، صریح و نتیجه‌گرا؛ ساختار و مسئولیت را دوست دارد.|رهبری اجرایی، قاطعیت، سازمان‌دهی، پایبندی به استاندارد|انعطاف کم، سخت‌گیری، کم‌توجهی به احساس‌ها|در مدیریت پروژه، عملیات و امور مالی عالی است|به نظر مخالف و بازخورد احساسی گوش دهید",
+ ESFJ:"میزبان حامی|گرم، مسئولیت‌پذیر و اجتماعی؛ هماهنگی و رفاه گروه برایش مهم است.|ارتباط، همکاری، توجه به نیاز دیگران، سازمان‌دهی اجتماعی|نیاز به تأیید، حساسیت به نقد، دشواری در تصمیم‌های سخت|در منابع انسانی، آموزش، پرستاری و مدیریت تیم عالی است|ارزش خود را از تأیید بیرونی جدا کنید",
+ ENFJ:"مربی الهام‌بخش|کاریزماتیک، همدل و رهبر طبیعی؛ رشد دیگران را می‌خواهد.|رهبری، ارتباط، انگیزه‌دهی، دیدگاه جمعی|فداکاری افراطی، حساسیت به انتقاد، دخالت در امور دیگران|در مربی‌گری، مدیریت تیم و آموزش عالی است|به نیازهای خودتان هم بپردازید و اجازه دهید دیگران اشتباه کنند",
+ ENTJ:"فرمانده راهبردی|قاطع، هدف‌محور و سازمان‌ده؛ چشم‌انداز می‌سازد و تیم را به نتیجه می‌رساند.|رهبری، برنامه‌ریزی، تصمیم‌گیری، کارایی|بی‌صبری، سلطه‌گری، کم‌توجهی به احساس‌ها|در مدیریت ارشد، کارآفرینی و راهبرد عالی است|گوش‌دادن فعال و تقدیر از تیم را تمرین کنید"
+};
+const MIND_DIM_TXT = {E:"انرژی‌تان را از تعامل با آدم‌ها و محیط بیرون می‌گیرید و با گفت‌وگو فکر می‌کنید.",I:"انرژی‌تان را از خلوت و تفکر درونی می‌گیرید و پیش از گفتن، در ذهن پردازش می‌کنید.",S:"به واقعیت‌های ملموس، جزئیات و تجربه‌ی عملی تکیه می‌کنید.",N:"به الگوها، امکان‌ها و معنای کلی‌تر امور بیشتر توجه می‌کنید.",T:"در تصمیم‌ها منطق، انصاف و تحلیل را مقدم می‌دارید.",F:"در تصمیم‌ها ارزش‌ها و اثر آن بر آدم‌ها را مقدم می‌دارید.",J:"ساختار، برنامه و قطعیت را دوست دارید و کار را پیش از مهلت جمع می‌کنید.",P:"انعطاف و باز بودن گزینه‌ها را ترجیح می‌دهید و با شرایط تازه سازگار می‌شوید."};
+const MIND_CLIN_TXT = {
+ dep:"نشانه‌های افسردگی (کم‌علاقگی، غم، خستگی، خواب و اشتها، احساس بی‌ارزشی).",
+ anx:"نشانه‌های اضطراب فراگیر (نگرانی کنترل‌نشدنی، تنش، بی‌قراری).",
+ man:"نشانه‌های بالا بودن غیرعادی خلق و انرژی؛ در کنار دوره‌های افسردگی می‌تواند به طیف دوقطبی مربوط باشد و نیاز به ارزیابی دقیق دارد.",
+ para:"سطح بالای بدگمانی نسبت به نیت دیگران؛ اگر با ترس مداوم یا ناتوانی در اعتماد همراه است، ارزیابی تخصصی لازم است.",
+ psy:"تجربه‌های شبه‌روان‌پریشی (شنیدن/دیدن چیزهایی که دیگران نمی‌بینند، احساس کنترل از بیرون). این غربالگری اسکیزوفرنی را تشخیص نمی‌دهد؛ ولی نمره‌ی بالا باید حتماً توسط روان‌پزشک بررسی شود.",
+ ocd:"نشانه‌های وسواس فکری-عملی (افکار مزاحم و رفتارهای تکراری).",
+ ptsd:"نشانه‌های استرس پس از سانحه (بازگشت خاطره، اجتناب، گوش‌به‌زنگی).",
+ adhd:"نشانه‌های نقص توجه / بیش‌فعالی در زندگی بزرگسالی.",
+ soc:"نشانه‌های اضطراب اجتماعی (ترس از قضاوت و پرهیز از جمع).",
+ sub:"الگوی مصرف الکل یا مواد که می‌تواند مشکل‌ساز باشد."};
+const MIND_DARK_TXT = {
+ mach:{ok:"گرایش کمی به مانور و فریب دارید؛ روابط‌تان بیشتر بر صداقت و اعتماد استوار است.",warn:"گاهی عمل‌گرا و مصلحت‌اندیش هستید؛ در مذاکره مفید است، اگر به فریب تبدیل نشود.",bad:"گرایش بالایی به بهره‌گیری راهبردی و پنهان‌کاری از دیگران دارید. در رهبری و مذاکره مفید است، ولی می‌تواند اعتماد تیم را بشکند؛ شفافیت و پایبندی به قول را جدی بگیرید."},
+ narc:{ok:"نیاز کمی به تحسین دارید و ارزیابی متواضعانه‌ای از خودتان دارید.",warn:"اعتمادبه‌نفس و میل به دیده‌شدن در حد معمول است.",bad:"نیاز بالایی به تحسین و حس شایستگی ویژه دارید. این می‌تواند انگیزه و کاریزما بدهد، ولی با نقد‌ناپذیری و تعارض در روابط همراه می‌شود؛ بازخورد را تمرین کنید. (این تشخیص اختلال شخصیت خودشیفته نیست.)"},
+ psyc:{ok:"همدلی و مسئولیت‌پذیری‌تان بالاست و ریسک‌پذیری‌تان کنترل‌شده است.",warn:"گاهی بی‌پروا یا کم‌صبرید؛ اثر کارتان بر دیگران را بسنجید.",bad:"ریسک‌پذیری، کم‌همدلی و گذشتن از قواعد در شما بالاست. در بحران مفید است ولی در روابط و کار تیمی آسیب می‌زند؛ ملاحظه‌ی پیامد و همدلی را آگاهانه تمرین کنید. در صورت درگیری مکرر با قانون یا دیگران با مشاور صحبت کنید."}};
+function mindInterpret(r){
+  const code=["EI","SN","TF","JP"].map(d=>r.type[d].letter).join(""), T=(MIND_TYPES[code]||"").split("|");
+  const dims=["EI","SN","TF","JP"].map(d=>{ const x=r.type[d], mid=x.strength<20; return `<li><b>${esc(MIND_NAMES[x.letter])} (${x.letter}) – ${mid?"گرایش ملایم":x.strength>=60?"گرایش قوی":"گرایش متوسط"}:</b> ${esc(MIND_DIM_TXT[x.letter])}${mid?" شما به هر دو سوی این بعد نزدیک هستید و بسته به موقعیت جابه‌جا می‌شوید.":""}</li>`; }).join("");
+  const dark=r.scales.filter(x=>x.dark).map(x=>`<li><b>${esc(x.name)} – ${esc(x.level)}:</b> ${esc(MIND_DARK_TXT[x.key][x.cls])}</li>`).join("");
+  const clin=r.scales.filter(x=>!x.dark&&x.cls!=="ok").map(x=>`<li><b>${esc(x.name)} – ${esc(x.level)}:</b> ${esc(MIND_CLIN_TXT[x.key])}</li>`).join("");
+  return `<div class="card" style="margin-bottom:10px"><h3 style="margin-top:0">تفسیر کامل شخصیت – ${esc(T[0]||code)}</h3>
+   <p>${esc(T[1]||"")}</p>
+   <h4>ابعاد چهارگانه</h4><ul>${dims}</ul>
+   <p><b>نقاط قوت:</b> ${esc(T[2]||"")}</p><p><b>نقاط کور و ریسک‌ها:</b> ${esc(T[3]||"")}</p><p><b>در محیط کار:</b> ${esc(T[4]||"")}</p><p><b>پیشنهاد رشد:</b> ${esc(T[5]||"")}</p>
+   <h4>صفات تاریک شخصیت</h4><ul>${dark}</ul>
+   <h4>وضعیت روانی</h4>${clin?`<ul>${clin}</ul>`:'<p>در هیچ حوزه‌ی غربالگری نشانه‌ی قابل‌توجهی دیده نشد. حفظ خواب منظم، ورزش، ارتباط اجتماعی و استراحت، سرمایه‌ی روانی شماست.</p>'}</div>`;
+}
+function mindResult(ans, who){
+  const r=mindScore(ans), ty=r.type, code=["EI","SN","TF","JP"].map(d=>ty[d].letter).join("");
+  const bars=["EI","SN","TF","JP"].map(d=>{ const x=ty[d]; return `<div style="margin:6px 0"><div class="row" style="justify-content:space-between"><span>${x.a} · ${MIND_NAMES[x.a]}</span><span>${MIND_NAMES[x.b]} · ${x.b}</span></div><div style="background:var(--line);border-radius:4px;height:10px;position:relative"><i style="position:absolute;inset-block:0;inset-inline-start:0;width:${x.pct}%;background:var(--signal);border-radius:4px"></i></div><span class="meta">گرایش به ${MIND_NAMES[x.letter]} (${faNum(Math.round(x.strength))}٪ شدت)</span></div>`; }).join("");
+  const clin=r.scales.filter(x=>!x.dark), dark=r.scales.filter(x=>x.dark), pill=x=>`<span class="pill p-${x.cls}">${esc(x.level)}</span>`;
+  const subj=who?`${esc(who)}`:"شما";
+  const crisis=r.crisis.length?`<div class="banner bad"><b>${who?`وضعیت روانی ${subj} بحرانی/نیازمند توجه جدی شناسایی شد`:"وضعیت روانی شما نیازمند توجه جدی است"}: ${esc(r.crisis.join("؛ "))}.</b><br>${who?"به این فرد":"به شما"} <b>حتماً مراجعه به روان‌درمانگر (تراپی)</b> یعنی روان‌پزشک یا روان‌شناس بالینی توصیه می‌شود؛ هرچه زودتر بهتر. ${r.urgent?"<br><b>اگر فکر خودکشی یا آسیب به خود یا صدا و ترس‌های کنترل‌نشدنی هست، همین حالا با یک فرد مورد اعتماد یا اورژانس تماس بگیرید (ایران: ۱۱۵، اورژانس اجتماعی ۱۲۳، مشاوره‌ی بهزیستی ۱۴۸۰؛ ترکیه: ۱۱۲).</b>":""}${who?"<br>این یک غربالگری است و نه تشخیص؛ با احترام و محرمانگی و بدون تصمیم تنبیهی با فرد در میان بگذارید.":""}</div>`:"";
+  return `${crisis}<div class="banner">این نتیجه فقط یک غربالگری و خودآگاهی است و <b>تشخیص نیست</b>. تشخیص اختلالات فقط با مصاحبه‌ی بالینی ممکن است.</div>
+  <div class="grid2"><div class="card"><h3 style="margin-top:0">تیپ شخصیتی: <span class="mono">${code}</span></h3>${bars}<p class="note">بر پایه‌ی تیپ‌شناسی یونگ؛ نسخه‌ی رسمی MBTI® نیست.</p></div>
+  <div class="card"><h3 style="margin-top:0">صفات تاریک شخصیت</h3>${table(["صفت","امتیاز","سطح"],dark.map(x=>`<tr>${td("صفت",esc(x.name),"t")}${td("امتیاز",`<span class="mono">${esc(x.score)}</span>`)}${td("سطح",pill(x))}</tr>`))}</div></div>
+  <h3>غربالگری نشانه‌های روانی</h3>${table(["حوزه","امتیاز","سطح نشانه"],clin.map(x=>`<tr>${td("حوزه",esc(x.name),"t")}${td("امتیاز",`<span class="mono">${esc(x.score)}</span>`)}${td("سطح",pill(x))}</tr>`))}${mindInterpret(r)}`;
+}
+function mindSecView(si){
+  const sec=MIND_SEC[si], st=mindState(), labels=sec.scale==="agree"?MIND_AGREE:sec.scale==="f2w"?MIND_F2W:MIND_FM, base=sec.scale==="agree"?1:0;
+  const rows=sec.items.map((it,ii)=>{ const id=mindId(si,ii), text=typeof it[it.length-1]==="number"?it[it.length-2]:it[it.length-1], v=st.ans[id];
+    return `<div class="card" style="margin-bottom:8px"><p style="margin:0 0 6px"><span class="meta">${faNum(ii+1)}.</span> ${esc(text)}</p><div class="row" style="gap:6px;flex-wrap:wrap">${labels.map((l,k)=>`<label class="chip"><input type="radio" name="m${id}" data-mind="${id}" value="${base+k}"${v===base+k?" checked":""}> ${esc(l)}</label>`).join("")}</div></div>`; }).join("");
+  return `<h3>${esc(sec.title)}</h3><p class="note">${esc(sec.note)}</p>${rows}<div class="row" style="gap:8px;margin-top:8px">${si>0?'<button class="btn ghost" data-act="mind-prev">قبلی</button>':""}<button class="btn sig" data-act="mind-next">${si===MIND_SEC.length-1?"ثبت و مشاهده‌ی نتیجه":"بخش بعد"}</button><span class="meta">پاسخ‌داده‌شده: ${faNum(Object.keys(st.ans).length)} از ${faNum(MIND_TOTAL)}</span></div>`;
+}
+function mindOwnerTable(){
+  if(!S.me.isOwner) return "";
+  const rows=(S.allMind||[]).map(x=>({...x,r:mindScore(x.ans)}));
+  const missing=S.members.filter(m=>mindRequired(m)&&!rows.some(x=>x.member===m.id));
+  return `<h3 style="margin-top:18px">نتایج اعضا (فقط مالک)</h3><p class="note">پاسخ‌ها را فقط خود فرد و مالک سامانه می‌بینند. از این اطلاعات برای حمایت و ارجاع به درمان استفاده شود، نه تصمیم تنبیهی یا استخدامی.</p>`+
+   (missing.length?`<p><span class="pill p-bad">آزمون انجام نداده‌اند</span> ${esc(missing.map(m=>m.full_name).join("، "))}</p>`:"")+
+   table(["عضو","تاریخ","تیپ","وضعیت",""],rows.map(x=>`<tr>${td("عضو",esc(memberName(x.member)),"t")}${td("تاریخ",faDate((x.at||"").slice(0,10)))}${td("تیپ",`<span class="mono">${["EI","SN","TF","JP"].map(d=>x.r.type[d].letter).join("")}</span>`)}${td("وضعیت",x.r.crisis.length?'<span class="pill p-bad">نیازمند توجه/تراپی</span>':'<span class="pill p-ok">بدون نشانه‌ی بحرانی</span>')}${td("",`<button class="btn sm ghost" data-act="mind-view" data-m="${esc(x.member)}">مشاهده‌ی پاسخ و تفسیر</button>`)}</tr>`),"هنوز نتیجه‌ای ثبت نشده است.");
+}
+function mindAnswersList(ans){
+  return `<details><summary>پاسخ‌های خام</summary>${MIND_SEC.map((sec,si)=>{ const lab=sec.scale==="agree"?MIND_AGREE:sec.scale==="f2w"?MIND_F2W:MIND_FM, base=sec.scale==="agree"?1:0;
+    return `<h4>${esc(sec.title)}</h4><ol>${sec.items.map((it,ii)=>{ const t=typeof it[it.length-1]==="number"?it[it.length-2]:it[it.length-1], v=ans[mindId(si,ii)]; return `<li>${esc(t)} ← <b>${v==null?"—":esc(lab[v-base])}</b></li>`; }).join("")}</ol>`; }).join("")}</details>`;
+}
+VIEWS["bpms.mind"] = () => {
+  if(!S.me.id) return `<p class="empty">برای استفاده از این بخش باید با حساب claude.ai وارد شده باشید.</p>`;
+  const st=mindState(), saved=S.myMind&&S.myMind.ans, req=mindRequired(myMember());
+  let main;
+  if(st.active&&st.step>0&&st.step<=MIND_SEC.length) main=mindSecView(st.step-1);
+  else if(saved||st.done) main=mindResult(saved||st.ans)+mindAnswersList(saved||st.ans)+`<div class="row" style="gap:8px;margin-top:8px"><button class="btn ghost" data-act="mind-start">انجام دوباره‌ی آزمون</button><span class="meta">آخرین انجام: ${(S.myMind&&S.myMind.at)?faDate(S.myMind.at.slice(0,10)):"—"}</span></div>`;
+  else main=`<div class="card"><h2 style="margin-top:0">ذهن‌نگار (MindScope)</h2><p>آزمون ترکیبی خودآگاهی با ${faNum(MIND_TOTAL)} پرسش در ۵ بخش: تیپ شخصیتی چهاربعدی، غربالگری افسردگی، اضطراب، نشانه‌های دوقطبی، بدگمانی (پارانوئید)، تجربه‌های شبه‌روان‌پریشی (طیف اسکیزوفرنی)، وسواس، استرس پس از سانحه، نقص توجه، اضطراب اجتماعی، مصرف مواد و صفات تاریک شخصیت (ماکیاولی، خودشیفتگی، سایکوپاتی). زمان تقریبی: ۱۵ تا ۲۰ دقیقه.</p>
+   <ul>${req?"<li><b>الزامی است:</b> تا انجام این آزمون، ثبت ورود و بارگذاری گزارش عملکرد ممکن نیست.</li>":""}<li><b>چه کسی می‌بیند:</b> فقط خودتان و مالک سامانه؛ برای سایر اعضا و مدیران نمایش داده نمی‌شود.</li><li><b>تشخیص نیست:</b> فقط غربالگری و خودآگاهی است. اگر نشانه‌ی جدی دیده شود، مراجعه به روان‌درمانگر توصیه می‌شود.</li><li>نتیجه برای حمایت و ارجاع به درمان است، نه تصمیم تنبیهی.</li></ul>
+   <button class="btn sig" data-act="mind-start">شروع آزمون</button></div>`;
+  return main+mindOwnerTable();
+};
+document.addEventListener("change", e => { const r=e.target.closest("[data-mind]"); if(r){ mindState().ans[r.dataset.mind]=Number(r.value); } });
+async function mindNext(){ const st=mindState(), si=st.step-1, sec=MIND_SEC[si];
+  const miss=sec.items.findIndex((_,ii)=>st.ans[mindId(si,ii)]==null);
+  if(miss>=0){ toast(`پرسش ${faNum(miss+1)} بی‌پاسخ است.`); return; }
+  if(st.step<MIND_SEC.length){ st.step++; S.forceFull=true; render(); window.scrollTo(0,0); return; }
+  const at=new Date().toISOString(), ok=await save(`mindtest/${S.me.id}/items/result`,{at,ans:st.ans,version:1,count:((S.myMind&&S.myMind.count)||0)+1},"آزمون ذهن‌نگار ثبت شد");
+  if(ok){ S.myMind={at,ans:st.ans,count:((S.myMind&&S.myMind.count)||0)+1}; st.active=false; st.done=true; S.forceFull=true; render(); window.scrollTo(0,0); }
+}
+function mindOwnerView(mid){ const x=(S.allMind||[]).find(a=>a.member===mid); if(!x||!S.me.isOwner) return;
+  $("#layer").innerHTML=`<div class="scrim" data-act="close-scrim"><div class="drawer" style="max-width:980px;width:96vw;overflow:auto"><div class="row" style="align-items:center;gap:8px"><h3 style="flex:1;margin:0">ذهن‌نگار – ${esc(memberName(mid))}</h3><button class="btn ghost sm" data-act="close">بستن</button></div>${mindResult(x.ans,memberName(mid))}${mindAnswersList(x.ans)}</div></div>`; }
+
 // ================================================================== TOUR (guided walkthrough for new members)
 // One step per module and per tab, in the order of the top bar; the page switches to the tab while it is explained.
 const TOUR = [
@@ -2795,10 +2972,14 @@ document.addEventListener("click", async e => {
     case "sprint-close": sprintClose(id); break;
     case "sprint-retro": retroForm(id); break;
     case "goto": S.mod=b.dataset.mod; S.sub=b.dataset.sub; S.forceFull=true; render(); break;
-    case "checkin": { if(b.disabled) break; b.disabled=true; try{ const g=await officeFix(); if(g) await save(`attendance/${S.me.id}/days/${today()}`,{in:nowHM(),break_min:60,in_geo:{lat:g.lat,lng:g.lng,acc:g.acc,dist:g.dist}},"ورود ثبت شد"); } finally{ b.disabled=false; } break; }
+    case "mind-start": { const st=mindState(); st.active=true; st.done=false; st.step=1; st.ans={}; S.forceFull=true; render(); window.scrollTo(0,0); break; }
+    case "mind-prev": { const st=mindState(); if(st.step>1){ st.step--; S.forceFull=true; render(); window.scrollTo(0,0); } break; }
+    case "mind-next": await mindNext(); break;
+    case "mind-view": mindOwnerView(b.dataset.m); break;
+    case "checkin": { if(mindGate("ثبت ورود")) break; if(b.disabled) break; b.disabled=true; try{ const g=await officeFix(); if(g) await save(`attendance/${S.me.id}/days/${today()}`,{in:nowHM(),break_min:60,in_geo:{lat:g.lat,lng:g.lng,acc:g.acc,dist:g.dist}},"ورود ثبت شد"); } finally{ b.disabled=false; } break; }
     case "checkout": { if(b.disabled) break; b.disabled=true; try{ const g=await officeFix(); if(g){ const att=S.myAtt.find(x=>x.id===today())||{}; await save(`attendance/${S.me.id}/days/${today()}`,{...att,out:nowHM(),out_geo:{lat:g.lat,lng:g.lng,acc:g.acc,dist:g.dist}},"خروج ثبت شد"); } } finally{ b.disabled=false; } break; }
     case "office-here": { try{ const f=await getFix(); $("#f_office_lat").value=f.lat.toFixed(6); $("#f_office_lng").value=f.lng.toFixed(6); toast(`موقعیت فعلی در فرم قرار گرفت (دقت ±${faNum(f.acc)} متر)؛ برای اعمال ذخیره کنید.`); }catch(e){ toast("موقعیت دریافت نشد؛ دسترسی GPS را بررسی کنید."); } break; }
-    case "report-new": reportForm(b.dataset.date); break;
+    case "report-new": if(mindGate("بارگذاری گزارش عملکرد")) break; reportForm(b.dataset.date); break;
     case "report-view": reportDetail(b.dataset.m,b.dataset.d); break;
     case "ra-csv": reportsCsv(); break;
     case "reload-reports": loadAllReports(); break;
