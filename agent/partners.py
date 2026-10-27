@@ -16,6 +16,12 @@ from .config import DATA_DIR, env
 STATE_FILE = DATA_DIR / "partners.json"
 STATUSES = {"drafted": "پیش‌نویس آماده", "sent": "ارسال شد", "replied": "پاسخ داد", "meeting": "جلسه",
             "mou": "تفاهم‌نامه", "not_interested": "علاقه‌مند نیست"}
+DIVISION_OF_WORK = (
+    "Division of work: your company would present the buyer's requirements to us for this tender, including all "
+    "documents requested in the tender documentation (company registration, references, certificates, guarantees "
+    "and forms) and the project requirements. Parsa International Group would then carry out the software "
+    "development, coding and technical implementation of the project."
+)
 
 SCHEMA = {
     "type": "object",
@@ -105,7 +111,9 @@ def scout(cfg, analyst, state, open_tenders, use_mail, log):
             if key in state["companies"]:
                 continue
             record = {**co, "country": country, "status": "drafted", "found": datetime.now().date().isoformat()}
-            msg = mailbox.build_message(env("IMAP_USER") or c["email"], co["subject"], co["body"], to=co["email"])
+            body = co["body"].rstrip() + "\n\n" + DIVISION_OF_WORK
+            cc = (cfg.get("mail") or {}).get("partner_cc") or env("PARTNER_CC")
+            msg = mailbox.build_message(env("IMAP_USER") or c["email"], co["subject"], body, to=co["email"], cc=cc)
             if use_mail and mailbox.configured():
                 try:
                     record["draft_saved_to"] = "webmail:" + mailbox.save_draft(msg, cfg)

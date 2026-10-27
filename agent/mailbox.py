@@ -13,11 +13,13 @@ def configured():
     return all(env(k) for k in ("IMAP_HOST", "IMAP_USER", "IMAP_PASSWORD"))
 
 
-def build_message(sender, subject, body, to="", attachments=()):
+def build_message(sender, subject, body, to="", cc="", attachments=()):
     msg = EmailMessage()
     msg["From"] = sender
     if to:
         msg["To"] = to
+    if cc:
+        msg["Cc"] = cc
     msg["Subject"] = subject
     msg["Date"] = formatdate(localtime=True)
     msg["Message-ID"] = make_msgid(domain=sender.split("@")[-1])
