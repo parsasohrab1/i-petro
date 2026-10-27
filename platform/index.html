@@ -220,7 +220,7 @@ const today = () => new Date().toISOString().slice(0,10);
 const faDate = d => { if(!d) return ""; try{return new Intl.DateTimeFormat("fa-IR-u-ca-persian",{year:"numeric",month:"long",day:"numeric"}).format(new Date(d+(d.length===10?"T12:00:00":"")))}catch(e){return d} };
 const faNum = n => { try{return new Intl.NumberFormat("fa-IR").format(n)}catch(e){return n} };
 const blobUrl = id => id ? "/_blob/" + id : "";
-const memberName = id => (S.members.find(m=>m.id===id)||{}).full_name || "—";
+const memberName = id => (S.members.find(m=>m.id===id)||{}).full_name || (id&&!isAdmin()?"همکار":"—");
 const isAdmin = () => S.me.isOwner || S.me.canEdit;
 const seeAllReports = () => !!S.me.isOwner;   // performance reports and their scores: only the person and the owner
 function toast(t){const d=document.createElement("div");d.className="toast";d.textContent=t;document.body.appendChild(d);setTimeout(()=>d.remove(),2600)}
@@ -242,12 +242,21 @@ const COLS = {
   members:"members", tasks:"tasks", letters:"letters", letters_archive:"lettersArchive", products:"products", patents:"patents",
   finance:"finance", clients:"clients", sprints:"sprints", scholarships:"schol", articles:"arts"
 };
+// privacy: only admins see other members and their tasks; everyone else gets just their own rows
+const PRIVATE_SUBS = {bpms:["contacts","teams"], erp:["people"]};
+function privateRows(key, rows){
+  if(isAdmin()||!S.me.id) return rows;
+  if(key==="members") return rows.filter(r=>r.id===S.me.id);
+  if(key==="tasks") return rows.filter(r=>r.assignee===S.me.id||r.created_by===S.me.id);
+  return rows;
+}
+const visibleSubs = mod => (SUBS[mod]||[]).filter(([k])=>isAdmin()||!(PRIVATE_SUBS[mod]||[]).includes(k));
 function setPath(key, val){ const [a,b]=key.split("."); if(b) S[a][b]=val; else S[a]=val; }
 function subscribe(){
   for(const [path,key] of Object.entries(COLS)){
     if(key==="schol"&&!isOwnerOnly()) continue;
     S.db.collection(path).onSnapshot(snap => {
-      setPath(key, snap.docs.map(d => ({id:d.id, ...d.data()})));
+      setPath(key, privateRows(key, snap.docs.map(d => ({id:d.id, ...d.data()}))));
       S.loaded = true; S.got.add(key); render(); if(key==="members") maybeWelcome();
     }, () => {});
   }
@@ -349,8 +358,9 @@ VIEWS["patent.mine"]=()=>areaMineView("patent"); VIEWS["scholar.mine"]=()=>areaM
 function paintNav(){
   if((AREA_KINDS[S.mod]&&areaAccess(S.mod)==="none")||(S.mod==="letters"&&!canSeeLetters())){ S.mod="market"; S.sub=SUBS.market[0][0]; }
   else if(AREA_KINDS[S.mod]&&areaAccess(S.mod)==="mine") S.sub="mine";
+  { const vs=visibleSubs(S.mod); if(vs.length&&!vs.some(x=>x[0]===S.sub)&&!(AREA_KINDS[S.mod]&&areaAccess(S.mod)==="mine")) S.sub=vs[0][0]; }
   $("#mods").innerHTML = visibleModules().map(([k,l])=>`<button role="tab" aria-selected="${k===S.mod}" data-act="mod" data-k="${k}">${l}</button>`).join("");
-  $("#subs").innerHTML = ((AREA_KINDS[S.mod]&&areaAccess(S.mod)==="mine")?[["mine","تسک‌های من"]]:SUBS[S.mod]).map(([k,l])=>`<button role="tab" aria-selected="${k===S.sub}" data-act="sub" data-k="${k}">${esc(l)}</button>`).join("")
+  $("#subs").innerHTML = ((AREA_KINDS[S.mod]&&areaAccess(S.mod)==="mine")?[["mine","تسک‌های من"]]:visibleSubs(S.mod)).map(([k,l])=>`<button role="tab" aria-selected="${k===S.sub}" data-act="sub" data-k="${k}">${esc(l)}</button>`).join("")
     + `<input id="search" placeholder="جست‌وجو…" value="${esc(S.q)}" style="margin-inline-start:auto;min-width:160px">`;
   $("#search").oninput = e => { S.q = e.target.value.trim().toLowerCase(); renderView(); };
   try{localStorage.setItem("ppt-view",JSON.stringify({mod:S.mod,sub:S.sub}))}catch(e){}
@@ -572,6 +582,9 @@ function ipWebmailUrl(t,lang,to,cc){
   return `${IP_WEBMAIL}?_task=mail&_action=compose&_to=${q(to)}&_cc=${q(cc)}&_subject=${q(m.subject)}&_body=${q(m.body)}`;
 }
 const partnerBtn = t => (ipIsIntl(t)&&isAdmin()) ? ` <button class="btn sm sig" data-act="ip-open" data-id="${esc(t.id)}">شرکای تجاری</button>` : "";
+const partnerEmail = x => String((x&&(x.email||x.public_contact))||"").trim();
+// recipient for the draft: the address the agent read from the partner's own website (tender partners first, then the country list)
+function ipRecipient(t){ const k=ipKey(t), rec=(S.ip.countries||{})[k]||{}; return String(t.suggested_to||"").trim()||[...(t.partners||[]),...(rec.partners||[])].map(partnerEmail).find(Boolean)||""; }
 function ipLangs(t){ const k=ipKey(t); return ["en",...(k?IP_C[k][1]:[])]; }
 function ipOpen(tid,tab){
   const t=S.m.tenders.find(x=>x.id===tid); if(!t) return;
@@ -584,14 +597,14 @@ function ipOpen(tid,tab){
     const tk=ipTask(tid), who=ipSender(tid);
     body=`<div class="row" style="gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:8px"><span class="meta">فرستنده‌ی ایمیل‌ها (مسئول تسک):</span><b>${esc(who)}</b>${tk?`<span class="pill p-info">${esc(TASK_ST[tk.status]||tk.status)}</span>`:""}<button class="btn sm ${tk?"ghost":"sig"}" data-act="ip-owner-task" data-id="${esc(tid)}">${tk?"تسک جدید برای فرد دیگر":"تعریف تسک ارسال ایمیل و تعیین فرستنده"}</button></div>`+`<p class="note">شرکت‌هایی که در ${esc(cinfo?cinfo[0]:t.country)} امکان همکاری با آن‌ها وجود دارد: شریک محلی که سابقه، ثبت شرکت و مدارک مناقصه را دارد و ما فناوری، محصول و کدنویسی را ارائه می‌کنیم. فهرست از جست‌وجوی روزانه بهبود می‌یابد؛ پیش از تماس، علاقه و ظرفیت هر شرکت در سایت رسمی‌اش تأیید شود.</p>`+
      (rec.note?`<p class="banner">${esc(rec.note)}</p>`:"")+
-     (partners.length?table(["شرکت","شهر","ایمیل","نوع","چرا مناسب است","منبع"],partners.map(x=>`<tr>${td("شرکت",`<b>${esc(x.name)}</b>${x.verified===false?' <span class="pill p-warn">تأیید شود</span>':""}`,"t")}${td("شهر",esc(x.city||"—"))}${td("ایمیل",x.email?`<a dir="ltr" href="mailto:${esc(x.email)}">${esc(x.email)}</a>`:"—")}${td("نوع",esc(x.type||"—"))}${td("چرا",esc(x.why||""))}${td("منبع",x.url?link(x.url,"لینک"):"—")}</tr>`),"شریکی ثبت نشده است."):`<p class="empty">برای این کشور هنوز شریکی ثبت نشده است. جست‌وجوی روزانه تکمیل می‌کند، یا تسک زیر را بزنید.</p>`)+
+     (partners.length?table(["شرکت","شهر","ایمیل","نوع","چرا مناسب است","منبع"],partners.map(x=>`<tr>${td("شرکت",`<b>${esc(x.name)}</b>${x.verified===false?' <span class="pill p-warn">تأیید شود</span>':""}`,"t")}${td("شهر",esc(x.city||"—"))}${td("ایمیل",partnerEmail(x)?`<a dir="ltr" href="mailto:${esc(partnerEmail(x))}">${esc(partnerEmail(x))}</a>`:"—")}${td("نوع",esc(x.type||"—"))}${td("چرا",esc(x.why||""))}${td("منبع",x.url?link(x.url,"لینک"):"—")}</tr>`),"شریکی ثبت نشده است."):`<p class="empty">برای این کشور هنوز شریکی ثبت نشده است. جست‌وجوی روزانه تکمیل می‌کند، یا تسک زیر را بزنید.</p>`)+
      `<div class="row" style="margin-top:8px;gap:8px;flex-wrap:wrap">${partners.length?`<button class="btn sm sig" data-act="ip-drafts" data-id="${esc(tid)}">درفت ایمیل برای همه‌ی شرکا (ZIP، فرستنده: ${esc(ipSender(tid))})</button>`:""}<button class="btn sm sig" data-act="ip-task" data-id="${esc(tid)}">📥 ثبت در صف: پیدا کردن شریک برای Claude</button></div>`;
   } else {
     const lang=S.ipTab.slice(5), m=ipCompose(t,lang), rtl=IP_RTL.has(lang);
     body=`<p class="note">پیش‌نویس ایمیل به زبان ${esc(IP_L[lang])}${lang!=="en"?" (زبان رسمی کشور) ":" "}برای ارسال از ایمیل شرکت (${IP_FROM}). ایمیل گیرنده را از وب‌سایت رسمی شریک وارد کنید؛ نسخه‌ی کپی (CC) برای ایمیل شخصی شما درج شده است. ${lang!=="en"?"ترجمه‌ی اولیه است؛ پیش از ارسال یک فرد بومی بازبینی کند.":""}</p>
      <div class="card"><div class="row" style="gap:8px;flex-wrap:wrap;margin-bottom:8px">
        <label style="flex:1;min-width:220px"><div class="meta">از (فرستنده)</div><input id="ipFrom" type="email" value="${esc(IP_FROM)}" readonly dir="ltr" style="width:100%"></label>
-       <label style="flex:1;min-width:220px"><div class="meta">به (ایمیل شریک)</div><input id="ipTo" type="email" placeholder="partner@company.com" dir="ltr" style="width:100%"></label>
+       <label style="flex:1;min-width:220px"><div class="meta">به (ایمیل شریک)</div><input id="ipTo" type="email" value="${esc(ipRecipient(t))}" placeholder="partner@company.com" dir="ltr" style="width:100%"></label>
        <label style="flex:1;min-width:220px"><div class="meta">رونوشت (CC)</div><input id="ipCc" type="email" value="${esc(IP_CC)}" dir="ltr" style="width:100%"></label></div><div class="meta">موضوع</div><p dir="${rtl?"rtl":"ltr"}" style="margin:0 0 8px"><b>${esc(m.subject)}</b></p><textarea id="ipBody" readonly dir="${rtl?"rtl":"ltr"}" style="width:100%;min-height:340px;font-size:14px">${esc(m.body)}</textarea></div>
      <div class="row" style="margin-top:8px;gap:8px;flex-wrap:wrap"><button class="btn sm sig" data-act="ip-copy">کپی متن</button><button class="btn sm sig" data-act="ip-wlink" data-t="${esc(lang)}">کپی لینک وب‌میل</button><button class="btn sm sig" data-act="ip-webmail" data-t="${esc(lang)}">باز کردن در وب‌میل شرکت (parsaint.group)</button><button class="btn sm ghost" data-act="ip-mailto" data-t="${esc(lang)}">برنامه‌ی ایمیل سیستم</button><button class="btn sm ghost" data-act="ip-eml" data-t="${esc(lang)}">دانلود درفت .eml</button></div>`;
     body+=`<p class="meta">اگر پیش‌نمایش اجازه‌ی باز شدن پنجره یا برنامه‌ی ایمیل را نداد: «کپی لینک وب‌میل» را بزنید و لینک را در یک تب جدید مرورگر بچسبانید، یا «دانلود درفت .eml» را بزنید و فایل را در برنامه‌ی ایمیل باز کنید. «کپی متن» هم متن کامل را می‌دهد تا در پیام وب‌میل بچسبانید.</p>`;
@@ -617,8 +630,12 @@ const mk = filter => () => {
   return kpis([["فرصت فعال",faNum(list.length)],["مهلت ≤ ۷ روز",faNum(soon),soon>0],["دولتی",faNum(list.filter(t=>(t.sector||"").startsWith("دولتی")).length)],["شرکت دولتی / عمومی",faNum(list.filter(t=>(t.sector||"").includes("شرکت")).length)]]) + tenderTable(list);
 };
 VIEWS["market.iran"] = mk(t=>t.market==="domestic"&&t.line!=="web");
+const WEBMAIL_DEFAULT = "https://parsaint.group/webmail";   // Parsa International Group corporate mailbox (cPanel); the login form opens there
+const webmailUrl = () => { const u=String((S.settings&&S.settings.webmail_url)||"").trim(); return /^https:\/\//i.test(u)?u:WEBMAIL_DEFAULT; };
+const webmailLink = cls => `<a class="btn ${cls}" href="${esc(webmailUrl())}" target="_blank" rel="noopener noreferrer">رفتن به پرتال ایمیل شرکتی (Parsa International Group)</a>`;
+const webmailBar = () => `<div class="toolbar">${webmailLink("sig")}<span class="meta">پیش‌نویس ایمیل شرکا در Drafts همین وب‌میل ذخیره می‌شود؛ پس از ورود با حساب info@parsaint.group آن را بازبینی و ارسال کنید.</span></div>`;
 VIEWS["market.overseas"] = mk(t=>(t.market||"international")==="international"&&t.line!=="web");
-{ const _mi=VIEWS["market.iran"], _mo=VIEWS["market.overseas"]; VIEWS["market.iran"]=()=>companyDocsStrip("ppt")+_mi(); VIEWS["market.overseas"]=()=>companyDocsStrip("parsa")+_mo(); }
+{ const _mi=VIEWS["market.iran"], _mo=VIEWS["market.overseas"]; VIEWS["market.iran"]=()=>companyDocsStrip("ppt")+_mi(); VIEWS["market.overseas"]=()=>webmailBar()+companyDocsStrip("parsa")+_mo(); }
 VIEWS["market.web"] = () => {
   const list = S.m.tenders.filter(t=>t.line==="web"&&ACTIVE.has(t.status)&&!owned(t.id)).filter(t=>match(t.title,t.country));
   const leads = S.m.leads.filter(l=>!owned("ld_"+l.id)&&match(l.name,l.activity,l.city));
@@ -869,14 +886,30 @@ VIEWS["bpms.myday"] = () => {
   const mine=S.tasks.filter(t=>t.assignee===S.me.id&&t.status!=="approved");
   const rep=S.myReports.find(r=>r.date===today());
   return `<div class="grid2">
-   <div class="card"><h3>حضور امروز – ${faDate(today())}</h3><p class="note">روزهای حضور شما: ${esc((me.office_days||[]).map(d=>(WEEKDAYS.find(w=>w[0]===d)||[])[1]).join("، "))}. هر روز حضور: ۸ ساعت کار + ۱ ساعت استراحت.</p>
+   <div class="card"><h3>حضور امروز – ${faDate(today())}</h3><p class="note">روزهای حضور شما: ${esc((me.office_days||[]).map(d=>(WEEKDAYS.find(w=>w[0]===d)||[])[1]).join("، "))}. هر روز حضور: ۸ ساعت کار + ۱ ساعت استراحت. ثبت ورود و خروج فقط با موقعیت مکانی (GPS گوشی) و داخل محدوده‌ی شرکت ممکن است.</p>
     <div class="row"><button class="btn" data-act="checkin" ${att.in?"disabled":""}>ثبت ورود ${att.in?`(${att.in})`:""}</button><button class="btn ghost" data-act="checkout" ${!att.in||att.out?"disabled":""}>ثبت خروج ${att.out?`(${att.out})`:""}</button></div>
-    ${hours!=null?`<p>ساعت کار خالص: <b class="mono">${hours}</b> از ۸</p>`:""}</div>
+    ${att.in_geo?`<p class="meta">فاصله از دفتر هنگام ورود: ${faNum(att.in_geo.dist)} متر (دقت ±${faNum(att.in_geo.acc)})</p>`:""}${hours!=null?`<p>ساعت کار خالص: <b class="mono">${hours}</b> از ۸</p>`:""}</div>
    <div class="card"><h3>گزارش عملکرد امروز</h3>${rep?`<p>${light(rep.score)}</p><p>${esc(rep.feedback||"")}</p>`:`<p class="note">در پایان روز، کارهای انجام‌شده را بنویسید. Claude با سخت‌گیری از ۱۰۰ نمره می‌دهد.</p><button class="btn sig" data-act="report-new">ثبت گزارش عملکرد</button>`}</div>
   </div><h3>تسک‌های من</h3>`+taskTable(mine);
 };
 const toMin = t => { const [h,m]=(t||"0:0").split(":").map(Number); return h*60+m; };
 const nowHM = () => new Date().toTimeString().slice(0,5);
+// ---- location-verified attendance: entry/exit only from a phone's GPS inside the office radius
+const GEO_MAX_ACC = 150;      // metres; coarse fixes (desktop / IP / Wi-Fi guesses) are rejected
+const GEO_DEF_RADIUS = 200;   // metres, used when the company settings give no radius
+function distM(a,b,c,d){ const R=6371000,r=x=>x*Math.PI/180, dl=r(c-a), dn=r(d-b), h=Math.sin(dl/2)**2+Math.cos(r(a))*Math.cos(r(c))*Math.sin(dn/2)**2; return 2*R*Math.asin(Math.sqrt(h)); }
+function getFix(){ return new Promise((ok,no)=>{ if(!navigator.geolocation) return no({code:0}); navigator.geolocation.getCurrentPosition(p=>ok({lat:p.coords.latitude,lng:p.coords.longitude,acc:Math.round(p.coords.accuracy||0)}),no,{enableHighAccuracy:true,timeout:20000,maximumAge:0}); }); }
+// returns {lat,lng,acc,dist} when the member is inside the office, else null after telling them why
+async function officeFix(){
+  const st=S.settings, lat=Number(st.office_lat), lng=Number(st.office_lng), rad=Number(st.office_radius)||GEO_DEF_RADIUS;
+  if(!st.office_lat||!st.office_lng||isNaN(lat)||isNaN(lng)){ toast("موقعیت دفتر هنوز ثبت نشده است؛ مدیر باید در «مشخصات شرکت» مختصات دفتر را وارد کند."); return null; }
+  toast("در حال دریافت موقعیت مکانی شما …");
+  let f; try{ f=await getFix(); }catch(e){ toast(e&&e.code===1?"دسترسی به موقعیت مکانی مسدود است. GPS گوشی و اجازه‌ی مرورگر را فعال کنید و دوباره تلاش کنید.":"موقعیت مکانی دریافت نشد. با گوشی و در فضای باز یا کنار پنجره تلاش کنید."); return null; }
+  if(f.acc>GEO_MAX_ACC){ toast(`دقت موقعیت کافی نیست (±${faNum(f.acc)} متر). ثبت فقط با GPS گوشی ممکن است؛ GPS را روشن کنید و دوباره تلاش کنید.`); return null; }
+  const dist=Math.round(distM(f.lat,f.lng,lat,lng));
+  if(dist>rad+f.acc){ toast(`شما حدود ${faNum(dist)} متر از دفتر فاصله دارید؛ ثبت ورود و خروج فقط داخل محدوده‌ی شرکت (${faNum(rad)} متر) ممکن است.`); return null; }
+  return {...f,dist};
+}
 function taskTable(list){
   return table(["تسک","تیم","مسئول","تعریف‌کننده","مهلت","اولویت","وضعیت",""], list.map(t=>`<tr>${td("تسک",`${esc(t.title)}${t.desc?`<br><span class="meta">${esc(t.desc)}</span>`:""}`,"t")}${td("تیم",esc(TEAMS[t.team]||"—"))}${td("مسئول",esc(memberName(t.assignee)))}${td("تعریف‌کننده",esc(memberName(t.created_by)))}${td("مهلت",t.due?`<span class="${t.due<today()&&!["done","approved"].includes(t.status)?"p-bad":""}">${faDate(t.due)}</span>`:"—")}${td("اولویت",esc(PRIORITY[t.priority]||"—"))}${td("وضعیت",`<span class="pill ${t.status==="approved"?"p-ok":t.status==="done"?"p-info":t.status==="doing"?"p-warn":"p-mute"}">${esc(TASK_ST[t.status])}</span>`)}
    ${td("",[t.assignee===S.me.id&&t.status==="todo"?`<button class="btn sm ghost" data-act="task-st" data-id="${t.id}" data-st="doing">شروع</button>`:"",t.assignee===S.me.id&&t.status==="doing"?`<button class="btn sm" data-act="task-st" data-id="${t.id}" data-st="done">انجام شد</button>`:"",(t.created_by===S.me.id||isAdmin())&&t.status==="done"?`<button class="btn sm sig" data-act="task-st" data-id="${t.id}" data-st="approved">تأیید</button>`:"",taskCan(t)?`<button class="btn sm ghost" data-act="task-edit" data-id="${t.id}">ویرایش</button>`:""].join(" "))}</tr>`), "تسکی وجود ندارد.");
@@ -1532,11 +1565,12 @@ function registerForm(first=false){
 }
 function companyForm(){
   const st=S.settings;
-  openForm({title:"مشخصات شرکت",values:st,fields:[{k:"name_fa",label:"نام شرکت"},{k:"name_en",label:"نام لاتین",dir:"ltr"},{k:"reg_no",label:"شماره‌ی ثبت شرکت"},{k:"national_id",label:"شناسه‌ی ملی"},{k:"address",label:"نشانی"},{k:"phone",label:"تلفن",dir:"ltr"},
+  openForm({title:"مشخصات شرکت",values:st,extra:`<div class="card" style="margin-bottom:8px"><b>محدوده‌ی ثبت ورود و خروج</b><p class="note">اعضا فقط با GPS گوشی و داخل این محدوده می‌توانند ورود و خروج ثبت کنند. اگر اکنون در دفتر هستید با دکمه‌ی زیر مختصات را پر کنید.</p><button class="btn sm sig" type="button" data-act="office-here">استفاده از موقعیت فعلی من</button></div>`,fields:[{k:"webmail_url",label:"آدرس پرتال ایمیل شرکتی (وب‌میل)",dir:"ltr",hint:"با https شروع شود؛ پیش‌فرض https://parsaint.group/webmail"},{k:"office_lat",label:"عرض جغرافیایی دفتر",dir:"ltr"},{k:"office_lng",label:"طول جغرافیایی دفتر",dir:"ltr"},{k:"office_radius",label:"شعاع مجاز (متر)",dir:"ltr",hint:"پیش‌فرض ۲۰۰ متر"},{k:"name_fa",label:"نام شرکت"},{k:"name_en",label:"نام لاتین",dir:"ltr"},{k:"reg_no",label:"شماره‌ی ثبت شرکت"},{k:"national_id",label:"شناسه‌ی ملی"},{k:"address",label:"نشانی"},{k:"phone",label:"تلفن",dir:"ltr"},
    {k:"ceo_member",label:"مدیرعامل",type:"select",options:Object.fromEntries([["","—"],...S.members.map(m=>[m.id,m.full_name])])},{k:"intl_name",label:"هویت بین‌المللی – نام شرکت (برای پیشنهادهای خارجی)",dir:"ltr",value:INTL_DEFAULT.name},{k:"intl_address",label:"هویت بین‌المللی – نشانی",dir:"ltr",value:INTL_DEFAULT.address},{k:"intl_website",label:"وب‌سایت",dir:"ltr",value:INTL_DEFAULT.website},{k:"intl_email",label:"ایمیل رسمی",dir:"ltr",value:INTL_DEFAULT.email},{k:"intl_signatory",label:"امضاکننده‌ی نامه‌های بین‌المللی",dir:"ltr",value:INTL_DEFAULT.signatory},{k:"intl_title",label:"سمت امضاکننده",dir:"ltr",value:INTL_DEFAULT.title},{k:"logo",label:"لوگوی شرکت",type:"file"},{k:"ceo_sig",label:"تصویر امضای مدیرعامل",type:"file"}],
    onSave: async v => { const {logo,ceo_sig,...rest}=v; const out={...st,...rest};
      if(logo){const id=await uploadImage(logo); if(id) out.logo_asset=id;}
      if(ceo_sig){const id=await uploadImage(ceo_sig); if(id) out.ceo_sig_asset=id;}
+     for(const k of ["office_lat","office_lng","office_radius"]){ const n=parseFloat(String(out[k]??"").replace(",",".")); if(isNaN(n)) delete out[k]; else out[k]=n; }
      return save("settings/company",out,"مشخصات شرکت ذخیره شد"); }});
 }
 
@@ -2585,7 +2619,7 @@ const TOUR = [
  {mod:"erp",sub:"clients",title:"مشتریان و قراردادها",text:"قیف مشتری: معرفی ← دمو با داده‌ی مصنوعی ← قرارداد اولیه ← داده‌ی واقعی ← ارتقای TRL ← قرارداد اصلی. برای هر مشتری ارزش قرارداد و اقدام بعدی را ثبت کنید."},
  {mod:"erp",sub:"backup",title:"پشتیبان‌گیری",text:"فقط مدیران: دریافت فایل کامل JSON و CSV هر مجموعه. هر هفته یک بار پشتیبان بگیرید؛ در غیر این صورت هشدار می‌آید."},
  {mod:"bpms",title:"BPMS – کار روزانه",text:"فرایند روزانه‌ی هر عضو: ورود، تسک‌ها، خروج، گزارش عملکرد. هر روز حضور ۸ ساعت کار خالص به‌علاوه‌ی ۱ ساعت استراحت است."},
- {mod:"bpms",sub:"myday",title:"روز من",text:"ورود و خروج امروز را اینجا ثبت کنید، ساعت کار خالص را ببینید، تسک‌های بازتان را بررسی کنید و گزارش عملکرد امروز را بنویسید."},
+ {mod:"bpms",sub:"myday",title:"روز من",text:"ورود و خروج امروز را اینجا ثبت کنید؛ ثبت فقط با موقعیت مکانی (GPS گوشی) و داخل محدوده‌ی شرکت ممکن است، پس GPS را روشن کنید و اجازه‌ی موقعیت را به مرورگر بدهید. ساعت کار خالص را ببینید، تسک‌های بازتان را بررسی کنید و گزارش عملکرد امروز را بنویسید."},
  {mod:"bpms",sub:"board",title:"تخته‌ی اسکرام (Agile)",text:"مدیریت کار در iPetro بر پایه‌ی روش چابک (Agile) و چارچوب Scrum است. کار اسپرینت جاری در سه ستون: جهت انجام، در حال انجام، انجام شده. کارت را بکشید و رها کنید یا از دکمه‌های ‹ › استفاده کنید. روی هر کارت امتیاز، مسئول و مهلت هست. بالای تخته هدف اسپرینت و نمودار Burndown و پایین آن Daily Scrum تیم را می‌بینید. بیش از ۳ تسک هم‌زمان برای یک نفر هشدار WIP می‌دهد."},
  {mod:"bpms",sub:"backlog",title:"بک‌لاگ و برنامه‌ریزی",text:"فهرست مرتب‌شده‌ی همه‌ی کارهای آینده. هر آیتم را با امتیاز داستان (۱، ۲، ۳، ۵، ۸، ۱۳) برآورد کنید، بعد در برنامه‌ریزی اسپرینت آن را از لیست «به اسپرینت ببر» به یک اسپرینت بدهید. جدول بالا نشان می‌دهد چند امتیاز متعهد شده‌اید و میانگین سرعت تیم چقدر است."},
  {mod:"bpms",sub:"sprints",title:"اسپرینت‌ها",text:"هر اسپرینت یک بازه‌ی ثابت (معمولاً دو هفته) با هدف مشخص است. مدیر تیم اسپرینت را می‌سازد، شروع و در پایان می‌بندد؛ کارهای ناتمام به بک‌لاگ یا اسپرینت بعد می‌روند. سرعت تیم و بازنگری (Retrospective) هر اسپرینت اینجا ثبت می‌شود."},
@@ -2595,7 +2629,7 @@ const TOUR = [
  {mod:"bpms",sub:"teams",title:"تیم‌ها",text:"سه تیم شرکت (مالی، اداری، هوش مصنوعی) با اعضا، تسک‌های باز و وظایف هر تیم."},
  {mod:"bpms",sub:"process",title:"فرایندها",text:"نمودار فرایند اصلی کسب‌وکار، فرایند نامه و فرایند روزانه‌ی هر عضو."},
  {mod:"bpms",sub:"calendar",title:"تقویم",text:"مهلت مناقصه‌ها، رویدادها، اقدام‌های بعدی، تسک‌ها، سررسیدهای مالی و پیگیری نامه‌ها در یک فهرست زمانی. با «فقط موارد من» فیلتر کنید و فایل ICS را به تقویم گوشی ببرید."},
- {mod:"bpms",sub:"members",title:"اعضا و ثبت‌نام",text:"مشخصات خودتان را هر زمان ویرایش کنید: روزهای حضور، ایمیل، شناسه‌ی تلگرام برای اعلان موبایل و تصویر امضا. مدیر مشخصات شرکت، لوگو و هویت بین‌المللی را هم از همین‌جا تنظیم می‌کند."},
+ {mod:"bpms",sub:"members",title:"اعضا و ثبت‌نام",text:"مشخصات خودتان را هر زمان ویرایش کنید: روزهای حضور، ایمیل، شناسه‌ی تلگرام برای اعلان موبایل و تصویر امضا. مدیر مشخصات شرکت، لوگو، هویت بین‌المللی و مختصات و شعاع دفتر (برای ثبت ورود و خروج با موقعیت مکانی) را هم از همین‌جا تنظیم می‌کند."},
  {mod:"letters",title:"Letters – نامه‌نگاری",text:"ساخت نامه‌ی رسمی روی سربرگ و پیگیری نامه‌های پیشین."},
  {mod:"letters",sub:"new",title:"نامه‌ی جدید",text:"گیرنده، موضوع و متن را بنویسید؛ سربرگ، شماره و تاریخ خودکار است و فایل Word آماده‌ی ارسال می‌شود. هویت فرستنده را انتخاب کنید: ایران (فارسی) یا بین‌المللی (انگلیسی، Parsa International Group). مسئول دفتر و مدیرعامل از «مشاهده و امضا» امضا می‌کنند."},
  {mod:"letters",sub:"archive",title:"پیگیری و بایگانی نامه‌ها",text:"نامه‌هایی که قبلاً بدون ایجنت فرستاده شده‌اند. برای هر نامه مرحله، آخرین وضعیت و اقدام بعدی ثبت می‌شود؛ نامه‌ای که بیش از ۱۴ روز پیگیری نشده یا اقدامش سررسید شده علامت می‌خورد."},
@@ -2605,7 +2639,7 @@ const TOUR = [
  {mod:"patent",sub:"products",title:"محصولات ریپو",text:"محصولات به تفکیک TRL، حوزه، لینک ریپو، شمار اختراع‌های ما و نتیجه‌ی بررسی قابلیت ثبت."},
  {mod:"articles",title:"Articles – مقاله‌ها",text:"فهرست ژورنال‌ها، ویژه‌شماره‌ها و کنفرانس‌هایی که برای ارسال مقاله در حوزه‌های فعالیت ما مناسب‌اند و ددلاینشان نگذشته است. برای هر مورد ایمپکت فاکتور، ددلاین، جزئیات، حضوری یا آنلاین بودن ارائه و کشور و شهر برگزارکننده آمده است. با فیلتر حوزه، نوع و نحوه‌ی ارائه جست‌وجو کنید؛ ردیف‌های «تأیید شود» را پیش از ارسال در سایت رسمی بررسی کنید و ردیف تازه را خودتان اضافه کنید. دکمه‌ی «چکیده (Word)» در هر ردیف چکیده‌ی آن مقصد را طبق قالب همان ژورنال یا کنفرانس به‌صورت فایل Word می‌دهد (صفحه‌ی اول متن چکیده، صفحه‌ی دوم برگه‌ی داخلی با ددلاین، قواعد و کارهای پیش از ثبت) و «همه‌ی چکیده‌ها (ZIP)» همه را یک‌جا. جاهای [داخل کروشه] هنوز اندازه‌گیری نشده‌اند؛ پیش از ارسال با نتایج واقعی پر شوند، محدودیت واژه در راهنمای نویسندگان دوباره دیده شود و وکیل ثبت اختراع متن را بازبینی کند."},
  {sel:"#bell",title:"زنگ اعلان",text:"تسک‌های سپرده‌شده به شما، اقدام‌های بعدی و مهلت‌های نزدیک پروژه‌هایتان، پیگیری نامه‌ها و گزارش‌های ثبت‌نشده اینجا می‌آید. عدد قرمز تعداد اعلان‌های خوانده‌نشده است."},
- {title:"شروع کنید",text:"سه کار اول: ۱) از BPMS ← روز من ورود را ثبت کنید. ۲) از Market یک فرصت مرتبط با تخصص‌تان را با «مسئولیت را می‌گیرم» بردارید. ۳) پایان روز گزارش عملکرد بنویسید. هر زمان خواستید از «راهنما» همین آموزش را دوباره ببینید یا با «راهنمای PDF» فایل کامل راهنمای iPetro را دریافت کنید."}
+ {title:"شروع کنید",text:"سه کار اول: ۱) از BPMS ← روز من، با گوشی و داخل محدوده‌ی شرکت ورود را ثبت کنید. ۲) از Market یک فرصت مرتبط با تخصص‌تان را با «مسئولیت را می‌گیرم» بردارید. ۳) پایان روز گزارش عملکرد بنویسید. هر زمان خواستید از «راهنما» همین آموزش را دوباره ببینید یا با «راهنمای PDF» فایل کامل راهنمای iPetro را دریافت کنید."}
 ];
 function tourHighlight(){
   document.querySelectorAll(".tour-hl").forEach(el=>el.classList.remove("tour-hl"));
@@ -2761,8 +2795,9 @@ document.addEventListener("click", async e => {
     case "sprint-close": sprintClose(id); break;
     case "sprint-retro": retroForm(id); break;
     case "goto": S.mod=b.dataset.mod; S.sub=b.dataset.sub; S.forceFull=true; render(); break;
-    case "checkin": await save(`attendance/${S.me.id}/days/${today()}`,{in:nowHM(),break_min:60},"ورود ثبت شد"); break;
-    case "checkout": { const att=S.myAtt.find(x=>x.id===today())||{}; await save(`attendance/${S.me.id}/days/${today()}`,{...att,out:nowHM()},"خروج ثبت شد"); break; }
+    case "checkin": { if(b.disabled) break; b.disabled=true; try{ const g=await officeFix(); if(g) await save(`attendance/${S.me.id}/days/${today()}`,{in:nowHM(),break_min:60,in_geo:{lat:g.lat,lng:g.lng,acc:g.acc,dist:g.dist}},"ورود ثبت شد"); } finally{ b.disabled=false; } break; }
+    case "checkout": { if(b.disabled) break; b.disabled=true; try{ const g=await officeFix(); if(g){ const att=S.myAtt.find(x=>x.id===today())||{}; await save(`attendance/${S.me.id}/days/${today()}`,{...att,out:nowHM(),out_geo:{lat:g.lat,lng:g.lng,acc:g.acc,dist:g.dist}},"خروج ثبت شد"); } } finally{ b.disabled=false; } break; }
+    case "office-here": { try{ const f=await getFix(); $("#f_office_lat").value=f.lat.toFixed(6); $("#f_office_lng").value=f.lng.toFixed(6); toast(`موقعیت فعلی در فرم قرار گرفت (دقت ±${faNum(f.acc)} متر)؛ برای اعمال ذخیره کنید.`); }catch(e){ toast("موقعیت دریافت نشد؛ دسترسی GPS را بررسی کنید."); } break; }
     case "report-new": reportForm(b.dataset.date); break;
     case "report-view": reportDetail(b.dataset.m,b.dataset.d); break;
     case "ra-csv": reportsCsv(); break;
@@ -2802,7 +2837,7 @@ document.addEventListener("click", async e => {
   }
 });
 
-document.addEventListener("input", e => { const el=e.target.closest("[data-c]"); if(!el) return;
+document.addEventListener("input", e => { if(e.target.id==="ipTo"){ const a=$("#ipMailto"); if(a) a.href=a.href.replace(/^mailto:[^?]*/,"mailto:"+encodeURIComponent(e.target.value.trim())); return; } const el=e.target.closest("[data-c]"); if(!el) return;
   const d=getDraft(); d[el.dataset.c]=el.value; if(el.dataset.c==="number") d.numAuto=false;
   if(el.dataset.c==="identity"){ if(d.numAuto) d.number=nextLetterNo(d.identity,d.date); S.forceFull=true; renderView(); return; }
   if(el.dataset.c==="date"&&d.numAuto){ d.number=nextLetterNo(d.identity,d.date); const nf=$("[data-c=number]"); if(nf) nf.value=d.number; }

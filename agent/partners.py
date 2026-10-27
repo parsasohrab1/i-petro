@@ -10,7 +10,7 @@ import json
 from datetime import datetime
 from urllib.parse import urlparse
 
-from . import mailbox
+from . import contact_email, mailbox
 from .config import DATA_DIR, env
 
 STATE_FILE = DATA_DIR / "partners.json"
@@ -110,6 +110,9 @@ def scout(cfg, analyst, state, open_tenders, use_mail, log):
             key = _key(co["website"], co["name"])
             if key in state["companies"]:
                 continue
+            found, src = contact_email.find_email(co.get("website", ""), log)
+            if found:   # the address read from the company's own site wins over whatever the research claimed
+                co["email"], co["email_source"] = found, src
             record = {**co, "country": country, "status": "drafted", "found": datetime.now().date().isoformat()}
             body = co["body"].rstrip() + "\n\n" + DIVISION_OF_WORK
             cc = (cfg.get("mail") or {}).get("partner_cc") or env("PARTNER_CC")
