@@ -573,7 +573,7 @@ function ipOpen(tid,tab){
      <div class="row" style="margin-top:8px;gap:8px;flex-wrap:wrap"><button class="btn sm sig" data-act="ip-copy">کپی متن</button><button class="btn sm sig" data-act="ip-webmail" data-t="${esc(lang)}">باز کردن در وب‌میل شرکت (parsaint.group)</button><button class="btn sm ghost" data-act="ip-mailto" data-t="${esc(lang)}">برنامه‌ی ایمیل سیستم</button></div>`;
   }
   $("#layer").innerHTML=`<div class="scrim" data-act="close-scrim"><div class="drawer" style="max-width:980px;width:96vw;overflow:auto"><div class="row" style="align-items:center;gap:8px"><h3 style="flex:1;margin:0">شرکای تجاری – ${esc(cinfo?cinfo[0]:t.country)}</h3><button class="btn ghost sm" data-act="close">بستن</button></div>
-   <p class="meta">${esc(t.title)}<br>${esc(t.buyer||"")} · مهلت ${esc(t.deadline||"—")} ${drafted?`<span class="pill p-ok">درفت در ایمیل شرکت (info@parsaint.group) ساخته شد</span>`:""}</p>
+   <p class="meta">${esc(t.title)}<br>${esc(t.buyer||"")} · مهلت ${esc(t.deadline||"—")} ${drafted?`<span class="pill p-warn" title="این نشانه از تسک قدیمی Gmail مانده است؛ در ایمیل شرکت درفتی ساخته نشده">درفت قدیمی در Gmail (نه ایمیل شرکت)</span>`:""}</p>
    <div class="row" style="gap:6px;flex-wrap:wrap;margin:8px 0">${tabs.map(([k2,l])=>`<button class="btn sm ${S.ipTab===k2?"sig":"ghost"}" data-act="ip-tab" data-id="${esc(tid)}" data-t="${k2}">${esc(l)}</button>`).join("")}</div>${body}</div></div>`;
 }
 VIEWS["market.partners"] = () => {
