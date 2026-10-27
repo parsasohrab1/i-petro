@@ -544,6 +544,9 @@ function ipCompose(t,lang){
   return {subject:f(T.sub), body:[f(T.g),"",f(T.p1),"",f(T.p2),"",f(T.p3),"",f(T.p4),"",sig].join("\n")};
 }
 const partnerBtn = t => (ipIsIntl(t)&&isAdmin()) ? ` <button class="btn sm sig" data-act="ip-open" data-id="${esc(t.id)}">شرکای تجاری</button>` : "";
+const partnerEmail = x => String((x&&(x.email||x.public_contact))||"").trim();
+// recipient for the draft: the address the agent read from the partner's own website (tender partners first, then the country list)
+function ipRecipient(t){ const k=ipKey(t), rec=(S.ip.countries||{})[k]||{}; return String(t.suggested_to||"").trim()||[...(t.partners||[]),...(rec.partners||[])].map(partnerEmail).find(Boolean)||""; }
 function ipLangs(t){ const k=ipKey(t); return ["en",...(k?IP_C[k][1]:[])]; }
 function ipOpen(tid,tab){
   const t=S.m.tenders.find(x=>x.id===tid); if(!t) return;
@@ -555,13 +558,13 @@ function ipOpen(tid,tab){
   if(S.ipTab==="partners"){
     body=`<p class="note">شرکت‌هایی که در ${esc(cinfo?cinfo[0]:t.country)} امکان همکاری با آن‌ها وجود دارد: شریک محلی که سابقه، ثبت شرکت و مدارک مناقصه را دارد و ما فناوری، محصول و کدنویسی را ارائه می‌کنیم. فهرست از جست‌وجوی روزانه بهبود می‌یابد؛ پیش از تماس، علاقه و ظرفیت هر شرکت در سایت رسمی‌اش تأیید شود.</p>`+
      (rec.note?`<p class="banner">${esc(rec.note)}</p>`:"")+
-     (partners.length?table(["شرکت","شهر","نوع","چرا مناسب است","منبع"],partners.map(x=>`<tr>${td("شرکت",`<b>${esc(x.name)}</b>${x.verified===false?' <span class="pill p-warn">تأیید شود</span>':""}`,"t")}${td("شهر",esc(x.city||"—"))}${td("نوع",esc(x.type||"—"))}${td("چرا",esc(x.why||""))}${td("منبع",x.url?link(x.url,"لینک"):"—")}</tr>`),"شریکی ثبت نشده است."):`<p class="empty">برای این کشور هنوز شریکی ثبت نشده است. جست‌وجوی روزانه تکمیل می‌کند، یا تسک زیر را بزنید.</p>`)+
+     (partners.length?table(["شرکت","شهر","نوع","ایمیل","چرا مناسب است","منبع"],partners.map(x=>`<tr>${td("شرکت",`<b>${esc(x.name)}</b>${x.verified===false?' <span class="pill p-warn">تأیید شود</span>':""}`,"t")}${td("شهر",esc(x.city||"—"))}${td("نوع",esc(x.type||"—"))}${td("ایمیل",partnerEmail(x)?`<a class="mono" href="mailto:${esc(partnerEmail(x))}">${esc(partnerEmail(x))}</a>`:"—")}${td("چرا",esc(x.why||""))}${td("منبع",x.url?link(x.url,"لینک"):"—")}</tr>`),"شریکی ثبت نشده است."):`<p class="empty">برای این کشور هنوز شریکی ثبت نشده است. جست‌وجوی روزانه تکمیل می‌کند، یا تسک زیر را بزنید.</p>`)+
      `<div class="row" style="margin-top:8px"><button class="btn sm sig" data-act="ip-task" data-id="${esc(tid)}">📥 ثبت در صف: پیدا کردن شریک برای Claude</button></div>`;
   } else {
     const lang=S.ipTab.slice(5), m=ipCompose(t,lang), rtl=IP_RTL.has(lang);
-    body=`<p class="note">پیش‌نویس ایمیل به زبان ${esc(IP_L[lang])}${lang!=="en"?" (زبان رسمی کشور) ":" "}برای ارسال از ایمیل شرکت. گیرنده را از وب‌سایت رسمی شریک بنویسید. ${lang!=="en"?"ترجمه‌ی اولیه است؛ پیش از ارسال یک فرد بومی بازبینی کند.":""}</p>
-     <div class="card"><div class="meta">موضوع</div><p dir="${rtl?"rtl":"ltr"}" style="margin:0 0 8px"><b>${esc(m.subject)}</b></p><textarea id="ipBody" readonly dir="${rtl?"rtl":"ltr"}" style="width:100%;min-height:340px;font-size:14px">${esc(m.body)}</textarea></div>
-     <div class="row" style="margin-top:8px;gap:8px;flex-wrap:wrap"><button class="btn sm sig" data-act="ip-copy">کپی متن</button><a class="btn sm ghost" href="mailto:?subject=${encodeURIComponent(m.subject)}&body=${encodeURIComponent(m.body)}">باز کردن در برنامه‌ی ایمیل</a></div>`;
+    body=`<p class="note">پیش‌نویس ایمیل به زبان ${esc(IP_L[lang])}${lang!=="en"?" (زبان رسمی کشور) ":" "}برای ارسال از ایمیل شرکت. ایمیل گیرنده را ایجنت از وب‌سایت رسمی شریک می‌خواند و در کادر «گیرنده» می‌گذارد؛ اگر خالی بود از سایت شریک وارد کنید. ${lang!=="en"?"ترجمه‌ی اولیه است؛ پیش از ارسال یک فرد بومی بازبینی کند.":""}</p>
+     <div class="card"><div class="meta">گیرنده (شریک تجاری)</div><input id="ipTo" dir="ltr" value="${esc(ipRecipient(t))}" placeholder="ایمیل شریک از وب‌سایت رسمی‌اش" style="width:100%;margin:2px 0 8px"><div class="meta">موضوع</div><p dir="${rtl?"rtl":"ltr"}" style="margin:0 0 8px"><b>${esc(m.subject)}</b></p><textarea id="ipBody" readonly dir="${rtl?"rtl":"ltr"}" style="width:100%;min-height:340px;font-size:14px">${esc(m.body)}</textarea></div>
+     <div class="row" style="margin-top:8px;gap:8px;flex-wrap:wrap"><button class="btn sm sig" data-act="ip-copy">کپی متن</button><a class="btn sm ghost" id="ipMailto" href="mailto:${encodeURIComponent(ipRecipient(t))}?subject=${encodeURIComponent(m.subject)}&body=${encodeURIComponent(m.body)}">باز کردن در برنامه‌ی ایمیل</a></div>`;
   }
   $("#layer").innerHTML=`<div class="scrim" data-act="close-scrim"><div class="drawer" style="max-width:980px;width:96vw;overflow:auto"><div class="row" style="align-items:center;gap:8px"><h3 style="flex:1;margin:0">شرکای تجاری – ${esc(cinfo?cinfo[0]:t.country)}</h3><button class="btn ghost sm" data-act="close">بستن</button></div>
    <p class="meta">${esc(t.title)}<br>${esc(t.buyer||"")} · مهلت ${esc(t.deadline||"—")} ${drafted?`<span class="pill p-ok">درفت در Gmail ساخته شد</span>`:""}</p>
@@ -2762,7 +2765,7 @@ document.addEventListener("click", async e => {
   }
 });
 
-document.addEventListener("input", e => { const el=e.target.closest("[data-c]"); if(!el) return;
+document.addEventListener("input", e => { if(e.target.id==="ipTo"){ const a=$("#ipMailto"); if(a) a.href=a.href.replace(/^mailto:[^?]*/,"mailto:"+encodeURIComponent(e.target.value.trim())); return; } const el=e.target.closest("[data-c]"); if(!el) return;
   const d=getDraft(); d[el.dataset.c]=el.value; if(el.dataset.c==="number") d.numAuto=false;
   if(el.dataset.c==="identity"){ if(d.numAuto) d.number=nextLetterNo(d.identity,d.date); S.forceFull=true; renderView(); return; }
   if(el.dataset.c==="date"&&d.numAuto){ d.number=nextLetterNo(d.identity,d.date); const nf=$("[data-c=number]"); if(nf) nf.value=d.number; }
