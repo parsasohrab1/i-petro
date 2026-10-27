@@ -549,6 +549,18 @@ async function ipDrafts(t){
   try{ if(S.downloads) await S.downloads.save({filename:fn,data:blob}); else { const a=document.createElement("a"); a.href=URL.createObjectURL(blob); a.download=fn; a.click(); } toast(`${faNum(files.length)} درفت ساخته شد`+(noMail?` (${faNum(noMail)} شریک ایمیل ثبت‌شده ندارد؛ گیرنده را در وب‌میل پر کنید)`:"")+"."); }
   catch(err){ if(!err||err.code!=="declined") toast("دریافت فایل انجام نشد."); }
 }
+async function ipCopyText(text){
+  try{ await navigator.clipboard.writeText(text); return true; }catch(e){}
+  try{ const ta=document.createElement("textarea"); ta.value=text; ta.style.position="fixed"; ta.style.top="-1000px"; document.body.appendChild(ta); ta.select(); const ok=document.execCommand("copy"); ta.remove(); return ok; }catch(e){ return false; }
+}
+function ipEml(t,lang,to){
+  const m=ipCompose(t,lang), CRLF=String.fromCharCode(13,10);
+  const lines=["X-Unsent: 1",'From: "'+IP_FROM_NAME+'" <'+IP_FROM+">","To: "+to,"Cc: "+IP_CC,"Subject: "+ipHdr(m.subject),"MIME-Version: 1.0","Content-Type: text/plain; charset=utf-8","Content-Transfer-Encoding: base64","",(ipB64(m.body).match(/.{1,76}/g)||[]).join(CRLF)];
+  const blob=new Blob([lines.join(CRLF)],{type:"message/rfc822"});
+  const a=document.createElement("a"); a.href=URL.createObjectURL(blob);
+  a.download="partner-"+(lang||"en")+".eml"; document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(()=>URL.revokeObjectURL(a.href),8000);
+}
 const partnerBtn = t => (ipIsIntl(t)&&isAdmin()) ? ` <button class="btn sm sig" data-act="ip-open" data-id="${esc(t.id)}">شرکای تجاری</button>` : "";
 function ipLangs(t){ const k=ipKey(t); return ["en",...(k?IP_C[k][1]:[])]; }
 function ipOpen(tid,tab){
@@ -570,7 +582,8 @@ function ipOpen(tid,tab){
        <label style="flex:1;min-width:220px"><div class="meta">از (فرستنده)</div><input id="ipFrom" type="email" value="${esc(IP_FROM)}" readonly dir="ltr" style="width:100%"></label>
        <label style="flex:1;min-width:220px"><div class="meta">به (ایمیل شریک)</div><input id="ipTo" type="email" placeholder="partner@company.com" dir="ltr" style="width:100%"></label>
        <label style="flex:1;min-width:220px"><div class="meta">رونوشت (CC)</div><input id="ipCc" type="email" value="${esc(IP_CC)}" dir="ltr" style="width:100%"></label></div><div class="meta">موضوع</div><p dir="${rtl?"rtl":"ltr"}" style="margin:0 0 8px"><b>${esc(m.subject)}</b></p><textarea id="ipBody" readonly dir="${rtl?"rtl":"ltr"}" style="width:100%;min-height:340px;font-size:14px">${esc(m.body)}</textarea></div>
-     <div class="row" style="margin-top:8px;gap:8px;flex-wrap:wrap"><button class="btn sm sig" data-act="ip-copy">کپی متن</button><button class="btn sm sig" data-act="ip-webmail" data-t="${esc(lang)}">باز کردن در وب‌میل شرکت (parsaint.group)</button><button class="btn sm ghost" data-act="ip-mailto" data-t="${esc(lang)}">برنامه‌ی ایمیل سیستم</button></div>`;
+     <div class="row" style="margin-top:8px;gap:8px;flex-wrap:wrap"><button class="btn sm sig" data-act="ip-copy">کپی متن</button><button class="btn sm sig" data-act="ip-webmail" data-t="${esc(lang)}">باز کردن در وب‌میل شرکت (parsaint.group)</button><button class="btn sm ghost" data-act="ip-mailto" data-t="${esc(lang)}">برنامه‌ی ایمیل سیستم</button><button class="btn sm ghost" data-act="ip-eml" data-t="${esc(lang)}">دانلود درفت .eml</button></div>`;
+    if(lang==="en") body+=`<p class="meta">اگر دکمه‌ی «برنامه‌ی ایمیل سیستم» پنجره باز نکرد، متن بلندتر از حد لینک ویندوز است؛ همان دکمه متن را کپی می‌کند یا «دانلود درفت .eml» را بزنید و با دوبار کلیک در برنامه‌ی ایمیل بازش کنید.</p>`;
   }
   $("#layer").innerHTML=`<div class="scrim" data-act="close-scrim"><div class="drawer" style="max-width:980px;width:96vw;overflow:auto"><div class="row" style="align-items:center;gap:8px"><h3 style="flex:1;margin:0">شرکای تجاری – ${esc(cinfo?cinfo[0]:t.country)}</h3><button class="btn ghost sm" data-act="close">بستن</button></div>
    <p class="meta">${esc(t.title)}<br>${esc(t.buyer||"")} · مهلت ${esc(t.deadline||"—")} ${drafted?`<span class="pill p-warn" title="این نشانه از تسک قدیمی Gmail مانده است؛ در ایمیل شرکت درفتی ساخته نشده">درفت قدیمی در Gmail (نه ایمیل شرکت)</span>`:""}</p>
@@ -2700,13 +2713,23 @@ document.addEventListener("click", async e => {
     case "task-for": taskForm({assignee:b.dataset.m}); break;
     case "ip-open": ipOpen(id); break;
     case "ip-tab": ipOpen(id,b.dataset.t); break;
-    case "ip-webmail": case "ip-mailto": {
+    case "ip-webmail": case "ip-mailto": case "ip-eml": {
       const t=S.m.tenders.find(x=>x.id===S.ipTid); if(!t) break;
       const to=($("#ipTo")||{}).value?.trim()||"", cc=($("#ipCc")||{}).value?.trim()||IP_CC, ok=s=>/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(s);
       if(!ok(to)){ toast("ایمیل گیرنده (شریک) را وارد کنید."); ($("#ipTo")||{}).focus?.(); break; }
       const m=ipCompose(t,b.dataset.t), q=encodeURIComponent;
-      if(a==="ip-mailto") location.href=`mailto:${to}?cc=${q(cc)}&subject=${q(m.subject)}&body=${q(m.body)}`;
-      else { window.open(`${IP_WEBMAIL}?_task=mail&_action=compose&_to=${q(to)}&_cc=${q(cc)}&_subject=${q(m.subject)}&_body=${q(m.body)}`,"_blank","noopener"); toast("اگر متن در وب‌میل پر نشد، «کپی متن» را بزنید و در پیام بچسبانید."); }
+      if(a==="ip-eml"){ ipEml(t,b.dataset.t,to); toast("فایل .eml دانلود شد؛ با دوبار کلیک در برنامه‌ی ایمیل باز می‌شود."); break; }
+      if(a==="ip-mailto"){
+        const head=`mailto:${to}?cc=${q(cc)}&subject=${q(m.subject)}`, full=head+`&body=${q(m.body)}`;
+        const long=full.length>1800, copyP=long?ipCopyText(m.body):null;
+        location.href = long ? head : full;
+        if(long){ const copied=await copyP; toast(copied?"متن از حد لینک ویندوز بلندتر بود، پس کپی شد؛ در پنجره‌ی ایمیل Ctrl+V کنید.":"پنجره‌ی ایمیل باز شد ولی متن کپی نشد؛ «کپی متن» را بزنید."); }
+      } else {
+        const url=`${IP_WEBMAIL}?_task=mail&_action=compose&_to=${q(to)}&_cc=${q(cc)}&_subject=${q(m.subject)}&_body=${q(m.body)}`;
+        const w=window.open(url,"_blank");
+        if(w) w.opener=null;
+        else { const a2=document.createElement("a"); a2.href=url; a2.target="_blank"; a2.rel="noopener"; document.body.appendChild(a2); a2.click(); a2.remove(); toast("اگر پنجره باز نشد، مرورگر آن را مسدود کرده؛ «کپی متن» را بزنید و وب‌میل را دستی باز کنید."); }
+      }
       break; }
     case "ip-drafts": { const t=S.m.tenders.find(x=>x.id===id); if(!t) break; await ipDrafts(t); break; }
     case "ip-copy": { const el=$("#ipBody"); if(el){ el.focus(); el.select(); let ok=false; try{ ok=document.execCommand("copy"); }catch(e){} if(!ok){ try{ await navigator.clipboard.writeText(el.value); ok=true; }catch(e){} } toast(ok?"متن کپی شد.":"متن انتخاب شد؛ با Ctrl+C کپی کنید."); } break; }
