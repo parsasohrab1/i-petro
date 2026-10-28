@@ -919,6 +919,27 @@ async function officeFix(){
   if(dist>rad+f.acc){ toast(`شما حدود ${faNum(dist)} متر از دفتر فاصله دارید؛ ثبت ورود و خروج فقط داخل محدوده‌ی شرکت (${faNum(rad)} متر) ممکن است.`); return null; }
   return {...f,dist};
 }
+// ---------- office map picker (Leaflet + OpenStreetMap tiles): click to set the office point used for GPS check-in
+let leafletP=null;
+function loadLeaflet(){ if(window.L) return Promise.resolve(); if(leafletP) return leafletP;
+  leafletP=new Promise(res=>{ const l=document.createElement("link"); l.rel="stylesheet"; l.href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css"; document.head.appendChild(l);
+    const sc=document.createElement("script"); sc.src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"; sc.onload=()=>res(); sc.onerror=()=>res(); document.head.appendChild(sc); });
+  return leafletP; }
+const omapNum = id => { const v=parseFloat(String(($(id)||{}).value||"").replace(",",".")); return isNaN(v)?null:v; };
+function officeMapSet(lat,lng,pan){ const o=S.omap; if(!o||!window.L) return; o.marker.setLatLng([lat,lng]).addTo(o.map); const r=omapNum("#f_office_radius")||GEO_DEF_RADIUS; o.circle.setLatLng([lat,lng]).setRadius(r).addTo(o.map); if(pan) o.map.setView([lat,lng],17); }
+async function officeMapInit(el){
+  el.dataset.init="1"; el.innerHTML='<p class="meta" style="padding:10px">در حال بارگذاری نقشه …</p>'; await loadLeaflet();
+  if(!window.L||!document.body.contains(el)){ el.innerHTML='<p class="meta" style="padding:10px">نقشه بارگذاری نشد؛ مختصات را دستی یا با دکمه‌ی «استفاده از موقعیت فعلی من» وارد کنید.</p>'; return; }
+  el.innerHTML=""; const lat=omapNum("#f_office_lat"), lng=omapNum("#f_office_lng"), has=lat!=null&&lng!=null;
+  const map=L.map(el).setView(has?[lat,lng]:[35.7,51.4],has?17:5);
+  L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:19,attribution:"© OpenStreetMap"}).addTo(map);
+  S.omap={map,marker:L.marker([0,0]),circle:L.circle([0,0],{radius:GEO_DEF_RADIUS,color:"#d12a1f",weight:2,fillOpacity:.12})};
+  if(has) officeMapSet(lat,lng);
+  map.on("click",e=>{ $("#f_office_lat").value=e.latlng.lat.toFixed(6); $("#f_office_lng").value=e.latlng.lng.toFixed(6); officeMapSet(e.latlng.lat,e.latlng.lng); });
+  const rad=$("#f_office_radius"); if(rad) rad.addEventListener("input",()=>{ const a=omapNum("#f_office_lat"),b=omapNum("#f_office_lng"); if(a!=null&&b!=null) officeMapSet(a,b); });
+  setTimeout(()=>map.invalidateSize(),150);
+}
+new MutationObserver(()=>{ const el=document.getElementById("officeMap"); if(el&&!el.dataset.init) officeMapInit(el); }).observe(document.body,{childList:true,subtree:true});
 function taskTable(list){
   return table(["تسک","تیم","مسئول","تعریف‌کننده","مهلت","اولویت","وضعیت",""], list.map(t=>`<tr>${td("تسک",`${esc(t.title)}${t.desc?`<br><span class="meta">${esc(t.desc)}</span>`:""}`,"t")}${td("تیم",esc(TEAMS[t.team]||"—"))}${td("مسئول",esc(memberName(t.assignee)))}${td("تعریف‌کننده",esc(memberName(t.created_by)))}${td("مهلت",t.due?`<span class="${t.due<today()&&!["done","approved"].includes(t.status)?"p-bad":""}">${faDate(t.due)}</span>`:"—")}${td("اولویت",esc(PRIORITY[t.priority]||"—"))}${td("وضعیت",`<span class="pill ${t.status==="approved"?"p-ok":t.status==="done"?"p-info":t.status==="doing"?"p-warn":"p-mute"}">${esc(TASK_ST[t.status])}</span>`)}
    ${td("",[t.assignee===S.me.id&&t.status==="todo"?`<button class="btn sm ghost" data-act="task-st" data-id="${t.id}" data-st="doing">شروع</button>`:"",t.assignee===S.me.id&&t.status==="doing"?`<button class="btn sm" data-act="task-st" data-id="${t.id}" data-st="done">انجام شد</button>`:"",(t.created_by===S.me.id||isAdmin())&&t.status==="done"?`<button class="btn sm sig" data-act="task-st" data-id="${t.id}" data-st="approved">تأیید</button>`:"",taskCan(t)?`<button class="btn sm ghost" data-act="task-edit" data-id="${t.id}">ویرایش</button>`:""].join(" "))}</tr>`), "تسکی وجود ندارد.");
@@ -1575,7 +1596,7 @@ function registerForm(first=false){
 }
 function companyForm(){
   const st=S.settings;
-  openForm({title:"مشخصات شرکت",values:st,extra:`<div class="card" style="margin-bottom:8px"><b>محدوده‌ی ثبت ورود و خروج</b><p class="note">اعضا فقط با GPS گوشی و داخل این محدوده می‌توانند ورود و خروج ثبت کنند. اگر اکنون در دفتر هستید با دکمه‌ی زیر مختصات را پر کنید.</p><button class="btn sm sig" type="button" data-act="office-here">استفاده از موقعیت فعلی من</button></div>`,fields:[{k:"webmail_url",label:"آدرس پرتال ایمیل شرکتی (وب‌میل)",dir:"ltr",hint:"با https شروع شود؛ پیش‌فرض https://parsaint.group/webmail"},{k:"office_lat",label:"عرض جغرافیایی دفتر",dir:"ltr"},{k:"office_lng",label:"طول جغرافیایی دفتر",dir:"ltr"},{k:"office_radius",label:"شعاع مجاز (متر)",dir:"ltr",hint:"پیش‌فرض ۲۰۰ متر"},{k:"name_fa",label:"نام شرکت"},{k:"name_en",label:"نام لاتین",dir:"ltr"},{k:"reg_no",label:"شماره‌ی ثبت شرکت"},{k:"national_id",label:"شناسه‌ی ملی"},{k:"address",label:"نشانی"},{k:"phone",label:"تلفن",dir:"ltr"},
+  openForm({title:"مشخصات شرکت",values:st,extra:`<div class="card" style="margin-bottom:8px"><b>محدوده‌ی ثبت ورود و خروج</b><p class="note">اعضا فقط با GPS گوشی و داخل این محدوده می‌توانند ورود و خروج ثبت کنند. اگر اکنون در دفتر هستید با دکمه‌ی زیر مختصات را پر کنید.</p><button class="btn sm sig" type="button" data-act="office-here">استفاده از موقعیت فعلی من</button><p class="note" style="margin-top:8px">یا روی نقشه‌ی زیر در محل دفتر کلیک کنید؛ دایره، شعاع مجاز را نشان می‌دهد.</p><div id="officeMap" style="height:280px;border:1px solid var(--line);border-radius:8px;direction:ltr"></div></div>`,fields:[{k:"webmail_url",label:"آدرس پرتال ایمیل شرکتی (وب‌میل)",dir:"ltr",hint:"با https شروع شود؛ پیش‌فرض https://parsaint.group/webmail"},{k:"office_lat",label:"عرض جغرافیایی دفتر",dir:"ltr"},{k:"office_lng",label:"طول جغرافیایی دفتر",dir:"ltr"},{k:"office_radius",label:"شعاع مجاز (متر)",dir:"ltr",hint:"پیش‌فرض ۲۰۰ متر"},{k:"name_fa",label:"نام شرکت"},{k:"name_en",label:"نام لاتین",dir:"ltr"},{k:"reg_no",label:"شماره‌ی ثبت شرکت"},{k:"national_id",label:"شناسه‌ی ملی"},{k:"address",label:"نشانی"},{k:"phone",label:"تلفن",dir:"ltr"},
    {k:"ceo_member",label:"مدیرعامل",type:"select",options:Object.fromEntries([["","—"],...S.members.map(m=>[m.id,m.full_name])])},{k:"intl_name",label:"هویت بین‌المللی – نام شرکت (برای پیشنهادهای خارجی)",dir:"ltr",value:INTL_DEFAULT.name},{k:"intl_address",label:"هویت بین‌المللی – نشانی",dir:"ltr",value:INTL_DEFAULT.address},{k:"intl_website",label:"وب‌سایت",dir:"ltr",value:INTL_DEFAULT.website},{k:"intl_email",label:"ایمیل رسمی",dir:"ltr",value:INTL_DEFAULT.email},{k:"intl_signatory",label:"امضاکننده‌ی نامه‌های بین‌المللی",dir:"ltr",value:INTL_DEFAULT.signatory},{k:"intl_title",label:"سمت امضاکننده",dir:"ltr",value:INTL_DEFAULT.title},{k:"logo",label:"لوگوی شرکت",type:"file"},{k:"ceo_sig",label:"تصویر امضای مدیرعامل",type:"file"}],
    onSave: async v => { const {logo,ceo_sig,...rest}=v; const out={...st,...rest};
      if(logo){const id=await uploadImage(logo); if(id) out.logo_asset=id;}
@@ -2987,7 +3008,7 @@ document.addEventListener("click", async e => {
     case "mind-view": mindOwnerView(b.dataset.m); break;
     case "checkin": { if(mindGate("ثبت ورود")) break; if(b.disabled) break; b.disabled=true; try{ const g=await officeFix(); if(g) await save(`attendance/${S.me.id}/days/${today()}`,{in:nowHM(),break_min:60,in_geo:{lat:g.lat,lng:g.lng,acc:g.acc,dist:g.dist}},"ورود ثبت شد"); } finally{ b.disabled=false; } break; }
     case "checkout": { if(b.disabled) break; b.disabled=true; try{ const g=await officeFix(); if(g){ const att=S.myAtt.find(x=>x.id===today())||{}; await save(`attendance/${S.me.id}/days/${today()}`,{...att,out:nowHM(),out_geo:{lat:g.lat,lng:g.lng,acc:g.acc,dist:g.dist}},"خروج ثبت شد"); } } finally{ b.disabled=false; } break; }
-    case "office-here": { try{ const f=await getFix(); $("#f_office_lat").value=f.lat.toFixed(6); $("#f_office_lng").value=f.lng.toFixed(6); toast(`موقعیت فعلی در فرم قرار گرفت (دقت ±${faNum(f.acc)} متر)؛ برای اعمال ذخیره کنید.`); }catch(e){ toast("موقعیت دریافت نشد؛ دسترسی GPS را بررسی کنید."); } break; }
+    case "office-here": { try{ const f=await getFix(); $("#f_office_lat").value=f.lat.toFixed(6); $("#f_office_lng").value=f.lng.toFixed(6); officeMapSet(f.lat,f.lng,true); toast(`موقعیت فعلی در فرم قرار گرفت (دقت ±${faNum(f.acc)} متر)؛ برای اعمال ذخیره کنید.`); }catch(e){ toast("موقعیت دریافت نشد؛ دسترسی GPS را بررسی کنید."); } break; }
     case "report-new": if(mindGate("بارگذاری گزارش عملکرد")) break; reportForm(b.dataset.date); break;
     case "report-view": reportDetail(b.dataset.m,b.dataset.d); break;
     case "ra-csv": reportsCsv(); break;
