@@ -567,7 +567,7 @@ const ipKey = t => t.country in IP_C ? t.country : null;
 const ipShort = v => { let x=String(v||"").replace(/^[^–]{2,40}–[^–]{2,60}–\s*/,"").trim(); return x.length>120?x.slice(0,117).trim()+"…":x; };
 function ipCompose(t,lang,partner){
   const T=IP_T[lang]||IP_T.en, f=x=>String(x).replace(/\{co\}/g,IP_CO).replace(/\{project\}/g,ipShort(t.title)).replace(/\{buyer\}/g,t.buyer||"").replace(/\{deadline\}/g,t.deadline||"—").replace(/\{url\}/g,t.url||"");
-  const sig=T.sig+"\n"+ipSender(t.id)+"\n"+IP_CO+(lang==="en"?"\nTürkiye":"");
+  const sn=ipSender(t.id), sig=T.sig+"\n"+(sn===IP_CO?"":sn+"\n")+IP_CO+(lang==="en"?"\nTürkiye":"");   // no assignee: ipSender already returns the company name, so it must not be printed twice
   return {subject:f(T.sub), body:[(partner&&partner.name&&lang==="en")?"Dear "+partner.name+" team,":f(T.g),"",f(T.p1),"",f(T.p2),"",f(T.p3),"",f(T.p4),"",f(IP_REQ)+(lang==="en"?"":"\n(English)"),"",sig].join("\n")};
 }
 const ipB64 = str => { const u=new TextEncoder().encode(str); let b=""; u.forEach(c=>b+=String.fromCharCode(c)); return btoa(b); };
