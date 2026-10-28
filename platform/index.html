@@ -207,7 +207,7 @@ const logoSrc = () => S.settings.logo_asset ? blobUrl(S.settings.logo_asset) : D
 const S = {mod:"market", sub:"iran", q:"", db:null, user:null, assets:null, sample:null, downloads:null,
   me:{id:null,isOwner:false,canEdit:false}, canWrite:null,
   m:{tenders:[],events:[],investors:[],leads:[],partners:[]}, opsList:[],
-  settings:{}, members:[], tasks:[], letters:[], lettersArchive:[], lh:null, draft:null, archF:"all", ra:{member:null,from:"",to:""}, repLoaded:false, allLoaded:false, forceFull:false, products:[], patents:[], finance:[], clients:[], tracking:{}, schol:[], sp:{}, cdocs:{}, ip:{countries:{},drafts:{}}, ipTab:"partners", news:{items:[]}, bi:{list:[]}, arts:[], tn:[], tnF:{src:"",ai:false,dom:"",st:""}, artProd:{}, artSt:{}, artAcc:{ids:[]}, ct:[], artF:{field:"",mode:"",type:"",past:false},
+  settings:{}, members:[], tasks:[], letters:[], lettersArchive:[], lh:null, draft:null, archF:"all", ra:{member:null,from:"",to:""}, repLoaded:false, allLoaded:false, forceFull:false, products:[], patents:[], finance:[], clients:[], tracking:{}, schol:[], sp:{}, cdocs:{}, ip:{countries:{},drafts:{}}, ipTab:"partners", news:{items:[]}, bi:{list:[]}, arts:[], tn:[], tnF:{src:"",ai:false,dom:"",st:""}, artRec:{}, artProd:{}, artSt:{}, artAcc:{ids:[]}, ct:[], artF:{field:"",mode:"",type:"",past:false},
   myAtt:[], myReports:[], allReports:[], allAtt:[], loaded:false, sprints:[], boardMine:false, tour:null, got:new Set(), welcomed:false, calMine:false, calTypes:null, seenTasks:new Set()};
 try{const v=JSON.parse(localStorage.getItem("ppt-view")||"{}");if(v.mod&&SUBS[v.mod]){S.mod=v.mod;S.sub=SUBS[v.mod].some(x=>x[0]===v.sub)?v.sub:SUBS[v.mod][0][0]}}catch(e){}
 try{S.seenTasks=new Set(JSON.parse(localStorage.getItem("ppt-seen")||"[]"))}catch(e){}
@@ -271,6 +271,7 @@ function subscribe(){
   S.db.doc("settings/article_access").onSnapshot(d => { S.artAcc = d.exists ? d.data() : {ids:[]}; render(); }, ()=>{});   // {ids:[memberId]}: people the owner lets see the Articles tab
   if(isAdmin()) S.db.collection("finance/_portal/items").onSnapshot(q => { S.portal={}; q.docs.forEach(d=>S.portal[d.id]=d.data()); render(); }, ()=>{});   // submission-portal logins per venue (admin-only rule of "finance"; not part of backups)
   S.db.doc("settings/article_status").onSnapshot(d => { S.artSt = d.exists ? (d.data().map||{}) : {}; render(); }, ()=>{});
+  S.db.doc("settings/article_records").onSnapshot(d => { S.artRec = d.exists ? (d.data().map||{}) : {}; render(); }, ()=>{});   // {venueId:{ref,state,next,note,mail,at}} filled from the journals' e-mail replies
   S.db.doc("settings/article_forms").onSnapshot(d => { S.artForms = d.exists ? (d.data().map||{}) : {}; render(); }, ()=>{});   // {venueId:{name,deadline,url}}; the Word files sit in settings/artform_<venueId> as base64
   S.db.doc("settings/article_abstracts").onSnapshot(d => { S.absDb = d.exists ? (d.data().map||{}) : {}; render(); }, ()=>{});   // {venueId: {title, abstract, keywords[], profile, product:{name,repo,new}, draft_note}}
   S.db.doc("settings/article_calls").onSnapshot(d => { S.calls = d.exists ? (d.data().map||{}) : {}; render(); paintBell(); }, ()=>{});   // {venueId: {…venue fields, found, product_hint, ack}} written by the weekly CFP job
@@ -2464,11 +2465,13 @@ function artView(page){
      ${td("نام",`${a.url?link(a.url,a.name):esc(a.name)}<br><span class="pill p-mute">${esc(ART_TYPE[a.type]||a.type||"")}</span> ${a.ver?'<span class="pill p-ok">منبع رسمی</span>':'<span class="pill p-warn" title="از aggregator یا استنباطی؛ پیش از ارسال بررسی کنید">تأیید شود</span>'}${a.mine?' <span class="pill p-info">افزوده‌ی تیم</span>':""}${a.call&&callIsNew(a)?' <span class="pill p-info">فراخوان جدید</span>':""}${a.call&&callNoProduct(a)?' <span class="pill p-bad" title="محصول مناسب برای این فراخوان تعریف نشده است">محصول ندارد</span>':""}`,"t")}
      ${td("IF",`<b class="mono">${esc(a.impact||"—")}</b>${a.impact_note?`<br><span class="meta">${esc(a.impact_note)}</span>`:""}`)}
      ${td("ددلاین",a.deadline?`<b>${faDate(a.deadline)}</b> <span class="${days<0?"p-bad":days<=30?"p-bad":"meta"}">(${days<0?"گذشته":faNum(days)+" روز"})</span><br><span class="mono meta">${esc(a.deadline)}</span>`:`<span class="meta">بدون ددلاین</span>`)}${a.dl_note?`<br><span class="meta">${esc(a.dl_note)}</span>`:""}
-     ${td("جزئیات",esc(a.details||"—"))}
+     ${td("جزئیات",esc(a.details||"—")+artRecBox(a))}
      ${td("ارائه",`<b>${esc(ART_PRES[a.present]||"—")}</b>${a.present_note?`<br><span class="meta">${esc(a.present_note)}</span>`:""}`)}
      ${td("کشور",`${esc(a.country||"—")}<br><span class="meta">${esc(a.city||"")}</span>`)}
      ${td("",artActions(a))}</tr>`}),"با این فیلترها موردی در این صفحه نیست.");
 }
+function artRecBox(a){ const r=(S.artRec||{})[a.id]; if(!r) return "";
+  return `<div class="card" style="margin-top:6px;padding:6px 8px"><b>ثبت‌شده در سامانه‌ی مقصد</b>${r.ref?`<br>شناسه: <b class="mono" dir="ltr">${esc(r.ref)}</b>`:""}${r.state?`<br>${esc(r.state)}`:""}${r.next?`<br><span class="meta">گام بعدی: ${esc(r.next)}</span>`:""}${r.note?`<br><span class="meta">${esc(r.note)}</span>`:""}<br><span class="meta">${esc(r.mail||"")}${r.at?` · ${faDate(String(r.at).slice(0,10))}`:""}</span></div>`; }
 VIEWS["articles.list"]=()=>artView("all");
 VIEWS["articles.applied"]=()=>artView("applied");
 VIEWS["articles.doing"]=()=>artView("doing");
