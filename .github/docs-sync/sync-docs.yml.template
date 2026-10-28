@@ -1,0 +1,22 @@
+# Copy this file into each SOURCE (code) repo as .github/workflows/sync-docs.yml
+# Needs a repo secret DOCS_PUSH_TOKEN (fine-grained PAT, Contents: read/write on the <repo>-docs repo only).
+name: sync-docs
+on:
+  push:
+    branches: [main]
+    paths: ['SRS*/**','srs*/**','docs/**','architecture/**','outputs/**','results/**','reports/**','README*']
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Copy docs only
+        run: |
+          mkdir -p ../docs-out
+          git ls-files | grep -Ei '(^|/)(SRS[^/]*|srs[^/]*|README[^/]*|docs|architecture|outputs?|results?|reports?)(/|\.[a-z]+$|$)' | grep -Evi '\.(py|js|ts|tsx|jsx|java|go|rs|c|cpp|h|ipynb|sh|env|pem|key)$' | while read f; do mkdir -p "../docs-out/$(dirname "$f")"; cp "$f" "../docs-out/$f"; done
+      - name: Push to docs repo
+        env: { TOKEN: '${{ secrets.DOCS_PUSH_TOKEN }}' }
+        run: |
+          cd ../docs-out && git init -q -b main && git add -A
+          git -c user.name=docs-sync -c user.email=docs@users.noreply.github.com commit -q -m "Sync docs from ${{ github.repository }}@${{ github.sha }}"
+          git push -q -f "https://x-access-token:${TOKEN}@github.com/${{ github.repository }}-docs.git" main
