@@ -269,6 +269,7 @@ function subscribe(){
   S.db.doc("settings/claude_tasks").onSnapshot(d => { S.ct = d.exists ? (d.data().list||[]) : []; render(); }, ()=>{});
   S.db.doc("settings/paper_evidence").onSnapshot(d => { S.pev = d.exists ? d.data() : {list:[]}; render(); }, ()=>{});
   S.db.doc("settings/article_access").onSnapshot(d => { S.artAcc = d.exists ? d.data() : {ids:[]}; render(); }, ()=>{});   // {ids:[memberId]}: people the owner lets see the Articles tab
+  if(isAdmin()) S.db.collection("finance/_portal/items").onSnapshot(q => { S.portal={}; q.docs.forEach(d=>S.portal[d.id]=d.data()); render(); }, ()=>{});   // submission-portal logins per venue (admin-only rule of "finance"; not part of backups)
   S.db.doc("settings/article_status").onSnapshot(d => { S.artSt = d.exists ? (d.data().map||{}) : {}; render(); }, ()=>{});
   S.db.doc("settings/article_forms").onSnapshot(d => { S.artForms = d.exists ? (d.data().map||{}) : {}; render(); }, ()=>{});   // {venueId:{name,deadline,url}}; the Word files sit in settings/artform_<venueId> as base64
   S.db.doc("settings/article_abstracts").onSnapshot(d => { S.absDb = d.exists ? (d.data().map||{}) : {}; render(); }, ()=>{});   // {venueId: {title, abstract, keywords[], profile, product:{name,repo,new}, draft_note}}
@@ -566,7 +567,7 @@ const ipKey = t => t.country in IP_C ? t.country : null;
 const ipShort = v => { let x=String(v||"").replace(/^[^–]{2,40}–[^–]{2,60}–\s*/,"").trim(); return x.length>120?x.slice(0,117).trim()+"…":x; };
 function ipCompose(t,lang,partner){
   const T=IP_T[lang]||IP_T.en, f=x=>String(x).replace(/\{co\}/g,IP_CO).replace(/\{project\}/g,ipShort(t.title)).replace(/\{buyer\}/g,t.buyer||"").replace(/\{deadline\}/g,t.deadline||"—").replace(/\{url\}/g,t.url||"");
-  const sig=T.sig+"\n"+ipSender(t.id)+"\n"+IP_CO+(lang==="en"?"\nTürkiye":"");
+  const sn=ipSender(t.id), sig=T.sig+"\n"+(sn===IP_CO?"":sn+"\n")+IP_CO+(lang==="en"?"\nTürkiye":"");   // no assignee: ipSender already returns the company name, so it must not be printed twice
   return {subject:f(T.sub), body:[(partner&&partner.name&&lang==="en")?"Dear "+partner.name+" team,":f(T.g),"",f(T.p1),"",f(T.p2),"",f(T.p3),"",f(T.p4),"",f(IP_REQ)+(lang==="en"?"":"\n(English)"),"",sig].join("\n")};
 }
 const ipB64 = str => { const u=new TextEncoder().encode(str); let b=""; u.forEach(c=>b+=String.fromCharCode(c)); return btoa(b); };
@@ -2375,6 +2376,14 @@ async function downloadAllAbstracts(){
     await S.downloads.save({filename:`ppt-abstracts-${today()}.zip`,data:new Blob([await zipStore(files)],{type:"application/zip"})}); }
   catch(err){ if(!err||err.code!=="declined"){ toast("ساخت فایل ZIP انجام نشد."); console.error(err); } }
 }
+function artCredForm(a){
+  const c=(S.portal||{})[a.id]||{};
+  openForm({title:`حساب سامانه‌ی ثبت: ${a.name}`,values:{url:c.url||a.url||"",user:c.user||"",pass:c.pass||"",note:c.note||""},
+   extra:`<p class="note">فقط مدیران می‌بینند. برای هر ژورنال از رمز اختصاصی همان پرتال استفاده کنید؛ هرگز رمز ایمیل، بانک یا حساب‌های دیگر را اینجا ننویسید.</p>`,
+   fields:[{k:"url",label:"نشانی سامانه‌ی ثبت (ورود/ارسال مقاله)",dir:"ltr"},{k:"user",label:"نام کاربری / ایمیل ورود",dir:"ltr"},{k:"pass",label:"رمز عبور",type:"password",dir:"ltr"},{k:"note",label:"یادداشت (مثلاً شماره‌ی ثبت یا مرحله)",type:"textarea"}],
+   onSave:v=>save(`finance/_portal/items/${a.id}`,{url:v.url||"",user:v.user||"",pass:v.pass||"",note:v.note||"",by:S.me.id,at:new Date().toISOString()},"حساب سامانه ذخیره شد")});
+}
+async function artCredCopy(id,k){ const c=(S.portal||{})[id]; if(!c||!c[k]) return; try{ await navigator.clipboard.writeText(c[k]); toast(k==="pass"?"رمز کپی شد.":"نام کاربری کپی شد."); }catch(e){ toast("کپی انجام نشد؛ دکمه‌ی «حساب» را بزنید."); } }
 async function artSetStatus(id,st){
   if(!isAdmin()){ toast("تغییر وضعیت فقط با owner است."); return; }
   // Read the latest map first so two people never overwrite each other, and refuse to start work somebody else already claimed.
@@ -2397,6 +2406,11 @@ function artActions(a){
     else if(st==="doing") b.push(`<label><input type="checkbox" data-act="art-st" data-id="${id}" data-st="applied"> ارسال شد</label>`,`<button class="btn sm ghost" data-act="art-st" data-id="${id}" data-st="todo">بازگشت</button>`);
     else b.push(`<span class="pill p-ok">اقدام شده – در دست بررسی</span>`,`<button class="btn sm ghost" data-act="art-st" data-id="${id}" data-st="doing">بازگردانی به در دست اقدام</button>`);
   }
+  if(isAdmin()){ const c=(S.portal||{})[a.id];
+    b.push(`<button class="btn sm ghost" data-act="art-cred" data-id="${id}">${c&&(c.user||c.pass)?"حساب سامانه ✓":"حساب سامانه"}</button>`);
+    if(c&&c.user) b.push(`<button class="btn sm ghost" data-act="art-cred-copy" data-id="${id}" data-k="user">کپی کاربر</button>`);
+    if(c&&c.pass) b.push(`<button class="btn sm ghost" data-act="art-cred-copy" data-id="${id}" data-k="pass">کپی رمز</button>`);
+    if(c&&/^https?:\/\//.test(c.url||"")) b.push(`<a class="btn sm ghost" href="${esc(c.url)}" target="_blank" rel="noopener">باز کردن سامانه</a>`); }
   if(a.mine) b.push(`<button class="btn sm ghost" data-act="art-edit" data-id="${id}">ویرایش</button><button class="btn sm ghost" data-act="art-del" data-id="${id}">حذف</button>`);
   return `<div class="row" style="gap:6px;flex-wrap:wrap">${b.join("")}</div>`;
 }
@@ -2958,6 +2972,8 @@ document.addEventListener("click", async e => {
     case "ap-clear": if(isAdmin()) await save("settings/article_product",{},"تسک پاک شد"); break;
     case "ap-intro": { const pr=S.products.find(x=>x.id===id); if(!pr||!isAdmin()) break; openForm({title:"قبلاً در کجا معرفی شده؟",values:{venue:pr.introduced_in||""},fields:[{k:"venue",label:"نام مقاله یا کنفرانس"}],onSave:v=>{ if(!v.venue){toast("نام را وارد کنید.");return false} return save(`products/${id}`,{...pr,introduced_in:v.venue},"ثبت شد"); }}); break; }
     case "art-edit": artForm(S.arts.find(x=>x.id===id)); break;
+    case "art-cred": { const a=artAll().find(x=>x.id===id); if(a) artCredForm(a); break; }
+    case "art-cred-copy": await artCredCopy(id,b.dataset.k); break;
     case "art-del": if(confirm("این ردیف حذف شود؟")) await remove(`articles/${id}`); break;
     case "tour-start": tourStart(); break;
     case "guide-pdf": { try{ const r=await fetch("iPetro-User-Guide.pdf"); if(!r.ok) throw 0; const blob=await r.blob();
