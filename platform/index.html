@@ -2377,12 +2377,22 @@ async function downloadAllAbstracts(){
 }
 async function artSetStatus(id,st){
   if(!isAdmin()){ toast("تغییر وضعیت فقط با owner است."); return; }
-  await save("settings/article_status",{map:{...S.artSt,[id]:{status:st,at:new Date().toISOString(),by:S.me.id}}},"وضعیت ذخیره شد");
+  // Read the latest map first so two people never overwrite each other, and refuse to start work somebody else already claimed.
+  let map=S.artSt; try{ const d=await S.db.doc("settings/article_status").get(); map=d.exists?(d.data().map||{}):{}; }catch(e){}
+  const cur=map[id]||{}, other=cur.by&&cur.by!==S.me.id, what=cur.status==="doing"?"در دست اقدام دارد":"ارسال کرده است";
+  if(other&&(cur.status==="doing"||cur.status==="applied")&&st!==cur.status){
+    if(!S.me.isOwner){ toast(`این مقاله را ${memberName(cur.by)} ${what}؛ موازی‌کاری نکنید.`); return; }
+    if(!confirm(`این مقاله را ${memberName(cur.by)} ${what}. وضعیت را تغییر می‌دهید؟`)) return;
+  }
+  await save("settings/article_status",{map:{...map,[id]:{status:st,at:new Date().toISOString(),by:S.me.id}}},"وضعیت ذخیره شد");
 }
 function artActions(a){
   const st=artStatus(a), id=esc(a.id), b=[];
   if(absOf(a.id)&&S.downloads) b.push(`<button class="btn sm" data-act="art-abs" data-id="${id}" title="چکیده طبق قالب همین ژورنال یا کنفرانس، آماده‌ی ثبت در سامانه (فایل Word)">چکیده (Word)</button>`);
-  if(isAdmin()){
+  const cl=S.artSt[a.id]||{}, taken=(st==="doing"||st==="applied")&&cl.by&&cl.by!==S.me.id&&!S.me.isOwner;
+  if(st==="doing"&&cl.by) b.push(`<span class="pill p-warn">در دست اقدام: ${esc(memberName(cl.by))}${cl.by===S.me.id?" (شما)":""}</span>`);
+  else if(st==="applied"&&cl.by) b.push(`<span class="pill p-ok">ارسال/اقدام: ${esc(memberName(cl.by))}</span>`);
+  if(isAdmin()&&!taken){
     if(st==="todo") b.push(`<label><input type="checkbox" data-act="art-st" data-id="${id}" data-st="applied"> قبلاً اقدام شده</label>`,`<button class="btn sm sig" data-act="art-st" data-id="${id}" data-st="doing">شروع اقدام</button>`);
     else if(st==="doing") b.push(`<label><input type="checkbox" data-act="art-st" data-id="${id}" data-st="applied"> ارسال شد</label>`,`<button class="btn sm ghost" data-act="art-st" data-id="${id}" data-st="todo">بازگشت</button>`);
     else b.push(`<span class="pill p-ok">اقدام شده – در دست بررسی</span>`,`<button class="btn sm ghost" data-act="art-st" data-id="${id}" data-st="doing">بازگردانی به در دست اقدام</button>`);
