@@ -270,6 +270,7 @@ function subscribe(){
   S.db.doc("settings/paper_evidence").onSnapshot(d => { S.pev = d.exists ? d.data() : {list:[]}; render(); }, ()=>{});
   S.db.doc("settings/article_access").onSnapshot(d => { S.artAcc = d.exists ? d.data() : {ids:[]}; render(); }, ()=>{});   // {ids:[memberId]}: people the owner lets see the Articles tab
   S.db.doc("settings/article_status").onSnapshot(d => { S.artSt = d.exists ? (d.data().map||{}) : {}; render(); }, ()=>{});
+  S.db.doc("settings/article_forms").onSnapshot(d => { S.artForms = d.exists ? (d.data().map||{}) : {}; render(); }, ()=>{});   // {venueId:{name,deadline,url}}; the Word files sit in settings/artform_<venueId> as base64
   S.db.doc("settings/article_abstracts").onSnapshot(d => { S.absDb = d.exists ? (d.data().map||{}) : {}; render(); }, ()=>{});   // {venueId: {title, abstract, keywords[], profile, product:{name,repo,new}, draft_note}}
   S.db.doc("settings/article_calls").onSnapshot(d => { S.calls = d.exists ? (d.data().map||{}) : {}; render(); paintBell(); }, ()=>{});   // {venueId: {…venue fields, found, product_hint, ack}} written by the weekly CFP job
   S.db.doc("settings/article_product").onSnapshot(d => { S.artProd = d.exists ? d.data() : {}; render(); }, ()=>{});
@@ -294,6 +295,17 @@ async function loadAllReports(){ // admins read every member's reports and atten
   S.allMind=mind;
   S.allReports=S.me.isOwner?all:[]; S.allAtt=att; S.allLoaded=true; render();
 }
+async function loadMind(){ // owner: re-read every member's MindScope result (the first load happens only once, so later submissions need this)
+  if(!S.me.isOwner) return; const mind=[];
+  for(const m of S.members){ try{ const d=await S.db.doc(`mindtest/${m.id}/items/result`).get(); if(d.exists) mind.push({member:m.id,...d.data()}); }catch(e){} }
+  S.allMind=mind; render();
+}
+async function artFormDownload(vid){ try{
+  const d=await S.db.doc(`settings/artform_${vid}`).get(); if(!d.exists) throw new Error("missing");
+  const {b64,filename}=d.data(), bin=atob(b64), u8=new Uint8Array(bin.length); for(let i=0;i<bin.length;i++) u8[i]=bin.charCodeAt(i);
+  const blob=new Blob([u8],{type:"application/vnd.openxmlformats-officedocument.wordprocessingml.document"});
+  if(S.downloads) await S.downloads.save({filename,data:blob}); else { const a=document.createElement("a"); a.href=URL.createObjectURL(blob); a.download=filename; a.click(); }
+}catch(e){ if(!e||e.code!=="declined") toast("دریافت فرم انجام نشد."); } }
 async function save(path, data, okMsg="ذخیره شد"){
   if(!S.db){ toast("اتصال به پایگاه داده برقرار نیست."); return false; }
   try{ await S.db.doc(path).set(data); toast(okMsg); return true; }
@@ -2447,6 +2459,7 @@ VIEWS["articles.submit"] = () => {
    kpis([["مقصد در جریان",faNum(vs.length)],["تسک تعریف‌شده",faNum(def)],["بدون تسک",faNum(vs.length-def),vs.length-def>0],["انجام‌شده",faNum(done)]])+
    (isAdmin()?`<div class="card"><div class="row"><label for="stkWho"><b>مسئول:</b></label><select id="stkWho" data-stkwho>${opts}</select><button class="btn sig" data-act="stk-all">تخصیص به همه (تعریف تسک برای همه‌ی مقصدها)</button></div><p class="meta" style="margin:6px 0 0">تسک‌های موجود که انجام نشده‌اند به همین فرد منتقل می‌شوند؛ تسک‌های انجام‌شده تغییر نمی‌کنند.</p></div>`:`<div class="banner">فقط مدیر می‌تواند تسک تعریف یا واگذار کند.</div>`)+
    (S.downloads?`<div class="toolbar"><button class="btn sig" data-act="art-abs-all">همه‌ی چکیده‌ها (ZIP)</button><span class="meta">چکیده‌ی هر مقصد طبق قالب همان ژورنال یا کنفرانس؛ [داخل کروشه] هنوز اندازه‌گیری نشده است.</span></div>`:"")+
+   (Object.keys(S.artForms||{}).length?`<div class="card"><h3 style="margin-top:0">فرم‌های آماده‌ی ثبت (Word)</h3><p class="note">عنوان، چکیده، کلیدواژه‌ها، مشخصات نویسنده و چک‌لیست هر مقصد پر شده است. فقط بررسی و ثبت دستی باقی مانده؛ چیزی ارسال نشده است.</p>${table(["مقصد","ددلاین","پیوند",""],Object.entries(S.artForms).map(([id,f])=>`<tr>${td("مقصد",esc(f.name),"t")}${td("ددلاین",f.deadline?faDate(f.deadline):"—")}${td("پیوند",(f.url?`<a href="${esc(f.url)}" target="_blank" rel="noopener">صفحه‌ی مقصد</a>`:"—")+(f.tpl?` · <a href="${esc(f.tpl)}" target="_blank" rel="noopener">قالب رسمی</a>`:""))}${td("",`<button class="btn sm sig" data-act="art-form" data-v="${esc(id)}">دانلود Word</button>`)}</tr>`),"")}</div>`:"")+
    table(["مقصد","ددلاین","مسئول","وضعیت",""],vs.map(({a})=>{ const t=submitTaskOf(a.id);
      return `<tr>${td("مقصد",esc(a.name),"t")}${td("ددلاین",a.deadline?faDate(a.deadline):"—")}${td("مسئول",t?esc(memberName(t.assignee)):'<span class="meta">تعریف نشده</span>')}${td("وضعیت",t?`<span class="pill ${t.status==="done"||t.status==="approved"?"p-ok":t.status==="doing"?"p-info":"p-warn"}">${esc(TASK_ST[t.status]||t.status)}</span>`:'<span class="pill p-mute">—</span>')}${td("",absBtn(a)+(isAdmin()?`<button class="btn sm ghost" data-act="stk-one" data-id="${esc(a.id)}">${t?"واگذاری به مسئول انتخاب‌شده":"تعریف تسک برای مسئول انتخاب‌شده"}</button>`:""))}</tr>`; }),"هنوز مقصدی در صف Claude نیست.");
 };
@@ -2769,7 +2782,7 @@ function mindOwnerTable(){
   if(!S.me.isOwner) return "";
   const rows=(S.allMind||[]).map(x=>({...x,r:mindScore(x.ans)}));
   const missing=S.members.filter(m=>mindRequired(m)&&!rows.some(x=>x.member===m.id));
-  return `<h3 style="margin-top:18px">نتایج اعضا (فقط مالک)</h3><p class="note">پاسخ‌ها را فقط خود فرد و مالک سامانه می‌بینند. از این اطلاعات برای حمایت و ارجاع به درمان استفاده شود، نه تصمیم تنبیهی یا استخدامی.</p>`+
+  return `<h3 style="margin-top:18px">نتایج اعضا (فقط مالک) <button class="btn sm ghost" data-act="mind-reload">به‌روزرسانی</button></h3><p class="note">پاسخ‌ها را فقط خود فرد و مالک سامانه می‌بینند. از این اطلاعات برای حمایت و ارجاع به درمان استفاده شود، نه تصمیم تنبیهی یا استخدامی.</p>`+
    (missing.length?`<p><span class="pill p-bad">آزمون انجام نداده‌اند</span> ${esc(missing.map(m=>m.full_name).join("، "))}</p>`:"")+
    table(["عضو","تاریخ","تیپ","وضعیت",""],rows.map(x=>`<tr>${td("عضو",esc(memberName(x.member)),"t")}${td("تاریخ",faDate((x.at||"").slice(0,10)))}${td("تیپ",`<span class="mono">${["EI","SN","TF","JP"].map(d=>x.r.type[d].letter).join("")}</span>`)}${td("وضعیت",x.r.crisis.length?'<span class="pill p-bad">نیازمند توجه/تراپی</span>':'<span class="pill p-ok">بدون نشانه‌ی بحرانی</span>')}${td("",`<button class="btn sm ghost" data-act="mind-view" data-m="${esc(x.member)}">مشاهده‌ی پاسخ و تفسیر</button>`)}</tr>`),"هنوز نتیجه‌ای ثبت نشده است.");
 }
@@ -2886,7 +2899,7 @@ document.addEventListener("click", async e => {
   if(a==="close-scrim" && e.target!==b) return;
   switch(a){
     case "mod": S.mod=b.dataset.k; S.sub=SUBS[S.mod][0][0]; S.q=""; render(); break;
-    case "sub": S.sub=b.dataset.k; S.forceFull=true; render(); if(S.mod==="bpms"&&S.sub==="rarchive"&&isAdmin()) loadAllReports(); break;
+    case "sub": S.sub=b.dataset.k; S.forceFull=true; render(); if(S.mod==="bpms"&&S.sub==="rarchive"&&isAdmin()) loadAllReports(); if(S.mod==="bpms"&&S.sub==="mind"&&S.me.isOwner) loadMind(); break;
     case "close": case "close-scrim": closeForm(); break;
     case "track": { const t=S.tracking[id]||{};
       const locked = t.owner && t.owner!==S.me.id && !isAdmin(); // only the owner or an admin may hand a taken project to someone else
@@ -2915,6 +2928,7 @@ document.addEventListener("click", async e => {
     case "art-acc": { if(!S.me.isOwner){ toast("فقط مالک سامانه می‌تواند دسترسی را تغییر دهد."); render(); break; } const s=new Set((S.artAcc||{}).ids||[]); if(b.checked) s.add(id); else s.delete(id); await save("settings/article_access",{ids:[...s]},"دسترسی تب مقالات ذخیره شد"); break; }
     case "art-abs": await downloadAbstract(id); break;
     case "art-abs-all": await downloadAllAbstracts(); break;
+    case "art-form": await artFormDownload(b.dataset.v); break;
     case "art-abs-mine": await downloadMyAbstracts(); break;
     case "ct-add": { const el=$("#ctText"); const v=(el&&el.value||"").trim(); if(!v){toast("متن تسک را بنویسید.");break;} if(await ctAdd(v,{kind:"free"})&&el) el.value=""; break; }
     case "stk-all": { const w=($("#stkWho")||{}).value||S.stkWho; await submitAssign(w,null); break; }
@@ -3013,6 +3027,7 @@ document.addEventListener("click", async e => {
     case "report-view": reportDetail(b.dataset.m,b.dataset.d); break;
     case "ra-csv": reportsCsv(); break;
     case "reload-reports": loadAllReports(); break;
+    case "mind-reload": loadMind(); toast("در حال به‌روزرسانی نتایج…"); break;
     case "register": registerForm(); break;
     case "print-sheet": printSheet(b.dataset.sel); break;
     case "sch-profile": schProfileForm(); break;
