@@ -25,7 +25,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": -5,
+   "days_left": -6,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -66,7 +66,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": -6,
+   "days_left": -7,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -107,7 +107,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": -5,
+   "days_left": -6,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -148,7 +148,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": -5,
+   "days_left": -6,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -189,7 +189,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": -5,
+   "days_left": -6,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -230,7 +230,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": -4,
+   "days_left": -5,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -271,7 +271,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": -3,
+   "days_left": -4,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -312,7 +312,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": 1,
+   "days_left": 0,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -348,7 +348,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": 1,
+   "days_left": 0,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -384,7 +384,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": 2,
+   "days_left": 1,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -420,7 +420,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": 2,
+   "days_left": 1,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -456,7 +456,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": 4,
+   "days_left": 3,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -492,7 +492,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": 5,
+   "days_left": 4,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -526,7 +526,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 6,
+   "days_left": 5,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -561,7 +561,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 9,
+   "days_left": 8,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -596,7 +596,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 14,
+   "days_left": 13,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -631,7 +631,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 16,
+   "days_left": 15,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -665,7 +665,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 20,
+   "days_left": 19,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -699,7 +699,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 22,
+   "days_left": 21,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -734,7 +734,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 34,
+   "days_left": 33,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -769,7 +769,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 42,
+   "days_left": 41,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -804,14 +804,19 @@
    "domains": [
     "energy"
    ],
-   "days_left": 0,
+   "days_left": -1,
    "line": "ai",
-   "status": "new",
+   "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
    "history": [
     {
      "at": "2026-10-19T13:28:54",
      "status": "new"
+    },
+    {
+     "at": "2026-10-28T10:50:09",
+     "status": "expired",
+     "note": ""
     }
    ]
   },
@@ -839,7 +844,7 @@
     "ai_cross_cutting",
     "medical"
    ],
-   "days_left": 20,
+   "days_left": 19,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -875,7 +880,7 @@
     "energy",
     "urban"
    ],
-   "days_left": 27,
+   "days_left": 26,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -909,7 +914,7 @@
    "domains": [
     "urban"
    ],
-   "days_left": 24,
+   "days_left": 23,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-20T09:40:22",
@@ -943,7 +948,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 77,
+   "days_left": 76,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-20T09:40:22",
@@ -1045,7 +1050,7 @@
    "domains": [
     "aviation"
    ],
-   "days_left": 1,
+   "days_left": 0,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-21T09:36:20",
@@ -1079,7 +1084,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 6,
+   "days_left": 5,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-21T09:36:20",
@@ -1114,7 +1119,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": 7,
+   "days_left": 6,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-21T09:36:20",
@@ -1148,7 +1153,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 25,
+   "days_left": 24,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-21T09:36:20",
@@ -1182,7 +1187,7 @@
    "domains": [
     "web"
    ],
-   "days_left": 27,
+   "days_left": 26,
    "line": "web",
    "status": "new",
    "first_seen": "2026-10-21T09:36:20",
@@ -1250,7 +1255,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 13,
+   "days_left": 12,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-22T09:39:52",
@@ -1284,7 +1289,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 24,
+   "days_left": 23,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-22T09:39:52",
@@ -1318,7 +1323,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 24,
+   "days_left": 23,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-22T09:39:52",
@@ -1352,7 +1357,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 34,
+   "days_left": 33,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-22T09:39:52",
@@ -1386,7 +1391,7 @@
    "domains": [
     "aviation"
    ],
-   "days_left": 29,
+   "days_left": 28,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-23T09:35:00",
@@ -1420,7 +1425,7 @@
    "domains": [
     "medical"
    ],
-   "days_left": 35,
+   "days_left": 34,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-23T09:35:00",
@@ -1454,7 +1459,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 38,
+   "days_left": 37,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-23T09:35:00",
@@ -1591,7 +1596,7 @@
    "domains": [
     "urban"
    ],
-   "days_left": 13,
+   "days_left": 12,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-26T10:29:22",
@@ -1625,7 +1630,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 27,
+   "days_left": 26,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-26T10:29:22",
@@ -1659,7 +1664,7 @@
    "domains": [
     "urban"
    ],
-   "days_left": 27,
+   "days_left": 26,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-26T10:29:22",
@@ -1727,7 +1732,7 @@
    "domains": [
     "urban"
    ],
-   "days_left": 14,
+   "days_left": 13,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-27T10:03:26",
@@ -1761,7 +1766,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 27,
+   "days_left": 26,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-27T10:03:26",
@@ -1795,7 +1800,7 @@
    "domains": [
     "medical"
    ],
-   "days_left": 30,
+   "days_left": 29,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-27T10:03:26",
@@ -1829,13 +1834,184 @@
    "domains": [
     "urban"
    ],
-   "days_left": 31,
+   "days_left": 30,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-27T10:03:26",
    "history": [
     {
      "at": "2026-10-27T10:03:26",
+     "status": "new"
+    }
+   ]
+  },
+  "WB-OP00477440": {
+   "id": "WB-OP00477440",
+   "source": "World Bank",
+   "market": "international",
+   "title": "Software Development (Point of Sale) for women-led small business; website design, POS training",
+   "description": "Digital Federated States of Micronesia Project. REQUEST FOR QUOTATION October 26, 2026 Project Title: Digital Federated States of Micronesia Project (P170718) Source of Funding (loan/credit/grant no.): IDA-D5560 Contract Name: Software Development (Point of Sale) for women-led small business, website design, POS training Contract Ref: FM-DHSA-520963-NC-RFP Dear Bidder, The FSM Department of Health & Social Affairs hereby invites you to submit a quotation for the following works: Lot 1: Website Design & Development Services for the Yap Women Association Digital Village Lot 2: Development of a User-Friendly Point of Sale (POS) System for Women-led Businesses in FSM The budget for this procurement is $40,000.00 (for both lots) . To assist you in the preparation of your price quotation, we enclose the necessary Terms of Reference, Specifications, Priced Activity Schedule (AS), and Form of Contract. This RFQ invites you to quote for 1 lot or both lots. Quotations for each lot must be submitted separately, with the signed Form of Quotation (including the priced AS) electronically at the following address(s): takiko.ifamilik@hsa.gov.fm and msamo@fsmhealth.fm This invitation is issued under the open RFQ and the Most Advantageous Bid will be recommended for contract award for the Bid of the Bidder that meets the qualification criteria and whose Bid has been determined to be: substantially responsive to the RFQ document; and the lowest evaluated cost. The following minimum qualification requirements apply to this RFQ: Lot 1: the bidder shall propose the following key personnel at a minimum – Web Developer and Project Manager. Lot-2: The bidder shall propose Key personnel, such as Team Leader (TL) and Testing Technician (TT), meeting the qualification requirements for these positions as outlined in the SOW. Each bidder shall submit only one quotation. All quotations submitted in violation of this rule shall be rejected. In evaluating the quotations, the Employer will determine for each quotation the evaluated price by adjusting the price quotation by making any correction for any arithmetical errors as follows: where there is a discrepancy between amounts in figures and in words, the amount in words will govern; where there is a discrepancy in the total and the sum of the line-item amounts, the total shall be corrected. if a Bidder refuses to accept the correction, his quotation will be rejected. Your quotation shall be valid for a period of forty-five (45) days from the submission deadline Your quotation in English shall be for the quote and based on a fixed lump sum for the entire assignment period. Prices can be quoted in any currency of the World Bank member countries. The currency to convert all quotation prices expressed in various currencies into a single currency is USD. The quotation shall include all duties, local taxes and other levies payable by the contractor in accordance with the local laws. The Employer will award the contract to the Bidder whose quotation has been determined to be substantially responsive to this RFQ, has offered the lowest evaluated price quotation, and is qualified to do the Works. 10. The terms and conditions of contract are attached to this RFQ. 11. Your quotation should be submitted by November 09, 2026, 05:00 pm Pohnpei Time. Late quotations may be rejected. 12. Further information can be obtained from: Name of Contact Person: Takiko L. Ifamilik, Digital Gender Coordination Telephone: (691) 320-4682 or 2619 E-mail: takiko.ifamilik@hsa.gov.fm 13. Please confirm by e-mail to the contact provided in paragraph 12 above the receipt of this RFQ and whether or not you will submit the price quotation(s). REQUEST FOR QUOTATION October 26, 2026 Project Title: Digital Federated States of Micronesia Project (P170718) Source of Funding (loan/credit/grant no.): IDA-D5560 Contract Name: Software Development (Point of Sale) for women-led small business, website design, POS training Contract Ref: FM-DHSA-520963-NC-",
+   "buyer": "Department of Health, Social Affairs",
+   "country": "Micronesia, Federated States of",
+   "deadline": "2026-11-09",
+   "published": "2026-10-27",
+   "url": "https://projects.worldbank.org/en/projects-operations/procurement-detail/OP00477440",
+   "notice_type": "Invitation for Bids",
+   "procurement_method": "Request for Quotations",
+   "sector": "دولتی (پروژه با تأمین مالی بانک جهانی)",
+   "facts": {
+    "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "طبق آگهی: qualification criteria and whose bid has been determined to be: substantially responsive to the rfq document; and the lowest evaluated cost",
+    "international": "قواعد خرید بانک جهانی: باز برای شرکت‌های همه‌ی کشورهای واجد شرایط (Eligibility rules)"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "web"
+   ],
+   "days_left": 12,
+   "line": "web",
+   "status": "new",
+   "first_seen": "2026-10-28T10:50:09",
+   "history": [
+    {
+     "at": "2026-10-28T10:50:09",
+     "status": "new"
+    }
+   ]
+  },
+  "TED-748820-2026": {
+   "id": "TED-748820-2026",
+   "source": "TED (EU)",
+   "market": "international",
+   "title": "Spain – Repair and maintenance services of reservoirs – Varias UCOS.- TA.- Servicio abierto sostenimiento tanques gasoil y gasolina",
+   "description": "Varias UCOS.- TA.- Servicio abierto sostenimiento tanques gasoil y gasolina",
+   "buyer": "Intendente de Ferrol",
+   "country": "ESP",
+   "deadline": "2026-11-27",
+   "published": "2026-10-28",
+   "url": "https://ted.europa.eu/en/notice/-/detail/748820-2026",
+   "notice_type": "cn-standard",
+   "sector": "دولتی",
+   "facts": {
+    "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "رویه‌ی باز اتحادیه اروپا – شرکت‌های خارج از EU معمولاً مجازند مگر محدودیت صریح در اسناد"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "energy"
+   ],
+   "days_left": 30,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-10-28T10:50:09",
+   "history": [
+    {
+     "at": "2026-10-28T10:50:09",
+     "status": "new"
+    }
+   ]
+  },
+  "TED-748747-2026": {
+   "id": "TED-748747-2026",
+   "source": "TED (EU)",
+   "market": "international",
+   "title": "Belgium – Business and management consultancy and related services – Learning through Experimentation for Adaptive Programming (LEAP) - Producing experimental designs for ERDF/CF/JTF investment in the field of energy efficiency measures",
+   "description": "The overarching goal of this assignment is to prepare the ground for embedding experimentation in National and Regional Partnership Plans from the outset of the 2028–2034 programming period. To this end, the assignment will structurally bring evaluators and programmers to work together, build capacity on both sides, and provide the EU evaluation system with practical experimentation tools that extend beyond the three participating MS. This assignment focuses on investments on energy efficiency measures and shall produce the following outputs: 1. NRPP-ready experimental designs to be implemented in the 2028–2034 programming period in three Member States; 2. a detailed toolkit to support MS in the introduction of experimental designs in 2028-2034 Plans: LEAP Kit (Learning through Experimentation for Adaptive Programming). Energy efficiency is central to the EU’s climate, cohesion, and energy security objectives. Reducing energy consumption across the built environment, industrial processes, district energy networks, and community energy systems contributes directly to cutting greenhouse gas emissions, reducing dependence on imported fossil fuels, and ensuring more resilient and affordable energy supply. All of which are particularly pressing in less developed and transition regions where energy poverty, ageing building stock, and limited private investment capacity make public intervention most necessary. Despite its widespread use, substantial analysis remains to be made in assessing the effectiveness of energy efficiency investments and identifying the conditions under which these generate the expected impact. Experimentation through randomised controlled trials (RCTs) - and the analysis of experiment results to identify the causal effects of interventions - offers the most rigorous way to generate this evidence. Improving the capacity to design and conduct experimental designs is even more important in light of the evolving regulatory context. The Commission proposal for the 2028-2034 Multiannual Financial Framework explicitly promotes policy learning and experimentation as a function of both coordinating and managing authorities (Articles 50 and 51 of the proposed Performance Regulation). DG REGIO’s ambition is that experimental designs and adaptive learning mechanisms will be embedded in the National and Regional Partnership Plans (NRPPs) from the outset of the next programming period.",
+   "buyer": "European Commission, DG REGIO - Regional and Urban Policy",
+   "country": "BEL",
+   "deadline": "2026-12-07",
+   "published": "2026-10-28",
+   "url": "https://ted.europa.eu/en/notice/-/detail/748747-2026",
+   "notice_type": "cn-standard",
+   "sector": "نهاد اتحادیه اروپا",
+   "facts": {
+    "price": "ارزش برآوردی: 340,000 EUR",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "رویه‌ی باز اتحادیه اروپا – شرکت‌های خارج از EU معمولاً مجازند مگر محدودیت صریح در اسناد"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "energy"
+   ],
+   "days_left": 40,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-10-28T10:50:09",
+   "history": [
+    {
+     "at": "2026-10-28T10:50:09",
+     "status": "new"
+    }
+   ]
+  },
+  "TED-745428-2026": {
+   "id": "TED-745428-2026",
+   "source": "TED (EU)",
+   "market": "international",
+   "title": "Germany – Research and development services and related consultancy services – [AI-as-OS] Artificial Intelligence as Operating System",
+   "description": "Artificial intelligence (AI) methods have been expanding into new areas of application for years. AI systems are increasingly capable of handling complex tasks with greater autonomy—for example, through agent-based approaches that run an AI agent on a computer to perform any task automatically or even autonomously, sometimes without explicit human instructions but rather based on identified intentions (see, for example, the open-source software OpenClaw, which can handle tasks such as calendar maintenance or file management). Just how deeply AI algorithms and models are now integrated into everyday applications is also evident in the fact that end devices are increasingly operable entirely without visible applications and exclusively via voice control, which fundamentally rethinks the way we interact with them (such as Deutsche Telekom’s AI Phone). The central control units of such end devices—the operating systems themselves—are also increasingly being enhanced with new AI functionalities to continuously improve system efficiency. These include initial theoretical—and in some cases already practical—approaches to using the latest AI technologies for file system or storage management. These developments mark a fundamental paradigm shift: AI is no longer viewed merely as an add-on, but increasingly as a native architectural component of the operating system itself. The AI-as-OS program aims to explore how artificial intelligence can be understood not merely as a separately encapsulated functionality that is simply executed by the operating system, but as the operating system itself—Artificial Intelligence as Operating System. Behind this lies the vision of an AI that not only supports individual applications but also acts as the central control system for the entire computer ecosystem, managing system resources (including the CPU, RAM, and system security) in a data-driven, adaptive, and context-aware manner. The aim of the program is to make fundamental contributions to the development of AI-based operating systems as the control unit of a computer system. Through the extensive integration of AI technologies into deep operating system layers, such a system is intended to manage system resources, enable context-aware operational decisions, and enhance system security through adaptive threat detection and defense. Since the underlying technology is still largely in a speculative stage, the scope of development work ranges from the general architecture of such an operating system to the integration of AI-based core mechanisms, and includes new considerations regarding the security and stability requirements for such an operating system, depending on the target platform (e.g., desktop, data center, edge device) and the application environment. The program’s main areas of research include: • AI-Centric Operating System Architectures: Concepts for the fundamental design of an operating system in which AI is viewed not as an add-on feature but as an integral part of the architecture. • AI-Native Core Mechanisms: Integration of AI-based methods into core operating system functions such as resource management, process control, and memory organization. • Control, Security, and Stability: Requirements for traceability, controllability, and robustness of an AI-based operating system, as well as approaches to adaptive threat detection and defense. From today’s perspective, it remains to be seen whether—and to what extent—the vision of an AI-native operating system can be technically realized. This is precisely where the program’s value lies: AI-as-OS explores a largely speculative field at the intersection of AI research and system software, the results of which could set the course for the operating systems of tomorrow.",
+   "buyer": "Agentur für Innovation in der Cybersicherheit GmbH (Cyberagentur)",
+   "country": "DEU",
+   "deadline": "",
+   "published": "2026-10-28",
+   "url": "https://ted.europa.eu/en/notice/-/detail/745428-2026",
+   "notice_type": "cn-standard",
+   "sector": "شرکت دولتی / عمومی",
+   "facts": {
+    "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "ai_cross_cutting"
+   ],
+   "days_left": null,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-10-28T10:50:09",
+   "history": [
+    {
+     "at": "2026-10-28T10:50:09",
+     "status": "new"
+    }
+   ]
+  },
+  "TED-748671-2026": {
+   "id": "TED-748671-2026",
+   "source": "TED (EU)",
+   "market": "international",
+   "title": "Norway – Research and development services and related consultancy services – Qualification scheme - Avinor AS - T-193432 - Demonstration of zero and low emission aircraft regional aviation",
+   "description": "Qualification scheme - Avinor AS - T-193432 - Demonstration of zero and low emission aircraft regional aviation",
+   "buyer": "AVINOR AS",
+   "country": "NOR",
+   "deadline": "",
+   "published": "2026-10-28",
+   "url": "https://ted.europa.eu/en/notice/-/detail/748671-2026",
+   "notice_type": "cn-standard",
+   "sector": "نامشخص",
+   "facts": {
+    "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "aviation"
+   ],
+   "days_left": null,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-10-28T10:50:09",
+   "history": [
+    {
+     "at": "2026-10-28T10:50:09",
      "status": "new"
     }
    ]
@@ -2504,6 +2680,81 @@
     "TED-744643-2026",
     "TED-743680-2026",
     "TED-741848-2026"
+   ],
+   "actioned_ids": [],
+   "reminders": []
+  },
+  {
+   "at": "2026-10-28T10:50:10",
+   "collected": 302,
+   "matched": 20,
+   "partner_drafts": [],
+   "events_added": 0,
+   "scholarships_added": 0,
+   "investors_added": 0,
+   "investor_drafts": [
+    "revo",
+    "212",
+    "hub71",
+    "aramco-ventures",
+    "antler-menap",
+    "equinor-ventures",
+    "shell-ventures",
+    "ycombinator",
+    "techstars"
+   ],
+   "leads_added": 0,
+   "papers_lines": [],
+   "events_soon": [
+    {
+     "start": "2026-10-28",
+     "name": "Media Expo 1405 (2nd)",
+     "name_fa": "دومین نمایشگاه مدیا اکسپو (با بخش هوش مصنوعی)",
+     "city": "تهران (برج میلاد)"
+    },
+    {
+     "start": "2026-11-02",
+     "name": "ADIPEC 2026",
+     "name_fa": "نمایشگاه و کنفرانس نفت و گاز ابوظبی",
+     "city": "ابوظبی"
+    },
+    {
+     "start": "2026-11-03",
+     "name": "Smart City Expo World Congress 2026",
+     "name_fa": "کنگره جهانی شهر هوشمند",
+     "city": "بارسلونا"
+    },
+    {
+     "start": "2026-11-09",
+     "name": "Web Summit 2026",
+     "name_fa": "وب سامیت لیسبون",
+     "city": "لیسبون"
+    },
+    {
+     "start": "2026-11-16",
+     "name": "MEDICA 2026",
+     "name_fa": "نمایشگاه تجهیزات و فناوری پزشکی دوسلدورف",
+     "city": "دوسلدورف"
+    },
+    {
+     "start": "2026-12-06",
+     "name": "NeurIPS 2026",
+     "name_fa": "کنفرانس NeurIPS (سیدنی / آتلانتا / پاریس)",
+     "city": "سیدنی، آتلانتا، پاریس"
+    },
+    {
+     "start": "2026-12-07",
+     "name": "GITEX Global 2026",
+     "name_fa": "جیتکس دبی",
+     "city": "دبی (Expo City)"
+    }
+   ],
+   "new_ids": [
+    "WB-OP00477440",
+    "TED-748820-2026",
+    "TED-748747-2026",
+    "TED-745428-2026",
+    "TED-748671-2026"
    ],
    "actioned_ids": [],
    "reminders": []
