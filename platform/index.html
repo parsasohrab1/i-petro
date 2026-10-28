@@ -300,8 +300,8 @@ async function loadMind(){ // owner: re-read every member's MindScope result (th
   for(const m of S.members){ try{ const d=await S.db.doc(`mindtest/${m.id}/items/result`).get(); if(d.exists) mind.push({member:m.id,...d.data()}); }catch(e){} }
   S.allMind=mind; render();
 }
-async function artFormDownload(vid){ try{
-  const d=await S.db.doc(`settings/artform_${vid}`).get(); if(!d.exists) throw new Error("missing");
+async function artFormDownload(vid,kind){ try{
+  const d=await S.db.doc(`settings/${kind==="ms"?"artms":"artform"}_${vid}`).get(); if(!d.exists) throw new Error("missing");
   const {b64,filename}=d.data(), bin=atob(b64), u8=new Uint8Array(bin.length); for(let i=0;i<bin.length;i++) u8[i]=bin.charCodeAt(i);
   const blob=new Blob([u8],{type:"application/vnd.openxmlformats-officedocument.wordprocessingml.document"});
   if(S.downloads) await S.downloads.save({filename,data:blob}); else { const a=document.createElement("a"); a.href=URL.createObjectURL(blob); a.download=filename; a.click(); }
@@ -2459,7 +2459,7 @@ VIEWS["articles.submit"] = () => {
    kpis([["مقصد در جریان",faNum(vs.length)],["تسک تعریف‌شده",faNum(def)],["بدون تسک",faNum(vs.length-def),vs.length-def>0],["انجام‌شده",faNum(done)]])+
    (isAdmin()?`<div class="card"><div class="row"><label for="stkWho"><b>مسئول:</b></label><select id="stkWho" data-stkwho>${opts}</select><button class="btn sig" data-act="stk-all">تخصیص به همه (تعریف تسک برای همه‌ی مقصدها)</button></div><p class="meta" style="margin:6px 0 0">تسک‌های موجود که انجام نشده‌اند به همین فرد منتقل می‌شوند؛ تسک‌های انجام‌شده تغییر نمی‌کنند.</p></div>`:`<div class="banner">فقط مدیر می‌تواند تسک تعریف یا واگذار کند.</div>`)+
    (S.downloads?`<div class="toolbar"><button class="btn sig" data-act="art-abs-all">همه‌ی چکیده‌ها (ZIP)</button><span class="meta">چکیده‌ی هر مقصد طبق قالب همان ژورنال یا کنفرانس؛ [داخل کروشه] هنوز اندازه‌گیری نشده است.</span></div>`:"")+
-   (Object.keys(S.artForms||{}).length?`<div class="card"><h3 style="margin-top:0">فرم‌های آماده‌ی ثبت (Word)</h3><p class="note">عنوان، چکیده، کلیدواژه‌ها، مشخصات نویسنده و چک‌لیست هر مقصد پر شده است. فقط بررسی و ثبت دستی باقی مانده؛ چیزی ارسال نشده است.</p>${table(["مقصد","ددلاین","پیوند",""],Object.entries(S.artForms).map(([id,f])=>`<tr>${td("مقصد",esc(f.name),"t")}${td("ددلاین",f.deadline?faDate(f.deadline):"—")}${td("پیوند",(f.url?`<a href="${esc(f.url)}" target="_blank" rel="noopener">صفحه‌ی مقصد</a>`:"—")+(f.tpl?` · <a href="${esc(f.tpl)}" target="_blank" rel="noopener">قالب رسمی</a>`:""))}${td("",`<button class="btn sm sig" data-act="art-form" data-v="${esc(id)}">دانلود Word</button>`)}</tr>`),"")}</div>`:"")+
+   (Object.keys(S.artForms||{}).length?`<div class="card"><h3 style="margin-top:0">فرم‌های آماده‌ی ثبت و قالب خام مقاله (Word)</h3><p class="note">عنوان، چکیده، کلیدواژه‌ها، مشخصات نویسنده و چک‌لیست هر مقصد پر شده است. فقط بررسی و ثبت دستی باقی مانده؛ چیزی ارسال نشده است.</p>${table(["مقصد","محصول","ددلاین","پیوند",""],Object.entries(S.artForms).map(([id,f])=>`<tr>${td("مقصد",esc(f.name),"t")}${td("محصول",`<span class="mono">${esc(f.prod||"—")}</span>`)}${td("ددلاین",f.deadline?faDate(f.deadline):"—")}${td("پیوند",(f.url?`<a href="${esc(f.url)}" target="_blank" rel="noopener">صفحه‌ی مقصد</a>`:"—")+(f.tpl?` · <a href="${esc(f.tpl)}" target="_blank" rel="noopener">قالب رسمی</a>`:""))}${td("",`<button class="btn sm sig" data-act="art-form" data-v="${esc(id)}">فرم ثبت (Word)</button>${f.ms?` <button class="btn sm ghost" data-act="art-form" data-k="ms" data-v="${esc(id)}">مقاله‌ی خام (Word)</button>`:""}`)}</tr>`),"")}</div>`:"")+
    table(["مقصد","ددلاین","مسئول","وضعیت",""],vs.map(({a})=>{ const t=submitTaskOf(a.id);
      return `<tr>${td("مقصد",esc(a.name),"t")}${td("ددلاین",a.deadline?faDate(a.deadline):"—")}${td("مسئول",t?esc(memberName(t.assignee)):'<span class="meta">تعریف نشده</span>')}${td("وضعیت",t?`<span class="pill ${t.status==="done"||t.status==="approved"?"p-ok":t.status==="doing"?"p-info":"p-warn"}">${esc(TASK_ST[t.status]||t.status)}</span>`:'<span class="pill p-mute">—</span>')}${td("",absBtn(a)+(isAdmin()?`<button class="btn sm ghost" data-act="stk-one" data-id="${esc(a.id)}">${t?"واگذاری به مسئول انتخاب‌شده":"تعریف تسک برای مسئول انتخاب‌شده"}</button>`:""))}</tr>`; }),"هنوز مقصدی در صف Claude نیست.");
 };
@@ -2928,7 +2928,7 @@ document.addEventListener("click", async e => {
     case "art-acc": { if(!S.me.isOwner){ toast("فقط مالک سامانه می‌تواند دسترسی را تغییر دهد."); render(); break; } const s=new Set((S.artAcc||{}).ids||[]); if(b.checked) s.add(id); else s.delete(id); await save("settings/article_access",{ids:[...s]},"دسترسی تب مقالات ذخیره شد"); break; }
     case "art-abs": await downloadAbstract(id); break;
     case "art-abs-all": await downloadAllAbstracts(); break;
-    case "art-form": await artFormDownload(b.dataset.v); break;
+    case "art-form": await artFormDownload(b.dataset.v,b.dataset.k); break;
     case "art-abs-mine": await downloadMyAbstracts(); break;
     case "ct-add": { const el=$("#ctText"); const v=(el&&el.value||"").trim(); if(!v){toast("متن تسک را بنویسید.");break;} if(await ctAdd(v,{kind:"free"})&&el) el.value=""; break; }
     case "stk-all": { const w=($("#stkWho")||{}).value||S.stkWho; await submitAssign(w,null); break; }
