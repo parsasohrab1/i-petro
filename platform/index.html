@@ -673,7 +673,7 @@ VIEWS["market.techneeds"] = () => {
   const F=S.tnF, doms=[...new Set(S.tn.filter(x=>x.kind==="need").map(x=>x.domain).filter(Boolean))];
   const st = x => (S.tracking["tn_"+x.id]||{}).tn_status||"new";
   const list=S.tn.filter(x=>(!F.src||x.kind===F.src)&&(!F.ai||x.ai)&&(!F.dom||x.domain===F.dom)&&(!F.st||st(x)===F.st)&&match(x.title,x.company,x.domain,x.summary,x.expected,x.solution))
-    .sort((a,b)=>(b.ai?1:0)-(a.ai?1:0)||String(a.company).localeCompare(String(b.company),"fa"));
+    .sort((a,b)=>(a.closed?1:0)-(b.closed?1:0)||(b.ai?1:0)-(a.ai?1:0)||String(a.company).localeCompare(String(b.company),"fa"));
   const sel=(k,opts,v)=>`<select data-tnf="${k}"><option value="">همه</option>${opts.map(([a,b])=>`<option value="${esc(a)}"${a===v?" selected":""}>${esc(b)}</option>`).join("")}</select>`;
   const bar=`<div class="toolbar">${isAdmin()?`<button class="btn" data-act="tn-new">افزودن نیاز</button>`:""}
    <label class="meta">نوع ${sel("src",Object.entries(TN_KIND),F.src)}</label>
@@ -682,9 +682,9 @@ VIEWS["market.techneeds"] = () => {
    <label class="meta"><input type="checkbox" data-tnf="ai"${F.ai?" checked":""}> فقط هوش مصنوعی و دیجیتال</label></div>`;
   const row = x => { const key="tn_"+x.id, tr=S.tracking[key]||{}, d=x.kind==="need"?x.date_fa:(x.kind==="call"?`${x.start_fa||""} تا ${x.end_fa||""}`:`${x.from_fa||""} تا ${x.to_fa||""}`);
     const more=[x.expected&&`<b>نتایج مورد انتظار:</b> ${esc(x.expected)}`,x.solution&&`<b>راهکار پیشنهادی:</b> ${esc(x.solution)}`,x.challenges&&`<b>چالش‌ها:</b> ${esc(x.challenges)}`,x.audience&&`<b>مخاطب:</b> ${esc(x.audience)}`,x.channel&&`<b>بستر اعلام:</b> ${esc(x.channel)}`,x.organizer&&`<b>برگزارکننده:</b> ${esc(x.organizer)}`].filter(Boolean).join("<br>");
-    return `<tr>${td("عنوان",`${x.ai?'<span class="pill p-info">AI / دیجیتال</span> ':""}<b>${esc(x.title)}</b>${x.summary||more?`<details><summary class="meta">جزئیات</summary>${x.summary?`<p>${esc(x.summary)}</p>`:""}<p class="meta">${more}</p></details>`:""}`,"t")}
+    return `<tr>${td("عنوان",`${x.closed?'<span class="pill p-mute">پایان‌یافته</span> ':""}${x.scope==="کشوری"?'<span class="pill p-ok">کشوری</span> ':""}${x.ai?'<span class="pill p-info">AI / دیجیتال</span> ':""}<b>${esc(x.title)}</b>${x.summary||more?`<details><summary class="meta">جزئیات</summary>${x.summary?`<p>${esc(x.summary)}</p>`:""}<p class="meta">${more}</p></details>`:""}`,"t")}
      ${td("نوع",esc(TN_KIND[x.kind]||x.kind))}${td("شرکت",esc(x.company||"—"))}${td("حوزه",esc(x.domain||x.type||x.call_type||"—"))}${td("تاریخ",esc(d||"—"))}
-     ${td("منبع",link(x.url,x.src==="fanntop"?"fanntop.ir":(x.src||"منبع")))}
+     ${td("منبع",link(x.url,x.src==="fanntop"?"fanntop.ir":x.src==="national"?"منبع رسمی":(x.src||"منبع")))}
      ${td("وضعیت",`<select data-tnst="${esc(x.id)}">${Object.entries(TN_ST).map(([k,l])=>`<option value="${k}"${k===st(x)?" selected":""}>${l}</option>`).join("")}</select>`)}
      ${td("مسئول",tr.owner?`${esc(memberName(tr.owner))}${tr.owner===S.me.id||isAdmin()?`<br><button class="btn sm ghost" data-act="unclaim" data-id="${esc(key)}">بازگرداندن</button>`:""}`:claimBtn(key))}</tr>`; };
   return `<p class="note">فهرست نیازهای فناورانه‌ی صنعت از <b>نظام مسائل فناورانه‌ی fanntop.ir</b> (پتروشیمی، نفت و گاز و صنایع وابسته) همراه با فراخوان‌ها و رویدادهای همان سامانه. fanntop فهرست جدایی از «رویدادهای هوش مصنوعی» ندارد؛ برچسب «AI / دیجیتال» را ما با حوزه‌ی «تحول دیجیتال و هوشمندسازی» و کلیدواژه‌های عنوان می‌گذاریم و باید دستی بازبینی شود. نیاز تازه را خودتان هم اضافه کنید.</p>`+
