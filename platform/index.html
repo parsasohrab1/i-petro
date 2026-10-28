@@ -168,7 +168,7 @@ const MODULES = [
 const SUBS = {
   basket:[["list","محصولات سبد"],["ideas","محصولات پیشنهادی نو"]],
   news:[["feed","اخبار هوش مصنوعی"]],
-  market:[["iran","Iran AI Projects"],["docs_ir","مدارک پترو پالاتوس (داخلی)"],["overseas","Overseas AI Projects"],["docs_int","مدارک پارسا اینت (بین‌المللی)"],["partners","شرکای تجاری بین‌المللی"],["web","Web Design & SEO"],["investors","AI Investors & Accelerators"],["tracking","Project Tracking"],["pipeline","Pipeline"],["memory","Team Memory"]],
+  market:[["iran","Iran AI Projects"],["docs_ir","مدارک پترو پالاتوس (داخلی)"],["overseas","Overseas AI Projects"],["techneeds","نیازهای فناورانه"],["docs_int","مدارک پارسا اینت (بین‌المللی)"],["partners","شرکای تجاری بین‌المللی"],["web","Web Design & SEO"],["investors","AI Investors & Accelerators"],["tracking","Project Tracking"],["pipeline","Pipeline"],["memory","Team Memory"]],
   events:[["iran","ایران"],["world","جهان"],["all","همه"],["taken","در دست پیگیری"]],
   erp:[["domains","حوزه‌های فعالیت"],["products","توسعه‌ی محصول هوشمند"],["people","نیروی انسانی"],["finance","مالی"],["clients","مشتریان و قراردادها"],["backup","پشتیبان‌گیری"]],
   bpms:[["home","خانه‌ی BPMS"],["contacts","مخاطبین و ارتباط"],["myday","روز من"],["mind","ذهن‌نگار (آزمون خصوصی)"],["board","تخته‌ی اسکرام"],["backlog","بک‌لاگ و برنامه‌ریزی"],["sprints","اسپرینت‌ها"],["tasks","فهرست تسک‌ها"],["reports","گزارش عملکرد"],["rarchive","بایگانی گزارش‌ها"],["teams","تیم‌ها"],["process","فرایندها"],["calendar","تقویم"],["members","اعضا و ثبت‌نام"],["nda","قرارداد محرمانگی"],["training","فرم آموزش"]],
@@ -207,7 +207,7 @@ const logoSrc = () => S.settings.logo_asset ? blobUrl(S.settings.logo_asset) : D
 const S = {mod:"market", sub:"iran", q:"", db:null, user:null, assets:null, sample:null, downloads:null,
   me:{id:null,isOwner:false,canEdit:false}, canWrite:null,
   m:{tenders:[],events:[],investors:[],leads:[],partners:[]}, opsList:[],
-  settings:{}, members:[], tasks:[], letters:[], lettersArchive:[], lh:null, draft:null, archF:"all", ra:{member:null,from:"",to:""}, repLoaded:false, allLoaded:false, forceFull:false, products:[], patents:[], finance:[], clients:[], tracking:{}, schol:[], sp:{}, cdocs:{}, ip:{countries:{},drafts:{}}, ipTab:"partners", news:{items:[]}, bi:{list:[]}, arts:[], artProd:{}, artSt:{}, artAcc:{ids:[]}, ct:[], artF:{field:"",mode:"",type:"",past:false},
+  settings:{}, members:[], tasks:[], letters:[], lettersArchive:[], lh:null, draft:null, archF:"all", ra:{member:null,from:"",to:""}, repLoaded:false, allLoaded:false, forceFull:false, products:[], patents:[], finance:[], clients:[], tracking:{}, schol:[], sp:{}, cdocs:{}, ip:{countries:{},drafts:{}}, ipTab:"partners", news:{items:[]}, bi:{list:[]}, arts:[], tn:[], tnF:{src:"",ai:false,dom:"",st:""}, artProd:{}, artSt:{}, artAcc:{ids:[]}, ct:[], artF:{field:"",mode:"",type:"",past:false},
   myAtt:[], myReports:[], allReports:[], allAtt:[], loaded:false, sprints:[], boardMine:false, tour:null, got:new Set(), welcomed:false, calMine:false, calTypes:null, seenTasks:new Set()};
 try{const v=JSON.parse(localStorage.getItem("ppt-view")||"{}");if(v.mod&&SUBS[v.mod]){S.mod=v.mod;S.sub=SUBS[v.mod].some(x=>x[0]===v.sub)?v.sub:SUBS[v.mod][0][0]}}catch(e){}
 try{S.seenTasks=new Set(JSON.parse(localStorage.getItem("ppt-seen")||"[]"))}catch(e){}
@@ -241,7 +241,7 @@ const COLS = {
   "market/data/tenders":"m.tenders","market/data/events":"m.events","market/data/investors":"m.investors",
   "market/data/leads":"m.leads","market/data/partners":"m.partners","patentops/data/items":"opsList",
   members:"members", tasks:"tasks", letters:"letters", letters_archive:"lettersArchive", products:"products", patents:"patents",
-  finance:"finance", clients:"clients", sprints:"sprints", scholarships:"schol", articles:"arts"
+  finance:"finance", clients:"clients", sprints:"sprints", scholarships:"schol", articles:"arts", techneeds:"tn"
 };
 // privacy: only admins see other members and their tasks; everyone else gets just their own rows
 const PRIVATE_SUBS = {bpms:["contacts","teams"], erp:["people"]};
@@ -658,6 +658,39 @@ const webmailLink = cls => `<a class="btn ${cls}" href="${esc(webmailUrl())}" ta
 const webmailBar = () => `<div class="toolbar">${webmailLink("sig")}<span class="meta">پیش‌نویس ایمیل شرکا در Drafts همین وب‌میل ذخیره می‌شود؛ پس از ورود با حساب info@parsaint.group آن را بازبینی و ارسال کنید.</span></div>`;
 VIEWS["market.overseas"] = mk(t=>(t.market||"international")==="international"&&t.line!=="web");
 { const _mi=VIEWS["market.iran"], _mo=VIEWS["market.overseas"]; VIEWS["market.iran"]=()=>companyDocsStrip("ppt")+_mi(); VIEWS["market.overseas"]=()=>webmailBar()+companyDocsStrip("parsa")+_mo(); }
+// ---------- technology needs (fanntop.ir RFP system, plus needs added by hand)
+const TN_KIND = {need:"نیاز فناورانه (RFP)", call:"فراخوان", event:"رویداد"};
+const TN_ST = {new:"جدید", review:"در حال بررسی", proposed:"پیشنهاد ارسال شد", skip:"مناسب ما نیست"};
+function tnForm(t={}){
+  if(!isAdmin()){ toast("افزودن و ویرایش نیاز فقط برای مدیران است."); return; }
+  openForm({title:t.id?"ویرایش نیاز":"نیاز فناورانه‌ی جدید", values:t,
+   fields:[{k:"title",label:"عنوان"},{k:"company",label:"شرکت یا سازمان"},{k:"kind",label:"نوع",type:"select",options:TN_KIND},{k:"domain",label:"حوزه"},
+    {k:"summary",label:"شرح اجمالی",type:"textarea"},{k:"expected",label:"نتایج مورد انتظار",type:"textarea"},{k:"url",label:"لینک منبع",dir:"ltr"},{k:"src",label:"منبع (مثلاً fanntop یا نام سایت)"},
+    {k:"ai",label:"مرتبط با هوش مصنوعی/دیجیتال؟ (yes یا no)"}],
+   onSave: v => { const id=t.id||("tn_"+newId()); const {ai,...r}=v; return save(`techneeds/${id}`,{...t,...r,id:undefined,ai:/^y/i.test(String(ai||"")),src:r.src||"manual",updated:new Date().toISOString(),updated_by:S.me.id}); }});
+}
+VIEWS["market.techneeds"] = () => {
+  const F=S.tnF, doms=[...new Set(S.tn.filter(x=>x.kind==="need").map(x=>x.domain).filter(Boolean))];
+  const st = x => (S.tracking["tn_"+x.id]||{}).tn_status||"new";
+  const list=S.tn.filter(x=>(!F.src||x.kind===F.src)&&(!F.ai||x.ai)&&(!F.dom||x.domain===F.dom)&&(!F.st||st(x)===F.st)&&match(x.title,x.company,x.domain,x.summary,x.expected,x.solution))
+    .sort((a,b)=>(b.ai?1:0)-(a.ai?1:0)||String(a.company).localeCompare(String(b.company),"fa"));
+  const sel=(k,opts,v)=>`<select data-tnf="${k}"><option value="">همه</option>${opts.map(([a,b])=>`<option value="${esc(a)}"${a===v?" selected":""}>${esc(b)}</option>`).join("")}</select>`;
+  const bar=`<div class="toolbar">${isAdmin()?`<button class="btn" data-act="tn-new">افزودن نیاز</button>`:""}
+   <label class="meta">نوع ${sel("src",Object.entries(TN_KIND),F.src)}</label>
+   <label class="meta">حوزه ${sel("dom",doms.map(d=>[d,d]),F.dom)}</label>
+   <label class="meta">وضعیت ${sel("st",Object.entries(TN_ST),F.st)}</label>
+   <label class="meta"><input type="checkbox" data-tnf="ai"${F.ai?" checked":""}> فقط هوش مصنوعی و دیجیتال</label></div>`;
+  const row = x => { const key="tn_"+x.id, tr=S.tracking[key]||{}, d=x.kind==="need"?x.date_fa:(x.kind==="call"?`${x.start_fa||""} تا ${x.end_fa||""}`:`${x.from_fa||""} تا ${x.to_fa||""}`);
+    const more=[x.expected&&`<b>نتایج مورد انتظار:</b> ${esc(x.expected)}`,x.solution&&`<b>راهکار پیشنهادی:</b> ${esc(x.solution)}`,x.challenges&&`<b>چالش‌ها:</b> ${esc(x.challenges)}`,x.audience&&`<b>مخاطب:</b> ${esc(x.audience)}`,x.channel&&`<b>بستر اعلام:</b> ${esc(x.channel)}`,x.organizer&&`<b>برگزارکننده:</b> ${esc(x.organizer)}`].filter(Boolean).join("<br>");
+    return `<tr>${td("عنوان",`${x.ai?'<span class="pill p-info">AI / دیجیتال</span> ':""}<b>${esc(x.title)}</b>${x.summary||more?`<details><summary class="meta">جزئیات</summary>${x.summary?`<p>${esc(x.summary)}</p>`:""}<p class="meta">${more}</p></details>`:""}`,"t")}
+     ${td("نوع",esc(TN_KIND[x.kind]||x.kind))}${td("شرکت",esc(x.company||"—"))}${td("حوزه",esc(x.domain||x.type||x.call_type||"—"))}${td("تاریخ",esc(d||"—"))}
+     ${td("منبع",link(x.url,x.src==="fanntop"?"fanntop.ir":(x.src||"منبع")))}
+     ${td("وضعیت",`<select data-tnst="${esc(x.id)}">${Object.entries(TN_ST).map(([k,l])=>`<option value="${k}"${k===st(x)?" selected":""}>${l}</option>`).join("")}</select>`)}
+     ${td("مسئول",tr.owner?`${esc(memberName(tr.owner))}${tr.owner===S.me.id||isAdmin()?`<br><button class="btn sm ghost" data-act="unclaim" data-id="${esc(key)}">بازگرداندن</button>`:""}`:claimBtn(key))}</tr>`; };
+  return `<p class="note">فهرست نیازهای فناورانه‌ی صنعت از <b>نظام مسائل فناورانه‌ی fanntop.ir</b> (پتروشیمی، نفت و گاز و صنایع وابسته) همراه با فراخوان‌ها و رویدادهای همان سامانه. fanntop فهرست جدایی از «رویدادهای هوش مصنوعی» ندارد؛ برچسب «AI / دیجیتال» را ما با حوزه‌ی «تحول دیجیتال و هوشمندسازی» و کلیدواژه‌های عنوان می‌گذاریم و باید دستی بازبینی شود. نیاز تازه را خودتان هم اضافه کنید.</p>`+
+   kpis([["کل موردها",faNum(S.tn.length)],["نیاز فناورانه",faNum(S.tn.filter(x=>x.kind==="need").length)],["مرتبط با AI/دیجیتال",faNum(S.tn.filter(x=>x.ai).length)],["بدون مسئول",faNum(list.filter(x=>!owned("tn_"+x.id)).length)]])+bar+
+   table(["عنوان","نوع","شرکت","حوزه","تاریخ","منبع","وضعیت","مسئول"],list.map(row),"موردی با این فیلتر نیست.");
+};
 VIEWS["market.web"] = () => {
   const list = S.m.tenders.filter(t=>t.line==="web"&&ACTIVE.has(t.status)&&!owned(t.id)).filter(t=>match(t.title,t.country));
   const leads = S.m.leads.filter(l=>!owned("ld_"+l.id)&&match(l.name,l.activity,l.city));
@@ -2841,6 +2874,7 @@ function mindOwnerView(mid){ const x=(S.allMind||[]).find(a=>a.member===mid); if
 const TOUR = [
  {title:"به iPetro خوش آمدید",text:"iPetro سامانه‌ی یکپارچه‌ی پترو پالا توس است و کار روزانه‌ی تیم را در یک جا جمع می‌کند: پیدا کردن فرصت‌های بازار، مدیریت شرکت، کار روزانه‌ی اعضا، نامه‌نگاری و پتنت. آموزش را قدم‌به‌قدم می‌بینید؛ هر مرحله خودش به همان تب می‌رود. هر زمان بخواهید از دکمه‌ی «راهنما» بالای صفحه دوباره شروع کنید."},
  {mod:"market",title:"Market – بازار",text:"همه‌ی فرصت‌های بیرونی شرکت اینجاست. ایجنت هر روز بازار را می‌گردد و فرصت‌ها را می‌آورد؛ شما مسئولیت می‌گیرید و پیگیری می‌کنید."},
+ {mod:"market",sub:"techneeds",title:"نیازهای فناورانه",text:"نیازهای فناورانه‌ی شرکت‌های پتروشیمی و نفت و گاز از نظام مسائل فناورانه‌ی fanntop.ir، با فراخوان‌ها و رویدادهای همان سامانه. با فیلتر نوع، حوزه، وضعیت و «فقط هوش مصنوعی و دیجیتال» جست‌وجو کنید، مسئولیت مورد را بگیرید و وضعیت را به‌روز کنید. برچسب AI را ما می‌گذاریم و باید دستی بازبینی شود."},
  {mod:"market",sub:"iran",title:"Iran AI Projects",text:"مناقصه‌ها و فراخوان‌های هوش مصنوعی و پژوهشی داخل ایران. هر ردیف مهلت، قیمت، ضمانت‌نامه، شرط رزومه و ستون Go/No-Go دارد. دکمه‌ی «مسئولیت را می‌گیرم» مورد را به نام شما ثبت می‌کند و از فهرست باز بر می‌دارد."},
  {mod:"market",sub:"overseas",title:"Overseas AI Projects",text:"همان فهرست برای مناقصه‌های بین‌المللی. پیشنهاد به نام Parsa International Group (استانبول) ارسال می‌شود. زیر «دلایل» ستون Go/No-Go می‌بینید چرا ایجنت پیشنهاد «برو» یا «نرو» داده است."},
  {mod:"market",sub:"web",title:"Web Design & SEO",text:"درخواست‌های طراحی سایت و سئو، و تولیدکنندگانی که سایت ندارند و می‌توان با آن‌ها تماس گرفت. آنچه کسی برداشته در پایین صفحه، بخش «در دست پیگیری» است."},
@@ -2992,6 +3026,7 @@ document.addEventListener("click", async e => {
       if(a==="product-approve"&&!eds.includes(m)) eds.push(m); if(a==="product-revoke") eds=eds.filter(x=>x!==m);
       await save(`products/${id}`,{...pr,edit_requests:rq,editors:eds,access_by:S.me.id,access_at:new Date().toISOString()},a==="product-approve"?"اجازه‌ی کار داده شد":a==="product-reject"?"درخواست رد شد":"دسترسی لغو شد"); break; }
     case "product-new": productForm(); break;
+    case "tn-new": tnForm(); break;
     case "product-edit": productForm(S.products.find(p=>p.id===id)); break;
     case "fin-new": finForm(); break;
     case "fin-edit": finForm(S.finance.find(f=>f.id===id)); break;
@@ -3094,7 +3129,9 @@ document.addEventListener("input", e => { if(e.target.id==="ipTo"){ const a=$("#
   if(el.dataset.c==="identity"){ if(d.numAuto) d.number=nextLetterNo(d.identity,d.date); S.forceFull=true; renderView(); return; }
   if(el.dataset.c==="date"&&d.numAuto){ d.number=nextLetterNo(d.identity,d.date); const nf=$("[data-c=number]"); if(nf) nf.value=d.number; }
   const p=$("#cprev"); if(p) p.innerHTML=letterSheet(draftLetter()); });
-document.addEventListener("change", async e => { const af=e.target.closest("[data-af]"); if(af){ S.artF[af.dataset.af]=af.type==="checkbox"?af.checked:af.value; renderView(); return; }
+document.addEventListener("change", async e => { const tf=e.target.closest("[data-tnf]"); if(tf){ S.tnF[tf.dataset.tnf]=tf.type==="checkbox"?tf.checked:tf.value; renderView(); return; }
+  const ts=e.target.closest("[data-tnst]"); if(ts){ if(!myMember()){toast("ابتدا ثبت‌نام کنید.");renderView();return;} try{ await S.db.doc("tracking/tn_"+ts.dataset.tnst).update({tn_status:ts.value}); }catch(err){ try{ await S.db.doc("tracking/tn_"+ts.dataset.tnst).set({tn_status:ts.value}); }catch(e2){ toast("ذخیره نشد: "+e2.message); } } return; }
+  const af=e.target.closest("[data-af]"); if(af){ S.artF[af.dataset.af]=af.type==="checkbox"?af.checked:af.value; renderView(); return; }
   const bm=e.target.closest("[data-bm]"); if(bm){ S.boardMine=bm.checked; renderView(); return; }
   const to=e.target.closest("[data-trkowner]"); if(to){ const id0=to.dataset.trkowner; if(!await trackSetOwner(id0,to.value)) renderView(); return; }
   const tw=e.target.closest("[data-trkwho]"); if(tw){ S.trkWho=tw.value; return; }
