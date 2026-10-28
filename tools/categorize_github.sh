@@ -16,6 +16,7 @@ N---Barekat---IPIND---Intelligent-Platform-for-Integrated-Nanocarrier-Design
 barekat-gen-therapy
 NPA---Neuro-Predict-Ai
 barekat-Genomics
+articles-readmitcal-diabetes
 L
 tag domain-oil-gas <<'L'
 inno---inteligent---ref---park-naft
@@ -26,6 +27,31 @@ i-lift---AI-Powered-Artificial-Lift-Management-Dashboard
 OGIM---NISOC
 inno-Khalij-AryaSasol-MultiGrade-PE-Transition-Optimization-System-
 inno-terminals-tanks
+inno-Jam-Petrochemical-polymerization-digitwin
+inno-Khalij-Apadana-Reformer-Methanol-Digital-Twin-System
+-Khalij-Apadana-Reformer-Methanol-Loop-Digital-Twin-System-
+Khalij-AryaSasol-MultiGrade-PE-Transition-Optimization-System
+inno-shimibaft-petrochemical
+inno-tech-inspection-corrosion-control-60ta
+inno-khorasan-petrochemical-SEM
+inno-iran-yasa-60ta
+Khalij-BandarImam-MultiPlant-Feedstock-Margin-Orchestrator-System
+Iran-carbon-black
+inno---Oil-Industry-Smart-Technology-and-Innovation-Park
+khalij-products-to-extend
+inno-Abadan-Petrochemical-Smart-Dash
+Khalij-Production-Process-Prediction-and-Optimization-System
+pfd---pid-design-for-gas-turbine
+intelligent-management-sys-energy-carbon-sustainability-
+inno-khark-dss
+inno-fanavaran-ioa
+inno-Khalij-Arvand-ChlorAlkali-PVC-Digital-Twin-System-
+inno---inteligent-ref---park-naft
+iFDC---FCDDWCSW
+DOF-Digital-Oil-Field
+i-drill
+articles-declinecal-offshore
+articles-stratguard-facies
 L
 tag domain-oil-gas domain-aerospace <<'L'
 -ApexAsset-AI
@@ -33,6 +59,7 @@ digital-twine-gas-turbine
 L
 tag domain-nuclear <<'L'
 Digital-twin---nuc---reac
+nuc---pdm---reactor
 L
 tag domain-other <<'L'
 khalij-Digital-Transformation-and-Value-Chain-Integration-System
