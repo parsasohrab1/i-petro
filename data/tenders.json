@@ -25,7 +25,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": -6,
+   "days_left": -7,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -66,7 +66,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": -7,
+   "days_left": -8,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -107,7 +107,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": -6,
+   "days_left": -7,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -148,7 +148,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": -6,
+   "days_left": -7,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -189,7 +189,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": -6,
+   "days_left": -7,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -214,8 +214,8 @@
    "description": "پژوهش کاربردی – ماهیت: فناوری",
    "buyer": "شرکت گاز استان مازندران",
    "country": "ایران – ساری",
-   "deadline": "2026-10-23",
-   "deadline_fa": "1405/08/01",
+   "deadline": "2026-11-04",
+   "deadline_fa": "1405/08/13",
    "published": "",
    "url": "https://sate.atf.gov.ir/Systems/Default.aspx?SiteRequestId=10n1I4Dvhmg=",
    "notice_type": "پژوهش کاربردی / فناوری",
@@ -230,7 +230,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": -5,
+   "days_left": 6,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -271,7 +271,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": -4,
+   "days_left": -5,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -312,14 +312,19 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": 0,
+   "days_left": -1,
    "line": "ai",
-   "status": "new",
+   "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
    "history": [
     {
      "at": "2026-10-19T13:28:54",
      "status": "new"
+    },
+    {
+     "at": "2026-10-29T10:29:08",
+     "status": "expired",
+     "note": ""
     }
    ]
   },
@@ -348,14 +353,19 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": 0,
+   "days_left": -1,
    "line": "ai",
-   "status": "new",
+   "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
    "history": [
     {
      "at": "2026-10-19T13:28:54",
      "status": "new"
+    },
+    {
+     "at": "2026-10-29T10:29:08",
+     "status": "expired",
+     "note": ""
     }
    ]
   },
@@ -384,7 +394,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": 1,
+   "days_left": 0,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -420,7 +430,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": 1,
+   "days_left": 0,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -456,7 +466,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": 3,
+   "days_left": 2,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -492,7 +502,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": 4,
+   "days_left": 3,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -526,7 +536,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 5,
+   "days_left": 4,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -561,7 +571,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 8,
+   "days_left": 7,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -596,7 +606,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 13,
+   "days_left": 12,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -631,7 +641,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 15,
+   "days_left": 14,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -665,7 +675,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 19,
+   "days_left": 18,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -699,7 +709,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 21,
+   "days_left": 20,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -734,7 +744,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 33,
+   "days_left": 32,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -769,7 +779,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 41,
+   "days_left": 40,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -804,7 +814,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": -1,
+   "days_left": -2,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -844,7 +854,7 @@
     "ai_cross_cutting",
     "medical"
    ],
-   "days_left": 19,
+   "days_left": 18,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -880,7 +890,7 @@
     "energy",
     "urban"
    ],
-   "days_left": 26,
+   "days_left": 25,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -914,7 +924,7 @@
    "domains": [
     "urban"
    ],
-   "days_left": 23,
+   "days_left": 22,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-20T09:40:22",
@@ -948,7 +958,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 76,
+   "days_left": 75,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-20T09:40:22",
@@ -1050,14 +1060,19 @@
    "domains": [
     "aviation"
    ],
-   "days_left": 0,
+   "days_left": -1,
    "line": "ai",
-   "status": "new",
+   "status": "expired",
    "first_seen": "2026-10-21T09:36:20",
    "history": [
     {
      "at": "2026-10-21T09:36:20",
      "status": "new"
+    },
+    {
+     "at": "2026-10-29T10:29:08",
+     "status": "expired",
+     "note": ""
     }
    ]
   },
@@ -1084,7 +1099,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 5,
+   "days_left": 4,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-21T09:36:20",
@@ -1119,7 +1134,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": 6,
+   "days_left": 5,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-21T09:36:20",
@@ -1153,7 +1168,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 24,
+   "days_left": 23,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-21T09:36:20",
@@ -1187,7 +1202,7 @@
    "domains": [
     "web"
    ],
-   "days_left": 26,
+   "days_left": 25,
    "line": "web",
    "status": "new",
    "first_seen": "2026-10-21T09:36:20",
@@ -1255,7 +1270,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 12,
+   "days_left": 11,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-22T09:39:52",
@@ -1289,7 +1304,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 23,
+   "days_left": 22,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-22T09:39:52",
@@ -1323,7 +1338,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 23,
+   "days_left": 22,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-22T09:39:52",
@@ -1357,7 +1372,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 33,
+   "days_left": 32,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-22T09:39:52",
@@ -1391,7 +1406,7 @@
    "domains": [
     "aviation"
    ],
-   "days_left": 28,
+   "days_left": 27,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-23T09:35:00",
@@ -1425,7 +1440,7 @@
    "domains": [
     "medical"
    ],
-   "days_left": 34,
+   "days_left": 33,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-23T09:35:00",
@@ -1459,7 +1474,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 37,
+   "days_left": 36,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-23T09:35:00",
@@ -1596,7 +1611,7 @@
    "domains": [
     "urban"
    ],
-   "days_left": 12,
+   "days_left": 11,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-26T10:29:22",
@@ -1630,7 +1645,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 26,
+   "days_left": 25,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-26T10:29:22",
@@ -1664,7 +1679,7 @@
    "domains": [
     "urban"
    ],
-   "days_left": 26,
+   "days_left": 25,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-26T10:29:22",
@@ -1732,7 +1747,7 @@
    "domains": [
     "urban"
    ],
-   "days_left": 13,
+   "days_left": 12,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-27T10:03:26",
@@ -1766,7 +1781,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 26,
+   "days_left": 25,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-27T10:03:26",
@@ -1800,7 +1815,7 @@
    "domains": [
     "medical"
    ],
-   "days_left": 29,
+   "days_left": 28,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-27T10:03:26",
@@ -1834,7 +1849,7 @@
    "domains": [
     "urban"
    ],
-   "days_left": 30,
+   "days_left": 29,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-27T10:03:26",
@@ -1869,7 +1884,7 @@
    "domains": [
     "web"
    ],
-   "days_left": 12,
+   "days_left": 11,
    "line": "web",
    "status": "new",
    "first_seen": "2026-10-28T10:50:09",
@@ -1903,7 +1918,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 30,
+   "days_left": 29,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-28T10:50:09",
@@ -1937,7 +1952,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 40,
+   "days_left": 39,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-28T10:50:09",
@@ -2012,6 +2027,498 @@
    "history": [
     {
      "at": "2026-10-28T10:50:09",
+     "status": "new"
+    }
+   ]
+  },
+  "TED-706866-2026": {
+   "id": "TED-706866-2026",
+   "source": "TED (EU)",
+   "market": "international",
+   "title": "Iceland – IT services: consulting, software development, Internet and support – IT services for Digital Health",
+   "description": "IT services for Digital Health",
+   "buyer": "Fjársýsla ríkisins",
+   "country": "ISL",
+   "deadline": "2026-11-18",
+   "published": "2026-10-13",
+   "url": "https://ted.europa.eu/en/notice/-/detail/706866-2026",
+   "notice_type": "cn-standard",
+   "sector": "دولتی",
+   "facts": {
+    "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "رویه‌ی باز اتحادیه اروپا – شرکت‌های خارج از EU معمولاً مجازند مگر محدودیت صریح در اسناد"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "health_ai"
+   ],
+   "days_left": 20,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-10-29T10:23:20",
+   "history": [
+    {
+     "at": "2026-10-29T10:23:20",
+     "status": "new"
+    }
+   ]
+  },
+  "TED-682626-2026": {
+   "id": "TED-682626-2026",
+   "source": "TED (EU)",
+   "market": "international",
+   "title": "Finland – IT services: consulting, software development, Internet and support – INVITATION TO PARTICIPATE - Digital pathology image viewer solution and supporting IT services",
+   "description": "Fimlab Laboratoriot Oy (also ”Contracting Entity”, \"Fimlab” or ”Customer”) is inviting candidates to leave a request to participate for a procurement of digital pathology image viewer solution and supporting IT services delivered as a SaaS solution (hereinafter the “Service”). AT THE MOMENT No tender nor preliminary tender is expected from the candidates. The purpose of the procurement is to select one (1) supplier with an overall responsibility, with whom the Contracting Entity will enter into a lot specific agreement valid until further notice. The selected supplier may also be a consortium formed by the candidates. Please note! The mandatory requirements for the object of the procurement described in the documents or the criteria set out for most economically advantageous tender are NOT negotiated during the procurement process and their content is not subject to change, but their specification is possible. In other respects, the Preliminary Call for Tenders and its appendices are preliminary views of the Contracting Entity and the documents will be amended and specified in the course of the procurement and negotiation process. The preliminary timetable for the procurement is presented in the Preliminary Invitation to Negotiate. The schedule may be subject to change during the procedure.",
+   "buyer": "Fimlab Laboratoriot Oy",
+   "country": "FIN",
+   "deadline": "",
+   "published": "2026-10-05",
+   "url": "https://ted.europa.eu/en/notice/-/detail/682626-2026",
+   "notice_type": "cn-standard",
+   "sector": "دولتی",
+   "facts": {
+    "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "health_ai"
+   ],
+   "days_left": null,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-10-29T10:23:20",
+   "history": [
+    {
+     "at": "2026-10-29T10:23:20",
+     "status": "new"
+    }
+   ]
+  },
+  "SETAD-1105092062000055": {
+   "id": "SETAD-1105092062000055",
+   "source": "ستاد (setadiran.ir)",
+   "market": "domestic",
+   "title": "نیاز کالا-ef AI18 دستگاه تشخیص چهره ،کارت رمز،بارکد دو بعدی،نصب ،راه اندازی و آموزش سیستم کنترل تردد و پایه فلزی-44دستگاه طبق فایل پیوست",
+   "description": "– خرید",
+   "buyer": "معاونت دانشجویی فرهنگی دانشگاه علوم پزشکی ایران",
+   "country": "ایران – تهران",
+   "deadline": "2026-10-31",
+   "deadline_fa": "1405/08/09 - 12:00",
+   "published": "",
+   "url": "https://fe.setadiran.ir/centralboard/#/central-board-0",
+   "notice_type": "خرید",
+   "setad_number": "1105092062000055",
+   "sector": "دولتی",
+   "facts": {
+    "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "guarantee": "تضمین شرکت در فرایند ارجاع کار طبق آیین‌نامه تضمین معاملات دولتی – مبلغ در اسناد ستاد",
+    "experience": "ارزیابی کیفی/رتبه و سوابق طبق اسناد ستاد (نیاز به ورود به سامانه)",
+    "international": "نیاز به ثبت‌نام در ستاد و شخصیت حقوقی ایرانی؛ شرکت خارجی فقط از طریق شریک ایرانی"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "ai_cross_cutting"
+   ],
+   "days_left": 2,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-10-29T10:29:08",
+   "history": [
+    {
+     "at": "2026-10-29T10:29:08",
+     "status": "new"
+    }
+   ]
+  },
+  "SETAD-1105004813000213": {
+   "id": "SETAD-1105004813000213",
+   "source": "ستاد (setadiran.ir)",
+   "market": "domestic",
+   "title": "نیاز خدمات-یک اکانت هوش مصنوعی یک ساله CURSOR مورد نیاز است",
+   "description": "– خرید",
+   "buyer": "ستاد قوه قضائیه",
+   "country": "ایران – تهران",
+   "deadline": "2026-10-31",
+   "deadline_fa": "1405/08/09 - 08:00",
+   "published": "",
+   "url": "https://fe.setadiran.ir/centralboard/#/central-board-0",
+   "notice_type": "خرید",
+   "setad_number": "1105004813000213",
+   "sector": "دولتی",
+   "facts": {
+    "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "guarantee": "تضمین شرکت در فرایند ارجاع کار طبق آیین‌نامه تضمین معاملات دولتی – مبلغ در اسناد ستاد",
+    "experience": "ارزیابی کیفی/رتبه و سوابق طبق اسناد ستاد (نیاز به ورود به سامانه)",
+    "international": "نیاز به ثبت‌نام در ستاد و شخصیت حقوقی ایرانی؛ شرکت خارجی فقط از طریق شریک ایرانی"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "ai_cross_cutting"
+   ],
+   "days_left": 2,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-10-29T10:29:08",
+   "history": [
+    {
+     "at": "2026-10-29T10:29:08",
+     "status": "new"
+    }
+   ]
+  },
+  "SETAD-1105093791000401": {
+   "id": "SETAD-1105093791000401",
+   "source": "ستاد (setadiran.ir)",
+   "market": "domestic",
+   "title": "نیاز کالا-دستگاه ثبت حضور غیاب بیومتریک(تشخیص چهره)",
+   "description": "– خرید",
+   "buyer": "شرکت مدیریت تولید برق نکا مازندران",
+   "country": "ایران – مازندران",
+   "deadline": "2026-11-01",
+   "deadline_fa": "1405/08/10 - 16:00",
+   "published": "",
+   "url": "https://fe.setadiran.ir/centralboard/#/central-board-0",
+   "notice_type": "خرید",
+   "setad_number": "1105093791000401",
+   "sector": "شرکت دولتی / عمومی",
+   "facts": {
+    "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "guarantee": "تضمین شرکت در فرایند ارجاع کار طبق آیین‌نامه تضمین معاملات دولتی – مبلغ در اسناد ستاد",
+    "experience": "ارزیابی کیفی/رتبه و سوابق طبق اسناد ستاد (نیاز به ورود به سامانه)",
+    "international": "نیاز به ثبت‌نام در ستاد و شخصیت حقوقی ایرانی؛ شرکت خارجی فقط از طریق شریک ایرانی"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "ai_cross_cutting"
+   ],
+   "days_left": 3,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-10-29T10:29:08",
+   "history": [
+    {
+     "at": "2026-10-29T10:29:08",
+     "status": "new"
+    }
+   ]
+  },
+  "SATE-Qet0nklxSLA": {
+   "id": "SATE-Qet0nklxSLA",
+   "source": "ساتع (sate.atf.gov.ir)",
+   "market": "domestic",
+   "prefiltered": true,
+   "title": "طراحی و استقرار سامانه هوشمند رسیدگی به شکایات و صیانت (سامانه هوشمند صیانت از حقوق شهروندی)",
+   "description": "پژوهش کاربردی – ماهیت: فناوری",
+   "buyer": "شرکت ملی پالایش و پخش فراورده های نفتی ایران",
+   "country": "ایران – تهران",
+   "deadline": "2026-11-04",
+   "deadline_fa": "1405/08/13",
+   "published": "",
+   "url": "https://sate.atf.gov.ir/Systems/Default.aspx?SiteRequestId=Qet0nklxSLA=",
+   "notice_type": "پژوهش کاربردی / فناوری",
+   "sector": "شرکت دولتی / عمومی",
+   "facts": {
+    "price": "اعتبار پروژه‌ی پژوهشی/فناوری – مبلغ در سند نیاز ساتع",
+    "guarantee": "طبق قرارداد پژوهشی با دستگاه متقاضی (معمولاً تضمین حسن انجام کار)",
+    "experience": "ارسال پیشنهاده (پروپوزال) و سوابق فناور در سامانه ساتع؛ ارزیابی توسط دستگاه متقاضی",
+    "international": "ویژه‌ی فناوران و شرکت‌های ایرانی ثبت‌نام‌شده در ساتع"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "ai_cross_cutting"
+   ],
+   "days_left": 6,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-10-29T10:29:08",
+   "history": [
+    {
+     "at": "2026-10-29T10:29:08",
+     "status": "new"
+    }
+   ]
+  },
+  "SATE-rdPkwh3x0d4": {
+   "id": "SATE-rdPkwh3x0d4",
+   "source": "ساتع (sate.atf.gov.ir)",
+   "market": "domestic",
+   "prefiltered": true,
+   "title": "آنالیز نتایج آزمایشات روغن ترانسفورماتورها با استفاده از هوش مصنوعی",
+   "description": "پژوهش کاربردی – ماهیت: فناوری",
+   "buyer": "موسسه تحقیقات سیاست علمی کشور_کارگزار شورای عالی علوم، تحقیقات و فناوری",
+   "country": "ایران – تهران",
+   "deadline": "2026-11-05",
+   "deadline_fa": "1405/08/14",
+   "published": "",
+   "url": "https://sate.atf.gov.ir/Systems/Default.aspx?SiteRequestId=rdPkwh3x0d4=",
+   "notice_type": "پژوهش کاربردی / فناوری",
+   "sector": "دولتی",
+   "facts": {
+    "price": "اعتبار پروژه‌ی پژوهشی/فناوری – مبلغ در سند نیاز ساتع",
+    "guarantee": "طبق قرارداد پژوهشی با دستگاه متقاضی (معمولاً تضمین حسن انجام کار)",
+    "experience": "ارسال پیشنهاده (پروپوزال) و سوابق فناور در سامانه ساتع؛ ارزیابی توسط دستگاه متقاضی",
+    "international": "ویژه‌ی فناوران و شرکت‌های ایرانی ثبت‌نام‌شده در ساتع"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "ai_cross_cutting"
+   ],
+   "days_left": 7,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-10-29T10:29:08",
+   "history": [
+    {
+     "at": "2026-10-29T10:29:08",
+     "status": "new"
+    }
+   ]
+  },
+  "SATE-zN5p8bjuYAc": {
+   "id": "SATE-zN5p8bjuYAc",
+   "source": "ساتع (sate.atf.gov.ir)",
+   "market": "domestic",
+   "prefiltered": true,
+   "title": "توسعه سامانه هوشمند بهینه‌سازی مصرف انرژی در واحدهای فرایندی",
+   "description": "پژوهش کاربردی – ماهیت: فناوری",
+   "buyer": "سازمان مدیریت و برنامه ریزی استان چهارمحال و بختیاری",
+   "country": "ایران – شهرکرد",
+   "deadline": "2026-11-05",
+   "deadline_fa": "1405/08/14",
+   "published": "",
+   "url": "https://sate.atf.gov.ir/Systems/Default.aspx?SiteRequestId=zN5p8bjuYAc=",
+   "notice_type": "پژوهش کاربردی / فناوری",
+   "sector": "دولتی",
+   "facts": {
+    "price": "اعتبار پروژه‌ی پژوهشی/فناوری – مبلغ در سند نیاز ساتع",
+    "guarantee": "طبق قرارداد پژوهشی با دستگاه متقاضی (معمولاً تضمین حسن انجام کار)",
+    "experience": "ارسال پیشنهاده (پروپوزال) و سوابق فناور در سامانه ساتع؛ ارزیابی توسط دستگاه متقاضی",
+    "international": "ویژه‌ی فناوران و شرکت‌های ایرانی ثبت‌نام‌شده در ساتع"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "ai_cross_cutting"
+   ],
+   "days_left": 7,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-10-29T10:29:08",
+   "history": [
+    {
+     "at": "2026-10-29T10:29:08",
+     "status": "new"
+    }
+   ]
+  },
+  "TED-751772-2026": {
+   "id": "TED-751772-2026",
+   "source": "TED (EU)",
+   "market": "international",
+   "title": "Poland – Aviation kerosene – Zakup i tankowanie paliwa lotniczego JET A-1",
+   "description": "Przedmiotem zamówienia jest zakup i tankowanie paliwa lotniczego JET A-1 w ilości do 800 000 litrów, zgodnie z wymaganiami zawartymi w Specyfikacji Warunków Zamówienia. Zamawiający zobowiązuje się w okresie trwania umowy do zakupu minimalnej ilości paliwa lotniczego JET A-1 w ilości 400 000 litrów lub do wysokości 50 % maksymalnego wynagrodzenia brutto. Paliwo musi pochodzić z bieżącej produkcji (tj. z okresu realizacji umowy) i może zawierać komponenty, które odpowiadają ustalonym wymaganiom jakościowym. Jakość paliwa tankowanego do statków powietrznych Zamawiającego musi być zgodna z normą DEF STAN 91-091 WT oraz ASTM D 1655 lub normą równoważną. Zapłata za paliwo nastąpi po cenie nieobciążonej podatkiem akcyzowym na warunkach określonych w ustawie o podatku akcyzowym oraz niezawierającej opłaty paliwowej.",
+   "buyer": "Komenda Główna Straży Granicznej",
+   "country": "POL",
+   "deadline": "2026-11-06",
+   "published": "2026-10-29",
+   "url": "https://ted.europa.eu/en/notice/-/detail/751772-2026",
+   "notice_type": "cn-standard",
+   "sector": "دولتی",
+   "facts": {
+    "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "رویه‌ی باز اتحادیه اروپا – شرکت‌های خارج از EU معمولاً مجازند مگر محدودیت صریح در اسناد"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "aviation"
+   ],
+   "days_left": 8,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-10-29T10:29:08",
+   "history": [
+    {
+     "at": "2026-10-29T10:29:08",
+     "status": "new"
+    }
+   ]
+  },
+  "TED-750509-2026": {
+   "id": "TED-750509-2026",
+   "source": "TED (EU)",
+   "market": "international",
+   "title": "Switzerland – IT services: consulting, software development, Internet and support – IT-Dienstleistungen Digital Transformation Services & AI Technical Solution & Operation Services",
+   "description": "In Ergänzung zu den Eigenleistungen werden Unternehmen gesucht, welche die ZHdK für drei Jahre (mit Option auf Verlängerung um einmal zwei Jahre oder zweimal ein Jahr) mit ihren Leistungen im Informatikbereich unterstützen. Es geht konkret um folgende Dienstleistungen: * Los 1: Digital Transformation Services: Expertise sowie Beratung und Unterstützung der ZHdK in der digitalen und agilen Trans-formation sowie dem damit verbundenen Kulturwandel Leitung von oder Unterstützung in Projekten oder Programmen im Bereich der digitalen und agilen Transformation * Los 2: AI Technical Solution & Operation Services: Aufbau, Weiterentwicklung und Betrieb von AI-Services sowie der dafür erforderlichen AI-Plattformen, Infrastrukturen und technischen Grundlagen Umsetzung, Integration und Governance von AI-Lösungen sowie Befähigung der ZHdK zum nachhaltigen und sicheren Einsatz von Künstlicher Intelligenz Die gesuchten Dienstleistungen sind in zwei Lose unterteilt. Jedes Los besteht aus einem oder meh-reren Profilen für die Leistungserbringung. Die konkreten Anforderungen und Tätigkeiten sind in den beiden Los-Beschreibungen in Kapitel 2 pro Los beschrieben. Es werden Unternehmen gesucht, deren Kernkompetenzen in den beschriebenen Bereichen des In-formatikumfelds liegen und die über eigenes, qualifiziertes Personal verfügen. Für jedes Los wird der Zuschlag an bis zu drei Unternehmen erteilt. Es besteht keine Begrenzung der Angebote, d.h. es dürfen für beide Lose Angebote eingereicht werden. Es ist allerdings erwünscht, dass sich Unternehmen auf Angebote in ihren jeweiligen Kernkompetenzen konzentrieren. Der Leistungsumfang umfasst folgende Aufgaben: * AI-Service Design & Solution Engineering Beratung, Analyse und Konzeption von AI-Services, Lösungsarchitekturen und Betriebsmodellen sowie Durchführung von Evaluationen, Pilotierungen und Technologiebeurteilungen. * AI-Plattformen & Infrastruktur Aufbau, Weiterentwicklung und Betrieb von AI-Plattformen, AI-Infrastrukturen und technischen Basisdiensten in Cloud-, Hybrid- und On-Premises-Umgebungen. * AI-Lösungen & Integration Entwicklung, Konfiguration und Integration von AI-Lösungen, AI-Infrastrukturdiensten, AI-Agenten, Automatisierungen und weiteren AI-gestützten Anwendungen sowie deren Einbindung in bestehende Systeme, Prozesse, Datenquellen und Organisationsstrukturen der ZHdK. * AI-Operation & Services Management Unterstützung beim Betrieb, der Überwachung und der kontinuierlichen Verbesserung von AI-Services und Plattformen. Die Leistungen umfassen Service Lifecycle Management, Fehleranalyse, Betriebsunterstützung, Qualitätsmanagement sowie die Umsetzung etablierter Service-Management-Prozesse. * Governance, Security & Compliance Beratung und Umsetzung technischer und organisatorischer Anforderungen in den Bereichen Governance, Datenschutz, Informationssicherheit, Compliance und verantwortungsvoller Einsatz von Künstlicher Intelligenz. Dies umfasst die Unterstützung bei Risikoanalysen, Sicherheitskonzepten und regulatorischen Anforderungen. * Wissenstransfer & Enablement Unterstützung beim Aufbau von AI-Kompetenzen innerhalb der ZHdK durch Know-how-Transfer, Coaching, Schulungen und fachliche Begleitung. Ziel ist die nachhaltige Befähigung interner Organisationseinheiten für den Aufbau, die Weiterentwicklung und den Betrieb von AI-Services.",
+   "buyer": "Zürcher Hochschule der Künste, strategischer Einkauf",
+   "country": "CHE",
+   "deadline": "2026-11-11",
+   "published": "2026-10-29",
+   "url": "https://ted.europa.eu/en/notice/-/detail/750509-2026",
+   "notice_type": "cn-standard",
+   "sector": "دولتی",
+   "facts": {
+    "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "رویه‌ی باز اتحادیه اروپا – شرکت‌های خارج از EU معمولاً مجازند مگر محدودیت صریح در اسناد"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "ai_cross_cutting"
+   ],
+   "days_left": 13,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-10-29T10:29:08",
+   "history": [
+    {
+     "at": "2026-10-29T10:29:08",
+     "status": "new"
+    }
+   ]
+  },
+  "SETAD-2005001028000034": {
+   "id": "SETAD-2005001028000034",
+   "source": "ستاد (setadiran.ir)",
+   "market": "domestic",
+   "title": "مناقصه عمومی همزمان با ارزیابی (یکپارچه) یک مرحله ای خرید کارت گرافیک جهت پایلوت پروژه هوش مصنوعی",
+   "description": "– مناقصه",
+   "buyer": "شرکت تهیه و تولید مواد معدنی ایران",
+   "country": "ایران – تهران",
+   "deadline": "2026-11-14",
+   "deadline_fa": "1405/08/23 - 17:00",
+   "published": "",
+   "url": "https://fe.setadiran.ir/centralboard/#/central-board-0",
+   "notice_type": "مناقصه",
+   "setad_number": "2005001028000034",
+   "sector": "شرکت دولتی / عمومی",
+   "facts": {
+    "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "guarantee": "تضمین شرکت در فرایند ارجاع کار طبق آیین‌نامه تضمین معاملات دولتی – مبلغ در اسناد ستاد",
+    "experience": "ارزیابی کیفی/رتبه و سوابق طبق اسناد ستاد (نیاز به ورود به سامانه)",
+    "international": "نیاز به ثبت‌نام در ستاد و شخصیت حقوقی ایرانی؛ شرکت خارجی فقط از طریق شریک ایرانی"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "ai_cross_cutting"
+   ],
+   "days_left": 16,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-10-29T10:29:08",
+   "history": [
+    {
+     "at": "2026-10-29T10:29:08",
+     "status": "new"
+    }
+   ]
+  },
+  "SETAD-2005001022000036": {
+   "id": "SETAD-2005001022000036",
+   "source": "ستاد (setadiran.ir)",
+   "market": "domestic",
+   "title": "مناقصه عمومی یک مرحله ای احداث پست پاساژ و برق رسانی به مرکز ثابت قدم (هوش مصنوعی)",
+   "description": "– مناقصه",
+   "buyer": "شرکت ارتباطات زیرساخت",
+   "country": "ایران – تهران",
+   "deadline": "2026-11-18",
+   "deadline_fa": "1405/08/27 - 11:00",
+   "published": "",
+   "url": "https://fe.setadiran.ir/centralboard/#/central-board-0",
+   "notice_type": "مناقصه",
+   "setad_number": "2005001022000036",
+   "sector": "شرکت دولتی / عمومی",
+   "facts": {
+    "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "guarantee": "تضمین شرکت در فرایند ارجاع کار طبق آیین‌نامه تضمین معاملات دولتی – مبلغ در اسناد ستاد",
+    "experience": "ارزیابی کیفی/رتبه و سوابق طبق اسناد ستاد (نیاز به ورود به سامانه)",
+    "international": "نیاز به ثبت‌نام در ستاد و شخصیت حقوقی ایرانی؛ شرکت خارجی فقط از طریق شریک ایرانی"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "ai_cross_cutting"
+   ],
+   "days_left": 20,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-10-29T10:29:08",
+   "history": [
+    {
+     "at": "2026-10-29T10:29:08",
+     "status": "new"
+    }
+   ]
+  },
+  "TED-751639-2026": {
+   "id": "TED-751639-2026",
+   "source": "TED (EU)",
+   "market": "international",
+   "title": "France – Preventive maintenance services – ACCORDS-CADRES DE MAINTENANCE ET ENTRETIEN DU PARC COMPLET DES GROUPES ELECTROGENES SUR LES LACS-RESERVOIRS AUBE, MARNE, SEINE ET YONNE",
+   "description": "Lot 1 - Accord-cadre de maintenance et entretien du parc complet des groupes électrogènes sur les lacs-réservoirs Aube, Marne et Seine Lot 2 - Accord-cadre de maintenance et entretien du parc complet des groupes électrogènes sur le lac-réservoir Yonne",
+   "buyer": "EPTB Seine Grands Lacs",
+   "country": "FRA",
+   "deadline": "2026-12-08",
+   "published": "2026-10-29",
+   "url": "https://ted.europa.eu/en/notice/-/detail/751639-2026",
+   "notice_type": "cn-standard",
+   "sector": "دولتی",
+   "facts": {
+    "price": "ارزش برآوردی: 180,000 EUR",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "رویه‌ی باز اتحادیه اروپا – شرکت‌های خارج از EU معمولاً مجازند مگر محدودیت صریح در اسناد"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "energy"
+   ],
+   "days_left": 40,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-10-29T10:29:08",
+   "history": [
+    {
+     "at": "2026-10-29T10:29:08",
+     "status": "new"
+    }
+   ]
+  },
+  "TED-751747-2026": {
+   "id": "TED-751747-2026",
+   "source": "TED (EU)",
+   "market": "international",
+   "title": "France – Feasibility study, advisory service, analysis – MISSION DE MAITRISE D'OEUVRE RELATIVE A LA REHABILITATION DU RESERVOIR 10 000 N°2 (ET DU RESERVOIR 10 000 N°1) – STATION DE PRODUCTION D’EAU POTABLE DE LA BASTIDE - PHASE CANDIDATURES - Relance du marché 2026-F102",
+   "description": "Des travaux de de réhabilitation sont nécessaires sur les deux ouvrages de stockage d’eau potable de 10 000 m3 de la station de production d’eau de La Bastide. Le présent marché permettra de désigner un maitre d’œuvre qui assurera le pilotage des études et des travaux pour la réhabilitation pérenne des réservoirs afin de réduire leur vulnérabilité.",
+   "buyer": "LIMOGES METROPOLE - Communauté urbaine",
+   "country": "FRA",
+   "deadline": "",
+   "published": "2026-10-29",
+   "url": "https://ted.europa.eu/en/notice/-/detail/751747-2026",
+   "notice_type": "cn-standard",
+   "sector": "دولتی",
+   "facts": {
+    "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "energy"
+   ],
+   "days_left": null,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-10-29T10:29:08",
+   "history": [
+    {
+     "at": "2026-10-29T10:29:08",
      "status": "new"
     }
    ]
@@ -2755,6 +3262,88 @@
     "TED-748747-2026",
     "TED-745428-2026",
     "TED-748671-2026"
+   ],
+   "actioned_ids": [],
+   "reminders": []
+  },
+  {
+   "at": "2026-10-29T10:29:11",
+   "collected": 452,
+   "matched": 35,
+   "partner_drafts": [],
+   "events_added": 0,
+   "scholarships_added": 0,
+   "investors_added": 0,
+   "investor_drafts": [
+    "revo",
+    "212",
+    "hub71",
+    "aramco-ventures",
+    "antler-menap",
+    "equinor-ventures",
+    "shell-ventures",
+    "ycombinator",
+    "techstars"
+   ],
+   "leads_added": 0,
+   "papers_lines": [],
+   "events_soon": [
+    {
+     "start": "2026-11-02",
+     "name": "ADIPEC 2026",
+     "name_fa": "نمایشگاه و کنفرانس نفت و گاز ابوظبی",
+     "city": "ابوظبی"
+    },
+    {
+     "start": "2026-11-03",
+     "name": "Smart City Expo World Congress 2026",
+     "name_fa": "کنگره جهانی شهر هوشمند",
+     "city": "بارسلونا"
+    },
+    {
+     "start": "2026-11-09",
+     "name": "Web Summit 2026",
+     "name_fa": "وب سامیت لیسبون",
+     "city": "لیسبون"
+    },
+    {
+     "start": "2026-11-16",
+     "name": "MEDICA 2026",
+     "name_fa": "نمایشگاه تجهیزات و فناوری پزشکی دوسلدورف",
+     "city": "دوسلدورف"
+    },
+    {
+     "start": "2026-12-06",
+     "name": "NeurIPS 2026",
+     "name_fa": "کنفرانس NeurIPS (سیدنی / آتلانتا / پاریس)",
+     "city": "سیدنی، آتلانتا، پاریس"
+    },
+    {
+     "start": "2026-12-07",
+     "name": "GITEX Global 2026",
+     "name_fa": "جیتکس دبی",
+     "city": "دبی (Expo City)"
+    },
+    {
+     "start": "2026-12-13",
+     "name": "Iran ITEX 1405 (5th) – Sharif University",
+     "name_fa": "پنجمین نمایشگاه ایران ایتکس دانشگاه صنعتی شریف",
+     "city": "تهران (دانشگاه صنعتی شریف)"
+    }
+   ],
+   "new_ids": [
+    "SETAD-1105092062000055",
+    "SETAD-1105004813000213",
+    "SETAD-1105093791000401",
+    "SATE-Qet0nklxSLA",
+    "SATE-rdPkwh3x0d4",
+    "SATE-zN5p8bjuYAc",
+    "TED-751772-2026",
+    "TED-750509-2026",
+    "SETAD-2005001028000034",
+    "SETAD-2005001022000036",
+    "TED-751639-2026",
+    "TED-751747-2026"
    ],
    "actioned_ids": [],
    "reminders": []
