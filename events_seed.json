@@ -409,6 +409,136 @@
    "participation_fa": "غرفه یا بازدید؛ مناسب برای جذب متخصص هوش مصنوعی",
    "url": "https://www.khabarfoori.com/بخش-اقتصادی-145/3251411",
    "source": "https://www.khabarfoori.com/بخش-اقتصادی-145/3251411"
+  },
+  {
+   "id": "awwa-wic-2027",
+   "name": "AWWA Water Infrastructure Conference 2027",
+   "name_fa": "کنفرانس زیرساخت آب AWWA ۲۰۲۷",
+   "region": "world",
+   "country": "آمریکا",
+   "city": "اعلام نشده",
+   "categories": [
+    "water",
+    "ai_cross_cutting"
+   ],
+   "type": "نمایشگاه و کنفرانس",
+   "why_fa": "مسیر «Data Automation, AI, and Intelligent Infrastructure» دارد؛ ثبت چکیده تا ۱۰ دسامبر ۲۰۲۶ (ساعت ۱۶ به وقت کوهستانی) باز است.",
+   "participation_fa": "ارسال چکیده (توسط مسئول انسانی)؛ این سامانه چیزی ارسال نمی‌کند.",
+   "url": "https://www.awwa.org/event/water-infrastructure-conference/",
+   "source": "https://www.awwa.org/event/water-infrastructure-conference/",
+   "status": "new",
+   "origin": "claude-water",
+   "date_status": "tbd",
+   "usual_period_fa": "صفحه‌ی رسمی: «2027 to be announced»؛ نسخه‌ی ۲۰۲۶ از ۳۰ اوت تا ۲ سپتامبر در ایندیاناپولیس بود"
+  },
+  {
+   "id": "sdewes-2027",
+   "name": "SDEWES 2027 – 22nd Conference on Sustainable Development of Energy, Water and Environment Systems",
+   "name_fa": "بیست‌ودومین کنفرانس توسعه‌ی پایدار سامانه‌های انرژی، آب و محیط‌زیست (SDEWES) ۲۰۲۷",
+   "region": "world",
+   "country": "کرواسی",
+   "city": "دوبروونیک",
+   "categories": [
+    "water",
+    "ai_cross_cutting"
+   ],
+   "type": "نمایشگاه و کنفرانس",
+   "why_fa": "نقطه‌ی تلاقی انرژی و آب (هم‌راستا با محصولات انرژی ما)؛ موضوعات شامل هوش مصنوعی و دوقلوی دیجیتال برای سامانه‌های آب و انرژی.",
+   "participation_fa": "ارسال مقاله؛ مهلت در نتیجه‌ی جستجو نیامد و باید از سایت رسمی گرفته شود.",
+   "url": "https://callforpaper.org/cfp/call-for-papers-sdewes-2027",
+   "source": "https://callforpaper.org/cfp/call-for-papers-sdewes-2027",
+   "status": "new",
+   "origin": "claude-water",
+   "date_status": "single-listing",
+   "start": "2027-10-03",
+   "end": "2027-10-08"
+  },
+  {
+   "id": "siww-2028",
+   "name": "Singapore International Water Week 2028",
+   "name_fa": "هفته‌ی بین‌المللی آب سنگاپور ۲۰۲۸",
+   "region": "world",
+   "country": "سنگاپور",
+   "city": "سنگاپور (Sands Expo)",
+   "categories": [
+    "water",
+    "ai_cross_cutting"
+   ],
+   "type": "نمایشگاه و کنفرانس",
+   "why_fa": "مهم‌ترین رویداد فناوری آب آسیا (دوسالانه)؛ دوقلوی دیجیتال، شیرین‌سازی و آب هوشمند. برخی فهرست‌ها ۱۳–۱۵ ژوئن نوشته‌اند؛ سایت رسمی ۱۲–۱۵ را می‌دهد.",
+   "participation_fa": "بازدیدکننده یا غرفه‌ی نوآوری.",
+   "url": "https://www.siww.com.sg/",
+   "source": "https://www.siww.com.sg/",
+   "status": "new",
+   "origin": "claude-water",
+   "date_status": "confirmed",
+   "start": "2028-06-12",
+   "end": "2028-06-15"
+  },
+  {
+   "id": "watex-iran-2027",
+   "name": "Watex Iran 2027 – 22nd Iran International Water & Wastewater Exhibition",
+   "name_fa": "بیست‌ودومین نمایشگاه بین‌المللی آب و فاضلاب ایران",
+   "region": "iran",
+   "country": "ایران",
+   "city": "تهران (نمایشگاه بین‌المللی تهران)",
+   "categories": [
+    "water",
+    "ai_cross_cutting"
+   ],
+   "type": "نمایشگاه و کنفرانس",
+   "why_fa": "مهم‌ترین نمایشگاه آب و فاضلاب ایران؛ محل ملاقات شرکت‌های آب و فاضلاب، آب منطقه‌ای و پیمانکاران برای عرضه‌ی محصولات هوشمند آب.",
+   "participation_fa": "بازدیدکننده (B2B) یا غرفه؛ پیش از برنامه‌ریزی تاریخ را از سایت برگزارکننده (M&T) تأیید کنید.",
+   "url": "https://water-wastewater-expo.ir/",
+   "source": "https://www.showsbee.com/fairs/Iran-Watex.html",
+   "status": "new",
+   "origin": "claude-water",
+   "date_status": "single-listing",
+   "start": "2027-01-24",
+   "end": "2027-01-27"
+  },
+  {
+   "id": "weftec-2027",
+   "name": "WEFTEC 2027 – 100th Water Environment Federation Technical Exhibition and Conference",
+   "name_fa": "نمایشگاه و کنفرانس فنی WEFTEC ۲۰۲۷ (صدمین دوره)",
+   "region": "world",
+   "country": "آمریکا",
+   "city": "شیکاگو (McCormick Place)",
+   "categories": [
+    "water",
+    "ai_cross_cutting"
+   ],
+   "type": "نمایشگاه و کنفرانس",
+   "why_fa": "بزرگ‌ترین نمایشگاه و کنفرانس آب و پساب آمریکای شمالی؛ مرجع خرید برای فناوری‌های هوشمند تصفیه و پایش.",
+   "participation_fa": "بازدیدکننده یا ارائه‌ی مقاله؛ منابع ثانویه محل را گاهی نیواورلئان نوشته‌اند، سایت رسمی WEFTEC شیکاگو را می‌گوید.",
+   "url": "https://www.weftec.org/",
+   "source": "https://www.weftec.org/",
+   "status": "new",
+   "origin": "claude-water",
+   "date_status": "confirmed",
+   "start": "2027-09-25",
+   "end": "2027-09-29"
+  },
+  {
+   "id": "world-water-week-2027",
+   "name": "World Water Week in Stockholm 2027",
+   "name_fa": "هفته‌ی جهانی آب استکهلم ۲۰۲۷",
+   "region": "world",
+   "country": "سوئد",
+   "city": "استکهلم",
+   "categories": [
+    "water",
+    "ai_cross_cutting"
+   ],
+   "type": "نمایشگاه و کنفرانس",
+   "why_fa": "گردهمایی سیاست‌گذاران آب جهان (SIWI)؛ مناسب برای ارتباط با نهادهای بین‌المللی و تأمین مالی پروژه‌های آب.",
+   "participation_fa": "شرکت‌کننده یا ارائه‌ی نشست جانبی؛ تاریخ هنوز تأیید نشده.",
+   "url": "https://siwi.org/about-world-water-week",
+   "source": "https://www.showsbee.com/fairs/World-Water-Week-in-Stockholm.html",
+   "status": "new",
+   "origin": "claude-water",
+   "date_status": "tbd",
+   "usual_period_fa": "معمولاً اواخر اوت؛ یک فهرست «اوت ۲۰۲۷» و فهرست دیگر «TBD» نوشته (۲۰۲۶ برابر ۲۳–۲۷ اوت بود)"
   }
  ]
 }
