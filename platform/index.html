@@ -285,7 +285,7 @@ function subscribe(){
   S.db.doc("settings/company").onSnapshot(d => { S.settings = d.exists ? d.data() : {}; paintBrand(); render(); }, ()=>{});
   S.db.doc("settings/letterhead").onSnapshot(d => { S.lh = d.exists ? d.data() : null; render(); }, ()=>{});
   if(S.me.id){
-    S.db.collection(`attendance/${S.me.id}/days`).onSnapshot(s=>{S.myAtt=s.docs.map(d=>({id:d.id,...d.data()}));render()},()=>{});
+    S.db.collection(`attendance/${S.me.id}/days`).onSnapshot(s=>{S.myAtt=s.docs.map(d=>({id:d.id,...d.data()}));render();autoCheckout(S.myAtt,S.me.id)},()=>{});
     S.db.doc(`mindtest/${S.me.id}/items/result`).onSnapshot(d=>{S.myMind=d.exists?d.data():null;render()},()=>{});
     S.db.collection(`reports/${S.me.id}/items`).onSnapshot(s=>{S.myReports=s.docs.map(d=>({id:d.id,...d.data()}));S.repLoaded=true;render()},()=>{});
   }
@@ -300,7 +300,7 @@ async function loadAllReports(){ // admins read every member's reports and atten
   const mind=[];   // MindScope answers: the owner only, never other admins
   if(S.me.isOwner) for(const m of S.members){ try{ const d=await S.db.doc(`mindtest/${m.id}/items/result`).get(); if(d.exists) mind.push({member:m.id,...d.data()}); }catch(e){} }
   S.allMind=mind;
-  S.allReports=S.me.isOwner?all:[]; S.allAtt=att; S.allLoaded=true; render();
+  S.allReports=S.me.isOwner?all:[]; S.allAtt=att; S.allLoaded=true; render(); autoCheckout(att);
 }
 async function loadMind(){ // owner: re-read every member's MindScope result (the first load happens only once, so later submissions need this)
   if(!S.me.isOwner) return; const mind=[];
@@ -1075,7 +1075,7 @@ VIEWS["bpms.myday"] = () => {
   const rep=S.myReports.find(r=>r.date===today());
   return `<div class="grid2">
    <div class="card"><h3>حضور امروز – ${faDate(today())}</h3><p class="note">روزهای حضور شما: ${esc((me.office_days||[]).map(d=>(WEEKDAYS.find(w=>w[0]===d)||[])[1]).join("، "))}. هر روز حضور: ۸ ساعت کار + ۱ ساعت استراحت. ثبت ورود و خروج فقط با موقعیت مکانی (GPS گوشی) و داخل محدوده‌ی شرکت ممکن است.</p>
-    <div class="row"><button class="btn" data-act="checkin" ${att.in?"disabled":""}>ثبت ورود ${att.in?`(${att.in})`:""}</button><button class="btn ghost" data-act="checkout" ${!att.in||att.out?"disabled":""}>ثبت خروج ${att.out?`(${att.out})`:""}</button></div>
+    <div class="row"><button class="btn" data-act="checkin" ${att.in?"disabled":""}>ثبت ورود ${att.in?`(${att.in})`:""}</button><button class="btn ghost" data-act="checkout" ${!att.in||(att.out&&!att.out_auto)?"disabled":""}>ثبت خروج ${att.out?`(${att.out}${att.out_auto?" – خودکار":""})`:""}</button></div>
     ${att.in_geo?`<p class="meta">فاصله از دفتر هنگام ورود: ${faNum(att.in_geo.dist)} متر (دقت ±${faNum(att.in_geo.acc)})</p>`:""}${hours!=null?`<p>ساعت کار خالص: <b class="mono">${hours}</b> از ۸</p>`:""}</div>
    <div class="card"><h3>گزارش عملکرد امروز</h3>${rep?`<p>${light(rep.score)}</p><p>${esc(rep.feedback||"")}</p>`:`<p class="note">در پایان روز، کارهای انجام‌شده را بنویسید. Claude سخاوتمندانه و با لحاظ‌کردن هر تلاش مستند از ۱۰۰ نمره می‌دهد.</p><button class="btn sig" data-act="report-new">ثبت گزارش عملکرد</button>`}</div>
   </div><h3>تسک‌های من</h3>`+taskTable(mine);
@@ -1083,20 +1083,37 @@ VIEWS["bpms.myday"] = () => {
 const toMin = t => { const [h,m]=(t||"0:0").split(":").map(Number); return h*60+m; };
 const nowHM = () => new Date().toTimeString().slice(0,5);
 // ---- location-verified attendance: entry/exit only from a phone's GPS inside the office radius
-const GEO_MAX_ACC = 150;      // metres; coarse fixes (desktop / IP / Wi-Fi guesses) are rejected
+const GEO_MAX_ACC = 300;      // metres; very coarse fixes (desktop / IP guesses are km-wide) are rejected; indoor Wi-Fi fixes pass
 const GEO_DEF_RADIUS = 200;   // metres, used when the company settings give no radius
 function distM(a,b,c,d){ const R=6371000,r=x=>x*Math.PI/180, dl=r(c-a), dn=r(d-b), h=Math.sin(dl/2)**2+Math.cos(r(a))*Math.cos(r(c))*Math.sin(dn/2)**2; return 2*R*Math.asin(Math.sqrt(h)); }
-function getFix(){ return new Promise((ok,no)=>{ if(!navigator.geolocation) return no({code:0}); navigator.geolocation.getCurrentPosition(p=>ok({lat:p.coords.latitude,lng:p.coords.longitude,acc:Math.round(p.coords.accuracy||0)}),no,{enableHighAccuracy:true,timeout:20000,maximumAge:0}); }); }
-// returns {lat,lng,acc,dist} when the member is inside the office, else null after telling them why
-async function officeFix(){
+const GEO_ERR = {1:"دسترسی به موقعیت مکانی مسدود است. GPS گوشی را روشن کنید و در مرورگر اجازه‌ی «Location» را بدهید؛ اگر صفحه داخل برنامه یا پیش‌نمایش باز شده، آن را در مرورگر کامل (Chrome/Safari) باز کنید.",2:"موقعیت مکانی در دسترس نیست؛ GPS یا اینترنت گوشی را بررسی کنید.",3:"دریافت موقعیت زمان زیادی برد؛ کنار پنجره یا بیرون ساختمان دوباره تلاش کنید.",0:"این مرورگر موقعیت مکانی را پشتیبانی نمی‌کند؛ با گوشی و مرورگر کامل باز کنید."};
+const geoOnce = o => new Promise((ok,no)=>{ if(!navigator.geolocation) return no({code:0}); navigator.geolocation.getCurrentPosition(p=>ok({lat:p.coords.latitude,lng:p.coords.longitude,acc:Math.round(p.coords.accuracy||0)}),no,o); });
+// GPS first; if it times out or is unavailable indoors, retry with the network/Wi-Fi position (cached up to a minute)
+async function getFix(){ try{ return await geoOnce({enableHighAccuracy:true,timeout:10000,maximumAge:0}); }catch(e){ if(e&&e.code===1||e&&e.code===0) throw e; return await geoOnce({enableHighAccuracy:false,timeout:20000,maximumAge:60000}); } }
+// returns {lat,lng,acc,dist} when the member is inside the office. soft=true (exit): never blocks, returns {unverified:reason} instead
+async function officeFix(soft){
   const st=S.settings, lat=Number(st.office_lat), lng=Number(st.office_lng), rad=Number(st.office_radius)||GEO_DEF_RADIUS;
-  if(!st.office_lat||!st.office_lng||isNaN(lat)||isNaN(lng)){ toast("موقعیت دفتر هنوز ثبت نشده است؛ مدیر باید در «مشخصات شرکت» مختصات دفتر را وارد کند."); return null; }
+  const no = msg => { if(soft) return {unverified:msg}; toast(msg); return null; };
+  if(!st.office_lat||!st.office_lng||isNaN(lat)||isNaN(lng)) return no("موقعیت دفتر هنوز ثبت نشده است؛ مدیر باید در «مشخصات شرکت» مختصات دفتر را وارد کند.");
   toast("در حال دریافت موقعیت مکانی شما …");
-  let f; try{ f=await getFix(); }catch(e){ toast(e&&e.code===1?"دسترسی به موقعیت مکانی مسدود است. GPS گوشی و اجازه‌ی مرورگر را فعال کنید و دوباره تلاش کنید.":"موقعیت مکانی دریافت نشد. با گوشی و در فضای باز یا کنار پنجره تلاش کنید."); return null; }
-  if(f.acc>GEO_MAX_ACC){ toast(`دقت موقعیت کافی نیست (±${faNum(f.acc)} متر). ثبت فقط با GPS گوشی ممکن است؛ GPS را روشن کنید و دوباره تلاش کنید.`); return null; }
+  let f; try{ f=await getFix(); }catch(e){ return no(GEO_ERR[e&&e.code]||GEO_ERR[2]); }
+  if(f.acc>GEO_MAX_ACC) return no(`دقت موقعیت کافی نیست (±${faNum(f.acc)} متر). GPS گوشی را روشن کنید و دوباره تلاش کنید.`);
   const dist=Math.round(distM(f.lat,f.lng,lat,lng));
-  if(dist>rad+f.acc){ toast(`شما حدود ${faNum(dist)} متر از دفتر فاصله دارید؛ ثبت ورود و خروج فقط داخل محدوده‌ی شرکت (${faNum(rad)} متر) ممکن است.`); return null; }
+  if(dist>rad+f.acc) return soft?{...f,dist,unverified:`خارج از محدوده (${faNum(dist)} متر از دفتر)`}:no(`شما حدود ${faNum(dist)} متر از دفتر فاصله دارید؛ ثبت ورود فقط داخل محدوده‌ی شرکت (${faNum(rad)} متر) ممکن است.`);
   return {...f,dist};
+}
+// members who checked in but never checked out are closed at 17:00 (or at the entry time if they came after 17:00)
+const AUTO_OUT = "17:00";
+async function autoCheckout(rows, owner){
+  if(!S.db||!S.me.id) return;
+  S.autoOut=S.autoOut||new Set();
+  for(const a of rows){ const key=(a.member||owner)+"/"+a.id;
+    if(!a.in||a.out||S.autoOut.has(key)) continue;
+    if(!(a.id<today()||(a.id===today()&&nowHM()>=AUTO_OUT))) continue;
+    S.autoOut.add(key);
+    const {id,member,...rest}=a, out=toMin(a.in)>=toMin(AUTO_OUT)?a.in:AUTO_OUT;
+    try{ await S.db.doc(`attendance/${a.member||owner}/days/${a.id}`).set({...rest,out,out_auto:true}); }catch(e){ S.autoOut.delete(key); }
+  }
 }
 // ---------- office map picker (Leaflet + OpenStreetMap tiles): click to set the office point used for GPS check-in
 let leafletP=null;
@@ -3309,7 +3326,9 @@ document.addEventListener("click", async e => {
     case "mind-next": await mindNext(); break;
     case "mind-view": mindOwnerView(b.dataset.m); break;
     case "checkin": { if(mindGate("ثبت ورود")) break; if(b.disabled) break; b.disabled=true; try{ const g=await officeFix(); if(g) await save(`attendance/${S.me.id}/days/${today()}`,{in:nowHM(),break_min:60,in_geo:{lat:g.lat,lng:g.lng,acc:g.acc,dist:g.dist}},"ورود ثبت شد"); } finally{ b.disabled=false; } break; }
-    case "checkout": { if(b.disabled) break; b.disabled=true; try{ const g=await officeFix(); if(g){ const att=S.myAtt.find(x=>x.id===today())||{}; await save(`attendance/${S.me.id}/days/${today()}`,{...att,out:nowHM(),out_geo:{lat:g.lat,lng:g.lng,acc:g.acc,dist:g.dist}},"خروج ثبت شد"); } } finally{ b.disabled=false; } break; }
+    case "checkout": { if(b.disabled) break; b.disabled=true; try{ const g=await officeFix(true), att=S.myAtt.find(x=>x.id===today())||{}, {id:_i,...rest}=att;
+      const geo=g.lat!=null?{out_geo:{lat:g.lat,lng:g.lng,acc:g.acc,dist:g.dist}}:{};
+      await save(`attendance/${S.me.id}/days/${today()}`,{...rest,out:nowHM(),...geo,...(g.unverified?{out_unverified:g.unverified}:{})},g.unverified?`خروج ثبت شد (موقعیت تأیید نشد: ${g.unverified})`:"خروج ثبت شد"); } finally{ b.disabled=false; } break; }
     case "office-here": { try{ const f=await getFix(); $("#f_office_lat").value=f.lat.toFixed(6); $("#f_office_lng").value=f.lng.toFixed(6); officeMapSet(f.lat,f.lng,true); toast(`موقعیت فعلی در فرم قرار گرفت (دقت ±${faNum(f.acc)} متر)؛ برای اعمال ذخیره کنید.`); }catch(e){ toast("موقعیت دریافت نشد؛ دسترسی GPS را بررسی کنید."); } break; }
     case "report-new": if(mindGate("بارگذاری گزارش عملکرد")) break; reportForm(b.dataset.date); break;
     case "report-view": reportDetail(b.dataset.m,b.dataset.d); break;
@@ -3394,6 +3413,7 @@ async function boot(){
   setTimeout(()=>{ const mm=myMember(); if(needsNda(mm)&&!ndaSigned(mm)&&!S.ndaShown&&!$("#layer").innerHTML){ S.ndaShown=true; ndaView(mm.id); } else if(needsTraining(mm)&&!trainingDone(mm)&&!S.ndaShown&&!$("#layer").innerHTML){ S.ndaShown=true; trainingView(mm.id); } }, 6000);
   setTimeout(maybeWelcome, 4000); // fallback if the members snapshot is slow
   setTimeout(()=>{ if(isAdmin()) loadAllReports(); }, 2500);
+  setInterval(()=>{ autoCheckout(S.myAtt||[],S.me.id); if(isAdmin()&&S.allAtt) autoCheckout(S.allAtt); }, 5*60*1000);   // page left open past 17:00
 }
 boot();
 })();
