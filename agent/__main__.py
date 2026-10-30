@@ -23,7 +23,7 @@ import sys
 
 from pathlib import Path
 
-from . import dashboard, events, investors, leads, memory, partners, platform_sync, scholarship_docs, scholarships, store
+from . import dashboard, events, investors, leads, memory, partners, platform_sync, platform_sch, scholarship_docs, scholarships, store
 from .config import ROOT, load_config
 
 
@@ -75,7 +75,28 @@ def main(argv=None):
     iv = sub.add_parser("investor")
     iv.add_argument("investor_id")
     iv.add_argument("status", choices=list(investors.STATUSES))
+    se = sub.add_parser("search")
+    se.add_argument("terms", nargs="*")
+    se.add_argument("--health", action="store_true", help="use the international health-AI phrase list")
+    se.add_argument("--source", choices=("ted", "worldbank", "all"), default="all")
+    se.add_argument("--days", type=int, default=30, help="TED look-back in days")
+    se.add_argument("--add", action="store_true", help="put hits that pass keyword screening into the pipeline")
     a = p.parse_args(argv)
+
+    if a.cmd == "search":
+        from . import search as srch
+        cfg = load_config()
+        phrases = srch.health_phrases(cfg) if a.health else []
+        phrases += a.terms
+        if not phrases:
+            sys.exit("give search terms or --health")
+        hits = srch.search(cfg, phrases, srch.SOURCES if a.source == "all" else (a.source,), a.days)
+        for t in sorted(hits, key=lambda t: t.get("deadline") or "9"):
+            print(srch.format_hit(t))
+        print(f"{len(hits)} notice(s)")
+        if a.add:
+            srch.add_to_pipeline(cfg, hits)
+        return
 
     if a.cmd == "run":
         from .pipeline import run
@@ -140,6 +161,7 @@ def main(argv=None):
         scholarships.save(ss)
         for path in scholarship_docs.build_all(ss):
             print(path)
+        print(f"dashboard page: {platform_sch.sync(ss)} scholarships synced")
         return
     if a.cmd in ("select", "unselect"):
         chosen = cfg.setdefault("selected_investors", [])
