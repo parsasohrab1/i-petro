@@ -25,7 +25,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": -7,
+   "days_left": -8,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -66,7 +66,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": -8,
+   "days_left": -9,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -107,7 +107,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": -7,
+   "days_left": -8,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -148,7 +148,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": -7,
+   "days_left": -8,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -189,7 +189,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": -7,
+   "days_left": -8,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -230,7 +230,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": -6,
+   "days_left": -7,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -271,7 +271,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": -5,
+   "days_left": -6,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -312,7 +312,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": -1,
+   "days_left": -2,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -353,7 +353,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": -1,
+   "days_left": -2,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -394,14 +394,19 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": 0,
+   "days_left": -1,
    "line": "ai",
-   "status": "new",
+   "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
    "history": [
     {
      "at": "2026-10-19T13:28:54",
      "status": "new"
+    },
+    {
+     "at": "2026-10-30T11:05:47",
+     "status": "expired",
+     "note": ""
     }
    ]
   },
@@ -430,14 +435,19 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": 0,
+   "days_left": -1,
    "line": "ai",
-   "status": "new",
+   "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
    "history": [
     {
      "at": "2026-10-19T13:28:54",
      "status": "new"
+    },
+    {
+     "at": "2026-10-30T11:05:47",
+     "status": "expired",
+     "note": ""
     }
    ]
   },
@@ -466,7 +476,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": 2,
+   "days_left": 1,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -502,7 +512,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": 3,
+   "days_left": 2,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -536,7 +546,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 4,
+   "days_left": 3,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -571,7 +581,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 7,
+   "days_left": 6,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -606,7 +616,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 12,
+   "days_left": 11,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -641,7 +651,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 14,
+   "days_left": 13,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -675,7 +685,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 18,
+   "days_left": 17,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -709,7 +719,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 20,
+   "days_left": 19,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -744,7 +754,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 32,
+   "days_left": 31,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -779,7 +789,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 40,
+   "days_left": 39,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -814,7 +824,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": -2,
+   "days_left": -3,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -854,7 +864,7 @@
     "ai_cross_cutting",
     "medical"
    ],
-   "days_left": 18,
+   "days_left": 17,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -890,7 +900,7 @@
     "energy",
     "urban"
    ],
-   "days_left": 25,
+   "days_left": 24,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -924,7 +934,7 @@
    "domains": [
     "urban"
    ],
-   "days_left": 22,
+   "days_left": 21,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-20T09:40:22",
@@ -958,7 +968,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 75,
+   "days_left": 74,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-20T09:40:22",
@@ -1060,7 +1070,7 @@
    "domains": [
     "aviation"
    ],
-   "days_left": -1,
+   "days_left": -2,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-21T09:36:20",
@@ -1099,7 +1109,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 4,
+   "days_left": 3,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-21T09:36:20",
@@ -1134,7 +1144,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": 5,
+   "days_left": 4,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-21T09:36:20",
@@ -1168,7 +1178,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 23,
+   "days_left": 22,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-21T09:36:20",
@@ -1202,7 +1212,7 @@
    "domains": [
     "web"
    ],
-   "days_left": 25,
+   "days_left": 24,
    "line": "web",
    "status": "new",
    "first_seen": "2026-10-21T09:36:20",
@@ -1270,7 +1280,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 11,
+   "days_left": 10,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-22T09:39:52",
@@ -1304,7 +1314,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 22,
+   "days_left": 21,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-22T09:39:52",
@@ -1338,7 +1348,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 22,
+   "days_left": 21,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-22T09:39:52",
@@ -1372,7 +1382,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 32,
+   "days_left": 31,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-22T09:39:52",
@@ -1406,7 +1416,7 @@
    "domains": [
     "aviation"
    ],
-   "days_left": 27,
+   "days_left": 26,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-23T09:35:00",
@@ -1440,7 +1450,7 @@
    "domains": [
     "medical"
    ],
-   "days_left": 33,
+   "days_left": 32,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-23T09:35:00",
@@ -1474,7 +1484,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 36,
+   "days_left": 35,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-23T09:35:00",
@@ -1611,7 +1621,7 @@
    "domains": [
     "urban"
    ],
-   "days_left": 11,
+   "days_left": 10,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-26T10:29:22",
@@ -1645,7 +1655,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 25,
+   "days_left": 24,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-26T10:29:22",
@@ -1679,7 +1689,7 @@
    "domains": [
     "urban"
    ],
-   "days_left": 25,
+   "days_left": 24,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-26T10:29:22",
@@ -1747,7 +1757,7 @@
    "domains": [
     "urban"
    ],
-   "days_left": 12,
+   "days_left": 11,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-27T10:03:26",
@@ -1781,7 +1791,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 25,
+   "days_left": 24,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-27T10:03:26",
@@ -1815,7 +1825,7 @@
    "domains": [
     "medical"
    ],
-   "days_left": 28,
+   "days_left": 27,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-27T10:03:26",
@@ -1849,7 +1859,7 @@
    "domains": [
     "urban"
    ],
-   "days_left": 29,
+   "days_left": 28,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-27T10:03:26",
@@ -1884,7 +1894,7 @@
    "domains": [
     "web"
    ],
-   "days_left": 11,
+   "days_left": 10,
    "line": "web",
    "status": "new",
    "first_seen": "2026-10-28T10:50:09",
@@ -1918,7 +1928,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 29,
+   "days_left": 28,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-28T10:50:09",
@@ -1952,7 +1962,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 39,
+   "days_left": 38,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-28T10:50:09",
@@ -2054,7 +2064,7 @@
    "domains": [
     "aviation"
    ],
-   "days_left": 8,
+   "days_left": 7,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-29T11:07:42",
@@ -2088,7 +2098,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": 13,
+   "days_left": 12,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-29T11:07:42",
@@ -2122,7 +2132,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 40,
+   "days_left": 39,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-29T11:07:42",
@@ -2163,6 +2173,143 @@
    "history": [
     {
      "at": "2026-10-29T11:07:42",
+     "status": "new"
+    }
+   ]
+  },
+  "WB-OP00473634": {
+   "id": "WB-OP00473634",
+   "source": "World Bank",
+   "market": "international",
+   "title": "Digital Transformation Expert",
+   "description": "Georgia Relief and Recovery for Micro, Small, and Medium Enterprises. REQUEST FOR EXPRESSIONS OF INTEREST Georgia Project Name: The Relief and Recovery for Micro, Small and Medium Enterprises (MSMEs) Project No: P173975 Loan No. 9239-GE Assignment Title: Digital Transformation Expert Reference No. GE-GEDC-CS-IC-45 Introduction JSC Georgian Economic Development Corporation (GEDC), within the Relief and Recovery for Micro, Small and Medium Enterprises (MSMEs) Project supported by the World Bank (WB) intends to apply part of the loan proceeds for consulting services of a Digital Transformation Expert, who will operate under the World Bank MSMEs Project structure, while being functionally integrated with GEDC’s Growth Hubs network. The Project Development Objective for the Relief and Recovery for MSME operation is to provide relief to MSMEs and support their recovery, including by strengthening the enabling environment for access to finance. Project Description The Project is implemented nationwide and consist of four components: Component 1 – Financial relief and recovery for MSMEs Component 2 – Digital payments & financial infrastructure upgrading Component 3 – Project management and Monitoring Component 4 – Contingent Emergency Response Component A substantial portion of the Project activities fall under Component 1. Component 1 is implemented by GEDC. It comprises of the following sub-components: Sub-component 1.1 - micro-grants to finance working capital and fixed assets for micro and small firms. Sub-component 1.2 - co-financing interest payments on loans underwritten by participating financial institutions (PFIs). Sub-component 1.3 - partial credit guarantees for loans issued by PFIs. Sub-component 1.4 - technical assistance for COVID-proofing and digitalization of MSMEs. Objectives of the assignment Subcomponent 1.4 of the Relief and Recovery for Micro, Small and Medium Enterprises (MSMEs) Project aims to support both the design and the provision of technical assistance to firms to adjust to the post Covid environment through the adoption of relevant managerial, digital, and other relevant practices and supporting the creation of a market for such services. The objective is to supplement the financial support under other subcomponents with technical assistance to address outstanding firm needs in key sectors, informed by stakeholder outreach. This subcomponent will also aim to gauge the feasibility of establishing and eventually scaling the most relevant of managerial capability and digitization programs in the context of Georgia. It will also pilot activities aimed at creation of a local market for firm consultancy services. In order to effectively provide support services mentioned above and ensure coverage and accessibility in all regions, GEDC will be developing Growth Hubs in all regional centres. Scope of Work of the Digital Transformation Expert The Expert will support the implementation of Subcomponent 1.4's digitalization component, ensuring alignment with GEDC’s strategic digital transformation agenda and Growth Hub service portfolio. The Digital Transformation Expert will report to the Head of Business Services Development Division and coordinate closely with the Strategic Development Unit within GEDC’s M&E Department, as necessary, particularly on monitoring, reporting, and knowledge-sharing related to digitalization activities at the Central Office of GEDC. The Expert will play a pivotal role in enabling digital transformation among MSMEs supported through the Growth Hub network. This includes conducting digital diagnostics, recommending tailored digital solutions, supporting implementation, and contributing to knowledge development across regions and sectors. Key responsibilities include: Conduct digital maturity assessments to MSMEs identified through the Growth Hub’s diagnostics, analyze their existing digital maturity level, their business processes, assess the existing technological infrastructure, and id",
+   "buyer": "Georgian Economic Development Corporation",
+   "country": "Georgia",
+   "deadline": "2026-11-15",
+   "published": "2026-10-29",
+   "url": "https://projects.worldbank.org/en/projects-operations/procurement-detail/OP00473634",
+   "notice_type": "Request for Expression of Interest",
+   "procurement_method": "Individual Consultant Selection",
+   "sector": "دولتی (پروژه با تأمین مالی بانک جهانی)",
+   "facts": {
+    "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "طبق آگهی: experience: bachelor's degree in information technology, computer science, business administration, or a related field; at least 5 years of work experience in a position related to the described responsibilities; practic",
+    "international": "قواعد خرید بانک جهانی: باز برای شرکت‌های همه‌ی کشورهای واجد شرایط (Eligibility rules)"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "ai_cross_cutting"
+   ],
+   "days_left": 16,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-10-30T11:05:47",
+   "history": [
+    {
+     "at": "2026-10-30T11:05:47",
+     "status": "new"
+    }
+   ]
+  },
+  "TED-753280-2026": {
+   "id": "TED-753280-2026",
+   "source": "TED (EU)",
+   "market": "international",
+   "title": "Spain – Aircraft maintenance services – 20266A01 Acuerdo Marco servicio integral de apoyo a la ingeniería y el sostenimiento de los sistemas de armas del Ejército del Aire y del Espacio",
+   "description": "Contratación de los servicios de apoyo integral de ingeniería y sostenimiento a los Sistemas de Armas del Ejército del Aire y del Espacio (EAE) en el Mando de Apoyo Logístico (MALOG) y, sus sistemas comunes y logísticos, incluyendo la documentación, bancos, simuladores y equipos de apoyo",
+   "buyer": "Dirección de Adquisiciones del Mando de Apoyo Logístico del Ejército del Aire y del Espacio",
+   "country": "ESP",
+   "deadline": "2026-11-30",
+   "published": "2026-10-30",
+   "url": "https://ted.europa.eu/en/notice/-/detail/753280-2026",
+   "notice_type": "cn-standard",
+   "sector": "دولتی",
+   "facts": {
+    "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "رویه‌ی باز اتحادیه اروپا – شرکت‌های خارج از EU معمولاً مجازند مگر محدودیت صریح در اسناد"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "aviation"
+   ],
+   "days_left": 31,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-10-30T11:05:47",
+   "history": [
+    {
+     "at": "2026-10-30T11:05:47",
+     "status": "new"
+    }
+   ]
+  },
+  "TED-755937-2026": {
+   "id": "TED-755937-2026",
+   "source": "TED (EU)",
+   "market": "international",
+   "title": "Ireland – World wide web (www) site design services – OPW Tender for Heritage Ireland Website Development and Maintenance",
+   "description": "Provision of support and maintenance of Heritage Ireland website inclusive of existing integrations. This includes services provided, incident management, request management, change management, upgrades where required, bug fixes, infrastructure and hosting management, technical maintenance and updates and any other technical supports necessary.",
+   "buyer": "Office of Public Works (OPW)",
+   "country": "IRL",
+   "deadline": "2026-12-17",
+   "published": "2026-10-30",
+   "url": "https://ted.europa.eu/en/notice/-/detail/755937-2026",
+   "notice_type": "cn-standard",
+   "sector": "دولتی",
+   "facts": {
+    "price": "ارزش برآوردی: 292,500 EUR",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "رویه‌ی باز اتحادیه اروپا – شرکت‌های خارج از EU معمولاً مجازند مگر محدودیت صریح در اسناد"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "web"
+   ],
+   "days_left": 48,
+   "line": "web",
+   "status": "new",
+   "first_seen": "2026-10-30T11:05:47",
+   "history": [
+    {
+     "at": "2026-10-30T11:05:47",
+     "status": "new"
+    }
+   ]
+  },
+  "TED-753939-2026": {
+   "id": "TED-753939-2026",
+   "source": "TED (EU)",
+   "market": "international",
+   "title": "Belgium – Electronic information services – Opdracht voor het opzetten van een digital twin voor het organiseren en opvolgen van de afvalinzameling",
+   "description": "Opdracht voor het opzetten van een digital twin voor het organiseren en opvolgen van de afvalinzameling De opdracht is om Limburg.net te voorzien van een state-of-the-art digitaal systeem waar chauffeurs/ophalers, planners/dispatchers, werkvoorbereiders en managers realtime informatie kunnen ingeven en extraheren om zo op een efficiënte manier hun werk te kunnen blijven uitvoeren. De hoofddoelstelling van deze oproep is om het proces van afvalinzameling aan huis te stroomlijnen en te vereenvoudigen.",
+   "buyer": "Limburg.net",
+   "country": "BEL",
+   "deadline": "",
+   "published": "2026-10-30",
+   "url": "https://ted.europa.eu/en/notice/-/detail/753939-2026",
+   "notice_type": "cn-standard",
+   "sector": "دولتی",
+   "facts": {
+    "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "energy"
+   ],
+   "days_left": null,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-10-30T11:05:47",
+   "history": [
+    {
+     "at": "2026-10-30T11:05:47",
      "status": "new"
     }
    ]
@@ -2980,6 +3127,80 @@
     "TED-750509-2026",
     "TED-751639-2026",
     "TED-751747-2026"
+   ],
+   "actioned_ids": [],
+   "reminders": []
+  },
+  {
+   "at": "2026-10-30T11:05:48",
+   "collected": 340,
+   "matched": 22,
+   "partner_drafts": [],
+   "events_added": 0,
+   "scholarships_added": 0,
+   "investors_added": 0,
+   "investor_drafts": [
+    "revo",
+    "212",
+    "hub71",
+    "aramco-ventures",
+    "antler-menap",
+    "equinor-ventures",
+    "shell-ventures",
+    "ycombinator",
+    "techstars"
+   ],
+   "leads_added": 0,
+   "papers_lines": [],
+   "events_soon": [
+    {
+     "start": "2026-11-02",
+     "name": "ADIPEC 2026",
+     "name_fa": "نمایشگاه و کنفرانس نفت و گاز ابوظبی",
+     "city": "ابوظبی"
+    },
+    {
+     "start": "2026-11-03",
+     "name": "Smart City Expo World Congress 2026",
+     "name_fa": "کنگره جهانی شهر هوشمند",
+     "city": "بارسلونا"
+    },
+    {
+     "start": "2026-11-09",
+     "name": "Web Summit 2026",
+     "name_fa": "وب سامیت لیسبون",
+     "city": "لیسبون"
+    },
+    {
+     "start": "2026-11-16",
+     "name": "MEDICA 2026",
+     "name_fa": "نمایشگاه تجهیزات و فناوری پزشکی دوسلدورف",
+     "city": "دوسلدورف"
+    },
+    {
+     "start": "2026-12-06",
+     "name": "NeurIPS 2026",
+     "name_fa": "کنفرانس NeurIPS (سیدنی / آتلانتا / پاریس)",
+     "city": "سیدنی، آتلانتا، پاریس"
+    },
+    {
+     "start": "2026-12-07",
+     "name": "GITEX Global 2026",
+     "name_fa": "جیتکس دبی",
+     "city": "دبی (Expo City)"
+    },
+    {
+     "start": "2026-12-13",
+     "name": "Iran ITEX 1405 (5th) – Sharif University",
+     "name_fa": "پنجمین نمایشگاه ایران ایتکس دانشگاه صنعتی شریف",
+     "city": "تهران (دانشگاه صنعتی شریف)"
+    }
+   ],
+   "new_ids": [
+    "WB-OP00473634",
+    "TED-753280-2026",
+    "TED-755937-2026",
+    "TED-753939-2026"
    ],
    "actioned_ids": [],
    "reminders": []
