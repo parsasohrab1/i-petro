@@ -14,6 +14,7 @@
   python -m agent track <tender-id> [--owner NAME] [--stage STAGE] [--next TEXT] [--date YYYY-MM-DD] [--note TEXT]
       stages: identified | documents | partner_email | partner_meeting | mou | proposal | submitted | result
   python -m agent remind-reports <folder>                    Telegram reminder to members without today's performance report
+  python -m agent save-drafts <zip|folder|file.eml>          put .eml drafts (e.g. the partners-tab ZIP) into the parsaint.group Drafts folder
   python -m agent investor <investor-id> <status>            researching | contacted | meeting | due_diligence | term_sheet | declined
 """
 import json
@@ -66,17 +67,52 @@ def main(argv=None):
     tk.add_argument("--note", default="")
     rr = sub.add_parser("remind-reports")
     rr.add_argument("folder")
+    sd = sub.add_parser("save-drafts")
+    sd.add_argument("source")
     ld = sub.add_parser("lead")
     ld.add_argument("lead_id")
     ld.add_argument("status", choices=list(leads.STATUSES))
     iv = sub.add_parser("investor")
     iv.add_argument("investor_id")
     iv.add_argument("status", choices=list(investors.STATUSES))
+    se = sub.add_parser("search")
+    se.add_argument("terms", nargs="*")
+    se.add_argument("--health", action="store_true", help="use the international health-AI phrase list")
+    se.add_argument("--source", choices=("ted", "worldbank", "all"), default="all")
+    se.add_argument("--days", type=int, default=30, help="TED look-back in days")
+    se.add_argument("--add", action="store_true", help="put hits that pass keyword screening into the pipeline")
     a = p.parse_args(argv)
+
+    if a.cmd == "search":
+        from . import search as srch
+        cfg = load_config()
+        phrases = srch.health_phrases(cfg) if a.health else []
+        phrases += a.terms
+        if not phrases:
+            sys.exit("give search terms or --health")
+        hits = srch.search(cfg, phrases, srch.SOURCES if a.source == "all" else (a.source,), a.days)
+        for t in sorted(hits, key=lambda t: t.get("deadline") or "9"):
+            print(srch.format_hit(t))
+        print(f"{len(hits)} notice(s)")
+        if a.add:
+            srch.add_to_pipeline(cfg, hits)
+        return
 
     if a.cmd == "run":
         from .pipeline import run
         run(use_llm=not a.no_llm, use_mail=not a.no_mail, send_notification=not a.no_notify)
+        return
+
+    if a.cmd == "save-drafts":
+        from . import mailbox
+        if not mailbox.configured():
+            sys.exit("Set IMAP_HOST, IMAP_USER and IMAP_PASSWORD in .env first (see .env.example).")
+        cfg, n = load_config(), 0
+        for name, msg in mailbox.drafts_from_eml(a.source):
+            folder = mailbox.save_draft(msg, cfg)
+            n += 1
+            print(f"{name} -> {folder} (To: {msg['To'] or '-'})")
+        print(f"{n} draft(s) saved to the parsaint.group mailbox. Nothing was sent.")
         return
 
     cfg, state = load_config(), store.load()

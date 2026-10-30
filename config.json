@@ -109,6 +109,28 @@
       "data analytics platform",
       "computer vision",
       "anomaly detection"
+    ],
+    "health_ai": [
+      "digital health",
+      "health information system",
+      "health management information system",
+      "artificial intelligence health",
+      "AI-based diagnostics",
+      "clinical AI",
+      "medical imaging AI",
+      "AI radiology",
+      "digital pathology",
+      "telehealth",
+      "remote patient monitoring",
+      "electronic medical record",
+      "disease surveillance",
+      "public health analytics",
+      "health data platform",
+      "hospital management information system",
+      "DHIS2",
+      "mHealth",
+      "AI-assisted screening",
+      "predictive analytics healthcare"
     ]
   },
   "exclude_keywords": [
@@ -204,7 +226,8 @@
       "INBOX.Drafts",
       "Drafts",
       "INBOX/Drafts"
-    ]
+    ],
+    "partner_cc": "oil.ms.sohrabi@gmail.com"
   },
   "dashboard": {
     "output": "docs/index.html"
@@ -215,7 +238,8 @@
     "aviation": "هوانوردی",
     "nuclear": "هسته‌ای",
     "urban": "شهری",
-    "ai_cross_cutting": "هوش مصنوعی"
+    "ai_cross_cutting": "هوش مصنوعی",
+    "health_ai": "هوش مصنوعی سلامت"
   },
   "domestic_keywords": {
     "ai_cross_cutting": [

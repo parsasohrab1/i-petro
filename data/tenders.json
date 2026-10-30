@@ -25,7 +25,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": -3,
+   "days_left": -7,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -66,7 +66,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": -4,
+   "days_left": -8,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -107,7 +107,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": -3,
+   "days_left": -7,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -148,7 +148,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": -3,
+   "days_left": -7,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -189,7 +189,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": -3,
+   "days_left": -7,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -230,7 +230,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": -2,
+   "days_left": -6,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -271,7 +271,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": -1,
+   "days_left": -5,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -312,14 +312,19 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": 3,
+   "days_left": -1,
    "line": "ai",
-   "status": "new",
+   "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
    "history": [
     {
      "at": "2026-10-19T13:28:54",
      "status": "new"
+    },
+    {
+     "at": "2026-10-29T11:07:42",
+     "status": "expired",
+     "note": ""
     }
    ]
   },
@@ -348,14 +353,19 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": 3,
+   "days_left": -1,
    "line": "ai",
-   "status": "new",
+   "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
    "history": [
     {
      "at": "2026-10-19T13:28:54",
      "status": "new"
+    },
+    {
+     "at": "2026-10-29T11:07:42",
+     "status": "expired",
+     "note": ""
     }
    ]
   },
@@ -384,7 +394,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": 4,
+   "days_left": 0,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -420,7 +430,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": 4,
+   "days_left": 0,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -456,7 +466,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": 6,
+   "days_left": 2,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -492,7 +502,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": 7,
+   "days_left": 3,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -526,7 +536,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 8,
+   "days_left": 4,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -561,7 +571,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 11,
+   "days_left": 7,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -596,7 +606,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 16,
+   "days_left": 12,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -631,7 +641,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 18,
+   "days_left": 14,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -665,7 +675,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 22,
+   "days_left": 18,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -699,7 +709,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 24,
+   "days_left": 20,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -734,7 +744,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 36,
+   "days_left": 32,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -769,7 +779,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 44,
+   "days_left": 40,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -804,14 +814,19 @@
    "domains": [
     "energy"
    ],
-   "days_left": 2,
+   "days_left": -2,
    "line": "ai",
-   "status": "new",
+   "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
    "history": [
     {
      "at": "2026-10-19T13:28:54",
      "status": "new"
+    },
+    {
+     "at": "2026-10-28T10:50:09",
+     "status": "expired",
+     "note": ""
     }
    ]
   },
@@ -839,7 +854,7 @@
     "ai_cross_cutting",
     "medical"
    ],
-   "days_left": 22,
+   "days_left": 18,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -875,7 +890,7 @@
     "energy",
     "urban"
    ],
-   "days_left": 29,
+   "days_left": 25,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -909,7 +924,7 @@
    "domains": [
     "urban"
    ],
-   "days_left": 26,
+   "days_left": 22,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-20T09:40:22",
@@ -943,7 +958,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 79,
+   "days_left": 75,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-20T09:40:22",
@@ -1045,14 +1060,19 @@
    "domains": [
     "aviation"
    ],
-   "days_left": 3,
+   "days_left": -1,
    "line": "ai",
-   "status": "new",
+   "status": "expired",
    "first_seen": "2026-10-21T09:36:20",
    "history": [
     {
      "at": "2026-10-21T09:36:20",
      "status": "new"
+    },
+    {
+     "at": "2026-10-29T11:07:42",
+     "status": "expired",
+     "note": ""
     }
    ]
   },
@@ -1079,7 +1099,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 8,
+   "days_left": 4,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-21T09:36:20",
@@ -1114,7 +1134,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": 9,
+   "days_left": 5,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-21T09:36:20",
@@ -1148,7 +1168,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 27,
+   "days_left": 23,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-21T09:36:20",
@@ -1182,7 +1202,7 @@
    "domains": [
     "web"
    ],
-   "days_left": 29,
+   "days_left": 25,
    "line": "web",
    "status": "new",
    "first_seen": "2026-10-21T09:36:20",
@@ -1250,7 +1270,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 15,
+   "days_left": 11,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-22T09:39:52",
@@ -1284,7 +1304,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 26,
+   "days_left": 22,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-22T09:39:52",
@@ -1318,7 +1338,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 26,
+   "days_left": 22,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-22T09:39:52",
@@ -1352,7 +1372,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 36,
+   "days_left": 32,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-22T09:39:52",
@@ -1386,7 +1406,7 @@
    "domains": [
     "aviation"
    ],
-   "days_left": 31,
+   "days_left": 27,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-23T09:35:00",
@@ -1420,7 +1440,7 @@
    "domains": [
     "medical"
    ],
-   "days_left": 37,
+   "days_left": 33,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-23T09:35:00",
@@ -1454,7 +1474,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 40,
+   "days_left": 36,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-23T09:35:00",
@@ -1529,6 +1549,620 @@
    "history": [
     {
      "at": "2026-10-23T09:35:00",
+     "status": "new"
+    }
+   ]
+  },
+  "TED-739696-2026": {
+   "id": "TED-739696-2026",
+   "source": "TED (EU)",
+   "market": "international",
+   "title": "Finland – Airport equipment – Rovaniemi Airport Baggage Handling System Modernisation",
+   "description": "The procurement concerns modernizing the existing baggage handling system for departure baggage at Rovaniemi airport. The procurement consists of modifications to the existing baggage handling system to add and integrate one (1) new standard 3 screening machine for departure baggage with its own conveyor line. Modernization of the existing baggage handling system for departure baggage must meet required specifications for baggage flow and redundancy, steel works, structures and other related peripheral devices/systems. The delivery includes designing, manufacturing, shipment, installation, integration of standard 3 screening machine, training and start-up of the Baggage Handling Systems. The procurement contains also fire doors and/or security shutters, low level control system, including SCADA remote monitoring system, SAC (Sort Allocation Controller) and other relevant interfaces and functionalities. On-site installations as well as commissioning are planned to take pace in period between 10/2026 – 11/2027. The successful implementation of the procurement requires cooperation with the contractors executing the necessary changes to the space where the baggage handling system is located and with the contractor installing the new screening machine.",
+   "buyer": "Finavia Oyj",
+   "country": "FIN",
+   "deadline": "",
+   "published": "2026-10-26",
+   "url": "https://ted.europa.eu/en/notice/-/detail/739696-2026",
+   "notice_type": "cn-standard",
+   "sector": "نامشخص",
+   "facts": {
+    "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه"
+   },
+   "keyword_score": 4,
+   "domains": [
+    "aviation",
+    "energy"
+   ],
+   "days_left": null,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-10-26T10:29:22",
+   "history": [
+    {
+     "at": "2026-10-26T10:29:22",
+     "status": "new"
+    }
+   ]
+  },
+  "TED-737355-2026": {
+   "id": "TED-737355-2026",
+   "source": "TED (EU)",
+   "market": "international",
+   "title": "Germany – Instrumentation and control equipment – Leak Detection Devices",
+   "description": "GIZ will announce the specific delivery addresses in Germany once the contract has been awarded. The address will be located within a 200-km radius of Eschborn/German GIZ will announce the specific delivery addresses in Germany once the contract has been awarded. The address will be located within a 200-km radius of Eschborn/German GIZ will announce the specific delivery addresses in Germany once the contract has been awarded. The address will be located within a 200-km radius of Eschborn/German GIZ will announce the specific delivery addresses in Germany once the contract has been awarded. The address will be located within a 200-km radius of Eschborn/German GIZ will announce the specific delivery addresses in Germany once the contract has been awarded. The address will be located within a 200-km radius of Eschborn/German GIZ will announce the specific delivery addresses in Germany once the contract has been awarded. The address will be located within a 200-km radius of Eschborn/German",
+   "buyer": "Deutsche Gesellschaft für Internationale Zusammenarbeit (GIZ) GmbH",
+   "country": "DEU",
+   "deadline": "2026-11-09",
+   "published": "2026-10-26",
+   "url": "https://ted.europa.eu/en/notice/-/detail/737355-2026",
+   "notice_type": "cn-standard",
+   "sector": "شرکت دولتی / عمومی",
+   "facts": {
+    "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "رویه‌ی باز اتحادیه اروپا – شرکت‌های خارج از EU معمولاً مجازند مگر محدودیت صریح در اسناد"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "urban"
+   ],
+   "days_left": 11,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-10-26T10:29:22",
+   "history": [
+    {
+     "at": "2026-10-26T10:29:22",
+     "status": "new"
+    }
+   ]
+  },
+  "TED-737185-2026": {
+   "id": "TED-737185-2026",
+   "source": "TED (EU)",
+   "market": "international",
+   "title": "Norway – IT services: consulting, software development, Internet and support – Platform for strategic traffic analysis - Digital twin",
+   "description": "The contracting authority is holding an open tender contest on a Platform for strategic traffic analysis - Digital twinTrondheim municipality and the collaboration partners in the Environmental Package are facing an increasing complexity in transport planning. With a high number of simultaneous plan processes and road projects, the need for quick access to precise analyses and updated decision making basis is high. The aim of the tender is to procure a modern platform for strategic traffic analyses that shall function as a digital decision-making tool for Trondheim municipality and collaboration partners in The Environment Package. Enables quick testing of alternative measures and scenarios. Visualise consequences for traffic flow, environment (noise/air quality) and area use. Support inter-agency cooperation and decision making by being available to all parties in the Environment Package. It functions as a \"digital laboratory\" where planners and decision makers can simulate, analyse and visualise the consequences of different transport and area measures before they are implemented in real life. The contract includes access to analysis software, as well as the necessary services for integration with the existing infrastructure. The contract will be valid for 1 (one) year calculated from the delivery day. The contract will then be renewed automatically for 1 (one) year at a time, unless 3 (three) months notice is given by the Customer before the renewal date. Tenderers can give notice on the contract with 12 (twelve) months notice before the renewal date. There is no upper limit for the number of contract renewals. See the tender documentation part II, annex 1 for further details on the procurement.",
+   "buyer": "Trondheim kommune",
+   "country": "NOR",
+   "deadline": "2026-11-23",
+   "published": "2026-10-26",
+   "url": "https://ted.europa.eu/en/notice/-/detail/737185-2026",
+   "notice_type": "cn-standard",
+   "sector": "دولتی",
+   "facts": {
+    "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "رویه‌ی باز اتحادیه اروپا – شرکت‌های خارج از EU معمولاً مجازند مگر محدودیت صریح در اسناد"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "energy"
+   ],
+   "days_left": 25,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-10-26T10:29:22",
+   "history": [
+    {
+     "at": "2026-10-26T10:29:22",
+     "status": "new"
+    }
+   ]
+  },
+  "TED-739448-2026": {
+   "id": "TED-739448-2026",
+   "source": "TED (EU)",
+   "market": "international",
+   "title": "Germany – Programming services of application software – Smart City Bamberg 2026 - MoMM-App II",
+   "description": "Ziel dieser Ausschreibung ist mit den vorhandenen Fördermitteln des Programmes „Modellprojekte Smart Cities“ des Bundesministeriums für Wohnen, Stadtentwicklung und Bauen die Beauftragung der Konzeption, Entwicklung, Bereitstellung und des Betriebs einer neuen, in sich geschlossenen mobilen Anwendung (im Folgenden „MoMM-App“), die die Funktionalitäten der barrierefreien Parkplatzsuche/-navigation und des barrierefreien Mobilitäts-Routings in einer einheitlichen Benutzeroberfläche zusammenführt. Bestehende kommunale Insellösungen sollen dadurch mittelfristig abgelöst bzw. konsolidiert und den Nutzenden ein durchgängiges, konsistentes digitales Erlebnis geboten werden.",
+   "buyer": "Stadt Bamberg / Zentrale Beschaffungs- und Vergabestelle im Auftrag von Smart City",
+   "country": "DEU",
+   "deadline": "2026-11-23",
+   "published": "2026-10-26",
+   "url": "https://ted.europa.eu/en/notice/-/detail/739448-2026",
+   "notice_type": "cn-standard",
+   "sector": "دولتی",
+   "facts": {
+    "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "رویه‌ی باز اتحادیه اروپا – شرکت‌های خارج از EU معمولاً مجازند مگر محدودیت صریح در اسناد"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "urban"
+   ],
+   "days_left": 25,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-10-26T10:29:22",
+   "history": [
+    {
+     "at": "2026-10-26T10:29:22",
+     "status": "new"
+    }
+   ]
+  },
+  "TED-740752-2026": {
+   "id": "TED-740752-2026",
+   "source": "TED (EU)",
+   "market": "international",
+   "title": "France – District heating boiler – Conception, fabrication, transport, mise en place sur site, essais et mise en service d’une chaudière biomasse et de ses équipements et accessoires annexes pour le réseau de chaleur de Millau",
+   "description": "Les éléments de dimensionnement explicités ci-dessous sont prévisionnels, les éléments définitifs seront indiqués dans les documents de consultation phase offre. Dalkia est attributaire d'un contrat pour la conception et la réalisation de la chaufferie et du réseau de chaleur urbain sur la ville de Millau. Ces travaux comprennent la réalisation d'une chaufferie. Le présent appel à candidature concerne spécifiquement la fourniture de la chaudière biomasse et prestations associées. Les mission qui seront confiées au prestataire comprennent l'étude de conception, la construction, les transports et livraisons, la mise en place et le montage sur site, les essais, la mise en service d'une chaudière biomasse d'environ 2 MW, y compris équipements et accessoires annexes . L'Acheteur envisage comme équipements annexes : les équipements nécessaires au stockage de la biomasse (hors bâti), les systèmes de convoyage, un économiseur, l'évacuation des cendres et traitement des fumées y compris air comprimé et carneaux de fumées jusqu'à la bride du ventilateur de tirage... Date de début des études: Décembre 2026 Date de livraison prévisionnelle: T4 2027 / T1 2028 Date de mise en service prévisionnelle: Avril 2028",
+   "buyer": "DALKIA (31)",
+   "country": "FRA",
+   "deadline": "",
+   "published": "2026-10-26",
+   "url": "https://ted.europa.eu/en/notice/-/detail/740752-2026",
+   "notice_type": "cn-standard",
+   "sector": "شرکت دولتی / عمومی",
+   "facts": {
+    "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "urban"
+   ],
+   "days_left": null,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-10-26T10:29:22",
+   "history": [
+    {
+     "at": "2026-10-26T10:29:22",
+     "status": "new"
+    }
+   ]
+  },
+  "TED-744614-2026": {
+   "id": "TED-744614-2026",
+   "source": "TED (EU)",
+   "market": "international",
+   "title": "Greece – Pumping station construction work – Modifications, construction of a new pumping station & accompanying infrastructure for the interconnection of Kozani district heating with the unified district heating network of Western Macedonia",
+   "description": "The project concerns the construction of pumping station facilities for the interconnection of Kozani district heating with the new and under construction thermal energy production facilities within the Kardia Thermal Power Plant site through the new thermal energy transfer system under construction, consisting of pipes of nominal diameter DN700mm DN600mm DN450mm with hot/superheated water as the carrier. In detail, it concerns the construction of the following distinct facilities: Installations (pump stations and other equipment) for interconnection in a field granted to DEYAK within the Kardia Thermal Power Plant/PPC referred to as \"KARDIAS PUMP STATION\". The facilities to be implemented with the project include the following main equipment and works: Hot water circulation pumping station for the transport system. Hot water circulation pump station of the production system Heat exchangers for the hydraulic separation of the existing district heating transport systems DEYAK and production. Other auxiliary equipment (pressure regulation and expansion valve reception, water treatment and replenishment, filtration, addition of chemical additives, safety devices, energy meters, etc.) Connection of the new facilities with the existing or new facilities to be implemented (transport pipeline, production facilities) (water supply, sewage, strong and weak currents and others). Automation control and remote management system for the remote monitoring of the Kardias Pumping Station. The system will fully cooperate with the existing control/remote management system of the district heating facilities control center and will essentially be an extension of it. Installations-renovation works at the existing district heating pumping station in the Kasla area of Kozani (replacement of pumping units of pumping station A2 and other equipment, so that the pumping station meets the requirements of the new transmission system as well as modifications to the routing of the transmission pipelines within the pumping station site), hereinafter referred to as \"KASLA PUMP STATION\". The works mainly concern Replacement of the main pumping units of pumping station A2 with their accompanying works Replacement of existing transformers with new ones to cover the increased electrical power requirements due to the new equipment. Replacement of existing speed regulators of pumping units of pumping station A1. Modification of the routing of the pre-insulated pipelines of the transmission system within the district heating installation site. Redesign of the existing operational control automation system of the main pumping stations. Upgrading of the supply lines of strong and weak currents of the new pumping complexes. Control automation and remote management system for the remote monitoring of the Kardia Pumping Station (see above-Kardia Pumping Station) as well as the Drepano valve station. The system will fully cooperate with the existing control/remote management system of the district heating installation control center and will essentially be an extension of it. With the implementation of the installations, the nominal transmission capacity of the system will be 195MWth.",
+   "buyer": "MUNICIPAL WATER, DRAINAGE & DISTRICT HEATING COMPANY OF KOZANI",
+   "country": "GRC",
+   "deadline": "2026-11-10",
+   "published": "2026-10-27",
+   "url": "https://ted.europa.eu/en/notice/-/detail/744614-2026",
+   "notice_type": "cn-standard",
+   "sector": "شرکت دولتی / عمومی",
+   "facts": {
+    "price": "ارزش برآوردی: 13,400,000 EUR",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "رویه‌ی باز اتحادیه اروپا – شرکت‌های خارج از EU معمولاً مجازند مگر محدودیت صریح در اسناد"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "urban"
+   ],
+   "days_left": 12,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-10-27T10:03:26",
+   "history": [
+    {
+     "at": "2026-10-27T10:03:26",
+     "status": "new"
+    }
+   ]
+  },
+  "TED-744643-2026": {
+   "id": "TED-744643-2026",
+   "source": "TED (EU)",
+   "market": "international",
+   "title": "Portugal – Repair and maintenance services of reservoirs – Prestação de serviços de operação, manutenção e conservação de Estações Elevatórias de Águas Residuais e Estações de Tratamento de Águas Residuais – Concelho de Chaves",
+   "description": "Lote I Lote II",
+   "buyer": "Município de Chaves",
+   "country": "PRT",
+   "deadline": "2026-11-23",
+   "published": "2026-10-27",
+   "url": "https://ted.europa.eu/en/notice/-/detail/744643-2026",
+   "notice_type": "cn-standard",
+   "sector": "دولتی",
+   "facts": {
+    "price": "ارزش برآوردی: 397,169 EUR (2 بخش)",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "رویه‌ی باز اتحادیه اروپا – شرکت‌های خارج از EU معمولاً مجازند مگر محدودیت صریح در اسناد"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "energy"
+   ],
+   "days_left": 25,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-10-27T10:03:26",
+   "history": [
+    {
+     "at": "2026-10-27T10:03:26",
+     "status": "new"
+    }
+   ]
+  },
+  "TED-743680-2026": {
+   "id": "TED-743680-2026",
+   "source": "TED (EU)",
+   "market": "international",
+   "title": "Germany – Medical imaging services – Röntgendienstleistung EAE Essen",
+   "description": "In der Erstaufnahmeeinrichtung (EAE) Essen ist der Betrieb einer vom Auftraggeber gestellten, fest installierten Röntgeneinrichtung ´SIEMENS Multix Select DR/ AXD 1872´ unter Berücksichtigung der Vorgaben und Vorschriften der Strahlenschutzverordnung (StrlSchV) in ihrer jeweils aktuellen Fassung, sowie die zugehörige IT syngo.plaza Workstation/ BND 1508, zwecks Ausschlusses von infektiöser Tuberkulose(TBC) von neu ankommenden Flüchtlingen zu erbringen. Bei der EAE Essen handelt es sich um eine Einrichtung des Landes NRW, zu deren Hauptaufgaben die erste medizinische Untersuchung (gemäß § 62 AsylG) sowie die Registrierung der ankommenden Flüchtlinge und Asylsuchenden gehört. Nach erfolgter Untersuchung und Registrierung können die Bewohnerinnen und Bewohner in weiteren Unterbringungseinrichtungen des Landes untergebracht werden. Der Auftragnehmer betreibt die landeseigene Röntgenanlage inkl. Software zwecks Durchführung des TBC-Ausschlusses sämtlicher in der EAE Essen ankommender Flüchtlinge und Asylsuchenden. Vertragspartner des Auftragnehmers wird das Land NRW, vertreten durch die Bezirksregierung Düsseldorf.",
+   "buyer": "Bezirksregierung Düsseldorf",
+   "country": "DEU",
+   "deadline": "2026-11-26",
+   "published": "2026-10-27",
+   "url": "https://ted.europa.eu/en/notice/-/detail/743680-2026",
+   "notice_type": "cn-standard",
+   "sector": "دولتی",
+   "facts": {
+    "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "رویه‌ی باز اتحادیه اروپا – شرکت‌های خارج از EU معمولاً مجازند مگر محدودیت صریح در اسناد"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "medical"
+   ],
+   "days_left": 28,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-10-27T10:03:26",
+   "history": [
+    {
+     "at": "2026-10-27T10:03:26",
+     "status": "new"
+    }
+   ]
+  },
+  "TED-741848-2026": {
+   "id": "TED-741848-2026",
+   "source": "TED (EU)",
+   "market": "international",
+   "title": "Italy – District heating boiler – Fornitura, montaggio e messa in esercizio di un impianto di condensazione per il recupero del calore dalla linea fumi della caldaia a biomassa del teleriscaldamento di Chiusa nonché ottimizzazione della caldaia esistente mediante l’installazione di sistemi di misurazione, regolazione, monitoraggio e sicurezza",
+   "description": "Fornitura impianto condensazione per recupero calore centrale Chiusa",
+   "buyer": "Alperia Ecoplus srl",
+   "country": "ITA",
+   "deadline": "2026-11-27",
+   "published": "2026-10-27",
+   "url": "https://ted.europa.eu/en/notice/-/detail/741848-2026",
+   "notice_type": "cn-standard",
+   "sector": "نامشخص",
+   "facts": {
+    "price": "ارزش برآوردی: 822,380 EUR",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "رویه‌ی باز اتحادیه اروپا – شرکت‌های خارج از EU معمولاً مجازند مگر محدودیت صریح در اسناد"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "urban"
+   ],
+   "days_left": 29,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-10-27T10:03:26",
+   "history": [
+    {
+     "at": "2026-10-27T10:03:26",
+     "status": "new"
+    }
+   ]
+  },
+  "WB-OP00477440": {
+   "id": "WB-OP00477440",
+   "source": "World Bank",
+   "market": "international",
+   "title": "Software Development (Point of Sale) for women-led small business; website design, POS training",
+   "description": "Digital Federated States of Micronesia Project. REQUEST FOR QUOTATION October 26, 2026 Project Title: Digital Federated States of Micronesia Project (P170718) Source of Funding (loan/credit/grant no.): IDA-D5560 Contract Name: Software Development (Point of Sale) for women-led small business, website design, POS training Contract Ref: FM-DHSA-520963-NC-RFP Dear Bidder, The FSM Department of Health & Social Affairs hereby invites you to submit a quotation for the following works: Lot 1: Website Design & Development Services for the Yap Women Association Digital Village Lot 2: Development of a User-Friendly Point of Sale (POS) System for Women-led Businesses in FSM The budget for this procurement is $40,000.00 (for both lots) . To assist you in the preparation of your price quotation, we enclose the necessary Terms of Reference, Specifications, Priced Activity Schedule (AS), and Form of Contract. This RFQ invites you to quote for 1 lot or both lots. Quotations for each lot must be submitted separately, with the signed Form of Quotation (including the priced AS) electronically at the following address(s): takiko.ifamilik@hsa.gov.fm and msamo@fsmhealth.fm This invitation is issued under the open RFQ and the Most Advantageous Bid will be recommended for contract award for the Bid of the Bidder that meets the qualification criteria and whose Bid has been determined to be: substantially responsive to the RFQ document; and the lowest evaluated cost. The following minimum qualification requirements apply to this RFQ: Lot 1: the bidder shall propose the following key personnel at a minimum – Web Developer and Project Manager. Lot-2: The bidder shall propose Key personnel, such as Team Leader (TL) and Testing Technician (TT), meeting the qualification requirements for these positions as outlined in the SOW. Each bidder shall submit only one quotation. All quotations submitted in violation of this rule shall be rejected. In evaluating the quotations, the Employer will determine for each quotation the evaluated price by adjusting the price quotation by making any correction for any arithmetical errors as follows: where there is a discrepancy between amounts in figures and in words, the amount in words will govern; where there is a discrepancy in the total and the sum of the line-item amounts, the total shall be corrected. if a Bidder refuses to accept the correction, his quotation will be rejected. Your quotation shall be valid for a period of forty-five (45) days from the submission deadline Your quotation in English shall be for the quote and based on a fixed lump sum for the entire assignment period. Prices can be quoted in any currency of the World Bank member countries. The currency to convert all quotation prices expressed in various currencies into a single currency is USD. The quotation shall include all duties, local taxes and other levies payable by the contractor in accordance with the local laws. The Employer will award the contract to the Bidder whose quotation has been determined to be substantially responsive to this RFQ, has offered the lowest evaluated price quotation, and is qualified to do the Works. 10. The terms and conditions of contract are attached to this RFQ. 11. Your quotation should be submitted by November 09, 2026, 05:00 pm Pohnpei Time. Late quotations may be rejected. 12. Further information can be obtained from: Name of Contact Person: Takiko L. Ifamilik, Digital Gender Coordination Telephone: (691) 320-4682 or 2619 E-mail: takiko.ifamilik@hsa.gov.fm 13. Please confirm by e-mail to the contact provided in paragraph 12 above the receipt of this RFQ and whether or not you will submit the price quotation(s). REQUEST FOR QUOTATION October 26, 2026 Project Title: Digital Federated States of Micronesia Project (P170718) Source of Funding (loan/credit/grant no.): IDA-D5560 Contract Name: Software Development (Point of Sale) for women-led small business, website design, POS training Contract Ref: FM-DHSA-520963-NC-",
+   "buyer": "Department of Health, Social Affairs",
+   "country": "Micronesia, Federated States of",
+   "deadline": "2026-11-09",
+   "published": "2026-10-27",
+   "url": "https://projects.worldbank.org/en/projects-operations/procurement-detail/OP00477440",
+   "notice_type": "Invitation for Bids",
+   "procurement_method": "Request for Quotations",
+   "sector": "دولتی (پروژه با تأمین مالی بانک جهانی)",
+   "facts": {
+    "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "طبق آگهی: qualification criteria and whose bid has been determined to be: substantially responsive to the rfq document; and the lowest evaluated cost",
+    "international": "قواعد خرید بانک جهانی: باز برای شرکت‌های همه‌ی کشورهای واجد شرایط (Eligibility rules)"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "web"
+   ],
+   "days_left": 11,
+   "line": "web",
+   "status": "new",
+   "first_seen": "2026-10-28T10:50:09",
+   "history": [
+    {
+     "at": "2026-10-28T10:50:09",
+     "status": "new"
+    }
+   ]
+  },
+  "TED-748820-2026": {
+   "id": "TED-748820-2026",
+   "source": "TED (EU)",
+   "market": "international",
+   "title": "Spain – Repair and maintenance services of reservoirs – Varias UCOS.- TA.- Servicio abierto sostenimiento tanques gasoil y gasolina",
+   "description": "Varias UCOS.- TA.- Servicio abierto sostenimiento tanques gasoil y gasolina",
+   "buyer": "Intendente de Ferrol",
+   "country": "ESP",
+   "deadline": "2026-11-27",
+   "published": "2026-10-28",
+   "url": "https://ted.europa.eu/en/notice/-/detail/748820-2026",
+   "notice_type": "cn-standard",
+   "sector": "دولتی",
+   "facts": {
+    "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "رویه‌ی باز اتحادیه اروپا – شرکت‌های خارج از EU معمولاً مجازند مگر محدودیت صریح در اسناد"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "energy"
+   ],
+   "days_left": 29,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-10-28T10:50:09",
+   "history": [
+    {
+     "at": "2026-10-28T10:50:09",
+     "status": "new"
+    }
+   ]
+  },
+  "TED-748747-2026": {
+   "id": "TED-748747-2026",
+   "source": "TED (EU)",
+   "market": "international",
+   "title": "Belgium – Business and management consultancy and related services – Learning through Experimentation for Adaptive Programming (LEAP) - Producing experimental designs for ERDF/CF/JTF investment in the field of energy efficiency measures",
+   "description": "The overarching goal of this assignment is to prepare the ground for embedding experimentation in National and Regional Partnership Plans from the outset of the 2028–2034 programming period. To this end, the assignment will structurally bring evaluators and programmers to work together, build capacity on both sides, and provide the EU evaluation system with practical experimentation tools that extend beyond the three participating MS. This assignment focuses on investments on energy efficiency measures and shall produce the following outputs: 1. NRPP-ready experimental designs to be implemented in the 2028–2034 programming period in three Member States; 2. a detailed toolkit to support MS in the introduction of experimental designs in 2028-2034 Plans: LEAP Kit (Learning through Experimentation for Adaptive Programming). Energy efficiency is central to the EU’s climate, cohesion, and energy security objectives. Reducing energy consumption across the built environment, industrial processes, district energy networks, and community energy systems contributes directly to cutting greenhouse gas emissions, reducing dependence on imported fossil fuels, and ensuring more resilient and affordable energy supply. All of which are particularly pressing in less developed and transition regions where energy poverty, ageing building stock, and limited private investment capacity make public intervention most necessary. Despite its widespread use, substantial analysis remains to be made in assessing the effectiveness of energy efficiency investments and identifying the conditions under which these generate the expected impact. Experimentation through randomised controlled trials (RCTs) - and the analysis of experiment results to identify the causal effects of interventions - offers the most rigorous way to generate this evidence. Improving the capacity to design and conduct experimental designs is even more important in light of the evolving regulatory context. The Commission proposal for the 2028-2034 Multiannual Financial Framework explicitly promotes policy learning and experimentation as a function of both coordinating and managing authorities (Articles 50 and 51 of the proposed Performance Regulation). DG REGIO’s ambition is that experimental designs and adaptive learning mechanisms will be embedded in the National and Regional Partnership Plans (NRPPs) from the outset of the next programming period.",
+   "buyer": "European Commission, DG REGIO - Regional and Urban Policy",
+   "country": "BEL",
+   "deadline": "2026-12-07",
+   "published": "2026-10-28",
+   "url": "https://ted.europa.eu/en/notice/-/detail/748747-2026",
+   "notice_type": "cn-standard",
+   "sector": "نهاد اتحادیه اروپا",
+   "facts": {
+    "price": "ارزش برآوردی: 340,000 EUR",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "رویه‌ی باز اتحادیه اروپا – شرکت‌های خارج از EU معمولاً مجازند مگر محدودیت صریح در اسناد"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "energy"
+   ],
+   "days_left": 39,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-10-28T10:50:09",
+   "history": [
+    {
+     "at": "2026-10-28T10:50:09",
+     "status": "new"
+    }
+   ]
+  },
+  "TED-745428-2026": {
+   "id": "TED-745428-2026",
+   "source": "TED (EU)",
+   "market": "international",
+   "title": "Germany – Research and development services and related consultancy services – [AI-as-OS] Artificial Intelligence as Operating System",
+   "description": "Artificial intelligence (AI) methods have been expanding into new areas of application for years. AI systems are increasingly capable of handling complex tasks with greater autonomy—for example, through agent-based approaches that run an AI agent on a computer to perform any task automatically or even autonomously, sometimes without explicit human instructions but rather based on identified intentions (see, for example, the open-source software OpenClaw, which can handle tasks such as calendar maintenance or file management). Just how deeply AI algorithms and models are now integrated into everyday applications is also evident in the fact that end devices are increasingly operable entirely without visible applications and exclusively via voice control, which fundamentally rethinks the way we interact with them (such as Deutsche Telekom’s AI Phone). The central control units of such end devices—the operating systems themselves—are also increasingly being enhanced with new AI functionalities to continuously improve system efficiency. These include initial theoretical—and in some cases already practical—approaches to using the latest AI technologies for file system or storage management. These developments mark a fundamental paradigm shift: AI is no longer viewed merely as an add-on, but increasingly as a native architectural component of the operating system itself. The AI-as-OS program aims to explore how artificial intelligence can be understood not merely as a separately encapsulated functionality that is simply executed by the operating system, but as the operating system itself—Artificial Intelligence as Operating System. Behind this lies the vision of an AI that not only supports individual applications but also acts as the central control system for the entire computer ecosystem, managing system resources (including the CPU, RAM, and system security) in a data-driven, adaptive, and context-aware manner. The aim of the program is to make fundamental contributions to the development of AI-based operating systems as the control unit of a computer system. Through the extensive integration of AI technologies into deep operating system layers, such a system is intended to manage system resources, enable context-aware operational decisions, and enhance system security through adaptive threat detection and defense. Since the underlying technology is still largely in a speculative stage, the scope of development work ranges from the general architecture of such an operating system to the integration of AI-based core mechanisms, and includes new considerations regarding the security and stability requirements for such an operating system, depending on the target platform (e.g., desktop, data center, edge device) and the application environment. The program’s main areas of research include: • AI-Centric Operating System Architectures: Concepts for the fundamental design of an operating system in which AI is viewed not as an add-on feature but as an integral part of the architecture. • AI-Native Core Mechanisms: Integration of AI-based methods into core operating system functions such as resource management, process control, and memory organization. • Control, Security, and Stability: Requirements for traceability, controllability, and robustness of an AI-based operating system, as well as approaches to adaptive threat detection and defense. From today’s perspective, it remains to be seen whether—and to what extent—the vision of an AI-native operating system can be technically realized. This is precisely where the program’s value lies: AI-as-OS explores a largely speculative field at the intersection of AI research and system software, the results of which could set the course for the operating systems of tomorrow.",
+   "buyer": "Agentur für Innovation in der Cybersicherheit GmbH (Cyberagentur)",
+   "country": "DEU",
+   "deadline": "",
+   "published": "2026-10-28",
+   "url": "https://ted.europa.eu/en/notice/-/detail/745428-2026",
+   "notice_type": "cn-standard",
+   "sector": "شرکت دولتی / عمومی",
+   "facts": {
+    "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "ai_cross_cutting"
+   ],
+   "days_left": null,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-10-28T10:50:09",
+   "history": [
+    {
+     "at": "2026-10-28T10:50:09",
+     "status": "new"
+    }
+   ]
+  },
+  "TED-748671-2026": {
+   "id": "TED-748671-2026",
+   "source": "TED (EU)",
+   "market": "international",
+   "title": "Norway – Research and development services and related consultancy services – Qualification scheme - Avinor AS - T-193432 - Demonstration of zero and low emission aircraft regional aviation",
+   "description": "Qualification scheme - Avinor AS - T-193432 - Demonstration of zero and low emission aircraft regional aviation",
+   "buyer": "AVINOR AS",
+   "country": "NOR",
+   "deadline": "",
+   "published": "2026-10-28",
+   "url": "https://ted.europa.eu/en/notice/-/detail/748671-2026",
+   "notice_type": "cn-standard",
+   "sector": "نامشخص",
+   "facts": {
+    "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "aviation"
+   ],
+   "days_left": null,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-10-28T10:50:09",
+   "history": [
+    {
+     "at": "2026-10-28T10:50:09",
+     "status": "new"
+    }
+   ]
+  },
+  "TED-751772-2026": {
+   "id": "TED-751772-2026",
+   "source": "TED (EU)",
+   "market": "international",
+   "title": "Poland – Aviation kerosene – Zakup i tankowanie paliwa lotniczego JET A-1",
+   "description": "Przedmiotem zamówienia jest zakup i tankowanie paliwa lotniczego JET A-1 w ilości do 800 000 litrów, zgodnie z wymaganiami zawartymi w Specyfikacji Warunków Zamówienia. Zamawiający zobowiązuje się w okresie trwania umowy do zakupu minimalnej ilości paliwa lotniczego JET A-1 w ilości 400 000 litrów lub do wysokości 50 % maksymalnego wynagrodzenia brutto. Paliwo musi pochodzić z bieżącej produkcji (tj. z okresu realizacji umowy) i może zawierać komponenty, które odpowiadają ustalonym wymaganiom jakościowym. Jakość paliwa tankowanego do statków powietrznych Zamawiającego musi być zgodna z normą DEF STAN 91-091 WT oraz ASTM D 1655 lub normą równoważną. Zapłata za paliwo nastąpi po cenie nieobciążonej podatkiem akcyzowym na warunkach określonych w ustawie o podatku akcyzowym oraz niezawierającej opłaty paliwowej.",
+   "buyer": "Komenda Główna Straży Granicznej",
+   "country": "POL",
+   "deadline": "2026-11-06",
+   "published": "2026-10-29",
+   "url": "https://ted.europa.eu/en/notice/-/detail/751772-2026",
+   "notice_type": "cn-standard",
+   "sector": "دولتی",
+   "facts": {
+    "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "رویه‌ی باز اتحادیه اروپا – شرکت‌های خارج از EU معمولاً مجازند مگر محدودیت صریح در اسناد"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "aviation"
+   ],
+   "days_left": 8,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-10-29T11:07:42",
+   "history": [
+    {
+     "at": "2026-10-29T11:07:42",
+     "status": "new"
+    }
+   ]
+  },
+  "TED-750509-2026": {
+   "id": "TED-750509-2026",
+   "source": "TED (EU)",
+   "market": "international",
+   "title": "Switzerland – IT services: consulting, software development, Internet and support – IT-Dienstleistungen Digital Transformation Services & AI Technical Solution & Operation Services",
+   "description": "In Ergänzung zu den Eigenleistungen werden Unternehmen gesucht, welche die ZHdK für drei Jahre (mit Option auf Verlängerung um einmal zwei Jahre oder zweimal ein Jahr) mit ihren Leistungen im Informatikbereich unterstützen. Es geht konkret um folgende Dienstleistungen: * Los 1: Digital Transformation Services: Expertise sowie Beratung und Unterstützung der ZHdK in der digitalen und agilen Trans-formation sowie dem damit verbundenen Kulturwandel Leitung von oder Unterstützung in Projekten oder Programmen im Bereich der digitalen und agilen Transformation * Los 2: AI Technical Solution & Operation Services: Aufbau, Weiterentwicklung und Betrieb von AI-Services sowie der dafür erforderlichen AI-Plattformen, Infrastrukturen und technischen Grundlagen Umsetzung, Integration und Governance von AI-Lösungen sowie Befähigung der ZHdK zum nachhaltigen und sicheren Einsatz von Künstlicher Intelligenz Die gesuchten Dienstleistungen sind in zwei Lose unterteilt. Jedes Los besteht aus einem oder meh-reren Profilen für die Leistungserbringung. Die konkreten Anforderungen und Tätigkeiten sind in den beiden Los-Beschreibungen in Kapitel 2 pro Los beschrieben. Es werden Unternehmen gesucht, deren Kernkompetenzen in den beschriebenen Bereichen des In-formatikumfelds liegen und die über eigenes, qualifiziertes Personal verfügen. Für jedes Los wird der Zuschlag an bis zu drei Unternehmen erteilt. Es besteht keine Begrenzung der Angebote, d.h. es dürfen für beide Lose Angebote eingereicht werden. Es ist allerdings erwünscht, dass sich Unternehmen auf Angebote in ihren jeweiligen Kernkompetenzen konzentrieren. Der Leistungsumfang umfasst folgende Aufgaben: * AI-Service Design & Solution Engineering Beratung, Analyse und Konzeption von AI-Services, Lösungsarchitekturen und Betriebsmodellen sowie Durchführung von Evaluationen, Pilotierungen und Technologiebeurteilungen. * AI-Plattformen & Infrastruktur Aufbau, Weiterentwicklung und Betrieb von AI-Plattformen, AI-Infrastrukturen und technischen Basisdiensten in Cloud-, Hybrid- und On-Premises-Umgebungen. * AI-Lösungen & Integration Entwicklung, Konfiguration und Integration von AI-Lösungen, AI-Infrastrukturdiensten, AI-Agenten, Automatisierungen und weiteren AI-gestützten Anwendungen sowie deren Einbindung in bestehende Systeme, Prozesse, Datenquellen und Organisationsstrukturen der ZHdK. * AI-Operation & Services Management Unterstützung beim Betrieb, der Überwachung und der kontinuierlichen Verbesserung von AI-Services und Plattformen. Die Leistungen umfassen Service Lifecycle Management, Fehleranalyse, Betriebsunterstützung, Qualitätsmanagement sowie die Umsetzung etablierter Service-Management-Prozesse. * Governance, Security & Compliance Beratung und Umsetzung technischer und organisatorischer Anforderungen in den Bereichen Governance, Datenschutz, Informationssicherheit, Compliance und verantwortungsvoller Einsatz von Künstlicher Intelligenz. Dies umfasst die Unterstützung bei Risikoanalysen, Sicherheitskonzepten und regulatorischen Anforderungen. * Wissenstransfer & Enablement Unterstützung beim Aufbau von AI-Kompetenzen innerhalb der ZHdK durch Know-how-Transfer, Coaching, Schulungen und fachliche Begleitung. Ziel ist die nachhaltige Befähigung interner Organisationseinheiten für den Aufbau, die Weiterentwicklung und den Betrieb von AI-Services.",
+   "buyer": "Zürcher Hochschule der Künste, strategischer Einkauf",
+   "country": "CHE",
+   "deadline": "2026-11-11",
+   "published": "2026-10-29",
+   "url": "https://ted.europa.eu/en/notice/-/detail/750509-2026",
+   "notice_type": "cn-standard",
+   "sector": "دولتی",
+   "facts": {
+    "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "رویه‌ی باز اتحادیه اروپا – شرکت‌های خارج از EU معمولاً مجازند مگر محدودیت صریح در اسناد"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "ai_cross_cutting"
+   ],
+   "days_left": 13,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-10-29T11:07:42",
+   "history": [
+    {
+     "at": "2026-10-29T11:07:42",
+     "status": "new"
+    }
+   ]
+  },
+  "TED-751639-2026": {
+   "id": "TED-751639-2026",
+   "source": "TED (EU)",
+   "market": "international",
+   "title": "France – Preventive maintenance services – ACCORDS-CADRES DE MAINTENANCE ET ENTRETIEN DU PARC COMPLET DES GROUPES ELECTROGENES SUR LES LACS-RESERVOIRS AUBE, MARNE, SEINE ET YONNE",
+   "description": "Lot 1 - Accord-cadre de maintenance et entretien du parc complet des groupes électrogènes sur les lacs-réservoirs Aube, Marne et Seine Lot 2 - Accord-cadre de maintenance et entretien du parc complet des groupes électrogènes sur le lac-réservoir Yonne",
+   "buyer": "EPTB Seine Grands Lacs",
+   "country": "FRA",
+   "deadline": "2026-12-08",
+   "published": "2026-10-29",
+   "url": "https://ted.europa.eu/en/notice/-/detail/751639-2026",
+   "notice_type": "cn-standard",
+   "sector": "دولتی",
+   "facts": {
+    "price": "ارزش برآوردی: 180,000 EUR",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "رویه‌ی باز اتحادیه اروپا – شرکت‌های خارج از EU معمولاً مجازند مگر محدودیت صریح در اسناد"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "energy"
+   ],
+   "days_left": 40,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-10-29T11:07:42",
+   "history": [
+    {
+     "at": "2026-10-29T11:07:42",
+     "status": "new"
+    }
+   ]
+  },
+  "TED-751747-2026": {
+   "id": "TED-751747-2026",
+   "source": "TED (EU)",
+   "market": "international",
+   "title": "France – Feasibility study, advisory service, analysis – MISSION DE MAITRISE D'OEUVRE RELATIVE A LA REHABILITATION DU RESERVOIR 10 000 N°2 (ET DU RESERVOIR 10 000 N°1) – STATION DE PRODUCTION D’EAU POTABLE DE LA BASTIDE - PHASE CANDIDATURES - Relance du marché 2026-F102",
+   "description": "Des travaux de de réhabilitation sont nécessaires sur les deux ouvrages de stockage d’eau potable de 10 000 m3 de la station de production d’eau de La Bastide. Le présent marché permettra de désigner un maitre d’œuvre qui assurera le pilotage des études et des travaux pour la réhabilitation pérenne des réservoirs afin de réduire leur vulnérabilité.",
+   "buyer": "LIMOGES METROPOLE - Communauté urbaine",
+   "country": "FRA",
+   "deadline": "",
+   "published": "2026-10-29",
+   "url": "https://ted.europa.eu/en/notice/-/detail/751747-2026",
+   "notice_type": "cn-standard",
+   "sector": "دولتی",
+   "facts": {
+    "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "energy"
+   ],
+   "days_left": null,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-10-29T11:07:42",
+   "history": [
+    {
+     "at": "2026-10-29T11:07:42",
      "status": "new"
     }
    ]
@@ -2049,6 +2683,304 @@
     }
    ],
    "new_ids": [],
+   "actioned_ids": [],
+   "reminders": []
+  },
+  {
+   "at": "2026-10-26T10:29:22",
+   "collected": 280,
+   "matched": 17,
+   "partner_drafts": [],
+   "events_added": 0,
+   "scholarships_added": 0,
+   "investors_added": 0,
+   "investor_drafts": [
+    "revo",
+    "212",
+    "hub71",
+    "aramco-ventures",
+    "antler-menap",
+    "equinor-ventures",
+    "shell-ventures",
+    "ycombinator",
+    "techstars"
+   ],
+   "leads_added": 0,
+   "papers_lines": [],
+   "events_soon": [
+    {
+     "start": "2026-10-28",
+     "name": "Media Expo 1405 (2nd)",
+     "name_fa": "دومین نمایشگاه مدیا اکسپو (با بخش هوش مصنوعی)",
+     "city": "تهران (برج میلاد)"
+    },
+    {
+     "start": "2026-11-02",
+     "name": "ADIPEC 2026",
+     "name_fa": "نمایشگاه و کنفرانس نفت و گاز ابوظبی",
+     "city": "ابوظبی"
+    },
+    {
+     "start": "2026-11-03",
+     "name": "Smart City Expo World Congress 2026",
+     "name_fa": "کنگره جهانی شهر هوشمند",
+     "city": "بارسلونا"
+    },
+    {
+     "start": "2026-11-09",
+     "name": "Web Summit 2026",
+     "name_fa": "وب سامیت لیسبون",
+     "city": "لیسبون"
+    },
+    {
+     "start": "2026-11-16",
+     "name": "MEDICA 2026",
+     "name_fa": "نمایشگاه تجهیزات و فناوری پزشکی دوسلدورف",
+     "city": "دوسلدورف"
+    },
+    {
+     "start": "2026-12-06",
+     "name": "NeurIPS 2026",
+     "name_fa": "کنفرانس NeurIPS (سیدنی / آتلانتا / پاریس)",
+     "city": "سیدنی، آتلانتا، پاریس"
+    },
+    {
+     "start": "2026-12-07",
+     "name": "GITEX Global 2026",
+     "name_fa": "جیتکس دبی",
+     "city": "دبی (Expo City)"
+    }
+   ],
+   "new_ids": [
+    "TED-739696-2026",
+    "TED-737355-2026",
+    "TED-737185-2026",
+    "TED-739448-2026",
+    "TED-740752-2026"
+   ],
+   "actioned_ids": [],
+   "reminders": []
+  },
+  {
+   "at": "2026-10-27T10:06:59",
+   "collected": 261,
+   "matched": 16,
+   "partner_drafts": [],
+   "events_added": 0,
+   "scholarships_added": 0,
+   "investors_added": 0,
+   "investor_drafts": [
+    "revo",
+    "212",
+    "hub71",
+    "aramco-ventures",
+    "antler-menap",
+    "equinor-ventures",
+    "shell-ventures",
+    "ycombinator",
+    "techstars"
+   ],
+   "leads_added": 0,
+   "papers_lines": [],
+   "events_soon": [
+    {
+     "start": "2026-10-28",
+     "name": "Media Expo 1405 (2nd)",
+     "name_fa": "دومین نمایشگاه مدیا اکسپو (با بخش هوش مصنوعی)",
+     "city": "تهران (برج میلاد)"
+    },
+    {
+     "start": "2026-11-02",
+     "name": "ADIPEC 2026",
+     "name_fa": "نمایشگاه و کنفرانس نفت و گاز ابوظبی",
+     "city": "ابوظبی"
+    },
+    {
+     "start": "2026-11-03",
+     "name": "Smart City Expo World Congress 2026",
+     "name_fa": "کنگره جهانی شهر هوشمند",
+     "city": "بارسلونا"
+    },
+    {
+     "start": "2026-11-09",
+     "name": "Web Summit 2026",
+     "name_fa": "وب سامیت لیسبون",
+     "city": "لیسبون"
+    },
+    {
+     "start": "2026-11-16",
+     "name": "MEDICA 2026",
+     "name_fa": "نمایشگاه تجهیزات و فناوری پزشکی دوسلدورف",
+     "city": "دوسلدورف"
+    },
+    {
+     "start": "2026-12-06",
+     "name": "NeurIPS 2026",
+     "name_fa": "کنفرانس NeurIPS (سیدنی / آتلانتا / پاریس)",
+     "city": "سیدنی، آتلانتا، پاریس"
+    },
+    {
+     "start": "2026-12-07",
+     "name": "GITEX Global 2026",
+     "name_fa": "جیتکس دبی",
+     "city": "دبی (Expo City)"
+    }
+   ],
+   "new_ids": [
+    "TED-744614-2026",
+    "TED-744643-2026",
+    "TED-743680-2026",
+    "TED-741848-2026"
+   ],
+   "actioned_ids": [],
+   "reminders": []
+  },
+  {
+   "at": "2026-10-28T10:50:10",
+   "collected": 302,
+   "matched": 20,
+   "partner_drafts": [],
+   "events_added": 0,
+   "scholarships_added": 0,
+   "investors_added": 0,
+   "investor_drafts": [
+    "revo",
+    "212",
+    "hub71",
+    "aramco-ventures",
+    "antler-menap",
+    "equinor-ventures",
+    "shell-ventures",
+    "ycombinator",
+    "techstars"
+   ],
+   "leads_added": 0,
+   "papers_lines": [],
+   "events_soon": [
+    {
+     "start": "2026-10-28",
+     "name": "Media Expo 1405 (2nd)",
+     "name_fa": "دومین نمایشگاه مدیا اکسپو (با بخش هوش مصنوعی)",
+     "city": "تهران (برج میلاد)"
+    },
+    {
+     "start": "2026-11-02",
+     "name": "ADIPEC 2026",
+     "name_fa": "نمایشگاه و کنفرانس نفت و گاز ابوظبی",
+     "city": "ابوظبی"
+    },
+    {
+     "start": "2026-11-03",
+     "name": "Smart City Expo World Congress 2026",
+     "name_fa": "کنگره جهانی شهر هوشمند",
+     "city": "بارسلونا"
+    },
+    {
+     "start": "2026-11-09",
+     "name": "Web Summit 2026",
+     "name_fa": "وب سامیت لیسبون",
+     "city": "لیسبون"
+    },
+    {
+     "start": "2026-11-16",
+     "name": "MEDICA 2026",
+     "name_fa": "نمایشگاه تجهیزات و فناوری پزشکی دوسلدورف",
+     "city": "دوسلدورف"
+    },
+    {
+     "start": "2026-12-06",
+     "name": "NeurIPS 2026",
+     "name_fa": "کنفرانس NeurIPS (سیدنی / آتلانتا / پاریس)",
+     "city": "سیدنی، آتلانتا، پاریس"
+    },
+    {
+     "start": "2026-12-07",
+     "name": "GITEX Global 2026",
+     "name_fa": "جیتکس دبی",
+     "city": "دبی (Expo City)"
+    }
+   ],
+   "new_ids": [
+    "WB-OP00477440",
+    "TED-748820-2026",
+    "TED-748747-2026",
+    "TED-745428-2026",
+    "TED-748671-2026"
+   ],
+   "actioned_ids": [],
+   "reminders": []
+  },
+  {
+   "at": "2026-10-29T11:07:43",
+   "collected": 354,
+   "matched": 24,
+   "partner_drafts": [],
+   "events_added": 0,
+   "scholarships_added": 0,
+   "investors_added": 0,
+   "investor_drafts": [
+    "revo",
+    "212",
+    "hub71",
+    "aramco-ventures",
+    "antler-menap",
+    "equinor-ventures",
+    "shell-ventures",
+    "ycombinator",
+    "techstars"
+   ],
+   "leads_added": 0,
+   "papers_lines": [],
+   "events_soon": [
+    {
+     "start": "2026-11-02",
+     "name": "ADIPEC 2026",
+     "name_fa": "نمایشگاه و کنفرانس نفت و گاز ابوظبی",
+     "city": "ابوظبی"
+    },
+    {
+     "start": "2026-11-03",
+     "name": "Smart City Expo World Congress 2026",
+     "name_fa": "کنگره جهانی شهر هوشمند",
+     "city": "بارسلونا"
+    },
+    {
+     "start": "2026-11-09",
+     "name": "Web Summit 2026",
+     "name_fa": "وب سامیت لیسبون",
+     "city": "لیسبون"
+    },
+    {
+     "start": "2026-11-16",
+     "name": "MEDICA 2026",
+     "name_fa": "نمایشگاه تجهیزات و فناوری پزشکی دوسلدورف",
+     "city": "دوسلدورف"
+    },
+    {
+     "start": "2026-12-06",
+     "name": "NeurIPS 2026",
+     "name_fa": "کنفرانس NeurIPS (سیدنی / آتلانتا / پاریس)",
+     "city": "سیدنی، آتلانتا، پاریس"
+    },
+    {
+     "start": "2026-12-07",
+     "name": "GITEX Global 2026",
+     "name_fa": "جیتکس دبی",
+     "city": "دبی (Expo City)"
+    },
+    {
+     "start": "2026-12-13",
+     "name": "Iran ITEX 1405 (5th) – Sharif University",
+     "name_fa": "پنجمین نمایشگاه ایران ایتکس دانشگاه صنعتی شریف",
+     "city": "تهران (دانشگاه صنعتی شریف)"
+    }
+   ],
+   "new_ids": [
+    "TED-751772-2026",
+    "TED-750509-2026",
+    "TED-751639-2026",
+    "TED-751747-2026"
+   ],
    "actioned_ids": [],
    "reminders": []
   }
