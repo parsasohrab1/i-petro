@@ -2015,6 +2015,158 @@
      "status": "new"
     }
    ]
+  },
+  "GRANT-HORIZON-HLTH-2027-02-TOOL-01": {
+   "id": "GRANT-HORIZON-HLTH-2027-02-TOOL-01",
+   "source": "Horizon Europe (EC Funding & Tenders)",
+   "market": "international",
+   "title": "HORIZON-HLTH-2027-02-TOOL-01-two-stage – Predictive biomarkers using AI for non-communicable diseases (Horizon Europe Health, RIA)",
+   "description": "Whether to apply depends on the reference requirements. For Parsa's products at TRL 3-5, grant calls such as Horizon Europe Health and Digital Europe may suit you better than tenders, since tenders usually want proven references. AI-based predictive biomarker development for chronic non-communicable diseases. Two-stage call opened 29 Oct 2026; stage 1 due 17 Feb 2027 and stage 2 due 16 Sep 2027 per the FFG national contact page and Accelopment (an earlier draft listed 13 Apr 2027). Budget ~EUR 44.2M for ~6 projects. More: https://www.ffg.at/en/europa/heu/cluster1/call2027-twostage تاریخ‌ها و شرایط از منابع ثانویه آمده است؛ پیش از هر اقدام در پورتال رسمی Funding & Tenders تأیید شود.",
+   "buyer": "European Commission – HaDEA / DG R&I",
+   "country": "European Union",
+   "deadline": "2027-02-17",
+   "deadline_fa": "مرحله‌ی اول: 17 فوریه 2027 (مرحله‌ی دوم: 16 سپتامبر 2027)",
+   "published": "",
+   "url": "https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/opportunities/topic-details/horizon-hlth-2027-02-tool-01-two-stage",
+   "notice_type": "Grant call (RIA, two-stage)",
+   "sector": "اتحادیه اروپا (فراخوان گرنت پژوهشی)",
+   "facts": {
+    "price": "حدود €44.2M برای ~۶ پروژه (هر پروژه €6 تا €8M)",
+    "guarantee": "ندارد (گرنت)؛ بودجه‌ی پروژه توسط اتحادیه اروپا پرداخت می‌شود",
+    "experience": "نیاز به کنسرسیوم؛ سابقه‌ی پژوهشی/بالینی شرکا مهم است. محصولات TRL 3-5 برای RIA مناسب‌اند.",
+    "international": "شخصیت حقوقی مستقر در کشورهای عضو اتحادیه اروپا یا کشورهای وابسته می‌تواند عضو کنسرسیوم شود (ترکیه وابسته است؛ شخصیت حقوقی ایرانی واجد نیست). به‌طور معمول حداقل ۳ نهاد مستقل از ۳ کشور؛ تأیید در پورتال رسمی."
+   },
+   "keyword_score": 10,
+   "domains": [
+    "medical",
+    "ai_cross_cutting"
+   ],
+   "line": "ai",
+   "grant": true,
+   "verified": false,
+   "days_left": 110,
+   "status": "new",
+   "first_seen": "2026-10-30T21:45:27",
+   "history": [
+    {
+     "at": "2026-10-30T21:45:27",
+     "status": "new"
+    }
+   ]
+  },
+  "GRANT-HORIZON-HLTH-2027-03-TOOL-04": {
+   "id": "GRANT-HORIZON-HLTH-2027-03-TOOL-04",
+   "source": "Horizon Europe (EC Funding & Tenders)",
+   "market": "international",
+   "title": "HORIZON-HLTH-2027-03-TOOL-04 – Virtual human twins: explainable and generative AI for diagnosis and risk prediction (Horizon Europe Health)",
+   "description": "Whether to apply depends on the reference requirements. For Parsa's products at TRL 3-5, grant calls such as Horizon Europe Health and Digital Europe may suit you better than tenders, since tenders usually want proven references. Explainable and generative AI for diagnosis and risk prediction using imaging, electrophysiology and clinical data (virtual human twins for clinical decision support). Sources disagree on dates: 16 Sep 2027 (partner-search listing) vs 3 Jun - 22 Sep 2027 window. تاریخ‌ها و شرایط از منابع ثانویه آمده است؛ پیش از هر اقدام در پورتال رسمی Funding & Tenders تأیید شود.",
+   "buyer": "European Commission – HaDEA / DG R&I",
+   "country": "European Union",
+   "deadline": "",
+   "deadline_fa": "حدود 16 تا 22 سپتامبر 2027 (منابع متناقض)",
+   "published": "",
+   "url": "https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/opportunities/topic-details/horizon-hlth-2027-03-tool-04",
+   "notice_type": "Grant call (Horizon Europe Health)",
+   "sector": "اتحادیه اروپا (فراخوان گرنت پژوهشی)",
+   "facts": {
+    "price": "در منبع نیامده – در پورتال رسمی",
+    "guarantee": "ندارد (گرنت)؛ بودجه‌ی پروژه توسط اتحادیه اروپا پرداخت می‌شود",
+    "experience": "نیاز به کنسرسیوم با شریک بالینی؛ مناسب محصولات تصویربرداری پزشکی و پشتیبان تصمیم بالینی.",
+    "international": "شخصیت حقوقی مستقر در کشورهای عضو اتحادیه اروپا یا کشورهای وابسته می‌تواند عضو کنسرسیوم شود (ترکیه وابسته است؛ شخصیت حقوقی ایرانی واجد نیست). به‌طور معمول حداقل ۳ نهاد مستقل از ۳ کشور؛ تأیید در پورتال رسمی."
+   },
+   "keyword_score": 10,
+   "domains": [
+    "medical",
+    "ai_cross_cutting"
+   ],
+   "line": "ai",
+   "grant": true,
+   "verified": false,
+   "days_left": null,
+   "status": "new",
+   "first_seen": "2026-10-30T21:45:27",
+   "history": [
+    {
+     "at": "2026-10-30T21:45:27",
+     "status": "new"
+    }
+   ]
+  },
+  "GRANT-HORIZON-HLTH-2027-03-TOOL-08": {
+   "id": "GRANT-HORIZON-HLTH-2027-03-TOOL-08",
+   "source": "Horizon Europe (EC Funding & Tenders)",
+   "market": "international",
+   "title": "HORIZON-HLTH-2027-03-TOOL-08 – Towards Artificial General Intelligence (AGI) for healthcare (Horizon Europe Health, CSA)",
+   "description": "Whether to apply depends on the reference requirements. For Parsa's products at TRL 3-5, grant calls such as Horizon Europe Health and Digital Europe may suit you better than tenders, since tenders usually want proven references. Coordination and support action on frontier AI for healthcare, ~EUR 2.9M for one project. Sources disagree: opens 3 Jun 2027 with deadline 16 Sep 2027, or opens 10 Feb 2027 and closes 21 Sep 2027. Low fit as lead (CSA); useful for joining a consortium. تاریخ‌ها و شرایط از منابع ثانویه آمده است؛ پیش از هر اقدام در پورتال رسمی Funding & Tenders تأیید شود.",
+   "buyer": "European Commission – HaDEA / DG R&I",
+   "country": "European Union",
+   "deadline": "",
+   "deadline_fa": "حدود 16 تا 21 سپتامبر 2027 (منابع متناقض)",
+   "published": "",
+   "url": "https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/opportunities/topic-details/horizon-hlth-2027-03-tool-08",
+   "notice_type": "Grant call (CSA)",
+   "sector": "اتحادیه اروپا (فراخوان گرنت پژوهشی)",
+   "facts": {
+    "price": "حدود €2.9M برای ۱ پروژه",
+    "guarantee": "ندارد (گرنت)؛ بودجه‌ی پروژه توسط اتحادیه اروپا پرداخت می‌شود",
+    "experience": "هماهنگی و پشتیبانی (CSA)؛ برای مشارکت به‌عنوان عضو کنسرسیوم مناسب‌تر از هماهنگ‌کننده شدن است.",
+    "international": "شخصیت حقوقی مستقر در کشورهای عضو اتحادیه اروپا یا کشورهای وابسته می‌تواند عضو کنسرسیوم شود (ترکیه وابسته است؛ شخصیت حقوقی ایرانی واجد نیست). به‌طور معمول حداقل ۳ نهاد مستقل از ۳ کشور؛ تأیید در پورتال رسمی."
+   },
+   "keyword_score": 6,
+   "domains": [
+    "medical",
+    "ai_cross_cutting"
+   ],
+   "line": "ai",
+   "grant": true,
+   "verified": false,
+   "days_left": null,
+   "status": "new",
+   "first_seen": "2026-10-30T21:45:27",
+   "history": [
+    {
+     "at": "2026-10-30T21:45:27",
+     "status": "new"
+    }
+   ]
+  },
+  "GRANT-EIC-ACCELERATOR-2027": {
+   "id": "GRANT-EIC-ACCELERATOR-2027",
+   "source": "Horizon Europe (EC Funding & Tenders)",
+   "market": "international",
+   "title": "EIC Accelerator 2027 – grant + equity for single SMEs (open to health and AI deep-tech)",
+   "description": "Whether to apply depends on the reference requirements. For Parsa's products at TRL 3-5, grant calls such as Horizon Europe Health and Digital Europe may suit you better than tenders, since tenders usually want proven references. EIC Accelerator supports single start-ups/SMEs (short application, then full proposal). First 2027 cut-off for full applications: 3 Feb 2027, then further cut-offs every 2-3 months (dates to be set in the 2027 EIC Work Programme). 2026 cut-offs were 7 Jan, 4 Mar, 6 May, 8 Jul, 2 Sep, 4 Nov. Info day (Turkish national contact point): 19 Nov 2026. تاریخ‌ها و شرایط از منابع ثانویه آمده است؛ پیش از هر اقدام در پورتال رسمی Funding & Tenders تأیید شود.",
+   "buyer": "European Commission – HaDEA / DG R&I",
+   "country": "European Union",
+   "deadline": "2027-02-03",
+   "deadline_fa": "نخستین cut-off سال 2027: 3 فوریه 2027 (بعدی‌ها هر ۲ تا ۳ ماه)",
+   "published": "",
+   "url": "https://eic.ec.europa.eu/eic-funding-opportunities/eic-accelerator_en",
+   "notice_type": "Grant + equity (SME)",
+   "sector": "اتحادیه اروپا (فراخوان گرنت پژوهشی)",
+   "facts": {
+    "price": "گرنت تا ~€2.5M به‌علاوه‌ی سرمایه‌گذاری (طبق قواعد EIC؛ تأیید شود)",
+    "guarantee": "ندارد (گرنت)؛ بودجه‌ی پروژه توسط اتحادیه اروپا پرداخت می‌شود",
+    "experience": "نیاز به TRL حدود 5-6 و شرکت دارای ثبت در کشور عضو/وابسته؛ سابقه‌ی مشتری لازم نیست ولی اعتبارسنجی بازار مهم است.",
+    "international": "فقط شرکت مستقر در عضو یا کشور وابسته؛ وابسته بودن ترکیه در برنامه‌ی 2027 باید تأیید شود."
+   },
+   "keyword_score": 8,
+   "domains": [
+    "medical",
+    "ai_cross_cutting"
+   ],
+   "line": "ai",
+   "grant": true,
+   "verified": false,
+   "days_left": 96,
+   "status": "new",
+   "first_seen": "2026-10-30T21:45:27",
+   "history": [
+    {
+     "at": "2026-10-30T21:45:27",
+     "status": "new"
+    }
+   ]
   }
  },
  "runs": [
