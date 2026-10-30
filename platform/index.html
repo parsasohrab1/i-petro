@@ -174,7 +174,7 @@ const SUBS = {
   bpms:[["home","خانه‌ی BPMS"],["contacts","مخاطبین و ارتباط"],["myday","روز من"],["mind","ذهن‌نگار (آزمون خصوصی)"],["board","تخته‌ی اسکرام"],["backlog","بک‌لاگ و برنامه‌ریزی"],["sprints","اسپرینت‌ها"],["tasks","فهرست تسک‌ها"],["reports","گزارش عملکرد"],["rarchive","بایگانی گزارش‌ها"],["teams","تیم‌ها"],["process","فرایندها"],["calendar","تقویم"],["members","اعضا و ثبت‌نام"],["nda","قرارداد محرمانگی"],["training","فرم آموزش"]],
   letters:[["new","نامه‌ی جدید (ساخت فایل Word)"],["archive","پیگیری و بایگانی نامه‌ها"]],
   scholar:[["applied","اقدام‌شده و در دست بررسی"],["human","مسئول انسانی"],["doing","در دست اقدام"],["todo","اقدام‌نشده"],["profile","مشخصات و رزومه من"],["cv","رزومه محمد پارسا سهرابی"]],
-  articles:[["applied","اقدام‌شده و در دست بررسی"],["doing","در دست اقدام"],["todo","اقدام‌نشده"],["product","محصول ویژه‌ی مقاله"],["claude","تسک برای Claude"],["evidence","شواهد و داده‌ی واقعی"],["submit","ثبت چکیده و ثبت‌نام (مسئول انسانی)"],["list","فهرست کامل"],["pipe","خط لوله تا ویزا"],["mail","مسیر ایمیل: ثبت · تاییدیه · مقاله کامل"],["access","دسترسی افراد"]],
+  articles:[["applied","اقدام‌شده و در دست بررسی"],["doing","در دست اقدام"],["todo","اقدام‌نشده"],["product","محصول ویژه‌ی مقاله"],["claude","تسک برای Claude"],["evidence","شواهد و داده‌ی واقعی"],["submit","ثبت چکیده و ثبت‌نام (مسئول انسانی)"],["list","فهرست کامل"],["pipe","خط لوله تا ویزا"],["mail","مسیر ایمیل: ثبت · تاییدیه · مقاله کامل"],["ready","آمادگی ثبت (۶ معیار)"],["access","دسترسی افراد"]],
   patent:[["home","پتنت‌ها"],["human","مسئول انسانی"],["ops","فرصت‌های ثبت اختراع"],["products","محصولات ریپو"]]
 };
 const TEAMS = {finance:"مالی",admin:"اداری",ai:"هوش مصنوعی"};
@@ -278,6 +278,7 @@ function subscribe(){
   S.db.doc("settings/article_status").onSnapshot(d => { S.artSt = d.exists ? (d.data().map||{}) : {}; render(); }, ()=>{});
   S.db.doc("settings/article_records").onSnapshot(d => { S.artRec = d.exists ? (d.data().map||{}) : {}; render(); }, ()=>{});   // {venueId:{ref,state,next,note,mail,at}} filled from the journals' e-mail replies
   S.db.doc("settings/article_forms").onSnapshot(d => { S.artForms = d.exists ? (d.data().map||{}) : {}; render(); }, ()=>{});   // {venueId:{name,deadline,url}}; the Word files sit in settings/artform_<venueId> as base64
+  S.db.doc("settings/article_manuscripts").onSnapshot(d => { S.msDb = d.exists ? (d.data().map||{}) : {}; render(); }, ()=>{});   // {venueId: {title, blocks[]}}
   S.db.doc("settings/article_abstracts").onSnapshot(d => { S.absDb = d.exists ? (d.data().map||{}) : {}; render(); }, ()=>{});   // {venueId: {title, abstract, keywords[], profile, product:{name,repo,new}, draft_note}}
   S.db.doc("settings/article_calls").onSnapshot(d => { S.calls = d.exists ? (d.data().map||{}) : {}; render(); paintBell(); }, ()=>{});   // {venueId: {…venue fields, found, product_hint, ack}} written by the weekly CFP job
   S.db.doc("settings/article_product").onSnapshot(d => { S.artProd = d.exists ? d.data() : {}; render(); }, ()=>{});
@@ -285,7 +286,7 @@ function subscribe(){
   S.db.doc("settings/company").onSnapshot(d => { S.settings = d.exists ? d.data() : {}; paintBrand(); render(); }, ()=>{});
   S.db.doc("settings/letterhead").onSnapshot(d => { S.lh = d.exists ? d.data() : null; render(); }, ()=>{});
   if(S.me.id){
-    S.db.collection(`attendance/${S.me.id}/days`).onSnapshot(s=>{S.myAtt=s.docs.map(d=>({id:d.id,...d.data()}));render();autoCheckout(S.myAtt,S.me.id)},()=>{});
+    S.db.collection(`attendance/${S.me.id}/days`).onSnapshot(s=>{S.myAtt=s.docs.map(d=>({id:d.id,...d.data()}));render()},()=>{});
     S.db.doc(`mindtest/${S.me.id}/items/result`).onSnapshot(d=>{S.myMind=d.exists?d.data():null;render()},()=>{});
     S.db.collection(`reports/${S.me.id}/items`).onSnapshot(s=>{S.myReports=s.docs.map(d=>({id:d.id,...d.data()}));S.repLoaded=true;render()},()=>{});
   }
@@ -300,7 +301,7 @@ async function loadAllReports(){ // admins read every member's reports and atten
   const mind=[];   // MindScope answers: the owner only, never other admins
   if(S.me.isOwner) for(const m of S.members){ try{ const d=await S.db.doc(`mindtest/${m.id}/items/result`).get(); if(d.exists) mind.push({member:m.id,...d.data()}); }catch(e){} }
   S.allMind=mind;
-  S.allReports=S.me.isOwner?all:[]; S.allAtt=att; S.allLoaded=true; render(); autoCheckout(att);
+  S.allReports=S.me.isOwner?all:[]; S.allAtt=att; S.allLoaded=true; render();
 }
 async function loadMind(){ // owner: re-read every member's MindScope result (the first load happens only once, so later submissions need this)
   if(!S.me.isOwner) return; const mind=[];
@@ -1075,7 +1076,7 @@ VIEWS["bpms.myday"] = () => {
   const rep=S.myReports.find(r=>r.date===today());
   return `<div class="grid2">
    <div class="card"><h3>حضور امروز – ${faDate(today())}</h3><p class="note">روزهای حضور شما: ${esc((me.office_days||[]).map(d=>(WEEKDAYS.find(w=>w[0]===d)||[])[1]).join("، "))}. هر روز حضور: ۸ ساعت کار + ۱ ساعت استراحت. ثبت ورود و خروج فقط با موقعیت مکانی (GPS گوشی) و داخل محدوده‌ی شرکت ممکن است.</p>
-    <div class="row"><button class="btn" data-act="checkin" ${att.in?"disabled":""}>ثبت ورود ${att.in?`(${att.in})`:""}</button><button class="btn ghost" data-act="checkout" ${!att.in||(att.out&&!att.out_auto)?"disabled":""}>ثبت خروج ${att.out?`(${att.out}${att.out_auto?" – خودکار":""})`:""}</button></div>
+    <div class="row"><button class="btn" data-act="checkin" ${att.in?"disabled":""}>ثبت ورود ${att.in?`(${att.in})`:""}</button><button class="btn ghost" data-act="checkout" ${!att.in||att.out?"disabled":""}>ثبت خروج ${att.out?`(${att.out})`:""}</button></div>
     ${att.in_geo?`<p class="meta">فاصله از دفتر هنگام ورود: ${faNum(att.in_geo.dist)} متر (دقت ±${faNum(att.in_geo.acc)})</p>`:""}${hours!=null?`<p>ساعت کار خالص: <b class="mono">${hours}</b> از ۸</p>`:""}</div>
    <div class="card"><h3>گزارش عملکرد امروز</h3>${rep?`<p>${light(rep.score)}</p><p>${esc(rep.feedback||"")}</p>`:`<p class="note">در پایان روز، کارهای انجام‌شده را بنویسید. Claude سخاوتمندانه و با لحاظ‌کردن هر تلاش مستند از ۱۰۰ نمره می‌دهد.</p><button class="btn sig" data-act="report-new">ثبت گزارش عملکرد</button>`}</div>
   </div><h3>تسک‌های من</h3>`+taskTable(mine);
@@ -1083,37 +1084,20 @@ VIEWS["bpms.myday"] = () => {
 const toMin = t => { const [h,m]=(t||"0:0").split(":").map(Number); return h*60+m; };
 const nowHM = () => new Date().toTimeString().slice(0,5);
 // ---- location-verified attendance: entry/exit only from a phone's GPS inside the office radius
-const GEO_MAX_ACC = 300;      // metres; very coarse fixes (desktop / IP guesses are km-wide) are rejected; indoor Wi-Fi fixes pass
+const GEO_MAX_ACC = 150;      // metres; coarse fixes (desktop / IP / Wi-Fi guesses) are rejected
 const GEO_DEF_RADIUS = 200;   // metres, used when the company settings give no radius
 function distM(a,b,c,d){ const R=6371000,r=x=>x*Math.PI/180, dl=r(c-a), dn=r(d-b), h=Math.sin(dl/2)**2+Math.cos(r(a))*Math.cos(r(c))*Math.sin(dn/2)**2; return 2*R*Math.asin(Math.sqrt(h)); }
-const GEO_ERR = {1:"دسترسی به موقعیت مکانی مسدود است. GPS گوشی را روشن کنید و در مرورگر اجازه‌ی «Location» را بدهید؛ اگر صفحه داخل برنامه یا پیش‌نمایش باز شده، آن را در مرورگر کامل (Chrome/Safari) باز کنید.",2:"موقعیت مکانی در دسترس نیست؛ GPS یا اینترنت گوشی را بررسی کنید.",3:"دریافت موقعیت زمان زیادی برد؛ کنار پنجره یا بیرون ساختمان دوباره تلاش کنید.",0:"این مرورگر موقعیت مکانی را پشتیبانی نمی‌کند؛ با گوشی و مرورگر کامل باز کنید."};
-const geoOnce = o => new Promise((ok,no)=>{ if(!navigator.geolocation) return no({code:0}); navigator.geolocation.getCurrentPosition(p=>ok({lat:p.coords.latitude,lng:p.coords.longitude,acc:Math.round(p.coords.accuracy||0)}),no,o); });
-// GPS first; if it times out or is unavailable indoors, retry with the network/Wi-Fi position (cached up to a minute)
-async function getFix(){ try{ return await geoOnce({enableHighAccuracy:true,timeout:10000,maximumAge:0}); }catch(e){ if(e&&e.code===1||e&&e.code===0) throw e; return await geoOnce({enableHighAccuracy:false,timeout:20000,maximumAge:60000}); } }
-// returns {lat,lng,acc,dist} when the member is inside the office. soft=true (exit): never blocks, returns {unverified:reason} instead
-async function officeFix(soft){
+function getFix(){ return new Promise((ok,no)=>{ if(!navigator.geolocation) return no({code:0}); navigator.geolocation.getCurrentPosition(p=>ok({lat:p.coords.latitude,lng:p.coords.longitude,acc:Math.round(p.coords.accuracy||0)}),no,{enableHighAccuracy:true,timeout:20000,maximumAge:0}); }); }
+// returns {lat,lng,acc,dist} when the member is inside the office, else null after telling them why
+async function officeFix(){
   const st=S.settings, lat=Number(st.office_lat), lng=Number(st.office_lng), rad=Number(st.office_radius)||GEO_DEF_RADIUS;
-  const no = msg => { if(soft) return {unverified:msg}; toast(msg); return null; };
-  if(!st.office_lat||!st.office_lng||isNaN(lat)||isNaN(lng)) return no("موقعیت دفتر هنوز ثبت نشده است؛ مدیر باید در «مشخصات شرکت» مختصات دفتر را وارد کند.");
+  if(!st.office_lat||!st.office_lng||isNaN(lat)||isNaN(lng)){ toast("موقعیت دفتر هنوز ثبت نشده است؛ مدیر باید در «مشخصات شرکت» مختصات دفتر را وارد کند."); return null; }
   toast("در حال دریافت موقعیت مکانی شما …");
-  let f; try{ f=await getFix(); }catch(e){ return no(GEO_ERR[e&&e.code]||GEO_ERR[2]); }
-  if(f.acc>GEO_MAX_ACC) return no(`دقت موقعیت کافی نیست (±${faNum(f.acc)} متر). GPS گوشی را روشن کنید و دوباره تلاش کنید.`);
+  let f; try{ f=await getFix(); }catch(e){ toast(e&&e.code===1?"دسترسی به موقعیت مکانی مسدود است. GPS گوشی و اجازه‌ی مرورگر را فعال کنید و دوباره تلاش کنید.":"موقعیت مکانی دریافت نشد. با گوشی و در فضای باز یا کنار پنجره تلاش کنید."); return null; }
+  if(f.acc>GEO_MAX_ACC){ toast(`دقت موقعیت کافی نیست (±${faNum(f.acc)} متر). ثبت فقط با GPS گوشی ممکن است؛ GPS را روشن کنید و دوباره تلاش کنید.`); return null; }
   const dist=Math.round(distM(f.lat,f.lng,lat,lng));
-  if(dist>rad+f.acc) return soft?{...f,dist,unverified:`خارج از محدوده (${faNum(dist)} متر از دفتر)`}:no(`شما حدود ${faNum(dist)} متر از دفتر فاصله دارید؛ ثبت ورود فقط داخل محدوده‌ی شرکت (${faNum(rad)} متر) ممکن است.`);
+  if(dist>rad+f.acc){ toast(`شما حدود ${faNum(dist)} متر از دفتر فاصله دارید؛ ثبت ورود و خروج فقط داخل محدوده‌ی شرکت (${faNum(rad)} متر) ممکن است.`); return null; }
   return {...f,dist};
-}
-// members who checked in but never checked out are closed at 17:00 (or at the entry time if they came after 17:00)
-const AUTO_OUT = "17:00";
-async function autoCheckout(rows, owner){
-  if(!S.db||!S.me.id) return;
-  S.autoOut=S.autoOut||new Set();
-  for(const a of rows){ const key=(a.member||owner)+"/"+a.id;
-    if(!a.in||a.out||S.autoOut.has(key)) continue;
-    if(!(a.id<today()||(a.id===today()&&nowHM()>=AUTO_OUT))) continue;
-    S.autoOut.add(key);
-    const {id,member,...rest}=a, out=toMin(a.in)>=toMin(AUTO_OUT)?a.in:AUTO_OUT;
-    try{ await S.db.doc(`attendance/${a.member||owner}/days/${a.id}`).set({...rest,out,out_auto:true}); }catch(e){ S.autoOut.delete(key); }
-  }
 }
 // ---------- office map picker (Leaflet + OpenStreetMap tiles): click to set the office point used for GPS check-in
 let leafletP=null;
@@ -1669,7 +1653,7 @@ function schSupBlock(p){
   const warn=phd?`<div class="banner" style="margin:6px 0"><b>پیش از دریافت بورسیه:</b> مکاتبه با استاد راهنما و دریافت تأیید کتبی او لازم است؛ پروپوزال هم باید طبق قالب همین دانشگاه نوشته شود.</div>`:"";
   if(!pr) return `<div style="margin-top:8px">${warn}${SCH_PROP[p.id]?"":`<p class="meta">استادان و ایمیل این دانشگاه هنوز آماده نشده است؛ در «تسک برای Claude» درخواست دهید.</p>`}</div>`;
   const sup=(pr.supervisors||[]).map(s=>`<li><b>${esc(s.name)}</b> – ${esc(s.role||"")} · <span class="meta">${esc(s.area||"")}</span> ${s.url?link(s.url):""}</li>`).join("");
-  const em=(pr.emails||[]).map(e=>`<details style="margin:6px 0"><summary>ایمیل به ${esc(e.to_name)}${e.draft_url?` – <a href="${esc(e.draft_url)}" target="_blank" rel="noopener noreferrer">باز کردن درافت در Gmail</a>`:""}</summary><p class="meta">موضوع: ${esc(e.subject)}</p><textarea readonly style="min-height:260px;direction:ltr;text-align:left">${esc(e.body)}</textarea></details>`).join("");
+  const em=(pr.emails||[]).map(e=>`<details style="margin:6px 0"><summary>ایمیل به ${esc(e.to_name)}${e.to_email?` ‹${esc(e.to_email)}›`:" (آدرس گیرنده را وارد کنید)"}${e.draft_url?` – <a href="${esc(e.draft_url)}" target="_blank" rel="noopener noreferrer">باز کردن درافت در Gmail</a>`:""}</summary><p class="meta">موضوع: ${esc(e.subject)}</p><textarea readonly style="min-height:260px;direction:ltr;text-align:left">${esc(e.body)}</textarea></details>`).join("");
   return `<details style="margin-top:8px"><summary><b>استاد راهنما، ایمیل و پروپوزال</b> – تهیه‌شده ${esc(pr.updated||"")}</summary>${warn}
    <h4>استادان پیشنهادی (از صفحه‌های رسمی؛ علاقه‌مندی آن‌ها را خودشان تأیید کنند)</h4><ul>${sup}</ul>
    <p class="meta">${esc(pr.format_note||"")}</p>
@@ -2629,15 +2613,15 @@ async function buildAbstractDocx(v,a){
   const row=(k,val)=>`<w:tr>${cell(2400,par(run(k,{b:true,sz:20}),{after:40}))}${cell(6638,par(run(val,{sz:20}),{after:40}))}</w:tr>`;
   const type={journal:"Journal",special:"Journal special issue",conf:"Conference"}[v.type]||v.type;
   const repo=prod.repo?(ABS_GH+prod.repo+(prod.new?"":"/tree/"+ABS.branch)):"—";
-  const todo="Replace every [bracketed] placeholder with the team's own measured values; add author names; confirm the limits in the venue's author guidelines (they are typical values for the venue family, not copied from the call). Patent rule: do not disclose methods covered by the product's filed claims; a patent attorney must review before submission."+(a.draft_note?" "+a.draft_note:"");
+  const todo="Check the limits against the venue's author guidelines (they are typical values for the venue family, not copied from the call). Add co-authors if any. Patent rule: methods covered by the product's filed claims are not disclosed here; a patent attorney must review before submission."+(a.draft_note?" "+a.draft_note:"");
   const rows=[["Venue",v.name],["Type",type],["Deadline",(v.deadline||"not stated")+(v.dl_note?" – "+v.dl_note:"")],["Official page",v.url||""],
     ["Abstract rule ("+pr.label+")",`${pr.rule} Typical length ${pr.min}–${pr.max} words; keywords ${pr.kw}.`],["Length of this abstract",`${n} words (limit ${pr.max})`],
     ["Product",prod.name],["Repository",repo],["Repository status",prod.new?"New repository created for this article. It is PRIVATE: GitHub shows a 404 page to anyone who is not a collaborator (ask the owner for access; the repository is also hidden from search and from the repository list).":`Existing product; content for the article is on branch "${ABS.branch}".`],["To do before submitting",todo]];
   const bd=t=>`<w:${t} w:val="single" w:sz="4" w:space="0" w:color="999999"/>`;
   const body=[
     par(run(a.title,{b:true,sz:30}),{jc:"center",after:200}),
-    par(run("[Author names]"),{jc:"center",after:40}),
-    par(run("[Affiliation – e.g. Parsa International Group, Istanbul, Türkiye]  ·  [Corresponding author e-mail]",{i:true,sz:20}),{jc:"center",after:280}),
+    par(run("Mohammad Parsa Sohrabi"),{jc:"center",after:40}),
+    par(run("Parsa International Group, Istanbul, Türkiye  ·  oil.ms.sohrabi@gmail.com",{i:true,sz:20}),{jc:"center",after:280}),
     par(run("Abstract",{b:true,sz:24}),{after:80}),
     par(run(a.abstract),{jc:"both",after:160,line:300}),
     par(run(pr.kw_label+": ",{b:true})+run((a.keywords||[]).join("; "),{i:true}),{after:0}),
@@ -2652,7 +2636,15 @@ async function buildAbstractDocx(v,a){
     {name:"word/_rels/document.xml.rels",data:rels([["rIdSty","styles","styles.xml"]])}]);
 }
 const ABS_DOCX = "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
-const absBtn = a => (absOf(a.id)&&S.downloads)?`<div style="margin-top:8px"><button class="btn sm" data-act="art-abs" data-id="${esc(a.id)}" title="چکیده طبق قالب همین ژورنال یا کنفرانس (فایل Word)">چکیده (Word)</button></div>`:"";
+const absBtn = a => (absOf(a.id)&&S.downloads)?`<div style="margin-top:8px"><button class="btn sm" data-act="art-abs" data-id="${esc(a.id)}" title="چکیده طبق قالب همین ژورنال یا کنفرانس (فایل Word)">چکیده (Word)</button> ${msBtn(a)}</div>`:"";
+const msOf = id => (S.msDb&&S.msDb[id]) || null;
+const msBtn = a => (msOf(a.id)&&S.downloads)?`<button class="btn sm sig" data-act="art-ms" data-id="${esc(a.id)}" title="متن کامل مقاله (Word)">منو اسکریپت (Word)</button>`:"";
+async function downloadMs(id){
+  if(!S.downloads){ toast("دریافت فایل فقط داخل claude.ai فعال است."); return; }
+  const m=msOf(id); if(!m) return;
+  try{ await S.downloads.save({filename:`${id.replace(/^s_/,"")}-manuscript.docx`,data:new Blob([await buildPropDocx(m)],{type:ABS_DOCX})}); }
+  catch(err){ if(!err||err.code!=="declined"){ toast("ساخت یا دریافت فایل Word منو اسکریپت انجام نشد."); console.error(err); } }
+}
 const absFile = id => `${id.replace(/^s_/,"")}-abstract.docx`;
 async function downloadAbstract(id){
   if(!S.downloads){ toast("دریافت فایل فقط داخل claude.ai فعال است."); return; }
@@ -2696,6 +2688,7 @@ async function artSetStatus(id,st){
 function artActions(a){
   const st=artStatus(a), id=esc(a.id), b=[];
   if(absOf(a.id)&&S.downloads) b.push(`<button class="btn sm" data-act="art-abs" data-id="${id}" title="چکیده طبق قالب همین ژورنال یا کنفرانس، آماده‌ی ثبت در سامانه (فایل Word)">چکیده (Word)</button>`);
+  if(msOf(a.id)&&S.downloads) b.push(`<button class="btn sm sig" data-act="art-ms" data-id="${id}" title="متن کامل مقاله (Word)">منو اسکریپت (Word)</button>`);
   { const f=(S.artForms||{})[a.id]; if(f&&f.ms&&S.downloads) b.push(`<button class="btn sm" data-act="art-form" data-k="ms" data-v="${id}" title="مقاله‌ی خام (manuscript) طبق قالب همین مقصد (فایل Word)">مقاله (Word)</button>`);
     if(f&&f.tpl) b.push(`<a class="btn sm ghost" href="${esc(f.tpl)}" target="_blank" rel="noopener" title="قالب رسمی مقصد">قالب رسمی</a>`); }
   const cl=S.artSt[a.id]||{}, taken=(st==="doing"||st==="applied")&&cl.by&&cl.by!==S.me.id&&!S.me.isOwner;
@@ -2884,6 +2877,29 @@ function humView(k){
      return `<tr>${td("مورد",esc(i.name),"t")}${td("شرح",`<span class="meta">${esc(i.sub)}</span>`)}${td("مسئول",t?esc(memberName(t.assignee)):'<span class="meta">تعریف نشده</span>')}${td("وضعیت",t?`<span class="pill ${t.status==="done"||t.status==="approved"?"p-ok":t.status==="doing"?"p-info":"p-warn"}">${esc(TASK_ST[t.status]||t.status)}</span>`:'<span class="pill p-mute">—</span>')}${td("",isAdmin()?`<button class="btn sm ghost" data-act="hum-one" data-k="${k}" data-id="${esc(i.id)}">${t?"واگذاری به مسئول انتخاب‌شده":"تعریف تسک برای مسئول انتخاب‌شده"}</button>`:"")}</tr>`;}),"موردی نیست.");
 }
 VIEWS["patent.human"] = () => humView("patent");
+
+// Six-criteria readiness per article product (code/TRL status from the repo audit; prior-art links are real search hits; patent and market views are preliminary).
+const READY = {"hqca": {"code": "partial", "codeN": "کد و ۳ تست دارد؛ CI و سند TRL ندارد؛ کد اعتبارسنجی واقعی در مخزن خصوصی research است.", "art": [["arXiv 2505.18890", "https://arxiv.org/abs/2505.18890"], ["arXiv 2510.15233", "https://arxiv.org/abs/2510.15233"], ["PMC7328444", "https://pmc.ncbi.nlm.nih.gov/articles/PMC7328444/"]], "artN": "Conformal prediction برای پیش‌بینی برهم‌کنش دارو–هدف پیش‌تر منتشر شده است؛ نوآوری روش پایین است.", "inv": "low", "invN": "کاربرد روش استاندارد؛ ادعای پتنتی جدید پیشنهاد نمی‌شود.", "mkt": "فناوری مکمل پلتفرم کشف دارو؛ ارزش اصلی در پلتفرم است، نه در لایه‌ی عدم‌قطعیت."}, "stratguard": {"code": "ok", "codeN": "اسکلت TRL 4 با تست و CI؛ داده‌ی واقعی SEG 2016 در research.", "art": [["جستجوی وب: مقاله‌ی conformal برای رخساره پیدا نشد", null]], "artN": "کار مجاور (ML رخساره) فراوان است، اما conformal با گرامر چینه‌ای پیدا نشد؛ جستجو کامل نیست.", "inv": "low-mod", "invN": "ترکیب مجموعه‌ی گواهی‌شده + دیکدینگ چینه‌ای شاید قابل‌بررسی باشد؛ پوشش بدترین چاه ۰٫۷۵ است.", "mkt": "خدمات تفسیر چاه‌نگار؛ بازار وجود دارد اما سهم قابل‌ادعا نیست."}, "qshot": {"code": "ok", "codeN": "اسکلت TRL 4؛ شبیه‌سازی دقیق در research.", "art": [["arXiv 2108.10434", "https://arxiv.org/abs/2108.10434"], ["arXiv 2507.16879", "https://arxiv.org/abs/2507.16879"]], "artN": "تخصیص شات وزن‌دار/واریانس کاملاً پوشش داده شده؛ تخصیص برای classical shadows کمتر.", "inv": "low", "invN": "پتنت‌پذیر دیده نمی‌شود.", "mkt": "ابزار پژوهشی کوانتومی؛ بازار تجاری مستقل ندارد."}, "ipind": {"code": "ok", "codeN": "۹۲ فایل کد، ۱۶ تست، CI و TRL.", "art": [["جستجوی وب: conformal برای LNP پیدا نشد؛ LipidFM بازه‌ی conformal دارد", null]], "artN": "دامنه‌ی کاربرد برای LNP کمتر کار شده؛ جستجو کامل نیست.", "inv": "low-mod", "invN": "هشدار انتقال سری شیمیایی مفید است؛ ادعای پتنتی ضعیف.", "mkt": "طراحی حامل نانویی؛ بازار واقعی اما متکی بر داده‌ی آزمایشگاهی."}, "apexasset": {"code": "gap", "codeN": "کد هست اما تست و CI ندارد؛ نتیجه‌ای هنوز اندازه‌گیری نشده.", "art": [["ResearchGate: Conformal Prediction Intervals for RUL Estimation", null], ["PHM Society paper 4902", null]], "artN": "بازه‌ی conformal برای RUL وجود دارد؛ حد پایین conformal روی IMS مستقیم پیدا نشد.", "inv": "low-mod", "invN": "افزونه‌ی عدم‌قطعیت روی دوقلوی دیجیتال؛ ادعای پتنتی باید از ادعاهای فعلی تفکیک شود.", "mkt": "نگهداری پیش‌بینانه بازار بزرگی است؛ سهم قابل‌ادعا نیست."}, "hydrogate": {"code": "ok", "codeN": "اسکلت TRL 4؛ داده‌ی USGS در research.", "art": [["جستجوی وب: مقاله‌ی gating حالت هیدروگراف پیدا نشد", null]], "artN": "نتیجه‌ی منفی است؛ ارزش در معیار و بازتولیدپذیری است.", "inv": "low", "invN": "پتنت‌پذیر نیست.", "mkt": "خارج از حوزه‌ی اصلی؛ بازار ندارد."}, "fidps": {"code": "partial", "codeN": "۱۰۰ فایل کد، ۱ تست، بدون CI و TRL؛ بخش ادعاشده پیاده نشده.", "art": [["arXiv 2602.04322", "https://arxiv.org/abs/2602.04322"], ["US 9,874,094", null], ["US 12,429,624", null]], "artN": "PELT روی چاه‌نگار و پتنت‌های مرزبندی لایه موجود است؛ نتیجه‌ی ما خنثی بود.", "inv": "low", "invN": "ماژول زون‌بندی مستقل از ادعاها و پتنت‌پذیر نیست؛ ادعاهای اصلی را وکیل بررسی کند.", "mkt": "پیشگیری آسیب سازند نیاز واقعی دارد؛ شواهد بازار جمع نشده."}, "qgridpart": {"code": "ok", "codeN": "اسکلت TRL 4؛ شبیه‌سازی IEEE 14-bus.", "art": [["arXiv 2606.15083", "https://arxiv.org/abs/2606.15083"], ["arXiv 2608.02789", "https://arxiv.org/abs/2608.02789"], ["arXiv 2609.27829", "https://arxiv.org/abs/2609.27829"]], "artN": "مقاله‌های QAOA برای جزیره‌سازی شبکه وجود دارد؛ نتیجه‌ی ما خنثی.", "inv": "low", "invN": "پتنت‌پذیر دیده نمی‌شود.", "mkt": "بهینه‌سازی کوانتومی شبکه هنوز پژوهشی است."}, "gas_turbine": {"code": "partial", "codeN": "۱۶۷ فایل کد، ۲۰ تست، ۲ CI؛ سند TRL ندارد.", "art": [["ResearchGate: Efficient Emission Monitoring in Gas Turbines – Conformal Adaptive Learning", null], ["MDPI Eng 7(10) 538", null]], "artN": "conformal تطبیقی برای PEMS گازی پیش‌تر منتشر شده.", "inv": "low", "invN": "پتنت‌پذیر نیست؛ دوقلوی دیجیتال را وکیل جدا بررسی کند (ادعای ۸۴۲۱).", "mkt": "پایش انتشار الزام نظارتی دارد؛ سهم قابل‌ادعا نیست."}, "lnp": {"code": "partial", "codeN": "۱۱۰ فایل کد، ۹ تست، ۱ CI؛ سند TRL ندارد.", "art": [["جستجوی وب: ML آگاه از استریوشیمی برای LNP پیدا نشد (مقاله‌ی bioRxiv تجربی است)", null]], "artN": "شکاف احتمالی؛ نتیجه‌ی ما یک seed و بدون جفت ایزومر است.", "inv": "mod", "invN": "متوسط‌ترین گزینه برای بررسی؛ ابتدا باید با ۱۰ seed و جفت‌های ایزومر تأیید شود.", "mkt": "ژن‌درمانی/LNP بازار بزرگ؛ سهم مبتنی بر داده نیست."}, "qrngaudit": {"code": "ok", "codeN": "اسکلت TRL 4؛ داده‌ی Zenodo واقعی.", "art": [["arXiv 1906.04410", "https://arxiv.org/abs/1906.04410"], ["arXiv 2401.12250", "https://arxiv.org/abs/2401.12250"]], "artN": "آزمون NIST روی QRNG آی‌بی‌ام پیش‌تر انجام شده؛ اصلاح چندآزمونی BH پیدا نشد.", "inv": "low-mod", "invN": "رویکرد FDR می‌تواند ارزش روش‌شناختی داشته باشد؛ پتنت بعید است.", "mkt": "حسابرسی QRNG نیاز امنیتی دارد؛ بازار کوچک."}, "pgx": {"code": "partial", "codeN": "۲۱۴ فایل کد، ۲۴ تست، بدون CI؛ سند TRL ندارد.", "art": [["PMC12024485", "https://pmc.ncbi.nlm.nih.gov/articles/PMC12024485/"], ["npj Genomic Medicine commentary", null]], "artN": "شکاف برابری در فارماکوژنومیکس مستند است؛ داده‌ی ایران پیدا نشد.", "inv": "low", "invN": "تحلیل فراوانی آلل پتنت‌پذیر نیست.", "mkt": "پنل‌های PGx بازار دارند؛ داده‌ی محلی لازم است."}, "stretchwatch": {"code": "ok", "codeN": "اسکلت TRL 4؛ محاسبه با PySCF.", "art": [["arXiv 1809.05523", "https://arxiv.org/abs/1809.05523"], ["arXiv 2404.08565", "https://arxiv.org/abs/2404.08565"]], "artN": "کار مرتبط موجود؛ اعتبارسنجی همتا برای شاخص ترکیبی پیدا نشد.", "inv": "low", "invN": "خطر افشای عمومی: صفحه‌ی GitHub پیش از خصوصی‌شدن فهرست شده و شاخص را توصیف می‌کرد؛ وکیل را مطلع کنید.", "mkt": "ابزار پژوهشی؛ بازار تجاری ندارد."}, "explainguard": {"code": "ok", "codeN": "اسکلت TRL 4؛ MedMNIST.", "art": [["Adebayo و همکاران: sanity checks", null], ["VinDr-CXR faithfulness benchmarks", null]], "artN": "آزمون وفاداری saliency پیش‌تر وجود دارد.", "inv": "low", "invN": "پتنت‌پذیر نیست.", "mkt": "اعتبارسنجی هوش مصنوعی پزشکی نیاز رگولاتوری دارد؛ محصول مستقل نشده."}, "nuclear": {"code": "gap", "codeN": "۵۶ فایل کد، بدون تست و CI.", "art": [["ScienceDirect S0029549324005211", "https://www.sciencedirect.com/science/article/pii/S0029549324005211"]], "artN": "open-set برای تشخیص حادثه‌ی نیروگاه هسته‌ای به‌خوبی پوشش داده شده.", "inv": "low", "invN": "ادعاهای ۱۶۵۴ و ۱۷۸۲ مجاورند؛ وکیل بررسی کند.", "mkt": "بازار هسته‌ای رگولاتوری و کند؛ ورود فعلی غیرواقعی."}, "terminals": {"code": "partial", "codeN": "۷۶ فایل کد، ۴ تست، ۱ CI؛ سند TRL ندارد.", "art": [["ScienceDirect S0140988323001019", "https://www.sciencedirect.com/science/article/pii/S0140988323001019"], ["arXiv 2508.14078", "https://arxiv.org/abs/2508.14078"], ["arXiv 2606.15950", "https://arxiv.org/abs/2606.15950"]], "artN": "conformal برای موجودی EIA پیدا نشد؛ کار مجاور هست. داده‌ی ملی، نه مخزن.", "inv": "low-mod", "invN": "ادعای پتنتی شناسایی نشده (سند ادعایی پیدا نشد).", "mkt": "مدیریت ترمینال نیاز واقعی دارد؛ داده‌ی مخزن مالک لازم است."}, "readmitcal": {"code": "ok", "codeN": "اسکلت TRL 4؛ UCI Diabetes 130.", "art": [["MDPI Healthcare 14(9) 1185", null]], "artN": "مطالعات کالیبراسیون روی همین داده وجود دارد.", "inv": "low", "invN": "پتنت‌پذیر نیست.", "mkt": "ابزار پژوهشی؛ بازار مستقل ندارد."}, "wearshift": {"code": "ok", "codeN": "اسکلت TRL 4؛ UCI HAR.", "art": [["arXiv 2310.11950", "https://arxiv.org/abs/2310.11950"]], "artN": "بیش‌برآوردی split تصادفی مستند است.", "inv": "low", "invN": "پتنت‌پذیر نیست.", "mkt": "ابزار پژوهشی؛ بازار مستقل ندارد."}, "ilift": {"code": "partial", "codeN": "۱۶۰ فایل کد، ۲۱ تست، ۲ CI؛ سند TRL ندارد.", "art": [["arXiv 2507.01048", "https://arxiv.org/abs/2507.01048"]], "artN": "conformal روی 3W پیدا نشد؛ پروژه‌های مجاور هست.", "inv": "low-mod", "invN": "ادعای ۱۵۶۶ مجاور است؛ وکیل بررسی کند.", "mkt": "لیفت مصنوعی نیاز عملیاتی دارد؛ شواهد بازار جمع نشده."}, "process_twin": {"code": "ok", "codeN": "اسکلت TRL 4 ادغام شد (داده‌ی مصنوعی)؛ ادعاها پیاده نشده.", "art": [["soft sensor شاخص مذاب PE (RPLS/JIT/ELM) — پوشش گسترده", null]], "artN": "soft sensor شاخص مذاب بسیار پوشش داده شده.", "inv": "low", "invN": "پیشنهاد پتنت ندارد؛ پرونده‌ی ۳۸۶۹ را وکیل بررسی کند.", "mkt": "پتروشیمی نیاز واقعی دارد؛ ارزش در دوقلوی کامل است."}};
+const RD_CODE = {ok:["p-ok","کد + تست + CI + TRL ۴"],partial:["p-warn","کد دارد؛ CI/TRL ناقص"],gap:["p-bad","تست و CI ندارد"]};
+const RD_INV = {low:["p-bad","پایین"],"low-mod":["p-warn","پایین تا متوسط"],mod:["p-ok","متوسط"]};
+function rdKey(a){ if(typeof a.product==="string") return a.product; const r=a.product&&a.product.repo; return Object.keys(ABS.products).find(k=>ABS.products[k].repo===r)||""; }
+VIEWS["articles.ready"] = () => {
+  const rows=artAll().filter(v=>absOf(v.id)).map(v=>{ const a=absOf(v.id), k=rdKey(a), r=READY[k], pr=absProd(a); return {v,a,k,r,pr}; });
+  const withR=rows.filter(x=>x.r), noR=rows.filter(x=>!x.r), ms=rows.filter(x=>msOf(x.v.id));
+  const cell=(x)=>{ const {v,a,r,pr}=x, c=RD_CODE[r.code], i=RD_INV[r.inv];
+    return `<tr>${td("مقاله",`<b>${esc(a.title)}</b><div class="meta">${esc(cvVenueName(v.name))}</div>`,"t")}
+    ${td("۱. محصول و ریپو",`${esc(pr.name)}<div class="meta">${pr.repo?esc(pr.repo)+" (خصوصی)":"—"}</div>`)}
+    ${td("۲. کد و داده تا TRL ۴",`<span class="pill ${c[0]}">${c[1]}</span><div class="meta">${esc(r.codeN)}</div>`)}
+    ${td("۳. جستجوی پیشینه",`${r.art.map(([l,u])=>u?link(u,l):esc(l)).join(" · ")}<div class="meta">${esc(r.artN)}</div>`)}
+    ${td("۴. نبوغ برای پتنت (مقدماتی)",`<span class="pill ${i[0]}">${i[1]}</span><div class="meta">${esc(r.invN)}</div>`)}
+    ${td("۵. سهم بازار (کیفی)",`<div class="meta">${esc(r.mkt)}</div>`)}
+    ${td("۶. چکیده و منو اسکریپت",`<span class="pill p-ok">چکیده ✓</span> ${msOf(v.id)?'<span class="pill p-ok">منو اسکریپت ✓</span>':'<span class="pill p-bad">منو اسکریپت ندارد</span>'}`)}</tr>`; };
+  return `<p class="note">برای هر مقاله‌ی دارای چکیده، شش معیار ثبت نشان داده می‌شود. بخش «پتنت» و «بازار» ارزیابی مقدماتی است، مشاوره‌ی حقوقی نیست و باید وکیل پتنت آن را تأیید کند؛ هیچ سهم بازار عددی ادعا نشده است. پیوندهای پیشینه نتیجه‌ی واقعی جستجوی وب‌اند و جستجو کامل نیست.</p>`+
+   kpis([["مقاله با چکیده",faNum(rows.length),false],["دارای منو اسکریپت",faNum(ms.length),false],["کد کامل تا TRL ۴",faNum(withR.filter(x=>x.r.code==="ok").length),false],["کد ناقص یا بدون تست",faNum(withR.filter(x=>x.r.code!=="ok").length),true],["نبوغ پتنتی متوسط یا بالاتر",faNum(withR.filter(x=>x.r.inv==="mod").length),false]])+
+   `<div class="banner bad"><b>هشدار افشا:</b> صفحه‌ی عمومی ریپوی StretchWatch پیش از خصوصی‌شدن فهرست شده بود و شاخص همپوشانی HF و آنتروپی را توصیف می‌کرد؛ وکیل پتنت باید مطلع شود. در مجموع، بیشتر محصولات کاربرد روش‌های استاندارد (conformal، change-point، QAOA) هستند و نبوغ پتنتی آنها پایین است؛ مسیر واقع‌بینانه انتشار مقاله است نه ثبت اختراع.</div>`+
+   `<div class="tablewrap rows"><table><thead><tr><th>مقاله</th><th>۱. محصول و ریپو</th><th>۲. کد تا TRL ۴</th><th>۳. پیشینه</th><th>۴. نبوغ پتنتی</th><th>۵. بازار</th><th>۶. چکیده و منو اسکریپت</th></tr></thead><tbody>${withR.map(cell).join("")}</tbody></table></div>`+
+   (noR.length?`<h3>مقالاتی که هنوز ارزیابی شش‌معیاره ندارند (${faNum(noR.length)})</h3><p class="note">${noR.map(x=>esc(cvVenueName(x.v.name))+" — "+esc(x.pr.name)).join("؛ ")}</p>`:"");
+};
 VIEWS["articles.evidence"] = () => {
   const ev=(S.pev&&S.pev.list)||[], real=ev.filter(e=>String(e.real).startsWith("بله")).length;
   const pill=e=>{const r=String(e.real); return `<span class="pill ${r.startsWith("بله")?"p-ok":r.startsWith("جزئی")?"p-warn":r.startsWith("خیر")?"p-bad":"p-mute"}">${esc(r)}</span>`;};
@@ -3319,6 +3335,7 @@ document.addEventListener("click", async e => {
     case "art-new": artForm(); break;
     case "art-acc": { if(!S.me.isOwner){ toast("فقط مالک سامانه می‌تواند دسترسی را تغییر دهد."); render(); break; } const s=new Set((S.artAcc||{}).ids||[]); if(b.checked) s.add(id); else s.delete(id); await save("settings/article_access",{ids:[...s]},"دسترسی تب مقالات ذخیره شد"); break; }
     case "art-abs": await downloadAbstract(id); break;
+    case "art-ms": await downloadMs(id); break;
     case "art-abs-all": await downloadAllAbstracts(); break;
     case "art-form": await artFormDownload(b.dataset.v,b.dataset.k); break;
     case "art-abs-mine": await downloadMyAbstracts(); break;
@@ -3422,9 +3439,7 @@ document.addEventListener("click", async e => {
     case "mind-next": await mindNext(); break;
     case "mind-view": mindOwnerView(b.dataset.m); break;
     case "checkin": { if(mindGate("ثبت ورود")) break; if(b.disabled) break; b.disabled=true; try{ const g=await officeFix(); if(g) await save(`attendance/${S.me.id}/days/${today()}`,{in:nowHM(),break_min:60,in_geo:{lat:g.lat,lng:g.lng,acc:g.acc,dist:g.dist}},"ورود ثبت شد"); } finally{ b.disabled=false; } break; }
-    case "checkout": { if(b.disabled) break; b.disabled=true; try{ const g=await officeFix(true), att=S.myAtt.find(x=>x.id===today())||{}, {id:_i,...rest}=att;
-      const geo=g.lat!=null?{out_geo:{lat:g.lat,lng:g.lng,acc:g.acc,dist:g.dist}}:{};
-      await save(`attendance/${S.me.id}/days/${today()}`,{...rest,out:nowHM(),...geo,...(g.unverified?{out_unverified:g.unverified}:{})},g.unverified?`خروج ثبت شد (موقعیت تأیید نشد: ${g.unverified})`:"خروج ثبت شد"); } finally{ b.disabled=false; } break; }
+    case "checkout": { if(b.disabled) break; b.disabled=true; try{ const g=await officeFix(); if(g){ const att=S.myAtt.find(x=>x.id===today())||{}; await save(`attendance/${S.me.id}/days/${today()}`,{...att,out:nowHM(),out_geo:{lat:g.lat,lng:g.lng,acc:g.acc,dist:g.dist}},"خروج ثبت شد"); } } finally{ b.disabled=false; } break; }
     case "office-here": { try{ const f=await getFix(); $("#f_office_lat").value=f.lat.toFixed(6); $("#f_office_lng").value=f.lng.toFixed(6); officeMapSet(f.lat,f.lng,true); toast(`موقعیت فعلی در فرم قرار گرفت (دقت ±${faNum(f.acc)} متر)؛ برای اعمال ذخیره کنید.`); }catch(e){ toast("موقعیت دریافت نشد؛ دسترسی GPS را بررسی کنید."); } break; }
     case "report-new": if(mindGate("بارگذاری گزارش عملکرد")) break; reportForm(b.dataset.date); break;
     case "report-view": reportDetail(b.dataset.m,b.dataset.d); break;
@@ -3512,7 +3527,6 @@ async function boot(){
   setTimeout(()=>{ const mm=myMember(); if(needsNda(mm)&&!ndaSigned(mm)&&!S.ndaShown&&!$("#layer").innerHTML){ S.ndaShown=true; ndaView(mm.id); } else if(needsTraining(mm)&&!trainingDone(mm)&&!S.ndaShown&&!$("#layer").innerHTML){ S.ndaShown=true; trainingView(mm.id); } }, 6000);
   setTimeout(maybeWelcome, 4000); // fallback if the members snapshot is slow
   setTimeout(()=>{ if(isAdmin()) loadAllReports(); }, 2500);
-  setInterval(()=>{ autoCheckout(S.myAtt||[],S.me.id); if(isAdmin()&&S.allAtt) autoCheckout(S.allAtt); }, 5*60*1000);   // page left open past 17:00
 }
 boot();
 })();
