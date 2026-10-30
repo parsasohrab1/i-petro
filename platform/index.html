@@ -1647,6 +1647,14 @@ const SCH_PHD = [   // doctoral applications: supervisor approval comes before t
   {k:"p3",t:"درافت ایمیل به استاد در Gmail (آماده ارسال)",by:"ai"},
   {k:"p4",t:"ارسال ایمیل به استاد، مکاتبه و دریافت تأیید کتبی او پیش از ثبت درخواست بورسیه",by:"me"}];
 const schItems = p => [...SCH_COMMON,...((p.levels||[]).includes("phd")?SCH_PHD:[]),...(p.extra||[]).map((e,i)=>({k:"x"+i,t:e.t,by:e.by}))];
+const SUP_ST = {draft:["p-mute","درافت در Gmail (ارسال نشده)"], sent:["p-warn","ارسال شد؛ منتظر پاسخ"], replied:["p-ok","پاسخ آمد"], declined:["p-bad","پاسخ منفی / رد شد"]};
+const supPill = e => { const s=SUP_ST[e.status||"draft"]||SUP_ST.draft; return `<span class="pill ${s[0]}">${s[1]}</span>`; };
+async function supSave(id,i){
+  const pr=JSON.parse(JSON.stringify((schState(id)||{}).prop||{})), e=(pr.emails||[])[i]; if(!e) return;
+  const st=document.getElementById("sst_"+id+"_"+i), rs=document.getElementById("srs_"+id+"_"+i);
+  e.status=st?st.value:"draft"; e.result=rs?rs.value.trim():""; e.at=new Date().toISOString().slice(0,10);
+  await schSave(id,{prop:pr});
+}
 function schSupBlock(p){
   const phd=(p.levels||[]).includes("phd"), pr=(schState(p.id)||{}).prop;
   if(!phd&&!pr) return "";
@@ -1654,8 +1662,8 @@ function schSupBlock(p){
   if(pr&&pr.na) return `<div style="margin-top:8px">${warn}<div class="banner" style="margin:6px 0;border-color:var(--muted);background:var(--sunken)"><b>وضعیت استاد و پروپوزال:</b> ${esc(pr.na)}</div></div>`;
   if(!pr) return `<div style="margin-top:8px">${warn}${SCH_PROP[p.id]?"":`<p class="meta">استادان و ایمیل این دانشگاه هنوز آماده نشده است؛ در «تسک برای Claude» درخواست دهید.</p>`}</div>`;
   const sup=(pr.supervisors||[]).map(s=>`<li><b>${esc(s.name)}</b> – ${esc(s.role||"")} · <span class="meta">${esc(s.area||"")}</span> ${s.url?link(s.url):""}</li>`).join("");
-  const em=(pr.emails||[]).map(e=>`<details style="margin:6px 0"><summary>ایمیل به ${esc(e.to_name)}${e.to_email?` ‹${esc(e.to_email)}›`:" (آدرس گیرنده را وارد کنید)"}${e.draft_url?` – <a href="${esc(e.draft_url)}" target="_blank" rel="noopener noreferrer">باز کردن درافت در Gmail</a>`:""}</summary><p class="meta">موضوع: ${esc(e.subject)}</p><textarea readonly style="min-height:260px;direction:ltr;text-align:left">${esc(e.body)}</textarea></details>`).join("");
-  return `<details style="margin-top:8px"><summary><b>استاد راهنما، ایمیل و پروپوزال</b> – تهیه‌شده ${esc(pr.updated||"")}</summary>${warn}
+  const em=(pr.emails||[]).map((e,i)=>`<details style="margin:6px 0"><summary>${supPill(e)} ایمیل به ${esc(e.to_name)}${e.to_email?` ‹${esc(e.to_email)}›`:" (آدرس گیرنده را وارد کنید)"}${e.draft_url?` – <a href="${esc(e.draft_url)}" target="_blank" rel="noopener noreferrer">باز کردن درافت در Gmail</a>`:""}</summary><p class="meta">موضوع: ${esc(e.subject)}</p><textarea readonly style="min-height:260px;direction:ltr;text-align:left">${esc(e.body)}</textarea><div class="row" style="margin-top:6px;gap:8px;flex-wrap:wrap"><label class="meta">وضعیت: <select id="sst_${esc(p.id)}_${i}">${Object.entries(SUP_ST).map(([k,v])=>`<option value="${k}"${(e.status||"draft")===k?" selected":""}>${v[1]}</option>`).join("")}</select></label><input id="srs_${esc(p.id)}_${i}" value="${esc(e.result||"")}" placeholder="نتیجه / خلاصه‌ی پاسخ استاد" style="flex:1;min-width:220px"><button class="btn sm sig" data-act="sup-save" data-id="${esc(p.id)}" data-i="${i}">ثبت وضعیت</button>${e.at?`<span class="meta">آخرین به‌روزرسانی: ${esc(e.at)}</span>`:""}</div></details>`).join("");
+  return `<details style="margin-top:8px"><summary><b>استاد راهنما، ایمیل و پروپوزال</b> – تهیه‌شده ${esc(pr.updated||"")} · ایمیل: ${["draft","sent","replied","declined"].map(k=>{const n=(pr.emails||[]).filter(e=>(e.status||"draft")===k).length; return n?`${faNum(n)} ${SUP_ST[k][1]}`:"";}).filter(Boolean).join("، ")||"—"}</summary>${warn}
    <h4>استادان پیشنهادی (از صفحه‌های رسمی؛ علاقه‌مندی آن‌ها را خودشان تأیید کنند)</h4><ul>${sup}</ul>
    <p class="meta">${esc(pr.format_note||"")}</p>
    <h4>ایمیل آماده (درافت در Gmail؛ آدرس گیرنده را از صفحه‌ی استاد وارد کنید)</h4>${em}
@@ -3455,6 +3463,7 @@ document.addEventListener("click", async e => {
     case "prop-docx": await downloadProp(b.dataset.id); break;
     case "prop-show": propShow(b.dataset.id); break;
     case "sch-profile": schProfileForm(); break;
+    case "sup-save": await supSave(b.dataset.id,Number(b.dataset.i)); break;
     case "sch-copy": await schCopyPrompt(b.dataset.id); break;
     case "sch-task": await schClaudeTask(b.dataset.id); break;
     case "sch-set": { const st=b.dataset.st; if(b.type==="checkbox"&&!b.checked) break; await schSave(b.dataset.id,{status:st,status_at:new Date().toISOString(),status_by:S.me.id}); break; }
