@@ -49,9 +49,9 @@
     "phd"
    ],
    "field": "همه‌ی رشته‌ها",
-   "support": "حقوق ماهیانه (حدود ۱٬۲۰۰ یورو) + بیمه + کمک‌هزینه‌ی سفر و پژوهش",
+   "support": "حقوق ماهیانه (حدود ۱٬۲۰۰ تا ۱٬۴۰۰ یورو؛ منابع اختلاف دارند) + بیمه + کمک‌هزینه‌ی سفر و پژوهش",
    "deadline": "2026-11-15",
-   "deadline_note": "معمولاً اوایل تا اواسط نوامبر",
+   "deadline_note": "پنجره‌ی اکتبر تا دسامبر؛ مبلغ و مهلت دقیق را در پورتال DAAD تأیید کنید",
    "url": "https://www.daad.de/en/study-and-research-in-germany/scholarships/",
    "source": "platform seed (researched earlier)",
    "ai_relevant": true,
@@ -1203,6 +1203,61 @@
    "origin": "seed",
    "region": "uk",
    "country": "بریتانیا"
+  },
+  {
+   "id": "imprs_is",
+   "name": "IMPRS-IS – International Max Planck Research School for Intelligent Systems",
+   "uni": "Max Planck Institute for Intelligent Systems (Stuttgart و Tübingen) با Uni Stuttgart و Uni Tübingen",
+   "field": "یادگیری ماشین، رباتیک، بینایی کامپیوتر، سیستم‌های هوشمند",
+   "support": "قرارداد کاری با حقوق (نه بورس سنتی)؛ پوشش کامل هزینه‌ها",
+   "deadline": "2026-11-15",
+   "deadline_note": "۱۵ نوامبر ۲۰۲۶؛ شروع از فوریه ۲۰۲۷ به بعد",
+   "url": "https://imprs.is.mpg.de/application",
+   "source": "globalsouthopportunities / edukateafrica (2026-09)",
+   "note": "آگهی استاد-محور نیست؛ از طریق مدرسه‌ی تحصیلات تکمیلی",
+   "ai_relevant": true,
+   "origin": "seed",
+   "region": "europe",
+   "country": "آلمان",
+   "levels": [
+    "phd"
+   ]
+  },
+  {
+   "id": "dkfz_ds_health",
+   "name": "DKFZ Heidelberg – Doctoral Researchers in Data Science and Health (تا ۶ موقعیت)",
+   "uni": "German Cancer Research Center (DKFZ)",
+   "field": "علم داده و هوش مصنوعی در سلامت",
+   "support": "موقعیت دکتری فول‌فاند",
+   "deadline": "",
+   "deadline_note": "مهلت در آگهی DKFZ؛ هنوز تأیید نشده",
+   "url": "https://jobs.dkfz.de/en/jobs/168731/doctoral-researchers-up-to-6-fully-funded-positions-in-data-science-and-health",
+   "source": "jobs.dkfz.de",
+   "ai_relevant": true,
+   "origin": "seed",
+   "region": "europe",
+   "country": "آلمان",
+   "levels": [
+    "phd"
+   ]
+  },
+  {
+   "id": "erfurt",
+   "name": "University of Erfurt – Doctoral scholarships 2027",
+   "uni": "University of Erfurt",
+   "field": "چند رشته؛ ارتباط با AI محدود (برای تأیید)",
+   "support": "حدود ۱٬۴۰۰ یورو در ماه، ۳ سال (منبع ثانویه)",
+   "deadline": "2026-11-24",
+   "deadline_note": "۲۴ نوامبر ۲۰۲۶ (منبع ثانویه)",
+   "url": "https://www.uni-erfurt.de/en",
+   "source": "aggregator (2026-10)",
+   "ai_relevant": true,
+   "origin": "seed",
+   "region": "europe",
+   "country": "آلمان",
+   "levels": [
+    "phd"
+   ]
   }
  ]
 }
