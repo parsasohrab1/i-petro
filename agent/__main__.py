@@ -22,7 +22,7 @@ import sys
 
 from pathlib import Path
 
-from . import dashboard, events, investors, leads, memory, partners, platform_sync, scholarship_docs, scholarships, store
+from . import dashboard, events, investors, leads, memory, partners, platform_sync, platform_sch, scholarship_docs, scholarships, store
 from .config import ROOT, load_config
 
 
@@ -125,6 +125,7 @@ def main(argv=None):
         scholarships.save(ss)
         for path in scholarship_docs.build_all(ss):
             print(path)
+        print(f"dashboard page: {platform_sch.sync(ss)} scholarships synced")
         return
     if a.cmd in ("select", "unselect"):
         chosen = cfg.setdefault("selected_investors", [])

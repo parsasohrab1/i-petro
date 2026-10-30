@@ -1131,6 +1131,141 @@
    ],
    "country": "چند کشور اروپایی",
    "status": "new"
+  },
+  "kingston_bs": {
+   "id": "kingston_bs",
+   "name": "[کسب‌وکار] Kingston Business School – بورسیه برای ایرانیان (گزارش شما)",
+   "uni": "Kingston University London – Kingston Business School",
+   "levels": [
+    "phd"
+   ],
+   "field": "کسب‌وکار و مدیریت (جزئیات آگهی باید تأیید شود)",
+   "support": "تأیید نشده",
+   "deadline": "",
+   "deadline_note": "مهلت و شرایط آگهی هنوز تأیید نشده",
+   "url": "https://www.kingston.ac.uk/study/fees-and-funding/international-scholarships-and-bursaries",
+   "source": "گزارش کاربر + صفحه‌ی بورس‌های بین‌المللی Kingston",
+   "note": "جست‌وجوی وب بورس ویژه‌ی ایرانیان یا بورس دکتری اختصاصی Business School را تأیید نکرد. آنچه پیدا شد: Niloufar Ebrahim (ارشد) و بورس بین‌المللی تا ۵٬۰۰۰ پوند شهریه‌ی سال اول (منبع ثانویه). لینک آگهی را بفرستید",
+   "ai_relevant": false,
+   "origin": "seed",
+   "region": "uk",
+   "country": "بریتانیا",
+   "status": "new"
+  },
+  "kingston_niloufar": {
+   "id": "kingston_niloufar",
+   "name": "[کسب‌وکار] Kingston – Niloufar Ebrahim Scholarship",
+   "uni": "Kingston University London – Faculty of Business and Social Sciences",
+   "levels": [
+    "master"
+   ],
+   "field": "کسب‌وکار و علوم اجتماعی (ارشد یک‌ساله)",
+   "support": "بورس شایستگی برای یک دانشجوی بین‌المللی ارشد (مبلغ را در صفحه ببینید)",
+   "deadline": "",
+   "deadline_note": "از میان متقاضیان International Merit Based Scholarship انتخاب می‌شود؛ مهلت را در سایت ببینید",
+   "url": "https://www.kingston.ac.uk/study/fees-and-funding/international-scholarships-and-bursaries",
+   "source": "kingston.ac.uk / idp.com",
+   "note": "به یاد قربانیان پرواز اوکراین ۲۰۲۰؛ شرط ملیت ایرانی در منابع دیده نشد",
+   "ai_relevant": false,
+   "origin": "seed",
+   "region": "uk",
+   "country": "بریتانیا",
+   "status": "new"
+  },
+  "imperial_bs": {
+   "id": "imperial_bs",
+   "name": "[کسب‌وکار] Imperial College Business School – PhD in Management & Organisational Research",
+   "uni": "Imperial College London – Business School",
+   "levels": [
+    "phd"
+   ],
+   "field": "مدیریت و پژوهش سازمانی",
+   "support": "فول‌فاند برای پذیرفته‌شدگان؛ حقوق حدود ۲۹٬۵۸۰ پوند سالانه (منبع ثانویه)",
+   "deadline": "2026-12-02",
+   "deadline_note": "۲ دسامبر ۲۰۲۶؛ احتمالاً GMAT/GRE لازم است",
+   "url": "https://www.imperial.ac.uk/business-school/programmes/phd/",
+   "source": "globalsouthopportunities (2026-10-13)",
+   "ai_relevant": false,
+   "origin": "seed",
+   "region": "uk",
+   "country": "بریتانیا",
+   "status": "new"
+  },
+  "liverpool_ms": {
+   "id": "liverpool_ms",
+   "name": "[کسب‌وکار] Liverpool Management School – Graduate Teaching Fellowships (۴ سال)",
+   "uni": "University of Liverpool Management School",
+   "levels": [
+    "phd"
+   ],
+   "field": "مدیریت",
+   "support": "شهریه کامل + کمک‌هزینه‌ی سالانه ۲۱٬۸۰۵ پوند + تدریس",
+   "deadline": "2026-11-27",
+   "deadline_note": "ابراز علاقه تا ۲۷ نوامبر ۲۰۲۶ ساعت ۱۷:۰۰ به وقت بریتانیا",
+   "url": "https://www.liverpool.ac.uk/management/",
+   "source": "careersandopportunities (2026-10-25)",
+   "ai_relevant": false,
+   "origin": "seed",
+   "region": "uk",
+   "country": "بریتانیا",
+   "status": "new"
+  },
+  "bristol_bs": {
+   "id": "bristol_bs",
+   "name": "[کسب‌وکار] Bristol Business School – PhD Bursaries (۴ سال)",
+   "uni": "University of Bristol Business School",
+   "levels": [
+    "phd"
+   ],
+   "field": "کسب‌وکار و مدیریت",
+   "support": "حمایت مالی ۴ ساله؛ پوشش شهریه برای واجدین بین‌المللی طبق آگهی",
+   "deadline": "2026-12-01",
+   "deadline_note": "۱ دسامبر ۲۰۲۶",
+   "url": "https://www.bristol.ac.uk/management/",
+   "source": "globalsouthopportunities (2026-10-29)",
+   "ai_relevant": false,
+   "origin": "seed",
+   "region": "uk",
+   "country": "بریتانیا",
+   "status": "new"
+  },
+  "edinburgh_bs": {
+   "id": "edinburgh_bs",
+   "name": "[کسب‌وکار] Edinburgh Business School – PhD scholarships",
+   "uni": "University of Edinburgh Business School",
+   "levels": [
+    "phd"
+   ],
+   "field": "کسب‌وکار و مدیریت",
+   "support": "شهریه کامل + حقوق (برای دارندگان پذیرش)",
+   "deadline": "2027-02-02",
+   "deadline_note": "۲ فوریه ۲۰۲۷ ساعت ۲۳:۵۹؛ صفحه‌ی رسمی نیمه‌قدیمی است، دور ۲۰۲۷ تأیید شود",
+   "url": "https://www.business-school.ed.ac.uk/phd/scholarships-funding",
+   "source": "business-school.ed.ac.uk",
+   "ai_relevant": false,
+   "origin": "seed",
+   "region": "uk",
+   "country": "بریتانیا",
+   "status": "new"
+  },
+  "ambs": {
+   "id": "ambs",
+   "name": "[کسب‌وکار] Alliance Manchester Business School – PhD funding",
+   "uni": "University of Manchester – Alliance Manchester Business School",
+   "levels": [
+    "phd"
+   ],
+   "field": "کسب‌وکار و مدیریت",
+   "support": "رقابت‌های تأمین مالی داخلی؛ شهریه + حقوق برای برندگان",
+   "deadline": "2026-12-01",
+   "deadline_note": "۱ دسامبر ۲۰۲۶ برای رقابت تأمین مالی؛ حداکثر ۳۰ ژوئن ۲۰۲۷ برای ورود سپتامبر ۲۰۲۷ بدون بورس",
+   "url": "https://www.manchester.ac.uk/study/postgraduate-research/programmes/list/19379/phd-business-and-management/",
+   "source": "manchester.ac.uk",
+   "ai_relevant": false,
+   "origin": "seed",
+   "region": "uk",
+   "country": "بریتانیا",
+   "status": "new"
   }
  },
  "updated": ""
