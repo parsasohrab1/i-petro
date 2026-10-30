@@ -892,20 +892,92 @@
   "proposal": ""
  },
  "mext": {
-  "university": "mext",
-  "na": "MEXT از مسیر سفارت ژاپن است و معمولاً موافقت استاد (nominating professor) یا انتخاب برنامه‌ی تحقیقاتی لازم است. در این نوبت استادان ژاپنی شناسایی نشد؛ در صورت تمایل جست‌وجوی جدا (Kyushu/Akita/Tokyo) انجام می‌شود.",
-  "format_note": "MEXT از مسیر سفارت ژاپن است و معمولاً موافقت استاد (nominating professor) یا انتخاب برنامه‌ی تحقیقاتی لازم است. در این نوبت استادان ژاپنی شناسایی نشد؛ در صورت تمایل جست‌وجوی جدا (Kyushu/Akita/Tokyo) انجام می‌شود.",
-  "supervisors": [],
-  "emails": [],
-  "proposal": ""
+  "university": "MEXT (Japan) – Tokyo / Kyushu / Tohoku",
+  "format_note": "MEXT از مسیر سفارت ژاپن است؛ بسته به مسیر (Research Student/University Recommendation) موافقت یا پذیرش استاد پیش از درخواست لازم است؛ مهلت تقریبی اردیبهشت تا خرداد. مهلت و قالب را از سفارت ژاپن در تهران/ترکیه تأیید کنید. آدرس Sugiyama تأیید نشد (صفحه‌ی CV او در ms.k.u-tokyo.ac.jp/sugi)؛ برای Kyushu آدرس دفتر دپارتمان درج شده است.",
+  "supervisors": [
+   {
+    "name": "Prof. Masashi Sugiyama",
+    "role": "University of Tokyo (Graduate School of Frontier Sciences); Director, RIKEN AIP",
+    "area": "یادگیری ماشین تحت تغییر توزیع، یادگیری انتقالی و ضعیف‌نظارتی",
+    "url": "https://www.ms.k.u-tokyo.ac.jp/sugi/cv.html"
+   },
+   {
+    "name": "Department of Earth Resources Engineering, Kyushu University",
+    "role": "گروه‌هایی در ژئوفیزیک تصویربرداری + چاه‌پیمایی + ML (نویسندگان: Tsuji، Ikeda، Fujimitsu و دیگران)",
+    "area": "ژئوفیزیک، چاه و یادگیری ماشین",
+    "url": "https://mine.kyushu-u.ac.jp"
+   },
+   {
+    "name": "Dr Nazir Mafakheri (Tohoku; یادداشت)",
+    "role": "Specially appointed assistant professor, Tohoku University؛ ناپایداری چاه و ML (پروفایل خودگزارشی؛ احتمالاً دانشجو نمی‌پذیرد)",
+    "area": "ژئومکانیک چاه و ML",
+    "url": "https://jp.linkedin.com/in/nazirmafakheri"
+   }
+  ],
+  "proposal": "Prepared for: MEXT scholarship – University of Tokyo / Kyushu University\n\nFit: the project combines machine learning under distribution shift (Tokyo) with well and geophysical data (Kyushu Earth Resources Engineering).\n\nTitle\nCalibrated, decision-aware uncertainty for machine learning in drilling and industrial asset monitoring under distribution shift\n\n1. Background and motivation\nMachine-learning models are increasingly used to support high-stakes engineering decisions: interpreting well logs while drilling, detecting abnormal operating states and scheduling maintenance of gas compressors and turbines. In these settings the cost of an unreliable prediction is large, yet the standard evaluation (random train/test splits and average accuracy) hides the failure that matters: a model that is well calibrated on average can be badly miscalibrated on a particular well, machine or operating regime. My professional work as a petroleum (drilling) engineer and as the developer of AI products for oil and gas, health and other industrial domains has repeatedly shown this gap between benchmark performance and decision-ready reliability.\n\nPreliminary, unpublished experiments on public data illustrate the problem. In a well-log facies study on the FORCE 2020 data (81 wells), split conformal prediction reached an average coverage of 0.889 against a 0.90 target, but the worst well reached only 0.599 and 19 of 81 wells fell below 0.85. In an alarm-design study on real Petrobras 3W instances (1,119 events) the false-alarm rate was 0.147 against a target of 0.10. These are early results from prototypes, not validated findings; they motivate the question below.\n\n2. Aims and research questions\nAim: to develop and rigorously evaluate uncertainty-quantification methods whose guarantees hold per well, per asset and under distribution shift, and that connect directly to operational decisions.\nRQ1. How can group-conditional and adaptive conformal prediction, and Bayesian ensembles, be made reliable at the level of individual wells or machines when the test distribution differs from the training data?\nRQ2. How should calibrated uncertainty be coupled to cost-sensitive decisions (alarm, referral to an expert, intervention) so that operational costs, not only accuracy, are minimised?\nRQ3. Can domain structure (stratigraphic transition grammars, drilling mechanics, physics-based digital twins) improve validity and sample efficiency without sacrificing coverage?\n\n3. Literature and positioning\nThe work builds on conformal prediction and its group-conditional, adaptive and shift-aware extensions, on Bayesian deep learning and deep ensembles, on cost-sensitive decision theory, and on physics-informed and structured prediction in geoscience and prognostics. The gap I address is empirical and methodological: few studies evaluate guarantees on a leave-one-well-out or leave-one-asset-out basis with real industrial benchmarks, and fewer connect the guarantees to decision costs. A full literature review will be completed in the first year.\n\n4. Methodology\n(a) Evaluation protocol: leave-one-well-out and leave-one-asset-out splits, worst-group coverage and decision-cost metrics reported alongside averages. (b) Methods: group-conditional and adaptive conformal prediction, Bayesian deep ensembles, structured decoding with domain grammars, and cost-sensitive referral policies; reinforcement learning for sequential decisions will be considered where a simulator exists. (c) Data: public datasets only (FORCE 2020 and SEG 2016 well logs, Petrobras 3W v2, NASA IMS bearings, further sets identified in year one), with licences verified before use; industrial data would be used only under a confidentiality agreement. (d) Software: an open-source, tested and reproducible toolkit.\n\n5. Work plan (three years)\nYear 1: literature review; reproducible baselines and the evaluation protocol; first paper on per-well coverage failure and remedies.\nYear 2: decision-aware calibration and structured decoding; second paper; secondment or collaboration with an industrial partner where possible.\nYear 3: extension to prognostics and digital twins; third paper; thesis writing and open-source release.\n\n6. Expected outcomes and impact\nThree peer-reviewed papers, an open benchmark protocol and software toolkit, and guidance for deploying trustworthy ML in safety-critical industrial settings. Negative results will be reported openly.\n\n7. Ethics, data and intellectual property\nOnly public data will be used unless an agreement is in place. Technical details of my existing patent applications are confidential and will not be disclosed or used without separate agreement.\n\n8. Why me\nMSc in Petroleum Engineering (Drilling), Professional Doctorate (DBA) in Business Management from the University of Tehran, and several years of industrial and product-development experience, including digital-twin and predictive-maintenance work for gas compressors and turbines. English proficiency: C2.",
+  "emails": [
+   {
+    "to_name": "Prof. Masashi Sugiyama",
+    "subject": "PhD enquiry: calibrated uncertainty for industrial machine learning (applicant with drilling engineering background)",
+    "body": "Dear Professor Sugiyama,\n\nI am Mohammad Parsa Sohrabi, a petroleum engineer (MSc, Drilling; Professional Doctorate in Business Management, University of Tehran) who develops AI products for oil and gas, health and other industrial domains at Parsa International Group in Istanbul. I am preparing a PhD application on calibrated, decision-aware uncertainty for machine learning in drilling and industrial asset monitoring under distribution shift.\n\nI noticed your work on machine learning under distribution shift, including weakly supervised and transfer learning, and I believe the project could fit your group. In preliminary public-data experiments, average conformal coverage met its target (0.889 on 81 FORCE 2020 wells) but the worst well reached only 0.599, which is the failure mode I would like to study rigorously.\n\nBefore I apply to the University of Tokyo (including through a MEXT scholarship), could you tell me whether you are open to supervising a project like this, and if so whether you would be willing to support my application? I attach a short proposal and my CV, and I would be glad to discuss it by video call at a time that suits you.\n\nThank you for your time and consideration.\n\nKind regards,\nMohammad Parsa Sohrabi\nParsa International Group, Istanbul\noil.ms.sohrabi@gmail.com",
+    "draft_url": "https://mail.google.com/mail/?authuser=oil.ms.sohrabi@gmail.com#all?compose=thread-f:1880514631438693787%2Bmsg-a:r8277449890271045082",
+    "status": "draft",
+    "result": ""
+   },
+   {
+    "to_name": "Department of Earth Resources Engineering, Kyushu University",
+    "subject": "PhD enquiry: calibrated uncertainty for industrial machine learning (applicant with drilling engineering background)",
+    "body": "(draft addressed to the department office; see Gmail)",
+    "draft_url": "https://mail.google.com/mail/?authuser=oil.ms.sohrabi@gmail.com#all?compose=thread-f:1880514631845869406%2Bmsg-a:r248123827885130889",
+    "status": "draft",
+    "result": "",
+    "to_email": "office@mine.kyushu-u.ac.jp"
+   }
+  ]
  },
  "gks": {
-  "university": "gks",
-  "na": "GKS از مسیر سفارت یا دانشگاه کره است؛ برای KAIST/SNU/POSTECH معمولاً پذیرش از دانشگاه لازم است. استادان کره‌ای شناسایی نشدند؛ در صورت تمایل جست‌وجوی جدا انجام می‌شود.",
-  "format_note": "GKS از مسیر سفارت یا دانشگاه کره است؛ برای KAIST/SNU/POSTECH معمولاً پذیرش از دانشگاه لازم است. استادان کره‌ای شناسایی نشدند؛ در صورت تمایل جست‌وجوی جدا انجام می‌شود.",
-  "supervisors": [],
-  "emails": [],
-  "proposal": ""
+  "university": "Global Korea Scholarship (GKS) – SNU / POSTECH / KAIST",
+  "format_note": "GKS دو مسیر دارد: سفارت کره و «University Track» (مستقیم از دانشگاه)؛ برای هر دو معمولاً پذیرش دانشگاه لازم است. مهلت‌ها حدود فوریه تا مارس. استاد KAIST: Wooseok Ha فقط از یک سمینار پیدا شد (دپارتمان تأیید نشد)، درافت نساختم.",
+  "supervisors": [
+   {
+    "name": "Prof. Hoonyoung Jeong",
+    "role": "Associate Professor, Energy Resources Engineering, SNU; Vice Dean for Planning and Strategy",
+    "area": "ML برای مدل‌سازی مخزن، history matching، پیش‌بینی سریع",
+    "url": "https://petro.snu.ac.kr"
+   },
+   {
+    "name": "Prof. Young Myoung Ko",
+    "role": "Head, Industrial and Management Engineering, POSTECH; leader, AI Factory M.AX Alliance",
+    "area": "هوش مصنوعی ساخت و صنعت",
+    "url": "https://imesea.postech.ac.kr"
+   },
+   {
+    "name": "Prof. Wooseok Ha (KAIST؛ یادداشت)",
+    "role": "KAIST (سمینار توزیع‌شده: invariance و استحکام؛ دپارتمان تأیید نشد)",
+    "area": "تغییر توزیع و استحکام",
+    "url": "https://www.ibs.re.kr/bimag/event/distribution-shift-in-machine-learning-robustness-invariance-and-a-causal-view-wooseok-ha/"
+   }
+  ],
+  "proposal": "Prepared for: GKS – Seoul National University / POSTECH\n\nFit: SNU Energy Resources Engineering works on machine learning for reservoir and subsurface data; POSTECH on industrial AI. The project brings calibrated uncertainty to both.\n\nTitle\nCalibrated, decision-aware uncertainty for machine learning in drilling and industrial asset monitoring under distribution shift\n\n1. Background and motivation\nMachine-learning models are increasingly used to support high-stakes engineering decisions: interpreting well logs while drilling, detecting abnormal operating states and scheduling maintenance of gas compressors and turbines. In these settings the cost of an unreliable prediction is large, yet the standard evaluation (random train/test splits and average accuracy) hides the failure that matters: a model that is well calibrated on average can be badly miscalibrated on a particular well, machine or operating regime. My professional work as a petroleum (drilling) engineer and as the developer of AI products for oil and gas, health and other industrial domains has repeatedly shown this gap between benchmark performance and decision-ready reliability.\n\nPreliminary, unpublished experiments on public data illustrate the problem. In a well-log facies study on the FORCE 2020 data (81 wells), split conformal prediction reached an average coverage of 0.889 against a 0.90 target, but the worst well reached only 0.599 and 19 of 81 wells fell below 0.85. In an alarm-design study on real Petrobras 3W instances (1,119 events) the false-alarm rate was 0.147 against a target of 0.10. These are early results from prototypes, not validated findings; they motivate the question below.\n\n2. Aims and research questions\nAim: to develop and rigorously evaluate uncertainty-quantification methods whose guarantees hold per well, per asset and under distribution shift, and that connect directly to operational decisions.\nRQ1. How can group-conditional and adaptive conformal prediction, and Bayesian ensembles, be made reliable at the level of individual wells or machines when the test distribution differs from the training data?\nRQ2. How should calibrated uncertainty be coupled to cost-sensitive decisions (alarm, referral to an expert, intervention) so that operational costs, not only accuracy, are minimised?\nRQ3. Can domain structure (stratigraphic transition grammars, drilling mechanics, physics-based digital twins) improve validity and sample efficiency without sacrificing coverage?\n\n3. Literature and positioning\nThe work builds on conformal prediction and its group-conditional, adaptive and shift-aware extensions, on Bayesian deep learning and deep ensembles, on cost-sensitive decision theory, and on physics-informed and structured prediction in geoscience and prognostics. The gap I address is empirical and methodological: few studies evaluate guarantees on a leave-one-well-out or leave-one-asset-out basis with real industrial benchmarks, and fewer connect the guarantees to decision costs. A full literature review will be completed in the first year.\n\n4. Methodology\n(a) Evaluation protocol: leave-one-well-out and leave-one-asset-out splits, worst-group coverage and decision-cost metrics reported alongside averages. (b) Methods: group-conditional and adaptive conformal prediction, Bayesian deep ensembles, structured decoding with domain grammars, and cost-sensitive referral policies; reinforcement learning for sequential decisions will be considered where a simulator exists. (c) Data: public datasets only (FORCE 2020 and SEG 2016 well logs, Petrobras 3W v2, NASA IMS bearings, further sets identified in year one), with licences verified before use; industrial data would be used only under a confidentiality agreement. (d) Software: an open-source, tested and reproducible toolkit.\n\n5. Work plan (three years)\nYear 1: literature review; reproducible baselines and the evaluation protocol; first paper on per-well coverage failure and remedies.\nYear 2: decision-aware calibration and structured decoding; second paper; secondment or collaboration with an industrial partner where possible.\nYear 3: extension to prognostics and digital twins; third paper; thesis writing and open-source release.\n\n6. Expected outcomes and impact\nThree peer-reviewed papers, an open benchmark protocol and software toolkit, and guidance for deploying trustworthy ML in safety-critical industrial settings. Negative results will be reported openly.\n\n7. Ethics, data and intellectual property\nOnly public data will be used unless an agreement is in place. Technical details of my existing patent applications are confidential and will not be disclosed or used without separate agreement.\n\n8. Why me\nMSc in Petroleum Engineering (Drilling), Professional Doctorate (DBA) in Business Management from the University of Tehran, and several years of industrial and product-development experience, including digital-twin and predictive-maintenance work for gas compressors and turbines. English proficiency: C2.",
+  "emails": [
+   {
+    "to_name": "Prof. Hoonyoung Jeong",
+    "subject": "PhD enquiry: calibrated uncertainty for industrial machine learning (applicant with drilling engineering background)",
+    "body": "Dear Professor Jeong,\n\nI am Mohammad Parsa Sohrabi, a petroleum engineer (MSc, Drilling; Professional Doctorate in Business Management, University of Tehran) who develops AI products for oil and gas, health and other industrial domains at Parsa International Group in Istanbul. I am preparing a PhD application on calibrated, decision-aware uncertainty for machine learning in drilling and industrial asset monitoring under distribution shift.\n\nI noticed your work on machine learning for reservoir modeling, history matching and fast forecasting of reservoir performance, and I believe the project could fit your group. In preliminary public-data experiments, average conformal coverage met its target (0.889 on 81 FORCE 2020 wells) but the worst well reached only 0.599, which is the failure mode I would like to study rigorously.\n\nBefore I apply to Seoul National University (including through the Global Korea Scholarship), could you tell me whether you are open to supervising a project like this, and if so whether you would be willing to support my application? I attach a short proposal and my CV, and I would be glad to discuss it by video call at a time that suits you.\n\nThank you for your time and consideration.\n\nKind regards,\nMohammad Parsa Sohrabi\nParsa International Group, Istanbul\noil.ms.sohrabi@gmail.com",
+    "draft_url": "https://mail.google.com/mail/?authuser=oil.ms.sohrabi@gmail.com#all?compose=thread-f:1880514633255638156%2Bmsg-a:r-1323988738720272727",
+    "status": "draft",
+    "result": "",
+    "to_email": "hoonyoung.jeong@snu.ac.kr"
+   },
+   {
+    "to_name": "Prof. Young Myoung Ko",
+    "subject": "PhD enquiry: calibrated uncertainty for industrial machine learning (applicant with drilling engineering background)",
+    "body": "Dear Professor Ko,\n\nI am Mohammad Parsa Sohrabi, a petroleum engineer (MSc, Drilling; Professional Doctorate in Business Management, University of Tehran) who develops AI products for oil and gas, health and other industrial domains at Parsa International Group in Istanbul. I am preparing a PhD application on calibrated, decision-aware uncertainty for machine learning in drilling and industrial asset monitoring under distribution shift.\n\nI noticed your work on AI-driven manufacturing transformation as leader of the AI Factory M.AX Alliance, and I believe the project could fit your group. In preliminary public-data experiments, average conformal coverage met its target (0.889 on 81 FORCE 2020 wells) but the worst well reached only 0.599, which is the failure mode I would like to study rigorously.\n\nBefore I apply to POSTECH (including through the Global Korea Scholarship), could you tell me whether you are open to supervising a project like this, and if so whether you would be willing to support my application? I attach a short proposal and my CV, and I would be glad to discuss it by video call at a time that suits you.\n\nThank you for your time and consideration.\n\nKind regards,\nMohammad Parsa Sohrabi\nParsa International Group, Istanbul\noil.ms.sohrabi@gmail.com",
+    "draft_url": "https://mail.google.com/mail/?authuser=oil.ms.sohrabi@gmail.com#all?compose=thread-f:1880514633427092192%2Bmsg-a:r8485342004580077098",
+    "status": "draft",
+    "result": ""
+   }
+  ]
  },
  "hungary": {
   "university": "hungary",
