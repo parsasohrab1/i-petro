@@ -119,7 +119,7 @@ def priority(s):
     left = scholarships.days_left(s)
     fit = any(w in (s.get("field", "") + s.get("name", "")).lower() for w in AI_WORDS)
     if "phd" not in s.get("levels", []):
-        return "C", "فقط ارشد"
+        return ("B", "ارشد؛ برای هدف دکتری مناسب نیست") if fit else ("C", "ارشد و رشته‌ی دورتر")
     if left is not None and left < 10:
         return "C", "کمتر از ۱۰ روز؛ فقط اگر مدارک آماده است"
     if fit and (left is None or left >= 21):
