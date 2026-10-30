@@ -1,0 +1,41 @@
+{
+ "n": 1200,
+ "target": "HeLa transfection (log scale)",
+ "nominal": 0.9,
+ "random": {
+  "coverage_mean": 0.915,
+  "coverage_min": 0.842,
+  "coverage_max": 0.958,
+  "coverage_ci95": 0.021,
+  "width": 8.06,
+  "rmse": 2.18,
+  "test_n_mean": 240
+ },
+ "group_by_A_component": {
+  "coverage_mean": 0.921,
+  "coverage_min": 0.821,
+  "coverage_max": 0.992,
+  "coverage_ci95": 0.035,
+  "width": 10.14,
+  "rmse": 2.85,
+  "test_n_mean": 240
+ },
+ "group_by_B_component": {
+  "coverage_mean": 0.84,
+  "coverage_min": 0.577,
+  "coverage_max": 0.977,
+  "coverage_ci95": 0.082,
+  "width": 9.08,
+  "rmse": 2.9,
+  "test_n_mean": 300
+ },
+ "group_by_C_component": {
+  "coverage_mean": 0.865,
+  "coverage_min": 0.617,
+  "coverage_max": 0.975,
+  "coverage_ci95": 0.063,
+  "width": 8.75,
+  "rmse": 2.73,
+  "test_n_mean": 240
+ }
+}
