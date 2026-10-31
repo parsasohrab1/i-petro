@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ورود به iPetro</title>
+<style>
+  :root { --bg:#f6f4f2; --card:#fff; --ink:#1d1a19; --line:#d9d3cf; --signal:#d12a1f; --muted:#615b59; }
+  @media (prefers-color-scheme: dark) { :root { --bg:#161413; --card:#211e1d; --ink:#f1ece9; --line:#3a3533; --muted:#a49d9a; } }
+  * { box-sizing: border-box }
+  body { margin:0; min-height:100vh; display:grid; place-items:center; background:var(--bg); color:var(--ink); font-family: Vazirmatn, Tahoma, sans-serif; padding:16px }
+  form { width:100%; max-width:360px; background:var(--card); border:1px solid var(--line); border-radius:12px; padding:24px }
+  h1 { margin:0 0 4px; font-size:22px } p { margin:0 0 16px; color:var(--muted); font-size:14px }
+  label { display:block; font-size:13px; margin:12px 0 4px }
+  input { width:100%; padding:10px; border:1px solid var(--line); border-radius:8px; background:var(--bg); color:var(--ink); font-size:15px }
+  button { width:100%; margin-top:16px; padding:11px; border:0; border-radius:8px; background:var(--signal); color:#fff; font-size:15px; cursor:pointer }
+  button:disabled { opacity:.6 } #err { color:var(--signal); font-size:13px; min-height:18px; margin-top:10px }
+</style>
+</head>
+<body>
+<form id="f">
+  <h1>iPetro</h1><p>ورود با ایمیل و رمز عبور</p>
+  <label for="e">ایمیل</label><input id="e" type="email" dir="ltr" autocomplete="username" required>
+  <label for="p">رمز عبور</label><input id="p" type="password" dir="ltr" autocomplete="current-password" required>
+  <button id="b">ورود</button><div id="err" role="alert"></div>
+</form>
+<script>
+document.getElementById("f").addEventListener("submit", async function (ev) {
+  ev.preventDefault();
+  var b = document.getElementById("b"), err = document.getElementById("err");
+  b.disabled = true; err.textContent = "";
+  try {
+    var r = await fetch("/api/login", { method: "POST", credentials: "same-origin",
+      headers: { "Content-Type": "application/json", "X-Requested-With": "ppt" },
+      body: JSON.stringify({ email: document.getElementById("e").value, password: document.getElementById("p").value }) });
+    if (r.ok) { location.href = "/"; return; }
+    err.textContent = r.status === 429 ? "تلاش‌های ناموفق زیاد بود؛ ۱۰ دقیقه بعد دوباره امتحان کنید." : "ایمیل یا رمز عبور درست نیست.";
+  } catch (e) { err.textContent = "اتصال به سرور برقرار نشد."; }
+  b.disabled = false;
+});
+</script>
+</body>
+</html>
