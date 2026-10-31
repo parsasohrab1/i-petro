@@ -76,7 +76,12 @@ jobs:
           git config user.email "actions@users.noreply.github.com"
           git add data outputs docs
           git diff --cached --quiet || git commit -m "Daily scan $(date -u +%F)"
-          git push
+          # main often moves during the ~10 minute scan (merged PRs); rebase onto it and retry instead of losing the results
+          for i in 1 2 3; do
+            git pull --rebase origin "${GITHUB_REF_NAME}" && git push && exit 0
+            sleep $((i * 5))
+          done
+          echo "::error::could not push scan results after 3 attempts"; exit 1
 
       - name: Public repository - results not committed
         if: steps.vis.outputs.private != 'true'
