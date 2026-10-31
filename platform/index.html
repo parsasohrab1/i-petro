@@ -1648,7 +1648,11 @@ const SCH_PHD = [   // doctoral applications: supervisor approval comes before t
   {k:"p4",t:"ارسال ایمیل به استاد، مکاتبه و دریافت تأیید کتبی او پیش از ثبت درخواست بورسیه",by:"me"}];
 const schItems = p => [...SCH_COMMON,...((p.levels||[]).includes("phd")?SCH_PHD:[]),...(p.extra||[]).map((e,i)=>({k:"x"+i,t:e.t,by:e.by}))];
 const SUP_ST = {draft:["p-mute","درافت در Gmail (ارسال نشده)"], sent:["p-warn","ارسال شد؛ منتظر پاسخ"], replied:["p-ok","پاسخ آمد"], declined:["p-bad","پاسخ منفی / رد شد"]};
-const supPill = e => { const s=SUP_ST[e.status||"draft"]||SUP_ST.draft; return `<span class="pill ${s[0]}">${s[1]}</span>`; };
+const gmSync = () => (schState("_gmail_sync")||{});
+const gmId = e => (String(e.draft_url||"").match(/msg-a:([^&\s]+)$/)||[])[1];
+const effEmail = e => { if(e.status&&e.status!=="draft") return e; const g=((gmSync().drafts)||{})[gmId(e)]; return g?{...e,...g}:e; };
+const gmNote = () => { const g=gmSync(); return g.checked_at?`<div class="banner" style="margin:6px 0;border-color:var(--info);background:var(--sunken)"><b>آخرین بررسی Gmail (توسط Claude):</b> ${esc(g.checked_at)} · درافت: ${faNum(g.drafts_left||0)} · ارسال‌شده: ${faNum(g.sent||0)} · پاسخ‌ها: ${faNum(g.replied||0)}${g.note?` · ${esc(g.note)}`:""}</div>`:""; };
+const supPill = e => { e=effEmail(e); const s=SUP_ST[e.status||"draft"]||SUP_ST.draft; return `<span class="pill ${s[0]}">${s[1]}</span>`; };
 async function supSave(id,i){
   const pr=JSON.parse(JSON.stringify((schState(id)||{}).prop||{})), e=(pr.emails||[])[i]; if(!e) return;
   const st=document.getElementById("sst_"+id+"_"+i), rs=document.getElementById("srs_"+id+"_"+i);
@@ -1662,8 +1666,8 @@ function schSupBlock(p){
   if(pr&&pr.na) return `<div style="margin-top:8px">${warn}<div class="banner" style="margin:6px 0;border-color:var(--muted);background:var(--sunken)"><b>وضعیت استاد و پروپوزال:</b> ${esc(pr.na)}</div></div>`;
   if(!pr) return `<div style="margin-top:8px">${warn}${SCH_PROP[p.id]?"":`<p class="meta">استادان و ایمیل این دانشگاه هنوز آماده نشده است؛ در «تسک برای Claude» درخواست دهید.</p>`}</div>`;
   const sup=(pr.supervisors||[]).map(s=>`<li><b>${esc(s.name)}</b> – ${esc(s.role||"")} · <span class="meta">${esc(s.area||"")}</span> ${s.url?link(s.url):""}</li>`).join("");
-  const em=(pr.emails||[]).map((e,i)=>`<details style="margin:6px 0"><summary>${supPill(e)} ایمیل به ${esc(e.to_name)}${e.to_email?` ‹${esc(e.to_email)}›`:" (آدرس گیرنده را وارد کنید)"}${e.draft_url?` – <a href="${esc(e.draft_url)}" target="_blank" rel="noopener noreferrer">باز کردن درافت در Gmail</a>`:""}</summary><p class="meta">موضوع: ${esc(e.subject)}</p><textarea readonly style="min-height:260px;direction:ltr;text-align:left">${esc(e.body)}</textarea><div class="row" style="margin-top:6px;gap:8px;flex-wrap:wrap"><label class="meta">وضعیت: <select id="sst_${esc(p.id)}_${i}">${Object.entries(SUP_ST).map(([k,v])=>`<option value="${k}"${(e.status||"draft")===k?" selected":""}>${v[1]}</option>`).join("")}</select></label><input id="srs_${esc(p.id)}_${i}" value="${esc(e.result||"")}" placeholder="نتیجه / خلاصه‌ی پاسخ استاد" style="flex:1;min-width:220px"><button class="btn sm sig" data-act="sup-save" data-id="${esc(p.id)}" data-i="${i}">ثبت وضعیت</button>${e.at?`<span class="meta">آخرین به‌روزرسانی: ${esc(e.at)}</span>`:""}</div></details>`).join("");
-  return `<details style="margin-top:8px"><summary><b>استاد راهنما، ایمیل و پروپوزال</b> – تهیه‌شده ${esc(pr.updated||"")} · ایمیل: ${["draft","sent","replied","declined"].map(k=>{const n=(pr.emails||[]).filter(e=>(e.status||"draft")===k).length; return n?`${faNum(n)} ${SUP_ST[k][1]}`:"";}).filter(Boolean).join("، ")||"—"}</summary>${warn}
+  const em=(pr.emails||[]).map((e0,i)=>{ const e=effEmail(e0); return `<details style="margin:6px 0"><summary>${supPill(e)} ایمیل به ${esc(e.to_name)}${e.to_email?` ‹${esc(e.to_email)}›`:" (آدرس گیرنده را وارد کنید)"}${e.draft_url?` – <a href="${esc(e.draft_url)}" target="_blank" rel="noopener noreferrer">باز کردن درافت در Gmail</a>`:""}</summary><p class="meta">موضوع: ${esc(e.subject)}</p><textarea readonly style="min-height:260px;direction:ltr;text-align:left">${esc(e.body)}</textarea><div class="row" style="margin-top:6px;gap:8px;flex-wrap:wrap"><label class="meta">وضعیت: <select id="sst_${esc(p.id)}_${i}">${Object.entries(SUP_ST).map(([k,v])=>`<option value="${k}"${(e.status||"draft")===k?" selected":""}>${v[1]}</option>`).join("")}</select></label><input id="srs_${esc(p.id)}_${i}" value="${esc(e.result||"")}" placeholder="نتیجه / خلاصه‌ی پاسخ استاد" style="flex:1;min-width:220px"><button class="btn sm sig" data-act="sup-save" data-id="${esc(p.id)}" data-i="${i}">ثبت وضعیت</button>${e.at?`<span class="meta">آخرین به‌روزرسانی: ${esc(e.at)}</span>`:""}</div></details>`; }).join("");
+  return `<details style="margin-top:8px"><summary><b>استاد راهنما، ایمیل و پروپوزال</b> – تهیه‌شده ${esc(pr.updated||"")} · ایمیل: ${["draft","sent","replied","declined"].map(k=>{const n=(pr.emails||[]).filter(e=>(effEmail(e).status||"draft")===k).length; return n?`${faNum(n)} ${SUP_ST[k][1]}`:"";}).filter(Boolean).join("، ")||"—"}</summary>${warn}
    <h4>استادان پیشنهادی (از صفحه‌های رسمی؛ علاقه‌مندی آن‌ها را خودشان تأیید کنند)</h4><ul>${sup}</ul>
    <p class="meta">${esc(pr.format_note||"")}</p>
    <h4>ایمیل آماده (درافت در Gmail؛ آدرس گیرنده را از صفحه‌ی استاد وارد کنید)</h4>${em}
@@ -1749,8 +1753,9 @@ function schPublicCard(p){ const items=schItems(p);
 const schOrder = (a,b) => { const t=new Date().toISOString().slice(0,10), ka=!a.deadline?2:a.deadline<t?1:0, kb=!b.deadline?2:b.deadline<t?1:0;   // open deadlines first (soonest first), then past, then rolling
   return ka-kb || (a.deadline||"").localeCompare(b.deadline||"") || String(a.uni).localeCompare(String(b.uni)); };
 function schList(page){
+  const gm=gmNote();
   const list=SCH.filter(p=>schStatus(p)===page).filter(p=>match(p.uni,p.country,p.city,p.field,p.kind)).sort(schOrder);
-  return `<p class="note">فهرست بورسیه‌های کامل ارشد و دکتری که شهریه را پوشش می‌دهند و حقوق ماهیانه دارند. مهلت‌ها تقریبی‌اند؛ پیش از اقدام در سایت رسمی تأیید شوند.</p>`+
+  return gm+`<p class="note">فهرست بورسیه‌های کامل ارشد و دکتری که شهریه را پوشش می‌دهند و حقوق ماهیانه دارند. مهلت‌ها تقریبی‌اند؛ پیش از اقدام در سایت رسمی تأیید شوند.</p>`+
    kpis(Object.entries(SCH_ST).map(([k,l])=>[l,faNum(SCH.filter(p=>schStatus(p)===k).length),false]))+
    (list.length?list.map(p=>schCard(p,page)).join(""):'<p class="empty">موردی در این صفحه نیست.</p>');
 }
@@ -3543,3 +3548,80 @@ async function boot(){
 boot();
 })();
 </script>
+
+<!--claude-mermaid-runtime-begin:3477-->
+<style>.mermaid-diagram{margin-block:4px}.mermaid-diagram svg{display:block;margin:0 auto;max-width:100%;height:auto}</style>
+<script src="/_runtime/mermaid-11.16.1.min.js"></script>
+<script>(function(){
+var CFG={"palettes":{"light":{"surface":"#f4efe4","text":"#42392e","line":"#8a7f6d","border":"#7a6c52","bg":"#fffdf8"},"dark":{"surface":"#262b34","text":"#f2f3f5","line":"#a8adb8","border":"#9aa4b8","bg":"#1f232b"}}};
+if(typeof mermaid==='undefined')return;
+var pres=Array.prototype.slice.call(document.querySelectorAll('pre.mermaid')).filter(function(p){if(p.hasAttribute('data-claude-mermaid-claimed'))return false;p.setAttribute('data-claude-mermaid-claimed','1');return true;});
+if(!pres.length)return;
+var mq=window.matchMedia?window.matchMedia('(prefers-color-scheme: dark)'):null;
+var root=document.documentElement;
+var items=pres.map(function(pre){
+var mount=document.createElement('div');mount.className='mermaid-diagram';
+return {pre:pre,mount:mount,src:pre.textContent||''};
+});
+var seq=0;
+var renderGen=0;
+var lastKey='';
+function pageBg(fallback){
+var els=[document.body,document.documentElement];
+for(var i=0;i<els.length;i++){
+var c=els[i]&&getComputedStyle(els[i]).backgroundColor;
+if(c&&c!=='transparent'&&c!=='rgba(0, 0, 0, 0)')return c;
+}
+return fallback;
+}
+function render(){
+var theme=root.getAttribute('data-theme');
+var dark=theme==='dark'||(!!(mq&&mq.matches)&&theme!=='light');
+var pal=dark?CFG.palettes.dark:CFG.palettes.light;
+var bg=pageBg(pal.bg);
+var key=(dark?'d':'l')+'|'+bg;
+if(key===lastKey)return;
+lastKey=key;
+var gen=++renderGen;
+var font=getComputedStyle(document.body).fontFamily||'sans-serif';
+var nat={useMaxWidth:false};
+mermaid.initialize({
+startOnLoad:false,securityLevel:'strict',theme:'base',
+flowchart:nat,sequence:nat,er:nat,state:nat,class:nat,pie:nat,
+gantt:nat,journey:nat,timeline:nat,gitGraph:nat,mindmap:nat,xyChart:nat,
+quadrantChart:nat,sankey:nat,c4:nat,requirement:nat,block:nat,
+packet:nat,kanban:nat,architecture:nat,radar:nat,
+themeVariables:{background:bg,mainBkg:pal.surface,primaryColor:pal.surface,
+primaryTextColor:pal.text,lineColor:pal.line,primaryBorderColor:pal.border,
+nodeBorder:pal.border,clusterBorder:pal.border,edgeLabelBackground:bg,
+clusterBkg:'rgba(127,127,127,0.07)',titleColor:pal.text,
+darkMode:dark,rowOdd:bg,rowEven:'rgba(127,127,127,0.07)',
+attributeBackgroundColorOdd:bg,attributeBackgroundColorEven:'rgba(127,127,127,0.07)',
+fontSize:'16px',fontFamily:font},
+themeCSS:'.node rect, .node circle, .node polygon, .node path, .cluster rect { stroke-width: 2px; }'
+});
+items.forEach(function(it){
+var id='claude-mermaid-'+seq++;
+mermaid.render(id,it.src).then(function(r){
+if(gen!==renderGen)return;
+var prev=it.pre.previousElementSibling;
+if(prev&&prev.className==='mermaid-diagram'&&prev!==it.mount)return;
+it.mount.innerHTML=r.svg;
+if(!it.mount.parentNode)it.pre.parentNode.insertBefore(it.mount,it.pre);
+it.pre.style.display='none';
+},function(){
+var scratch=document.getElementById(id);
+if(scratch)scratch.parentNode.removeChild(scratch);
+scratch=document.getElementById('d'+id);
+if(scratch)scratch.parentNode.removeChild(scratch);
+if(gen!==renderGen)return;
+if(it.mount.parentNode)it.mount.parentNode.removeChild(it.mount);
+it.pre.style.display='';
+});
+});
+}
+render();
+if(mq&&mq.addEventListener)mq.addEventListener('change',render);
+if(typeof MutationObserver!=='undefined')new MutationObserver(render).observe(root,{attributes:true,attributeFilter:['data-theme']});
+})();</script>
+<!--claude-mermaid-runtime-end-->
