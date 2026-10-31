@@ -275,4 +275,5 @@ def index(request: Request):
     html = PAGE.read_text(encoding="utf-8")
     html = '<script src="/shim.js"></script>' + html      # the page is a fragment (no <head>); the shim must run first
     return HTMLResponse(html, headers={"Cache-Control": "no-store", "X-Frame-Options": "SAMEORIGIN",
-                                       "Referrer-Policy": "same-origin"})
+                                       "Referrer-Policy": "same-origin",
+                                       "Permissions-Policy": "geolocation=(self)"})
