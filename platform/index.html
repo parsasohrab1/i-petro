@@ -172,9 +172,9 @@ const SUBS = {
   events:[["iran","ایران"],["world","جهان"],["all","همه"],["taken","در دست پیگیری"]],
   erp:[["domains","حوزه‌های فعالیت"],["products","توسعه‌ی محصول هوشمند"],["people","نیروی انسانی"],["finance","مالی"],["clients","مشتریان و قراردادها"],["backup","پشتیبان‌گیری"]],
   bpms:[["home","خانه‌ی BPMS"],["contacts","مخاطبین و ارتباط"],["myday","روز من"],["mind","ذهن‌نگار (آزمون خصوصی)"],["board","تخته‌ی اسکرام"],["backlog","بک‌لاگ و برنامه‌ریزی"],["sprints","اسپرینت‌ها"],["tasks","فهرست تسک‌ها"],["reports","گزارش عملکرد"],["rarchive","بایگانی گزارش‌ها"],["teams","تیم‌ها"],["process","فرایندها"],["calendar","تقویم"],["members","اعضا و ثبت‌نام"],["nda","قرارداد محرمانگی"],["training","فرم آموزش"]],
-  letters:[["new","نامه‌ی جدید (ساخت فایل Word)"],["archive","پیگیری و بایگانی نامه‌ها"]],
+  letters:[["new","نامه‌ی جدید (ساخت فایل Word)"],["archive","همه‌ی نامه‌ها (پیگیری و بایگانی)"],["sec_oil","نفت و گاز"],["sec_med","پزشکی"],["sec_water","آب"],["sec_energy","انرژی"],["sec_power","نیروگاه‌ها"],["sec_shasta","هلدینگ شستا"],["sec_hpc","هلدینگ خلیج فارس"]],
   scholar:[["applied","اقدام‌شده و در دست بررسی"],["human","مسئول انسانی"],["doing","در دست اقدام"],["todo","اقدام‌نشده"],["profile","مشخصات و رزومه من"],["cv","رزومه محمد پارسا سهرابی"]],
-  articles:[["applied","اقدام‌شده و در دست بررسی"],["doing","در دست اقدام"],["todo","اقدام‌نشده"],["product","محصول ویژه‌ی مقاله"],["claude","تسک برای Claude"],["evidence","شواهد و داده‌ی واقعی"],["submit","ثبت چکیده و ثبت‌نام (مسئول انسانی)"],["list","فهرست کامل"],["pipe","خط لوله تا ویزا"],["mail","مسیر ایمیل: ثبت · تاییدیه · مقاله کامل"],["ready","آمادگی ثبت (۶ معیار)"],["access","دسترسی افراد"]],
+  articles:[["applied","اقدام‌شده و در دست بررسی"],["doing","در دست اقدام"],["todo","اقدام‌نشده"],["product","محصول ویژه‌ی مقاله"],["claude","تسک برای Claude"],["evidence","شواهد و داده‌ی واقعی"],["submit","ثبت چکیده و ثبت‌نام (مسئول انسانی)"],["list","فهرست کامل"],["pipe","خط لوله تا ویزا"],["mail","مسیر ایمیل: ثبت · تاییدیه · مقاله کامل"],["ready","آمادگی ثبت (۶ معیار)"],["upload","آپلود داده‌ها"],["access","دسترسی افراد"]],
   patent:[["home","پتنت‌ها"],["human","مسئول انسانی"],["ops","فرصت‌های ثبت اختراع"],["products","محصولات ریپو"]]
 };
 const TEAMS = {finance:"مالی",admin:"اداری",ai:"هوش مصنوعی"};
@@ -208,7 +208,7 @@ const S = {mod:"market", sub:"iran", q:"", db:null, user:null, assets:null, samp
   me:{id:null,isOwner:false,canEdit:false}, canWrite:null,
   m:{tenders:[],events:[],investors:[],leads:[],partners:[]}, opsList:[],
   settings:{}, members:[], tasks:[], letters:[], lettersArchive:[], lh:null, draft:null, archF:"all", ra:{member:null,from:"",to:""}, repLoaded:false, allLoaded:false, forceFull:false, products:[], patents:[], finance:[], clients:[], tracking:{}, schol:[], sp:{}, cdocs:{}, ip:{countries:{},drafts:{}}, ipTab:"partners", news:{items:[]}, bi:{list:[]}, arts:[], tn:[], tnF:{src:"",ai:false,dom:"",st:""}, artRec:{}, artProd:{}, artSt:{}, artAcc:{ids:[]}, artMail:{}, ct:[], artF:{field:"",mode:"",type:"",past:false},
-  myAtt:[], myReports:[], allReports:[], allAtt:[], loaded:false, sprints:[], boardMine:false, tour:null, got:new Set(), welcomed:false, calMine:false, calTypes:null, seenTasks:new Set()};
+  myAtt:[], myReports:[], allReports:[], allAtt:[], loaded:false, sprints:[], boardMine:false, tour:null, got:new Set(), welcomed:false, calMine:false, calTypes:null, seenTasks:new Set(), taskWho:""};
 try{const v=JSON.parse(localStorage.getItem("ppt-view")||"{}");if(v.mod&&SUBS[v.mod]){S.mod=v.mod;S.sub=SUBS[v.mod].some(x=>x[0]===v.sub)?v.sub:SUBS[v.mod][0][0]}}catch(e){}
 try{S.seenTasks=new Set(JSON.parse(localStorage.getItem("ppt-seen")||"[]"))}catch(e){}
 
@@ -285,6 +285,7 @@ function subscribe(){
   if(isOwnerOnly()) S.db.doc("settings/scholar").onSnapshot(d => { S.sp = d.exists ? d.data() : SP_DEFAULT; render(); }, ()=>{});
   S.db.doc("settings/company").onSnapshot(d => { S.settings = d.exists ? d.data() : {}; paintBrand(); render(); }, ()=>{});
   S.db.doc("settings/letterhead").onSnapshot(d => { S.lh = d.exists ? d.data() : null; render(); }, ()=>{});
+  S.db.doc("settings/letterhead_soshiant").onSnapshot(d => { S.lhs = d.exists ? d.data() : null; render(); }, ()=>{});
   if(S.me.id){
     S.db.collection(`attendance/${S.me.id}/days`).onSnapshot(s=>{S.myAtt=s.docs.map(d=>({id:d.id,...d.data()}));render();autoCheckout(S.myAtt,S.me.id)},()=>{});
     S.db.doc(`mindtest/${S.me.id}/items/result`).onSnapshot(d=>{S.myMind=d.exists?d.data():null;render()},()=>{});
@@ -534,7 +535,7 @@ const TCAT = {health:"پروژه‌های سلامت و پزشکی (Health & Med
 // sector grouping shared by every list: medical, water, energy, other (keyword reading of the item text, not a measurement)
 const SEC = {medical:"پزشکی و سلامت",water:"آب",energy:"انرژی",other:"سایر"};
 const TW_RE=/water|aquifer|wastewater|desalin|hydrolog|irrigat|drought|subsidence|sewage|dam safety|آبخوان|فاضلاب|شیرین‌سازی|خشکسالی|فرونشست|سدها|(?:^|[^\u0600-\u06FF])آب(?![\u0600-\u06FF])/i;
-const PROD_SEC = {neuropredict:"medical",inescape:"medical",diagkits:"medical",healthdata:"medical",pgx:"medical",ipind:"medical",lnp:"medical",cart:"medical",hqca:"medical",hydroguard:"water"};
+const PROD_SEC = {neuropredict:"medical",inescape:"medical",diagkits:"medical",healthdata:"medical",pgx:"medical",ipind:"medical",lnp:"medical",cart:"medical",hqca:"medical",hydroguard:"water",aquiferguard:"water",nrwleak:"water",damops:"water",reusetwin:"water"};
 const secOf = txt => TH_RE.test(txt)?"medical":TW_RE.test(txt)?"water":TE_RE.test(txt)?"energy":"other";
 const secKey = c => c==="health"?"medical":c;
 const prSec = p => PROD_SEC[p&&p.id] || secOf([p&&p.name,p&&p.algorithms].join(" "));
@@ -710,12 +711,19 @@ function ipOpen(tid,tab){
    <p class="meta">${esc(t.title)}<br>${esc(t.buyer||"")} · مهلت ${esc(t.deadline||"—")} ${drafted?`<span class="pill p-warn" title="این نشانه از تسک قدیمی Gmail مانده است؛ در ایمیل شرکت درفتی ساخته نشده">درفت قدیمی در Gmail (نه ایمیل شرکت)</span>`:""}</p>
    <div class="row" style="gap:6px;flex-wrap:wrap;margin:8px 0">${tabs.map(([k2,l])=>`<button class="btn sm ${S.ipTab===k2?"sig":"ghost"}" data-act="ip-tab" data-id="${esc(tid)}" data-t="${k2}">${esc(l)}</button>`).join("")}</div>${body}</div></div>`;
 }
+function ipOutreach(){
+  const o=(S.ip||{}).outreach||[]; if(!o.length) return "";
+  const pill=v=>{v=String(v||""); const c=v.startsWith("دارد")?"p-ok":v.startsWith("ندارد")||v.startsWith("کافی نیست")||v.startsWith("تنگ")?"p-warn":"p-mute"; return `<span class="pill ${c}">${esc(v)}</span>`;};
+  return `<div class="card" style="margin-bottom:12px"><h3 style="margin:0 0 6px">پیگیری ایمیل‌های ارسالی پارسا اینت (${faNum(o.length)} مورد)</h3><p class="meta">${esc(S.ip.outreach_src||"")} · به‌روز: ${esc(S.ip.outreach_updated||"")}</p>`+
+   table(["شریک","کشور / مناقصه","ارسال و پاسخ","تمایل به همکاری","زمان کافی؟","قابلیت‌های مناقصه (ضمانت‌نامه، رزومه…)","اقدام بعدی"],o.map(x=>`<tr>${td("شریک",`<b>${esc(x.partner)}</b><br><span class="meta" dir="ltr">${esc(x.email||"")}</span>`,"t")}${td("کشور",esc(x.country||"")+"<br><span class=\"meta\">"+esc(x.tender||"")+"</span>")}${td("ارسال",`<span class="meta">${esc(x.sent||"")}</span><br>${esc(x.reply||"")}`)}${td("تمایل",pill(x.interest))}${td("زمان",esc(x.time||"—"))}${td("قابلیت",esc(x.caps||"—")+(x.note?`<br><span class="meta">${esc(x.note)}</span>`:""))}${td("اقدام",esc(x.next||"—"))}</tr>`),"")+`</div>`;
+}
 VIEWS["market.partners"] = () => {
   if(!isAdmin()) return `<p class="empty">این بخش فقط برای owner و مدیران نمایش داده می‌شود.</p>`;
   const list=S.m.tenders.filter(ipIsIntl).filter(t=>ACTIVE.has(t.status)).filter(t=>match(t.title,t.country,t.buyer));
   const by={}; list.forEach(t=>{(by[t.country]=by[t.country]||[]).push(t)});
   const rows=Object.entries(by).sort((a,b)=>b[1].length-a[1].length);
   return `<p class="note">برای هر پروژه‌ی بین‌المللی به شریک تجاری در کشور یا شهر کارفرما نیاز داریم، چون رزومه‌ی کافی نداریم: شریک مدارک و سابقه را می‌دهد و ما محصول و بخش فنی را. روی «شرکای تجاری» هر پروژه بزنید تا شرکت‌ها و ایمیل دو زبانه (انگلیسی و زبان رسمی کشور) را ببینید. فهرست هر روز تکمیل می‌شود.</p>`+
+   ipOutreach()+
    kpis([["پروژه‌ی بین‌المللی",faNum(list.length)],["کشور",faNum(rows.length)],["کشور دارای شریک ثبت‌شده",faNum(rows.filter(([c])=>(((S.ip.countries||{})[c]||{}).partners||[]).length).length)]])+
    rows.map(([c,ts])=>{const info=IP_C[c], rec=((S.ip.countries||{})[c]||{}), np=(rec.partners||[]).length;
     return `<div class="card" style="margin-bottom:10px"><div class="row" style="align-items:center;gap:8px;flex-wrap:wrap"><h3 style="margin:0;flex:1">${esc(info?info[0]:c)}</h3><span class="pill p-info">${faNum(ts.length)} پروژه</span><span class="pill ${np?"p-ok":"p-mute"}">${faNum(np)} شریک</span><span class="meta">زبان رسمی: ${esc(info?info[1].map(l=>IP_L[l]).join("، "):"—")}</span></div>
@@ -1170,7 +1178,7 @@ async function moveTask(id, st){
 }
 function taskForm(t={}){ if(!S.me.id){toast("برای تعریف تسک وارد شوید.");return}
   const sprints=Object.fromEntries([["","بک‌لاگ (بدون اسپرینت)"],...S.sprints.filter(x=>x.status!=="closed"||x.id===t.sprint).map(x=>[x.id,`${x.name} (${SPRINT_ST[x.status]})`])]);
-  openForm({title:t.id?"ویرایش تسک":"تعریف تسک",values:{assignee:S.me.id,team:(myMember()||{}).team||"ai",priority:"normal",due:today(),type:"task",blocked:"no",sprint:"",...t,points:t.points==null?"":String(t.points),blocked:t.blocked?"yes":"no"},
+  openForm({title:t.id?"ویرایش تسک":"تعریف تسک",extra:t.id?upBlock(t):"",values:{assignee:S.me.id,team:(myMember()||{}).team||"ai",priority:"normal",due:today(),type:"task",blocked:"no",sprint:"",...t,points:t.points==null?"":String(t.points),blocked:t.blocked?"yes":"no"},
    fields:[{k:"title",label:"عنوان تسک"},{k:"desc",label:"شرح و معیار پذیرش (Definition of Done)",type:"textarea",hint:"قالب پیشنهادی: «به‌عنوان … می‌خواهم … تا …» و بعد چند معیار پذیرش که انجام‌شدن کار را قابل بررسی می‌کند."},
     {k:"type",label:"نوع",type:"select",options:TASK_TYPE},{k:"points",label:"امتیاز داستان (Story Point)",type:"select",options:POINTS,hint:"اندازه‌ی نسبی کار، نه ساعت؛ ۱ کوچک‌ترین و ۱۳ بسیار بزرگ (بهتر است کار بزرگ را بشکنید)."},
     {k:"sprint",label:"اسپرینت",type:"select",options:sprints},{k:"priority",label:"اولویت",type:"select",options:PRIORITY},
@@ -1181,8 +1189,14 @@ function taskForm(t={}){ if(!S.me.id){toast("برای تعریف تسک وارد
     return save(`tasks/${t.id||newId()}`,{...base,...v,points:v.points===""||v.points==null?null:Number(v.points),blocked:v.blocked==="yes",status:t.status||"todo",created_by:t.created_by||S.me.id,created:t.created||now,updated:now},t.id?"تسک به‌روز شد":"تسک ثبت شد و اعلان آن برای مسئول نمایش داده می‌شود").then(r=>{ if(base.ip_tender) setTimeout(()=>ipOpen(base.ip_tender),700); return r; }); }}); }
 
 VIEWS["bpms.tasks"] = () => {
-  const list=S.tasks.filter(t=>match(t.title,memberName(t.assignee),TEAMS[t.team])).sort((a,b)=>(a.due||"9").localeCompare(b.due||"9"));
-  return `<div class="toolbar"><button class="btn" data-act="task-new">تعریف تسک</button><span class="meta">فهرست کامل همه‌ی تسک‌ها. کار روزانه‌ی تیم روی «تخته‌ی اسکرام» انجام می‌شود. تسکی که عضو برای خودش تعریف کند به مدیر اعلان می‌شود؛ تسکی که مدیر تعریف کند به عضو.</span></div>`+
+  // people first: each name shows how many open tasks the person has; clicking it lists only that person's tasks
+  const ids=[...new Set([...S.members.map(m=>m.id),...S.tasks.map(t=>t.assignee).filter(Boolean)])];
+  const open=id=>S.tasks.filter(t=>t.assignee===id&&!["done","approved"].includes(t.status)).length;
+  const people=ids.map(id=>({id,name:memberName(id),n:S.tasks.filter(t=>t.assignee===id).length,open:open(id)})).filter(x=>x.n||S.members.some(m=>m.id===x.id)).sort((a,b)=>b.open-a.open||a.name.localeCompare(b.name,"fa"));
+  if(S.taskWho&&!people.some(x=>x.id===S.taskWho)) S.taskWho="";
+  const strip=`<div class="row" style="gap:6px;flex-wrap:wrap;margin-bottom:10px" role="group" aria-label="افراد"><button class="btn sm ${S.taskWho?"ghost":"sig"}" data-act="task-who" data-m="">همه (${faNum(S.tasks.length)})</button>${people.map(x=>`<button class="btn sm ${S.taskWho===x.id?"sig":"ghost"}" data-act="task-who" data-m="${esc(x.id)}">${esc(x.name)} <span class="meta">(${faNum(x.open)} باز از ${faNum(x.n)})</span></button>`).join("")}</div>`;
+  const list=S.tasks.filter(t=>(!S.taskWho||t.assignee===S.taskWho)&&match(t.title,memberName(t.assignee),TEAMS[t.team])).sort((a,b)=>(a.due||"9").localeCompare(b.due||"9"));
+  return strip+`<div class="toolbar"><button class="btn" data-act="task-new">تعریف تسک</button><span class="meta">فهرست کامل همه‌ی تسک‌ها. کار روزانه‌ی تیم روی «تخته‌ی اسکرام» انجام می‌شود. تسکی که عضو برای خودش تعریف کند به مدیر اعلان می‌شود؛ تسکی که مدیر تعریف کند به عضو.</span></div>`+
   kpis([["کل",faNum(list.length)],["جهت انجام",faNum(list.filter(t=>t.status==="todo").length)],["در حال انجام",faNum(list.filter(t=>t.status==="doing").length)],["عقب‌افتاده",faNum(list.filter(t=>t.due&&t.due<today()&&!isDone(t)).length),true]])+taskTable(list);
 };
 
@@ -1722,9 +1736,9 @@ async function buildPropDocx(pr){
   const par=(inner,{jc="left",after=100,ind=0,bb=false}={})=>`<w:p><w:pPr>${bb?'<w:keepNext/><w:pBdr><w:bottom w:val="single" w:sz="4" w:space="1" w:color="999999"/></w:pBdr>':""}<w:spacing w:before="${bb?240:0}" w:after="${after}" w:line="288" w:lineRule="auto"/>${ind?`<w:ind w:left="${ind}" w:hanging="260"/>`:""}<w:jc w:val="${jc}"/></w:pPr>${inner}</w:p>`;
   const cell=(w,inner,hd)=>`<w:tc><w:tcPr><w:tcW w:w="${w}" w:type="dxa"/>${hd?'<w:shd w:val="clear" w:color="auto" w:fill="E8E8E8"/>':""}</w:tcPr>${inner}</w:tc>`;
   const bd=t=>`<w:${t} w:val="single" w:sz="4" w:space="0" w:color="999999"/>`;
-  const W=[1500,4600,2938];
+  const nc=n=>{ const t=9038, w=n===2?[Math.round(t*0.45),t-Math.round(t*0.45)]:Array(n).fill(Math.floor(t/n)); w[n-1]+=t-w.reduce((a,b)=>a+b,0); return w; };
   const out=pr.blocks.map(b=>b.t==="title"?par(run(b.x,{b:true,sz:32}),{jc:"center",after:200}):b.t==="h"?par(run(b.x,{b:true,sz:26}),{bb:true,after:100}):b.t==="p"?par(run(b.x),{jc:"both"}):b.t==="ul"?b.x.map(i=>par(run("• "+i),{ind:360,after:60})).join(""):b.t==="note"?par(run(b.x,{i:true,sz:18})):b.t==="table"?
-    `<w:tbl><w:tblPr><w:tblW w:w="9038" w:type="dxa"/><w:tblBorders>${["top","left","bottom","right","insideH","insideV"].map(bd).join("")}</w:tblBorders><w:tblLayout w:type="fixed"/></w:tblPr><w:tblGrid>${W.map(w=>`<w:gridCol w:w="${w}"/>`).join("")}</w:tblGrid><w:tr>${b.head.map((h,i)=>cell(W[i],par(run(h,{b:true,sz:20}),{after:30}),1)).join("")}</w:tr>${b.rows.map(r=>`<w:tr>${r.map((c,i)=>cell(W[i],par(run(c,{sz:20}),{after:30}))).join("")}</w:tr>`).join("")}</w:tbl>`+par("",{after:60}):"").join("");
+    `<w:tbl><w:tblPr><w:tblW w:w="9038" w:type="dxa"/><w:tblBorders>${["top","left","bottom","right","insideH","insideV"].map(bd).join("")}</w:tblBorders><w:tblLayout w:type="fixed"/></w:tblPr><w:tblGrid>${nc(b.head.length).map(w=>`<w:gridCol w:w="${w}"/>`).join("")}</w:tblGrid><w:tr>${b.head.map((h,i)=>cell(nc(b.head.length)[i],par(run(h,{b:true,sz:20}),{after:30}),1)).join("")}</w:tr>${b.rows.map(r=>`<w:tr>${r.map((c,i)=>cell(nc(b.head.length)[i],par(run(c,{sz:20}),{after:30}))).join("")}</w:tr>`).join("")}</w:tbl>`+par("",{after:60}):"").join("");
   const doc=`<?xml version="1.0" encoding="UTF-8" standalone="yes"?><w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"><w:body>${out}<w:sectPr><w:pgSz w:w="11906" w:h="16838"/><w:pgMar w:top="1418" w:right="1418" w:bottom="1418" w:left="1418" w:header="709" w:footer="709" w:gutter="0"/></w:sectPr></w:body></w:document>`;
   const styles=`<?xml version="1.0" encoding="UTF-8" standalone="yes"?><w:styles xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"><w:docDefaults><w:rPrDefault><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:sz w:val="22"/><w:lang w:val="en-US"/></w:rPr></w:rPrDefault></w:docDefaults></w:styles>`;
   const ct=`<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/word/document.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml"/><Override PartName="/word/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.styles+xml"/></Types>`;
@@ -2250,7 +2264,7 @@ async function makeLetterDocx(l){
     const j=jalaliParts(l.date);
     return (await restampDocx(await unzip(await packDoc(l.src_pack,l.src_key)), l.number, `${j.y}/${j.m}/${j.d}`, String(l.recipient_line||"").trim(), String(l.signer_line||"").trim())).bytes;
   }
-  const st=S.settings, lh=S.lh, ceo=S.members.find(m=>m.id===st.ceo_member);
+  const st=S.settings, lh=l.identity==="soshiant"?S.lhs:S.lh, ceo=S.members.find(m=>m.id===st.ceo_member);
   const sigId = l.ceo_sig ? (l.ceo_sig.asset||st.ceo_sig_asset) : null;
   const sig = sigId ? await prepImage(sigId,600) : null;
   const L={number:l.number,recipient:l.recipient,subject:l.subject,body:l.body,annex:l.annex,signer:l.signer,attachments:l.attachments,cc:l.cc};
@@ -2258,6 +2272,7 @@ async function makeLetterDocx(l){
     return buildLetterDocx({...L,dateFa:enDate(l.date)},
       {nameFa:I.name,nameEn:"",footer:[I.address,I.website,I.email].filter(Boolean).join(" · "),ceoName:I.signatory,ceoTitle:I.title}, logo, sig, true); }
   const C={nameFa:st.name_fa||"پترو پالا توس",nameEn:st.name_en||"",footer:[st.address, st.phone&&`تلفن: ${st.phone}`, st.reg_no&&`شماره‌ی ثبت: ${st.reg_no}`, st.national_id&&`شناسه‌ی ملی: ${st.national_id}`].filter(Boolean).join(" · "),ceoName:ceo?ceo.full_name:"",ceoTitle:ceo?`مدیرعامل ${st.name_fa||""}`.trim():""};
+  if(l.identity==="soshiant"){ C.nameFa="سوشیانت"; C.nameEn=""; C.ceoTitle=""; }
   L.dateFa=faDate(l.date); const jp=jalaliParts(l.date); L.dateNum=jp.y+"/"+jp.m+"/"+jp.d;
   if(lh&&lh.kind==="docx"&&(lh.asset||lh.b64)){   // the Word letterhead is kept as a base64 text file in the asset store (a database document is limited to 256 KB)
     const b64 = lh.b64 || (await (await fetch(blobUrl(lh.asset))).text()).trim();
@@ -2295,7 +2310,7 @@ VIEWS["letters.new"] = () => {
   <div id="lhcard">${letterheadCard()}</div>
   <div class="compose"><div class="card" id="composer"><h3>${d.id?"ویرایش نامه":"نوشتن نامه‌ی جدید"}</h3>
    <p class="note">فقط محتوا را وارد کنید؛ سربرگ (لوگو، نام و نشانی شرکت)، شماره، تاریخ و جای امضا به‌صورت خودکار در فایل Word قرار می‌گیرد.</p>
-   ${fld("identity","هویت فرستنده",`<select id="c_identity" data-c="identity"><option value="ir"${d.identity!=="intl"?" selected":""}>ایران – پترو پالا توس (فارسی، سربرگ داخلی)</option><option value="intl"${d.identity==="intl"?" selected":""}>بین‌المللی – ${esc(intlId().name)} (English)</option></select>`)}
+   ${fld("identity","هویت فرستنده",`<select id="c_identity" data-c="identity"><option value="ir"${d.identity!=="intl"?" selected":""}>ایران – پترو پالا توس (فارسی، سربرگ داخلی)</option><option value="soshiant"${d.identity==="soshiant"?" selected":""}>سوشیانت (پزشکی، سربرگ Word سوشیانت)</option><option value="intl"${d.identity==="intl"?" selected":""}>بین‌المللی – ${esc(intlId().name)} (English)</option></select>`)}
    ${d.identity==="intl"?`<p class="note">نامه به انگلیسی و با سربرگ ${esc(intlId().name)} (${esc(intlId().address)}) ساخته می‌شود؛ گیرنده، موضوع و متن را هم انگلیسی بنویسید. شماره با پیشوند PIG است.</p>`:""}
    <div class="grid2" style="gap:0 12px">${inp("number","شماره‌ی نامه","text","ltr")}${inp("date","تاریخ نامه","date")}</div>
    ${ta("recipient","گیرنده (هر سطر یک خط: نام، سمت، سازمان)",3)}${inp("subject","موضوع نامه")}${ta("body","متن نامه (هر پاراگراف در یک سطر جدا؛ «با سلام»، «موضوع:» و امضا را نیاورید)",12)}
@@ -2337,7 +2352,7 @@ async function composeSubmit(){
   if(S.letters.some(l=>l.number===d.number&&l.id!==d.id)){ toast("این شماره قبلاً برای نامه‌ی دیگری ثبت شده است."); return; }
   const old=d.id?S.letters.find(x=>x.id===d.id):null;
   const id=d.id||newId();
-  const rec={...(old||{}),identity:d.identity==="intl"?"intl":"ir",number:v("number"),date:d.date||today(),recipient:v("recipient"),subject:v("subject"),body:v("body"),attachments:v("attachments"),cc:v("cc"),annex:v("annex"),signer:v("signer"),updated:new Date().toISOString(),created_by:(old&&old.created_by)||S.me.id};
+  const rec={...(old||{}),identity:d.identity==="intl"?"intl":d.identity==="soshiant"?"soshiant":"ir",number:v("number"),date:d.date||today(),recipient:v("recipient"),subject:v("subject"),body:v("body"),attachments:v("attachments"),cc:v("cc"),annex:v("annex"),signer:v("signer"),updated:new Date().toISOString(),created_by:(old&&old.created_by)||S.me.id};
   if(old&&(old.body!==rec.body||old.subject!==rec.subject||old.recipient!==rec.recipient)){ rec.office_sig=null; rec.ceo_sig=null; } // edited content needs fresh signatures
   delete rec.id;
   const P=prepLetter(rec); rec.subject=P.subject; rec.body=P.bodyText; rec.annex=P.annexText; rec.signer=P.signer||"";
@@ -2383,7 +2398,7 @@ function letterheadCard(){
   return `<div class="card" style="margin-bottom:12px"><div class="row"><b>سربرگ نامه‌ها:</b> <span>${cur}</span>
    ${adm?`<label class="btn sm" style="cursor:pointer">بارگذاری سربرگ شرکت (Word یا تصویر)<input type="file" data-lh="file" accept=".docx,.dotx,image/*" hidden></label>${has?`<button class="btn sm ghost" data-act="lh-del">بازگشت به سربرگ پیش‌فرض</button>`:""}`:`<span class="meta">بارگذاری فقط برای مدیر سامانه است.</span>`}</div>
    ${adm&&lh&&lh.kind==="image"?`<div class="row" style="margin-top:6px"><label class="meta">فاصله‌ی متن از بالای صفحه (سانتی‌متر) <input type="number" step="0.1" min="0" style="width:80px" data-lh="top" value="${esc(lh.top_cm||"")}" placeholder="خودکار"></label><label class="meta">از پایین صفحه <input type="number" step="0.1" min="0" style="width:80px" data-lh="bottom" value="${esc(lh.bottom_cm||"")}" placeholder="خودکار"></label></div>`:""}
-   <p class="note">بهترین حالت: فایل Word سربرگ خودتان (.docx) را بارگذاری کنید؛ سربرگ، پانویس، حاشیه‌ها، امضا و مهر همان‌طور که هست می‌ماند و نامه داخل آن قرار می‌گیرد. اگر فایل شامل نامه‌ی نمونه است (گیرنده، «موضوع: ...»، متن «...»)، همان قالب حفظ می‌شود و فقط جاهای خالی پر می‌شود و شماره، تاریخ و پیوست داخل هدر عوض می‌شود. اگر در فایل سربرگ عبارت‌های <code>{{number}}</code> (شماره)، <code>{{date}}</code> (تاریخ)، <code>{{attachments}}</code> (پیوست) یا <code>{{body}}</code> (محل متن) را بنویسید، دقیقاً همان‌جا پر می‌شوند. سربرگ تصویری (JPG/PNG) هم می‌تواند تمام‌صفحه یا نواری باشد.</p></div>`;
+   <div class="row" style="margin-top:6px"><b>سربرگ سوشیانت (پزشکی، آب و انرژی):</b> ${S.lhs?`<span>${esc(S.lhs.name||"")}</span><button class="btn sm sig" data-act="lhs-dl">دریافت فرم خام نامه</button>`:`<span class="meta">ثبت نشده</span>`}</div><p class="note">بهترین حالت: فایل Word سربرگ خودتان (.docx) را بارگذاری کنید؛ سربرگ، پانویس، حاشیه‌ها، امضا و مهر همان‌طور که هست می‌ماند و نامه داخل آن قرار می‌گیرد. اگر فایل شامل نامه‌ی نمونه است (گیرنده، «موضوع: ...»، متن «...»)، همان قالب حفظ می‌شود و فقط جاهای خالی پر می‌شود و شماره، تاریخ و پیوست داخل هدر عوض می‌شود. اگر در فایل سربرگ عبارت‌های <code>{{number}}</code> (شماره)، <code>{{date}}</code> (تاریخ)، <code>{{attachments}}</code> (پیوست) یا <code>{{body}}</code> (محل متن) را بنویسید، دقیقاً همان‌جا پر می‌شوند. سربرگ تصویری (JPG/PNG) هم می‌تواند تمام‌صفحه یا نواری باشد.</p></div>`;
 }
 async function saveLetterhead(file){
   try{
@@ -2423,31 +2438,34 @@ const archLast = a => ((a.log&&a.log.length?a.log[a.log.length-1].at:(a.updated|
 const archOpen = a => a.status!=="closed" && a.stage!=="done";
 const archOverdue = a => archOpen(a) && a.next_date && a.next_date<=today();
 const archStale = a => archOpen(a) && archLast(a) && daysBetween(archLast(a),today())>14;
-VIEWS["letters.archive"] = () => {
-  const all=S.lettersArchive.filter(a=>match(a.subject,a.recipient,a.number,a.employer_no,a.summary));
+const ARCH_SECT = {oil:"نفت و گاز",med:"پزشکی",water:"آب",energy:"انرژی",power:"نیروگاه‌ها",shasta:"هلدینگ شستا",hpc:"هلدینگ خلیج فارس"};
+const archView = sector => {
+  const all=S.lettersArchive.filter(a=>(!sector||a.sector===sector||(a.also||[]).includes(sector))&&match(a.subject,a.recipient,a.number,a.employer_no,a.summary));
   const flt={all:()=>true,active:a=>archOpen(a)&&a.status!=="stalled",stalled:a=>archOpen(a)&&a.status==="stalled",overdue:archOverdue,stale:archStale,closed:a=>!archOpen(a)}[S.archF]||(()=>true);
   const list=all.filter(flt).sort((a,b)=>(b.date||"").localeCompare(a.date||""));
   const keys=Object.keys(ARCH_STAGES);
-  return `<div class="banner">این بخش جدا از «نامه‌ی جدید» است: نامه‌هایی که ارسال می‌شوند یا ارسال شده‌اند (چه قبلاً بدون ایجنت، چه نامه‌های آماده‌شده در همین سامانه) و پیگیری‌شان. برای هر نامه مشخص است در کدام مرحله هستیم، آخرین اقدام چه بوده و گام بعدی کِی است.</div>
+  return `${sector?`<h2>نامه‌های ${esc(ARCH_SECT[sector])}</h2>`:""}${sector==="med"?`<div class="banner">نامه‌های پزشکی با سربرگ شرکت سوشیانت صادر می‌شوند. ${S.lhs?`سربرگ ثبت شده است: «${esc(S.lhs.name||"")}». در «نامه‌ی جدید» هویت فرستنده را «سوشیانت» انتخاب کنید. <button class="btn sm sig" data-act="lhs-dl">دریافت فرم خام نامه (سربرگ سوشیانت)</button>`:"فایل سربرگ هنوز ثبت نشده است."}</div>`:""}${(sector==="water"||sector==="energy")?`<div class="banner">نامه‌های این گروه روی سربرگ سوشیانت ساخته می‌شوند. ${S.lhs?`<button class="btn sm sig" data-act="lhs-dl">دریافت فرم خام نامه (سربرگ سوشیانت)</button>`:"فایل سربرگ هنوز ثبت نشده است."}</div>`:""}<div class="banner">این بخش جدا از «نامه‌ی جدید» است: نامه‌هایی که ارسال می‌شوند یا ارسال شده‌اند (چه قبلاً بدون ایجنت، چه نامه‌های آماده‌شده در همین سامانه) و پیگیری‌شان. برای هر نامه مشخص است در کدام مرحله هستیم، آخرین اقدام چه بوده و گام بعدی کِی است.</div>
   <div class="toolbar"><button class="btn sig" data-act="arch-new">ثبت نامه‌ی ارسال‌شده‌ی پیشین</button>${Object.entries(ARCH_F).map(([k,l])=>`<button class="btn sm ${S.archF===k?"":"ghost"}" data-act="arch-f" data-k="${k}">${esc(l)}</button>`).join("")}</div>`+
   kpis([["کل نامه‌های بایگانی",faNum(all.length)],["در جریان",faNum(all.filter(a=>archOpen(a)&&a.status!=="stalled").length)],["متوقف",faNum(all.filter(a=>archOpen(a)&&a.status==="stalled").length),all.some(a=>archOpen(a)&&a.status==="stalled")],["اقدام بعدی سررسیده",faNum(all.filter(archOverdue).length),all.some(archOverdue)],["بدون پیگیری بیش از ۱۴ روز",faNum(all.filter(archStale).length),all.some(archStale)],["بسته‌شده",faNum(all.filter(a=>!archOpen(a)).length)]])+
   table(["شماره / تاریخ ارسال","موضوع","گیرنده","پیشرفت","آخرین وضعیت","اقدام بعدی","مسئول",""], list.map(a=>{
     const i=keys.indexOf(a.stage), last=(a.log||[])[(a.log||[]).length-1], since=archLast(a)?daysBetween(archLast(a),today()):null;
     return `<tr>${td("شماره",`<span class="mono">${esc(a.number||"—")}</span><br><span class="meta">${faDate(a.date)}</span>${a.employer_no?`<br><span class="meta">کارفرما: <span class="mono">${esc(a.employer_no)}</span></span>`:""}`)}
-     ${td("موضوع",`${esc(a.subject)}${a.summary?`<br><span class="meta">${esc(a.summary)}</span>`:""}${a.scan_asset?`<br>${link(blobUrl(a.scan_asset),"فایل / تصویر نامه")}`:""}`,"t")}
-     ${td("گیرنده",`${esc(a.recipient)}<br><span class="meta">${esc(ARCH_CH[a.channel]||"")}</span>`)}
+     ${td("موضوع",`${esc(a.subject)}${!sector&&a.sector?` <span class="pill p-mute">${esc(ARCH_SECT[a.sector]||"")}</span>`:""}${a.summary?`<br><span class="meta">${esc(a.summary)}</span>`:""}${a.scan_asset?`<br>${link(blobUrl(a.scan_asset),"فایل / تصویر نامه")}`:""}`,"t")}
+     ${td("گیرنده",`${esc(a.recipient)}<br><span class="meta">${esc(ARCH_CH[a.channel]||"")}</span>${a.contact?`<details><summary>اطلاعات تماس</summary><span class="meta">${esc(a.contact)}</span></details>`:""}`)}
      ${td("پیشرفت",`<b>${esc(ARCH_STAGES[a.stage]||"—")}</b><div class="steps">${keys.map((k,j)=>`<span class="${j<=i?"on":""}"></span>`).join("")}</div><span class="pill ${a.status==="closed"||a.stage==="done"?"p-ok":a.status==="stalled"?"p-bad":"p-info"}">${esc(a.stage==="done"?ARCH_ST.closed:ARCH_ST[a.status]||ARCH_ST.active)}</span>`)}
      ${td("آخرین وضعیت",`${last&&last.note?esc(last.note):"—"}<br><span class="${archStale(a)?"p-bad":"meta"}">${archLast(a)?`${faDate(archLast(a))}${since!=null&&archOpen(a)?` (${faNum(since)} روز پیش)`:""}`:""}</span>${(a.log||[]).length>1?`<details><summary>تاریخچه (${faNum(a.log.length)})</summary>${[...a.log].reverse().map(e=>`<div class="meta">${faDate((e.at||"").slice(0,10))} · ${esc(ARCH_STAGES[e.stage]||"")} · ${esc(e.note||"")} <i>(${esc(memberName(e.by))})</i></div>`).join("")}</details>`:""}`)}
      ${td("اقدام بعدی",`${esc(a.next_action||"—")}${a.next_date?`<br><span class="${archOverdue(a)?"p-bad":"meta"}">${faDate(a.next_date)}</span>`:""}`)}
      ${td("مسئول",esc(memberName(a.owner)))}
      ${td("",`<div class="row"><button class="btn sm" data-act="arch-progress" data-id="${esc(a.id)}">به‌روزرسانی پیشرفت</button><button class="btn sm ghost" data-act="arch-edit" data-id="${esc(a.id)}">ویرایش</button>${a.letter_id&&S.downloads?`<button class="btn sm ghost" data-act="letter-dl" data-id="${esc(a.letter_id)}">Word</button>`:""}</div>`)}</tr>`}),
-   "هنوز نامه‌ای در بایگانی ثبت نشده است. نامه‌های ارسال‌شده‌ی پیشین را با «ثبت نامه‌ی ارسال‌شده‌ی پیشین» وارد کنید.");
+   "هنوز نامه‌ای در این گروه ثبت نشده است. نامه‌های ارسال‌شده‌ی پیشین را با «ثبت نامه‌ی ارسال‌شده‌ی پیشین» وارد کنید یا گروه نامه‌ی موجود را از «ویرایش» تغییر دهید.");
 };
+VIEWS["letters.archive"] = () => archView(null);
+Object.keys(ARCH_SECT).forEach(k=>{ VIEWS["letters.sec_"+k] = () => archView(k); });
 const memberOpts = () => Object.fromEntries([["","—"],...S.members.map(m=>[m.id,m.full_name])]);
 function archForm(a={}){
-  openForm({title:a.id?"ویرایش نامه‌ی بایگانی":"ثبت نامه‌ی ارسال‌شده‌ی پیشین",values:{stage:"sent",status:"active",channel:"secretariat",...a},fields:[
+  openForm({title:a.id?"ویرایش نامه‌ی بایگانی":"ثبت نامه‌ی ارسال‌شده‌ی پیشین",values:{stage:"sent",status:"active",channel:"secretariat",sector:(S.sub||"").startsWith("sec_")?S.sub.slice(4):"",...a},fields:[
    {k:"number",label:"شماره‌ی نامه‌ی ما",dir:"ltr"},{k:"employer_no",label:"شماره‌ی ثبت در سیستم گیرنده / کارفرما",dir:"ltr"},{k:"date",label:"تاریخ ارسال",type:"date"},
-   {k:"subject",label:"موضوع نامه"},{k:"recipient",label:"گیرنده (نام، سمت، سازمان)"},{k:"channel",label:"روش ارسال",type:"select",options:ARCH_CH},
+   {k:"subject",label:"موضوع نامه"},{k:"recipient",label:"گیرنده (نام، سمت، سازمان)"},{k:"channel",label:"روش ارسال",type:"select",options:ARCH_CH},{k:"sector",label:"گروه نامه",type:"select",options:{"":"—",...ARCH_SECT}},{k:"contact",label:"اطلاعات تماس گیرنده (تلفن، فکس، ایمیل، افراد)",type:"textarea"},
    {k:"summary",label:"خلاصه‌ی درخواست یا محتوای نامه",type:"textarea"},
    {k:"stage",label:"مرحله‌ی فعلی",type:"select",options:ARCH_STAGES},{k:"status",label:"وضعیت پیگیری",type:"select",options:ARCH_ST},
    {k:"owner",label:"مسئول پیگیری",type:"select",options:memberOpts()},{k:"next_action",label:"اقدام بعدی"},{k:"next_date",label:"تاریخ اقدام بعدی",type:"date"},
@@ -2939,6 +2957,72 @@ VIEWS["articles.ready"] = () => {
    `<div class="tablewrap rows"><table><thead><tr><th>مقاله</th><th>۱. محصول و ریپو</th><th>۲. کد تا TRL ۴</th><th>۳. پیشینه</th><th>۴. نبوغ پتنتی</th><th>۵. بازار</th><th>۶. چکیده و منو اسکریپت</th><th>۷. نوآوری برای پذیرش</th></tr></thead><tbody>${withR.map(cell).join("")}</tbody></table></div>`+
    (noR.length?`<h3>مقالاتی که هنوز ارزیابی شش‌معیاره ندارند (${faNum(noR.length)})</h3><p class="note">${noR.map(x=>esc(cvVenueName(x.v.name))+" — "+esc(x.pr.name)).join("؛ ")}</p>`:"");
 };
+
+
+function upBlock(t){ const ups=t.uploads||[];
+  return `<div class="card" style="margin-bottom:12px"><h4 style="margin:0 0 4px">بارگذاری فایل (پیوست تسک)</h4>
+  <p class="meta" style="margin:0 0 6px">فایل‌ها با انتخاب بلافاصله بارگذاری و در همین تسک ثبت می‌شوند (تا ۲۰ مگابایت برای هر فایل). برای دیدن فهرست به‌روز، فرم را ببندید و دوباره باز کنید.</p>
+  ${ups.length?`<ul style="margin:0 0 6px">${ups.map(u=>`<li>${u.store==="db"?esc(u.name):`<a href="${esc(u.url||("/_blob/"+u.id))}" target="_blank" rel="noopener">${esc(u.name)}</a>`} <span class="meta">${esc(fmtMB(u.size||0))}</span></li>`).join("")}</ul>`:`<p class="meta" style="margin:0 0 6px">هنوز فایلی بارگذاری نشده است.</p>`}
+  <label class="btn sm sig" style="cursor:pointer">انتخاب و آپلود فایل<input type="file" multiple data-up="${esc(t.id)}" hidden></label></div>`; }
+// Data upload: tasks of kind data_download (made by the data-request agent) get files uploaded to the asset store; Claude reads them from there.
+const UP_MAX = 20*1024*1024;
+const fmtMB = n => (n/1048576).toFixed(n<1048576*10?2:1)+" MB";
+async function sha256Hex(file){ try{ const h=await crypto.subtle.digest("SHA-256", await file.arrayBuffer()); return [...new Uint8Array(h)].map(x=>x.toString(16).padStart(2,"0")).join(""); }catch(e){ return ""; } }
+const upTasks = () => (S.tasks||[]).filter(t=>t.kind==="data_download").sort((a,b)=>(a.status==="done")-(b.status==="done")||String(a.title).localeCompare(String(b.title)));
+VIEWS["articles.upload"] = () => {
+  const ts=upTasks(), todo=ts.filter(t=>t.status!=="done"&&t.status!=="approved").length, nf=ts.reduce((a,t)=>a+((t.uploads||[]).length),0);
+  const card=t=>{ const ups=t.uploads||[], done=t.status==="done"||t.status==="approved";
+    return `<div class="card" style="margin-bottom:12px"><div class="row" style="align-items:flex-start;gap:10px"><h3 style="flex:1;margin:0">${esc(t.title)}</h3><span class="pill ${done?"p-ok":ups.length?"p-info":"p-warn"}">${done?"انجام شد":ups.length?"در حال انجام":"منتظر آپلود"}</span></div>
+    <details><summary class="meta">شرح تسک، لینک دانلود و محل جانمایی</summary><p style="white-space:pre-wrap;font-size:13px">${esc(t.desc||"")}</p></details>
+    ${ups.length?`<table style="width:100%;margin-top:8px"><thead><tr><th>فایل</th><th>حجم</th><th>SHA256</th><th>زمان</th></tr></thead><tbody>${ups.map(u=>`<tr><td>${u.store==="db"?`${esc(u.name)} <span class="meta">(پایگاه، ${faNum(u.chunks||1)} بخش)</span>`:`<a href="${esc(u.url||("/_blob/"+u.id))}" target="_blank" rel="noopener">${esc(u.name)}</a>`}</td><td>${esc(fmtMB(u.size||0))}</td><td class="mono" style="font-size:11px">${esc((u.sha256||"").slice(0,16))}${u.sha256?"…":""}</td><td class="meta">${esc((u.at||"").slice(0,16).replace("T"," "))}</td></tr>`).join("")}</tbody></table>`:`<p class="meta" style="margin-top:8px">هنوز فایلی بارگذاری نشده است.</p>`}
+    <div class="row" style="margin-top:8px">${done?"":`<label class="btn sm sig" style="cursor:pointer">انتخاب و آپلود فایل‌ها<input type="file" multiple data-up="${esc(t.id)}" hidden></label>${ups.length?`<button class="btn sm" data-act="up-done" data-id="${esc(t.id)}">همه‌ی فایل‌ها بارگذاری شد؛ تسک را انجام‌شده کن</button>`:""}`}</div></div>`; };
+  return `<p class="note">فایل‌های مجموعه‌داده‌هایی که Claude به سایتشان دسترسی ندارد را اینجا بارگذاری کنید. هر فایل تا ۲۰ مگابایت (۸ مگابایت اگر فضای فایل برای شما فعال نباشد)؛ برای فایل بزرگ‌تر آن را به چند بخش (zip چندبخشی یا فایل‌های جدا) تقسیم کنید. SHA256 هر فایل خودکار ثبت می‌شود. پس از آپلود، Claude داده را می‌خواند و نتایج مقاله را بازتولید می‌کند. به مجوز هر داده (در شرح تسک) دقت کنید؛ داده‌ی SRMG فقط برای پژوهش دانشگاهی است.</p>`+
+   kpis([["تسک‌های دانلود داده",faNum(ts.length),false],["منتظر آپلود",faNum(todo),todo>0],["فایل‌های بارگذاری‌شده",faNum(nf),false]])+
+   (!S.assets?`<div class="banner">فضای فایل سامانه برای حساب شما فعال نیست؛ فایل‌ها مستقیم در پایگاه داده‌ی سامانه ذخیره می‌شوند (حداکثر ۸ مگابایت برای هر فایل). فایل بزرگ‌تر را تقسیم کنید.</div>`:"")+
+   (ts.length?ts.map(card).join(""):'<p class="empty">تسک «دانلود داده‌ها»یی برای شما ثبت نشده است.</p>');
+};
+const DB_CHUNK = 150000, DB_MAX = 8*1024*1024;   // a database document may hold 256 KiB of JSON; 150000 bytes become 200000 base64 characters
+function b64Of(u8){ let s=""; const k=0x8000; for(let i=0;i<u8.length;i+=k) s+=String.fromCharCode.apply(null,u8.subarray(i,i+k)); return btoa(s); }
+async function dbUploadFile(taskId, f, sha){   // fallback for viewers who do not get the asset store: the file is split into base64 chunks kept in the shared database
+  const buf=new Uint8Array(await f.arrayBuffer()), n=Math.max(1,Math.ceil(buf.length/DB_CHUNK)), key=newId();
+  for(let i=0;i<n;i++){
+    await S.db.doc(`taskfiles/${taskId}__${key}__${String(i).padStart(3,"0")}`).set({task:taskId,key,name:f.name,i,n,size:f.size,type:f.type||"",sha256:sha,b64:b64Of(buf.subarray(i*DB_CHUNK,(i+1)*DB_CHUNK)),by:S.me.id,at:new Date().toISOString()});
+    if(n>1) toast(`«${f.name}»: بخش ${faNum(i+1)} از ${faNum(n)}`);
+  }
+  return {key,chunks:n};
+}
+async function upFiles(taskId, files){
+  const t=(S.tasks||[]).find(x=>x.id===taskId); if(!t||!files.length) return;
+  if(!S.db){ toast("اتصال به پایگاه داده برقرار نیست."); return; }
+  const ups=[...(t.uploads||[])]; let n=0;
+  for(const f of files){
+    const viaDb=!S.assets, lim=viaDb?DB_MAX:UP_MAX;
+    if(f.size>lim){ toast(`«${f.name}» بزرگ‌تر از ${faNum(Math.round(lim/1048576))} مگابایت است؛ آن را تقسیم کنید.`); continue; }
+    toast(`در حال بارگذاری «${f.name}»…`);
+    try{ const sha=await sha256Hex(f); let rec;
+      if(!viaDb){
+        try{ const r=await S.assets.upload(f); rec={id:r.id,url:r.url}; }
+        catch(e1){   // invited outside members may only add images, fonts and scripts to the asset store; other types go to the shared database like for viewers without a file store
+          if(f.size>DB_MAX) throw e1;
+          console.warn("asset store refused the file; storing it in the database",e1);
+          const r=await dbUploadFile(taskId,f,sha); rec={store:"db",key:r.key,chunks:r.chunks};
+        }
+      }
+      else { const r=await dbUploadFile(taskId,f,sha); rec={store:"db",key:r.key,chunks:r.chunks}; }
+      ups.push({...rec,name:f.name,size:f.size,type:f.type||"",sha256:sha,by:S.me.id,at:new Date().toISOString()}); n++; }
+    catch(e){ console.error("upload",e); toast(`«${f.name}» بارگذاری نشد: `+(e.message||e.code||"")); }
+  }
+  if(!n) return;
+  const {id:_,...cur}=t;
+  await save("tasks/"+taskId,{...cur,uploads:ups,status:t.status==="todo"?"doing":t.status,updated:new Date().toISOString()},`${faNum(n)} فایل بارگذاری شد`);
+}
+async function upDone(taskId){
+  const t=(S.tasks||[]).find(x=>x.id===taskId); if(!t) return;
+  const ups=t.uploads||[]; if(!ups.length){ toast("ابتدا فایل‌ها را بارگذاری کنید."); return; }
+  const {id:_,...cur}=t, note=ups.map(u=>`${u.name} (${u.sha256?u.sha256.slice(0,12):"بدون هش"})`).join("؛ ");
+  await save("tasks/"+taskId,{...cur,status:"done",done_at:new Date().toISOString(),updated:new Date().toISOString(),desc:(cur.desc||"")+"\n\nنتیجه: فایل‌ها بارگذاری شد — "+note},"تسک انجام‌شده ثبت شد");
+}
+document.addEventListener("change", async e => { const el=e.target.closest("[data-up]"); if(!el) return; const fs=[...(el.files||[])]; el.value=""; await upFiles(el.dataset.up, fs); });
 VIEWS["articles.evidence"] = () => {
   const ev=(S.pev&&S.pev.list)||[], real=ev.filter(e=>String(e.real).startsWith("بله")).length;
   const pill=e=>{const r=String(e.real); return `<span class="pill ${r.startsWith("بله")?"p-ok":r.startsWith("جزئی")?"p-warn":r.startsWith("خیر")?"p-bad":"p-mute"}">${esc(r)}</span>`;};
@@ -3480,6 +3564,7 @@ document.addEventListener("click", async e => {
     case "checkin": { if(mindGate("ثبت ورود")) break; if(b.disabled) break; b.disabled=true; try{ const g=await officeFix("in");
       if(g){ const geo=g.lat!=null?{in_geo:{lat:g.lat,lng:g.lng,acc:g.acc,dist:g.dist}}:{};
         await save(`attendance/${S.me.id}/days/${today()}`,{in:nowHM(),break_min:60,...geo,...(g.unverified?{in_unverified:g.unverified}:{})},g.unverified?"ورود ثبت شد؛ موقعیت تأیید نشد و منتظر تأیید مدیر است: "+g.unverified:"ورود ثبت شد"); } } finally{ b.disabled=false; } break; }
+    case "task-who": S.taskWho=b.dataset.m||""; render(); break;
     case "att-approve": { if(!isAdmin()) break; const a=(S.allAtt||[]).find(x=>x.member===b.dataset.m&&x.id===b.dataset.d); if(!a) break; const {id:_i,member:_m,...rest}=a;
       if(await save(`attendance/${a.member}/days/${a.id}`,{...rest,in_approved:S.me.id},"ورود تأیید شد")){ a.in_approved=S.me.id; render(); } break; }
     case "checkout": { if(b.disabled) break; b.disabled=true; try{ const g=await officeFix("out"), att=S.myAtt.find(x=>x.id===today())||{}, {id:_i,...rest}=att;
@@ -3494,6 +3579,7 @@ document.addEventListener("click", async e => {
     case "register": registerForm(); break;
     case "print-sheet": printSheet(b.dataset.sel); break;
     case "cv-docx": await downloadCv(); break;
+    case "up-done": await upDone(b.dataset.id); break;
     case "prop-docx": await downloadProp(b.dataset.id); break;
     case "prop-show": propShow(b.dataset.id); break;
     case "sch-profile": schProfileForm(); break;
@@ -3514,6 +3600,13 @@ document.addEventListener("click", async e => {
     case "letter-edit": { const l=S.letters.find(x=>x.id===id); if(!l) break; S.draft={...l,numAuto:false}; S.mod="letters"; S.sub="new"; S.forceFull=true; closeForm(); render(); window.scrollTo(0,0); break; }
     case "compose-go": composeSubmit(); break;
     case "letter-meta": letterMeta(id); break;
+    case "lhs-dl": {
+      if(!S.lhs||!S.lhs.asset){ toast("سربرگ سوشیانت هنوز ثبت نشده است."); break; }
+      if(!S.downloads){ toast("دریافت فایل فقط داخل claude.ai فعال است."); break; }
+      try{ const b64=(await (await fetch(blobUrl(S.lhs.asset))).text()).trim();
+        await S.downloads.save({filename:"soshiant-blank-letter.docx", data:new Blob([b64ToBytes(b64)],{type:"application/vnd.openxmlformats-officedocument.wordprocessingml.document"})});
+      }catch(err){ if(!err||err.code!=="declined"){ toast("دریافت فرم خام انجام نشد."); console.error(err); } }
+      break; }
     case "lh-del": await save("settings/letterhead",{kind:"none",updated:new Date().toISOString()},"سربرگ پیش‌فرض فعال شد."); break;
     case "compose-reset": S.draft=null; S.forceFull=true; render(); break;
     case "arch-new": archForm(); break;
@@ -3578,6 +3671,160 @@ async function boot(){
 boot();
 })();
 </script>
+
+<!--claude-mermaid-runtime-begin:3477-->
+<style>.mermaid-diagram{margin-block:4px}.mermaid-diagram svg{display:block;margin:0 auto;max-width:100%;height:auto}</style>
+<script src="/_runtime/mermaid-11.16.1.min.js"></script>
+<script>(function(){
+var CFG={"palettes":{"light":{"surface":"#f4efe4","text":"#42392e","line":"#8a7f6d","border":"#7a6c52","bg":"#fffdf8"},"dark":{"surface":"#262b34","text":"#f2f3f5","line":"#a8adb8","border":"#9aa4b8","bg":"#1f232b"}}};
+if(typeof mermaid==='undefined')return;
+var pres=Array.prototype.slice.call(document.querySelectorAll('pre.mermaid')).filter(function(p){if(p.hasAttribute('data-claude-mermaid-claimed'))return false;p.setAttribute('data-claude-mermaid-claimed','1');return true;});
+if(!pres.length)return;
+var mq=window.matchMedia?window.matchMedia('(prefers-color-scheme: dark)'):null;
+var root=document.documentElement;
+var items=pres.map(function(pre){
+var mount=document.createElement('div');mount.className='mermaid-diagram';
+return {pre:pre,mount:mount,src:pre.textContent||''};
+});
+var seq=0;
+var renderGen=0;
+var lastKey='';
+function pageBg(fallback){
+var els=[document.body,document.documentElement];
+for(var i=0;i<els.length;i++){
+var c=els[i]&&getComputedStyle(els[i]).backgroundColor;
+if(c&&c!=='transparent'&&c!=='rgba(0, 0, 0, 0)')return c;
+}
+return fallback;
+}
+function render(){
+var theme=root.getAttribute('data-theme');
+var dark=theme==='dark'||(!!(mq&&mq.matches)&&theme!=='light');
+var pal=dark?CFG.palettes.dark:CFG.palettes.light;
+var bg=pageBg(pal.bg);
+var key=(dark?'d':'l')+'|'+bg;
+if(key===lastKey)return;
+lastKey=key;
+var gen=++renderGen;
+var font=getComputedStyle(document.body).fontFamily||'sans-serif';
+var nat={useMaxWidth:false};
+mermaid.initialize({
+startOnLoad:false,securityLevel:'strict',theme:'base',
+flowchart:nat,sequence:nat,er:nat,state:nat,class:nat,pie:nat,
+gantt:nat,journey:nat,timeline:nat,gitGraph:nat,mindmap:nat,xyChart:nat,
+quadrantChart:nat,sankey:nat,c4:nat,requirement:nat,block:nat,
+packet:nat,kanban:nat,architecture:nat,radar:nat,
+themeVariables:{background:bg,mainBkg:pal.surface,primaryColor:pal.surface,
+primaryTextColor:pal.text,lineColor:pal.line,primaryBorderColor:pal.border,
+nodeBorder:pal.border,clusterBorder:pal.border,edgeLabelBackground:bg,
+clusterBkg:'rgba(127,127,127,0.07)',titleColor:pal.text,
+darkMode:dark,rowOdd:bg,rowEven:'rgba(127,127,127,0.07)',
+attributeBackgroundColorOdd:bg,attributeBackgroundColorEven:'rgba(127,127,127,0.07)',
+fontSize:'16px',fontFamily:font},
+themeCSS:'.node rect, .node circle, .node polygon, .node path, .cluster rect { stroke-width: 2px; }'
+});
+items.forEach(function(it){
+var id='claude-mermaid-'+seq++;
+mermaid.render(id,it.src).then(function(r){
+if(gen!==renderGen)return;
+var prev=it.pre.previousElementSibling;
+if(prev&&prev.className==='mermaid-diagram'&&prev!==it.mount)return;
+it.mount.innerHTML=r.svg;
+if(!it.mount.parentNode)it.pre.parentNode.insertBefore(it.mount,it.pre);
+it.pre.style.display='none';
+},function(){
+var scratch=document.getElementById(id);
+if(scratch)scratch.parentNode.removeChild(scratch);
+scratch=document.getElementById('d'+id);
+if(scratch)scratch.parentNode.removeChild(scratch);
+if(gen!==renderGen)return;
+if(it.mount.parentNode)it.mount.parentNode.removeChild(it.mount);
+it.pre.style.display='';
+});
+});
+}
+render();
+if(mq&&mq.addEventListener)mq.addEventListener('change',render);
+if(typeof MutationObserver!=='undefined')new MutationObserver(render).observe(root,{attributes:true,attributeFilter:['data-theme']});
+})();</script>
+<!--claude-mermaid-runtime-end-->
+
+<!--claude-mermaid-runtime-begin:3477-->
+<style>.mermaid-diagram{margin-block:4px}.mermaid-diagram svg{display:block;margin:0 auto;max-width:100%;height:auto}</style>
+<script src="/_runtime/mermaid-11.16.1.min.js"></script>
+<script>(function(){
+var CFG={"palettes":{"light":{"surface":"#f4efe4","text":"#42392e","line":"#8a7f6d","border":"#7a6c52","bg":"#fffdf8"},"dark":{"surface":"#262b34","text":"#f2f3f5","line":"#a8adb8","border":"#9aa4b8","bg":"#1f232b"}}};
+if(typeof mermaid==='undefined')return;
+var pres=Array.prototype.slice.call(document.querySelectorAll('pre.mermaid')).filter(function(p){if(p.hasAttribute('data-claude-mermaid-claimed'))return false;p.setAttribute('data-claude-mermaid-claimed','1');return true;});
+if(!pres.length)return;
+var mq=window.matchMedia?window.matchMedia('(prefers-color-scheme: dark)'):null;
+var root=document.documentElement;
+var items=pres.map(function(pre){
+var mount=document.createElement('div');mount.className='mermaid-diagram';
+return {pre:pre,mount:mount,src:pre.textContent||''};
+});
+var seq=0;
+var renderGen=0;
+var lastKey='';
+function pageBg(fallback){
+var els=[document.body,document.documentElement];
+for(var i=0;i<els.length;i++){
+var c=els[i]&&getComputedStyle(els[i]).backgroundColor;
+if(c&&c!=='transparent'&&c!=='rgba(0, 0, 0, 0)')return c;
+}
+return fallback;
+}
+function render(){
+var theme=root.getAttribute('data-theme');
+var dark=theme==='dark'||(!!(mq&&mq.matches)&&theme!=='light');
+var pal=dark?CFG.palettes.dark:CFG.palettes.light;
+var bg=pageBg(pal.bg);
+var key=(dark?'d':'l')+'|'+bg;
+if(key===lastKey)return;
+lastKey=key;
+var gen=++renderGen;
+var font=getComputedStyle(document.body).fontFamily||'sans-serif';
+var nat={useMaxWidth:false};
+mermaid.initialize({
+startOnLoad:false,securityLevel:'strict',theme:'base',
+flowchart:nat,sequence:nat,er:nat,state:nat,class:nat,pie:nat,
+gantt:nat,journey:nat,timeline:nat,gitGraph:nat,mindmap:nat,xyChart:nat,
+quadrantChart:nat,sankey:nat,c4:nat,requirement:nat,block:nat,
+packet:nat,kanban:nat,architecture:nat,radar:nat,
+themeVariables:{background:bg,mainBkg:pal.surface,primaryColor:pal.surface,
+primaryTextColor:pal.text,lineColor:pal.line,primaryBorderColor:pal.border,
+nodeBorder:pal.border,clusterBorder:pal.border,edgeLabelBackground:bg,
+clusterBkg:'rgba(127,127,127,0.07)',titleColor:pal.text,
+darkMode:dark,rowOdd:bg,rowEven:'rgba(127,127,127,0.07)',
+attributeBackgroundColorOdd:bg,attributeBackgroundColorEven:'rgba(127,127,127,0.07)',
+fontSize:'16px',fontFamily:font},
+themeCSS:'.node rect, .node circle, .node polygon, .node path, .cluster rect { stroke-width: 2px; }'
+});
+items.forEach(function(it){
+var id='claude-mermaid-'+seq++;
+mermaid.render(id,it.src).then(function(r){
+if(gen!==renderGen)return;
+var prev=it.pre.previousElementSibling;
+if(prev&&prev.className==='mermaid-diagram'&&prev!==it.mount)return;
+it.mount.innerHTML=r.svg;
+if(!it.mount.parentNode)it.pre.parentNode.insertBefore(it.mount,it.pre);
+it.pre.style.display='none';
+},function(){
+var scratch=document.getElementById(id);
+if(scratch)scratch.parentNode.removeChild(scratch);
+scratch=document.getElementById('d'+id);
+if(scratch)scratch.parentNode.removeChild(scratch);
+if(gen!==renderGen)return;
+if(it.mount.parentNode)it.mount.parentNode.removeChild(it.mount);
+it.pre.style.display='';
+});
+});
+}
+render();
+if(mq&&mq.addEventListener)mq.addEventListener('change',render);
+if(typeof MutationObserver!=='undefined')new MutationObserver(render).observe(root,{attributes:true,attributeFilter:['data-theme']});
+})();</script>
+<!--claude-mermaid-runtime-end-->
 
 <!--claude-mermaid-runtime-begin:3477-->
 <style>.mermaid-diagram{margin-block:4px}.mermaid-diagram svg{display:block;margin:0 auto;max-width:100%;height:auto}</style>

@@ -151,6 +151,9 @@ def run(use_llm=True, use_mail=True, send_notification=True):
     state = store.load()
     log_lines = []
     log = _log_factory(log_lines)
+    seeded = store.seed_grants(state)
+    if seeded:
+        log(f"{seeded} grant calls added from grants_seed.json")
 
     profile = build_profile(cfg)
     tenders = collect_all(cfg, log)
