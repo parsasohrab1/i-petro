@@ -25,13 +25,13 @@ Honest reading: marginal coverage holds, per-well coverage does not (19/81 FORCE
 
 ## Few-shot well-local recalibration (new contribution)
 
-`local_cal.py`, results in `results_local_cal.json` (SEG 2016: 8 wells with at least 50 samples, 3 seeds; FORCE 2020: 81 wells, 1 seed; nominal coverage 0.90; m depths of the new well are labelled at random).
+`local_cal.py`, results in `results_local_cal.json` (SEG 2016: 10 wells of facies_vectors.csv, 3 seeds (an earlier run on the 8-well contest training file gave the same picture: worst well 0.80 to 0.87); FORCE 2020: 81 wells, 1 seed; nominal coverage 0.90; m depths of the new well are labelled at random).
 
 | data | calibration | worst-well coverage | wells below 0.85 | mean set size |
 |---|---|---|---|---|
 | FORCE 2020 | pooled wells only | 0.599 | 19 / 81 | 2.02 |
 | FORCE 2020 | local, m = 100 | 0.818 | 6 / 81 | 2.27 |
-| SEG 2016 | pooled wells only | 0.803 | 2 / 8 | 4.33 |
-| SEG 2016 | local, m = 100 | 0.870 | 0 / 8 | 4.04 |
+| SEG 2016 (facies_vectors.csv, 10 wells) | pooled wells only | 0.735 | 1 / 10 | 3.33 |
+| SEG 2016 (facies_vectors.csv, 10 wells) | local, m = 100 | 0.879 | 0 / 10 | 3.25 |
 
 Caveat: the labelled depths are drawn at random inside the new well, so calibration and test depths of that well are exchangeable; contiguous labelling of the top of a well would be harsher and was not tested. Mixing the pooled scores with the local ones (5x weight) helped much less than local-only.
