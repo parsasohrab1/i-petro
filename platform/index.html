@@ -2219,21 +2219,23 @@ async function fillLetterTemplate(entries, L, C, sig){
   } finally { WD.font=true; }
 }
 // A finished letter (its own .docx kept as the master): only the number and date in the header change, optionally the recipient's name line.
-async function restampDocx(entries, number, dateStr, recipientLine, signerLine){
+async function restampDocx(entries, number, dateStr, recipientLine, signerLine, orgLine){
   const dec=new TextDecoder(), enc=new TextEncoder(); let n=0;
   for(const e of entries){
     if(/^word\/(header|footer)\d*\.xml$/.test(e.name)){ const r=fillHeaderMeta(dec.decode(e.data),{number,date:dateStr,attachments:null}); if(r.n){ e.data=enc.encode(r.xml); n+=r.n; } }
   }
-  if(recipientLine||signerLine){
+  if(recipientLine||signerLine||orgLine){
     const e=entries.find(x=>x.name==="word/document.xml"), doc=dec.decode(e.data), open=doc.match(/<w:body[^>]*>/);
     const sm=doc.match(/(<w:sectPr(?:(?!<w:sectPr)[\s\S])*<\/w:sectPr>)\s*<\/w:body>/);
     if(open&&sm){
       const from=open.index+open[0].length, segs=topSegments(doc.slice(from,sm.index));
       const i=recipientLine?segs.findIndex(g=>g.p&&/^(?:جناب|سرکار)/.test(plainText(g.xml).replace(/\u200c/g,"").trim())):-1;
       if(i>=0) segs[i].xml=withText(segs[i].xml,recipientLine);
+      const oi=orgLine?segs.findIndex(g=>g.p&&/^مدیر\s*عامل\s+محترم/.test(plainText(g.xml).replace(/\u200c/g," ").trim())):-1;
+      if(oi>=0) segs[oi].xml=withText(segs[oi].xml,orgLine);   // official company name line under the addressee
       const k=signerLine?segs.findIndex(g=>g.p&&!/<w:drawing/.test(g.xml)&&/\S[^\n]*[–-]\s*مدیر\s*عامل\s*$/.test(plainText(g.xml).trim())&&plainText(g.xml).trim().length<60):-1;
       if(k>=0) segs[k].xml=withText(segs[k].xml,signerLine);   // typed name under the sign-off; the signature and stamp pictures stay
-      if(i>=0||k>=0) e.data=enc.encode(doc.slice(0,from)+segs.map(g=>g.xml).join("")+doc.slice(sm.index));
+      if(i>=0||k>=0||oi>=0) e.data=enc.encode(doc.slice(0,from)+segs.map(g=>g.xml).join("")+doc.slice(sm.index));
     }
   }
   return {bytes:await zipStore(entries), stamped:n};
@@ -2265,7 +2267,7 @@ async function packDoc(assetId, key){
 async function makeLetterDocx(l){
   if(l.src_pack){   // a finished letter prepared in Word: its own file is the master; only number/date (and the recipient's name line) are refreshed
     const j=jalaliParts(l.date);
-    return (await restampDocx(await unzip(await packDoc(l.src_pack,l.src_key)), l.number, `${j.y}/${j.m}/${j.d}`, String(l.recipient_line||"").trim(), String(l.signer_line||"").trim())).bytes;
+    return (await restampDocx(await unzip(await packDoc(l.src_pack,l.src_key)), l.number, `${j.y}/${j.m}/${j.d}`, String(l.recipient_line||"").trim(), String(l.signer_line||"").trim(), String(l.org_line||"").trim())).bytes;
   }
   const st=S.settings, lh=l.identity==="soshiant"?S.lhs:S.lh, ceo=S.members.find(m=>m.id===st.ceo_member);
   const sigId = l.ceo_sig ? (l.ceo_sig.asset||st.ceo_sig_asset) : null;
@@ -2350,13 +2352,13 @@ function letterLedger(){
 }
 function letterMeta(id){
   const l=S.letters.find(x=>x.id===id); if(!l) return;
-  openForm({title:`نامه‌ی ${l.number} – شماره، تاریخ و گیرنده`,values:{number:l.number,date:l.date,recipient_line:l.recipient_line||""},
+  openForm({title:`نامه‌ی ${l.number} – شماره، تاریخ و گیرنده`,values:{number:l.number,date:l.date,recipient_line:l.recipient_line||"",org_line:l.org_line||""},
    extra:`<p class="note">فایل Word اصلی نامه (سربرگ، پاورقی، فهرست‌ها، امضا و مهر) همان‌طور که هست می‌ماند؛ فقط شماره و تاریخ هدر و، اگر پر کنید، سطر نام گیرنده عوض می‌شود.</p>${needsName(l)?`<div class="banner">نام مدیرعامل گیرنده در متن این نامه کامل نیست؛ سطر کامل را بنویسید، مثلاً «جناب آقای دکتر … » یا «سرکار خانم …».</div>`:""}`,
-   fields:[{k:"number",label:"شماره‌ی نامه",dir:"ltr"},{k:"date",label:"تاریخ نامه",type:"date"},{k:"recipient_line",label:"سطر نام گیرنده (مثلاً: جناب آقای دکتر … )"}],
+   fields:[{k:"number",label:"شماره‌ی نامه",dir:"ltr"},{k:"date",label:"تاریخ نامه",type:"date"},{k:"recipient_line",label:"سطر نام گیرنده (مثلاً: جناب آقای دکتر … )"},{k:"org_line",label:"سطر سمت و نام رسمی شرکت (مثلاً: مدیرعامل محترم شرکت … ؛ نام دقیق از سایت رسمی شرکت)"}],
    onSave: async v => { if(!v.number){toast("شماره را وارد کنید.");return false}
      if(S.letters.some(x=>x.number===v.number&&x.id!==id)){toast("این شماره برای نامه‌ی دیگری ثبت شده است.");return false}
      const {id:_i,...base}=l; const now=new Date().toISOString();
-     if(!await save(`letters/${id}`,{...base,number:v.number,date:v.date||l.date,recipient_line:v.recipient_line,updated:now},"ذخیره شد")) return false;
+     if(!await save(`letters/${id}`,{...base,number:v.number,date:v.date||l.date,recipient_line:v.recipient_line,org_line:v.org_line||"",...(v.org_line?{recipient:String(l.recipient||"").split("\n").slice(0,1).concat(v.org_line).join("\n")}:{}),updated:now},"ذخیره شد")) return false;
      const ar=S.lettersArchive.find(x=>x.letter_id===id); if(ar){ const {id:_a,...ab}=ar; await save(`letters_archive/${ar.id}`,{...ab,number:v.number,updated:now}); }
      return true; }});
 }
