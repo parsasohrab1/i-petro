@@ -207,7 +207,7 @@ const logoSrc = () => S.settings.logo_asset ? blobUrl(S.settings.logo_asset) : D
 const S = {mod:"market", sub:"iran", q:"", db:null, user:null, assets:null, sample:null, downloads:null,
   me:{id:null,isOwner:false,canEdit:false}, canWrite:null,
   m:{tenders:[],events:[],investors:[],leads:[],partners:[]}, opsList:[],
-  settings:{}, members:[], tasks:[], letters:[], lettersArchive:[], lh:null, draft:null, archF:"all", ra:{member:null,from:"",to:""}, repLoaded:false, allLoaded:false, forceFull:false, products:[], patents:[], finance:[], clients:[], tracking:{}, schol:[], sp:{}, cdocs:{}, ip:{countries:{},drafts:{}}, ipTab:"partners", news:{items:[]}, bi:{list:[]}, arts:[], tn:[], tnF:{src:"",ai:false,dom:"",st:""}, artRec:{}, artProd:{}, artSt:{}, artAcc:{ids:[]}, artMail:{}, ct:[], artF:{field:"",mode:"",type:"",past:false},
+  settings:{}, members:[], tasks:[], letters:[], lettersArchive:[], lh:null, draft:null, archF:"all", ra:{member:null,from:"",to:""}, repLoaded:false, allLoaded:false, forceFull:false, products:[], patents:[], finance:[], clients:[], tracking:{}, schol:[], sp:{}, cdocs:{}, ip:{countries:{},drafts:{}}, ipTab:"partners", news:{items:[]}, bi:{list:[]}, arts:[], tn:[], tnF:{src:"",ai:false,dom:"",st:""}, artRec:{}, artProd:{}, artSt:{}, artAcc:{ids:[]}, artDeny:{ids:[]}, artMail:{}, ct:[], artF:{field:"",mode:"",type:"",past:false},
   myAtt:[], myReports:[], allReports:[], allAtt:[], loaded:false, sprints:[], boardMine:false, tour:null, got:new Set(), welcomed:false, calMine:false, calTypes:null, seenTasks:new Set(), taskWho:""};
 try{const v=JSON.parse(localStorage.getItem("ppt-view")||"{}");if(v.mod&&SUBS[v.mod]){S.mod=v.mod;S.sub=SUBS[v.mod].some(x=>x[0]===v.sub)?v.sub:SUBS[v.mod][0][0]}}catch(e){}
 try{S.seenTasks=new Set(JSON.parse(localStorage.getItem("ppt-seen")||"[]"))}catch(e){}
@@ -251,11 +251,10 @@ function privateRows(key, rows){
   if(key==="tasks") return rows.filter(r=>r.assignee===S.me.id||r.created_by===S.me.id);
   return rows;
 }
-const visibleSubs = mod => (SUBS[mod]||[]).filter(([k])=>isAdmin()||!(PRIVATE_SUBS[mod]||[]).includes(k));
+const visibleSubs = mod => (SUBS[mod]||[]).filter(([k])=>(isAdmin()||!(PRIVATE_SUBS[mod]||[]).includes(k))&&!(mod==="scholar"&&!S.me.isOwner&&["profile","cv"].includes(k)));
 function setPath(key, val){ const [a,b]=key.split("."); if(b) S[a][b]=val; else S[a]=val; }
 function subscribe(){
   for(const [path,key] of Object.entries(COLS)){
-    if(key==="schol"&&!isOwnerOnly()) continue;
     S.db.collection(path).onSnapshot(snap => {
       setPath(key, privateRows(key, snap.docs.map(d => ({id:d.id, ...d.data()}))));
       S.loaded = true; S.got.add(key); render(); if(key==="members") maybeWelcome();
@@ -273,6 +272,7 @@ function subscribe(){
   S.db.doc("settings/article_mode").onSnapshot(d => { S.artMode = d.exists ? (d.data().map||{}) : {}; render(); }, ()=>{});
   S.db.doc("settings/article_mail").onSnapshot(d => { S.artMail = d.exists ? (d.data().map||{}) : {}; S.artMailAt = d.exists ? d.data().updated||"" : ""; render(); }, ()=>{});
   S.db.doc("settings/trl_data").onSnapshot(d => { S.trl = d.exists ? d.data() : {products:{}}; render(); }, ()=>{});   // real-data sources and measured results per TRL-4 product
+  S.db.doc("settings/article_deny").onSnapshot(d => { S.artDeny = d.exists ? d.data() : {ids:[]}; render(); }, ()=>{});
   S.db.doc("settings/article_access").onSnapshot(d => { S.artAcc = d.exists ? d.data() : {ids:[]}; render(); }, ()=>{});   // {ids:[memberId]}: people the owner lets see the Articles tab
   if(isAdmin()) S.db.collection("finance/_portal/items").onSnapshot(q => { S.portal={}; q.docs.forEach(d=>S.portal[d.id]=d.data()); render(); }, ()=>{});   // submission-portal logins per venue (admin-only rule of "finance"; not part of backups)
   S.db.doc("settings/article_status").onSnapshot(d => { S.artSt = d.exists ? (d.data().map||{}) : {}; render(); }, ()=>{});
@@ -375,13 +375,13 @@ const canSeeLetters = () => { if(S.me.isOwner) return true; const m=(S.members||
 const VIEWS = {};   // declared before the first view is registered (patent/scholar/articles 'mine' views come early)
 const AREA_KINDS = {patent:["human_patent"], scholar:["human_scholar"], articles:["submit"]};
 const areaTasks = mod => (S.tasks||[]).filter(t=>t.assignee===S.me.id&&(AREA_KINDS[mod]||[]).includes(t.kind));
-const areaAccess = mod => S.me.isOwner?"full":(mod==="articles"&&S.me.id&&((S.artAcc||{}).ids||[]).includes(S.me.id))?"full":(areaTasks(mod).length||asgMine(mod).length)?"mine":"none";
+const areaAccess = mod => S.me.isOwner?"full":(mod==="scholar"&&S.me.id&&asgMine("scholar").length)?"full":(mod==="articles"&&S.me.id&&((S.artDeny||{}).ids||[]).includes(S.me.id))?"none":(mod==="articles"&&S.me.id&&((S.artAcc||{}).ids||[]).includes(S.me.id))?"full":(areaTasks(mod).length||asgMine(mod).length)?"mine":"none";   // settings/article_deny {ids}: people with article tasks who must not see the Articles tab
 const visibleModules = () => MODULES.filter(([k])=>(!AREA_KINDS[k]||areaAccess(k)!=="none")&&(k!=="letters"||canSeeLetters())&&(k!=="basket"||!!S.me.isOwner||asgMine("basket").length>0));
 const areaMineView = mod => { const all=areaTasks(mod).sort((a,b)=>(a.due||"9999").localeCompare(b.due||"9999")), ts=S.mineDone?all:all.filter(t=>!(t.status==="done"||t.status==="approved"));
   return asgMineBox(mod)+`<p class="note">فقط تسک‌هایی که برای شما تعریف شده در این بخش دیده می‌شود. وضعیت تسک را از «BPMS ← روز من» یا «تخته‌ی اسکرام» تغییر دهید.</p>`+
    (mod==="articles"&&S.downloads&&ts.some(t=>t.venue&&absOf(t.venue))?`<div class="toolbar"><button class="btn sig" data-act="art-abs-mine">چکیده‌های تسک‌های من (ZIP)</button><span class="meta">چکیده‌ی هر مقصد طبق قالب همان ژورنال یا کنفرانس؛ [داخل کروشه] هنوز اندازه‌گیری نشده است.</span></div>`:"")+
    `<div class="toolbar"><label class="chip"><input type="checkbox" data-act="mine-done"${S.mineDone?" checked":""}> نمایش تسک‌های انجام‌شده (${faNum(all.length-all.filter(t=>!(t.status==="done"||t.status==="approved")).length)})</label></div>`+
-   table(["تسک","مهلت","وضعیت","شرح",""],ts.map(t=>`<tr>${td("تسک",esc(t.title),"t")}${td("مهلت",t.due?faDate(t.due):"—")}${td("وضعیت",`<span class="pill ${t.status==="done"||t.status==="approved"?"p-ok":t.status==="doing"?"p-info":"p-warn"}">${esc(TASK_ST[t.status]||t.status)}</span>`)}${td("شرح",`<span style="white-space:pre-wrap">${esc(t.desc||"")}</span>`)}${td("",mod==="articles"&&t.venue&&absOf(t.venue)&&S.downloads?`<button class="btn sm" data-act="art-abs" data-id="${esc(t.venue)}" title="چکیده طبق قالب همین ژورنال یا کنفرانس (فایل Word)">چکیده (Word)</button>`:"")}</tr>`),"تسکی برای شما تعریف نشده است.")+(mod==="scholar"?ts.filter(t=>t.ref).map(t=>{ const p=SCH.find(x=>x.id===t.ref); return p?schPublicCard(p):""; }).join(""):""); };
+   table(["تسک","مهلت","وضعیت","شرح",""],ts.map(t=>`<tr>${td("تسک",esc(t.title),"t")}${td("مهلت",t.due?faDate(t.due):"—")}${td("وضعیت",`<span class="pill ${t.status==="done"||t.status==="approved"?"p-ok":t.status==="doing"?"p-info":"p-warn"}">${esc(TASK_ST[t.status]||t.status)}</span>`)}${td("شرح",`<span style="white-space:pre-wrap">${esc(t.desc||"")}</span>`)}${td("",mod==="articles"&&t.venue&&absOf(t.venue)&&S.downloads?`<button class="btn sm" data-act="art-abs" data-id="${esc(t.venue)}" title="چکیده طبق قالب همین ژورنال یا کنفرانس (فایل Word)">چکیده (Word)</button>`:"")}</tr>`),"تسکی برای شما تعریف نشده است.")+(mod==="scholar"?[...new Set([...ts.filter(t=>t.ref).map(t=>t.ref),...asgMine("scholar").map(a=>String(a.key).replace(/^sch_/,""))])].map(id=>{ const p=SCH.find(x=>x.id===id); return p?schPublicCard(p):""; }).join(""):""); };
 VIEWS["patent.mine"]=()=>areaMineView("patent"); VIEWS["scholar.mine"]=()=>areaMineView("scholar"); VIEWS["articles.mine"]=()=>areaMineView("articles");
 function paintNav(){
   if((AREA_KINDS[S.mod]&&areaAccess(S.mod)==="none")||(S.mod==="letters"&&!canSeeLetters())||(S.mod==="basket"&&!S.me.isOwner&&!asgMine("basket").length)){ S.mod="market"; S.sub=SUBS.market[0][0]; }
@@ -1774,11 +1774,11 @@ function schCard(p,page){
   <tr><td style="color:var(--muted)">مهلت ثبت‌نام</td><td>${schDeadline(p)}</td></tr>
   <tr><td style="color:var(--muted)">سایت رسمی</td><td>${link(p.url)}</td></tr></tbody></table>${p.warn?`<div class="banner bad" style="margin:6px 0">${esc(p.warn)}</div>`:""}
   <div class="row" style="margin:8px 0;gap:10px;flex-wrap:wrap">${page!=="applied"?`<label><input type="checkbox" data-act="sch-set" data-id="${esc(p.id)}" data-st="applied"> قبلاً اقدام شده است</label>`:`<span class="pill p-ok">اقدام شده – در دست بررسی</span>`}${move}<button class="btn sm sig" data-act="sch-task" data-id="${esc(p.id)}">ثبت تسک برای Claude</button><button class="btn sm ghost" data-act="sch-copy" data-id="${esc(p.id)}">کپی دستور</button>${st.claude_task?`<span class="pill ${st.claude_task.status==="open"?"p-warn":"p-ok"}">${st.claude_task.status==="open"?"تسک Claude در انتظار انجام":"تسک Claude انجام شد"}</span>`:""}</div>
-  <details${page==="doing"?" open":""}><summary><b>مدارک و کارها</b> – ${faNum(done)} از ${faNum(items.length)} (${faNum(pct)}٪)</summary>
+  <details open><summary><b>مدارک و کارها</b> – ${faNum(done)} از ${faNum(items.length)} (${faNum(pct)}٪)</summary>
    ${propBox(p)}
    <div class="grid2" style="margin-top:8px"><div><h4>Claude انجام می‌دهد</h4>${items.filter(i=>i.by==="ai").map(row).join("")}</div><div><h4>خودتان باید انجام دهید</h4>${items.filter(i=>i.by==="me").map(row).join("")}</div></div></details>${schSupBlock(p)}</div>`;
 }
-function schPublicCard(p){ const items=schItems(p);
+function schPublicCard(p){ const items=schItems(p), pubRow=i=>`<div class="row" style="align-items:center;gap:8px;padding:3px 0"><span class="meta">☐</span> <span>${esc(i.t)}</span></div>`;
   return `<div class="card" style="margin-top:12px"><div class="row" style="align-items:flex-start;gap:10px;flex-wrap:wrap"><h3 style="flex:1;margin:0;min-width:220px">${esc(p.uni)}</h3>${asgCell("sch_"+p.id,p.uni,"scholar")}${p.levels.map(l=>`<span class="pill p-mute">${SCH_LV[l]}</span>`).join("")}</div>
   <table style="width:100%;margin-top:6px"><tbody>
   <tr><td style="width:26%;color:var(--muted)">رشته‌ی درسی</td><td>${esc(p.field)}</td></tr>
@@ -1786,7 +1786,9 @@ function schPublicCard(p){ const items=schItems(p);
   <tr><td style="color:var(--muted)">شرایط حمایت</td><td><b>${esc(p.kind)}</b> · ${esc(p.support)}</td></tr>
   <tr><td style="color:var(--muted)">مهلت ثبت‌نام</td><td>${schDeadline(p)}</td></tr>
   <tr><td style="color:var(--muted)">سایت رسمی</td><td>${link(p.url)}</td></tr></tbody></table>${p.warn?`<div class="banner bad" style="margin:6px 0">${esc(p.warn)}</div>`:""}
-  ${propBox(p)}<details open><summary><b>مدارک و کارهای لازم</b></summary><ul>${items.map(i=>`<li>${esc(i.t)}</li>`).join("")}</ul></details></div>`; }
+  ${propBox(p)}<details open><summary><b>مدارک و کارها</b> – ${faNum(items.length)} مورد</summary>
+   <div class="grid2" style="margin-top:8px"><div><h4>Claude انجام می‌دهد</h4>${items.filter(i=>i.by==="ai").map(pubRow).join("")}</div><div><h4>خودتان باید انجام دهید</h4>${items.filter(i=>i.by==="me").map(pubRow).join("")}</div></div>
+   <p class="meta">تیک «انجام شد» و ثبت وضعیت را مالک سامانه انجام می‌دهد؛ اطلاعات شخصی و رزومه‌ی او برای مسئول نمایش داده نمی‌شود.</p></details></div>`; }
 const schOrder = (a,b) => { const t=new Date().toISOString().slice(0,10), ka=!a.deadline?2:a.deadline<t?1:0, kb=!b.deadline?2:b.deadline<t?1:0;   // open deadlines first (soonest first), then past, then rolling
   return ka-kb || (a.deadline||"").localeCompare(b.deadline||"") || String(a.uni).localeCompare(String(b.uni)); };
 function schList(page){
@@ -1797,10 +1799,11 @@ function schList(page){
    (list.length?list.map(p=>schCard(p,page)).join(""):'<p class="empty">موردی در این صفحه نیست.</p>');
 }
 const schOnly = fn => () => isOwnerOnly() ? fn() : `<p class="empty">این بخش فقط برای مالک سامانه است.</p>`;
-VIEWS["scholar.human"] = schOnly(() => humView("scholar"));
-VIEWS["scholar.applied"]=schOnly(()=>schList("applied"));
-VIEWS["scholar.doing"]=schOnly(()=>schList("doing"));
-VIEWS["scholar.todo"]=schOnly(()=>schList("todo"));
+const schTeam = fn => () => (isOwnerOnly()||asgMine("scholar").length) ? fn() : `<p class="empty">این بخش فقط برای مالک و مسئولان بورسیه است.</p>`;
+VIEWS["scholar.human"] = schTeam(() => humView("scholar"));
+VIEWS["scholar.applied"]=schTeam(()=>schList("applied"));
+VIEWS["scholar.doing"]=schTeam(()=>schList("doing"));
+VIEWS["scholar.todo"]=schTeam(()=>schList("todo"));
 const SCH_DOCS = ["رزومه‌ی آکادمیک (CV)","انگیزه‌نامه (SOP)","پیشنهاد پژوهشی (برای دکتری)","ریز نمرات و مدرک تحصیلی با ترجمه‌ی رسمی","مدرک زبان (IELTS/TOEFL)","۲ تا ۳ توصیه‌نامه","پاسپورت","مقالات و سوابق پژوهشی (در صورت وجود)","گواهی سابقه‌ی کار (در صورت نیاز)"];
 function schCv(){
   const q=S.sp||{}; const L=(t,v)=>v?`<h4>${t}</h4><p style="white-space:pre-wrap">${esc(v)}</p>`:"";
@@ -2972,10 +2975,10 @@ const upTasks = () => (S.tasks||[]).filter(t=>t.kind==="data_download").sort((a,
 VIEWS["articles.upload"] = () => {
   const ts=upTasks(), todo=ts.filter(t=>t.status!=="done"&&t.status!=="approved").length, nf=ts.reduce((a,t)=>a+((t.uploads||[]).length),0);
   const card=t=>{ const ups=t.uploads||[], done=t.status==="done"||t.status==="approved";
-    return `<div class="card" style="margin-bottom:12px"><div class="row" style="align-items:flex-start;gap:10px"><h3 style="flex:1;margin:0">${esc(t.title)}</h3><span class="pill ${done?"p-ok":ups.length?"p-info":"p-warn"}">${done?"انجام شد":ups.length?"در حال انجام":"منتظر آپلود"}</span></div>
+    return `<div class="card" style="margin-bottom:12px"><div class="row" style="align-items:flex-start;gap:10px"><h3 style="flex:1;margin:0">${esc(t.title)}</h3><span class="pill ${done&&ups.length?"p-ok":done?"p-risk":ups.length?"p-info":"p-warn"}">${done&&ups.length?"انجام شد":done?"علامت «انجام‌شده» خورده، اما فایلی بارگذاری نشده":ups.length?"در حال انجام":"منتظر آپلود"}</span></div>
     <details><summary class="meta">شرح تسک، لینک دانلود و محل جانمایی</summary><p style="white-space:pre-wrap;font-size:13px">${esc(t.desc||"")}</p></details>
-    ${ups.length?`<table style="width:100%;margin-top:8px"><thead><tr><th>فایل</th><th>حجم</th><th>SHA256</th><th>زمان</th></tr></thead><tbody>${ups.map(u=>`<tr><td>${u.store==="db"?`${esc(u.name)} <span class="meta">(پایگاه، ${faNum(u.chunks||1)} بخش)</span>`:`<a href="${esc(u.url||("/_blob/"+u.id))}" target="_blank" rel="noopener">${esc(u.name)}</a>`}</td><td>${esc(fmtMB(u.size||0))}</td><td class="mono" style="font-size:11px">${esc((u.sha256||"").slice(0,16))}${u.sha256?"…":""}</td><td class="meta">${esc((u.at||"").slice(0,16).replace("T"," "))}</td></tr>`).join("")}</tbody></table>`:`<p class="meta" style="margin-top:8px">هنوز فایلی بارگذاری نشده است.</p>`}
-    <div class="row" style="margin-top:8px">${done?"":`<label class="btn sm sig" style="cursor:pointer">انتخاب و آپلود فایل‌ها<input type="file" multiple data-up="${esc(t.id)}" hidden></label>${ups.length?`<button class="btn sm" data-act="up-done" data-id="${esc(t.id)}">همه‌ی فایل‌ها بارگذاری شد؛ تسک را انجام‌شده کن</button>`:""}`}</div></div>`; };
+    ${ups.length?`<table style="width:100%;margin-top:8px"><thead><tr><th>فایل</th><th>حجم</th><th>SHA256</th><th>زمان</th></tr></thead><tbody>${ups.map(u=>`<tr><td>${u.store==="local"?`${esc(u.name)} <span class="meta">(روی رایانه‌ی مالک: <span class="mono">${esc(u.path||"")}</span>)</span>${u.note?`<div class="meta">${esc(u.note)}</div>`:""}`:u.store==="db"?`${esc(u.name)} <span class="meta">(پایگاه، ${faNum(u.chunks||1)} بخش)</span>`:`<a href="${esc(u.url||("/_blob/"+u.id))}" target="_blank" rel="noopener">${esc(u.name)}</a>`}</td><td>${esc(fmtMB(u.size||0))}</td><td class="mono" style="font-size:11px">${esc((u.sha256||"").slice(0,16))}${u.sha256?"…":""}</td><td class="meta">${esc((u.at||"").slice(0,16).replace("T"," "))}</td></tr>`).join("")}</tbody></table>`:`<p class="meta" style="margin-top:8px">هنوز فایلی بارگذاری نشده است.</p>`}
+    <div class="row" style="margin-top:8px"><label class="btn sm sig" style="cursor:pointer">انتخاب و آپلود فایل‌ها<input type="file" multiple data-up="${esc(t.id)}" hidden></label>${ups.length&&!done?`<button class="btn sm" data-act="up-done" data-id="${esc(t.id)}">همه‌ی فایل‌ها بارگذاری شد؛ تسک را انجام‌شده کن</button>`:""}</div></div>`; };
   return `<p class="note">فایل‌های مجموعه‌داده‌هایی که Claude به سایتشان دسترسی ندارد را اینجا بارگذاری کنید. هر فایل تا ۲۰ مگابایت (۸ مگابایت اگر فضای فایل برای شما فعال نباشد)؛ برای فایل بزرگ‌تر آن را به چند بخش (zip چندبخشی یا فایل‌های جدا) تقسیم کنید. SHA256 هر فایل خودکار ثبت می‌شود. پس از آپلود، Claude داده را می‌خواند و نتایج مقاله را بازتولید می‌کند. به مجوز هر داده (در شرح تسک) دقت کنید؛ داده‌ی SRMG فقط برای پژوهش دانشگاهی است.</p>`+
    kpis([["تسک‌های دانلود داده",faNum(ts.length),false],["منتظر آپلود",faNum(todo),todo>0],["فایل‌های بارگذاری‌شده",faNum(nf),false]])+
    (!S.assets?`<div class="banner">فضای فایل سامانه برای حساب شما فعال نیست؛ فایل‌ها مستقیم در پایگاه داده‌ی سامانه ذخیره می‌شوند (حداکثر ۸ مگابایت برای هر فایل). فایل بزرگ‌تر را تقسیم کنید.</div>`:"")+
