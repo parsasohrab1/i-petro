@@ -12,7 +12,7 @@ def reg():
 def test_task_doc_has_link_destination_and_assignee():
     r = reg(); t = dr.task_doc(r, r["datasets"][0], now="2026-10-31T00:00:00.000Z")
     assert t["kind"] == "data_download" and t["assignee"] == "u_x" and t["venue"] == "s_a" and t["status"] == "todo"
-    assert "https://u" in t["desc"] and "research/mod/data_raw/" in t["desc"] and "data-upload" in t["desc"] and "rule" in t["desc"]
+    assert "https://u" in t["desc"] and "rule" in t["desc"] and "data-upload" not in t["desc"]
     assert t["title"] == "دانلود داده‌ها – Data A"
 
 

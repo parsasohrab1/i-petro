@@ -6,6 +6,7 @@ task document (`kind: data_download`, `venue` = the article id, `assignee` = the
 and the exact destination path. `check_received` marks an entry `received` when its files are present, and the task is then ready to be
 closed. Documents are exported under data/platform_export/tasks/ and applied with the ArtifactData tool using `set` WITHOUT `if_version`:
 an existing task (possibly already edited by the member) is then refused instead of overwritten, so the export is create-only.
+Files are uploaded by the member on the task itself in the platform (asset store); the agent's `destination` path is only the folder where Claude copies them in the product repository after reading them.
 """
 import datetime
 import json
@@ -33,8 +34,8 @@ def description(reg, entry):
     return (f"دانلود داده‌ی «{entry['name']}» برای مقاله‌ی {entry['article']} (محصول {entry['product']}).\n\n"
             f"چرا تسک؟ Claude به این سایت دسترسی ندارد و بدون داده‌ی واقعی نمی‌تواند نتیجه را بازتولید کند.\n\n"
             f"۱) دانلود از: {entry['url']}\n   مجوز: {entry['license']}\n   فایل‌های موردنیاز:\n{files}\n\n"
-            f"۲) محل جانمایی: ریپوی خصوصی {entry['repo']}، شاخه‌ی data-upload، مسیر {destination(entry)}\n   {reg['place_rule_fa']}\n\n"
-            f"معیار پذیرش: همه‌ی فایل‌ها در مسیر بالا هستند، نام و SHA256 هر فایل در یادداشت این تسک آمده، و داده در شاخه‌ی main کامیت نشده است.")
+            f"۲) آپلود: {reg['place_rule_fa']}\n\n"
+            f"معیار پذیرش: همه‌ی فایل‌ها در همین تسک بارگذاری شده‌اند (نام و SHA256 هر فایل خودکار ثبت می‌شود) و تسک «انجام‌شده» شده است.")
 
 
 def task_doc(reg, entry, now=None):
