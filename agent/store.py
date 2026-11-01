@@ -8,6 +8,7 @@ import json
 from datetime import datetime
 
 from .config import DATA_DIR, ROOT
+from .taxonomy import canon_record
 
 STATE_FILE = DATA_DIR / "tenders.json"
 
@@ -33,7 +34,10 @@ def now():
 
 def load():
     if STATE_FILE.exists():
-        return json.loads(STATE_FILE.read_text(encoding="utf-8"))
+        state = json.loads(STATE_FILE.read_text(encoding="utf-8"))
+        for t in state.get("tenders", {}).values():
+            canon_record(t, "domains")   # legacy "energy"/"aviation" keys -> oil_gas, aerospace, nuclear, water, mining
+        return state
     return {"tenders": {}, "runs": []}
 
 

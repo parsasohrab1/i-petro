@@ -12,7 +12,7 @@ from .config import DATA_DIR, ROOT
 
 SEED_FILE = ROOT / "papers_seed.json"
 STATE_FILE = DATA_DIR / "papers.json"
-FIELDS = ["oil_gas", "ai_industry", "medical", "quantum", "aerospace", "nuclear", "water", "energy"]
+FIELDS = ["oil_gas", "ai_industry", "medical", "quantum", "aerospace", "nuclear", "water", "mining"]
 
 CALL_SCHEMA = {
     "type": "object",
@@ -44,7 +44,11 @@ CALL_SCHEMA = {
 
 
 def load():
-    return json.loads(STATE_FILE.read_text(encoding="utf-8")) if STATE_FILE.exists() else {"calls": {}, "updated": ""}
+    state = json.loads(STATE_FILE.read_text(encoding="utf-8")) if STATE_FILE.exists() else {"calls": {}, "updated": ""}
+    for c in state.get("calls", {}).values():
+        if c.get("field") == "energy":   # legacy group: the five sectors replaced it
+            c["field"] = "oil_gas"
+    return state
 
 
 def save(state):
@@ -102,7 +106,7 @@ def update(cfg, analyst, state, log):
         f"Today is {date.today().isoformat()}. Search the web for NEW open calls for papers with a submission deadline in the "
         f"next {horizon} months (or rolling calls of special issues) that suit a company building AI products for: oil and "
         "gas, industrial AI / predictive maintenance / digital twins, medicine and health AI, quantum computing applications, "
-        "aviation, nuclear power, water and energy. Include journal special issues and conferences/symposia (IEEE, Elsevier, "
+        "aerospace, nuclear power, water and mining. Include journal special issues and conferences/symposia (IEEE, Elsevier, "
         "Springer, MDPI, Frontiers, SPE, EAGE and similar). Prefer official call pages and give the deadline from the official "
         f"page. Skip predatory venues and anything military. Already known (do not repeat): {known_text}")
     if not research:

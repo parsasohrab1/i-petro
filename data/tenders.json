@@ -549,7 +549,7 @@
    },
    "keyword_score": 3,
    "domains": [
-    "energy"
+    "oil_gas"
    ],
    "days_left": 1,
    "line": "ai",
@@ -584,7 +584,7 @@
    },
    "keyword_score": 3,
    "domains": [
-    "energy"
+    "oil_gas"
    ],
    "days_left": 4,
    "line": "ai",
@@ -619,7 +619,7 @@
    },
    "keyword_score": 3,
    "domains": [
-    "energy"
+    "oil_gas"
    ],
    "days_left": 9,
    "line": "ai",
@@ -654,7 +654,7 @@
    },
    "keyword_score": 3,
    "domains": [
-    "energy"
+    "oil_gas"
    ],
    "days_left": 18,
    "line": "ai",
@@ -688,7 +688,7 @@
    },
    "keyword_score": 3,
    "domains": [
-    "energy"
+    "oil_gas"
    ],
    "days_left": 15,
    "line": "ai",
@@ -722,7 +722,7 @@
    },
    "keyword_score": 3,
    "domains": [
-    "energy"
+    "oil_gas"
    ],
    "days_left": 17,
    "line": "ai",
@@ -757,7 +757,7 @@
    },
    "keyword_score": 3,
    "domains": [
-    "energy"
+    "oil_gas"
    ],
    "days_left": 29,
    "line": "ai",
@@ -792,7 +792,7 @@
    },
    "keyword_score": 3,
    "domains": [
-    "energy"
+    "oil_gas"
    ],
    "days_left": 37,
    "line": "ai",
@@ -827,7 +827,7 @@
    },
    "keyword_score": 2,
    "domains": [
-    "energy"
+    "water"
    ],
    "days_left": -5,
    "line": "ai",
@@ -902,7 +902,7 @@
    },
    "keyword_score": 2,
    "domains": [
-    "energy",
+    "oil_gas",
     "urban"
    ],
    "days_left": 22,
@@ -971,7 +971,7 @@
    },
    "keyword_score": 3,
    "domains": [
-    "energy"
+    "oil_gas"
    ],
    "days_left": 72,
    "line": "ai",
@@ -1005,7 +1005,7 @@
    },
    "keyword_score": 3,
    "domains": [
-    "aviation"
+    "aerospace"
    ],
    "days_left": null,
    "line": "ai",
@@ -1073,7 +1073,7 @@
    },
    "keyword_score": 3,
    "domains": [
-    "aviation"
+    "aerospace"
    ],
    "days_left": -4,
    "line": "ai",
@@ -1112,7 +1112,7 @@
    },
    "keyword_score": 3,
    "domains": [
-    "energy"
+    "oil_gas"
    ],
    "days_left": 1,
    "line": "ai",
@@ -1181,7 +1181,7 @@
    },
    "keyword_score": 3,
    "domains": [
-    "energy"
+    "oil_gas"
    ],
    "days_left": 20,
    "line": "ai",
@@ -1249,7 +1249,7 @@
    },
    "keyword_score": 3,
    "domains": [
-    "energy"
+    "oil_gas"
    ],
    "days_left": null,
    "line": "ai",
@@ -1283,7 +1283,7 @@
    },
    "keyword_score": 3,
    "domains": [
-    "energy"
+    "oil_gas"
    ],
    "days_left": 8,
    "line": "ai",
@@ -1317,7 +1317,7 @@
    },
    "keyword_score": 3,
    "domains": [
-    "energy"
+    "oil_gas"
    ],
    "days_left": 19,
    "line": "ai",
@@ -1351,7 +1351,7 @@
    },
    "keyword_score": 3,
    "domains": [
-    "energy"
+    "oil_gas"
    ],
    "days_left": 19,
    "line": "ai",
@@ -1385,7 +1385,7 @@
    },
    "keyword_score": 3,
    "domains": [
-    "energy"
+    "oil_gas"
    ],
    "days_left": 29,
    "line": "ai",
@@ -1419,7 +1419,7 @@
    },
    "keyword_score": 3,
    "domains": [
-    "aviation"
+    "aerospace"
    ],
    "days_left": 24,
    "line": "ai",
@@ -1487,7 +1487,7 @@
    },
    "keyword_score": 3,
    "domains": [
-    "energy"
+    "oil_gas"
    ],
    "days_left": 33,
    "line": "ai",
@@ -1521,7 +1521,7 @@
    },
    "keyword_score": 3,
    "domains": [
-    "energy"
+    "oil_gas"
    ],
    "days_left": null,
    "line": "ai",
@@ -1589,8 +1589,7 @@
    },
    "keyword_score": 4,
    "domains": [
-    "aviation",
-    "energy"
+    "aerospace"
    ],
    "days_left": null,
    "line": "ai",
@@ -1658,7 +1657,7 @@
    },
    "keyword_score": 3,
    "domains": [
-    "energy"
+    "oil_gas"
    ],
    "days_left": 22,
    "line": "ai",
@@ -1794,7 +1793,7 @@
    },
    "keyword_score": 3,
    "domains": [
-    "energy"
+    "oil_gas"
    ],
    "days_left": 22,
    "line": "ai",
@@ -1931,7 +1930,7 @@
    },
    "keyword_score": 3,
    "domains": [
-    "energy"
+    "oil_gas"
    ],
    "days_left": 26,
    "line": "ai",
@@ -1965,7 +1964,7 @@
    },
    "keyword_score": 3,
    "domains": [
-    "energy"
+    "oil_gas"
    ],
    "days_left": 36,
    "line": "ai",
@@ -2033,7 +2032,7 @@
    },
    "keyword_score": 3,
    "domains": [
-    "aviation"
+    "aerospace"
    ],
    "days_left": null,
    "line": "ai",
@@ -2067,7 +2066,7 @@
    },
    "keyword_score": 3,
    "domains": [
-    "aviation"
+    "aerospace"
    ],
    "days_left": 5,
    "line": "ai",
@@ -2135,7 +2134,7 @@
    },
    "keyword_score": 3,
    "domains": [
-    "energy"
+    "oil_gas"
    ],
    "days_left": 37,
    "line": "ai",
@@ -2169,7 +2168,7 @@
    },
    "keyword_score": 3,
    "domains": [
-    "energy"
+    "oil_gas"
    ],
    "days_left": null,
    "line": "ai",
@@ -2238,7 +2237,7 @@
    },
    "keyword_score": 3,
    "domains": [
-    "aviation"
+    "aerospace"
    ],
    "days_left": 29,
    "line": "ai",
@@ -2306,7 +2305,7 @@
    },
    "keyword_score": 3,
    "domains": [
-    "energy"
+    "oil_gas"
    ],
    "days_left": null,
    "line": "ai",
