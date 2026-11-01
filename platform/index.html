@@ -208,7 +208,7 @@ const S = {mod:"market", sub:"iran", q:"", db:null, user:null, assets:null, samp
   me:{id:null,isOwner:false,canEdit:false}, canWrite:null,
   m:{tenders:[],events:[],investors:[],leads:[],partners:[]}, opsList:[],
   settings:{}, members:[], tasks:[], letters:[], lettersArchive:[], lh:null, draft:null, archF:"all", ra:{member:null,from:"",to:""}, repLoaded:false, allLoaded:false, forceFull:false, products:[], patents:[], finance:[], clients:[], tracking:{}, schol:[], sp:{}, cdocs:{}, ip:{countries:{},drafts:{}}, ipTab:"partners", news:{items:[]}, bi:{list:[]}, arts:[], tn:[], tnF:{src:"",ai:false,dom:"",st:""}, artRec:{}, artProd:{}, artSt:{}, artAcc:{ids:[]}, artDeny:{ids:[]}, artMail:{}, ct:[], artF:{field:"",mode:"",type:"",past:false},
-  myAtt:[], myReports:[], allReports:[], allAtt:[], loaded:false, sprints:[], boardMine:false, tour:null, got:new Set(), welcomed:false, calMine:false, calTypes:null, seenTasks:new Set(), taskWho:"", taskFilter:"", subsAll:false, erpLog:{}, erpDept:""};
+  myAtt:[], myReports:[], allReports:[], allAtt:[], loaded:false, sprints:[], boardMine:false, tour:null, got:new Set(), welcomed:false, calMine:false, calTypes:null, seenTasks:new Set(), planner:{}, taskWho:"", taskFilter:"", subsAll:false, erpLog:{}, erpDept:""};
 try{const v=JSON.parse(localStorage.getItem("ppt-view")||"{}");if(v.mod&&SUBS[v.mod]){S.mod=v.mod;S.sub=SUBS[v.mod].some(x=>x[0]===v.sub)?v.sub:SUBS[v.mod][0][0]}}catch(e){}
 try{S.seenTasks=new Set(JSON.parse(localStorage.getItem("ppt-seen")||"[]"))}catch(e){}
 
@@ -272,6 +272,7 @@ function subscribe(){
   S.db.doc("settings/paper_evidence").onSnapshot(d => { S.pev = d.exists ? d.data() : {list:[]}; render(); }, ()=>{});
   S.db.doc("settings/article_mode").onSnapshot(d => { S.artMode = d.exists ? (d.data().map||{}) : {}; render(); }, ()=>{});
   S.db.doc("settings/article_mail").onSnapshot(d => { S.artMail = d.exists ? (d.data().map||{}) : {}; S.artMailAt = d.exists ? d.data().updated||"" : ""; render(); }, ()=>{});
+  S.db.doc("settings/planner").onSnapshot(d => { S.planner = d.exists ? d.data() : {}; render(); }, ()=>{});   // {level, auto, last_run}: owner expectation level for the daily planner
   S.db.doc("settings/trl_data").onSnapshot(d => { S.trl = d.exists ? d.data() : {products:{}}; render(); }, ()=>{});   // real-data sources and measured results per TRL-4 product
   S.db.doc("settings/article_deny").onSnapshot(d => { S.artDeny = d.exists ? d.data() : {ids:[]}; render(); }, ()=>{});
   S.db.doc("settings/article_access").onSnapshot(d => { S.artAcc = d.exists ? d.data() : {ids:[]}; render(); }, ()=>{});   // {ids:[memberId]}: people the owner lets see the Articles tab
@@ -894,6 +895,47 @@ VIEWS["erp.ops"] = () => {
    (list.length?table(["بخش","مورد","دوره","سررسید","وضعیت","انجام‌دهنده و واگذاری",""],list.sort((a,b)=>(erpDue(b).late-erpDue(a).late)||erpDue(a).due.localeCompare(erpDue(b).due)).map(o=>{ const du=erpDue(o), lg=(S.erpLog||{})[o.id]||{}, a=asgOf("erp_"+o.id)||{}, can=isAdmin()||a.doer===S.me.id;
      return `<tr>${td("بخش",esc(ERP_DEPTS[o.d]))}${td("مورد",`<b>${esc(o.t)}</b><br><span class="meta">${esc(o.x)}</span>`,"t")}${td("دوره",esc(ERP_PERIOD[o.p][0]))}${td("سررسید",du.never?'<span class="pill p-warn">هنوز انجام نشده</span>':`${faDate(du.due)}<br><span class="meta">${du.left<0?faNum(-du.left)+" روز گذشته":faNum(du.left)+" روز دیگر"}</span>`)}${td("وضعیت",du.late?'<span class="pill p-bad">سررسید</span>':'<span class="pill p-ok">به‌روز</span>')}${td("انجام‌دهنده",asgCell("erp_"+o.id,o.t,"erp")+(lg.last_done?`<div class="meta">آخرین انجام: ${faDate(lg.last_done)} · ${esc(asgWho(lg.by))}${lg.count?` · ${faNum(lg.count)} بار`:""}</div>`:""))}${td("",`${can?`<button class="btn sm sig" data-act="erp-done" data-id="${esc(o.id)}">ثبت انجام</button> `:""}${o.go?`<button class="btn sm ghost" data-act="goto" data-mod="${o.go[0]}" data-sub="${o.go[1]}">باز کردن بخش</button>`:""}`)}</tr>`}),"موردی با این فیلتر نیست."):'<p class="empty">موردی با این فیلتر نیست.</p>');
 };
+// ---------- Daily planner: standing tasks repeat, and a person with nothing open gets tasks chosen from the work still left in the system.
+// Runs when an admin has the dashboard open (once per day; ids are deterministic so two admins cannot create duplicates). The owner's expectation level
+// (settings/planner.level) sets how many tasks an idle person receives: standard 1, high 2, intense 3.
+const PLAN_LEVELS = {standard:["استاندارد (۱ تسک خودکار)",1],high:["بالا (۲ تسک خودکار)",2],intense:["شدید (۳ تسک خودکار)",3]};
+const PLAN_TEAM_DEPT = {finance:["fin"],admin:["hr","legal"],ai:["sales","it","prod"],content:["prod","sales"]};
+function planCandidates(m){
+  const out=[], day=today(), team=m.team||"ai", depts=PLAN_TEAM_DEPT[team]||[];
+  ERP_OPS.forEach(o=>{ const a=asgOf("erp_"+o.id)||{}, mine=a.doer===m.id, free=!a.doer&&depts.includes(o.d);
+    if((mine||free)&&erpDue(o).late) out.push({key:"erp_"+o.id,title:o.t,desc:o.x+"\n\nثبت انجام: ERP ← برنامه‌ی عملیات و واگذاری.",prio:mine?0:3,priority:"normal"}); });
+  Object.entries((S.trl&&S.trl.products)||{}).forEach(([pid,t])=>{ const a=asgOf("basket_"+pid)||{};
+    if(a.doer===m.id&&(t.sources||[]).some(x=>x.status==="not_downloaded")) out.push({key:"trl_"+pid,title:`دانلود داده‌ی واقعی و جانمایی در الگوریتم «${t.name||pid}»`,desc:"منابع داده و لینک‌ها در Products Basket ← «داده‌ی واقعی و ارتقای TRL» است؛ پس از دانلود وضعیت منبع و معیار اندازه‌گیری‌شده را ثبت کنید.",prio:1,priority:"high"}); });
+  if(team==="ai"||team==="admin"){ const t=(S.m.tenders||[]).filter(x=>ACTIVE.has(x.status)&&!owned(x.id)&&x.line!=="web"&&(x.deadline||"9999")>=day).sort((a,b)=>(a.deadline||"9999").localeCompare(b.deadline||"9999")||(b.keyword_score||0)-(a.keyword_score||0))[0];
+    if(t) out.push({key:"tn_"+t.id,title:`بررسی فرصت و برداشتن مسئولیت: ${String(t.title).slice(0,90)}`,desc:`${t.country||""} · مهلت ${t.deadline||"نامشخص"}\n${t.url||""}\nدر Market با «مسئولیت را می‌گیرم» بردارید و مرحله‌ی پیگیری را ثبت کنید.`,prio:2,priority:"normal"}); }
+  if(team==="admin"){ const a=(S.lettersArchive||[]).filter(archStale)[0];
+    if(a) out.push({key:"ar_"+a.id,title:`پیگیری نامه‌ی بی‌پاسخ: ${String(a.subject||"").slice(0,80)}`,desc:`گیرنده: ${a.recipient||"—"} · آخرین اقدام بیش از ۱۴ روز پیش. وضعیت و گام بعدی را در بایگانی نامه‌ها به‌روز کنید.`,prio:2,priority:"normal"}); }
+  if(team==="content"||team==="ai"){ const e=(S.m.events||[]).filter(x=>(x.start||"")>=day&&(x.start||"")<=addDays(day,30)&&!owned("ev_"+x.id)).sort((a,b)=>(a.start||"").localeCompare(b.start||""))[0];
+    if(e) out.push({key:"ev_"+e.id,title:`برنامه‌ریزی حضور در رویداد: ${e.name_fa||e.name}`,desc:`${e.start||""} · ${e.city||""}. نماینده و هدف حضور را مشخص و در Events مسئول را ثبت کنید.`,prio:3,priority:"normal"}); }
+  return out.sort((a,b)=>a.prio-b.prio);
+}
+async function runPlanner(force){
+  if(!S.db||!isAdmin()) return;
+  const cfg=S.planner||{}, day=today();
+  if(!force&&(cfg.auto===false||cfg.last_run===day)) return;
+  if(!["members","tasks"].every(k=>S.got.has(k))) return;
+  const level=(PLAN_LEVELS[cfg.level]||PLAN_LEVELS.high)[1], now=new Date().toISOString(), writes=[], busy=new Set();
+  let reopened=0, created=0;
+  for(const t of S.tasks){   // standing tasks repeat on their owner's office days once the last round is finished
+    if(!t.repeat||!isDone(t)||(t.due||"")>=day) continue;
+    const m=S.members.find(x=>x.id===t.assignee); if(!isOfficeDay(m,day)) continue;
+    const {id,...rest}=t; writes.push([`tasks/${id}`,{...rest,status:"todo",due:day,updated:now,runs:[...(t.runs||[]),{due:t.due,done:t.updated||""}].slice(-60)}]); busy.add(t.assignee); reopened++; }
+  for(const m of S.members){   // nobody is left without work: pick from what remains in the system
+    if(!isOfficeDay(m,day)||busy.has(m.id)||S.tasks.some(t=>t.assignee===m.id&&!isDone(t))) continue;
+    const have=new Set(S.tasks.filter(t=>t.assignee===m.id&&t.auto_key&&(t.created||"")>=addDays(day,-7)).map(t=>t.auto_key));
+    for(const c of planCandidates(m).filter(c=>!have.has(c.key)).slice(0,level)){
+      const id=`pl_${day}_${m.id.slice(-6)}_${c.key}`.replace(/[^A-Za-z0-9_\-]/g,"_").slice(0,150);
+      if(S.tasks.some(t=>t.id===id)) continue;
+      writes.push([`tasks/${id}`,{title:c.title,desc:c.desc+"\n\n(تسک خودکار برنامه‌ریز هوشمند: از کارهای باقی‌مانده‌ی سامانه و سطح انتظار مالک انتخاب شده است.)",assignee:m.id,created_by:S.me.id,team:m.team||"ai",priority:c.priority||"normal",due:day,status:"todo",type:"task",blocked:false,points:null,sprint:"",created:now,updated:now,auto:true,auto_key:c.key}]); created++; } }
+  for(const [path,data] of writes){ try{ await S.db.doc(path).set(data); }catch(e){ console.error("planner",path,e); } }
+  try{ await S.db.doc("settings/planner").set({...cfg,last_run:day,last_reopened:reopened,last_created:created,updated:now}); }catch(e){}
+  if(force) toast(`برنامه‌ریز اجرا شد: ${faNum(reopened)} تسک تکرارشونده باز شد، ${faNum(created)} تسک تازه ساخته شد.`);
+}
 VIEWS["erp.domains"] = () => {
   const d = (S.settings.domains && S.settings.domains.length) ? S.settings.domains : DOMAINS_DEFAULT;
   return `<div class="grid2">${d.map(x=>`<div class="card"><h3>${esc(x.name)} ${x.suggested?'<span class="pill p-warn">پیشنهاد</span>':""}</h3><p>${esc(x.desc)}</p><p class="meta">محصولات: ${esc(S.products.filter(p=>(p.domains_fa||[]).includes(x.k)).map(p=>p.name).join("، ")||"—")}</p></div>`).join("")}</div>`;
@@ -996,6 +1038,9 @@ VIEWS["bpms.home"] = () => {
     <div class="stack">
      ${toApprove.length?`<div class="card"><h3 style="margin:0 0 6px">منتظر تأیید شما (${faNum(toApprove.length)})</h3>${toApprove.map(t=>`<div class="row" style="gap:8px;align-items:center;padding:4px 0"><span style="flex:1"><b>${esc(t.title)}</b><br><span class="meta">${esc(memberName(t.assignee))}</span></span><button class="btn sm sig" data-act="task-st" data-id="${esc(t.id)}" data-st="approved">تأیید</button></div>`).join("")}</div>`:""}
      ${team.length?`<div class="card"><h3 style="margin:0 0 6px">وضعیت تیم</h3>${table(["نام","تسک باز","عقب‌افتاده"],team.map(x=>`<tr>${td("نام",`<a href="#" data-act="who-go" data-m="${esc(x.m.id)}">${esc(x.m.full_name||x.m.id)}</a>`,"t")}${td("باز",faNum(x.open.length))}${td("عقب‌افتاده",x.late?`<span class="p-bad">${faNum(x.late)}</span>`:"—")}</tr>`))}</div>`:""}
+     ${isAdmin()?`<div class="card"><h3 style="margin:0 0 6px">برنامه‌ریز هوشمند روزانه</h3><p class="meta">تسک‌های تکرارشونده هر روز کاری دوباره باز می‌شوند و کسی که تسک بازی ندارد از کارهای باقی‌مانده‌ی سامانه (پیگیری‌ها، داده‌ی واقعی، نامه‌های بی‌پاسخ، رویدادها، وظایف ERP) تسک می‌گیرد.</p>
+       <div class="row" style="gap:8px;align-items:center"><label class="meta">سطح انتظار <select data-pl="level">${Object.entries(PLAN_LEVELS).map(([k,[l]])=>`<option value="${k}"${(S.planner.level||"high")===k?" selected":""}>${esc(l)}</option>`).join("")}</select></label><label class="meta"><input type="checkbox" data-pl="auto"${S.planner.auto===false?"":" checked"}> اجرای خودکار هر روز</label><button class="btn sm sig" data-act="plan-run">اجرا همین حالا</button></div>
+       <p class="meta">${S.planner.last_run?`آخرین اجرا: ${faDate(S.planner.last_run)} · ${faNum(S.planner.last_reopened||0)} تکرار، ${faNum(S.planner.last_created||0)} تسک تازه`:"هنوز اجرا نشده است."}</p></div>`:""}
      <div class="card"><h3 style="margin:0 0 8px">میان‌بر</h3><div class="row" style="gap:8px;flex-wrap:wrap"><button class="btn sig" data-act="report-new">ثبت گزارش امروز</button><button class="btn" data-act="task-new">تسک کامل جدید</button><button class="btn ghost" data-act="sub" data-k="myday">ورود و خروج</button><button class="btn ghost" data-act="sub" data-k="board">تخته‌ی اسکرام</button></div></div></div></div>`+
    `<details style="margin-top:12px"><summary>همه‌ی بخش‌های BPMS</summary><div class="grid2" style="margin-top:8px">`+
    grp("کار و تسک",[["tasks","فهرست تسک‌ها"],["backlog","بک‌لاگ و برنامه‌ریزی"],["sprints","اسپرینت‌ها"],["calendar","تقویم"]])+
@@ -3537,6 +3582,7 @@ VIEWS["bpms.mind"] = () => {
   return main+mindOwnerTable();
 };
 document.addEventListener("keydown", e => { if(e.key==="Enter"&&e.target&&e.target.id==="qtTitle"){ e.preventDefault(); const b=document.querySelector('[data-act="task-quick"]'); if(b) b.click(); } });
+document.addEventListener("change", async e => { const pl=e.target.closest("[data-pl]"); if(pl&&isAdmin()){ const cur=S.planner||{}; await save("settings/planner",{...cur,[pl.dataset.pl]:pl.type==="checkbox"?pl.checked:pl.value},"تنظیم برنامه‌ریز ذخیره شد"); return; } });
 document.addEventListener("change", e => { const r=e.target.closest("[data-mind]"); if(r){ mindState().ans[r.dataset.mind]=Number(r.value); } });
 async function mindNext(){ const st=mindState(), si=st.step-1, sec=MIND_SEC[si];
   const miss=sec.items.findIndex((_,ii)=>st.ans[mindId(si,ii)]==null);
@@ -3787,6 +3833,7 @@ document.addEventListener("click", async e => {
     case "ref-letter": { const r=REFINERIES.find(x=>x.id===id); if(!r) break; const L=refineryLetter(r);
       S.draft={identity:"ir",sector:"oil",date:today(),numAuto:true,number:nextLetterNo("ir",today()),recipient:L.recipient,subject:L.subject,body:L.body,attachments:"",cc:"",annex:"",signer:""};
       S.mod="letters"; S.sub="new"; S.forceFull=true; render(); toast("پیش‌نویس نامه با سربرگ پترو پالا توس آماده شد؛ بازبینی و ذخیره کنید."); break; }
+    case "plan-run": await runPlanner(true); break;
     case "task-who": S.taskWho=b.dataset.m||""; render(); break;
     case "att-approve": { if(!isAdmin()) break; const a=(S.allAtt||[]).find(x=>x.member===b.dataset.m&&x.id===b.dataset.d); if(!a) break; const {id:_i,member:_m,...rest}=a;
       if(await save(`attendance/${a.member}/days/${a.id}`,{...rest,in_approved:S.me.id},"ورود تأیید شد")){ a.in_approved=S.me.id; render(); } break; }
@@ -3891,6 +3938,7 @@ async function boot(){
   setTimeout(()=>{ const mm=myMember(); if(needsNda(mm)&&!ndaSigned(mm)&&!S.ndaShown&&!$("#layer").innerHTML){ S.ndaShown=true; ndaView(mm.id); } else if(needsTraining(mm)&&!trainingDone(mm)&&!S.ndaShown&&!$("#layer").innerHTML){ S.ndaShown=true; trainingView(mm.id); } }, 6000);
   setTimeout(maybeWelcome, 4000); // fallback if the members snapshot is slow
   setTimeout(()=>{ if(isAdmin()) loadAllReports(); }, 2500);
+  setTimeout(()=>runPlanner(false), 7000); setInterval(()=>runPlanner(false), 30*60*1000);   // daily planner (admin session)
   setInterval(()=>{ autoCheckout(S.myAtt||[],S.me.id); if(isAdmin()&&S.allAtt) autoCheckout(S.allAtt); }, 5*60*1000);   // page left open past 17:00
 }
 boot();
