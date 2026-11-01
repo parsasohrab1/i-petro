@@ -25,7 +25,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": -9,
+   "days_left": -10,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -66,7 +66,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": -10,
+   "days_left": -11,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -107,7 +107,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": -9,
+   "days_left": -10,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -148,7 +148,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": -9,
+   "days_left": -10,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -189,7 +189,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": -9,
+   "days_left": -10,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -230,7 +230,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": -8,
+   "days_left": -9,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -271,7 +271,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": -7,
+   "days_left": -8,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -312,7 +312,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": -3,
+   "days_left": -4,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -353,7 +353,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": -3,
+   "days_left": -4,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -394,7 +394,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": -2,
+   "days_left": -3,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -435,7 +435,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": -2,
+   "days_left": -3,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -476,14 +476,19 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": 0,
+   "days_left": -1,
    "line": "ai",
-   "status": "new",
+   "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
    "history": [
     {
      "at": "2026-10-19T13:28:54",
      "status": "new"
+    },
+    {
+     "at": "2026-11-01T11:33:15",
+     "status": "expired",
+     "note": ""
     }
    ]
   },
@@ -512,7 +517,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": 1,
+   "days_left": 0,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -546,7 +551,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 2,
+   "days_left": 1,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -581,7 +586,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 5,
+   "days_left": 4,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -616,7 +621,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 10,
+   "days_left": 9,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -635,7 +640,7 @@
    "description": "Improving Power System Resilience for European Power Grid Integration Project. SPECIFIC PROCUREMENT NOTICE Request for Bids Plant Design, Supply, and Installation (Without Prequalification) (Two-Envelope Bidding Process with rated criteria) Country : Ukraine Project : Ukraine – Improving Power System Resilience for European Power Grid Integration (Installation of Hybrid Systems for Electricity Production in Ukrhydroenergo) Contract Title : Design, Supply and Installation of Battery Energy Storage Systems (BESS) with Energy Management Systems (EMS) and Ancillary Equipment at Kyiv HPP / PSP, Kaniv, Kremenchuk and Seredniodniprovska Hydropower Plants, including related services (training of UHE staff) (hereinafter referred to ‘the Contract’) comprising the following lots: Lot 1: Design, Supply and Installation of Battery Energy Storage Systems (BESS) with Energy Management Systems (EMS) and Ancillary Equipment at Kyiv HPP / PSP, including related services (training of UHE staff) (46 MW BESS capacity). Lot 2: Design, Supply and Installation of Battery Energy Storage Systems (BESS) with Energy Management Systems (EMS) and Ancillary Equipment at Kaniv HPP, including related services (training of UHE staff) (66 MW BESS capacity). Lot 3: Design, Supply and Installation of Battery Energy Storage Systems (BESS) with Energy Management Systems (EMS) and Ancillary Equipment at Kremenchuk HPP, including related services (training of UHE staff) (60 MW BESS capacity). Lot 4: Design, Supply and Installation of Battery Energy Storage Systems (BESS) with Energy Management Systems (EMS) and Ancillary Equipment at Seredniodniprovska HPP, including related services (training of UHE staff) (25 MW BESS capacity). Source of financing: IBRD Loan No.: 9284-UA; CTF Loan No.: TF0B5994; CTF Loan No.: TF0C5903-UA; and CTF Grant No.: TF-0B5724. Project ID : P176114 RFB reference No .: UHE-IPSR-DSI-1 1. Private Joint Stock Company “Ukrhydroenergo” (PJSC “Ukrhydroenergo” or UHE) has received financing from the World Bank (hereinafter referred to as the “Bank”) toward the cost of the Project “Ukraine – Improving Power System Resilience for European Power Grid Integration (Installation of Hybrid Systems for Electricity Production in Ukrhydroenergo)” and intends to apply part of the proceeds toward payments under the Contract. Under this Contract, UHE intends to make payments using the Direct Payment disbursement method, as defined in the World Bank Disbursement Guidelines for Investment Project Financing. 2. PJSC “Ukrhydroenergo” now invites eligible Bidders to submit Bids for the Contract. Bidders can bid for any one lot, more than one lot or all the four lots . The Time for Completion shall be between 420 and 510 calendar days from the Effective Date of the Contract. No credit will be given for early completion, and Bids offering a Time for Completion exceeding 510 days shall be rejected. 3. Prospective Bidders shall meet the following minimum qualification requirements: (a) General Experience: Experience in activities related to the design, supply and installation of equipment for energy infrastructure facilities, including generating facilities, battery energy storage systems (BESS), and MV and HV grids, under contracts in the role of contractor, subcontractor, or management contractor since at least January 2020. Design and construction experience may be from different contracts. (b) Financial Capabilities : The Bidder shall submit audited balance sheets or, if not required by the law of the Bidder’s country, other financial statements acceptable to UHE for the last five (5) fiscal years to demonstrate the current soundness of the Bidder’s financial position and its prospective long-term profitability. (c) Average Annual Turnover: The Bidder shall demonstrate a minimum average annual turnover for the last three (3) fiscal years as follows: Lot 1 – USD 36 million; Lot 2 – USD 51 million; Lot 3 – USD 46 million; Lot 4 – USD 20 million. Bidders submitting Bids",
    "buyer": "PRIVATE JOINT STOCK COMPANY “UKRHYDROENERGO”",
    "country": "Ukraine",
-   "deadline": "2026-11-12",
+   "deadline": "2026-11-19",
    "published": "2026-09-16",
    "url": "https://projects.worldbank.org/en/projects-operations/procurement-detail/OP00468997",
    "notice_type": "Invitation for Bids",
@@ -651,7 +656,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 12,
+   "days_left": 18,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -685,7 +690,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 16,
+   "days_left": 15,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -719,7 +724,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 18,
+   "days_left": 17,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -754,7 +759,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 30,
+   "days_left": 29,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -789,7 +794,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 38,
+   "days_left": 37,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -824,7 +829,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": -4,
+   "days_left": -5,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -864,7 +869,7 @@
     "ai_cross_cutting",
     "medical"
    ],
-   "days_left": 16,
+   "days_left": 15,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -900,7 +905,7 @@
     "energy",
     "urban"
    ],
-   "days_left": 23,
+   "days_left": 22,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -934,7 +939,7 @@
    "domains": [
     "urban"
    ],
-   "days_left": 20,
+   "days_left": 19,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-20T09:40:22",
@@ -968,7 +973,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 73,
+   "days_left": 72,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-20T09:40:22",
@@ -1070,7 +1075,7 @@
    "domains": [
     "aviation"
    ],
-   "days_left": -3,
+   "days_left": -4,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-21T09:36:20",
@@ -1109,7 +1114,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 2,
+   "days_left": 1,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-21T09:36:20",
@@ -1144,7 +1149,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": 3,
+   "days_left": 2,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-21T09:36:20",
@@ -1178,7 +1183,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 21,
+   "days_left": 20,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-21T09:36:20",
@@ -1212,7 +1217,7 @@
    "domains": [
     "web"
    ],
-   "days_left": 23,
+   "days_left": 22,
    "line": "web",
    "status": "new",
    "first_seen": "2026-10-21T09:36:20",
@@ -1280,7 +1285,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 9,
+   "days_left": 8,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-22T09:39:52",
@@ -1314,7 +1319,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 20,
+   "days_left": 19,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-22T09:39:52",
@@ -1348,7 +1353,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 20,
+   "days_left": 19,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-22T09:39:52",
@@ -1382,7 +1387,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 30,
+   "days_left": 29,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-22T09:39:52",
@@ -1416,7 +1421,7 @@
    "domains": [
     "aviation"
    ],
-   "days_left": 25,
+   "days_left": 24,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-23T09:35:00",
@@ -1450,7 +1455,7 @@
    "domains": [
     "medical"
    ],
-   "days_left": 31,
+   "days_left": 30,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-23T09:35:00",
@@ -1484,7 +1489,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 34,
+   "days_left": 33,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-23T09:35:00",
@@ -1621,7 +1626,7 @@
    "domains": [
     "urban"
    ],
-   "days_left": 9,
+   "days_left": 8,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-26T10:29:22",
@@ -1655,7 +1660,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 23,
+   "days_left": 22,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-26T10:29:22",
@@ -1689,7 +1694,7 @@
    "domains": [
     "urban"
    ],
-   "days_left": 23,
+   "days_left": 22,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-26T10:29:22",
@@ -1757,7 +1762,7 @@
    "domains": [
     "urban"
    ],
-   "days_left": 10,
+   "days_left": 9,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-27T10:03:26",
@@ -1791,7 +1796,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 23,
+   "days_left": 22,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-27T10:03:26",
@@ -1825,7 +1830,7 @@
    "domains": [
     "medical"
    ],
-   "days_left": 26,
+   "days_left": 25,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-27T10:03:26",
@@ -1859,7 +1864,7 @@
    "domains": [
     "urban"
    ],
-   "days_left": 27,
+   "days_left": 26,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-27T10:03:26",
@@ -1894,7 +1899,7 @@
    "domains": [
     "web"
    ],
-   "days_left": 9,
+   "days_left": 8,
    "line": "web",
    "status": "new",
    "first_seen": "2026-10-28T10:50:09",
@@ -1928,7 +1933,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 27,
+   "days_left": 26,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-28T10:50:09",
@@ -1962,7 +1967,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 37,
+   "days_left": 36,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-28T10:50:09",
@@ -2064,7 +2069,7 @@
    "domains": [
     "aviation"
    ],
-   "days_left": 6,
+   "days_left": 5,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-29T11:07:42",
@@ -2098,7 +2103,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": 11,
+   "days_left": 10,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-29T11:07:42",
@@ -2132,7 +2137,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 38,
+   "days_left": 37,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-29T11:07:42",
@@ -2201,7 +2206,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": 15,
+   "days_left": 14,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-30T11:05:47",
@@ -2235,7 +2240,7 @@
    "domains": [
     "aviation"
    ],
-   "days_left": 30,
+   "days_left": 29,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-30T11:05:47",
@@ -2269,7 +2274,7 @@
    "domains": [
     "web"
    ],
-   "days_left": 47,
+   "days_left": 46,
    "line": "web",
    "status": "new",
    "first_seen": "2026-10-30T11:05:47",
@@ -2338,7 +2343,7 @@
    "domains": [
     "health_ai"
    ],
-   "days_left": 11,
+   "days_left": 10,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-30T22:04:27",
@@ -2348,6 +2353,158 @@
      "status": "new"
     }
    ]
+  },
+  "GRANT-HORIZON-HLTH-2027-02-TOOL-01": {
+   "id": "GRANT-HORIZON-HLTH-2027-02-TOOL-01",
+   "source": "Horizon Europe (EC Funding & Tenders)",
+   "market": "international",
+   "title": "HORIZON-HLTH-2027-02-TOOL-01-two-stage – Predictive biomarkers using AI for non-communicable diseases (Horizon Europe Health, RIA)",
+   "description": "Whether to apply depends on the reference requirements. For Parsa's products at TRL 3-5, grant calls such as Horizon Europe Health and Digital Europe may suit you better than tenders, since tenders usually want proven references. AI-based predictive biomarker development for chronic non-communicable diseases. Two-stage call opened 29 Oct 2026; stage 1 due 17 Feb 2027 and stage 2 due 16 Sep 2027 per the FFG national contact page and Accelopment (an earlier draft listed 13 Apr 2027). Budget ~EUR 44.2M for ~6 projects. More: https://www.ffg.at/en/europa/heu/cluster1/call2027-twostage تاریخ‌ها و شرایط از منابع ثانویه آمده است؛ پیش از هر اقدام در پورتال رسمی Funding & Tenders تأیید شود.",
+   "buyer": "European Commission – HaDEA / DG R&I",
+   "country": "European Union",
+   "deadline": "2027-02-17",
+   "deadline_fa": "مرحله‌ی اول: 17 فوریه 2027 (مرحله‌ی دوم: 16 سپتامبر 2027)",
+   "published": "",
+   "url": "https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/opportunities/topic-details/horizon-hlth-2027-02-tool-01-two-stage",
+   "notice_type": "Grant call (RIA, two-stage)",
+   "sector": "اتحادیه اروپا (فراخوان گرنت پژوهشی)",
+   "facts": {
+    "price": "حدود €44.2M برای ~۶ پروژه (هر پروژه €6 تا €8M)",
+    "guarantee": "ندارد (گرنت)؛ بودجه‌ی پروژه توسط اتحادیه اروپا پرداخت می‌شود",
+    "experience": "نیاز به کنسرسیوم؛ سابقه‌ی پژوهشی/بالینی شرکا مهم است. محصولات TRL 3-5 برای RIA مناسب‌اند.",
+    "international": "شخصیت حقوقی مستقر در کشورهای عضو اتحادیه اروپا یا کشورهای وابسته می‌تواند عضو کنسرسیوم شود (ترکیه وابسته است؛ شخصیت حقوقی ایرانی واجد نیست). به‌طور معمول حداقل ۳ نهاد مستقل از ۳ کشور؛ تأیید در پورتال رسمی."
+   },
+   "keyword_score": 10,
+   "domains": [
+    "medical",
+    "ai_cross_cutting"
+   ],
+   "line": "ai",
+   "grant": true,
+   "verified": false,
+   "status": "new",
+   "first_seen": "2026-11-01T11:24:31",
+   "history": [
+    {
+     "at": "2026-11-01T11:24:31",
+     "status": "new"
+    }
+   ],
+   "days_left": 108
+  },
+  "GRANT-HORIZON-HLTH-2027-03-TOOL-04": {
+   "id": "GRANT-HORIZON-HLTH-2027-03-TOOL-04",
+   "source": "Horizon Europe (EC Funding & Tenders)",
+   "market": "international",
+   "title": "HORIZON-HLTH-2027-03-TOOL-04 – Virtual human twins: explainable and generative AI for diagnosis and risk prediction (Horizon Europe Health)",
+   "description": "Whether to apply depends on the reference requirements. For Parsa's products at TRL 3-5, grant calls such as Horizon Europe Health and Digital Europe may suit you better than tenders, since tenders usually want proven references. Explainable and generative AI for diagnosis and risk prediction using imaging, electrophysiology and clinical data (virtual human twins for clinical decision support). Sources disagree on dates: 16 Sep 2027 (partner-search listing) vs 3 Jun - 22 Sep 2027 window. تاریخ‌ها و شرایط از منابع ثانویه آمده است؛ پیش از هر اقدام در پورتال رسمی Funding & Tenders تأیید شود.",
+   "buyer": "European Commission – HaDEA / DG R&I",
+   "country": "European Union",
+   "deadline": "",
+   "deadline_fa": "حدود 16 تا 22 سپتامبر 2027 (منابع متناقض)",
+   "published": "",
+   "url": "https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/opportunities/topic-details/horizon-hlth-2027-03-tool-04",
+   "notice_type": "Grant call (Horizon Europe Health)",
+   "sector": "اتحادیه اروپا (فراخوان گرنت پژوهشی)",
+   "facts": {
+    "price": "در منبع نیامده – در پورتال رسمی",
+    "guarantee": "ندارد (گرنت)؛ بودجه‌ی پروژه توسط اتحادیه اروپا پرداخت می‌شود",
+    "experience": "نیاز به کنسرسیوم با شریک بالینی؛ مناسب محصولات تصویربرداری پزشکی و پشتیبان تصمیم بالینی.",
+    "international": "شخصیت حقوقی مستقر در کشورهای عضو اتحادیه اروپا یا کشورهای وابسته می‌تواند عضو کنسرسیوم شود (ترکیه وابسته است؛ شخصیت حقوقی ایرانی واجد نیست). به‌طور معمول حداقل ۳ نهاد مستقل از ۳ کشور؛ تأیید در پورتال رسمی."
+   },
+   "keyword_score": 10,
+   "domains": [
+    "medical",
+    "ai_cross_cutting"
+   ],
+   "line": "ai",
+   "grant": true,
+   "verified": false,
+   "status": "new",
+   "first_seen": "2026-11-01T11:24:31",
+   "history": [
+    {
+     "at": "2026-11-01T11:24:31",
+     "status": "new"
+    }
+   ],
+   "days_left": null
+  },
+  "GRANT-HORIZON-HLTH-2027-03-TOOL-08": {
+   "id": "GRANT-HORIZON-HLTH-2027-03-TOOL-08",
+   "source": "Horizon Europe (EC Funding & Tenders)",
+   "market": "international",
+   "title": "HORIZON-HLTH-2027-03-TOOL-08 – Towards Artificial General Intelligence (AGI) for healthcare (Horizon Europe Health, CSA)",
+   "description": "Whether to apply depends on the reference requirements. For Parsa's products at TRL 3-5, grant calls such as Horizon Europe Health and Digital Europe may suit you better than tenders, since tenders usually want proven references. Coordination and support action on frontier AI for healthcare, ~EUR 2.9M for one project. Sources disagree: opens 3 Jun 2027 with deadline 16 Sep 2027, or opens 10 Feb 2027 and closes 21 Sep 2027. Low fit as lead (CSA); useful for joining a consortium. تاریخ‌ها و شرایط از منابع ثانویه آمده است؛ پیش از هر اقدام در پورتال رسمی Funding & Tenders تأیید شود.",
+   "buyer": "European Commission – HaDEA / DG R&I",
+   "country": "European Union",
+   "deadline": "",
+   "deadline_fa": "حدود 16 تا 21 سپتامبر 2027 (منابع متناقض)",
+   "published": "",
+   "url": "https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/opportunities/topic-details/horizon-hlth-2027-03-tool-08",
+   "notice_type": "Grant call (CSA)",
+   "sector": "اتحادیه اروپا (فراخوان گرنت پژوهشی)",
+   "facts": {
+    "price": "حدود €2.9M برای ۱ پروژه",
+    "guarantee": "ندارد (گرنت)؛ بودجه‌ی پروژه توسط اتحادیه اروپا پرداخت می‌شود",
+    "experience": "هماهنگی و پشتیبانی (CSA)؛ برای مشارکت به‌عنوان عضو کنسرسیوم مناسب‌تر از هماهنگ‌کننده شدن است.",
+    "international": "شخصیت حقوقی مستقر در کشورهای عضو اتحادیه اروپا یا کشورهای وابسته می‌تواند عضو کنسرسیوم شود (ترکیه وابسته است؛ شخصیت حقوقی ایرانی واجد نیست). به‌طور معمول حداقل ۳ نهاد مستقل از ۳ کشور؛ تأیید در پورتال رسمی."
+   },
+   "keyword_score": 6,
+   "domains": [
+    "medical",
+    "ai_cross_cutting"
+   ],
+   "line": "ai",
+   "grant": true,
+   "verified": false,
+   "status": "new",
+   "first_seen": "2026-11-01T11:24:31",
+   "history": [
+    {
+     "at": "2026-11-01T11:24:31",
+     "status": "new"
+    }
+   ],
+   "days_left": null
+  },
+  "GRANT-EIC-ACCELERATOR-2027": {
+   "id": "GRANT-EIC-ACCELERATOR-2027",
+   "source": "Horizon Europe (EC Funding & Tenders)",
+   "market": "international",
+   "title": "EIC Accelerator 2027 – grant + equity for single SMEs (open to health and AI deep-tech)",
+   "description": "Whether to apply depends on the reference requirements. For Parsa's products at TRL 3-5, grant calls such as Horizon Europe Health and Digital Europe may suit you better than tenders, since tenders usually want proven references. EIC Accelerator supports single start-ups/SMEs (short application, then full proposal). First 2027 cut-off for full applications: 3 Feb 2027, then further cut-offs every 2-3 months (dates to be set in the 2027 EIC Work Programme). 2026 cut-offs were 7 Jan, 4 Mar, 6 May, 8 Jul, 2 Sep, 4 Nov. Info day (Turkish national contact point): 19 Nov 2026. تاریخ‌ها و شرایط از منابع ثانویه آمده است؛ پیش از هر اقدام در پورتال رسمی Funding & Tenders تأیید شود.",
+   "buyer": "European Commission – HaDEA / DG R&I",
+   "country": "European Union",
+   "deadline": "2027-02-03",
+   "deadline_fa": "نخستین cut-off سال 2027: 3 فوریه 2027 (بعدی‌ها هر ۲ تا ۳ ماه)",
+   "published": "",
+   "url": "https://eic.ec.europa.eu/eic-funding-opportunities/eic-accelerator_en",
+   "notice_type": "Grant + equity (SME)",
+   "sector": "اتحادیه اروپا (فراخوان گرنت پژوهشی)",
+   "facts": {
+    "price": "گرنت تا ~€2.5M به‌علاوه‌ی سرمایه‌گذاری (طبق قواعد EIC؛ تأیید شود)",
+    "guarantee": "ندارد (گرنت)؛ بودجه‌ی پروژه توسط اتحادیه اروپا پرداخت می‌شود",
+    "experience": "نیاز به TRL حدود 5-6 و شرکت دارای ثبت در کشور عضو/وابسته؛ سابقه‌ی مشتری لازم نیست ولی اعتبارسنجی بازار مهم است.",
+    "international": "فقط شرکت مستقر در عضو یا کشور وابسته؛ وابسته بودن ترکیه در برنامه‌ی 2027 باید تأیید شود."
+   },
+   "keyword_score": 8,
+   "domains": [
+    "medical",
+    "ai_cross_cutting"
+   ],
+   "line": "ai",
+   "grant": true,
+   "verified": false,
+   "status": "new",
+   "first_seen": "2026-11-01T11:24:31",
+   "history": [
+    {
+     "at": "2026-11-01T11:24:31",
+     "status": "new"
+    }
+   ],
+   "days_left": 94
   }
  },
  "runs": [
@@ -3384,6 +3541,75 @@
    "at": "2026-10-31T10:38:23",
    "collected": 294,
    "matched": 18,
+   "partner_drafts": [],
+   "events_added": 0,
+   "scholarships_added": 0,
+   "investors_added": 0,
+   "investor_drafts": [
+    "revo",
+    "212",
+    "hub71",
+    "aramco-ventures",
+    "antler-menap",
+    "equinor-ventures",
+    "shell-ventures",
+    "ycombinator",
+    "techstars"
+   ],
+   "leads_added": 0,
+   "papers_lines": [],
+   "events_soon": [
+    {
+     "start": "2026-11-02",
+     "name": "ADIPEC 2026",
+     "name_fa": "نمایشگاه و کنفرانس نفت و گاز ابوظبی",
+     "city": "ابوظبی"
+    },
+    {
+     "start": "2026-11-03",
+     "name": "Smart City Expo World Congress 2026",
+     "name_fa": "کنگره جهانی شهر هوشمند",
+     "city": "بارسلونا"
+    },
+    {
+     "start": "2026-11-09",
+     "name": "Web Summit 2026",
+     "name_fa": "وب سامیت لیسبون",
+     "city": "لیسبون"
+    },
+    {
+     "start": "2026-11-16",
+     "name": "MEDICA 2026",
+     "name_fa": "نمایشگاه تجهیزات و فناوری پزشکی دوسلدورف",
+     "city": "دوسلدورف"
+    },
+    {
+     "start": "2026-12-06",
+     "name": "NeurIPS 2026",
+     "name_fa": "کنفرانس NeurIPS (سیدنی / آتلانتا / پاریس)",
+     "city": "سیدنی، آتلانتا، پاریس"
+    },
+    {
+     "start": "2026-12-07",
+     "name": "GITEX Global 2026",
+     "name_fa": "جیتکس دبی",
+     "city": "دبی (Expo City)"
+    },
+    {
+     "start": "2026-12-13",
+     "name": "Iran ITEX 1405 (5th) – Sharif University",
+     "name_fa": "پنجمین نمایشگاه ایران ایتکس دانشگاه صنعتی شریف",
+     "city": "تهران (دانشگاه صنعتی شریف)"
+    }
+   ],
+   "new_ids": [],
+   "actioned_ids": [],
+   "reminders": []
+  },
+  {
+   "at": "2026-11-01T11:33:16",
+   "collected": 273,
+   "matched": 14,
    "partner_drafts": [],
    "events_added": 0,
    "scholarships_added": 0,

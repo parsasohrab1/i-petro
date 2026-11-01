@@ -75,6 +75,8 @@ def main(argv=None):
     iv = sub.add_parser("investor")
     iv.add_argument("investor_id")
     iv.add_argument("status", choices=list(investors.STATUSES))
+    dq = sub.add_parser("data-requests")
+    dq.add_argument("--check", nargs="*", default=None, help="folders that hold clones of the product repos; marks received datasets")
     se = sub.add_parser("search")
     se.add_argument("terms", nargs="*")
     se.add_argument("--health", action="store_true", help="use the international health-AI phrase list")
@@ -82,6 +84,16 @@ def main(argv=None):
     se.add_argument("--days", type=int, default=30, help="TED look-back in days")
     se.add_argument("--add", action="store_true", help="put hits that pass keyword screening into the pipeline")
     a = p.parse_args(argv)
+    if a.cmd == "data-requests":
+        from . import data_requests
+        if a.check is not None:
+            reg, got = data_requests.refresh(roots=a.check)
+            print("received:", ", ".join(got) or "none yet")
+        writes = data_requests.export()
+        print(f"{len(writes)} task documents exported to {data_requests.EXPORT_DIR}")
+        for line in data_requests.notification_lines():
+            print(line)
+        return
 
     if a.cmd == "search":
         from . import search as srch
