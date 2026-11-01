@@ -172,7 +172,7 @@ const SUBS = {
   events:[["iran","ایران"],["world","جهان"],["all","همه"],["taken","در دست پیگیری"]],
   erp:[["ops","برنامه‌ی عملیات و واگذاری"],["domains","حوزه‌های فعالیت"],["products","توسعه‌ی محصول هوشمند"],["people","نیروی انسانی"],["finance","مالی"],["clients","مشتریان و قراردادها"],["backup","پشتیبان‌گیری"]],
   bpms:[["home","خانه‌ی BPMS"],["contacts","مخاطبین و ارتباط"],["myday","روز من"],["mind","ذهن‌نگار (آزمون خصوصی)"],["board","تخته‌ی اسکرام"],["backlog","بک‌لاگ و برنامه‌ریزی"],["sprints","اسپرینت‌ها"],["tasks","فهرست تسک‌ها"],["reports","گزارش عملکرد"],["rarchive","بایگانی گزارش‌ها"],["teams","تیم‌ها"],["process","فرایندها"],["calendar","تقویم"],["members","اعضا و ثبت‌نام"],["nda","قرارداد محرمانگی"],["training","فرم آموزش"]],
-  letters:[["new","نامه‌ی جدید (ساخت فایل Word)"],["pp","نامه‌های پترو پالاتوس"],["sosh","نامه‌های سوشیانت"],["archive","همه‌ی نامه‌ها"]],
+  letters:[["new","نامه‌ی جدید (ساخت فایل Word)"],["refinery","پالایشگاه‌ها"],["pp","نامه‌های پترو پالاتوس"],["sosh","نامه‌های سوشیانت"],["archive","همه‌ی نامه‌ها"]],
   scholar:[["applied","اقدام‌شده و در دست بررسی"],["human","مسئول انسانی"],["doing","در دست اقدام"],["todo","اقدام‌نشده"],["profile","مشخصات و رزومه من"],["cv","رزومه محمد پارسا سهرابی"]],
   articles:[["applied","اقدام‌شده و در دست بررسی"],["doing","در دست اقدام"],["todo","اقدام‌نشده"],["product","محصول ویژه‌ی مقاله"],["claude","تسک برای Claude"],["evidence","شواهد و داده‌ی واقعی"],["submit","ثبت چکیده و ثبت‌نام (مسئول انسانی)"],["list","فهرست کامل"],["pipe","خط لوله تا ویزا"],["mail","مسیر ایمیل: ثبت · تاییدیه · مقاله کامل"],["ready","آمادگی ثبت (۶ معیار)"],["upload","آپلود داده‌ها"],["access","دسترسی افراد"]],
   patent:[["home","پتنت‌ها"],["human","مسئول انسانی"],["ops","فرصت‌های ثبت اختراع"],["products","محصولات ریپو"]]
@@ -2549,6 +2549,79 @@ VIEWS["letters.archive"] = () => archView(null);
 VIEWS["letters.pp"] = () => archView(null,"ir");
 VIEWS["letters.sosh"] = () => archView(null,"soshiant");
 Object.keys(ARCH_SECT).forEach(k=>{ VIEWS["letters.sec_"+k] = () => archView(k); });
+// ---------- Refineries: fuel-use optimisation and energy control, production-line smartening and an industrial dashboard per refinery,
+// written as a letter on the Petro Pala Toos letterhead (identity "ir", sector oil). Capacities are rounded public figures that differ between
+// sources and the unit lists are typical for the refinery type, not a site survey: both are confirmed with the refinery in the first meeting.
+const REF_TYPES = {
+ conv:{n:"پالایشگاه تبدیلی (با واحدهای ارتقای برش‌های سنگین)",units:"تقطیر جو و خلأ، هیدروتریتینگ، اصلاح کاتالیستی، واحدهای تبدیل (مثل کراکینگ/هیدروکراکینگ یا ویسبرکر)، بخار و برق جانبی، فلر",
+   fuel:["بهینه‌سازی احتراق کوره‌های تقطیر و واحدهای فرایندی (کنترل اکسیژن اضافی و دمای دودکش، پایش راندمان کوره)","تراز بخار و برق (دیگ‌ها، توربین‌ها، افت بخار) و بهینه‌سازی چیدمان بار","کاهش سوخت‌سوزی و گاز فلر با پایش جریان و بازیابی گاز"],
+   dash:["مرکز کنترل انرژی: شدت مصرف انرژی هر واحد (سوخت، بخار، برق به‌ازای هر بشکه)","داشبورد کوره‌ها: راندمان، اکسیژن اضافی، دمای دودکش و هشدار انحراف","تراز بخار و برق لحظه‌ای و گزارش فلر","نگهداری مبتنی بر وضعیت کمپرسورها، پمپ‌ها و توربین‌ها"],
+   prods:["iems","process_twin","cbm_dash","gas_turbine"]},
+ simple:{n:"پالایشگاه ساده/نیمه‌تبدیلی",units:"تقطیر جو، هیدروتریتینگ، اصلاح کاتالیستی، ویسبرکر یا ایزوم‌سازی، بخار و برق جانبی",
+   fuel:["بهینه‌سازی احتراق کوره‌ی تقطیر و پایش افت راندمان","پایش رسوب‌گیری مبدل‌های پیش‌گرم خوراک و برنامه‌ی تمیزکاری بر پایه‌ی هزینه‌ی انرژی","کنترل مصرف بخار و دیگ‌ها"],
+   dash:["داشبورد مصرف سوخت و انرژی به‌ازای هر بشکه‌ی خوراک","داشبورد کوره و پیش‌گرم خوراک","هشدار انحراف مصرف نسبت به مرجع (baseline) واحد"],
+   prods:["iems","process_twin","cbm_dash"]},
+ cond:{n:"پالایشگاه میعانات گازی",units:"واحدهای شکست/تفکیک میعانات، هیدروتریتینگ، اصلاح کاتالیستی، ایزوم‌سازی و تأسیسات جانبی",
+   fuel:["بهینه‌سازی احتراق کوره‌های واحدهای تفکیک و اصلاح","مدیریت یکپارچه‌ی بخار، برق و هیدروژن","پایش نشت و فلر"],
+   dash:["مرکز کنترل انرژی کل مجتمع","داشبورد کوره‌ها و کمپرسورهای هیدروژن/گاز","شاخص‌های مصرف سوخت به‌ازای هر تن خوراک"],
+   prods:["iems","process_twin","cbm_dash","gas_turbine"]}
+};
+const REFINERIES = [
+ {id:"abadan",name:"پالایش نفت آبادان",city:"آبادان – خوزستان",cap:"حدود ۳۸۸ تا ۴۰۰ هزار بشکه در روز",t:"conv",note:"قدیمی‌ترین پالایشگاه کشور؛ تجهیزات با سن بالا و فرصت بزرگ برای پایش وضعیت و صرفه‌جویی سوخت."},
+ {id:"pgs",name:"پالایش نفت ستاره خلیج فارس",city:"بندرعباس – هرمزگان",cap:"حدود ۳۶۰ تا ۴۰۰ هزار بشکه در روز (میعانات گازی)",t:"cond",note:"واحد جدید و بزرگ؛ مناسب داشبورد یکپارچه‌ی انرژی از ابتدا."},
+ {id:"isfahan",name:"پالایش نفت اصفهان",city:"اصفهان",cap:"حدود ۳۷۵ هزار بشکه در روز",t:"conv",note:"مصرف بالای سوخت در کوره‌های تقطیر و واحدهای تبدیل."},
+ {id:"bandarabbas",name:"پالایش نفت بندرعباس (خلیج فارس)",city:"بندرعباس – هرمزگان",cap:"حدود ۳۲۰ هزار بشکه در روز",t:"conv",note:""},
+ {id:"arak",name:"پالایش نفت امام خمینی شازند (اراک)",city:"اراک – مرکزی",cap:"حدود ۲۵۰ هزار بشکه در روز",t:"conv",note:""},
+ {id:"tehran",name:"پالایش نفت تهران",city:"تهران (ری)",cap:"حدود ۲۵۰ هزار بشکه در روز",t:"conv",note:"در بافت شهری؛ کاهش سوخت‌سوزی و انتشار اهمیت ویژه دارد."},
+ {id:"tabriz",name:"پالایش نفت تبریز",city:"تبریز – آذربایجان شرقی",cap:"حدود ۱۱۰ تا ۱۱۵ هزار بشکه در روز",t:"simple",note:""},
+ {id:"lavan",name:"پالایش نفت لاوان",city:"جزیره‌ی لاوان – هرمزگان",cap:"حدود ۶۰ هزار بشکه در روز",t:"simple",note:"دسترسی دشوار؛ پایش از راه دور ارزش بالایی دارد."},
+ {id:"shiraz",name:"پالایش نفت شیراز",city:"شیراز – فارس",cap:"ظرفیت کوچک (بر پایه‌ی منبع رسمی تأیید شود)",t:"simple",note:""},
+ {id:"kermanshah",name:"پالایش نفت کرمانشاه",city:"کرمانشاه",cap:"ظرفیت کوچک (بر پایه‌ی منبع رسمی تأیید شود)",t:"simple",note:""}
+];
+const refProdName = id => { const p=S.products.find(x=>x.id===id); return p?String(p.name).split(" – ")[0]+(p.trl?` (TRL ${faNum(p.trl)})`:""):id; };
+function refineryLetter(r){
+  const T=REF_TYPES[r.t], co=`شرکت ${r.name}`;
+  const L=a=>a.map((x,i)=>`${faNum(i+1)}) ${x}`).join("\n");
+  return {
+   recipient:`مدیرعامل محترم ${co}\n${r.city}`,
+   subject:`پیشنهاد هوشمندسازی خط تولید، بهینه‌سازی مصرف سوخت و کنترل انرژی ${r.name}`,
+   body:`با سلام و احترام،
+
+شرکت پترو پالا توس در حوزه‌ی هوش مصنوعی و هوشمندسازی صنعتی برای نفت، گاز و پالایش فعالیت می‌کند. بر پایه‌ی اطلاعات عمومی، ${r.name} (${r.cap}) یک ${T.n} است. واحدهای رایج چنین پالایشگاهی عبارت‌اند از: ${T.units}. فهرست دقیق واحدها، داده‌ی در دسترس و اولویت‌ها را در نخستین جلسه با کارشناسان آن مجموعه تأیید می‌کنیم.${r.note?`\n\nنکته‌ی ویژه: ${r.note}`:""}
+
+۱) بهینه‌سازی مصرف سوخت
+${L(T.fuel)}
+
+۲) کنترل و مدیریت انرژی
+• تعریف خط مبنای مصرف انرژی هر واحد و پایش شاخص‌های مصرف (سوخت، بخار و برق به‌ازای هر بشکه یا تن خوراک)
+• هشدار انحراف مصرف و گزارش دوره‌ای برای مدیریت و دفتر انرژی، همسو با رویکرد نظام مدیریت انرژی (ISO 50001)
+
+۳) هوشمندسازی خط تولید
+• اتصال به داده‌ی موجود (Historian/DCS) بدون دخالت در حلقه‌های کنترل
+• دوقلوی دیجیتال و حسگر مجازی برای واحدهای کلیدی، و توصیه‌ی نقطه‌ی کار به اپراتور (پیشنهادی، نه فرمان خودکار)
+
+۴) داشبورد هوشمند صنعتی متناسب با خط تولید
+${L(T.dash)}
+
+محصولات پیشنهادی از سبد ما: ${T.prods.map(refProdName).join("، ")}.
+
+۵) روش همکاری
+پایلوت محدود روی یک یا دو واحد، در ۸ تا ۱۲ هفته: دریافت داده‌ی تاریخی، تعیین خط مبنا، استقرار داشبورد، و گزارش اندازه‌گیری‌شده‌ی صرفه‌جویی. هدف عددی را پس از دیدن داده‌ی شما تعیین می‌کنیم و پیش از آن عددی را تضمین نمی‌کنیم.
+
+شفافیت درباره‌ی بلوغ فناوری: محصولات ما در سطح نمونه‌ی اولیه تا نمونه‌ی نمایشی (TRL ۴ و ۵) هستند و هنوز سابقه‌ی اجرای کامل در پالایشگاه نداریم؛ به همین دلیل پایلوت با نظارت کارشناسان شما و بدون ریسک برای عملیات پیشنهاد می‌شود.
+
+در صورت تمایل، یک جلسه‌ی فنی کوتاه (حضوری یا برخط) برای بررسی نیازها هماهنگ شود.
+
+با تشکر`};
+}
+VIEWS["letters.refinery"] = () => {
+  const list=REFINERIES.filter(r=>match(r.name,r.city,REF_TYPES[r.t].n));
+  return `<p class="note">برای هر پالایشگاه پیشنهاد هوشمندسازی خط تولید و داشبورد صنعتی متناسب با ساختار آن نوشته شده است، با تمرکز بر بهینه‌سازی مصرف سوخت و کنترل انرژی. «ساخت نامه» متن را در «نامه‌ی جدید» با سربرگ <b>پترو پالا توس</b> باز می‌کند تا ویرایش، امضا و فایل Word بگیرید. ظرفیت‌ها ارقام گرد منابع عمومی‌اند (بین منابع فرق دارند) و فهرست واحدها بر پایه‌ی نوع پالایشگاه است؛ هر دو را با خود پالایشگاه تأیید کنید. نام مدیرعامل در نامه ننوشته شده است.</p>`+
+   kpis([["پالایشگاه",faNum(REFINERIES.length)],["تبدیلی",faNum(REFINERIES.filter(r=>r.t==="conv").length)],["ساده/نیمه‌تبدیلی",faNum(REFINERIES.filter(r=>r.t==="simple").length)],["میعانات گازی",faNum(REFINERIES.filter(r=>r.t==="cond").length)]])+
+   table(["پالایشگاه","ظرفیت (تقریبی)","نوع و واحدهای رایج","تمرکز سوخت و انرژی","داشبورد پیشنهادی",""],list.map(r=>{ const T=REF_TYPES[r.t];
+    return `<tr>${td("پالایشگاه",`<b>${esc(r.name)}</b><br><span class="meta">${esc(r.city)}</span>${r.note?`<br><span class="meta">${esc(r.note)}</span>`:""}`,"t")}${td("ظرفیت",esc(r.cap))}${td("نوع",`${esc(T.n)}<br><span class="meta">${esc(T.units)}</span>`)}${td("سوخت و انرژی",`<ul style="margin:0;padding-inline-start:16px">${T.fuel.map(x=>`<li>${esc(x)}</li>`).join("")}</ul>`)}${td("داشبورد",`<ul style="margin:0;padding-inline-start:16px">${T.dash.map(x=>`<li>${esc(x)}</li>`).join("")}</ul><span class="meta">محصولات: ${esc(T.prods.map(refProdName).join("، "))}</span>`)}${td("",`<button class="btn sm sig" data-act="ref-letter" data-id="${esc(r.id)}">ساخت نامه (سربرگ پترو پالا توس)</button><details><summary class="meta">متن نامه</summary><pre style="white-space:pre-wrap;font:inherit;max-width:420px">${esc(refineryLetter(r).body)}</pre></details>`)}</tr>`}),"پالایشگاهی با این جست‌وجو نیست.");
+};
+
 const memberOpts = () => Object.fromEntries([["","—"],...S.members.map(m=>[m.id,m.full_name])]);
 function archForm(a={}){
   openForm({title:a.id?"ویرایش نامه‌ی بایگانی":"ثبت نامه‌ی ارسال‌شده‌ی پیشین",values:{stage:"sent",status:"active",channel:"secretariat",sector:(S.sub||"").startsWith("sec_")?S.sub.slice(4):"",...a,identity:a.id?archIdent(a):(S.sub==="sosh"?"soshiant":"ir")},fields:[
@@ -2990,7 +3063,7 @@ VIEWS["articles.submit"] = () => {
      return `<tr>${td("مقصد",esc(a.name),"t")}${td("ددلاین",a.deadline?faDate(a.deadline):"—")}${td("مسئول",t?esc(memberName(t.assignee)):'<span class="meta">تعریف نشده</span>')}${td("وضعیت",t?`<span class="pill ${t.status==="done"||t.status==="approved"?"p-ok":t.status==="doing"?"p-info":"p-warn"}">${esc(TASK_ST[t.status]||t.status)}</span>`:'<span class="pill p-mute">—</span>')}${td("",absBtn(a)+(isAdmin()?`<button class="btn sm ghost" data-act="stk-one" data-id="${esc(a.id)}">${t?"واگذاری به مسئول انتخاب‌شده":"تعریف تسک برای مسئول انتخاب‌شده"}</button>`:""))}</tr>`; }; const H=["مقصد","ددلاین","مسئول","وضعیت",""], act=vs.filter(v=>!subDone(v)), dn=vs.filter(subDone);
      return table(H,act.map(rowf),vs.length?"همه‌ی مقصدها انجام شده‌اند.":"هنوز مقصدی در صف Claude نیست.")+(dn.length?`<details class="card"><summary>انجام‌شده (${faNum(dn.length)})</summary>${table(H,dn.map(rowf),"")}</details>`:""); })();
 };
-for(const k of ["letters.new","letters.archive","letters.pp","letters.sosh"]){ const f=VIEWS[k]; VIEWS[k]=()=>canSeeLetters()?f():`<p class="empty">بخش نامه‌ها فقط برای کارکنان اداری و مالک سامانه قابل مشاهده است.</p>`; }
+for(const k of ["letters.new","letters.archive","letters.pp","letters.sosh","letters.refinery"]){ const f=VIEWS[k]; VIEWS[k]=()=>canSeeLetters()?f():`<p class="empty">بخش نامه‌ها فقط برای کارکنان اداری و مالک سامانه قابل مشاهده است.</p>`; }
 // ---- human owner (مسئول انسانی) for Patent and Scholarship: one pick can be assigned to every item; tasks land in the BPMS board
 const HUM = {
   patent:{label:"اختراع‌های در جریان",kind:"human_patent",items:()=>S.patents.filter(p=>p.status!=="granted").map(p=>({id:p.id,name:p.title||"—",sub:`${PAT_ST[p.status]||""}${p.number?" · "+p.number:""}`,due:p.next_date||"",
@@ -3662,6 +3735,9 @@ document.addEventListener("click", async e => {
     case "task-quick": { const el=$("#qtTitle"), title=(el&&el.value||"").trim(); if(!title){ toast("عنوان تسک را بنویسید."); break; }
       const now=new Date().toISOString(), tid="t_"+newId();
       if(await save(`tasks/${tid}`,{title,assignee:S.me.id,created_by:S.me.id,team:(myMember()||{}).team||"ai",priority:"normal",due:today(),status:"todo",type:"task",blocked:false,points:null,sprint:"",desc:"",created:now,updated:now},"تسک ساخته شد")) { if(el) el.value=""; } break; }
+    case "ref-letter": { const r=REFINERIES.find(x=>x.id===id); if(!r) break; const L=refineryLetter(r);
+      S.draft={identity:"ir",sector:"oil",date:today(),numAuto:true,number:nextLetterNo("ir",today()),recipient:L.recipient,subject:L.subject,body:L.body,attachments:"",cc:"",annex:"",signer:""};
+      S.mod="letters"; S.sub="new"; S.forceFull=true; render(); toast("پیش‌نویس نامه با سربرگ پترو پالا توس آماده شد؛ بازبینی و ذخیره کنید."); break; }
     case "task-who": S.taskWho=b.dataset.m||""; render(); break;
     case "att-approve": { if(!isAdmin()) break; const a=(S.allAtt||[]).find(x=>x.member===b.dataset.m&&x.id===b.dataset.d); if(!a) break; const {id:_i,member:_m,...rest}=a;
       if(await save(`attendance/${a.member}/days/${a.id}`,{...rest,in_approved:S.me.id},"ورود تأیید شد")){ a.in_approved=S.me.id; render(); } break; }
