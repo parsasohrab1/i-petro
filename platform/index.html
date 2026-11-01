@@ -909,6 +909,18 @@ VIEWS["erp.ops"] = () => {
 // ---------- Daily planner: standing tasks repeat, and a person with nothing open gets tasks chosen from the work still left in the system.
 // Runs when an admin has the dashboard open (once per day; ids are deterministic so two admins cannot create duplicates). The owner's expectation level
 // (settings/planner.level) sets how many tasks an idle person receives: standard 1, high 2, intense 3.
+const AI_CORE = [{"key": "rfp_ir", "title": "ثبت نهایی یک RFP داخلی", "desc": "دست‌کم یک RFP داخلی (Iran AI Projects) را تا مرحله‌ی «ارسال پیشنهاد» ببرید و ثبت نهایی کنید.\n\nگام‌ها: ۱) از فهرست موارد باز با مهلت آینده یکی را با «مسئولیت را می‌گیرم» بردارید. ۲) مدارک پترو پالاتوس را از «مدارک پترو پالاتوس (داخلی)» بردارید. ۳) پیشنهاد را بنویسید و در سامانه‌ی کارفرما (ستاد/ساتع) بارگذاری و ثبت نهایی کنید. ۴) در Project Tracking مرحله را «ارسال پیشنهاد» کنید و شماره‌ی ثبت را بنویسید.\n\nمعیار پذیرش: شماره‌ی ثبت یا تأییدیه‌ی سامانه‌ی کارفرما در Project Tracking نوشته شده باشد."}, {"key": "rfp_intl", "title": "ثبت نهایی یک RFP بین‌المللی", "desc": "دست‌کم یک RFP بین‌المللی (Overseas AI Projects) را تا ارسال پیشنهاد یا ثبت نهایی ببرید.\n\nگام‌ها: ۱) مورد باز با مهلت آینده را با «مسئولیت را می‌گیرم» بردارید. ۲) مدارک پارسا اینت را از «مدارک پارسا اینت (بین‌المللی)» بردارید و شریک را در «شرکای تجاری» پیدا کنید. ۳) پیشنهاد را در پورتال کارفرما ثبت کنید. ۴) مرحله و شماره‌ی ثبت را در Project Tracking بنویسید.\n\nمعیار پذیرش: شماره‌ی ثبت یا رسید پورتال در Project Tracking باشد."}, {"key": "article_reg", "title": "ثبت مقاله (ثبت کامل در Articles)", "desc": "دست‌کم یک مقاله را کامل ثبت کنید: انتخاب مقصد از «فهرست کامل» یا «در دست اقدام» با نزدیک‌ترین مهلت، تکمیل چکیده با «چکیده (Word)»، ثبت وضعیت، شماره‌ی پیگیری، گام بعدی و مسیر ایمیل (ثبت · تاییدیه · مقاله کامل).\n\nمعیار پذیرش: وضعیت مقصد در Articles به «در دست اقدام» یا «اقدام‌شده» تغییر کرده و به نام شما ثبت شده باشد (نمره‌دهی همین ثبت سامانه را می‌شمارد، نه متن گزارش)."}, {"key": "optimize", "title": "بهینه‌سازی یک محصول موجود در سبد محصولات", "desc": "یک محصول از Products Basket را انتخاب و بهینه کنید: ارتقای مدل یا کد، افزودن تست، رفع مشکل داده یا مستندات، و push در ریپوی همان محصول. محصول با پایین‌ترین TRL یا محصولی که برای مقاله/مشتری نیاز دارد اولویت دارد.\n\nمعیار پذیرش: لینک commit یا PR، فهرست تغییرها و نتیجه‌ی تست (قبل و بعد) در توضیح تسک نوشته شود."}, {"key": "letters", "title": "نامه‌نگاری برای معرفی محصول جدید", "desc": "دست‌کم یک نامه برای معرفی محصول جدید به مشتری یا سازمان هدف بنویسید (Letters ← نامه‌ی جدید؛ سربرگ پترو پالاتوس برای ایران، پارسا اینت برای خارج). گیرنده باید با تحقیق مشخص باشد و محصول متناسب با نیاز او انتخاب شود.\n\nمعیار پذیرش: نامه در بایگانی نامه‌ها ثبت و فایل Word ساخته شده باشد؛ نام گیرنده و محصول در توضیح تسک بیاید."}, {"key": "newprod", "title": "توسعه‌ی محصول جدید تا TRL ۴ و بارگذاری در ریپوی اصلی", "desc": "یک محصول جدید را (از «محصولات پیشنهادی نو» یا پیشنهاد خودتان) تا سطح TRL ۴ توسعه دهید و در ریپوی اصلی بارگذاری کنید.\n\nTRL ۴ یعنی: ماژول‌های اصلی کار می‌کنند، تست خودکار دارند، با داده‌ی شبیه‌سازی یا نمونه در آزمایشگاه اعتبارسنجی شده‌اند (نه داده‌ی واقعی)، README و نمونه‌ی اجرا دارند. هر روز پیشرفت را commit کنید.\n\nمعیار پذیرش: لینک ریپو/commit، تست سبز و README؛ پس از TRL ۴ محصول را در سبد ثبت کنید."}];   // standing duties of every AI-team member, on top of the personal minimums set for individuals
+async function ensureCore(){   // every AI-team member always holds each core duty as a standing daily task (ids are deterministic, so repeated runs and two admins never duplicate)
+  const day=today(); if(!S.db||!isAdmin()||!["members","tasks"].every(k=>S.got.has(k))) return 0;
+  let n=0, now=new Date().toISOString();
+  for(const m of S.members){ if((m.team||"ai")!=="ai"||!isOfficeDay(m,day)) continue;
+    for(const d of AI_CORE){
+      if(S.tasks.some(t=>t.assignee===m.id&&t.core_key===d.key)) continue;
+      const id=`core_${m.id.slice(-6)}_${d.key}`.replace(/[^A-Za-z0-9_\-]/g,"_");
+      if(S.tasks.some(t=>t.id===id)) continue;
+      try{ await S.db.doc("tasks/"+id).set({title:d.title,desc:d.desc+"\n\n(وظیفه‌ی ثابت تیم هوش مصنوعی؛ تکرارشونده: پس از انجام، برنامه‌ریز در روز کاری بعد دوباره آن را باز می‌کند. جدا از حداقل‌هایی است که برای افراد تعریف شده است.)",assignee:m.id,created_by:S.me.id,team:"ai",priority:"high",due:day,status:"todo",type:"task",blocked:false,points:null,sprint:"",created:now,updated:now,repeat:"daily",core_key:d.key,auto:true}); n++; }catch(e){ console.error("core",id,e); } } }
+  return n;
+}
 const PLAN_LEVELS = {standard:["استاندارد (۱ تسک خودکار)",1],high:["بالا (۲ تسک خودکار)",2],intense:["شدید (۳ تسک خودکار)",3]};
 const PLAN_TEAM_DEPT = {finance:["fin"],admin:["hr","legal"],ai:["sales","it","prod"],content:["prod","sales"]};
 function planCandidates(m){
@@ -927,6 +939,8 @@ function planCandidates(m){
 }
 async function runPlanner(force){
   if(!S.db||!isAdmin()) return;
+  const nc=await ensureCore();   // independent of the once-a-day guard below
+  if(nc&&force) toast(faNum(nc)+" وظیفه‌ی ثابت تیم هوش مصنوعی ساخته شد.");
   const cfg=S.planner||{}, day=today();
   if(!force&&(cfg.auto===false||cfg.last_run===day)) return;
   if(!["members","tasks"].every(k=>S.got.has(k))) return;
@@ -1422,7 +1436,7 @@ VIEWS["bpms.reports"] = () => {
   const list = src.filter(r=>match(memberName(r.member),r.text)).sort((a,b)=>(b.date||"").localeCompare(a.date||""));
   const byMember = {}; list.forEach(r=>{ if(r.score!=null){(byMember[r.member]=byMember[r.member]||[]).push(r.score)} });
   const summary = Object.entries(byMember).map(([m,s])=>{const avg=Math.round(s.reduce((a,b)=>a+b,0)/s.length);return `<tr>${td("عضو",esc(memberName(m)),"t")}${td("تعداد گزارش",faNum(s.length))}${td("میانگین",light(avg))}${td("وضعیت",avg<40?'<span class="p-bad">تذکر: احتمال قطع همکاری</span>':avg<70?'<span class="p-warn">نیاز به بهبود</span>':'<span class="p-ok">مطلوب</span>')}</tr>`});
-  return `<p class="note">نمره از ۱۰۰: ۷۰٪ انجام واقعی تسک‌های سپرده‌شده (با شواهد ثبت‌شده در سامانه، مثلاً تعداد مقاله‌های ثبت‌شده در برابر سهمیه) و ۳۰٪ کیفیت و صداقت گزارش نسبت به همان شواهد. متن گزارش به‌تنهایی نمره نمی‌آورد. چراغ سبز ≥ ۷۰، زرد ۴۰ تا ۶۹، نارنجی زیر ۴۰.</p>
+  return `<p class="note">نمره از ۱۰۰: ۷۰٪ انجام واقعی تسک‌های سپرده‌شده (با شواهد ثبت‌شده در سامانه، مثلاً تعداد مقاله‌های ثبت‌شده در برابر سهمیه) و ۳۰٪ کیفیت و صداقت گزارش نسبت به همان شواهد. متن گزارش به‌تنهایی نمره نمی‌آورد. <b>اغراق و بلوف در حجم یا کیفیت گزارش نمره‌ی منفی دارد</b> (کسر ۲۰، ۵۰ یا ۱۰۰ نمره؛ کف نمره −۱۰۰). چراغ سبز ≥ ۷۰، زرد ۴۰ تا ۶۹، نارنجی زیر ۴۰.</p>
    <div class="toolbar"><button class="btn sig" data-act="report-new">ثبت گزارش عملکرد</button>${isAdmin()?`<button class="btn ghost" data-act="reload-reports">به‌روزرسانی گزارش همه‌ی اعضا</button>`:""}${S.me.isOwner?`<button class="btn ghost" data-act="regrade">نمره‌دهی دوباره‌ی ۳ روز اخیر با ممیزی تسک‌ها</button>`:""}</div>`+
    (summary.length?`<h3>بهره‌وری اعضا</h3>`+table(["عضو","تعداد گزارش","میانگین نمره","وضعیت"],summary):"")+
    `<h3>گزارش‌ها</h3>`+table(["تاریخ","عضو","ساعت کار","شرح","نمره","بازخورد"], list.map(r=>`<tr>${td("تاریخ",faDate(r.date))}${td("عضو",esc(memberName(r.member)),"t")}${td("ساعت",`<span class="mono">${esc(r.hours??"—")}</span>`)}${td("شرح",esc(r.text))}${td("نمره",light(r.score))}${td("بازخورد",esc(r.feedback||"")+auditHtml(r))}</tr>`),"گزارشی ثبت نشده است.");
@@ -1500,31 +1514,41 @@ function auditTasks(memberId, date, tasks){
     rows.push({title:t.title||"",priority:t.priority||"normal",need:q?`${q.n} ${q.unit==="article"?"مقاله":q.unit}`:"",status:t.status,ratio:Math.round(ratio*100)/100,evidence});
   }
   const w=r=>r.priority==="high"?2:1, tw=rows.reduce((a,r)=>a+w(r),0);
-  return {rows,taskScore:tw?Math.round(100*rows.reduce((a,r)=>a+w(r)*r.ratio,0)/tw):null};
+  return {rows,taskScore:tw?Math.round(100*rows.reduce((a,r)=>a+w(r)*r.ratio,0)/tw):null,artDone};
 }
+// Bluff check that needs no model: the report claims more registered articles than the system shows this person registered that day
+function claimedArticles(text){ const t=faToLat(text||""), nums=[...t.matchAll(/(\d+)\s*(?:عدد\s*)?(?:مقاله|آردیکل|آرتیکل|article)/gi)].map(m=>Number(m[1])).filter(n=>n>0&&n<200);
+  const listed=(t.match(/^\s*\d+\s*[-–.)]?\s*(?:ثبت|ارسال)[^\n]*(?:مقاله|conference|conf|journal|2027|2026)/gim)||[]).length;
+  return Math.max(0,...nums,listed); }
 async function gradeReport(rec, me, tasks){
   if(!S.sample){ toast("نمره‌دهی خودکار در این نما در دسترس نیست؛ مدیر بعداً نمره می‌دهد."); return; }
-  const au=auditTasks(me.id||S.me.id, rec.date, tasks);
-  const prompt = `You are a fair but evidence-based performance reviewer at an early-stage Iranian AI company (Petro Pala Toos). Step 1 is already done by the system: it audited the person's assigned tasks against what is actually recorded in the work system (below). Step 2 is yours: judge the QUALITY OF THE REPORT, i.e. how honestly and verifiably it describes the day compared with that audit.
-Rules: the person must work 8 net hours on each office day. Never accept a claim that the audit contradicts (e.g. the report lists 3 articles but the task requires 10 and the system shows fewer than 10). Vague text, claims with no verifiable deliverable, work unrelated to the assigned tasks, or missing hours lower the quality score; a report that openly admits an unmet quota is better than one that hides it.
+  const au=auditTasks(me.id||S.me.id, rec.date, tasks), claimed=claimedArticles(rec.text), over=claimed>au.artDone?claimed-au.artDone:0;
+  const prompt = `You are a fair but evidence-based performance reviewer at an early-stage Iranian AI company (Petro Pala Toos). Step 1 is already done by the system: it audited the person's assigned tasks against what is actually recorded in the work system (below). Step 2 is yours: judge the QUALITY OF THE REPORT and detect BLUFFING.
+Bluffing means: claims that the audit or the attendance record contradicts (e.g. the report lists 3 registered articles but the system shows fewer), claimed work that cannot fit in the recorded net hours, inflated volume (padding, repeated or filler lines, long vague lists, the same item counted twice, generic text that could describe any day), invented deliverables with no link, reference or number, or work unrelated to the assigned tasks presented as progress. Honest short reports, and reports that openly admit an unmet quota, are NOT bluffing. Be fair: do not call something a bluff unless you can name the specific evidence.
+Rules: the person must work 8 net hours on each office day.
 Team: ${TEAMS[me.team]||me.team}. Staff type: ${STAFF[me.staff_type]||me.staff_type}.
 Net hours recorded: ${rec.hours==null?"not recorded":rec.hours}.
 TASK AUDIT (system evidence, ratio 0..1; task score ${au.taskScore==null?"n/a":au.taskScore}/100): ${JSON.stringify(au.rows)}
+Articles the system shows this person registered that day: ${au.artDone}. Articles the report claims: ${claimed}.
 Report: ${rec.text}
 Blockers: ${rec.blockers||"-"}
-Return JSON only: {"quality": <integer 0-100 report quality>, "mismatch_fa": "<Persian: list each task where the report claims or omits something that contradicts the audit; empty string if none>", "feedback_fa": "<2-3 short Persian sentences: which required tasks were not met (with the numbers), and exactly what to do tomorrow. Do not use the word سخت‌گیر.>"}`;
+Return JSON only: {"quality": <integer 0-100 report quality>, "bluff_level": <0 none | 1 mild exaggeration | 2 clear exaggeration or padding | 3 fabricated or seriously inflated>, "bluff_fa": "<Persian: the specific evidence for the bluff, empty if bluff_level is 0>", "mismatch_fa": "<Persian: each task where the report claims or omits something that contradicts the audit; empty string if none>", "feedback_fa": "<2-3 short Persian sentences: which required tasks were not met (with the numbers), and exactly what to do tomorrow. Do not use the word سخت‌گیر.>"}`;
   try{
     const r = await S.sample.json(prompt, {modelTier:"default"});
     const quality=Math.max(0,Math.min(100,Math.round(Number(r.quality)||0)));
-    const score = au.taskScore==null ? quality : Math.max(0,Math.min(100,Math.round(.7*au.taskScore+.3*quality)));   // task delivery 70 %, report quality 30 %
+    const base = au.taskScore==null ? quality : Math.round(.7*au.taskScore+.3*quality);   // task delivery 70 %, report quality 30 %
+    const level = Math.max(Math.max(0,Math.min(3,Math.round(Number(r.bluff_level)||0))), over>0?(over>=3?3:2):0);   // an article claim above the system record is at least a clear exaggeration
+    const penalty = [0,20,50,100][level];   // bluffing is punished: the score can go below zero
+    const score = Math.max(-100,Math.min(100,base-penalty));
     let fb=String(r.feedback_fa||"");
     if(r.mismatch_fa) fb += " ناهمخوانی با سامانه: "+String(r.mismatch_fa);
+    if(level>0) fb += ` ⚠ اغراق یا بلوف در گزارش (سطح ${level} از ۳؛ کسر ${penalty} نمره): `+(over>0?`گزارش ${claimed} مقاله را ادعا می‌کند اما سامانه ${au.artDone} ثبت برای شما نشان می‌دهد. `:"")+String(r.bluff_fa||"");
     if(score<40) fb += " تذکر: با این بهره‌وری احتمال قطع همکاری وجود دارد؛ روی بهره‌وری خود وقت بگذارید.";
-    await S.db.doc(`reports/${me.id||S.me.id}/items/${rec.date}`).update({score,quality,task_score:au.taskScore,audit:au.rows,feedback:fb,graded:new Date().toISOString()});
-    toast(`نمره‌ی گزارش: ${score} از ۱۰۰ (انجام تسک‌ها ${au.taskScore==null?"—":au.taskScore})`);
+    await S.db.doc(`reports/${me.id||S.me.id}/items/${rec.date}`).update({score,quality,base_score:base,bluff_level:level,bluff_penalty:penalty,task_score:au.taskScore,audit:au.rows,feedback:fb,graded:new Date().toISOString()});
+    toast(level>0?`نمره‌ی گزارش: ${score} (اغراق شناسایی شد: ${penalty}− نمره)`:`نمره‌ی گزارش: ${score} از ۱۰۰ (انجام تسک‌ها ${au.taskScore==null?"—":au.taskScore})`);
   }catch(e){ toast(e.code==="not_granted"?"نمره‌دهی خودکار اجازه داده نشد.":"نمره‌دهی انجام نشد؛ بعداً دوباره ثبت کنید."); }
 }
-const auditHtml = r => (r.audit&&r.audit.length)?`<details><summary class="meta">ممیزی تسک‌ها${r.task_score!=null?" · "+faNum(r.task_score)+" از ۱۰۰":""}</summary><ul style="margin:4px 0">${r.audit.map(x=>`<li>${esc(x.title)}${x.need?` <span class="meta">(الزام: ${esc(x.need)})</span>`:""}: <b>${faNum(Math.round(x.ratio*100))}٪</b> <span class="meta">${esc(x.evidence)}</span></li>`).join("")}</ul></details>`:"";
+const auditHtml = r => ((r.audit&&r.audit.length)||r.bluff_level)?`<details${r.bluff_level?" open":""}><summary class="meta">${r.bluff_level?`<span class="p-bad">⚠ اغراق سطح ${faNum(r.bluff_level)} · کسر ${faNum(r.bluff_penalty||0)} نمره</span> · `:""}ممیزی تسک‌ها${r.task_score!=null?" · "+faNum(r.task_score)+" از ۱۰۰":""}</summary><ul style="margin:4px 0">${(r.audit||[]).map(x=>`<li>${esc(x.title)}${x.need?` <span class="meta">(الزام: ${esc(x.need)})</span>`:""}: <b>${faNum(Math.round(x.ratio*100))}٪</b> <span class="meta">${esc(x.evidence)}</span></li>`).join("")}</ul></details>`:"";
 // Owner: grade again the last reports of every member against the task audit
 async function regradeRecent(days){
   if(!S.me.isOwner||!S.allReports){ toast("ابتدا «به‌روزرسانی گزارش همه‌ی اعضا» را بزنید."); return; }
