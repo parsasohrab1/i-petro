@@ -1,0 +1,191 @@
+{
+ "SEG2016": {
+  "n_wells": 8,
+  "pooled_m0": {
+   "mean": 0.906,
+   "worst": 0.803,
+   "below_0.85": 2,
+   "size": 4.33
+  },
+  "pooled_m20": {
+   "mean": 0.906,
+   "worst": 0.805,
+   "below_0.85": 2,
+   "size": 4.34
+  },
+  "local_m20": {
+   "mean": 0.903,
+   "worst": 0.841,
+   "below_0.85": 1,
+   "size": 4.06
+  },
+  "mixed_m20": {
+   "mean": 0.908,
+   "worst": 0.823,
+   "below_0.85": 2,
+   "size": 4.35
+  },
+  "pooled_m50": {
+   "mean": 0.907,
+   "worst": 0.801,
+   "below_0.85": 2,
+   "size": 4.31
+  },
+  "local_m50": {
+   "mean": 0.905,
+   "worst": 0.858,
+   "below_0.85": 0,
+   "size": 3.73
+  },
+  "mixed_m50": {
+   "mean": 0.909,
+   "worst": 0.829,
+   "below_0.85": 2,
+   "size": 4.31
+  },
+  "pooled_m100": {
+   "mean": 0.899,
+   "worst": 0.8,
+   "below_0.85": 2,
+   "size": 4.55
+  },
+  "local_m100": {
+   "mean": 0.902,
+   "worst": 0.87,
+   "below_0.85": 0,
+   "size": 4.04
+  },
+  "mixed_m100": {
+   "mean": 0.903,
+   "worst": 0.834,
+   "below_0.85": 2,
+   "size": 4.57
+  }
+ },
+ "FORCE2020": {
+  "n_wells": 81,
+  "pooled_m0": {
+   "mean": 0.889,
+   "worst": 0.599,
+   "below_0.85": 19,
+   "size": 2.02
+  },
+  "pooled_m20": {
+   "mean": 0.889,
+   "worst": 0.599,
+   "below_0.85": 19,
+   "size": 2.02
+  },
+  "local_m20": {
+   "mean": 0.907,
+   "worst": 0.731,
+   "below_0.85": 12,
+   "size": 2.61
+  },
+  "mixed_m20": {
+   "mean": 0.89,
+   "worst": 0.61,
+   "below_0.85": 18,
+   "size": 2.02
+  },
+  "pooled_m50": {
+   "mean": 0.89,
+   "worst": 0.601,
+   "below_0.85": 19,
+   "size": 2.02
+  },
+  "local_m50": {
+   "mean": 0.901,
+   "worst": 0.809,
+   "below_0.85": 14,
+   "size": 2.39
+  },
+  "mixed_m50": {
+   "mean": 0.891,
+   "worst": 0.638,
+   "below_0.85": 16,
+   "size": 2.02
+  },
+  "pooled_m100": {
+   "mean": 0.89,
+   "worst": 0.608,
+   "below_0.85": 19,
+   "size": 2.02
+  },
+  "local_m100": {
+   "mean": 0.901,
+   "worst": 0.818,
+   "below_0.85": 6,
+   "size": 2.27
+  },
+  "mixed_m100": {
+   "mean": 0.893,
+   "worst": 0.691,
+   "below_0.85": 15,
+   "size": 2.03
+  }
+ },
+ "SEG2016_facies_vectors": {
+  "n_wells": 10,
+  "pooled_m0": {
+   "mean": 0.904,
+   "worst": 0.735,
+   "below_0.85": 1,
+   "size": 3.33
+  },
+  "pooled_m20": {
+   "mean": 0.903,
+   "worst": 0.74,
+   "below_0.85": 1,
+   "size": 3.34
+  },
+  "local_m20": {
+   "mean": 0.906,
+   "worst": 0.835,
+   "below_0.85": 1,
+   "size": 3.6
+  },
+  "mixed_m20": {
+   "mean": 0.91,
+   "worst": 0.811,
+   "below_0.85": 1,
+   "size": 3.28
+  },
+  "pooled_m50": {
+   "mean": 0.901,
+   "worst": 0.735,
+   "below_0.85": 1,
+   "size": 3.33
+  },
+  "local_m50": {
+   "mean": 0.895,
+   "worst": 0.851,
+   "below_0.85": 0,
+   "size": 3.14
+  },
+  "mixed_m50": {
+   "mean": 0.906,
+   "worst": 0.807,
+   "below_0.85": 1,
+   "size": 3.19
+  },
+  "pooled_m100": {
+   "mean": 0.904,
+   "worst": 0.736,
+   "below_0.85": 1,
+   "size": 3.51
+  },
+  "local_m100": {
+   "mean": 0.897,
+   "worst": 0.879,
+   "below_0.85": 0,
+   "size": 3.25
+  },
+  "mixed_m100": {
+   "mean": 0.91,
+   "worst": 0.832,
+   "below_0.85": 1,
+   "size": 3.33
+  }
+ }
+}
