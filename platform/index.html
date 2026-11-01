@@ -1416,10 +1416,10 @@ VIEWS["bpms.reports"] = () => {
   const list = src.filter(r=>match(memberName(r.member),r.text)).sort((a,b)=>(b.date||"").localeCompare(a.date||""));
   const byMember = {}; list.forEach(r=>{ if(r.score!=null){(byMember[r.member]=byMember[r.member]||[]).push(r.score)} });
   const summary = Object.entries(byMember).map(([m,s])=>{const avg=Math.round(s.reduce((a,b)=>a+b,0)/s.length);return `<tr>${td("عضو",esc(memberName(m)),"t")}${td("تعداد گزارش",faNum(s.length))}${td("میانگین",light(avg))}${td("وضعیت",avg<40?'<span class="p-bad">تذکر: احتمال قطع همکاری</span>':avg<70?'<span class="p-warn">نیاز به بهبود</span>':'<span class="p-ok">مطلوب</span>')}</tr>`});
-  return `<p class="note">نمره‌دهی سخت‌گیرانه از ۱۰۰ توسط Claude. معیار: ۸ ساعت کار خالص در هر روز حضور، انجام تسک‌های سپرده‌شده، کیفیت و اثربخشی خروجی. چراغ سبز ≥ ۷۰، زرد ۴۰ تا ۶۹، نارنجی زیر ۴۰.</p>
-   <div class="toolbar"><button class="btn sig" data-act="report-new">ثبت گزارش عملکرد</button>${isAdmin()?`<button class="btn ghost" data-act="reload-reports">به‌روزرسانی گزارش همه‌ی اعضا</button>`:""}</div>`+
+  return `<p class="note">نمره از ۱۰۰: ۷۰٪ انجام واقعی تسک‌های سپرده‌شده (با شواهد ثبت‌شده در سامانه، مثلاً تعداد مقاله‌های ثبت‌شده در برابر سهمیه) و ۳۰٪ کیفیت و صداقت گزارش نسبت به همان شواهد. متن گزارش به‌تنهایی نمره نمی‌آورد. چراغ سبز ≥ ۷۰، زرد ۴۰ تا ۶۹، نارنجی زیر ۴۰.</p>
+   <div class="toolbar"><button class="btn sig" data-act="report-new">ثبت گزارش عملکرد</button>${isAdmin()?`<button class="btn ghost" data-act="reload-reports">به‌روزرسانی گزارش همه‌ی اعضا</button>`:""}${S.me.isOwner?`<button class="btn ghost" data-act="regrade">نمره‌دهی دوباره‌ی ۳ روز اخیر با ممیزی تسک‌ها</button>`:""}</div>`+
    (summary.length?`<h3>بهره‌وری اعضا</h3>`+table(["عضو","تعداد گزارش","میانگین نمره","وضعیت"],summary):"")+
-   `<h3>گزارش‌ها</h3>`+table(["تاریخ","عضو","ساعت کار","شرح","نمره","بازخورد"], list.map(r=>`<tr>${td("تاریخ",faDate(r.date))}${td("عضو",esc(memberName(r.member)),"t")}${td("ساعت",`<span class="mono">${esc(r.hours??"—")}</span>`)}${td("شرح",esc(r.text))}${td("نمره",light(r.score))}${td("بازخورد",esc(r.feedback||""))}</tr>`),"گزارشی ثبت نشده است.");
+   `<h3>گزارش‌ها</h3>`+table(["تاریخ","عضو","ساعت کار","شرح","نمره","بازخورد"], list.map(r=>`<tr>${td("تاریخ",faDate(r.date))}${td("عضو",esc(memberName(r.member)),"t")}${td("ساعت",`<span class="mono">${esc(r.hours??"—")}</span>`)}${td("شرح",esc(r.text))}${td("نمره",light(r.score))}${td("بازخورد",esc(r.feedback||"")+auditHtml(r))}</tr>`),"گزارشی ثبت نشده است.");
 };
 const REPORT_START = "2026-10-21"; // reports are expected from this date for members who registered before it
 const addDays = (d,n) => new Date(new Date(d+"T12:00:00").getTime()+n*864e5).toISOString().slice(0,10);
@@ -1473,24 +1473,58 @@ function reportForm(date){
      gradeReport(rec, me, myTasks); return true;
    }});
 }
+// ---- Task audit: a report is judged against what the person was asked to deliver, never on its own wording.
+const QTY_W = {"یک":1,"دو":2,"سه":3,"چهار":4,"پنج":5,"شش":6,"هفت":7,"هشت":8,"نه":9,"ده":10,"پانزده":15,"بیست":20};
+const faToLat = s => String(s).replace(/[۰-۹]/g,d=>"۰۱۲۳۴۵۶۷۸۹".indexOf(d));
+function taskQuota(t){ const s=faToLat((t.title||"")+" "+(t.desc||"").split("\n")[0]), m=s.match(/(\d+|پانزده|بیست|یک|دو|سه|چهار|پنج|شش|هفت|هشت|نه|ده)\s*(?:عدد\s*)?(مقاله|آردیکل|آرتیکل|بورسیه|نامه|محصول|RFP)/);
+  if(!m) return null; const n=/^\d+$/.test(m[1])?Number(m[1]):QTY_W[m[1]]; return n>0?{n,unit:m[2]==="مقاله"||m[2]==="آردیکل"||m[2]==="آرتیکل"?"article":m[2]}:null; }
+function auditTasks(memberId, date, tasks){
+  const day = x => (x||"").slice(0,10), artDone = Object.values(S.artSt||{}).filter(x=>x&&x.by===memberId&&day(x.at)===date&&(x.status==="doing"||x.status==="applied")).length;
+  const rows=[];
+  for(const t of tasks){
+    const fin=isDone(t), finDay=day(t.done_at||t.updated), q=taskQuota(t), touched=day(t.updated)===date;
+    const lastRun=((t.runs||[]).slice(-1)[0]||{}), doneToday=(fin&&finDay===date)||day(lastRun.done)===date;
+    const expected = t.repeat==="daily" || q&&q.unit==="article" || (!fin && ((t.due||"9999")<=date || t.status==="doing")) || doneToday;
+    if(!expected||(fin&&finDay<date&&t.repeat!=="daily")) continue;
+    let ratio, evidence;
+    if(q&&q.unit==="article"){ ratio=Math.min(1,artDone/q.n); evidence=`${artDone} از ${q.n} مقاله در سامانه (Articles) امروز توسط این فرد ثبت شده است`; }
+    else if(doneToday){ ratio=1; evidence="تسک امروز انجام‌شده ثبت شده"+((t.uploads||[]).length?`، ${(t.uploads||[]).length} فایل پیوست`:"")+(q&&q.n>1?`؛ تعداد ${q.n} ${q.unit} را سامانه نمی‌تواند خودکار بشمارد`:""); }
+    else if(t.status==="doing"&&touched){ ratio=.3; evidence="در حال انجام؛ امروز به‌روز شده اما تمام نشده"; }
+    else { ratio=0; evidence=t.status==="doing"?"در حال انجام؛ امروز هیچ پیشرفتی در سامانه ثبت نشده":"انجام نشده"; }
+    rows.push({title:t.title||"",priority:t.priority||"normal",need:q?`${q.n} ${q.unit==="article"?"مقاله":q.unit}`:"",status:t.status,ratio:Math.round(ratio*100)/100,evidence});
+  }
+  const w=r=>r.priority==="high"?2:1, tw=rows.reduce((a,r)=>a+w(r),0);
+  return {rows,taskScore:tw?Math.round(100*rows.reduce((a,r)=>a+w(r)*r.ratio,0)/tw):null};
+}
 async function gradeReport(rec, me, tasks){
   if(!S.sample){ toast("نمره‌دهی خودکار در این نما در دسترس نیست؛ مدیر بعداً نمره می‌دهد."); return; }
-  const prompt = `You are a generous, fair performance reviewer at an early-stage Iranian AI company (Petro Pala Toos). Grade one daily work report from 0 to 100. Give credit for every concrete, verifiable piece of work and give the benefit of the doubt where the text is brief but plausible. Never describe the review as strict or harsh in the feedback.
-Rules: the person must work 8 net hours on each office day (9 hours presence including a 1-hour break). Score mostly on concrete, verifiable output that matches their assigned tasks; vague text, missing hours, or work unrelated to assigned tasks score low. Above 70 only for a full day with clear deliverables.
+  const au=auditTasks(me.id||S.me.id, rec.date, tasks);
+  const prompt = `You are a fair but evidence-based performance reviewer at an early-stage Iranian AI company (Petro Pala Toos). Step 1 is already done by the system: it audited the person's assigned tasks against what is actually recorded in the work system (below). Step 2 is yours: judge the QUALITY OF THE REPORT, i.e. how honestly and verifiably it describes the day compared with that audit.
+Rules: the person must work 8 net hours on each office day. Never accept a claim that the audit contradicts (e.g. the report lists 3 articles but the task requires 10 and the system shows fewer than 10). Vague text, claims with no verifiable deliverable, work unrelated to the assigned tasks, or missing hours lower the quality score; a report that openly admits an unmet quota is better than one that hides it.
 Team: ${TEAMS[me.team]||me.team}. Staff type: ${STAFF[me.staff_type]||me.staff_type}.
-Net hours recorded today: ${rec.hours==null?"not recorded":rec.hours}.
-Assigned tasks: ${JSON.stringify(tasks.map(t=>({title:t.title,status:t.status,due:t.due})))}.
+Net hours recorded: ${rec.hours==null?"not recorded":rec.hours}.
+TASK AUDIT (system evidence, ratio 0..1; task score ${au.taskScore==null?"n/a":au.taskScore}/100): ${JSON.stringify(au.rows)}
 Report: ${rec.text}
 Blockers: ${rec.blockers||"-"}
-Return JSON only: {"score": <integer 0-100>, "feedback_fa": "<2-3 short Persian sentences: what lowered the score and what to do tomorrow. This review is generous; if the score is below 70, say politely that this score came from a generous assessment, so the report needs clearer deliverables and recorded hours. Do not use the words strict or harsh (سخت‌گیر).>"}`;
+Return JSON only: {"quality": <integer 0-100 report quality>, "mismatch_fa": "<Persian: list each task where the report claims or omits something that contradicts the audit; empty string if none>", "feedback_fa": "<2-3 short Persian sentences: which required tasks were not met (with the numbers), and exactly what to do tomorrow. Do not use the word سخت‌گیر.>"}`;
   try{
     const r = await S.sample.json(prompt, {modelTier:"default"});
-    const score=Math.max(0,Math.min(100,Math.round(Number(r.score)||0)));
+    const quality=Math.max(0,Math.min(100,Math.round(Number(r.quality)||0)));
+    const score = au.taskScore==null ? quality : Math.max(0,Math.min(100,Math.round(.7*au.taskScore+.3*quality)));   // task delivery 70 %, report quality 30 %
     let fb=String(r.feedback_fa||"");
+    if(r.mismatch_fa) fb += " ناهمخوانی با سامانه: "+String(r.mismatch_fa);
     if(score<40) fb += " تذکر: با این بهره‌وری احتمال قطع همکاری وجود دارد؛ روی بهره‌وری خود وقت بگذارید.";
-    await S.db.doc(`reports/${S.me.id}/items/${rec.date}`).update({score,feedback:fb,graded:new Date().toISOString()});
-    toast(`نمره‌ی گزارش: ${score} از ۱۰۰`);
+    await S.db.doc(`reports/${me.id||S.me.id}/items/${rec.date}`).update({score,quality,task_score:au.taskScore,audit:au.rows,feedback:fb,graded:new Date().toISOString()});
+    toast(`نمره‌ی گزارش: ${score} از ۱۰۰ (انجام تسک‌ها ${au.taskScore==null?"—":au.taskScore})`);
   }catch(e){ toast(e.code==="not_granted"?"نمره‌دهی خودکار اجازه داده نشد.":"نمره‌دهی انجام نشد؛ بعداً دوباره ثبت کنید."); }
+}
+const auditHtml = r => (r.audit&&r.audit.length)?`<details><summary class="meta">ممیزی تسک‌ها${r.task_score!=null?" · "+faNum(r.task_score)+" از ۱۰۰":""}</summary><ul style="margin:4px 0">${r.audit.map(x=>`<li>${esc(x.title)}${x.need?` <span class="meta">(الزام: ${esc(x.need)})</span>`:""}: <b>${faNum(Math.round(x.ratio*100))}٪</b> <span class="meta">${esc(x.evidence)}</span></li>`).join("")}</ul></details>`:"";
+// Owner: grade again the last reports of every member against the task audit
+async function regradeRecent(days){
+  if(!S.me.isOwner||!S.allReports){ toast("ابتدا «به‌روزرسانی گزارش همه‌ی اعضا» را بزنید."); return; }
+  const from=addDays(today(),-days), list=S.allReports.filter(r=>(r.date||"")>=from); let n=0;
+  for(const r of list){ const m=S.members.find(x=>x.id===r.member); if(!m) continue; toast(`نمره‌دهی دوباره: ${m.full_name||m.id} · ${r.date}`); await gradeReport({...r},{...m,id:m.id},(S.tasks||[]).filter(t=>t.assignee===m.id)); n++; }
+  toast(`${faNum(n)} گزارش دوباره نمره‌دهی شد`);
 }
 // ---------- REPORT ARCHIVE: one row per day for each person; missed office days are visible and flagged
 function raDays(){
@@ -3898,6 +3932,7 @@ document.addEventListener("click", async e => {
     case "print-sheet": printSheet(b.dataset.sel); break;
     case "cv-docx": await downloadCv(); break;
     case "up-done": await upDone(b.dataset.id); break;
+    case "regrade": await regradeRecent(3); break;
     case "dl-add": { const key=b.dataset.key, el=document.getElementById("dl_"+key), v=(el&&el.value||"").trim(); if(!v) break; let name="",url=v; if(v.includes("|")){ const k=v.indexOf("|"); name=v.slice(0,k).trim(); url=v.slice(k+1).trim(); }
       if(!/^https?:\/\//i.test(url)){ toast("لینک باید با http یا https شروع شود."); break; }
       const map={...(S.dlinks||{})}; map[key]=[...(map[key]||[]),{name:name||url,url,by:S.me.id,at:new Date().toISOString()}];
