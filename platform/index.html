@@ -170,9 +170,9 @@ const SUBS = {
   news:[["feed","اخبار هوش مصنوعی"]],
   market:[["iran","Iran AI Projects"],["docs_ir","مدارک پترو پالاتوس (داخلی)"],["overseas","Overseas AI Projects"],["techneeds","نیازهای فناورانه"],["docs_int","مدارک پارسا اینت (بین‌المللی)"],["partners","شرکای تجاری بین‌المللی"],["web","Web Design & SEO"],["investors","AI Investors & Accelerators"],["tracking","Project Tracking"],["pipeline","Pipeline"],["memory","Team Memory"]],
   events:[["iran","ایران"],["world","جهان"],["all","همه"],["taken","در دست پیگیری"]],
-  erp:[["domains","حوزه‌های فعالیت"],["products","توسعه‌ی محصول هوشمند"],["people","نیروی انسانی"],["finance","مالی"],["clients","مشتریان و قراردادها"],["backup","پشتیبان‌گیری"]],
+  erp:[["ops","برنامه‌ی عملیات و واگذاری"],["domains","حوزه‌های فعالیت"],["products","توسعه‌ی محصول هوشمند"],["people","نیروی انسانی"],["finance","مالی"],["clients","مشتریان و قراردادها"],["backup","پشتیبان‌گیری"]],
   bpms:[["home","خانه‌ی BPMS"],["contacts","مخاطبین و ارتباط"],["myday","روز من"],["mind","ذهن‌نگار (آزمون خصوصی)"],["board","تخته‌ی اسکرام"],["backlog","بک‌لاگ و برنامه‌ریزی"],["sprints","اسپرینت‌ها"],["tasks","فهرست تسک‌ها"],["reports","گزارش عملکرد"],["rarchive","بایگانی گزارش‌ها"],["teams","تیم‌ها"],["process","فرایندها"],["calendar","تقویم"],["members","اعضا و ثبت‌نام"],["nda","قرارداد محرمانگی"],["training","فرم آموزش"]],
-  letters:[["new","نامه‌ی جدید (ساخت فایل Word)"],["archive","همه‌ی نامه‌ها (پیگیری و بایگانی)"],["sec_oil","نفت و گاز"],["sec_med","پزشکی"],["sec_water","آب"],["sec_energy","انرژی"],["sec_power","نیروگاه‌ها"],["sec_shasta","هلدینگ شستا"],["sec_hpc","هلدینگ خلیج فارس"]],
+  letters:[["new","نامه‌ی جدید (ساخت فایل Word)"],["refinery","پالایشگاه‌ها"],["pp","نامه‌های پترو پالاتوس"],["sosh","نامه‌های سوشیانت"],["archive","همه‌ی نامه‌ها"]],
   scholar:[["applied","اقدام‌شده و در دست بررسی"],["human","مسئول انسانی"],["doing","در دست اقدام"],["todo","اقدام‌نشده"],["profile","مشخصات و رزومه من"],["cv","رزومه محمد پارسا سهرابی"]],
   articles:[["applied","اقدام‌شده و در دست بررسی"],["doing","در دست اقدام"],["todo","اقدام‌نشده"],["product","محصول ویژه‌ی مقاله"],["claude","تسک برای Claude"],["evidence","شواهد و داده‌ی واقعی"],["submit","ثبت چکیده و ثبت‌نام (مسئول انسانی)"],["list","فهرست کامل"],["pipe","خط لوله تا ویزا"],["mail","مسیر ایمیل: ثبت · تاییدیه · مقاله کامل"],["ready","آمادگی ثبت (۶ معیار)"],["upload","آپلود داده‌ها"],["access","دسترسی افراد"]],
   patent:[["home","پتنت‌ها"],["human","مسئول انسانی"],["ops","فرصت‌های ثبت اختراع"],["products","محصولات ریپو"]]
@@ -208,7 +208,7 @@ const S = {mod:"market", sub:"iran", q:"", db:null, user:null, assets:null, samp
   me:{id:null,isOwner:false,canEdit:false}, canWrite:null,
   m:{tenders:[],events:[],investors:[],leads:[],partners:[]}, opsList:[],
   settings:{}, members:[], tasks:[], letters:[], lettersArchive:[], lh:null, draft:null, archF:"all", ra:{member:null,from:"",to:""}, repLoaded:false, allLoaded:false, forceFull:false, products:[], patents:[], finance:[], clients:[], tracking:{}, schol:[], sp:{}, cdocs:{}, ip:{countries:{},drafts:{}}, ipTab:"partners", news:{items:[]}, bi:{list:[]}, arts:[], tn:[], tnF:{src:"",ai:false,dom:"",st:""}, artRec:{}, artProd:{}, artSt:{}, artAcc:{ids:[]}, artDeny:{ids:[]}, artMail:{}, ct:[], artF:{field:"",mode:"",type:"",past:false},
-  myAtt:[], myReports:[], allReports:[], allAtt:[], loaded:false, sprints:[], boardMine:false, tour:null, got:new Set(), welcomed:false, calMine:false, calTypes:null, seenTasks:new Set(), taskWho:""};
+  myAtt:[], myReports:[], allReports:[], allAtt:[], loaded:false, sprints:[], boardMine:false, tour:null, got:new Set(), welcomed:false, calMine:false, calTypes:null, seenTasks:new Set(), taskWho:"", taskFilter:"", subsAll:false, erpLog:{}, erpDept:""};
 try{const v=JSON.parse(localStorage.getItem("ppt-view")||"{}");if(v.mod&&SUBS[v.mod]){S.mod=v.mod;S.sub=SUBS[v.mod].some(x=>x[0]===v.sub)?v.sub:SUBS[v.mod][0][0]}}catch(e){}
 try{S.seenTasks=new Set(JSON.parse(localStorage.getItem("ppt-seen")||"[]"))}catch(e){}
 
@@ -261,6 +261,7 @@ function subscribe(){
     }, () => {});
   }
   S.db.collection("tracking").onSnapshot(snap => { const t={}; snap.docs.forEach(d=>t[d.id]=d.data()); S.tracking=t; render(); }, ()=>{});
+  S.db.collection("erp_log").onSnapshot(snap => { const t={}; snap.docs.forEach(d=>t[d.id]=d.data()); S.erpLog=t; render(); }, ()=>{});   // erp_log/<duty id>: {last_done, by, at, count}
   S.db.collection("assign").onSnapshot(snap => { const t={}; snap.docs.forEach(d=>t[d.id]=d.data()); S.asg=t; render(); }, ()=>{});   // assign/<item key>: {mod,title,doer,selector,task,log}
   S.db.doc("settings/intl_partners").onSnapshot(d => { S.ip = d.exists ? d.data() : {countries:{},drafts:{}}; render(); }, ()=>{});
   S.db.doc("settings/news").onSnapshot(d => { S.news = d.exists ? d.data() : {items:[]}; render(); }, ()=>{});
@@ -388,7 +389,13 @@ function paintNav(){
   else if(AREA_KINDS[S.mod]&&areaAccess(S.mod)==="mine") S.sub="mine";
   { const vs=visibleSubs(S.mod); if(vs.length&&!vs.some(x=>x[0]===S.sub)&&!(AREA_KINDS[S.mod]&&areaAccess(S.mod)==="mine")) S.sub=vs[0][0]; }
   $("#mods").innerHTML = visibleModules().map(([k,l])=>`<button role="tab" aria-selected="${k===S.mod}" data-act="mod" data-k="${k}">${l}</button>`).join("");
-  $("#subs").innerHTML = ((AREA_KINDS[S.mod]&&areaAccess(S.mod)==="mine")?[["mine","تسک‌های من"]]:visibleSubs(S.mod)).map(([k,l])=>`<button role="tab" aria-selected="${k===S.sub}" data-act="sub" data-k="${k}">${esc(l)}</button>`).join("")
+  { let subs=(AREA_KINDS[S.mod]&&areaAccess(S.mod)==="mine")?[["mine","تسک‌های من"]]:visibleSubs(S.mod), more="";
+    if(S.mod==="bpms"&&!S.subsAll){   // BPMS has 16 sections; show the daily ones and fold the rest behind one button
+      const core=new Set(["home","myday","tasks","board",...(mindBlocked()?["mind"]:[])]), rest=subs.filter(([k])=>!core.has(k)&&k!==S.sub);
+      if(rest.length){ subs=subs.filter(([k])=>core.has(k)||k===S.sub); more=`<button class="btn sm ghost" data-act="subs-more" aria-expanded="false">بیشتر (${faNum(rest.length)}) ▾</button>`; } }
+    else if(S.mod==="bpms") more=`<button class="btn sm ghost" data-act="subs-more" aria-expanded="true">کمتر ▴</button>`;
+    S.subsHtml=subs.map(([k,l])=>`<button role="tab" aria-selected="${k===S.sub}" data-act="sub" data-k="${k}">${esc(l)}</button>`).join("")+more; }
+  $("#subs").innerHTML = S.subsHtml
     + `<input id="search" placeholder="جست‌وجو…" value="${esc(S.q)}" style="margin-inline-start:auto;min-width:160px">`;
   $("#search").oninput = e => { S.q = e.target.value.trim().toLowerCase(); renderView(); };
   try{localStorage.setItem("ppt-view",JSON.stringify({mod:S.mod,sub:S.sub}))}catch(e){}
@@ -847,6 +854,46 @@ VIEWS["erp.overview"] = () => {
   `<div class="grid2"><div class="card"><h3>TRL محصولات</h3>${[1,2,3,4,5,6,7,8,9].map(n=>{const c=p.filter(x=>Number(x.trl)===n).length;return c?`<div class="row"><span class="mono" style="width:44px">TRL ${n}</span><span style="height:10px;background:var(--brand);border-radius:2px;width:${c*18}px;max-width:70%"></span><span class="meta">${faNum(c)}</span></div>`:""}).join("")||'<p class="meta">پس از همگام‌سازی نمایش داده می‌شود.</p>'}</div>
    <div class="card"><h3>نیروها بر اساس نوع</h3>${Object.entries(STAFF).map(([k,l])=>`<div class="row"><span style="flex:1">${l}</span><b class="mono">${faNum(mem.filter(m=>m.staff_type===k).length)}</b></div>`).join("")}</div></div>`;
 };
+// ---------- ERP: the company's standing operations (finance, HR, sales, assets, legal, products), each with an owner and a due date
+const ERP_DEPTS = {fin:"مالی و حسابداری",hr:"منابع انسانی",sales:"فروش و مشتریان",it:"دارایی و فناوری",legal:"حقوقی و اسناد",prod:"محصولات و پژوهش"};
+const ERP_PERIOD = {weekly:["هفتگی",7],monthly:["ماهانه",30],quarterly:["فصلی",91],yearly:["سالانه",365]};
+const ERP_OPS = [
+ {id:"fin_budget",d:"fin",p:"monthly",t:"بودجه‌ی ماهانه و پیش‌بینی جریان نقد",x:"درآمد و هزینه‌ی ماه آینده، تعهدات بیمه و مالیات و حقوق، و کسری یا مازاد نقدینگی را بنویسید.",go:["erp","finance"]},
+ {id:"fin_payroll",d:"fin",p:"monthly",t:"حقوق و دستمزد",x:"محاسبه‌ی حقوق بر پایه‌ی ساعت کار ثبت‌شده، کسورات و پرداخت؛ لیست پرداخت را در «مالی» ثبت کنید.",go:["erp","finance"]},
+ {id:"fin_insurance",d:"fin",p:"monthly",t:"لیست و پرداخت بیمه‌ی تأمین اجتماعی",x:"ارسال لیست ماهانه و پرداخت حق بیمه پیش از مهلت.",go:["erp","finance"]},
+ {id:"fin_vat",d:"fin",p:"quarterly",t:"اظهارنامه و پرداخت مالیات (ارزش افزوده و عملکرد)",x:"تهیه‌ی اظهارنامه با اسناد و فاکتورهای دوره و ثبت پرداخت.",go:["erp","finance"]},
+ {id:"fin_bank",d:"fin",p:"monthly",t:"تطبیق بانکی و بستن دفتر ماه",x:"تطبیق صورت‌حساب بانک با دفتر و ثبت اختلاف‌ها.",go:["erp","finance"]},
+ {id:"fin_receivable",d:"fin",p:"monthly",t:"صدور صورت‌حساب و پیگیری مطالبات مشتریان",x:"صورت‌حساب‌های سررسیدشده را صادر و مطالبات معوق را پیگیری کنید.",go:["erp","clients"]},
+ {id:"hr_attendance",d:"hr",p:"monthly",t:"بازبینی حضور و ساعت کار اعضا",x:"ورودهای «بدون تأیید موقعیت» را تأیید و خروج‌های خودکار ۱۷:۰۰ را بررسی کنید؛ ساعت کار خالص ماه را برای حقوق نهایی کنید.",go:["bpms","rarchive"]},
+ {id:"hr_onboard",d:"hr",p:"monthly",t:"اعضای جدید: ثبت‌نام، قرارداد محرمانگی، فرم آموزش و ذهن‌نگار",x:"مطمئن شوید هر عضو جدید مشخصات، امضا و اثر انگشت، قرارداد محرمانگی، فرم آموزش و آزمون ذهن‌نگار را کامل کرده است.",go:["bpms","members"]},
+ {id:"hr_review",d:"hr",p:"monthly",t:"ارزیابی عملکرد و بازخورد به اعضا",x:"گزارش‌های روزانه و نمره‌ها را مرور و برای اعضای با نمره‌ی پایین یا بدون گزارش برنامه‌ی بهبود بنویسید.",go:["bpms","rarchive"]},
+ {id:"sales_funnel",d:"sales",p:"weekly",t:"بازبینی قیف پروژه‌ها (Project Tracking)",x:"مسئول، مرحله و اقدام بعدی هر پروژه را به‌روز و پروژه‌های بدون مسئول را واگذار کنید.",go:["market","tracking"]},
+ {id:"sales_rfp",d:"sales",p:"weekly",t:"ثبت نهایی دست‌کم یک RFP داخلی و یک RFP بین‌المللی",x:"از Iran AI Projects و Overseas AI Projects مناسب‌ترین فرصت باز را انتخاب و پیشنهاد را آماده و ثبت نهایی کنید.",go:["market","iran"]},
+ {id:"sales_clients",d:"sales",p:"monthly",t:"مشتریان و قراردادها",x:"مرحله‌ی هر مشتری (معرفی تا قرارداد اصلی)، تمدید قراردادها و گام بعدی را به‌روز کنید.",go:["erp","clients"]},
+ {id:"it_backup",d:"it",p:"weekly",t:"پشتیبان‌گیری کامل از داشبورد",x:"فایل JSON کامل را دریافت و روی یک مکان دوم ذخیره کنید.",go:["erp","backup"]},
+ {id:"it_infra",d:"it",p:"quarterly",t:"بازبینی سرور، دامنه‌ها و گواهی SSL",x:"تاریخ انقضای دامنه و گواهی، فضای دیسک و پشتیبان سرور را بررسی کنید.",go:null},
+ {id:"it_tools",d:"it",p:"quarterly",t:"بازبینی اشتراک‌ها و ابزارها",x:"اشتراک‌های فعال، هزینه و حساب‌های دسترسی را مرور و موارد بلااستفاده را قطع کنید.",go:null},
+ {id:"legal_docs",d:"legal",p:"quarterly",t:"به‌روزرسانی مدارک رسمی شرکت‌ها",x:"روزنامه‌ی رسمی، گواهی‌ها و رزومه‌ی شرکت پترو پالاتوس و پارسا اینت را برای RFPها نگه دارید.",go:["market","docs_ir"]},
+ {id:"legal_ip",d:"legal",p:"monthly",t:"پیگیری ثبت اختراع و علائم",x:"وضعیت پرونده‌ها، مهلت پاسخ و فرصت‌های جدید ثبت اختراع را بررسی کنید.",go:["patent","home"]},
+ {id:"prod_trl",d:"prod",p:"monthly",t:"ارتقای TRL: داده‌ی واقعی و اندازه‌گیری",x:"داده‌ی واقعی هر محصول را دانلود، در الگوریتم جانمایی و نتیجه را در «داده‌ی واقعی و ارتقای TRL» ثبت کنید.",go:["basket","trl"]},
+ {id:"prod_articles",d:"prod",p:"weekly",t:"مقاله‌ها: ثبت کامل و پیگیری",x:"وضعیت، شماره‌ی پیگیری، گام بعدی و مسیر ایمیل هر مقاله را کامل ثبت کنید.",go:["articles","list"]},
+ {id:"prod_events",d:"prod",p:"monthly",t:"رویدادها و فراخوان‌ها",x:"رویدادهای ۶۰ روز آینده و مهلت ثبت‌نام آن‌ها را بررسی و نمایندگان را مشخص کنید.",go:["events","all"]}
+];
+function erpDue(o){ const lg=(S.erpLog||{})[o.id], days=ERP_PERIOD[o.p][1];
+  if(!lg||!lg.last_done) return {never:true,due:today(),late:true,left:0};
+  const due=addDays(lg.last_done,days), left=daysBetween(today(),due); return {never:false,due,late:left<0,left}; }
+VIEWS["erp.ops"] = () => {
+  const mine=o=>(asgOf("erp_"+o.id)||{}).doer===S.me.id;
+  const all=ERP_OPS.filter(o=>isAdmin()||mine(o));
+  if(!all.length) return `<p class="empty">موردی از برنامه‌ی عملیات به شما واگذار نشده است. مدیر هر مورد را به یک نفر واگذار می‌کند یا خودتان در این صفحه برمی‌دارید.</p>`;
+  const dept=S.erpDept, list=all.filter(o=>(!dept||o.d===dept)&&match(o.t,o.x,ERP_DEPTS[o.d]));
+  const asg=o=>(asgOf("erp_"+o.id)||{}).doer, late=all.filter(o=>erpDue(o).late);
+  return `<p class="note">برنامه‌ی عملیات تکرارشونده‌ی شرکت در شش بخش ERP. هر مورد یک انجام‌دهنده دارد (واگذاری یا انتخاب شخصی)، دوره‌ی تکرار و تاریخ سررسید بعدی نشان داده می‌شود و پس از انجام، «ثبت انجام» تاریخ را جلو می‌برد. موارد سررسید یا انجام‌نشده در بالا می‌آیند.</p>`+
+   kpis([["مورد عملیات",faNum(all.length)],["واگذارشده",faNum(all.filter(asg).length)],["بدون انجام‌دهنده",faNum(all.filter(o=>!asg(o)).length),all.some(o=>!asg(o))],["سررسید یا انجام‌نشده",faNum(late.length),late.length>0]])+
+   `<div class="toolbar"><button class="btn sm ${dept?"ghost":"sig"}" data-act="erp-dept" data-d="">همه</button>${Object.entries(ERP_DEPTS).map(([k,l])=>`<button class="btn sm ${dept===k?"sig":"ghost"}" data-act="erp-dept" data-d="${k}">${esc(l)} (${faNum(all.filter(o=>o.d===k).length)})</button>`).join("")}</div>`+
+   (list.length?table(["بخش","مورد","دوره","سررسید","وضعیت","انجام‌دهنده و واگذاری",""],list.sort((a,b)=>(erpDue(b).late-erpDue(a).late)||erpDue(a).due.localeCompare(erpDue(b).due)).map(o=>{ const du=erpDue(o), lg=(S.erpLog||{})[o.id]||{}, a=asgOf("erp_"+o.id)||{}, can=isAdmin()||a.doer===S.me.id;
+     return `<tr>${td("بخش",esc(ERP_DEPTS[o.d]))}${td("مورد",`<b>${esc(o.t)}</b><br><span class="meta">${esc(o.x)}</span>`,"t")}${td("دوره",esc(ERP_PERIOD[o.p][0]))}${td("سررسید",du.never?'<span class="pill p-warn">هنوز انجام نشده</span>':`${faDate(du.due)}<br><span class="meta">${du.left<0?faNum(-du.left)+" روز گذشته":faNum(du.left)+" روز دیگر"}</span>`)}${td("وضعیت",du.late?'<span class="pill p-bad">سررسید</span>':'<span class="pill p-ok">به‌روز</span>')}${td("انجام‌دهنده",asgCell("erp_"+o.id,o.t,"erp")+(lg.last_done?`<div class="meta">آخرین انجام: ${faDate(lg.last_done)} · ${esc(asgWho(lg.by))}${lg.count?` · ${faNum(lg.count)} بار`:""}</div>`:""))}${td("",`${can?`<button class="btn sm sig" data-act="erp-done" data-id="${esc(o.id)}">ثبت انجام</button> `:""}${o.go?`<button class="btn sm ghost" data-act="goto" data-mod="${o.go[0]}" data-sub="${o.go[1]}">باز کردن بخش</button>`:""}`)}</tr>`}),"موردی با این فیلتر نیست."):'<p class="empty">موردی با این فیلتر نیست.</p>');
+};
 VIEWS["erp.domains"] = () => {
   const d = (S.settings.domains && S.settings.domains.length) ? S.settings.domains : DOMAINS_DEFAULT;
   return `<div class="grid2">${d.map(x=>`<div class="card"><h3>${esc(x.name)} ${x.suggested?'<span class="pill p-warn">پیشنهاد</span>':""}</h3><p>${esc(x.desc)}</p><p class="meta">محصولات: ${esc(S.products.filter(p=>(p.domains_fa||[]).includes(x.k)).map(p=>p.name).join("، ")||"—")}</p></div>`).join("")}</div>`;
@@ -933,18 +980,28 @@ function myMember(){ return S.members.find(m=>m.id===S.me.id); }
 VIEWS["bpms.home"] = () => {
   const me=myMember(), my=S.tasks.filter(t=>t.assignee===S.me.id&&!["done","approved"].includes(t.status)), due=my.filter(t=>t.due&&t.due<=today()), att=S.myAtt.find(a=>a.id===today());
   const miss=me?missingReportDays(me).length:0;
-  const pend=[]; if(me&&needsNda(me)&&!ndaSigned(me)) pend.push(["nda","قرارداد محرمانگی را امضا کنید"]); if(me&&needsTraining(me)&&!trainingDone(me)) pend.push(["training","فرم آموزش را تأیید کنید"]); if(me&&!hasProof(me)) pend.push(["members","امضا و اثر انگشت خود را ثبت کنید"]);
-  const grp=(title,items)=>`<div class="card"><h3 style="margin:0 0 8px">${title}</h3><div class="row" style="gap:8px;flex-wrap:wrap">${items.map(([k,l,hint])=>`<button class="btn ${k==="__task"||k==="__report"?"sig":"ghost"}" data-act="${k==="__task"?"task-new":k==="__report"?"report-new":"sub"}" data-k="${k}" title="${esc(hint||"")}">${esc(l)}</button>`).join("")}</div></div>`;
-  return `<p class="note">همه‌ی کارهای BPMS از همین صفحه شروع می‌شود. دکمه‌ی قرمز یعنی ساخت چیز جدید؛ دکمه‌ی خاکستری یعنی رفتن به بخش.</p>`+
-   kpis([["تسک‌های باز من",faNum(my.length),my.length>0],["مهلت امروز یا گذشته",faNum(due.length),due.length>0],["گزارش ثبت‌نشده",faNum(miss),miss>0],["ورود امروز",att&&att.in?att.in:"ثبت نشده"]])+
-   (pend.length?`<div class="banner bad"><b>کارهای معوق شما:</b> ${pend.map(([k,l])=>`<button class="btn sm sig" data-act="sub" data-k="${k}">${esc(l)}</button>`).join(" ")}</div>`:"")+
-   `<div class="grid2">`+
-   grp("امروز",[["myday","روز من (ورود و خروج)"],["__report","ثبت گزارش امروز"],["__task","تسک جدید"]])+
-   grp("کار و تسک",[["board","تخته‌ی اسکرام"],["tasks","فهرست تسک‌ها"],["backlog","بک‌لاگ و برنامه‌ریزی"],["sprints","اسپرینت‌ها"]])+
+  const pend=[]; if(mindBlocked()) pend.push(["mind","آزمون ذهن‌نگار را کامل کنید (برای ثبت ورود و گزارش لازم است)"]); if(me&&needsNda(me)&&!ndaSigned(me)) pend.push(["nda","قرارداد محرمانگی را امضا کنید"]); if(me&&needsTraining(me)&&!trainingDone(me)) pend.push(["training","فرم آموزش را تأیید کنید"]); if(me&&!hasProof(me)) pend.push(["members","امضا و اثر انگشت خود را ثبت کنید"]);
+  if(me&&!(att&&att.in)) pend.push(["myday","ورود امروز را ثبت کنید"]); if(miss) pend.push(["reports",`${faNum(miss)} گزارش عملکرد ثبت‌نشده دارید`]);
+  // my work, most urgent first: overdue, due today, then by due date
+  const rank=t=>t.due&&t.due<today()?0:t.due===today()?1:2, mine=[...my].sort((a,b)=>rank(a)-rank(b)||(a.due||"9").localeCompare(b.due||"9")||(PRI_RANK[a.priority]??1)-(PRI_RANK[b.priority]??1));
+  const row=t=>`<div class="row" style="gap:8px;align-items:center;padding:6px 0;border-bottom:1px solid var(--line)"><span style="flex:1;min-width:180px"><b>${esc(t.title)}</b><br><span class="meta">${t.due?(t.due<today()?`<span class="p-bad">عقب‌افتاده از ${faDate(t.due)}</span>`:t.due===today()?'<span class="p-warn">مهلت امروز</span>':faDate(t.due)):"بدون مهلت"} · ${esc(TASK_ST[t.status])}${t.priority==="high"?' · <span class="p-bad">فوری</span>':""}</span></span>${t.status==="todo"?`<button class="btn sm ghost" data-act="task-st" data-id="${esc(t.id)}" data-st="doing">شروع</button>`:""}<button class="btn sm" data-act="task-st" data-id="${esc(t.id)}" data-st="done">انجام شد</button><button class="btn sm ghost" data-act="task-edit" data-id="${esc(t.id)}">ویرایش</button></div>`;
+  const toApprove=S.tasks.filter(t=>t.status==="done"&&t.assignee!==S.me.id&&(t.created_by===S.me.id||isAdmin())).slice(0,6);
+  const team=isAdmin()?S.members.map(m=>({m,open:S.tasks.filter(t=>t.assignee===m.id&&!["done","approved"].includes(t.status)),})).map(x=>({...x,late:x.open.filter(t=>t.due&&t.due<today()).length})).sort((a,b)=>b.late-a.late||b.open.length-a.open.length).slice(0,8):[];
+  const grp=(title,items)=>`<div class="card"><h3 style="margin:0 0 8px">${title}</h3><div class="row" style="gap:8px;flex-wrap:wrap">${items.map(([k,l,hint])=>`<button class="btn ghost" data-act="sub" data-k="${k}" title="${esc(hint||"")}">${esc(l)}</button>`).join("")}</div></div>`;
+  return kpis([["تسک‌های باز من",faNum(my.length),my.length>0],["مهلت امروز یا گذشته",faNum(due.length),due.length>0],["گزارش ثبت‌نشده",faNum(miss),miss>0],["ورود امروز",att&&att.in?att.in:"ثبت نشده"]])+
+   (pend.length?`<div class="banner bad"><b>اول این‌ها:</b> ${pend.map(([k,l])=>`<button class="btn sm sig" data-act="sub" data-k="${k}">${esc(l)}</button>`).join(" ")}</div>`:"")+
+   `<div class="grid2"><div class="card"><h3 style="margin:0 0 6px">کارهای من (${faNum(mine.length)})</h3>
+     <div class="row" style="gap:6px;margin-bottom:8px"><input id="qtTitle" placeholder="تسک سریع: عنوان را بنویسید و Enter بزنید" style="flex:1;min-width:160px"><button class="btn sig" data-act="task-quick">افزودن</button></div>
+     ${mine.length?mine.slice(0,8).map(row).join("")+(mine.length>8?`<p class="meta" style="margin-top:6px">${faNum(mine.length-8)} تسک دیگر در <a href="#" data-act="sub" data-k="tasks">فهرست تسک‌ها</a></p>`:""):'<p class="meta">تسک بازی ندارید. عنوان بنویسید تا یکی بسازید.</p>'}</div>
+    <div class="stack">
+     ${toApprove.length?`<div class="card"><h3 style="margin:0 0 6px">منتظر تأیید شما (${faNum(toApprove.length)})</h3>${toApprove.map(t=>`<div class="row" style="gap:8px;align-items:center;padding:4px 0"><span style="flex:1"><b>${esc(t.title)}</b><br><span class="meta">${esc(memberName(t.assignee))}</span></span><button class="btn sm sig" data-act="task-st" data-id="${esc(t.id)}" data-st="approved">تأیید</button></div>`).join("")}</div>`:""}
+     ${team.length?`<div class="card"><h3 style="margin:0 0 6px">وضعیت تیم</h3>${table(["نام","تسک باز","عقب‌افتاده"],team.map(x=>`<tr>${td("نام",`<a href="#" data-act="who-go" data-m="${esc(x.m.id)}">${esc(x.m.full_name||x.m.id)}</a>`,"t")}${td("باز",faNum(x.open.length))}${td("عقب‌افتاده",x.late?`<span class="p-bad">${faNum(x.late)}</span>`:"—")}</tr>`))}</div>`:""}
+     <div class="card"><h3 style="margin:0 0 8px">میان‌بر</h3><div class="row" style="gap:8px;flex-wrap:wrap"><button class="btn sig" data-act="report-new">ثبت گزارش امروز</button><button class="btn" data-act="task-new">تسک کامل جدید</button><button class="btn ghost" data-act="sub" data-k="myday">ورود و خروج</button><button class="btn ghost" data-act="sub" data-k="board">تخته‌ی اسکرام</button></div></div></div></div>`+
+   `<details style="margin-top:12px"><summary>همه‌ی بخش‌های BPMS</summary><div class="grid2" style="margin-top:8px">`+
+   grp("کار و تسک",[["tasks","فهرست تسک‌ها"],["backlog","بک‌لاگ و برنامه‌ریزی"],["sprints","اسپرینت‌ها"],["calendar","تقویم"]])+
    grp("گزارش",[["reports","گزارش‌های من"],["rarchive","بایگانی گزارش‌ها"]])+
-   grp("تیم و ارتباط",[["contacts","مخاطبین و ارتباط (تماس، ایمیل، تلگرام)"],["members","اعضا و ثبت‌نام"],["teams","تیم‌ها"],["calendar","تقویم"],["process","فرایندها"]])+
-   grp("اسناد من",[["nda","قرارداد محرمانگی"],["training","فرم آموزش"]])+
-   `</div>`;
+   grp("تیم و ارتباط",[["contacts","مخاطبین و ارتباط"],["members","اعضا و ثبت‌نام"],["teams","تیم‌ها"],["process","فرایندها"]])+
+   grp("اسناد من",[["mind","ذهن‌نگار"],["nda","قرارداد محرمانگی"],["training","فرم آموزش"]])+`</div></details>`;
 };
 function contactLinks(m){
   const out=[]; const tg=String(m.telegram||"").trim(), ph=String(m.phone||"").replace(/[^\d+]/g,""), em=String(m.email||"").trim();
@@ -1195,8 +1252,10 @@ VIEWS["bpms.tasks"] = () => {
   const people=ids.map(id=>({id,name:memberName(id),n:S.tasks.filter(t=>t.assignee===id).length,open:open(id)})).filter(x=>x.n||S.members.some(m=>m.id===x.id)).sort((a,b)=>b.open-a.open||a.name.localeCompare(b.name,"fa"));
   if(S.taskWho&&!people.some(x=>x.id===S.taskWho)) S.taskWho="";
   const strip=`<div class="row" style="gap:6px;flex-wrap:wrap;margin-bottom:10px" role="group" aria-label="افراد"><button class="btn sm ${S.taskWho?"ghost":"sig"}" data-act="task-who" data-m="">همه (${faNum(S.tasks.length)})</button>${people.map(x=>`<button class="btn sm ${S.taskWho===x.id?"sig":"ghost"}" data-act="task-who" data-m="${esc(x.id)}">${esc(x.name)} <span class="meta">(${faNum(x.open)} باز از ${faNum(x.n)})</span></button>`).join("")}</div>`;
-  const list=S.tasks.filter(t=>(!S.taskWho||t.assignee===S.taskWho)&&match(t.title,memberName(t.assignee),TEAMS[t.team])).sort((a,b)=>(a.due||"9").localeCompare(b.due||"9"));
-  return strip+`<div class="toolbar"><button class="btn" data-act="task-new">تعریف تسک</button><span class="meta">فهرست کامل همه‌ی تسک‌ها. کار روزانه‌ی تیم روی «تخته‌ی اسکرام» انجام می‌شود. تسکی که عضو برای خودش تعریف کند به مدیر اعلان می‌شود؛ تسکی که مدیر تعریف کند به عضو.</span></div>`+
+  const QF={"":["همه",()=>true],mine:["مال من",t=>t.assignee===S.me.id],open:["باز",t=>!isDone(t)],today:["مهلت امروز",t=>t.due===today()&&!isDone(t)],late:["عقب‌افتاده",t=>t.due&&t.due<today()&&!isDone(t)],wait:["منتظر تأیید",t=>t.status==="done"]};
+  const qfStrip=`<div class="row" style="gap:6px;flex-wrap:wrap;margin-bottom:10px" role="group" aria-label="فیلتر">${Object.entries(QF).map(([k,[l,f]])=>`<button class="btn sm ${S.taskFilter===k?"sig":"ghost"}" data-act="task-filter" data-k="${k}">${l} (${faNum(S.tasks.filter(t=>(!S.taskWho||t.assignee===S.taskWho)&&f(t)).length)})</button>`).join("")}</div>`;
+  const list=S.tasks.filter(t=>(!S.taskWho||t.assignee===S.taskWho)&&(QF[S.taskFilter]||QF[""])[1](t)&&match(t.title,memberName(t.assignee),TEAMS[t.team])).sort((a,b)=>(a.due||"9").localeCompare(b.due||"9"));
+  return strip+qfStrip+`<div class="toolbar"><button class="btn" data-act="task-new">تعریف تسک</button><span class="meta">فهرست کامل همه‌ی تسک‌ها. کار روزانه‌ی تیم روی «تخته‌ی اسکرام» انجام می‌شود. تسکی که عضو برای خودش تعریف کند به مدیر اعلان می‌شود؛ تسکی که مدیر تعریف کند به عضو.</span></div>`+
   kpis([["کل",faNum(list.length)],["جهت انجام",faNum(list.filter(t=>t.status==="todo").length)],["در حال انجام",faNum(list.filter(t=>t.status==="doing").length)],["عقب‌افتاده",faNum(list.filter(t=>t.due&&t.due<today()&&!isDone(t)).length),true]])+taskTable(list);
 };
 
@@ -2219,21 +2278,23 @@ async function fillLetterTemplate(entries, L, C, sig){
   } finally { WD.font=true; }
 }
 // A finished letter (its own .docx kept as the master): only the number and date in the header change, optionally the recipient's name line.
-async function restampDocx(entries, number, dateStr, recipientLine, signerLine){
+async function restampDocx(entries, number, dateStr, recipientLine, signerLine, orgLine){
   const dec=new TextDecoder(), enc=new TextEncoder(); let n=0;
   for(const e of entries){
     if(/^word\/(header|footer)\d*\.xml$/.test(e.name)){ const r=fillHeaderMeta(dec.decode(e.data),{number,date:dateStr,attachments:null}); if(r.n){ e.data=enc.encode(r.xml); n+=r.n; } }
   }
-  if(recipientLine||signerLine){
+  if(recipientLine||signerLine||orgLine){
     const e=entries.find(x=>x.name==="word/document.xml"), doc=dec.decode(e.data), open=doc.match(/<w:body[^>]*>/);
     const sm=doc.match(/(<w:sectPr(?:(?!<w:sectPr)[\s\S])*<\/w:sectPr>)\s*<\/w:body>/);
     if(open&&sm){
       const from=open.index+open[0].length, segs=topSegments(doc.slice(from,sm.index));
       const i=recipientLine?segs.findIndex(g=>g.p&&/^(?:جناب|سرکار)/.test(plainText(g.xml).replace(/\u200c/g,"").trim())):-1;
       if(i>=0) segs[i].xml=withText(segs[i].xml,recipientLine);
+      const oi=orgLine?segs.findIndex(g=>g.p&&/^مدیر\s*عامل\s+محترم/.test(plainText(g.xml).replace(/\u200c/g," ").trim())):-1;
+      if(oi>=0) segs[oi].xml=withText(segs[oi].xml,orgLine);   // official company name line under the addressee
       const k=signerLine?segs.findIndex(g=>g.p&&!/<w:drawing/.test(g.xml)&&/\S[^\n]*[–-]\s*مدیر\s*عامل\s*$/.test(plainText(g.xml).trim())&&plainText(g.xml).trim().length<60):-1;
       if(k>=0) segs[k].xml=withText(segs[k].xml,signerLine);   // typed name under the sign-off; the signature and stamp pictures stay
-      if(i>=0||k>=0) e.data=enc.encode(doc.slice(0,from)+segs.map(g=>g.xml).join("")+doc.slice(sm.index));
+      if(i>=0||k>=0||oi>=0) e.data=enc.encode(doc.slice(0,from)+segs.map(g=>g.xml).join("")+doc.slice(sm.index));
     }
   }
   return {bytes:await zipStore(entries), stamped:n};
@@ -2265,7 +2326,7 @@ async function packDoc(assetId, key){
 async function makeLetterDocx(l){
   if(l.src_pack){   // a finished letter prepared in Word: its own file is the master; only number/date (and the recipient's name line) are refreshed
     const j=jalaliParts(l.date);
-    return (await restampDocx(await unzip(await packDoc(l.src_pack,l.src_key)), l.number, `${j.y}/${j.m}/${j.d}`, String(l.recipient_line||"").trim(), String(l.signer_line||"").trim())).bytes;
+    return (await restampDocx(await unzip(await packDoc(l.src_pack,l.src_key)), l.number, `${j.y}/${j.m}/${j.d}`, String(l.recipient_line||"").trim(), String(l.signer_line||"").trim(), String(l.org_line||"").trim())).bytes;
   }
   const st=S.settings, lh=l.identity==="soshiant"?S.lhs:S.lh, ceo=S.members.find(m=>m.id===st.ceo_member);
   const sigId = l.ceo_sig ? (l.ceo_sig.asset||st.ceo_sig_asset) : null;
@@ -2298,10 +2359,21 @@ const intlId = () => { const st=S.settings; return {name:st.intl_name||INTL_DEFA
 const enDate = d => { try{ return new Intl.DateTimeFormat("en-GB",{day:"numeric",month:"long",year:"numeric"}).format(new Date((d||today())+"T12:00:00")); }catch(e){ return d||""; } };
 function nextLetterNo(identity,date){
   if(identity==="intl"){ const y=new Date().getFullYear(); const n=S.letters.filter(l=>(l.number||"").startsWith(`PIG-${y}-`)).length+1; return `PIG-${y}-${String(n).padStart(4,"0")}`; }
-  const j=jalaliParts(date||today()), prefix=j.y+j.m+j.d, n=S.letters.filter(l=>String(l.number||"").startsWith(prefix)).length+1;
-  return prefix+String(n).padStart(3,"0");   // e.g. 14050714001: Jalali year, month, day and a 3-digit serial
+  // at most LETTER_DAY_CAP letters carry the same day's date; the next one is dated the following day (and the draft's date moves with it)
+  const start=date||today(), used=new Set(S.letters.map(l=>String(l.number||"")));
+  let day=start;
+  for(let g=0; g<120; g++){
+    const j=jalaliParts(day), prefix=j.y+j.m+j.d, n=S.letters.filter(l=>String(l.number||"").startsWith(prefix)).length;
+    if(n<LETTER_DAY_CAP){
+      let s=n+1, num; do{ num=prefix+String(s).padStart(3,"0"); s++; }while(used.has(num));
+      if(day!==start&&S.draft&&S.draft.numAuto){ S.draft.date=day; toast("سقف "+faNum(LETTER_DAY_CAP)+" نامه در روز تکمیل است؛ تاریخ نامه به روز بعد منتقل شد."); }
+      return num;   // e.g. 14050714001: Jalali year, month, day and a 3-digit serial
+    }
+    day=addDays(day,1);
+  }
 }
-function getDraft(){ if(!S.draft) S.draft={number:nextLetterNo("ir",today()),date:today(),numAuto:true}; return S.draft; }
+const LETTER_DAY_CAP = 20;
+function getDraft(){ if(!S.draft) S.draft={number:nextLetterNo("ir",today()),date:today(),numAuto:true,sector:"oil",identity:"ir"}; return S.draft; }
 function draftLetter(){ return {...getDraft()}; }
 
 VIEWS["letters.new"] = () => {
@@ -2313,6 +2385,8 @@ VIEWS["letters.new"] = () => {
   <div id="lhcard">${letterheadCard()}</div>
   <div class="compose"><div class="card" id="composer"><h3>${d.id?"ویرایش نامه":"نوشتن نامه‌ی جدید"}</h3>
    <p class="note">فقط محتوا را وارد کنید؛ سربرگ (لوگو، نام و نشانی شرکت)، شماره، تاریخ و جای امضا به‌صورت خودکار در فایل Word قرار می‌گیرد.</p>
+   ${fld("sector","حوزه‌ی نامه (تعیین‌کننده‌ی سربرگ)",`<select id="c_sector" data-c="sector">${Object.entries(ARCH_SECT).map(([k,l])=>`<option value="${k}"${(d.sector||"oil")===k?" selected":""}>${esc(l)} ← سربرگ ${k==="oil"?"پترو پالا توس":"سوشیانت"}</option>`).join("")}</select>`)}
+   <p class="note">نفت و گاز با سربرگ <b>پترو پالا توس</b> و همه‌ی حوزه‌های دیگر (پزشکی، آب، انرژی، نیروگاه‌ها، هلدینگ‌ها) با سربرگ <b>سوشیانت</b> تهیه و ارسال می‌شود؛ با انتخاب حوزه، هویت فرستنده خودکار تنظیم می‌شود.</p>
    ${fld("identity","هویت فرستنده",`<select id="c_identity" data-c="identity"><option value="ir"${d.identity!=="intl"?" selected":""}>ایران – پترو پالا توس (فارسی، سربرگ داخلی)</option><option value="soshiant"${d.identity==="soshiant"?" selected":""}>سوشیانت (پزشکی، سربرگ Word سوشیانت)</option><option value="intl"${d.identity==="intl"?" selected":""}>بین‌المللی – ${esc(intlId().name)} (English)</option></select>`)}
    ${d.identity==="intl"?`<p class="note">نامه به انگلیسی و با سربرگ ${esc(intlId().name)} (${esc(intlId().address)}) ساخته می‌شود؛ گیرنده، موضوع و متن را هم انگلیسی بنویسید. شماره با پیشوند PIG است.</p>`:""}
    <div class="grid2" style="gap:0 12px">${inp("number","شماره‌ی نامه","text","ltr")}${inp("date","تاریخ نامه","date")}</div>
@@ -2337,13 +2411,13 @@ function letterLedger(){
 }
 function letterMeta(id){
   const l=S.letters.find(x=>x.id===id); if(!l) return;
-  openForm({title:`نامه‌ی ${l.number} – شماره، تاریخ و گیرنده`,values:{number:l.number,date:l.date,recipient_line:l.recipient_line||""},
+  openForm({title:`نامه‌ی ${l.number} – شماره، تاریخ و گیرنده`,values:{number:l.number,date:l.date,recipient_line:l.recipient_line||"",org_line:l.org_line||""},
    extra:`<p class="note">فایل Word اصلی نامه (سربرگ، پاورقی، فهرست‌ها، امضا و مهر) همان‌طور که هست می‌ماند؛ فقط شماره و تاریخ هدر و، اگر پر کنید، سطر نام گیرنده عوض می‌شود.</p>${needsName(l)?`<div class="banner">نام مدیرعامل گیرنده در متن این نامه کامل نیست؛ سطر کامل را بنویسید، مثلاً «جناب آقای دکتر … » یا «سرکار خانم …».</div>`:""}`,
-   fields:[{k:"number",label:"شماره‌ی نامه",dir:"ltr"},{k:"date",label:"تاریخ نامه",type:"date"},{k:"recipient_line",label:"سطر نام گیرنده (مثلاً: جناب آقای دکتر … )"}],
+   fields:[{k:"number",label:"شماره‌ی نامه",dir:"ltr"},{k:"date",label:"تاریخ نامه",type:"date"},{k:"recipient_line",label:"سطر نام گیرنده (مثلاً: جناب آقای دکتر … )"},{k:"org_line",label:"سطر سمت و نام رسمی شرکت (مثلاً: مدیرعامل محترم شرکت … ؛ نام دقیق از سایت رسمی شرکت)"}],
    onSave: async v => { if(!v.number){toast("شماره را وارد کنید.");return false}
      if(S.letters.some(x=>x.number===v.number&&x.id!==id)){toast("این شماره برای نامه‌ی دیگری ثبت شده است.");return false}
      const {id:_i,...base}=l; const now=new Date().toISOString();
-     if(!await save(`letters/${id}`,{...base,number:v.number,date:v.date||l.date,recipient_line:v.recipient_line,updated:now},"ذخیره شد")) return false;
+     if(!await save(`letters/${id}`,{...base,number:v.number,date:v.date||l.date,recipient_line:v.recipient_line,org_line:v.org_line||"",...(v.org_line?{recipient:String(l.recipient||"").split("\n").slice(0,1).concat(v.org_line).join("\n")}:{}),updated:now},"ذخیره شد")) return false;
      const ar=S.lettersArchive.find(x=>x.letter_id===id); if(ar){ const {id:_a,...ab}=ar; await save(`letters_archive/${ar.id}`,{...ab,number:v.number,updated:now}); }
      return true; }});
 }
@@ -2355,7 +2429,7 @@ async function composeSubmit(){
   if(S.letters.some(l=>l.number===d.number&&l.id!==d.id)){ toast("این شماره قبلاً برای نامه‌ی دیگری ثبت شده است."); return; }
   const old=d.id?S.letters.find(x=>x.id===d.id):null;
   const id=d.id||newId();
-  const rec={...(old||{}),identity:d.identity==="intl"?"intl":d.identity==="soshiant"?"soshiant":"ir",number:v("number"),date:d.date||today(),recipient:v("recipient"),subject:v("subject"),body:v("body"),attachments:v("attachments"),cc:v("cc"),annex:v("annex"),signer:v("signer"),updated:new Date().toISOString(),created_by:(old&&old.created_by)||S.me.id};
+  const rec={...(old||{}),identity:d.identity==="intl"?"intl":d.identity==="soshiant"?"soshiant":"ir",number:v("number"),date:d.date||today(),sector:d.identity==="intl"?"":(d.identity==="soshiant"?(d.sector&&d.sector!=="oil"?d.sector:"med"):"oil"),recipient:v("recipient"),subject:v("subject"),body:v("body"),attachments:v("attachments"),cc:v("cc"),annex:v("annex"),signer:v("signer"),updated:new Date().toISOString(),created_by:(old&&old.created_by)||S.me.id};
   if(old&&(old.body!==rec.body||old.subject!==rec.subject||old.recipient!==rec.recipient)){ rec.office_sig=null; rec.ceo_sig=null; } // edited content needs fresh signatures
   delete rec.id;
   const P=prepLetter(rec); rec.subject=P.subject; rec.body=P.bodyText; rec.annex=P.annexText; rec.signer=P.signer||"";
@@ -2442,18 +2516,27 @@ const archOpen = a => a.status!=="closed" && a.stage!=="done";
 const archOverdue = a => archOpen(a) && a.next_date && a.next_date<=today();
 const archStale = a => archOpen(a) && archLast(a) && daysBetween(archLast(a),today())>14;
 const ARCH_SECT = {oil:"نفت و گاز",med:"پزشکی",water:"آب",energy:"انرژی",power:"نیروگاه‌ها",shasta:"هلدینگ شستا",hpc:"هلدینگ خلیج فارس"};
-const archView = sector => {
-  const all=S.lettersArchive.filter(a=>(!sector||a.sector===sector||(a.also||[]).includes(sector))&&match(a.subject,a.recipient,a.number,a.employer_no,a.summary));
+const IDENT_NAME = {ir:"پترو پالاتوس",soshiant:"سوشیانت"};
+const IDENT_SECTORS = {ir:["oil"],soshiant:["med","water","energy","power","shasta","hpc"]};
+const sectorIdent = k => k==="oil"?"ir":"soshiant";   // oil & gas letters go out on the Petro Pala letterhead; every other field on Soshiant's
+const archIdent = a => { if(a.identity==="soshiant"||a.identity==="ir") return a.identity; const l=a.letter_id&&S.letters.find(x=>x.id===a.letter_id); if(l&&l.identity) return l.identity==="soshiant"?"soshiant":"ir"; return a.sector?sectorIdent(a.sector):"ir"; };
+const archView = (sector0, ident) => {
+  if(ident){ if(S._asI!==ident){ S.archSec=""; S._asI=ident; } }
+  const sector = ident ? (S.archSec||null) : sector0;
+  const inIdent = ident ? S.lettersArchive.filter(a=>archIdent(a)===ident) : S.lettersArchive;
+  const secChips = ident ? `<div class="toolbar"><span class="meta">گروه:</span><button class="btn sm ${!sector?"":"ghost"}" data-act="arch-sec" data-k="">همه (${faNum(inIdent.length)})</button>${Object.keys(ARCH_SECT).filter(k=>inIdent.some(a=>a.sector===k)||IDENT_SECTORS[ident].includes(k)).map(k=>`<button class="btn sm ${sector===k?"":"ghost"}" data-act="arch-sec" data-k="${k}">${esc(ARCH_SECT[k])} (${faNum(inIdent.filter(a=>a.sector===k||(a.also||[]).includes(k)).length)})</button>`).join("")}</div>` : "";
+  const identBanner = ident ? `<div class="banner" style="border-color:${ident==="soshiant"?"var(--info)":"var(--signal)"}"><b>${ident==="soshiant"?"شرکت سوشیانت":"شرکت پترو پالا توس"}</b> — این فهرست فقط نامه‌هایی است که با سربرگ ${ident==="soshiant"?"سوشیانت":"پترو پالا توس"} صادر می‌شوند. ${ident==="soshiant"?(S.lhs?`<button class="btn sm sig" data-act="lhs-dl">دریافت فرم خام نامه (سربرگ سوشیانت)</button>`:"فایل سربرگ سوشیانت هنوز ثبت نشده است."):""}</div>` : "";
+  const all=inIdent.filter(a=>(!sector||a.sector===sector||(a.also||[]).includes(sector))&&match(a.subject,a.recipient,a.number,a.employer_no,a.summary));
   const flt={all:()=>true,active:a=>archOpen(a)&&a.status!=="stalled",stalled:a=>archOpen(a)&&a.status==="stalled",overdue:archOverdue,stale:archStale,closed:a=>!archOpen(a)}[S.archF]||(()=>true);
   const list=all.filter(flt).sort((a,b)=>(b.date||"").localeCompare(a.date||""));
   const keys=Object.keys(ARCH_STAGES);
-  return `${sector?`<h2>نامه‌های ${esc(ARCH_SECT[sector])}</h2>`:""}${sector==="med"?`<div class="banner">نامه‌های پزشکی با سربرگ شرکت سوشیانت صادر می‌شوند. ${S.lhs?`سربرگ ثبت شده است: «${esc(S.lhs.name||"")}». در «نامه‌ی جدید» هویت فرستنده را «سوشیانت» انتخاب کنید. <button class="btn sm sig" data-act="lhs-dl">دریافت فرم خام نامه (سربرگ سوشیانت)</button>`:"فایل سربرگ هنوز ثبت نشده است."}</div>`:""}${(sector==="water"||sector==="energy")?`<div class="banner">نامه‌های این گروه روی سربرگ سوشیانت ساخته می‌شوند. ${S.lhs?`<button class="btn sm sig" data-act="lhs-dl">دریافت فرم خام نامه (سربرگ سوشیانت)</button>`:"فایل سربرگ هنوز ثبت نشده است."}</div>`:""}<div class="banner">این بخش جدا از «نامه‌ی جدید» است: نامه‌هایی که ارسال می‌شوند یا ارسال شده‌اند (چه قبلاً بدون ایجنت، چه نامه‌های آماده‌شده در همین سامانه) و پیگیری‌شان. برای هر نامه مشخص است در کدام مرحله هستیم، آخرین اقدام چه بوده و گام بعدی کِی است.</div>
+  return `${ident?`<h2>نامه‌های ${esc(IDENT_NAME[ident])}${sector?` – ${esc(ARCH_SECT[sector])}`:""}</h2>${identBanner}${secChips}`:sector?`<h2>نامه‌های ${esc(ARCH_SECT[sector])}</h2>`:""}${!ident&&sector==="med"?`<div class="banner">نامه‌های پزشکی با سربرگ شرکت سوشیانت صادر می‌شوند. ${S.lhs?`سربرگ ثبت شده است: «${esc(S.lhs.name||"")}». در «نامه‌ی جدید» هویت فرستنده را «سوشیانت» انتخاب کنید. <button class="btn sm sig" data-act="lhs-dl">دریافت فرم خام نامه (سربرگ سوشیانت)</button>`:"فایل سربرگ هنوز ثبت نشده است."}</div>`:""}${(sector==="water"||sector==="energy")?`<div class="banner">نامه‌های این گروه روی سربرگ سوشیانت ساخته می‌شوند. ${S.lhs?`<button class="btn sm sig" data-act="lhs-dl">دریافت فرم خام نامه (سربرگ سوشیانت)</button>`:"فایل سربرگ هنوز ثبت نشده است."}</div>`:""}<div class="banner">این بخش جدا از «نامه‌ی جدید» است: نامه‌هایی که ارسال می‌شوند یا ارسال شده‌اند (چه قبلاً بدون ایجنت، چه نامه‌های آماده‌شده در همین سامانه) و پیگیری‌شان. برای هر نامه مشخص است در کدام مرحله هستیم، آخرین اقدام چه بوده و گام بعدی کِی است.</div>
   <div class="toolbar"><button class="btn sig" data-act="arch-new">ثبت نامه‌ی ارسال‌شده‌ی پیشین</button>${Object.entries(ARCH_F).map(([k,l])=>`<button class="btn sm ${S.archF===k?"":"ghost"}" data-act="arch-f" data-k="${k}">${esc(l)}</button>`).join("")}</div>`+
   kpis([["کل نامه‌های بایگانی",faNum(all.length)],["در جریان",faNum(all.filter(a=>archOpen(a)&&a.status!=="stalled").length)],["متوقف",faNum(all.filter(a=>archOpen(a)&&a.status==="stalled").length),all.some(a=>archOpen(a)&&a.status==="stalled")],["اقدام بعدی سررسیده",faNum(all.filter(archOverdue).length),all.some(archOverdue)],["بدون پیگیری بیش از ۱۴ روز",faNum(all.filter(archStale).length),all.some(archStale)],["بسته‌شده",faNum(all.filter(a=>!archOpen(a)).length)]])+
   table(["شماره / تاریخ ارسال","موضوع","گیرنده","پیشرفت","آخرین وضعیت","اقدام بعدی","مسئول",""], list.map(a=>{
     const i=keys.indexOf(a.stage), last=(a.log||[])[(a.log||[]).length-1], since=archLast(a)?daysBetween(archLast(a),today()):null;
     return `<tr>${td("شماره",`<span class="mono">${esc(a.number||"—")}</span><br><span class="meta">${faDate(a.date)}</span>${a.employer_no?`<br><span class="meta">کارفرما: <span class="mono">${esc(a.employer_no)}</span></span>`:""}`)}
-     ${td("موضوع",`${esc(a.subject)}${!sector&&a.sector?` <span class="pill p-mute">${esc(ARCH_SECT[a.sector]||"")}</span>`:""}${a.summary?`<br><span class="meta">${esc(a.summary)}</span>`:""}${a.scan_asset?`<br>${link(blobUrl(a.scan_asset),"فایل / تصویر نامه")}`:""}`,"t")}
+     ${td("موضوع",`${esc(a.subject)}${!ident&&!sector?` <span class="pill ${archIdent(a)==="soshiant"?"p-info":"p-warn"}">${esc(IDENT_NAME[archIdent(a)])}</span>`:""}${!sector&&a.sector?` <span class="pill p-mute">${esc(ARCH_SECT[a.sector]||"")}</span>`:""}${a.summary?`<br><span class="meta">${esc(a.summary)}</span>`:""}${a.scan_asset?`<br>${link(blobUrl(a.scan_asset),"فایل / تصویر نامه")}`:""}`,"t")}
      ${td("گیرنده",`${esc(a.recipient)}<br><span class="meta">${esc(ARCH_CH[a.channel]||"")}</span>${a.contact?`<details><summary>اطلاعات تماس</summary><span class="meta">${esc(a.contact)}</span></details>`:""}`)}
      ${td("پیشرفت",`<b>${esc(ARCH_STAGES[a.stage]||"—")}</b><div class="steps">${keys.map((k,j)=>`<span class="${j<=i?"on":""}"></span>`).join("")}</div><span class="pill ${a.status==="closed"||a.stage==="done"?"p-ok":a.status==="stalled"?"p-bad":"p-info"}">${esc(a.stage==="done"?ARCH_ST.closed:ARCH_ST[a.status]||ARCH_ST.active)}</span>`)}
      ${td("آخرین وضعیت",`${last&&last.note?esc(last.note):"—"}<br><span class="${archStale(a)?"p-bad":"meta"}">${archLast(a)?`${faDate(archLast(a))}${since!=null&&archOpen(a)?` (${faNum(since)} روز پیش)`:""}`:""}</span>${(a.log||[]).length>1?`<details><summary>تاریخچه (${faNum(a.log.length)})</summary>${[...a.log].reverse().map(e=>`<div class="meta">${faDate((e.at||"").slice(0,10))} · ${esc(ARCH_STAGES[e.stage]||"")} · ${esc(e.note||"")} <i>(${esc(memberName(e.by))})</i></div>`).join("")}</details>`:""}`)}
@@ -2463,12 +2546,87 @@ const archView = sector => {
    "هنوز نامه‌ای در این گروه ثبت نشده است. نامه‌های ارسال‌شده‌ی پیشین را با «ثبت نامه‌ی ارسال‌شده‌ی پیشین» وارد کنید یا گروه نامه‌ی موجود را از «ویرایش» تغییر دهید.");
 };
 VIEWS["letters.archive"] = () => archView(null);
+VIEWS["letters.pp"] = () => archView(null,"ir");
+VIEWS["letters.sosh"] = () => archView(null,"soshiant");
 Object.keys(ARCH_SECT).forEach(k=>{ VIEWS["letters.sec_"+k] = () => archView(k); });
+// ---------- Refineries: fuel-use optimisation and energy control, production-line smartening and an industrial dashboard per refinery,
+// written as a letter on the Petro Pala Toos letterhead (identity "ir", sector oil). Capacities are rounded public figures that differ between
+// sources and the unit lists are typical for the refinery type, not a site survey: both are confirmed with the refinery in the first meeting.
+const REF_TYPES = {
+ conv:{n:"پالایشگاه تبدیلی (با واحدهای ارتقای برش‌های سنگین)",units:"تقطیر جو و خلأ، هیدروتریتینگ، اصلاح کاتالیستی، واحدهای تبدیل (مثل کراکینگ/هیدروکراکینگ یا ویسبرکر)، بخار و برق جانبی، فلر",
+   fuel:["بهینه‌سازی احتراق کوره‌های تقطیر و واحدهای فرایندی (کنترل اکسیژن اضافی و دمای دودکش، پایش راندمان کوره)","تراز بخار و برق (دیگ‌ها، توربین‌ها، افت بخار) و بهینه‌سازی چیدمان بار","کاهش سوخت‌سوزی و گاز فلر با پایش جریان و بازیابی گاز"],
+   dash:["مرکز کنترل انرژی: شدت مصرف انرژی هر واحد (سوخت، بخار، برق به‌ازای هر بشکه)","داشبورد کوره‌ها: راندمان، اکسیژن اضافی، دمای دودکش و هشدار انحراف","تراز بخار و برق لحظه‌ای و گزارش فلر","نگهداری مبتنی بر وضعیت کمپرسورها، پمپ‌ها و توربین‌ها"],
+   prods:["iems","process_twin","cbm_dash","gas_turbine"]},
+ simple:{n:"پالایشگاه ساده/نیمه‌تبدیلی",units:"تقطیر جو، هیدروتریتینگ، اصلاح کاتالیستی، ویسبرکر یا ایزوم‌سازی، بخار و برق جانبی",
+   fuel:["بهینه‌سازی احتراق کوره‌ی تقطیر و پایش افت راندمان","پایش رسوب‌گیری مبدل‌های پیش‌گرم خوراک و برنامه‌ی تمیزکاری بر پایه‌ی هزینه‌ی انرژی","کنترل مصرف بخار و دیگ‌ها"],
+   dash:["داشبورد مصرف سوخت و انرژی به‌ازای هر بشکه‌ی خوراک","داشبورد کوره و پیش‌گرم خوراک","هشدار انحراف مصرف نسبت به مرجع (baseline) واحد"],
+   prods:["iems","process_twin","cbm_dash"]},
+ cond:{n:"پالایشگاه میعانات گازی",units:"واحدهای شکست/تفکیک میعانات، هیدروتریتینگ، اصلاح کاتالیستی، ایزوم‌سازی و تأسیسات جانبی",
+   fuel:["بهینه‌سازی احتراق کوره‌های واحدهای تفکیک و اصلاح","مدیریت یکپارچه‌ی بخار، برق و هیدروژن","پایش نشت و فلر"],
+   dash:["مرکز کنترل انرژی کل مجتمع","داشبورد کوره‌ها و کمپرسورهای هیدروژن/گاز","شاخص‌های مصرف سوخت به‌ازای هر تن خوراک"],
+   prods:["iems","process_twin","cbm_dash","gas_turbine"]}
+};
+const REFINERIES = [
+ {id:"abadan",name:"پالایش نفت آبادان",city:"آبادان – خوزستان",cap:"حدود ۳۸۸ تا ۴۰۰ هزار بشکه در روز",t:"conv",note:"قدیمی‌ترین پالایشگاه کشور؛ تجهیزات با سن بالا و فرصت بزرگ برای پایش وضعیت و صرفه‌جویی سوخت."},
+ {id:"pgs",name:"پالایش نفت ستاره خلیج فارس",city:"بندرعباس – هرمزگان",cap:"حدود ۳۶۰ تا ۴۰۰ هزار بشکه در روز (میعانات گازی)",t:"cond",note:"واحد جدید و بزرگ؛ مناسب داشبورد یکپارچه‌ی انرژی از ابتدا."},
+ {id:"isfahan",name:"پالایش نفت اصفهان",city:"اصفهان",cap:"حدود ۳۷۵ هزار بشکه در روز",t:"conv",note:"مصرف بالای سوخت در کوره‌های تقطیر و واحدهای تبدیل."},
+ {id:"bandarabbas",name:"پالایش نفت بندرعباس (خلیج فارس)",city:"بندرعباس – هرمزگان",cap:"حدود ۳۲۰ هزار بشکه در روز",t:"conv",note:""},
+ {id:"arak",name:"پالایش نفت امام خمینی شازند (اراک)",city:"اراک – مرکزی",cap:"حدود ۲۵۰ هزار بشکه در روز",t:"conv",note:""},
+ {id:"tehran",name:"پالایش نفت تهران",city:"تهران (ری)",cap:"حدود ۲۵۰ هزار بشکه در روز",t:"conv",note:"در بافت شهری؛ کاهش سوخت‌سوزی و انتشار اهمیت ویژه دارد."},
+ {id:"tabriz",name:"پالایش نفت تبریز",city:"تبریز – آذربایجان شرقی",cap:"حدود ۱۱۰ تا ۱۱۵ هزار بشکه در روز",t:"simple",note:""},
+ {id:"lavan",name:"پالایش نفت لاوان",city:"جزیره‌ی لاوان – هرمزگان",cap:"حدود ۶۰ هزار بشکه در روز",t:"simple",note:"دسترسی دشوار؛ پایش از راه دور ارزش بالایی دارد."},
+ {id:"shiraz",name:"پالایش نفت شیراز",city:"شیراز – فارس",cap:"ظرفیت کوچک (بر پایه‌ی منبع رسمی تأیید شود)",t:"simple",note:""},
+ {id:"kermanshah",name:"پالایش نفت کرمانشاه",city:"کرمانشاه",cap:"ظرفیت کوچک (بر پایه‌ی منبع رسمی تأیید شود)",t:"simple",note:""}
+];
+const refProdName = id => { const p=S.products.find(x=>x.id===id); return p?String(p.name).split(" – ")[0]+(p.trl?` (TRL ${faNum(p.trl)})`:""):id; };
+function refineryLetter(r){
+  const T=REF_TYPES[r.t], co=`شرکت ${r.name}`;
+  const L=a=>a.map((x,i)=>`${faNum(i+1)}) ${x}`).join("\n");
+  return {
+   recipient:`مدیرعامل محترم ${co}\n${r.city}`,
+   subject:`پیشنهاد هوشمندسازی خط تولید، بهینه‌سازی مصرف سوخت و کنترل انرژی ${r.name}`,
+   body:`با سلام و احترام،
+
+شرکت پترو پالا توس در حوزه‌ی هوش مصنوعی و هوشمندسازی صنعتی برای نفت، گاز و پالایش فعالیت می‌کند. بر پایه‌ی اطلاعات عمومی، ${r.name} (${r.cap}) یک ${T.n} است. واحدهای رایج چنین پالایشگاهی عبارت‌اند از: ${T.units}. فهرست دقیق واحدها، داده‌ی در دسترس و اولویت‌ها را در نخستین جلسه با کارشناسان آن مجموعه تأیید می‌کنیم.${r.note?`\n\nنکته‌ی ویژه: ${r.note}`:""}
+
+۱) بهینه‌سازی مصرف سوخت
+${L(T.fuel)}
+
+۲) کنترل و مدیریت انرژی
+• تعریف خط مبنای مصرف انرژی هر واحد و پایش شاخص‌های مصرف (سوخت، بخار و برق به‌ازای هر بشکه یا تن خوراک)
+• هشدار انحراف مصرف و گزارش دوره‌ای برای مدیریت و دفتر انرژی، همسو با رویکرد نظام مدیریت انرژی (ISO 50001)
+
+۳) هوشمندسازی خط تولید
+• اتصال به داده‌ی موجود (Historian/DCS) بدون دخالت در حلقه‌های کنترل
+• دوقلوی دیجیتال و حسگر مجازی برای واحدهای کلیدی، و توصیه‌ی نقطه‌ی کار به اپراتور (پیشنهادی، نه فرمان خودکار)
+
+۴) داشبورد هوشمند صنعتی متناسب با خط تولید
+${L(T.dash)}
+
+محصولات پیشنهادی از سبد ما: ${T.prods.map(refProdName).join("، ")}.
+
+۵) روش همکاری
+پایلوت محدود روی یک یا دو واحد، در ۸ تا ۱۲ هفته: دریافت داده‌ی تاریخی، تعیین خط مبنا، استقرار داشبورد، و گزارش اندازه‌گیری‌شده‌ی صرفه‌جویی. هدف عددی را پس از دیدن داده‌ی شما تعیین می‌کنیم و پیش از آن عددی را تضمین نمی‌کنیم.
+
+شفافیت درباره‌ی بلوغ فناوری: محصولات ما در سطح نمونه‌ی اولیه تا نمونه‌ی نمایشی (TRL ۴ و ۵) هستند و هنوز سابقه‌ی اجرای کامل در پالایشگاه نداریم؛ به همین دلیل پایلوت با نظارت کارشناسان شما و بدون ریسک برای عملیات پیشنهاد می‌شود.
+
+در صورت تمایل، یک جلسه‌ی فنی کوتاه (حضوری یا برخط) برای بررسی نیازها هماهنگ شود.
+
+با تشکر`};
+}
+VIEWS["letters.refinery"] = () => {
+  const list=REFINERIES.filter(r=>match(r.name,r.city,REF_TYPES[r.t].n));
+  return `<p class="note">برای هر پالایشگاه پیشنهاد هوشمندسازی خط تولید و داشبورد صنعتی متناسب با ساختار آن نوشته شده است، با تمرکز بر بهینه‌سازی مصرف سوخت و کنترل انرژی. «ساخت نامه» متن را در «نامه‌ی جدید» با سربرگ <b>پترو پالا توس</b> باز می‌کند تا ویرایش، امضا و فایل Word بگیرید. ظرفیت‌ها ارقام گرد منابع عمومی‌اند (بین منابع فرق دارند) و فهرست واحدها بر پایه‌ی نوع پالایشگاه است؛ هر دو را با خود پالایشگاه تأیید کنید. نام مدیرعامل در نامه ننوشته شده است.</p>`+
+   kpis([["پالایشگاه",faNum(REFINERIES.length)],["تبدیلی",faNum(REFINERIES.filter(r=>r.t==="conv").length)],["ساده/نیمه‌تبدیلی",faNum(REFINERIES.filter(r=>r.t==="simple").length)],["میعانات گازی",faNum(REFINERIES.filter(r=>r.t==="cond").length)]])+
+   table(["پالایشگاه","ظرفیت (تقریبی)","نوع و واحدهای رایج","تمرکز سوخت و انرژی","داشبورد پیشنهادی",""],list.map(r=>{ const T=REF_TYPES[r.t];
+    return `<tr>${td("پالایشگاه",`<b>${esc(r.name)}</b><br><span class="meta">${esc(r.city)}</span>${r.note?`<br><span class="meta">${esc(r.note)}</span>`:""}`,"t")}${td("ظرفیت",esc(r.cap))}${td("نوع",`${esc(T.n)}<br><span class="meta">${esc(T.units)}</span>`)}${td("سوخت و انرژی",`<ul style="margin:0;padding-inline-start:16px">${T.fuel.map(x=>`<li>${esc(x)}</li>`).join("")}</ul>`)}${td("داشبورد",`<ul style="margin:0;padding-inline-start:16px">${T.dash.map(x=>`<li>${esc(x)}</li>`).join("")}</ul><span class="meta">محصولات: ${esc(T.prods.map(refProdName).join("، "))}</span>`)}${td("",`<button class="btn sm sig" data-act="ref-letter" data-id="${esc(r.id)}">ساخت نامه (سربرگ پترو پالا توس)</button><details><summary class="meta">متن نامه</summary><pre style="white-space:pre-wrap;font:inherit;max-width:420px">${esc(refineryLetter(r).body)}</pre></details>`)}</tr>`}),"پالایشگاهی با این جست‌وجو نیست.");
+};
+
 const memberOpts = () => Object.fromEntries([["","—"],...S.members.map(m=>[m.id,m.full_name])]);
 function archForm(a={}){
-  openForm({title:a.id?"ویرایش نامه‌ی بایگانی":"ثبت نامه‌ی ارسال‌شده‌ی پیشین",values:{stage:"sent",status:"active",channel:"secretariat",sector:(S.sub||"").startsWith("sec_")?S.sub.slice(4):"",...a},fields:[
+  openForm({title:a.id?"ویرایش نامه‌ی بایگانی":"ثبت نامه‌ی ارسال‌شده‌ی پیشین",values:{stage:"sent",status:"active",channel:"secretariat",sector:(S.sub||"").startsWith("sec_")?S.sub.slice(4):"",...a,identity:a.id?archIdent(a):(S.sub==="sosh"?"soshiant":"ir")},fields:[
    {k:"number",label:"شماره‌ی نامه‌ی ما",dir:"ltr"},{k:"employer_no",label:"شماره‌ی ثبت در سیستم گیرنده / کارفرما",dir:"ltr"},{k:"date",label:"تاریخ ارسال",type:"date"},
-   {k:"subject",label:"موضوع نامه"},{k:"recipient",label:"گیرنده (نام، سمت، سازمان)"},{k:"channel",label:"روش ارسال",type:"select",options:ARCH_CH},{k:"sector",label:"گروه نامه",type:"select",options:{"":"—",...ARCH_SECT}},{k:"contact",label:"اطلاعات تماس گیرنده (تلفن، فکس، ایمیل، افراد)",type:"textarea"},
+   {k:"subject",label:"موضوع نامه"},{k:"recipient",label:"گیرنده (نام، سمت، سازمان)"},{k:"channel",label:"روش ارسال",type:"select",options:ARCH_CH},{k:"identity",label:"شرکت فرستنده (سربرگ)",type:"select",options:IDENT_NAME},{k:"sector",label:"گروه نامه",type:"select",options:{"":"—",...ARCH_SECT}},{k:"contact",label:"اطلاعات تماس گیرنده (تلفن، فکس، ایمیل، افراد)",type:"textarea"},
    {k:"summary",label:"خلاصه‌ی درخواست یا محتوای نامه",type:"textarea"},
    {k:"stage",label:"مرحله‌ی فعلی",type:"select",options:ARCH_STAGES},{k:"status",label:"وضعیت پیگیری",type:"select",options:ARCH_ST},
    {k:"owner",label:"مسئول پیگیری",type:"select",options:memberOpts()},{k:"next_action",label:"اقدام بعدی"},{k:"next_date",label:"تاریخ اقدام بعدی",type:"date"},
@@ -2905,7 +3063,7 @@ VIEWS["articles.submit"] = () => {
      return `<tr>${td("مقصد",esc(a.name),"t")}${td("ددلاین",a.deadline?faDate(a.deadline):"—")}${td("مسئول",t?esc(memberName(t.assignee)):'<span class="meta">تعریف نشده</span>')}${td("وضعیت",t?`<span class="pill ${t.status==="done"||t.status==="approved"?"p-ok":t.status==="doing"?"p-info":"p-warn"}">${esc(TASK_ST[t.status]||t.status)}</span>`:'<span class="pill p-mute">—</span>')}${td("",absBtn(a)+(isAdmin()?`<button class="btn sm ghost" data-act="stk-one" data-id="${esc(a.id)}">${t?"واگذاری به مسئول انتخاب‌شده":"تعریف تسک برای مسئول انتخاب‌شده"}</button>`:""))}</tr>`; }; const H=["مقصد","ددلاین","مسئول","وضعیت",""], act=vs.filter(v=>!subDone(v)), dn=vs.filter(subDone);
      return table(H,act.map(rowf),vs.length?"همه‌ی مقصدها انجام شده‌اند.":"هنوز مقصدی در صف Claude نیست.")+(dn.length?`<details class="card"><summary>انجام‌شده (${faNum(dn.length)})</summary>${table(H,dn.map(rowf),"")}</details>`:""); })();
 };
-for(const k of ["letters.new","letters.archive"]){ const f=VIEWS[k]; VIEWS[k]=()=>canSeeLetters()?f():`<p class="empty">بخش نامه‌ها فقط برای کارکنان اداری و مالک سامانه قابل مشاهده است.</p>`; }
+for(const k of ["letters.new","letters.archive","letters.pp","letters.sosh","letters.refinery"]){ const f=VIEWS[k]; VIEWS[k]=()=>canSeeLetters()?f():`<p class="empty">بخش نامه‌ها فقط برای کارکنان اداری و مالک سامانه قابل مشاهده است.</p>`; }
 // ---- human owner (مسئول انسانی) for Patent and Scholarship: one pick can be assigned to every item; tasks land in the BPMS board
 const HUM = {
   patent:{label:"اختراع‌های در جریان",kind:"human_patent",items:()=>S.patents.filter(p=>p.status!=="granted").map(p=>({id:p.id,name:p.title||"—",sub:`${PAT_ST[p.status]||""}${p.number?" · "+p.number:""}`,due:p.next_date||"",
@@ -3334,6 +3492,7 @@ VIEWS["bpms.mind"] = () => {
    <button class="btn sig" data-act="mind-start">شروع آزمون</button></div>`;
   return main+mindOwnerTable();
 };
+document.addEventListener("keydown", e => { if(e.key==="Enter"&&e.target&&e.target.id==="qtTitle"){ e.preventDefault(); const b=document.querySelector('[data-act="task-quick"]'); if(b) b.click(); } });
 document.addEventListener("change", e => { const r=e.target.closest("[data-mind]"); if(r){ mindState().ans[r.dataset.mind]=Number(r.value); } });
 async function mindNext(){ const st=mindState(), si=st.step-1, sec=MIND_SEC[si];
   const miss=sec.items.findIndex((_,ii)=>st.ans[mindId(si,ii)]==null);
@@ -3567,6 +3726,18 @@ document.addEventListener("click", async e => {
     case "checkin": { if(mindGate("ثبت ورود")) break; if(b.disabled) break; b.disabled=true; try{ const g=await officeFix("in");
       if(g){ const geo=g.lat!=null?{in_geo:{lat:g.lat,lng:g.lng,acc:g.acc,dist:g.dist}}:{};
         await save(`attendance/${S.me.id}/days/${today()}`,{in:nowHM(),break_min:60,...geo,...(g.unverified?{in_unverified:g.unverified}:{})},g.unverified?"ورود ثبت شد؛ موقعیت تأیید نشد و منتظر تأیید مدیر است: "+g.unverified:"ورود ثبت شد"); } } finally{ b.disabled=false; } break; }
+    case "erp-dept": S.erpDept=b.dataset.d||""; render(); break;
+    case "erp-done": { const o=ERP_OPS.find(x=>x.id===id); const a=asgOf("erp_"+id)||{}; if(!o||!(isAdmin()||a.doer===S.me.id)) break; const lg=(S.erpLog||{})[id]||{};
+      await save(`erp_log/${id}`,{last_done:today(),by:S.me.id,at:new Date().toISOString(),count:(lg.count||0)+1},"انجام ثبت شد: "+o.t); break; }
+    case "task-filter": S.taskFilter=b.dataset.k||""; render(); break;
+    case "subs-more": S.subsAll=!S.subsAll; render(); break;
+    case "who-go": S.taskWho=b.dataset.m||""; S.sub="tasks"; S.forceFull=true; render(); break;
+    case "task-quick": { const el=$("#qtTitle"), title=(el&&el.value||"").trim(); if(!title){ toast("عنوان تسک را بنویسید."); break; }
+      const now=new Date().toISOString(), tid="t_"+newId();
+      if(await save(`tasks/${tid}`,{title,assignee:S.me.id,created_by:S.me.id,team:(myMember()||{}).team||"ai",priority:"normal",due:today(),status:"todo",type:"task",blocked:false,points:null,sprint:"",desc:"",created:now,updated:now},"تسک ساخته شد")) { if(el) el.value=""; } break; }
+    case "ref-letter": { const r=REFINERIES.find(x=>x.id===id); if(!r) break; const L=refineryLetter(r);
+      S.draft={identity:"ir",sector:"oil",date:today(),numAuto:true,number:nextLetterNo("ir",today()),recipient:L.recipient,subject:L.subject,body:L.body,attachments:"",cc:"",annex:"",signer:""};
+      S.mod="letters"; S.sub="new"; S.forceFull=true; render(); toast("پیش‌نویس نامه با سربرگ پترو پالا توس آماده شد؛ بازبینی و ذخیره کنید."); break; }
     case "task-who": S.taskWho=b.dataset.m||""; render(); break;
     case "att-approve": { if(!isAdmin()) break; const a=(S.allAtt||[]).find(x=>x.member===b.dataset.m&&x.id===b.dataset.d); if(!a) break; const {id:_i,member:_m,...rest}=a;
       if(await save(`attendance/${a.member}/days/${a.id}`,{...rest,in_approved:S.me.id},"ورود تأیید شد")){ a.in_approved=S.me.id; render(); } break; }
@@ -3616,6 +3787,7 @@ document.addEventListener("click", async e => {
     case "arch-edit": archForm(S.lettersArchive.find(x=>x.id===id)); break;
     case "arch-progress": archProgress(S.lettersArchive.find(x=>x.id===id)); break;
     case "arch-f": S.archF=b.dataset.k; renderView(); break;
+    case "arch-sec": S.archSec=b.dataset.k||""; renderView(); break;
     case "sign-office": { if(!hasProof(myMember())){ toast("برای امضای نامه، امضا و عکس اثر انگشت هر دو باید ثبت شده باشد."); break; } const l=S.letters.find(x=>x.id===id); if(l&&await save(`letters/${id}`,{...l,office_sig:{by:S.me.id,at:new Date().toISOString()}},"امضای مسئول دفتر ثبت شد")) letterView(id); break; }
     case "sign-ceo": { if(!hasProof(myMember())){ toast("برای امضای نامه، امضا و عکس اثر انگشت هر دو باید ثبت شده باشد."); break; } const l=S.letters.find(x=>x.id===id); if(l&&await save(`letters/${id}`,{...l,ceo_sig:{by:S.me.id,at:new Date().toISOString(),asset:S.settings.ceo_sig_asset||(myMember()||{}).signature_asset||null}},"امضای مدیرعامل ثبت شد")) letterView(id); break; }
     case "letter-dl": { const l=S.letters.find(x=>x.id===id); if(l) await downloadLetter(l); break; }
@@ -3628,7 +3800,8 @@ document.addEventListener("click", async e => {
 
 document.addEventListener("input", e => { if(e.target.id==="ipTo"){ const a=$("#ipMailto"); if(a) a.href=a.href.replace(/^mailto:[^?]*/,"mailto:"+encodeURIComponent(e.target.value.trim())); return; } const el=e.target.closest("[data-c]"); if(!el) return;
   const d=getDraft(); d[el.dataset.c]=el.value; if(el.dataset.c==="number") d.numAuto=false;
-  if(el.dataset.c==="identity"){ if(d.numAuto) d.number=nextLetterNo(d.identity,d.date); S.forceFull=true; renderView(); return; }
+  if(el.dataset.c==="sector"&&d.identity!=="intl"){ d.identity=sectorIdent(d.sector); if(d.numAuto) d.number=nextLetterNo(d.identity,d.date); S.forceFull=true; renderView(); return; }
+  if(el.dataset.c==="identity"){ if(d.identity==="ir") d.sector="oil"; else if(d.identity==="soshiant"&&(!d.sector||d.sector==="oil")) d.sector="med"; if(d.numAuto) d.number=nextLetterNo(d.identity,d.date); S.forceFull=true; renderView(); return; }
   if(el.dataset.c==="date"&&d.numAuto){ d.number=nextLetterNo(d.identity,d.date); const nf=$("[data-c=number]"); if(nf) nf.value=d.number; }
   const p=$("#cprev"); if(p) p.innerHTML=letterSheet(draftLetter()); });
 document.addEventListener("change", async e => { const tf=e.target.closest("[data-tnf]"); if(tf){ S.tnF[tf.dataset.tnf]=tf.type==="checkbox"?tf.checked:tf.value; renderView(); return; }
@@ -3675,159 +3848,6 @@ boot();
 })();
 </script>
 
-<!--claude-mermaid-runtime-begin:3477-->
-<style>.mermaid-diagram{margin-block:4px}.mermaid-diagram svg{display:block;margin:0 auto;max-width:100%;height:auto}</style>
-<script src="/_runtime/mermaid-11.16.1.min.js"></script>
-<script>(function(){
-var CFG={"palettes":{"light":{"surface":"#f4efe4","text":"#42392e","line":"#8a7f6d","border":"#7a6c52","bg":"#fffdf8"},"dark":{"surface":"#262b34","text":"#f2f3f5","line":"#a8adb8","border":"#9aa4b8","bg":"#1f232b"}}};
-if(typeof mermaid==='undefined')return;
-var pres=Array.prototype.slice.call(document.querySelectorAll('pre.mermaid')).filter(function(p){if(p.hasAttribute('data-claude-mermaid-claimed'))return false;p.setAttribute('data-claude-mermaid-claimed','1');return true;});
-if(!pres.length)return;
-var mq=window.matchMedia?window.matchMedia('(prefers-color-scheme: dark)'):null;
-var root=document.documentElement;
-var items=pres.map(function(pre){
-var mount=document.createElement('div');mount.className='mermaid-diagram';
-return {pre:pre,mount:mount,src:pre.textContent||''};
-});
-var seq=0;
-var renderGen=0;
-var lastKey='';
-function pageBg(fallback){
-var els=[document.body,document.documentElement];
-for(var i=0;i<els.length;i++){
-var c=els[i]&&getComputedStyle(els[i]).backgroundColor;
-if(c&&c!=='transparent'&&c!=='rgba(0, 0, 0, 0)')return c;
-}
-return fallback;
-}
-function render(){
-var theme=root.getAttribute('data-theme');
-var dark=theme==='dark'||(!!(mq&&mq.matches)&&theme!=='light');
-var pal=dark?CFG.palettes.dark:CFG.palettes.light;
-var bg=pageBg(pal.bg);
-var key=(dark?'d':'l')+'|'+bg;
-if(key===lastKey)return;
-lastKey=key;
-var gen=++renderGen;
-var font=getComputedStyle(document.body).fontFamily||'sans-serif';
-var nat={useMaxWidth:false};
-mermaid.initialize({
-startOnLoad:false,securityLevel:'strict',theme:'base',
-flowchart:nat,sequence:nat,er:nat,state:nat,class:nat,pie:nat,
-gantt:nat,journey:nat,timeline:nat,gitGraph:nat,mindmap:nat,xyChart:nat,
-quadrantChart:nat,sankey:nat,c4:nat,requirement:nat,block:nat,
-packet:nat,kanban:nat,architecture:nat,radar:nat,
-themeVariables:{background:bg,mainBkg:pal.surface,primaryColor:pal.surface,
-primaryTextColor:pal.text,lineColor:pal.line,primaryBorderColor:pal.border,
-nodeBorder:pal.border,clusterBorder:pal.border,edgeLabelBackground:bg,
-clusterBkg:'rgba(127,127,127,0.07)',titleColor:pal.text,
-darkMode:dark,rowOdd:bg,rowEven:'rgba(127,127,127,0.07)',
-attributeBackgroundColorOdd:bg,attributeBackgroundColorEven:'rgba(127,127,127,0.07)',
-fontSize:'16px',fontFamily:font},
-themeCSS:'.node rect, .node circle, .node polygon, .node path, .cluster rect { stroke-width: 2px; }'
-});
-items.forEach(function(it){
-var id='claude-mermaid-'+seq++;
-mermaid.render(id,it.src).then(function(r){
-if(gen!==renderGen)return;
-var prev=it.pre.previousElementSibling;
-if(prev&&prev.className==='mermaid-diagram'&&prev!==it.mount)return;
-it.mount.innerHTML=r.svg;
-if(!it.mount.parentNode)it.pre.parentNode.insertBefore(it.mount,it.pre);
-it.pre.style.display='none';
-},function(){
-var scratch=document.getElementById(id);
-if(scratch)scratch.parentNode.removeChild(scratch);
-scratch=document.getElementById('d'+id);
-if(scratch)scratch.parentNode.removeChild(scratch);
-if(gen!==renderGen)return;
-if(it.mount.parentNode)it.mount.parentNode.removeChild(it.mount);
-it.pre.style.display='';
-});
-});
-}
-render();
-if(mq&&mq.addEventListener)mq.addEventListener('change',render);
-if(typeof MutationObserver!=='undefined')new MutationObserver(render).observe(root,{attributes:true,attributeFilter:['data-theme']});
-})();</script>
-<!--claude-mermaid-runtime-end-->
-
-<!--claude-mermaid-runtime-begin:3477-->
-<style>.mermaid-diagram{margin-block:4px}.mermaid-diagram svg{display:block;margin:0 auto;max-width:100%;height:auto}</style>
-<script src="/_runtime/mermaid-11.16.1.min.js"></script>
-<script>(function(){
-var CFG={"palettes":{"light":{"surface":"#f4efe4","text":"#42392e","line":"#8a7f6d","border":"#7a6c52","bg":"#fffdf8"},"dark":{"surface":"#262b34","text":"#f2f3f5","line":"#a8adb8","border":"#9aa4b8","bg":"#1f232b"}}};
-if(typeof mermaid==='undefined')return;
-var pres=Array.prototype.slice.call(document.querySelectorAll('pre.mermaid')).filter(function(p){if(p.hasAttribute('data-claude-mermaid-claimed'))return false;p.setAttribute('data-claude-mermaid-claimed','1');return true;});
-if(!pres.length)return;
-var mq=window.matchMedia?window.matchMedia('(prefers-color-scheme: dark)'):null;
-var root=document.documentElement;
-var items=pres.map(function(pre){
-var mount=document.createElement('div');mount.className='mermaid-diagram';
-return {pre:pre,mount:mount,src:pre.textContent||''};
-});
-var seq=0;
-var renderGen=0;
-var lastKey='';
-function pageBg(fallback){
-var els=[document.body,document.documentElement];
-for(var i=0;i<els.length;i++){
-var c=els[i]&&getComputedStyle(els[i]).backgroundColor;
-if(c&&c!=='transparent'&&c!=='rgba(0, 0, 0, 0)')return c;
-}
-return fallback;
-}
-function render(){
-var theme=root.getAttribute('data-theme');
-var dark=theme==='dark'||(!!(mq&&mq.matches)&&theme!=='light');
-var pal=dark?CFG.palettes.dark:CFG.palettes.light;
-var bg=pageBg(pal.bg);
-var key=(dark?'d':'l')+'|'+bg;
-if(key===lastKey)return;
-lastKey=key;
-var gen=++renderGen;
-var font=getComputedStyle(document.body).fontFamily||'sans-serif';
-var nat={useMaxWidth:false};
-mermaid.initialize({
-startOnLoad:false,securityLevel:'strict',theme:'base',
-flowchart:nat,sequence:nat,er:nat,state:nat,class:nat,pie:nat,
-gantt:nat,journey:nat,timeline:nat,gitGraph:nat,mindmap:nat,xyChart:nat,
-quadrantChart:nat,sankey:nat,c4:nat,requirement:nat,block:nat,
-packet:nat,kanban:nat,architecture:nat,radar:nat,
-themeVariables:{background:bg,mainBkg:pal.surface,primaryColor:pal.surface,
-primaryTextColor:pal.text,lineColor:pal.line,primaryBorderColor:pal.border,
-nodeBorder:pal.border,clusterBorder:pal.border,edgeLabelBackground:bg,
-clusterBkg:'rgba(127,127,127,0.07)',titleColor:pal.text,
-darkMode:dark,rowOdd:bg,rowEven:'rgba(127,127,127,0.07)',
-attributeBackgroundColorOdd:bg,attributeBackgroundColorEven:'rgba(127,127,127,0.07)',
-fontSize:'16px',fontFamily:font},
-themeCSS:'.node rect, .node circle, .node polygon, .node path, .cluster rect { stroke-width: 2px; }'
-});
-items.forEach(function(it){
-var id='claude-mermaid-'+seq++;
-mermaid.render(id,it.src).then(function(r){
-if(gen!==renderGen)return;
-var prev=it.pre.previousElementSibling;
-if(prev&&prev.className==='mermaid-diagram'&&prev!==it.mount)return;
-it.mount.innerHTML=r.svg;
-if(!it.mount.parentNode)it.pre.parentNode.insertBefore(it.mount,it.pre);
-it.pre.style.display='none';
-},function(){
-var scratch=document.getElementById(id);
-if(scratch)scratch.parentNode.removeChild(scratch);
-scratch=document.getElementById('d'+id);
-if(scratch)scratch.parentNode.removeChild(scratch);
-if(gen!==renderGen)return;
-if(it.mount.parentNode)it.mount.parentNode.removeChild(it.mount);
-it.pre.style.display='';
-});
-});
-}
-render();
-if(mq&&mq.addEventListener)mq.addEventListener('change',render);
-if(typeof MutationObserver!=='undefined')new MutationObserver(render).observe(root,{attributes:true,attributeFilter:['data-theme']});
-})();</script>
-<!--claude-mermaid-runtime-end-->
 
 <!--claude-mermaid-runtime-begin:3477-->
 <style>.mermaid-diagram{margin-block:4px}.mermaid-diagram svg{display:block;margin:0 auto;max-width:100%;height:auto}</style>
