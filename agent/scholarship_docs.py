@@ -119,7 +119,7 @@ def priority(s):
     left = scholarships.days_left(s)
     fit = any(w in (s.get("field", "") + s.get("name", "")).lower() for w in AI_WORDS)
     if "phd" not in s.get("levels", []):
-        return "C", "فقط ارشد"
+        return ("B", "ارشد؛ برای هدف دکتری مناسب نیست") if fit else ("C", "ارشد و رشته‌ی دورتر")
     if left is not None and left < 10:
         return "C", "کمتر از ۱۰ روز؛ فقط اگر مدارک آماده است"
     if fit and (left is None or left >= 21):
@@ -406,5 +406,31 @@ def skills_doc():
     return d.save("AI_SKILLS_PROFILE.docx")
 
 
+def proposals_doc():
+    """Supervisor shortlist, email drafts and proposal text per university (English); source: proposals_seed.json."""
+    import json
+    data = json.loads((ROOT / "proposals_seed.json").read_text(encoding="utf-8"))
+    d = Doc(rtl=False)
+    d.para("PhD proposals, supervisor shortlists and email drafts", True, 16, (31, 58, 95), 2)
+    d.para(f"Prepared {date.today().isoformat()}. Supervisors come from official staff pages and job ads; confirm their interest and addresses yourself. "
+           "Emails are saved as drafts in Gmail (recipient left blank). Proposals are drafts: no result of the proposed work is claimed.", False, 9, (90, 90, 90), 8)
+    for sid, v in data.items():
+        d.h(v["university"])
+        d.para("Note on format: " + v["format_note"], False, 9, (90, 90, 90))
+        d.para("Supervisors to approach", True, 10)
+        for s in v["supervisors"]:
+            d.para(f"- {s['name']}, {s['role']} ({s['area']}) {s.get('url', '')}", False, 9.5, None, 2)
+        for e in v["emails"]:
+            d.para("Email to " + e["to_name"], True, 10)
+            d.para("Subject: " + e["subject"], False, 9.5, None, 2)
+            for chunk in e["body"].split("\n\n"):
+                d.para(chunk, False, 9.5, None, 4)
+        d.para("Proposal", True, 10)
+        for chunk in v["proposal"].split("\n\n"):
+            d.para(chunk, False, 9.5, None, 4)
+        d.d.add_page_break()
+    return d.save("SCHOLARSHIP_PROPOSALS_AND_EMAILS.docx")
+
+
 def build_all(state):
-    return [opportunities_doc(state), todo_doc(state), derby_kit_doc(), admission_plan_doc(state), skills_doc()]
+    return [opportunities_doc(state), todo_doc(state), derby_kit_doc(), admission_plan_doc(state), skills_doc(), proposals_doc()]

@@ -25,7 +25,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": -5,
+   "days_left": -10,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -66,7 +66,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": -6,
+   "days_left": -11,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -107,7 +107,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": -5,
+   "days_left": -10,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -148,7 +148,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": -5,
+   "days_left": -10,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -189,7 +189,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": -5,
+   "days_left": -10,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -230,7 +230,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": -4,
+   "days_left": -9,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -271,7 +271,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": -3,
+   "days_left": -8,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -312,14 +312,19 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": 1,
+   "days_left": -4,
    "line": "ai",
-   "status": "new",
+   "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
    "history": [
     {
      "at": "2026-10-19T13:28:54",
      "status": "new"
+    },
+    {
+     "at": "2026-10-29T11:07:42",
+     "status": "expired",
+     "note": ""
     }
    ]
   },
@@ -348,14 +353,19 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": 1,
+   "days_left": -4,
    "line": "ai",
-   "status": "new",
+   "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
    "history": [
     {
      "at": "2026-10-19T13:28:54",
      "status": "new"
+    },
+    {
+     "at": "2026-10-29T11:07:42",
+     "status": "expired",
+     "note": ""
     }
    ]
   },
@@ -384,14 +394,19 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": 2,
+   "days_left": -3,
    "line": "ai",
-   "status": "new",
+   "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
    "history": [
     {
      "at": "2026-10-19T13:28:54",
      "status": "new"
+    },
+    {
+     "at": "2026-10-30T11:05:47",
+     "status": "expired",
+     "note": ""
     }
    ]
   },
@@ -420,14 +435,19 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": 2,
+   "days_left": -3,
    "line": "ai",
-   "status": "new",
+   "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
    "history": [
     {
      "at": "2026-10-19T13:28:54",
      "status": "new"
+    },
+    {
+     "at": "2026-10-30T11:05:47",
+     "status": "expired",
+     "note": ""
     }
    ]
   },
@@ -456,14 +476,19 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": 4,
+   "days_left": -1,
    "line": "ai",
-   "status": "new",
+   "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
    "history": [
     {
      "at": "2026-10-19T13:28:54",
      "status": "new"
+    },
+    {
+     "at": "2026-11-01T11:33:15",
+     "status": "expired",
+     "note": ""
     }
    ]
   },
@@ -492,7 +517,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": 5,
+   "days_left": 0,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -526,7 +551,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 6,
+   "days_left": 1,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -561,7 +586,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 9,
+   "days_left": 4,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -596,7 +621,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 14,
+   "days_left": 9,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -615,7 +640,7 @@
    "description": "Improving Power System Resilience for European Power Grid Integration Project. SPECIFIC PROCUREMENT NOTICE Request for Bids Plant Design, Supply, and Installation (Without Prequalification) (Two-Envelope Bidding Process with rated criteria) Country : Ukraine Project : Ukraine – Improving Power System Resilience for European Power Grid Integration (Installation of Hybrid Systems for Electricity Production in Ukrhydroenergo) Contract Title : Design, Supply and Installation of Battery Energy Storage Systems (BESS) with Energy Management Systems (EMS) and Ancillary Equipment at Kyiv HPP / PSP, Kaniv, Kremenchuk and Seredniodniprovska Hydropower Plants, including related services (training of UHE staff) (hereinafter referred to ‘the Contract’) comprising the following lots: Lot 1: Design, Supply and Installation of Battery Energy Storage Systems (BESS) with Energy Management Systems (EMS) and Ancillary Equipment at Kyiv HPP / PSP, including related services (training of UHE staff) (46 MW BESS capacity). Lot 2: Design, Supply and Installation of Battery Energy Storage Systems (BESS) with Energy Management Systems (EMS) and Ancillary Equipment at Kaniv HPP, including related services (training of UHE staff) (66 MW BESS capacity). Lot 3: Design, Supply and Installation of Battery Energy Storage Systems (BESS) with Energy Management Systems (EMS) and Ancillary Equipment at Kremenchuk HPP, including related services (training of UHE staff) (60 MW BESS capacity). Lot 4: Design, Supply and Installation of Battery Energy Storage Systems (BESS) with Energy Management Systems (EMS) and Ancillary Equipment at Seredniodniprovska HPP, including related services (training of UHE staff) (25 MW BESS capacity). Source of financing: IBRD Loan No.: 9284-UA; CTF Loan No.: TF0B5994; CTF Loan No.: TF0C5903-UA; and CTF Grant No.: TF-0B5724. Project ID : P176114 RFB reference No .: UHE-IPSR-DSI-1 1. Private Joint Stock Company “Ukrhydroenergo” (PJSC “Ukrhydroenergo” or UHE) has received financing from the World Bank (hereinafter referred to as the “Bank”) toward the cost of the Project “Ukraine – Improving Power System Resilience for European Power Grid Integration (Installation of Hybrid Systems for Electricity Production in Ukrhydroenergo)” and intends to apply part of the proceeds toward payments under the Contract. Under this Contract, UHE intends to make payments using the Direct Payment disbursement method, as defined in the World Bank Disbursement Guidelines for Investment Project Financing. 2. PJSC “Ukrhydroenergo” now invites eligible Bidders to submit Bids for the Contract. Bidders can bid for any one lot, more than one lot or all the four lots . The Time for Completion shall be between 420 and 510 calendar days from the Effective Date of the Contract. No credit will be given for early completion, and Bids offering a Time for Completion exceeding 510 days shall be rejected. 3. Prospective Bidders shall meet the following minimum qualification requirements: (a) General Experience: Experience in activities related to the design, supply and installation of equipment for energy infrastructure facilities, including generating facilities, battery energy storage systems (BESS), and MV and HV grids, under contracts in the role of contractor, subcontractor, or management contractor since at least January 2020. Design and construction experience may be from different contracts. (b) Financial Capabilities : The Bidder shall submit audited balance sheets or, if not required by the law of the Bidder’s country, other financial statements acceptable to UHE for the last five (5) fiscal years to demonstrate the current soundness of the Bidder’s financial position and its prospective long-term profitability. (c) Average Annual Turnover: The Bidder shall demonstrate a minimum average annual turnover for the last three (3) fiscal years as follows: Lot 1 – USD 36 million; Lot 2 – USD 51 million; Lot 3 – USD 46 million; Lot 4 – USD 20 million. Bidders submitting Bids",
    "buyer": "PRIVATE JOINT STOCK COMPANY “UKRHYDROENERGO”",
    "country": "Ukraine",
-   "deadline": "2026-11-12",
+   "deadline": "2026-11-19",
    "published": "2026-09-16",
    "url": "https://projects.worldbank.org/en/projects-operations/procurement-detail/OP00468997",
    "notice_type": "Invitation for Bids",
@@ -631,7 +656,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 16,
+   "days_left": 18,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -665,7 +690,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 20,
+   "days_left": 15,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -699,7 +724,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 22,
+   "days_left": 17,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -734,7 +759,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 34,
+   "days_left": 29,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -769,7 +794,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 42,
+   "days_left": 37,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -804,14 +829,19 @@
    "domains": [
     "energy"
    ],
-   "days_left": 0,
+   "days_left": -5,
    "line": "ai",
-   "status": "new",
+   "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
    "history": [
     {
      "at": "2026-10-19T13:28:54",
      "status": "new"
+    },
+    {
+     "at": "2026-10-28T10:50:09",
+     "status": "expired",
+     "note": ""
     }
    ]
   },
@@ -839,7 +869,7 @@
     "ai_cross_cutting",
     "medical"
    ],
-   "days_left": 20,
+   "days_left": 15,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -875,7 +905,7 @@
     "energy",
     "urban"
    ],
-   "days_left": 27,
+   "days_left": 22,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -909,7 +939,7 @@
    "domains": [
     "urban"
    ],
-   "days_left": 24,
+   "days_left": 19,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-20T09:40:22",
@@ -943,7 +973,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 77,
+   "days_left": 72,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-20T09:40:22",
@@ -1045,14 +1075,19 @@
    "domains": [
     "aviation"
    ],
-   "days_left": 1,
+   "days_left": -4,
    "line": "ai",
-   "status": "new",
+   "status": "expired",
    "first_seen": "2026-10-21T09:36:20",
    "history": [
     {
      "at": "2026-10-21T09:36:20",
      "status": "new"
+    },
+    {
+     "at": "2026-10-29T11:07:42",
+     "status": "expired",
+     "note": ""
     }
    ]
   },
@@ -1079,7 +1114,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 6,
+   "days_left": 1,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-21T09:36:20",
@@ -1114,7 +1149,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": 7,
+   "days_left": 2,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-21T09:36:20",
@@ -1148,7 +1183,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 25,
+   "days_left": 20,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-21T09:36:20",
@@ -1182,7 +1217,7 @@
    "domains": [
     "web"
    ],
-   "days_left": 27,
+   "days_left": 22,
    "line": "web",
    "status": "new",
    "first_seen": "2026-10-21T09:36:20",
@@ -1250,7 +1285,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 13,
+   "days_left": 8,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-22T09:39:52",
@@ -1284,7 +1319,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 24,
+   "days_left": 19,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-22T09:39:52",
@@ -1318,7 +1353,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 24,
+   "days_left": 19,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-22T09:39:52",
@@ -1352,7 +1387,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 34,
+   "days_left": 29,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-22T09:39:52",
@@ -1386,7 +1421,7 @@
    "domains": [
     "aviation"
    ],
-   "days_left": 29,
+   "days_left": 24,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-23T09:35:00",
@@ -1420,7 +1455,7 @@
    "domains": [
     "medical"
    ],
-   "days_left": 35,
+   "days_left": 30,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-23T09:35:00",
@@ -1454,7 +1489,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 38,
+   "days_left": 33,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-23T09:35:00",
@@ -1591,7 +1626,7 @@
    "domains": [
     "urban"
    ],
-   "days_left": 13,
+   "days_left": 8,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-26T10:29:22",
@@ -1625,7 +1660,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 27,
+   "days_left": 22,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-26T10:29:22",
@@ -1659,7 +1694,7 @@
    "domains": [
     "urban"
    ],
-   "days_left": 27,
+   "days_left": 22,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-26T10:29:22",
@@ -1727,7 +1762,7 @@
    "domains": [
     "urban"
    ],
-   "days_left": 14,
+   "days_left": 9,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-27T10:03:26",
@@ -1761,7 +1796,7 @@
    "domains": [
     "energy"
    ],
-   "days_left": 27,
+   "days_left": 22,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-27T10:03:26",
@@ -1795,7 +1830,7 @@
    "domains": [
     "medical"
    ],
-   "days_left": 30,
+   "days_left": 25,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-27T10:03:26",
@@ -1829,7 +1864,7 @@
    "domains": [
     "urban"
    ],
-   "days_left": 31,
+   "days_left": 26,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-27T10:03:26",
@@ -1839,6 +1874,637 @@
      "status": "new"
     }
    ]
+  },
+  "WB-OP00477440": {
+   "id": "WB-OP00477440",
+   "source": "World Bank",
+   "market": "international",
+   "title": "Software Development (Point of Sale) for women-led small business; website design, POS training",
+   "description": "Digital Federated States of Micronesia Project. REQUEST FOR QUOTATION October 26, 2026 Project Title: Digital Federated States of Micronesia Project (P170718) Source of Funding (loan/credit/grant no.): IDA-D5560 Contract Name: Software Development (Point of Sale) for women-led small business, website design, POS training Contract Ref: FM-DHSA-520963-NC-RFP Dear Bidder, The FSM Department of Health & Social Affairs hereby invites you to submit a quotation for the following works: Lot 1: Website Design & Development Services for the Yap Women Association Digital Village Lot 2: Development of a User-Friendly Point of Sale (POS) System for Women-led Businesses in FSM The budget for this procurement is $40,000.00 (for both lots) . To assist you in the preparation of your price quotation, we enclose the necessary Terms of Reference, Specifications, Priced Activity Schedule (AS), and Form of Contract. This RFQ invites you to quote for 1 lot or both lots. Quotations for each lot must be submitted separately, with the signed Form of Quotation (including the priced AS) electronically at the following address(s): takiko.ifamilik@hsa.gov.fm and msamo@fsmhealth.fm This invitation is issued under the open RFQ and the Most Advantageous Bid will be recommended for contract award for the Bid of the Bidder that meets the qualification criteria and whose Bid has been determined to be: substantially responsive to the RFQ document; and the lowest evaluated cost. The following minimum qualification requirements apply to this RFQ: Lot 1: the bidder shall propose the following key personnel at a minimum – Web Developer and Project Manager. Lot-2: The bidder shall propose Key personnel, such as Team Leader (TL) and Testing Technician (TT), meeting the qualification requirements for these positions as outlined in the SOW. Each bidder shall submit only one quotation. All quotations submitted in violation of this rule shall be rejected. In evaluating the quotations, the Employer will determine for each quotation the evaluated price by adjusting the price quotation by making any correction for any arithmetical errors as follows: where there is a discrepancy between amounts in figures and in words, the amount in words will govern; where there is a discrepancy in the total and the sum of the line-item amounts, the total shall be corrected. if a Bidder refuses to accept the correction, his quotation will be rejected. Your quotation shall be valid for a period of forty-five (45) days from the submission deadline Your quotation in English shall be for the quote and based on a fixed lump sum for the entire assignment period. Prices can be quoted in any currency of the World Bank member countries. The currency to convert all quotation prices expressed in various currencies into a single currency is USD. The quotation shall include all duties, local taxes and other levies payable by the contractor in accordance with the local laws. The Employer will award the contract to the Bidder whose quotation has been determined to be substantially responsive to this RFQ, has offered the lowest evaluated price quotation, and is qualified to do the Works. 10. The terms and conditions of contract are attached to this RFQ. 11. Your quotation should be submitted by November 09, 2026, 05:00 pm Pohnpei Time. Late quotations may be rejected. 12. Further information can be obtained from: Name of Contact Person: Takiko L. Ifamilik, Digital Gender Coordination Telephone: (691) 320-4682 or 2619 E-mail: takiko.ifamilik@hsa.gov.fm 13. Please confirm by e-mail to the contact provided in paragraph 12 above the receipt of this RFQ and whether or not you will submit the price quotation(s). REQUEST FOR QUOTATION October 26, 2026 Project Title: Digital Federated States of Micronesia Project (P170718) Source of Funding (loan/credit/grant no.): IDA-D5560 Contract Name: Software Development (Point of Sale) for women-led small business, website design, POS training Contract Ref: FM-DHSA-520963-NC-",
+   "buyer": "Department of Health, Social Affairs",
+   "country": "Micronesia, Federated States of",
+   "deadline": "2026-11-09",
+   "published": "2026-10-27",
+   "url": "https://projects.worldbank.org/en/projects-operations/procurement-detail/OP00477440",
+   "notice_type": "Invitation for Bids",
+   "procurement_method": "Request for Quotations",
+   "sector": "دولتی (پروژه با تأمین مالی بانک جهانی)",
+   "facts": {
+    "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "طبق آگهی: qualification criteria and whose bid has been determined to be: substantially responsive to the rfq document; and the lowest evaluated cost",
+    "international": "قواعد خرید بانک جهانی: باز برای شرکت‌های همه‌ی کشورهای واجد شرایط (Eligibility rules)"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "web"
+   ],
+   "days_left": 8,
+   "line": "web",
+   "status": "new",
+   "first_seen": "2026-10-28T10:50:09",
+   "history": [
+    {
+     "at": "2026-10-28T10:50:09",
+     "status": "new"
+    }
+   ]
+  },
+  "TED-748820-2026": {
+   "id": "TED-748820-2026",
+   "source": "TED (EU)",
+   "market": "international",
+   "title": "Spain – Repair and maintenance services of reservoirs – Varias UCOS.- TA.- Servicio abierto sostenimiento tanques gasoil y gasolina",
+   "description": "Varias UCOS.- TA.- Servicio abierto sostenimiento tanques gasoil y gasolina",
+   "buyer": "Intendente de Ferrol",
+   "country": "ESP",
+   "deadline": "2026-11-27",
+   "published": "2026-10-28",
+   "url": "https://ted.europa.eu/en/notice/-/detail/748820-2026",
+   "notice_type": "cn-standard",
+   "sector": "دولتی",
+   "facts": {
+    "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "رویه‌ی باز اتحادیه اروپا – شرکت‌های خارج از EU معمولاً مجازند مگر محدودیت صریح در اسناد"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "energy"
+   ],
+   "days_left": 26,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-10-28T10:50:09",
+   "history": [
+    {
+     "at": "2026-10-28T10:50:09",
+     "status": "new"
+    }
+   ]
+  },
+  "TED-748747-2026": {
+   "id": "TED-748747-2026",
+   "source": "TED (EU)",
+   "market": "international",
+   "title": "Belgium – Business and management consultancy and related services – Learning through Experimentation for Adaptive Programming (LEAP) - Producing experimental designs for ERDF/CF/JTF investment in the field of energy efficiency measures",
+   "description": "The overarching goal of this assignment is to prepare the ground for embedding experimentation in National and Regional Partnership Plans from the outset of the 2028–2034 programming period. To this end, the assignment will structurally bring evaluators and programmers to work together, build capacity on both sides, and provide the EU evaluation system with practical experimentation tools that extend beyond the three participating MS. This assignment focuses on investments on energy efficiency measures and shall produce the following outputs: 1. NRPP-ready experimental designs to be implemented in the 2028–2034 programming period in three Member States; 2. a detailed toolkit to support MS in the introduction of experimental designs in 2028-2034 Plans: LEAP Kit (Learning through Experimentation for Adaptive Programming). Energy efficiency is central to the EU’s climate, cohesion, and energy security objectives. Reducing energy consumption across the built environment, industrial processes, district energy networks, and community energy systems contributes directly to cutting greenhouse gas emissions, reducing dependence on imported fossil fuels, and ensuring more resilient and affordable energy supply. All of which are particularly pressing in less developed and transition regions where energy poverty, ageing building stock, and limited private investment capacity make public intervention most necessary. Despite its widespread use, substantial analysis remains to be made in assessing the effectiveness of energy efficiency investments and identifying the conditions under which these generate the expected impact. Experimentation through randomised controlled trials (RCTs) - and the analysis of experiment results to identify the causal effects of interventions - offers the most rigorous way to generate this evidence. Improving the capacity to design and conduct experimental designs is even more important in light of the evolving regulatory context. The Commission proposal for the 2028-2034 Multiannual Financial Framework explicitly promotes policy learning and experimentation as a function of both coordinating and managing authorities (Articles 50 and 51 of the proposed Performance Regulation). DG REGIO’s ambition is that experimental designs and adaptive learning mechanisms will be embedded in the National and Regional Partnership Plans (NRPPs) from the outset of the next programming period.",
+   "buyer": "European Commission, DG REGIO - Regional and Urban Policy",
+   "country": "BEL",
+   "deadline": "2026-12-07",
+   "published": "2026-10-28",
+   "url": "https://ted.europa.eu/en/notice/-/detail/748747-2026",
+   "notice_type": "cn-standard",
+   "sector": "نهاد اتحادیه اروپا",
+   "facts": {
+    "price": "ارزش برآوردی: 340,000 EUR",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "رویه‌ی باز اتحادیه اروپا – شرکت‌های خارج از EU معمولاً مجازند مگر محدودیت صریح در اسناد"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "energy"
+   ],
+   "days_left": 36,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-10-28T10:50:09",
+   "history": [
+    {
+     "at": "2026-10-28T10:50:09",
+     "status": "new"
+    }
+   ]
+  },
+  "TED-745428-2026": {
+   "id": "TED-745428-2026",
+   "source": "TED (EU)",
+   "market": "international",
+   "title": "Germany – Research and development services and related consultancy services – [AI-as-OS] Artificial Intelligence as Operating System",
+   "description": "Artificial intelligence (AI) methods have been expanding into new areas of application for years. AI systems are increasingly capable of handling complex tasks with greater autonomy—for example, through agent-based approaches that run an AI agent on a computer to perform any task automatically or even autonomously, sometimes without explicit human instructions but rather based on identified intentions (see, for example, the open-source software OpenClaw, which can handle tasks such as calendar maintenance or file management). Just how deeply AI algorithms and models are now integrated into everyday applications is also evident in the fact that end devices are increasingly operable entirely without visible applications and exclusively via voice control, which fundamentally rethinks the way we interact with them (such as Deutsche Telekom’s AI Phone). The central control units of such end devices—the operating systems themselves—are also increasingly being enhanced with new AI functionalities to continuously improve system efficiency. These include initial theoretical—and in some cases already practical—approaches to using the latest AI technologies for file system or storage management. These developments mark a fundamental paradigm shift: AI is no longer viewed merely as an add-on, but increasingly as a native architectural component of the operating system itself. The AI-as-OS program aims to explore how artificial intelligence can be understood not merely as a separately encapsulated functionality that is simply executed by the operating system, but as the operating system itself—Artificial Intelligence as Operating System. Behind this lies the vision of an AI that not only supports individual applications but also acts as the central control system for the entire computer ecosystem, managing system resources (including the CPU, RAM, and system security) in a data-driven, adaptive, and context-aware manner. The aim of the program is to make fundamental contributions to the development of AI-based operating systems as the control unit of a computer system. Through the extensive integration of AI technologies into deep operating system layers, such a system is intended to manage system resources, enable context-aware operational decisions, and enhance system security through adaptive threat detection and defense. Since the underlying technology is still largely in a speculative stage, the scope of development work ranges from the general architecture of such an operating system to the integration of AI-based core mechanisms, and includes new considerations regarding the security and stability requirements for such an operating system, depending on the target platform (e.g., desktop, data center, edge device) and the application environment. The program’s main areas of research include: • AI-Centric Operating System Architectures: Concepts for the fundamental design of an operating system in which AI is viewed not as an add-on feature but as an integral part of the architecture. • AI-Native Core Mechanisms: Integration of AI-based methods into core operating system functions such as resource management, process control, and memory organization. • Control, Security, and Stability: Requirements for traceability, controllability, and robustness of an AI-based operating system, as well as approaches to adaptive threat detection and defense. From today’s perspective, it remains to be seen whether—and to what extent—the vision of an AI-native operating system can be technically realized. This is precisely where the program’s value lies: AI-as-OS explores a largely speculative field at the intersection of AI research and system software, the results of which could set the course for the operating systems of tomorrow.",
+   "buyer": "Agentur für Innovation in der Cybersicherheit GmbH (Cyberagentur)",
+   "country": "DEU",
+   "deadline": "",
+   "published": "2026-10-28",
+   "url": "https://ted.europa.eu/en/notice/-/detail/745428-2026",
+   "notice_type": "cn-standard",
+   "sector": "شرکت دولتی / عمومی",
+   "facts": {
+    "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "ai_cross_cutting"
+   ],
+   "days_left": null,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-10-28T10:50:09",
+   "history": [
+    {
+     "at": "2026-10-28T10:50:09",
+     "status": "new"
+    }
+   ]
+  },
+  "TED-748671-2026": {
+   "id": "TED-748671-2026",
+   "source": "TED (EU)",
+   "market": "international",
+   "title": "Norway – Research and development services and related consultancy services – Qualification scheme - Avinor AS - T-193432 - Demonstration of zero and low emission aircraft regional aviation",
+   "description": "Qualification scheme - Avinor AS - T-193432 - Demonstration of zero and low emission aircraft regional aviation",
+   "buyer": "AVINOR AS",
+   "country": "NOR",
+   "deadline": "",
+   "published": "2026-10-28",
+   "url": "https://ted.europa.eu/en/notice/-/detail/748671-2026",
+   "notice_type": "cn-standard",
+   "sector": "نامشخص",
+   "facts": {
+    "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "aviation"
+   ],
+   "days_left": null,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-10-28T10:50:09",
+   "history": [
+    {
+     "at": "2026-10-28T10:50:09",
+     "status": "new"
+    }
+   ]
+  },
+  "TED-751772-2026": {
+   "id": "TED-751772-2026",
+   "source": "TED (EU)",
+   "market": "international",
+   "title": "Poland – Aviation kerosene – Zakup i tankowanie paliwa lotniczego JET A-1",
+   "description": "Przedmiotem zamówienia jest zakup i tankowanie paliwa lotniczego JET A-1 w ilości do 800 000 litrów, zgodnie z wymaganiami zawartymi w Specyfikacji Warunków Zamówienia. Zamawiający zobowiązuje się w okresie trwania umowy do zakupu minimalnej ilości paliwa lotniczego JET A-1 w ilości 400 000 litrów lub do wysokości 50 % maksymalnego wynagrodzenia brutto. Paliwo musi pochodzić z bieżącej produkcji (tj. z okresu realizacji umowy) i może zawierać komponenty, które odpowiadają ustalonym wymaganiom jakościowym. Jakość paliwa tankowanego do statków powietrznych Zamawiającego musi być zgodna z normą DEF STAN 91-091 WT oraz ASTM D 1655 lub normą równoważną. Zapłata za paliwo nastąpi po cenie nieobciążonej podatkiem akcyzowym na warunkach określonych w ustawie o podatku akcyzowym oraz niezawierającej opłaty paliwowej.",
+   "buyer": "Komenda Główna Straży Granicznej",
+   "country": "POL",
+   "deadline": "2026-11-06",
+   "published": "2026-10-29",
+   "url": "https://ted.europa.eu/en/notice/-/detail/751772-2026",
+   "notice_type": "cn-standard",
+   "sector": "دولتی",
+   "facts": {
+    "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "رویه‌ی باز اتحادیه اروپا – شرکت‌های خارج از EU معمولاً مجازند مگر محدودیت صریح در اسناد"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "aviation"
+   ],
+   "days_left": 5,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-10-29T11:07:42",
+   "history": [
+    {
+     "at": "2026-10-29T11:07:42",
+     "status": "new"
+    }
+   ]
+  },
+  "TED-750509-2026": {
+   "id": "TED-750509-2026",
+   "source": "TED (EU)",
+   "market": "international",
+   "title": "Switzerland – IT services: consulting, software development, Internet and support – IT-Dienstleistungen Digital Transformation Services & AI Technical Solution & Operation Services",
+   "description": "In Ergänzung zu den Eigenleistungen werden Unternehmen gesucht, welche die ZHdK für drei Jahre (mit Option auf Verlängerung um einmal zwei Jahre oder zweimal ein Jahr) mit ihren Leistungen im Informatikbereich unterstützen. Es geht konkret um folgende Dienstleistungen: * Los 1: Digital Transformation Services: Expertise sowie Beratung und Unterstützung der ZHdK in der digitalen und agilen Trans-formation sowie dem damit verbundenen Kulturwandel Leitung von oder Unterstützung in Projekten oder Programmen im Bereich der digitalen und agilen Transformation * Los 2: AI Technical Solution & Operation Services: Aufbau, Weiterentwicklung und Betrieb von AI-Services sowie der dafür erforderlichen AI-Plattformen, Infrastrukturen und technischen Grundlagen Umsetzung, Integration und Governance von AI-Lösungen sowie Befähigung der ZHdK zum nachhaltigen und sicheren Einsatz von Künstlicher Intelligenz Die gesuchten Dienstleistungen sind in zwei Lose unterteilt. Jedes Los besteht aus einem oder meh-reren Profilen für die Leistungserbringung. Die konkreten Anforderungen und Tätigkeiten sind in den beiden Los-Beschreibungen in Kapitel 2 pro Los beschrieben. Es werden Unternehmen gesucht, deren Kernkompetenzen in den beschriebenen Bereichen des In-formatikumfelds liegen und die über eigenes, qualifiziertes Personal verfügen. Für jedes Los wird der Zuschlag an bis zu drei Unternehmen erteilt. Es besteht keine Begrenzung der Angebote, d.h. es dürfen für beide Lose Angebote eingereicht werden. Es ist allerdings erwünscht, dass sich Unternehmen auf Angebote in ihren jeweiligen Kernkompetenzen konzentrieren. Der Leistungsumfang umfasst folgende Aufgaben: * AI-Service Design & Solution Engineering Beratung, Analyse und Konzeption von AI-Services, Lösungsarchitekturen und Betriebsmodellen sowie Durchführung von Evaluationen, Pilotierungen und Technologiebeurteilungen. * AI-Plattformen & Infrastruktur Aufbau, Weiterentwicklung und Betrieb von AI-Plattformen, AI-Infrastrukturen und technischen Basisdiensten in Cloud-, Hybrid- und On-Premises-Umgebungen. * AI-Lösungen & Integration Entwicklung, Konfiguration und Integration von AI-Lösungen, AI-Infrastrukturdiensten, AI-Agenten, Automatisierungen und weiteren AI-gestützten Anwendungen sowie deren Einbindung in bestehende Systeme, Prozesse, Datenquellen und Organisationsstrukturen der ZHdK. * AI-Operation & Services Management Unterstützung beim Betrieb, der Überwachung und der kontinuierlichen Verbesserung von AI-Services und Plattformen. Die Leistungen umfassen Service Lifecycle Management, Fehleranalyse, Betriebsunterstützung, Qualitätsmanagement sowie die Umsetzung etablierter Service-Management-Prozesse. * Governance, Security & Compliance Beratung und Umsetzung technischer und organisatorischer Anforderungen in den Bereichen Governance, Datenschutz, Informationssicherheit, Compliance und verantwortungsvoller Einsatz von Künstlicher Intelligenz. Dies umfasst die Unterstützung bei Risikoanalysen, Sicherheitskonzepten und regulatorischen Anforderungen. * Wissenstransfer & Enablement Unterstützung beim Aufbau von AI-Kompetenzen innerhalb der ZHdK durch Know-how-Transfer, Coaching, Schulungen und fachliche Begleitung. Ziel ist die nachhaltige Befähigung interner Organisationseinheiten für den Aufbau, die Weiterentwicklung und den Betrieb von AI-Services.",
+   "buyer": "Zürcher Hochschule der Künste, strategischer Einkauf",
+   "country": "CHE",
+   "deadline": "2026-11-11",
+   "published": "2026-10-29",
+   "url": "https://ted.europa.eu/en/notice/-/detail/750509-2026",
+   "notice_type": "cn-standard",
+   "sector": "دولتی",
+   "facts": {
+    "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "رویه‌ی باز اتحادیه اروپا – شرکت‌های خارج از EU معمولاً مجازند مگر محدودیت صریح در اسناد"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "ai_cross_cutting"
+   ],
+   "days_left": 10,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-10-29T11:07:42",
+   "history": [
+    {
+     "at": "2026-10-29T11:07:42",
+     "status": "new"
+    }
+   ]
+  },
+  "TED-751639-2026": {
+   "id": "TED-751639-2026",
+   "source": "TED (EU)",
+   "market": "international",
+   "title": "France – Preventive maintenance services – ACCORDS-CADRES DE MAINTENANCE ET ENTRETIEN DU PARC COMPLET DES GROUPES ELECTROGENES SUR LES LACS-RESERVOIRS AUBE, MARNE, SEINE ET YONNE",
+   "description": "Lot 1 - Accord-cadre de maintenance et entretien du parc complet des groupes électrogènes sur les lacs-réservoirs Aube, Marne et Seine Lot 2 - Accord-cadre de maintenance et entretien du parc complet des groupes électrogènes sur le lac-réservoir Yonne",
+   "buyer": "EPTB Seine Grands Lacs",
+   "country": "FRA",
+   "deadline": "2026-12-08",
+   "published": "2026-10-29",
+   "url": "https://ted.europa.eu/en/notice/-/detail/751639-2026",
+   "notice_type": "cn-standard",
+   "sector": "دولتی",
+   "facts": {
+    "price": "ارزش برآوردی: 180,000 EUR",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "رویه‌ی باز اتحادیه اروپا – شرکت‌های خارج از EU معمولاً مجازند مگر محدودیت صریح در اسناد"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "energy"
+   ],
+   "days_left": 37,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-10-29T11:07:42",
+   "history": [
+    {
+     "at": "2026-10-29T11:07:42",
+     "status": "new"
+    }
+   ]
+  },
+  "TED-751747-2026": {
+   "id": "TED-751747-2026",
+   "source": "TED (EU)",
+   "market": "international",
+   "title": "France – Feasibility study, advisory service, analysis – MISSION DE MAITRISE D'OEUVRE RELATIVE A LA REHABILITATION DU RESERVOIR 10 000 N°2 (ET DU RESERVOIR 10 000 N°1) – STATION DE PRODUCTION D’EAU POTABLE DE LA BASTIDE - PHASE CANDIDATURES - Relance du marché 2026-F102",
+   "description": "Des travaux de de réhabilitation sont nécessaires sur les deux ouvrages de stockage d’eau potable de 10 000 m3 de la station de production d’eau de La Bastide. Le présent marché permettra de désigner un maitre d’œuvre qui assurera le pilotage des études et des travaux pour la réhabilitation pérenne des réservoirs afin de réduire leur vulnérabilité.",
+   "buyer": "LIMOGES METROPOLE - Communauté urbaine",
+   "country": "FRA",
+   "deadline": "",
+   "published": "2026-10-29",
+   "url": "https://ted.europa.eu/en/notice/-/detail/751747-2026",
+   "notice_type": "cn-standard",
+   "sector": "دولتی",
+   "facts": {
+    "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "energy"
+   ],
+   "days_left": null,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-10-29T11:07:42",
+   "history": [
+    {
+     "at": "2026-10-29T11:07:42",
+     "status": "new"
+    }
+   ]
+  },
+  "WB-OP00473634": {
+   "id": "WB-OP00473634",
+   "source": "World Bank",
+   "market": "international",
+   "title": "Digital Transformation Expert",
+   "description": "Georgia Relief and Recovery for Micro, Small, and Medium Enterprises. REQUEST FOR EXPRESSIONS OF INTEREST Georgia Project Name: The Relief and Recovery for Micro, Small and Medium Enterprises (MSMEs) Project No: P173975 Loan No. 9239-GE Assignment Title: Digital Transformation Expert Reference No. GE-GEDC-CS-IC-45 Introduction JSC Georgian Economic Development Corporation (GEDC), within the Relief and Recovery for Micro, Small and Medium Enterprises (MSMEs) Project supported by the World Bank (WB) intends to apply part of the loan proceeds for consulting services of a Digital Transformation Expert, who will operate under the World Bank MSMEs Project structure, while being functionally integrated with GEDC’s Growth Hubs network. The Project Development Objective for the Relief and Recovery for MSME operation is to provide relief to MSMEs and support their recovery, including by strengthening the enabling environment for access to finance. Project Description The Project is implemented nationwide and consist of four components: Component 1 – Financial relief and recovery for MSMEs Component 2 – Digital payments & financial infrastructure upgrading Component 3 – Project management and Monitoring Component 4 – Contingent Emergency Response Component A substantial portion of the Project activities fall under Component 1. Component 1 is implemented by GEDC. It comprises of the following sub-components: Sub-component 1.1 - micro-grants to finance working capital and fixed assets for micro and small firms. Sub-component 1.2 - co-financing interest payments on loans underwritten by participating financial institutions (PFIs). Sub-component 1.3 - partial credit guarantees for loans issued by PFIs. Sub-component 1.4 - technical assistance for COVID-proofing and digitalization of MSMEs. Objectives of the assignment Subcomponent 1.4 of the Relief and Recovery for Micro, Small and Medium Enterprises (MSMEs) Project aims to support both the design and the provision of technical assistance to firms to adjust to the post Covid environment through the adoption of relevant managerial, digital, and other relevant practices and supporting the creation of a market for such services. The objective is to supplement the financial support under other subcomponents with technical assistance to address outstanding firm needs in key sectors, informed by stakeholder outreach. This subcomponent will also aim to gauge the feasibility of establishing and eventually scaling the most relevant of managerial capability and digitization programs in the context of Georgia. It will also pilot activities aimed at creation of a local market for firm consultancy services. In order to effectively provide support services mentioned above and ensure coverage and accessibility in all regions, GEDC will be developing Growth Hubs in all regional centres. Scope of Work of the Digital Transformation Expert The Expert will support the implementation of Subcomponent 1.4's digitalization component, ensuring alignment with GEDC’s strategic digital transformation agenda and Growth Hub service portfolio. The Digital Transformation Expert will report to the Head of Business Services Development Division and coordinate closely with the Strategic Development Unit within GEDC’s M&E Department, as necessary, particularly on monitoring, reporting, and knowledge-sharing related to digitalization activities at the Central Office of GEDC. The Expert will play a pivotal role in enabling digital transformation among MSMEs supported through the Growth Hub network. This includes conducting digital diagnostics, recommending tailored digital solutions, supporting implementation, and contributing to knowledge development across regions and sectors. Key responsibilities include: Conduct digital maturity assessments to MSMEs identified through the Growth Hub’s diagnostics, analyze their existing digital maturity level, their business processes, assess the existing technological infrastructure, and id",
+   "buyer": "Georgian Economic Development Corporation",
+   "country": "Georgia",
+   "deadline": "2026-11-15",
+   "published": "2026-10-29",
+   "url": "https://projects.worldbank.org/en/projects-operations/procurement-detail/OP00473634",
+   "notice_type": "Request for Expression of Interest",
+   "procurement_method": "Individual Consultant Selection",
+   "sector": "دولتی (پروژه با تأمین مالی بانک جهانی)",
+   "facts": {
+    "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "طبق آگهی: experience: bachelor's degree in information technology, computer science, business administration, or a related field; at least 5 years of work experience in a position related to the described responsibilities; practic",
+    "international": "قواعد خرید بانک جهانی: باز برای شرکت‌های همه‌ی کشورهای واجد شرایط (Eligibility rules)"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "ai_cross_cutting"
+   ],
+   "days_left": 14,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-10-30T11:05:47",
+   "history": [
+    {
+     "at": "2026-10-30T11:05:47",
+     "status": "new"
+    }
+   ]
+  },
+  "TED-753280-2026": {
+   "id": "TED-753280-2026",
+   "source": "TED (EU)",
+   "market": "international",
+   "title": "Spain – Aircraft maintenance services – 20266A01 Acuerdo Marco servicio integral de apoyo a la ingeniería y el sostenimiento de los sistemas de armas del Ejército del Aire y del Espacio",
+   "description": "Contratación de los servicios de apoyo integral de ingeniería y sostenimiento a los Sistemas de Armas del Ejército del Aire y del Espacio (EAE) en el Mando de Apoyo Logístico (MALOG) y, sus sistemas comunes y logísticos, incluyendo la documentación, bancos, simuladores y equipos de apoyo",
+   "buyer": "Dirección de Adquisiciones del Mando de Apoyo Logístico del Ejército del Aire y del Espacio",
+   "country": "ESP",
+   "deadline": "2026-11-30",
+   "published": "2026-10-30",
+   "url": "https://ted.europa.eu/en/notice/-/detail/753280-2026",
+   "notice_type": "cn-standard",
+   "sector": "دولتی",
+   "facts": {
+    "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "رویه‌ی باز اتحادیه اروپا – شرکت‌های خارج از EU معمولاً مجازند مگر محدودیت صریح در اسناد"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "aviation"
+   ],
+   "days_left": 29,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-10-30T11:05:47",
+   "history": [
+    {
+     "at": "2026-10-30T11:05:47",
+     "status": "new"
+    }
+   ]
+  },
+  "TED-755937-2026": {
+   "id": "TED-755937-2026",
+   "source": "TED (EU)",
+   "market": "international",
+   "title": "Ireland – World wide web (www) site design services – OPW Tender for Heritage Ireland Website Development and Maintenance",
+   "description": "Provision of support and maintenance of Heritage Ireland website inclusive of existing integrations. This includes services provided, incident management, request management, change management, upgrades where required, bug fixes, infrastructure and hosting management, technical maintenance and updates and any other technical supports necessary.",
+   "buyer": "Office of Public Works (OPW)",
+   "country": "IRL",
+   "deadline": "2026-12-17",
+   "published": "2026-10-30",
+   "url": "https://ted.europa.eu/en/notice/-/detail/755937-2026",
+   "notice_type": "cn-standard",
+   "sector": "دولتی",
+   "facts": {
+    "price": "ارزش برآوردی: 292,500 EUR",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "رویه‌ی باز اتحادیه اروپا – شرکت‌های خارج از EU معمولاً مجازند مگر محدودیت صریح در اسناد"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "web"
+   ],
+   "days_left": 46,
+   "line": "web",
+   "status": "new",
+   "first_seen": "2026-10-30T11:05:47",
+   "history": [
+    {
+     "at": "2026-10-30T11:05:47",
+     "status": "new"
+    }
+   ]
+  },
+  "TED-753939-2026": {
+   "id": "TED-753939-2026",
+   "source": "TED (EU)",
+   "market": "international",
+   "title": "Belgium – Electronic information services – Opdracht voor het opzetten van een digital twin voor het organiseren en opvolgen van de afvalinzameling",
+   "description": "Opdracht voor het opzetten van een digital twin voor het organiseren en opvolgen van de afvalinzameling De opdracht is om Limburg.net te voorzien van een state-of-the-art digitaal systeem waar chauffeurs/ophalers, planners/dispatchers, werkvoorbereiders en managers realtime informatie kunnen ingeven en extraheren om zo op een efficiënte manier hun werk te kunnen blijven uitvoeren. De hoofddoelstelling van deze oproep is om het proces van afvalinzameling aan huis te stroomlijnen en te vereenvoudigen.",
+   "buyer": "Limburg.net",
+   "country": "BEL",
+   "deadline": "",
+   "published": "2026-10-30",
+   "url": "https://ted.europa.eu/en/notice/-/detail/753939-2026",
+   "notice_type": "cn-standard",
+   "sector": "دولتی",
+   "facts": {
+    "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "energy"
+   ],
+   "days_left": null,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-10-30T11:05:47",
+   "history": [
+    {
+     "at": "2026-10-30T11:05:47",
+     "status": "new"
+    }
+   ]
+  },
+  "WB-OP00477942": {
+   "id": "WB-OP00477942",
+   "source": "World Bank",
+   "market": "international",
+   "title": "National Consultant for Coordination with OJSC “Tunduk” on the Implementation of Digital Health Solutions",
+   "description": "Primary Health Care Quality Improvement Program. SDTF No. TF C7573-KG: The Ministry of Health of the Kyrgyz Republic's “Primary Health Care Quality Improvement Operation (PHCQIO) Additional Financing” project, financed by the World Bank, announces a competition for the following vacant position: Date of publication: 27-10-2026 Deadline for applications: 11-11-2026 As part of the implementation of the Primary Health Care Quality Improvement Operation (PHCQIO) Additional Financing Project, financed by the World Bank, the Ministry of Health of the Kyrgyz Republic announces a competition for the following vacant position: National Consultant for Coordination with the State Institution “Kyzmat” on the Implementation of Digital Health Solutions Qualification Requirements: higher education in information technology, health care, public administration, economics, or a related field; at least 2 years of direct experience in digital health, including business process analysis, digital project coordination, information systems implementation, or digital team leadership; experience coordinating projects involving government authorities and organizations responsible for the technical implementation of information systems; experience preparing and monitoring work plans, meeting minutes, official correspondence, analytical materials, and reports; knowledge of digital solutions and information systems used in the health system of the Kyrgyz Republic, including Sanarip Clinic, the iLab LIS, and the National BI Platform, is an advantage; fluency in Kyrgyz and Russian; proficiency in Microsoft Office, particularly Excel, Word, and PowerPoint, as well as task management, planning, and monitoring tools such as ClickUp, Trello, or Asana; skills in using collaboration and document-sharing tools, such as Microsoft Teams and SharePoint or equivalent solutions; skills in preparing analytical reports and data visualizations using Power BI or equivalent tools are an advantage. Interested candidates are invited to send their CV, indicating their contact telephone number and position in English and Russian, letters of recommendation from their place of work, copies of relevant diplomas and certificates, as well as the contact details of at least two referees for verification of references, by 18:00 on November 11, 2026, by email: puimzkr@gmail.com; saltanat1281@mail.ru; a_turgunalieva@mz.med.kg; or by mail to Kyrgyzstan, Bishkek, Togolok-Moldo 1a St, 1nd floor, No. 12. Documents must be submitted in PDF format, and resumes must be signed. Applications without the job title, containing an incomplete set of documents, or received after the deadline will not be considered. Only the most suitable candidates will be invited for an interview. Detailed information regarding the eligibility requirements and technical specifications is available on the EGZ portal in the Announcements section, under Procurements Announced by Projects.",
+   "buyer": "PIU of Ministry of Health of KR",
+   "country": "Kyrgyz Republic",
+   "deadline": "2026-11-11",
+   "published": "2026-10-29",
+   "url": "https://projects.worldbank.org/en/projects-operations/procurement-detail/OP00477942",
+   "notice_type": "Request for Expression of Interest",
+   "procurement_method": "Individual Consultant Selection",
+   "sector": "دولتی (پروژه با تأمین مالی بانک جهانی)",
+   "facts": {
+    "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "طبق آگهی: qualification requirements: higher education in information technology, health care, public administration, economics, or a related field; at least 2 years of direct experience in digital health, including business proce",
+    "international": "قواعد خرید بانک جهانی: باز برای شرکت‌های همه‌ی کشورهای واجد شرایط (Eligibility rules)"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "health_ai"
+   ],
+   "days_left": 10,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-10-30T22:04:27",
+   "history": [
+    {
+     "at": "2026-10-30T22:04:27",
+     "status": "new"
+    }
+   ]
+  },
+  "GRANT-HORIZON-HLTH-2027-02-TOOL-01": {
+   "id": "GRANT-HORIZON-HLTH-2027-02-TOOL-01",
+   "source": "Horizon Europe (EC Funding & Tenders)",
+   "market": "international",
+   "title": "HORIZON-HLTH-2027-02-TOOL-01-two-stage – Predictive biomarkers using AI for non-communicable diseases (Horizon Europe Health, RIA)",
+   "description": "Whether to apply depends on the reference requirements. For Parsa's products at TRL 3-5, grant calls such as Horizon Europe Health and Digital Europe may suit you better than tenders, since tenders usually want proven references. AI-based predictive biomarker development for chronic non-communicable diseases. Two-stage call opened 29 Oct 2026; stage 1 due 17 Feb 2027 and stage 2 due 16 Sep 2027 per the FFG national contact page and Accelopment (an earlier draft listed 13 Apr 2027). Budget ~EUR 44.2M for ~6 projects. More: https://www.ffg.at/en/europa/heu/cluster1/call2027-twostage تاریخ‌ها و شرایط از منابع ثانویه آمده است؛ پیش از هر اقدام در پورتال رسمی Funding & Tenders تأیید شود.",
+   "buyer": "European Commission – HaDEA / DG R&I",
+   "country": "European Union",
+   "deadline": "2027-02-17",
+   "deadline_fa": "مرحله‌ی اول: 17 فوریه 2027 (مرحله‌ی دوم: 16 سپتامبر 2027)",
+   "published": "",
+   "url": "https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/opportunities/topic-details/horizon-hlth-2027-02-tool-01-two-stage",
+   "notice_type": "Grant call (RIA, two-stage)",
+   "sector": "اتحادیه اروپا (فراخوان گرنت پژوهشی)",
+   "facts": {
+    "price": "حدود €44.2M برای ~۶ پروژه (هر پروژه €6 تا €8M)",
+    "guarantee": "ندارد (گرنت)؛ بودجه‌ی پروژه توسط اتحادیه اروپا پرداخت می‌شود",
+    "experience": "نیاز به کنسرسیوم؛ سابقه‌ی پژوهشی/بالینی شرکا مهم است. محصولات TRL 3-5 برای RIA مناسب‌اند.",
+    "international": "شخصیت حقوقی مستقر در کشورهای عضو اتحادیه اروپا یا کشورهای وابسته می‌تواند عضو کنسرسیوم شود (ترکیه وابسته است؛ شخصیت حقوقی ایرانی واجد نیست). به‌طور معمول حداقل ۳ نهاد مستقل از ۳ کشور؛ تأیید در پورتال رسمی."
+   },
+   "keyword_score": 10,
+   "domains": [
+    "medical",
+    "ai_cross_cutting"
+   ],
+   "line": "ai",
+   "grant": true,
+   "verified": false,
+   "status": "new",
+   "first_seen": "2026-11-01T11:24:31",
+   "history": [
+    {
+     "at": "2026-11-01T11:24:31",
+     "status": "new"
+    }
+   ],
+   "days_left": 108
+  },
+  "GRANT-HORIZON-HLTH-2027-03-TOOL-04": {
+   "id": "GRANT-HORIZON-HLTH-2027-03-TOOL-04",
+   "source": "Horizon Europe (EC Funding & Tenders)",
+   "market": "international",
+   "title": "HORIZON-HLTH-2027-03-TOOL-04 – Virtual human twins: explainable and generative AI for diagnosis and risk prediction (Horizon Europe Health)",
+   "description": "Whether to apply depends on the reference requirements. For Parsa's products at TRL 3-5, grant calls such as Horizon Europe Health and Digital Europe may suit you better than tenders, since tenders usually want proven references. Explainable and generative AI for diagnosis and risk prediction using imaging, electrophysiology and clinical data (virtual human twins for clinical decision support). Sources disagree on dates: 16 Sep 2027 (partner-search listing) vs 3 Jun - 22 Sep 2027 window. تاریخ‌ها و شرایط از منابع ثانویه آمده است؛ پیش از هر اقدام در پورتال رسمی Funding & Tenders تأیید شود.",
+   "buyer": "European Commission – HaDEA / DG R&I",
+   "country": "European Union",
+   "deadline": "",
+   "deadline_fa": "حدود 16 تا 22 سپتامبر 2027 (منابع متناقض)",
+   "published": "",
+   "url": "https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/opportunities/topic-details/horizon-hlth-2027-03-tool-04",
+   "notice_type": "Grant call (Horizon Europe Health)",
+   "sector": "اتحادیه اروپا (فراخوان گرنت پژوهشی)",
+   "facts": {
+    "price": "در منبع نیامده – در پورتال رسمی",
+    "guarantee": "ندارد (گرنت)؛ بودجه‌ی پروژه توسط اتحادیه اروپا پرداخت می‌شود",
+    "experience": "نیاز به کنسرسیوم با شریک بالینی؛ مناسب محصولات تصویربرداری پزشکی و پشتیبان تصمیم بالینی.",
+    "international": "شخصیت حقوقی مستقر در کشورهای عضو اتحادیه اروپا یا کشورهای وابسته می‌تواند عضو کنسرسیوم شود (ترکیه وابسته است؛ شخصیت حقوقی ایرانی واجد نیست). به‌طور معمول حداقل ۳ نهاد مستقل از ۳ کشور؛ تأیید در پورتال رسمی."
+   },
+   "keyword_score": 10,
+   "domains": [
+    "medical",
+    "ai_cross_cutting"
+   ],
+   "line": "ai",
+   "grant": true,
+   "verified": false,
+   "status": "new",
+   "first_seen": "2026-11-01T11:24:31",
+   "history": [
+    {
+     "at": "2026-11-01T11:24:31",
+     "status": "new"
+    }
+   ],
+   "days_left": null
+  },
+  "GRANT-HORIZON-HLTH-2027-03-TOOL-08": {
+   "id": "GRANT-HORIZON-HLTH-2027-03-TOOL-08",
+   "source": "Horizon Europe (EC Funding & Tenders)",
+   "market": "international",
+   "title": "HORIZON-HLTH-2027-03-TOOL-08 – Towards Artificial General Intelligence (AGI) for healthcare (Horizon Europe Health, CSA)",
+   "description": "Whether to apply depends on the reference requirements. For Parsa's products at TRL 3-5, grant calls such as Horizon Europe Health and Digital Europe may suit you better than tenders, since tenders usually want proven references. Coordination and support action on frontier AI for healthcare, ~EUR 2.9M for one project. Sources disagree: opens 3 Jun 2027 with deadline 16 Sep 2027, or opens 10 Feb 2027 and closes 21 Sep 2027. Low fit as lead (CSA); useful for joining a consortium. تاریخ‌ها و شرایط از منابع ثانویه آمده است؛ پیش از هر اقدام در پورتال رسمی Funding & Tenders تأیید شود.",
+   "buyer": "European Commission – HaDEA / DG R&I",
+   "country": "European Union",
+   "deadline": "",
+   "deadline_fa": "حدود 16 تا 21 سپتامبر 2027 (منابع متناقض)",
+   "published": "",
+   "url": "https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/opportunities/topic-details/horizon-hlth-2027-03-tool-08",
+   "notice_type": "Grant call (CSA)",
+   "sector": "اتحادیه اروپا (فراخوان گرنت پژوهشی)",
+   "facts": {
+    "price": "حدود €2.9M برای ۱ پروژه",
+    "guarantee": "ندارد (گرنت)؛ بودجه‌ی پروژه توسط اتحادیه اروپا پرداخت می‌شود",
+    "experience": "هماهنگی و پشتیبانی (CSA)؛ برای مشارکت به‌عنوان عضو کنسرسیوم مناسب‌تر از هماهنگ‌کننده شدن است.",
+    "international": "شخصیت حقوقی مستقر در کشورهای عضو اتحادیه اروپا یا کشورهای وابسته می‌تواند عضو کنسرسیوم شود (ترکیه وابسته است؛ شخصیت حقوقی ایرانی واجد نیست). به‌طور معمول حداقل ۳ نهاد مستقل از ۳ کشور؛ تأیید در پورتال رسمی."
+   },
+   "keyword_score": 6,
+   "domains": [
+    "medical",
+    "ai_cross_cutting"
+   ],
+   "line": "ai",
+   "grant": true,
+   "verified": false,
+   "status": "new",
+   "first_seen": "2026-11-01T11:24:31",
+   "history": [
+    {
+     "at": "2026-11-01T11:24:31",
+     "status": "new"
+    }
+   ],
+   "days_left": null
+  },
+  "GRANT-EIC-ACCELERATOR-2027": {
+   "id": "GRANT-EIC-ACCELERATOR-2027",
+   "source": "Horizon Europe (EC Funding & Tenders)",
+   "market": "international",
+   "title": "EIC Accelerator 2027 – grant + equity for single SMEs (open to health and AI deep-tech)",
+   "description": "Whether to apply depends on the reference requirements. For Parsa's products at TRL 3-5, grant calls such as Horizon Europe Health and Digital Europe may suit you better than tenders, since tenders usually want proven references. EIC Accelerator supports single start-ups/SMEs (short application, then full proposal). First 2027 cut-off for full applications: 3 Feb 2027, then further cut-offs every 2-3 months (dates to be set in the 2027 EIC Work Programme). 2026 cut-offs were 7 Jan, 4 Mar, 6 May, 8 Jul, 2 Sep, 4 Nov. Info day (Turkish national contact point): 19 Nov 2026. تاریخ‌ها و شرایط از منابع ثانویه آمده است؛ پیش از هر اقدام در پورتال رسمی Funding & Tenders تأیید شود.",
+   "buyer": "European Commission – HaDEA / DG R&I",
+   "country": "European Union",
+   "deadline": "2027-02-03",
+   "deadline_fa": "نخستین cut-off سال 2027: 3 فوریه 2027 (بعدی‌ها هر ۲ تا ۳ ماه)",
+   "published": "",
+   "url": "https://eic.ec.europa.eu/eic-funding-opportunities/eic-accelerator_en",
+   "notice_type": "Grant + equity (SME)",
+   "sector": "اتحادیه اروپا (فراخوان گرنت پژوهشی)",
+   "facts": {
+    "price": "گرنت تا ~€2.5M به‌علاوه‌ی سرمایه‌گذاری (طبق قواعد EIC؛ تأیید شود)",
+    "guarantee": "ندارد (گرنت)؛ بودجه‌ی پروژه توسط اتحادیه اروپا پرداخت می‌شود",
+    "experience": "نیاز به TRL حدود 5-6 و شرکت دارای ثبت در کشور عضو/وابسته؛ سابقه‌ی مشتری لازم نیست ولی اعتبارسنجی بازار مهم است.",
+    "international": "فقط شرکت مستقر در عضو یا کشور وابسته؛ وابسته بودن ترکیه در برنامه‌ی 2027 باید تأیید شود."
+   },
+   "keyword_score": 8,
+   "domains": [
+    "medical",
+    "ai_cross_cutting"
+   ],
+   "line": "ai",
+   "grant": true,
+   "verified": false,
+   "status": "new",
+   "first_seen": "2026-11-01T11:24:31",
+   "history": [
+    {
+     "at": "2026-11-01T11:24:31",
+     "status": "new"
+    }
+   ],
+   "days_left": 94
   }
  },
  "runs": [
@@ -2505,6 +3171,507 @@
     "TED-743680-2026",
     "TED-741848-2026"
    ],
+   "actioned_ids": [],
+   "reminders": []
+  },
+  {
+   "at": "2026-10-28T10:50:10",
+   "collected": 302,
+   "matched": 20,
+   "partner_drafts": [],
+   "events_added": 0,
+   "scholarships_added": 0,
+   "investors_added": 0,
+   "investor_drafts": [
+    "revo",
+    "212",
+    "hub71",
+    "aramco-ventures",
+    "antler-menap",
+    "equinor-ventures",
+    "shell-ventures",
+    "ycombinator",
+    "techstars"
+   ],
+   "leads_added": 0,
+   "papers_lines": [],
+   "events_soon": [
+    {
+     "start": "2026-10-28",
+     "name": "Media Expo 1405 (2nd)",
+     "name_fa": "دومین نمایشگاه مدیا اکسپو (با بخش هوش مصنوعی)",
+     "city": "تهران (برج میلاد)"
+    },
+    {
+     "start": "2026-11-02",
+     "name": "ADIPEC 2026",
+     "name_fa": "نمایشگاه و کنفرانس نفت و گاز ابوظبی",
+     "city": "ابوظبی"
+    },
+    {
+     "start": "2026-11-03",
+     "name": "Smart City Expo World Congress 2026",
+     "name_fa": "کنگره جهانی شهر هوشمند",
+     "city": "بارسلونا"
+    },
+    {
+     "start": "2026-11-09",
+     "name": "Web Summit 2026",
+     "name_fa": "وب سامیت لیسبون",
+     "city": "لیسبون"
+    },
+    {
+     "start": "2026-11-16",
+     "name": "MEDICA 2026",
+     "name_fa": "نمایشگاه تجهیزات و فناوری پزشکی دوسلدورف",
+     "city": "دوسلدورف"
+    },
+    {
+     "start": "2026-12-06",
+     "name": "NeurIPS 2026",
+     "name_fa": "کنفرانس NeurIPS (سیدنی / آتلانتا / پاریس)",
+     "city": "سیدنی، آتلانتا، پاریس"
+    },
+    {
+     "start": "2026-12-07",
+     "name": "GITEX Global 2026",
+     "name_fa": "جیتکس دبی",
+     "city": "دبی (Expo City)"
+    }
+   ],
+   "new_ids": [
+    "WB-OP00477440",
+    "TED-748820-2026",
+    "TED-748747-2026",
+    "TED-745428-2026",
+    "TED-748671-2026"
+   ],
+   "actioned_ids": [],
+   "reminders": []
+  },
+  {
+   "at": "2026-10-29T11:07:43",
+   "collected": 354,
+   "matched": 24,
+   "partner_drafts": [],
+   "events_added": 0,
+   "scholarships_added": 0,
+   "investors_added": 0,
+   "investor_drafts": [
+    "revo",
+    "212",
+    "hub71",
+    "aramco-ventures",
+    "antler-menap",
+    "equinor-ventures",
+    "shell-ventures",
+    "ycombinator",
+    "techstars"
+   ],
+   "leads_added": 0,
+   "papers_lines": [],
+   "events_soon": [
+    {
+     "start": "2026-11-02",
+     "name": "ADIPEC 2026",
+     "name_fa": "نمایشگاه و کنفرانس نفت و گاز ابوظبی",
+     "city": "ابوظبی"
+    },
+    {
+     "start": "2026-11-03",
+     "name": "Smart City Expo World Congress 2026",
+     "name_fa": "کنگره جهانی شهر هوشمند",
+     "city": "بارسلونا"
+    },
+    {
+     "start": "2026-11-09",
+     "name": "Web Summit 2026",
+     "name_fa": "وب سامیت لیسبون",
+     "city": "لیسبون"
+    },
+    {
+     "start": "2026-11-16",
+     "name": "MEDICA 2026",
+     "name_fa": "نمایشگاه تجهیزات و فناوری پزشکی دوسلدورف",
+     "city": "دوسلدورف"
+    },
+    {
+     "start": "2026-12-06",
+     "name": "NeurIPS 2026",
+     "name_fa": "کنفرانس NeurIPS (سیدنی / آتلانتا / پاریس)",
+     "city": "سیدنی، آتلانتا، پاریس"
+    },
+    {
+     "start": "2026-12-07",
+     "name": "GITEX Global 2026",
+     "name_fa": "جیتکس دبی",
+     "city": "دبی (Expo City)"
+    },
+    {
+     "start": "2026-12-13",
+     "name": "Iran ITEX 1405 (5th) – Sharif University",
+     "name_fa": "پنجمین نمایشگاه ایران ایتکس دانشگاه صنعتی شریف",
+     "city": "تهران (دانشگاه صنعتی شریف)"
+    }
+   ],
+   "new_ids": [
+    "TED-751772-2026",
+    "TED-750509-2026",
+    "TED-751639-2026",
+    "TED-751747-2026"
+   ],
+   "actioned_ids": [],
+   "reminders": []
+  },
+  {
+   "at": "2026-10-30T11:05:48",
+   "collected": 340,
+   "matched": 22,
+   "partner_drafts": [],
+   "events_added": 0,
+   "scholarships_added": 0,
+   "investors_added": 0,
+   "investor_drafts": [
+    "revo",
+    "212",
+    "hub71",
+    "aramco-ventures",
+    "antler-menap",
+    "equinor-ventures",
+    "shell-ventures",
+    "ycombinator",
+    "techstars"
+   ],
+   "leads_added": 0,
+   "papers_lines": [],
+   "events_soon": [
+    {
+     "start": "2026-11-02",
+     "name": "ADIPEC 2026",
+     "name_fa": "نمایشگاه و کنفرانس نفت و گاز ابوظبی",
+     "city": "ابوظبی"
+    },
+    {
+     "start": "2026-11-03",
+     "name": "Smart City Expo World Congress 2026",
+     "name_fa": "کنگره جهانی شهر هوشمند",
+     "city": "بارسلونا"
+    },
+    {
+     "start": "2026-11-09",
+     "name": "Web Summit 2026",
+     "name_fa": "وب سامیت لیسبون",
+     "city": "لیسبون"
+    },
+    {
+     "start": "2026-11-16",
+     "name": "MEDICA 2026",
+     "name_fa": "نمایشگاه تجهیزات و فناوری پزشکی دوسلدورف",
+     "city": "دوسلدورف"
+    },
+    {
+     "start": "2026-12-06",
+     "name": "NeurIPS 2026",
+     "name_fa": "کنفرانس NeurIPS (سیدنی / آتلانتا / پاریس)",
+     "city": "سیدنی، آتلانتا، پاریس"
+    },
+    {
+     "start": "2026-12-07",
+     "name": "GITEX Global 2026",
+     "name_fa": "جیتکس دبی",
+     "city": "دبی (Expo City)"
+    },
+    {
+     "start": "2026-12-13",
+     "name": "Iran ITEX 1405 (5th) – Sharif University",
+     "name_fa": "پنجمین نمایشگاه ایران ایتکس دانشگاه صنعتی شریف",
+     "city": "تهران (دانشگاه صنعتی شریف)"
+    }
+   ],
+   "new_ids": [
+    "WB-OP00473634",
+    "TED-753280-2026",
+    "TED-755937-2026",
+    "TED-753939-2026"
+   ],
+   "actioned_ids": [],
+   "reminders": []
+  },
+  {
+   "at": "2026-10-30T22:04:28",
+   "collected": 352,
+   "matched": 23,
+   "partner_drafts": [],
+   "events_added": 0,
+   "scholarships_added": 0,
+   "investors_added": 0,
+   "investor_drafts": [
+    "revo",
+    "212",
+    "hub71",
+    "aramco-ventures",
+    "antler-menap",
+    "equinor-ventures",
+    "shell-ventures",
+    "ycombinator",
+    "techstars"
+   ],
+   "leads_added": 0,
+   "papers_lines": [],
+   "events_soon": [
+    {
+     "start": "2026-11-02",
+     "name": "ADIPEC 2026",
+     "name_fa": "نمایشگاه و کنفرانس نفت و گاز ابوظبی",
+     "city": "ابوظبی"
+    },
+    {
+     "start": "2026-11-03",
+     "name": "Smart City Expo World Congress 2026",
+     "name_fa": "کنگره جهانی شهر هوشمند",
+     "city": "بارسلونا"
+    },
+    {
+     "start": "2026-11-09",
+     "name": "Web Summit 2026",
+     "name_fa": "وب سامیت لیسبون",
+     "city": "لیسبون"
+    },
+    {
+     "start": "2026-11-16",
+     "name": "MEDICA 2026",
+     "name_fa": "نمایشگاه تجهیزات و فناوری پزشکی دوسلدورف",
+     "city": "دوسلدورف"
+    },
+    {
+     "start": "2026-12-06",
+     "name": "NeurIPS 2026",
+     "name_fa": "کنفرانس NeurIPS (سیدنی / آتلانتا / پاریس)",
+     "city": "سیدنی، آتلانتا، پاریس"
+    },
+    {
+     "start": "2026-12-07",
+     "name": "GITEX Global 2026",
+     "name_fa": "جیتکس دبی",
+     "city": "دبی (Expo City)"
+    },
+    {
+     "start": "2026-12-13",
+     "name": "Iran ITEX 1405 (5th) – Sharif University",
+     "name_fa": "پنجمین نمایشگاه ایران ایتکس دانشگاه صنعتی شریف",
+     "city": "تهران (دانشگاه صنعتی شریف)"
+    }
+   ],
+   "new_ids": [
+    "WB-OP00477942"
+   ],
+   "actioned_ids": [],
+   "reminders": []
+  },
+  {
+   "at": "2026-10-31T05:41:43",
+   "collected": 294,
+   "matched": 18,
+   "partner_drafts": [],
+   "events_added": 0,
+   "scholarships_added": 0,
+   "investors_added": 0,
+   "investor_drafts": [
+    "revo",
+    "212",
+    "hub71",
+    "aramco-ventures",
+    "antler-menap",
+    "equinor-ventures",
+    "shell-ventures",
+    "ycombinator",
+    "techstars"
+   ],
+   "leads_added": 0,
+   "papers_lines": [],
+   "events_soon": [
+    {
+     "start": "2026-11-02",
+     "name": "ADIPEC 2026",
+     "name_fa": "نمایشگاه و کنفرانس نفت و گاز ابوظبی",
+     "city": "ابوظبی"
+    },
+    {
+     "start": "2026-11-03",
+     "name": "Smart City Expo World Congress 2026",
+     "name_fa": "کنگره جهانی شهر هوشمند",
+     "city": "بارسلونا"
+    },
+    {
+     "start": "2026-11-09",
+     "name": "Web Summit 2026",
+     "name_fa": "وب سامیت لیسبون",
+     "city": "لیسبون"
+    },
+    {
+     "start": "2026-11-16",
+     "name": "MEDICA 2026",
+     "name_fa": "نمایشگاه تجهیزات و فناوری پزشکی دوسلدورف",
+     "city": "دوسلدورف"
+    },
+    {
+     "start": "2026-12-06",
+     "name": "NeurIPS 2026",
+     "name_fa": "کنفرانس NeurIPS (سیدنی / آتلانتا / پاریس)",
+     "city": "سیدنی، آتلانتا، پاریس"
+    },
+    {
+     "start": "2026-12-07",
+     "name": "GITEX Global 2026",
+     "name_fa": "جیتکس دبی",
+     "city": "دبی (Expo City)"
+    },
+    {
+     "start": "2026-12-13",
+     "name": "Iran ITEX 1405 (5th) – Sharif University",
+     "name_fa": "پنجمین نمایشگاه ایران ایتکس دانشگاه صنعتی شریف",
+     "city": "تهران (دانشگاه صنعتی شریف)"
+    }
+   ],
+   "new_ids": [],
+   "actioned_ids": [],
+   "reminders": []
+  },
+  {
+   "at": "2026-10-31T10:38:23",
+   "collected": 294,
+   "matched": 18,
+   "partner_drafts": [],
+   "events_added": 0,
+   "scholarships_added": 0,
+   "investors_added": 0,
+   "investor_drafts": [
+    "revo",
+    "212",
+    "hub71",
+    "aramco-ventures",
+    "antler-menap",
+    "equinor-ventures",
+    "shell-ventures",
+    "ycombinator",
+    "techstars"
+   ],
+   "leads_added": 0,
+   "papers_lines": [],
+   "events_soon": [
+    {
+     "start": "2026-11-02",
+     "name": "ADIPEC 2026",
+     "name_fa": "نمایشگاه و کنفرانس نفت و گاز ابوظبی",
+     "city": "ابوظبی"
+    },
+    {
+     "start": "2026-11-03",
+     "name": "Smart City Expo World Congress 2026",
+     "name_fa": "کنگره جهانی شهر هوشمند",
+     "city": "بارسلونا"
+    },
+    {
+     "start": "2026-11-09",
+     "name": "Web Summit 2026",
+     "name_fa": "وب سامیت لیسبون",
+     "city": "لیسبون"
+    },
+    {
+     "start": "2026-11-16",
+     "name": "MEDICA 2026",
+     "name_fa": "نمایشگاه تجهیزات و فناوری پزشکی دوسلدورف",
+     "city": "دوسلدورف"
+    },
+    {
+     "start": "2026-12-06",
+     "name": "NeurIPS 2026",
+     "name_fa": "کنفرانس NeurIPS (سیدنی / آتلانتا / پاریس)",
+     "city": "سیدنی، آتلانتا، پاریس"
+    },
+    {
+     "start": "2026-12-07",
+     "name": "GITEX Global 2026",
+     "name_fa": "جیتکس دبی",
+     "city": "دبی (Expo City)"
+    },
+    {
+     "start": "2026-12-13",
+     "name": "Iran ITEX 1405 (5th) – Sharif University",
+     "name_fa": "پنجمین نمایشگاه ایران ایتکس دانشگاه صنعتی شریف",
+     "city": "تهران (دانشگاه صنعتی شریف)"
+    }
+   ],
+   "new_ids": [],
+   "actioned_ids": [],
+   "reminders": []
+  },
+  {
+   "at": "2026-11-01T11:33:16",
+   "collected": 273,
+   "matched": 14,
+   "partner_drafts": [],
+   "events_added": 0,
+   "scholarships_added": 0,
+   "investors_added": 0,
+   "investor_drafts": [
+    "revo",
+    "212",
+    "hub71",
+    "aramco-ventures",
+    "antler-menap",
+    "equinor-ventures",
+    "shell-ventures",
+    "ycombinator",
+    "techstars"
+   ],
+   "leads_added": 0,
+   "papers_lines": [],
+   "events_soon": [
+    {
+     "start": "2026-11-02",
+     "name": "ADIPEC 2026",
+     "name_fa": "نمایشگاه و کنفرانس نفت و گاز ابوظبی",
+     "city": "ابوظبی"
+    },
+    {
+     "start": "2026-11-03",
+     "name": "Smart City Expo World Congress 2026",
+     "name_fa": "کنگره جهانی شهر هوشمند",
+     "city": "بارسلونا"
+    },
+    {
+     "start": "2026-11-09",
+     "name": "Web Summit 2026",
+     "name_fa": "وب سامیت لیسبون",
+     "city": "لیسبون"
+    },
+    {
+     "start": "2026-11-16",
+     "name": "MEDICA 2026",
+     "name_fa": "نمایشگاه تجهیزات و فناوری پزشکی دوسلدورف",
+     "city": "دوسلدورف"
+    },
+    {
+     "start": "2026-12-06",
+     "name": "NeurIPS 2026",
+     "name_fa": "کنفرانس NeurIPS (سیدنی / آتلانتا / پاریس)",
+     "city": "سیدنی، آتلانتا، پاریس"
+    },
+    {
+     "start": "2026-12-07",
+     "name": "GITEX Global 2026",
+     "name_fa": "جیتکس دبی",
+     "city": "دبی (Expo City)"
+    },
+    {
+     "start": "2026-12-13",
+     "name": "Iran ITEX 1405 (5th) – Sharif University",
+     "name_fa": "پنجمین نمایشگاه ایران ایتکس دانشگاه صنعتی شریف",
+     "city": "تهران (دانشگاه صنعتی شریف)"
+    }
+   ],
+   "new_ids": [],
    "actioned_ids": [],
    "reminders": []
   }

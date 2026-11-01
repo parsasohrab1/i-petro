@@ -1,5 +1,8 @@
 .env
+*.env.txt
 __pycache__/
 *.pyc
 data/platform_export/
 .pytest_cache/
+deploy/.env
+deploy/certs/

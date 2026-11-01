@@ -7,7 +7,7 @@ plus: skipped, expired.
 import json
 from datetime import datetime
 
-from .config import DATA_DIR
+from .config import DATA_DIR, ROOT
 
 STATE_FILE = DATA_DIR / "tenders.json"
 
@@ -54,6 +54,20 @@ def upsert(state, tender):
     record = {**{k: v for k, v in tender.items() if k != "full_text"}, "status": "new", "first_seen": now(), "history": [{"at": now(), "status": "new"}]}
     state["tenders"][tender["id"]] = record
     return record, True
+
+
+def seed_grants(state):
+    """Grant calls researched by hand (grants_seed.json) are re-added on every run if the cached state lacks them,
+    because the daily job restores data/ from the Actions cache and would otherwise drop hand-edited records."""
+    f = ROOT / "grants_seed.json"
+    if not f.exists():
+        return 0
+    added = 0
+    for r in json.loads(f.read_text(encoding="utf-8")):
+        if r["id"] not in state["tenders"]:
+            upsert(state, dict(r))
+            added += 1
+    return added
 
 
 def set_status(record, status, note=""):

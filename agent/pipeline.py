@@ -2,7 +2,7 @@
 import json
 from datetime import date, timedelta
 
-from . import dashboard, documents, events, investors, leads, mailbox, memory, notify, papers, partners, scholarship_docs, scholarships, store
+from . import contact_email, dashboard, documents, events, investors, leads, mailbox, memory, notify, papers, partners, scholarship_docs, scholarships, store
 from .analyst import Analyst, llm_available
 from .config import OUTPUT_DIR, env, load_config
 from .portfolio import build_profile, profile_text
@@ -64,9 +64,13 @@ def process_candidate(analyst, cfg, rec, use_mail, budget, log):
         _save_json(rec, "partner_package.json", pkg)
         mou = documents.write_mou(rec, pkg, cfg["company"])
         rec.setdefault("files", {})["mou"] = mou.relative_to(OUTPUT_DIR.parent).as_posix()
+        for p in pkg["partner_candidates"]:   # read the partner's own website for its published business address
+            found, src = contact_email.find_email(p.get("website", ""), log)
+            if found:
+                p["public_contact"], p["contact_source"] = found, src
         rec["partners"] = pkg["partner_candidates"]
         first_contact = next((p["public_contact"] for p in pkg["partner_candidates"] if p["public_contact"]), "")
-        _draft(cfg, rec, pkg["email_subject"], pkg["email_body"], [mou], "", use_mail, log)
+        _draft(cfg, rec, pkg["email_subject"], pkg["email_body"], [mou], first_contact, use_mail, log)
         rec["suggested_to"] = first_contact
         store.set_status(rec, "partner_search", "partner email + MoU drafted")
         store.track(rec, stage="partner_email", next_action="ارسال ایمیل همکاری از Drafts وب‌میل به شریک", note="پیش‌نویس ایمیل و MoU آماده شد")
@@ -147,6 +151,9 @@ def run(use_llm=True, use_mail=True, send_notification=True):
     state = store.load()
     log_lines = []
     log = _log_factory(log_lines)
+    seeded = store.seed_grants(state)
+    if seeded:
+        log(f"{seeded} grant calls added from grants_seed.json")
 
     profile = build_profile(cfg)
     tenders = collect_all(cfg, log)
