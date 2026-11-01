@@ -84,7 +84,7 @@ def scout(cfg, analyst, state, open_tenders, use_mail, log):
         tenders = [f"- {t['title']} ({t['url']})" for t in open_tenders if country.lower() in (t.get("country") or "").lower()]
         research = analyst._research(
             f"Find {pcfg.get('companies_per_country', 6)} established companies in {country} that work in the same "
-            "fields as Parsa International Group (AI and digital solutions for energy/oil & gas, healthcare, aviation, "
+            "fields as Parsa International Group (AI and digital solutions for oil & gas, aerospace, nuclear, water, mining, healthcare, "
             "nuclear power and smart cities): system integrators, engineering and IT firms, digital-transformation "
             "consultancies and industrial or medical software distributors that could act as local partner, lead "
             "bidder or reseller. Use the companies' own websites and public LinkedIn company pages that appear in "

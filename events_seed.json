@@ -12,7 +12,7 @@
    "end": "2026-11-05",
    "date_status": "confirmed",
    "categories": [
-    "energy",
+    "oil_gas",
     "ai_cross_cutting"
    ],
    "type": "نمایشگاه و کنفرانس",
@@ -33,7 +33,7 @@
    "date_status": "confirmed",
    "categories": [
     "urban",
-    "energy",
+    "oil_gas",
     "ai_cross_cutting"
    ],
    "type": "نمایشگاه و کنگره",
@@ -132,7 +132,7 @@
    "end": "2027-01-22",
    "date_status": "confirmed",
    "categories": [
-    "energy"
+    "oil_gas"
    ],
    "type": "نمایشگاه و کنفرانس",
    "why_fa": "در شهر خود شرکت؛ کم‌هزینه‌ترین فرصت برای آشنایی با شرکت‌های انرژی ترکیه به‌عنوان شریک مناقصه",
@@ -171,7 +171,7 @@
    "end": "2027-02-03",
    "date_status": "confirmed",
    "categories": [
-    "aviation"
+    "aerospace"
    ],
    "type": "نمایشگاه و کنفرانس",
    "why_fa": "ورود به بازار هوانوردی: نگهداری پیش‌بینانه و پایش موتور (بر پایه‌ی محصولات پایش توربین و دوقلوی دیجیتال)",
@@ -190,7 +190,7 @@
    "end": "2027-04-08",
    "date_status": "confirmed",
    "categories": [
-    "energy",
+    "oil_gas",
     "ai_cross_cutting"
    ],
    "type": "نمایشگاه",
@@ -211,7 +211,7 @@
    "date_status": "to_verify",
    "categories": [
     "ai_cross_cutting",
-    "energy",
+    "oil_gas",
     "medical"
    ],
    "type": "نمایشگاه و کنفرانس",
@@ -270,7 +270,7 @@
    "date_status": "tba",
    "usual_period_fa": "معمولاً اردیبهشت",
    "categories": [
-    "energy",
+    "oil_gas",
     "ai_cross_cutting"
    ],
    "type": "نمایشگاه",
@@ -293,7 +293,7 @@
    "usual_period_fa": "دوره‌ی نخست: ۲۲ تا ۲۵ دی ۱۴۰۴",
    "categories": [
     "ai_cross_cutting",
-    "energy",
+    "oil_gas",
     "medical",
     "urban"
    ],

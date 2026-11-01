@@ -197,7 +197,7 @@ const OUTCOME = {"":"— (در جریان)",won:"برنده شدیم",lost:"نب
 const OUTCOME_PILL = {won:"p-ok",lost:"p-bad",dropped:"p-mute"};
 const STAGE_PROB = {identified:5,documents:10,partner_email:15,partner_meeting:25,mou:40,proposal:55,submitted:70,result:90};
 const PAT_ST = {granted:"ثبت‌شده",review:"در دست داوری",filed:"اظهارنامه ارسال شد",draft:"پیش‌نویس"};
-const LABELS = {energy:"انرژی",medical:"پزشکی",water:"آب",aviation:"هوانوردی",nuclear:"هسته‌ای",urban:"شهری",ai_cross_cutting:"هوش مصنوعی",web:"طراحی سایت"};
+const LABELS = {oil_gas:"نفت و گاز",aerospace:"هوا فضا",nuclear:"هسته‌ای",water:"آب",mining:"معدن",medical:"پزشکی",urban:"شهری",ai_cross_cutting:"هوش مصنوعی",web:"طراحی سایت",energy:"نفت و گاز",aviation:"هوا فضا"};   // energy/aviation: legacy keys in old records
 const FIN_TYPES = {insurance:"بیمه",tax:"مالیات",payroll:"حقوق و دستمزد",rent:"اجاره",other:"سایر"};
 
 // Company logo (Petro Pala Toos); a logo uploaded in "مشخصات شرکت" replaces it.
@@ -544,27 +544,31 @@ function asgForm(key,title,mod){
   }});
 }
 const asgMineBox = mod => { const l=asgMine(mod); return l.length?`<h3>مواردی که به شما واگذار شده یا خودتان انتخاب کرده‌اید</h3>`+table(["مورد","شرح تسک","واگذارکننده",""],l.map(a=>`<tr>${td("مورد",esc(a.title),"t")}${td("شرح",`<span style="white-space:pre-wrap">${esc(a.task||"—")}</span>`)}${td("واگذارکننده",esc(a.selector===S.me.id?"خودم":memberName(a.selector)))}${td("",`<button class="btn sm ghost" data-act="asg" data-id="${esc(a.key)}" data-m="${esc(mod)}" data-t="${esc(a.title)}">ویرایش شرح</button>`)}</tr>`)):""; };
-// ---------- RFP categories: health & medical, energy, the rest
-const TCAT = {health:"پروژه‌های سلامت و پزشکی (Health & Medical)",water:"پروژه‌ها و محصولات آب (Water)",energy:"محصولات و پروژه‌های انرژی (Energy)",other:"سایر حوزه‌ها"};
-// sector grouping shared by every list: medical, water, energy, other (keyword reading of the item text, not a measurement)
-const SEC = {medical:"پزشکی و سلامت",water:"آب",energy:"انرژی",other:"سایر"};
+// ---------- Sector taxonomy: oil & gas, aerospace, nuclear, water, mining (the old "energy" group is split into these), plus medical and the rest
+const TCAT = {health:"پروژه‌های سلامت و پزشکی (Health & Medical)",oil_gas:"نفت و گاز (Oil & Gas)",aerospace:"هوا فضا (Aerospace)",nuclear:"هسته‌ای (Nuclear)",water:"آب (Water)",mining:"معدن (Mining)",other:"سایر حوزه‌ها"};
+// sector grouping shared by every list (keyword reading of the item text, not a measurement)
+const SEC = {oil_gas:"نفت و گاز",aerospace:"هوا فضا",nuclear:"هسته‌ای",water:"آب",mining:"معدن",medical:"پزشکی و سلامت",other:"سایر"};
 const TW_RE=/water|aquifer|wastewater|desalin|hydrolog|irrigat|drought|subsidence|sewage|dam safety|آبخوان|فاضلاب|شیرین‌سازی|خشکسالی|فرونشست|سدها|(?:^|[^\u0600-\u06FF])آب(?![\u0600-\u06FF])/i;
-const PROD_SEC = {neuropredict:"medical",inescape:"medical",diagkits:"medical",healthdata:"medical",pgx:"medical",ipind:"medical",lnp:"medical",cart:"medical",hqca:"medical",hydroguard:"water",aquiferguard:"water",nrwleak:"water",damops:"water",reusetwin:"water"};
-const secOf = txt => TH_RE.test(txt)?"medical":TW_RE.test(txt)?"water":TE_RE.test(txt)?"energy":"other";
+const TN_RE=/nuclear|reactor|radiation|uranium|هسته|راکتور|پرتو/i;
+const TM_RE=/\bmining\b|\bmines?\b|mineral|\bores?\b|quarr(?:y|ies)|metallurg|smelt|copper|iron ore|معدن|سنگ آهن|فولاد|کانی/i;
+const TA_RE=/aero|aviation|aircraft|airport|airline|flight|space|satellite|\buav\b|drone|هوافضا|هواپیما|فرودگاه|پرواز|ماهواره/i;
+const PROD_SEC = {neuropredict:"medical",inescape:"medical",diagkits:"medical",healthdata:"medical",pgx:"medical",ipind:"medical",lnp:"medical",cart:"medical",hqca:"medical",hydroguard:"water",aquiferguard:"water",nrwleak:"water",damops:"water",reusetwin:"water",nuclear:"nuclear"};
+const TH_RE=/health|medical|medicine|hospital|clinic|patient|pharma|diagnos|radiolog|patholog|telehealth|epidemi|surveillance|laborator|x-ray|dhis|سلامت|پزشک|بیمار|بیمارستان|دارو|درمان|تشخیص|رادیولوژی|آزمایشگاه|پاتولوژی/i;
+const TE_RE=/energy|oil|gas|petro|power|electric|solar|wind|grid|refiner|pipeline|transformer|turbine|انرژی|نفت|گاز|پتروشیمی|برق|پالایش|نیروگاه|ترانسفورماتور|خورشیدی|توربین/i;   // generic energy now belongs to oil & gas
+const SECTOR_KEYS = ["oil_gas","aerospace","nuclear","water","mining"];
+const canonDom = (d,txt) => d==="energy" ? (TN_RE.test(txt||"")?"nuclear":TM_RE.test(txt||"")?"mining":TA_RE.test(txt||"")?"aerospace":TW_RE.test(txt||"")?"water":"oil_gas") : d==="aviation" ? "aerospace" : d;   // legacy keys in records saved before the split
+const secOf = txt => TH_RE.test(txt)?"medical":TN_RE.test(txt)?"nuclear":TM_RE.test(txt)?"mining":TA_RE.test(txt)?"aerospace":TW_RE.test(txt)?"water":TE_RE.test(txt)?"oil_gas":"other";
 const secKey = c => c==="health"?"medical":c;
-const prSec = p => PROD_SEC[p&&p.id] || secOf([p&&p.name,p&&p.algorithms].join(" "));
+const domSec = p => { const t=[p&&p.name,p&&p.algorithms].join(" "); const ds=[...((p&&p.domains_fa)||[]),...((p&&p.domains)||[])].map(d=>canonDom(d,t)); return SECTOR_KEYS.find(k=>ds.includes(k)); };
+const prSec = p => PROD_SEC[p&&p.id] || domSec(p) || secOf([p&&p.name,p&&p.algorithms].join(" "));
 const secBar = k => { const v=(S.secF=S.secF||{})[k]||""; return `<div class="toolbar"><span class="meta">دسته‌بندی:</span> ${[["","همه"],...Object.entries(SEC)].map(([a,l])=>`<button class="btn sm ${v===a?"sig":"ghost"}" data-act="sec-f" data-k="${k}" data-v="${a}">${l}</button>`).join(" ")}</div>`; };
 const secOn = (k,c) => { const v=(S.secF||{})[k]||""; return !v||v===c; };
-const secPill = c => `<span class="pill ${c==="medical"?"p-ok":c==="water"?"p-info":c==="energy"?"p-warn":"p-mute"}">${SEC[c]||c}</span>`;
-const evSec = e => { const c=e.categories||[]; return c.includes("medical")?"medical":c.includes("water")?"water":(c.includes("energy")||c.includes("nuclear"))?"energy":secOf([e.name,e.name_fa,e.why_fa].join(" ")); };
-const TH_RE=/health|medical|medicine|hospital|clinic|patient|pharma|diagnos|radiolog|patholog|telehealth|epidemi|surveillance|laborator|x-ray|dhis|سلامت|پزشک|بیمار|بیمارستان|دارو|درمان|تشخیص|رادیولوژی|آزمایشگاه|پاتولوژی/i;
-const TE_RE=/energy|oil|gas|petro|power|electric|solar|wind|hydro|nuclear|grid|refiner|pipeline|transformer|turbine|انرژی|نفت|گاز|پتروشیمی|برق|پالایش|نیروگاه|ترانسفورماتور|خورشیدی|توربین/i;
-const tenderCat = t => { const d=(t.domains||[]).join(" "), txt=[t.title,t.description,t.sector].join(" ");
-  if(/health_ai|medical/.test(d)||TH_RE.test(txt)) return "health";
-  if(TW_RE.test(t.title||"")) return "water";
-  if(/energy|nuclear/.test(d)||TE_RE.test(txt)) return "energy";
-  if(TW_RE.test(txt)) return "water";
-  return "other"; };
+const secPill = c => `<span class="pill ${({medical:"p-ok",water:"p-info",oil_gas:"p-warn",aerospace:"p-info",nuclear:"p-risk",mining:"p-warn"})[c]||"p-mute"}">${SEC[c]||c}</span>`;
+const evSec = e => { const t=[e.name,e.name_fa,e.why_fa].join(" "), c=(e.categories||[]).map(x=>canonDom(x,t)); return c.includes("medical")?"medical":SECTOR_KEYS.find(k=>c.includes(k)) || secOf(t); };
+const tenderCat = t => { const txt=[t.title,t.description,t.sector].join(" "), d=(t.domains||[]).map(x=>canonDom(x,txt));
+  if(d.includes("health_ai")||d.includes("medical")||TH_RE.test(txt)) return "health";
+  const k=SECTOR_KEYS.find(x=>d.includes(x)); if(k) return k;
+  const g=secOf(txt); return g==="medical"||g==="other"?"other":g; };
 
 const byDeadline = (a,b) => (a.days_left??1e9)-(b.days_left??1e9) || String(a.deadline||"9999").localeCompare(String(b.deadline||"9999"));   // soonest first, unknown last
 function tenderTable(list){
@@ -849,8 +853,9 @@ const DOMAINS_DEFAULT = [
   {k:"oil_gas",name:"نفت و گاز",desc:"پایش میدان، پیشگیری از آسیب سازند، فرازآوری مصنوعی، دوقلوی دیجیتال توربین و فرایند، مدیریت انرژی و کربن"},
   {k:"medical",name:"پزشکی و دامپزشکی",desc:"تحلیل کیت‌های تشخیصی، ارزیابی خطر بیماری‌های عصبی، سرطان، ژنومیک؛ گسترش به تشخیص و پایش سلامت دام"},
   {k:"nuclear",name:"هسته‌ای",desc:"دوقلوی دیجیتال و نگهداری پیش‌بینانه‌ی راکتور، پایش ایمنی"},
-  {k:"aerospace",name:"هوا و فضا",desc:"پایش موتور و توربین، نگهداری پیش‌بینانه‌ی تجهیزات پروازی و زمینی"},
-  {k:"water",name:"مدیریت هوشمند آب و پایش خشکسالی (پیشنهاد جدید)",desc:"پیش‌بینی خشکسالی، بهینه‌سازی مصرف آب زیرزمینی، منحنی فرمان سدها و نشت‌یابی با یادگیری ماشین. پشتوانه: شرکت‌های آب منطقه‌ای بیشترین فراخوان‌های پژوهشی فعال ساتع را دارند و این حوزه مستقیماً با داده‌ی سری زمانی، سنجش‌ازدور و هوش مصنوعی کار می‌کند.", suggested:true}
+  {k:"aerospace",name:"هوا فضا",desc:"پایش موتور و توربین، نگهداری پیش‌بینانه‌ی تجهیزات پروازی و زمینی"},
+  {k:"water",name:"آب (مدیریت هوشمند آب و پایش خشکسالی)",desc:"پیش‌بینی خشکسالی، بهینه‌سازی مصرف آب زیرزمینی، منحنی فرمان سدها و نشت‌یابی با یادگیری ماشین. پشتوانه: شرکت‌های آب منطقه‌ای بیشترین فراخوان‌های پژوهشی فعال ساتع را دارند و این حوزه مستقیماً با داده‌ی سری زمانی، سنجش‌ازدور و هوش مصنوعی کار می‌کند.", suggested:true},
+  {k:"mining",name:"معدن",desc:"هوشمندسازی معدن: پایش ناوگان و تجهیزات، بهینه‌سازی فرایند کانه‌آرایی و آسیاب، پیش‌بینی عیار، ایمنی و تهویه (پیشنهاد جدید؛ هنوز محصولی ثبت نشده است)",suggested:true}
 ];
 VIEWS["erp.overview"] = () => {
   const p=S.products, mem=S.members, fin=S.finance, cl=S.clients;
@@ -1142,7 +1147,7 @@ VIEWS["basket.ideas"] = () => {
     ${isAdmin()?`<button class="btn sm sig" data-act="bi-task" data-i="${i}">📥 ثبت در صف: اسکافلد و توسعه برای Claude</button>`:""}</div>`).join(""):'<p class="empty">هنوز فهرستی ثبت نشده است.</p>');
 };
 // ---------- world products / patents / papers compared with our basket, and new-product proposals (settings/world_products)
-const WP_KIND = {product:"محصول",patent:"ثبت اختراع",paper:"مقاله"}, WP_AREA = {energy:"انرژی",medical:"پزشکی",water:"آب"};
+const WP_KIND = {product:"محصول",patent:"ثبت اختراع",paper:"مقاله"}, WP_AREA = {oil_gas:"نفت و گاز",aerospace:"هوا فضا",nuclear:"هسته‌ای",water:"آب",mining:"معدن",medical:"پزشکی"};
 const WP_CONF = c => /ادعای|ثانویه|تأییدنشده/.test(c||"") ? "p-warn" : "p-ok";
 const prodChip = id => { const p=S.products.find(x=>x.id===id); return `<span class="pill p-mute" title="${esc(p?p.name:id)}">${esc(p?String(p.name).split(" – ")[0]:id)}${p&&p.trl?` · TRL ${faNum(p.trl)}`:""}</span>`; };
 const wpList = (l, cls) => (l&&l.length&&!(l.length===1&&l[0]==="—")) ? `<ul style="margin:4px 0;padding-inline-start:18px">${l.map(t=>`<li class="${cls||""}">${esc(t)}</li>`).join("")}</ul>` : `<p class="meta">—</p>`;
@@ -1161,8 +1166,9 @@ function wpSearch(p){
 function worldBox(){
   const W=S.wp||{items:[],proposals:[]}, F=(S.wpF=S.wpF||{area:"",kind:""});
   const fb = (k,opts) => `<span class="meta">${k==="area"?"حوزه":"نوع"}:</span> `+[["","همه"],...Object.entries(opts)].map(([v,l])=>`<button class="btn sm ${F[k]===v?"sig":"ghost"}" data-act="wp-f" data-k="${k}" data-v="${v}">${l}</button>`).join(" ");
-  const items=(W.items||[]).filter(x=>(!F.area||x.area===F.area)&&(!F.kind||x.kind===F.kind)&&match(x.name,x.vendor,x.what,x.evidence));
-  const props=(W.proposals||[]).filter(x=>(!F.area||x.area===F.area)&&match(x.name,x.why,x.first)).sort((a,b)=>(b.total||0)-(a.total||0));
+  const wpArea=x=>canonDom(x.area,[x.name,x.what].join(" "));
+  const items=(W.items||[]).filter(x=>(!F.area||wpArea(x)===F.area)&&(!F.kind||x.kind===F.kind)&&match(x.name,x.vendor,x.what,x.evidence));
+  const props=(W.proposals||[]).filter(x=>(!F.area||wpArea(x)===F.area)&&match(x.name,x.why,x.first)).sort((a,b)=>(b.total||0)-(a.total||0));
   return `<h2 style="margin-top:28px">مقایسه با محصولات، ثبت اختراع‌ها و مقاله‌های جهانی</h2>
    <p class="note">${esc(W.note||"")}${F.area==="water"&&W.water_note?" "+esc(W.water_note):""} به‌روزرسانی: <b>${W.updated?faDate(String(W.updated).slice(0,10)):"—"}</b>. برچسب نارنجی یعنی ادعای فروشنده یا منبع ثانویه یا تأییدنشده؛ برچسب سبز یعنی منبع اولیه.</p>`+
    kpis([["محصول جهانی",faNum((W.items||[]).filter(x=>x.kind==="product").length)],["ثبت اختراع",faNum((W.items||[]).filter(x=>x.kind==="patent").length)],["مقاله",faNum((W.items||[]).filter(x=>x.kind==="paper").length)],["پیشنهاد محصول نو",faNum((W.proposals||[]).length)]])+
@@ -2901,7 +2907,7 @@ async function backupCsv(k){
 // ================================================================== ARTICLES (where to submit papers: journals, special issues, conferences)
 // Seed list collected from public calls on 2026-10-21; the team can add or correct rows (collection "articles").
 // ver:true = the key facts were seen on an official or publisher page; ver:false = taken from an aggregator or inferred, check before submitting.
-const ART_FIELDS = {oil_gas:"نفت و گاز",ai_industry:"هوش مصنوعی صنعتی و نگهداری پیش‌بینانه",medical:"پزشکی و سلامت",quantum:"کوانتوم",aerospace:"هوا و فضا",nuclear:"هسته‌ای",water:"آب و محیط‌زیست",energy:"انرژی"};
+const ART_FIELDS = {oil_gas:"نفت و گاز",aerospace:"هوا فضا",nuclear:"هسته‌ای",water:"آب",mining:"معدن",medical:"پزشکی و سلامت",ai_industry:"هوش مصنوعی صنعتی و نگهداری پیش‌بینانه",quantum:"کوانتوم"};
 const PRES_EV = {explicit:["تصریح سایت رسمی","p-ok"],inferred:["استنباط از سایت رسمی","p-info"],none:["در سایت رسمی ذکر نشده","p-warn"],secondary:["فقط منبع ثانویه","p-warn"]};
 const PRES_CLS = {inperson:"p-info",online:"p-ok",hybrid:"p-ok",unknown:"p-warn"};
 const ART_PRES = {none:"ندارد (ژورنال)",inperson:"دارد – حضوری",online:"دارد – آنلاین",hybrid:"دارد – حضوری و آنلاین",unknown:"اعلام نشده"};
@@ -2932,13 +2938,13 @@ const ARTICLES_SEED = [
  {id:"p_ioch",status0:"applied",field:"medical",name:"IOCH 2027 – 2nd International Online Conference on Healthcare",type:"conf",impact:"—",deadline:"",dl_note:"ارسال شد (Sciforum-215575، ۱۳ اکتبر)؛ تاریخ اعلام نتیجه در ایمیل ذکر نشده («بعداً اعلام می‌شود»)",details:"مقاله‌ی ارسالی: Intelligent Diagnostic Kit Analysis Platform: AI-Assisted qPCR Data Analysis and Quality Control",present:"online",country:"آنلاین",city:"—",url:"",ver:true},
  {id:"p_healthinfo",status0:"applied",field:"medical",name:"HEALTHINFO 2027 – 12th International Conference on Informatics and Assistive Technologies for Health-Care, Medical Support and Wellbeing",type:"conf",impact:"—",deadline:"",dl_note:"⚠ ارسال ناقص: فقط مشخصات ثبت شده (مشارکت 90005، نوع short paper، ۴ صفحه). طبق ایمیل ۱۳ اکتبر باید فایل مقاله را در سامانه‌ی iariasubmit آپلود کنید؛ مهلت آپلود در ایمیل نیامده، از فراخوان HEALTHINFO 2027 بررسی شود",details:"مقاله‌ی ارسالی: An Integrated Health Informatics Platform for Heterogeneous Clinical Data Integration and Big Data Analytics",present:"inperson",country:"فرانسه",city:"نیس",url:"",ver:true},
  {id:"p_isct",status0:"applied",field:"medical",name:"ISCT 2027 Annual Meeting",type:"conf",impact:"—",deadline:"2027-01-14",dl_note:"ارسال شد (#4620070)؛ آخرین مهلت ویرایش چکیده ۱۴ ژانویه ۲۰۲۷ (۲۳:۵۹ به وقت شرق آمریکا)؛ اعلام نتیجه ۱۶ فوریه ۲۰۲۷؛ انصراف تا ۲ مارس ۲۰۲۷",details:"مقاله‌ی ارسالی: An Explainable Platform for Designing and Simulating Personalized CAR-T Cell Therapies",present:"inperson",country:"کانادا",city:"تورنتو",url:"",ver:true},
- {id:"p_ccus",status0:"applied",field:"energy",name:"Asia Pacific CCUS Conference 2027",type:"conf",impact:"—",deadline:"2027-02-08",dl_note:"ارسال شد (27APCC-P-187-SPE)؛ اعلام نتیجه تا ۸ فوریه ۲۰۲۷؛ در صورت پذیرش، متن کامل تا ۱۰ می ۲۰۲۷ ساعت ۲۳:۵۹ به وقت مرکز آمریکا",details:"مقاله‌ی ارسالی: An Intelligent Energy and Carbon Management Platform for Petrochemical Plants",present:"unknown",country:"مالزی",city:"کوالالامپور",url:"",ver:true},
+ {id:"p_ccus",status0:"applied",field:"oil_gas",name:"Asia Pacific CCUS Conference 2027",type:"conf",impact:"—",deadline:"2027-02-08",dl_note:"ارسال شد (27APCC-P-187-SPE)؛ اعلام نتیجه تا ۸ فوریه ۲۰۲۷؛ در صورت پذیرش، متن کامل تا ۱۰ می ۲۰۲۷ ساعت ۲۳:۵۹ به وقت مرکز آمریکا",details:"مقاله‌ی ارسالی: An Intelligent Energy and Carbon Management Platform for Petrochemical Plants",present:"unknown",country:"مالزی",city:"کوالالامپور",url:"",ver:true},
  {id:"p_spe",status0:"applied",field:"oil_gas",name:"SPE Offshore Europe Conference & Exhibition 2027",type:"conf",impact:"—",deadline:"2027-03-23",dl_note:"ارسال شد (27OE-P-17-SPE)؛ اعلام نتیجه تا ۲۳ مارس ۲۰۲۷؛ در صورت پذیرش، متن کامل تا ۱ ژوئیه ۲۰۲۷ ساعت ۲۳:۵۹ به وقت مرکز آمریکا",details:"مقاله‌ی ارسالی: Adaptive Multi-Criteria Data Routing System for Heterogeneous Telecommunication Infrastructures in Oil and Gas Fields",present:"unknown",country:"بریتانیا (اسکاتلند)",city:"آبردین",url:"",ver:true}
 ];
 const callsList = () => { const seed=new Set(ARTICLES_SEED.map(x=>x.id)); return Object.values(S.calls||{}).filter(c=>c&&c.id&&c.name&&!seed.has(c.id)).map(c=>({present:"unknown",ver:false,field:"ai_industry",type:"conf",...c,call:true})); };
 const callNoProduct = c => c.no_product!=null ? !!c.no_product : apBestFor(c).all.length===0;
 const callIsNew = c => c.found && dayDiff(c.found) >= -21;
-const artAll = () => [...ARTICLES_SEED, ...callsList(), ...S.arts.map(a=>({...a,mine:true}))].map(a=>{ const o=(S.artMode||{})[a.id]; return o?{...a,present:o.present||a.present,present_note:o.present_note||a.present_note,pres_ev:o.ev||a.pres_ev,pres_src:o.src||a.pres_src,evdate:o.evdate||a.evdate,evdate_end:o.evdate_end||a.evdate_end}:a; });   // in-person / online read from the call pages (settings/article_mode)
+const artAll = () => [...ARTICLES_SEED, ...callsList(), ...S.arts.map(a=>({...a,mine:true}))].map(a=>a.field==="energy"?{...a,field:canonDom("energy",[a.name,a.details].join(" "))}:a).map(a=>{ const o=(S.artMode||{})[a.id]; return o?{...a,present:o.present||a.present,present_note:o.present_note||a.present_note,pres_ev:o.ev||a.pres_ev,pres_src:o.src||a.pres_src,evdate:o.evdate||a.evdate,evdate_end:o.evdate_end||a.evdate_end}:a; });   // in-person / online read from the call pages (settings/article_mode)
 const artOpen = a => !a.deadline || a.deadline>=today();
 const artStatus = a => { const st=S.artSt[a.id]||{}, t=(S.tasks||[]).find(x=>x.kind==="submit"&&x.venue===a.id);
   if(t&&(t.status==="done"||t.status==="approved")&&(!st.at||st.at<(t.done_at||t.updated||""))) return "applied";   // finished by the assignee: it must leave "todo"/"doing" for the whole team
@@ -3419,13 +3425,13 @@ VIEWS["articles.product"] = () => {
 };
 // ---- redesigned "product for paper" page: every open venue + best overlapping product (or a new-product task)
 const AP_MATCH = {
-  oil_gas: p => (p.domains_fa||[]).includes("oil_gas"),
+  oil_gas: p => (p.domains_fa||[]).includes("oil_gas") || domSec(p)==="oil_gas",
   ai_industry: p => ((p.domains_fa||[]).some(d=>["oil_gas","aerospace","nuclear"].includes(d))) && /RUL|دوقلو|پیش‌بینی|ناهنجاری|نگهداری|یادگیری/.test((p.name||"")+" "+(p.algorithms||"")),
   medical: p => (p.domains_fa||[]).includes("medical"),
   quantum: p => /کوانتوم|quantum|VQC|VQE/i.test((p.name||"")+" "+(p.algorithms||"")),
-  aerospace: p => (p.domains_fa||[]).includes("aerospace"),
-  nuclear: p => (p.domains_fa||[]).includes("nuclear"),
-  energy: p => (p.domains||[]).includes("energy") || /انرژی|کربن/.test(p.name||""),
+  aerospace: p => (p.domains_fa||[]).includes("aerospace") || domSec(p)==="aerospace",
+  nuclear: p => (p.domains_fa||[]).includes("nuclear") || domSec(p)==="nuclear",
+  mining: p => domSec(p)==="mining" || /معدن|mining/i.test((p.name||"")+" "+(p.algorithms||"")),
   water: p => /آب|هیدرولوژی/.test((p.name||"")+" "+(p.algorithms||""))
 };
 function apBestFor(a){
