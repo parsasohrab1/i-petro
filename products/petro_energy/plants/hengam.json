@@ -1,0 +1,40 @@
+{
+ "slug": "hengam",
+ "name_fa": "پتروشیمی هنگام",
+ "name_en": "Hengam Petrochemical",
+ "kind": "process",
+ "production_tph": 56.0,
+ "steam_demand_tph": 105,
+ "furnaces": [
+  {
+   "id": "F-101",
+   "duty_mw": 32.0,
+   "o2_setpoint": 3.4,
+   "t_stack_c": 185
+  },
+  {
+   "id": "F-102",
+   "duty_mw": 29.4,
+   "o2_setpoint": 3.6,
+   "t_stack_c": 191
+  }
+ ],
+ "boilers": [
+  {
+   "id": "B-1",
+   "min_tph": 20,
+   "max_tph": 88,
+   "eta_max": 0.91
+  },
+  {
+   "id": "B-2",
+   "min_tph": 20,
+   "max_tph": 82,
+   "eta_max": 0.885
+  }
+ ],
+ "fuel_price": 1.0,
+ "existing_product": null,
+ "illustrative": true,
+ "notes": "پارامترهای واحد نمونه و ساختگی‌اند، نه داده‌ی اندازه‌گیری‌شده؛ با داده‌ی واقعی شرکت جایگزین شوند."
+}
