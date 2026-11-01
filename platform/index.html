@@ -172,7 +172,7 @@ const SUBS = {
   events:[["iran","ایران"],["world","جهان"],["all","همه"],["taken","در دست پیگیری"]],
   erp:[["ops","برنامه‌ی عملیات و واگذاری"],["domains","حوزه‌های فعالیت"],["products","توسعه‌ی محصول هوشمند"],["people","نیروی انسانی"],["finance","مالی"],["clients","مشتریان و قراردادها"],["backup","پشتیبان‌گیری"]],
   bpms:[["home","خانه‌ی BPMS"],["contacts","مخاطبین و ارتباط"],["myday","روز من"],["mind","ذهن‌نگار (آزمون خصوصی)"],["board","تخته‌ی اسکرام"],["backlog","بک‌لاگ و برنامه‌ریزی"],["sprints","اسپرینت‌ها"],["tasks","فهرست تسک‌ها"],["reports","گزارش عملکرد"],["rarchive","بایگانی گزارش‌ها"],["teams","تیم‌ها"],["process","فرایندها"],["calendar","تقویم"],["members","اعضا و ثبت‌نام"],["nda","قرارداد محرمانگی"],["training","فرم آموزش"]],
-  letters:[["new","نامه‌ی جدید (ساخت فایل Word)"],["refinery","پالایشگاه‌ها"],["pp","نامه‌های پترو پالاتوس"],["sosh","نامه‌های سوشیانت"],["archive","همه‌ی نامه‌ها"]],
+  letters:[["new","نامه‌ی جدید (ساخت فایل Word)"],["refinery","پالایشگاه‌ها"],["hpc","پتروشیمی‌های خلیج فارس"],["pp","نامه‌های پترو پالاتوس"],["sosh","نامه‌های سوشیانت"],["archive","همه‌ی نامه‌ها"]],
   scholar:[["applied","اقدام‌شده و در دست بررسی"],["human","مسئول انسانی"],["doing","در دست اقدام"],["todo","اقدام‌نشده"],["profile","مشخصات و رزومه من"],["cv","رزومه محمد پارسا سهرابی"]],
   articles:[["applied","اقدام‌شده و در دست بررسی"],["doing","در دست اقدام"],["todo","اقدام‌نشده"],["product","محصول ویژه‌ی مقاله"],["claude","تسک برای Claude"],["evidence","شواهد و داده‌ی واقعی"],["submit","ثبت چکیده و ثبت‌نام (مسئول انسانی)"],["list","فهرست کامل"],["pipe","خط لوله تا ویزا"],["mail","مسیر ایمیل: ثبت · تاییدیه · مقاله کامل"],["ready","آمادگی ثبت (۶ معیار)"],["upload","آپلود داده‌ها"],["access","دسترسی افراد"]],
   patent:[["home","پتنت‌ها"],["human","مسئول انسانی"],["ops","فرصت‌های ثبت اختراع"],["products","محصولات ریپو"]]
@@ -1040,7 +1040,8 @@ const BASKET_INFO = {
  lnp:{d:"طراحی ناقل ژن (LNP) و رتبه‌بندی چندمعیاره نامزدها.",m:"TRL 4: خط لوله‌ی طراحی آماده؛ آزمون آزمایشگاهی انجام نشده.",k:"بازار: شرکت‌های ژن‌درمانی و واکسن و داروسازی.",i:"راهکار: همکاری با آزمایشگاه برای اعتبارسنجی چند نامزد اول."},
  ipind:{d:"طراحی هوشمند نانوحامل دارو با مدل مولد و شبیه‌سازی دینامیک مولکولی.",m:"TRL 4: خط لوله‌ی مدل‌سازی؛ نیاز به GPU و اعتبارسنجی تجربی.",k:"بازار: داروسازی و نانوفناوری دارویی.",i:"راهکار: همکاری با گروه دانشگاهی برای اعتبارسنجی آزمایشگاهی."},
  pgx:{d:"پلتفرم ژنومیک و فارماکوژنومیک: هم‌ترازی، تماس واریانت و تفسیر دارویی.",m:"TRL 4: خط لوله‌ی کامل؛ برای TRL 5 نیاز به داده‌ی واقعی توالی‌یابی و اعتبارسنجی بالینی.",k:"بازار: مراکز ژنتیک و داروخانه‌های بالینی.",i:"راهکار: پایلوت با نمونه‌های ناشناس‌شده‌ی یک مرکز ژنتیک."},
- hqca:{d:"کشف دارو با مدل ترکیبی کوانتوم-کلاسیک (VQC و VQE).",m:"TRL 4: ریپو و آزمایش روی شبیه‌ساز؛ مقاله‌ی IQIM در دست نگارش. برتری روی داده‌ی واقعی هنوز اثبات نشده است.",k:"بازار: پژوهشی؛ کاربرد تجاری پس از اثبات مزیت نسبت به روش کلاسیک.",i:"راهکار: مقایسه‌ی دقیق با مدل‌های کلاسیک روی داده‌ی عمومی (ChEMBL)."}
+ hqca:{d:"کشف دارو با مدل ترکیبی کوانتوم-کلاسیک (VQC و VQE).",m:"TRL 4: ریپو و آزمایش روی شبیه‌ساز؛ مقاله‌ی IQIM در دست نگارش. برتری روی داده‌ی واقعی هنوز اثبات نشده است.",k:"بازار: پژوهشی؛ کاربرد تجاری پس از اثبات مزیت نسبت به روش کلاسیک.",i:"راهکار: مقایسه‌ی دقیق با مدل‌های کلاسیک روی داده‌ی عمومی (ChEMBL)."},
+ hpc_petro_energy:{d:"PetroEnergy: کنترل مصرف سوخت و بهینه‌سازی انرژی پتروشیمی‌های هلدینگ خلیج فارس؛ پایش راندمان کوره‌ها و دیگ‌های بخار، هوشمندسازی خط تولید و داشبورد مدیریتی برای هر واحد (۱۶ پیکربندی).",m:"TRL 4: اعتبارسنجی آزمایشگاهی با داده‌ی ساختگی (۳۰ روز شبیه‌سازی هر واحد، یک عیب تزریق‌شده: نشت هوا). برای TRL 5 نیاز به داده‌ی واقعی Historian یک واحد و اندازه‌گیری در برابر خط مبنا.",k:"بازار: پتروشیمی‌ها و واحدهای خدمات جانبی (مبین، فجر) با مصرف بالای گاز سوخت؛ کنترل سوخت و انرژی هم هزینه و هم انتشار را کم می‌کند. ملاحظه‌ی تحریم هلدینگ را جدی بگیرید.",i:"راهکار: پایلوت ۸ تا ۱۲ هفته‌ای روی ۱ تا ۲ واحد با اتصال فقط‌خواندنی به Historian/DCS، تعیین خط مبنا، استقرار داشبورد و گزارش صرفه‌جویی اندازه‌گیری‌شده."}
 };
 VIEWS["basket.list"] = () => {
   const list=[...S.products].filter(p=>S.me.isOwner||(asgOf("basket_"+p.id)||{}).doer===S.me.id).filter(p=>match(p.name,p.algorithms,p.client)).filter(p=>secOn("bk",prSec(p))).sort((a,b)=>(b.trl||0)-(a.trl||0)||String(a.name).localeCompare(String(b.name)));
@@ -2614,6 +2615,49 @@ ${L(T.dash)}
 
 با تشکر`};
 }
+// ---------- Persian Gulf Holding petrochemicals: PetroEnergy (fuel and energy control, line smartening, management dashboard), letters on the Petro Pala letterhead.
+// The company list comes from public sources (sanction lists and news reports) and must be confirmed with the holding. Plant data in the product repo is synthetic.
+const HPC_REPO = "https://github.com/parsasohrab1/i-petro/tree/main/products/petro_energy";
+const HPC_PLANTS = [
+ ["bandar_imam","پتروشیمی بندر امام",""],["arvand","پتروشیمی اروند","process_twin"],["karoun","پتروشیمی کارون",""],["tondgooyan","پتروشیمی شهید تندگویان",""],
+ ["khuzestan","پتروشیمی خوزستان",""],["bu_ali_sina","پتروشیمی بوعلی‌سینا",""],["nouri","پتروشیمی نوری",""],["pars","پتروشیمی پارس",""],
+ ["mobin","مبین انرژی خلیج فارس",""],["fajr","فجر انرژی خلیج فارس",""],["urmia","پتروشیمی ارومیه",""],["ilam","پتروشیمی ایلام",""],
+ ["hengam","پتروشیمی هنگام",""],["apadana","پتروشیمی خلیج فارس آپادانا","process_twin"],["lordegan","کود اوره لردگان",""],["hormoz","کود اوره هرمز",""]];
+const HPC_OTHERS = [["پتروشیمی آریاساسول","process_twin"],["پتروشیمی جم","process_twin"],["پتروشیمی آبادان","cbm_dash"],["پتروشیمی فن‌آوران","cbm_dash"],["پتروشیمی خراسان","iems"]];
+function hpcLetter(slug,name,existing){
+  const ex=existing?`همچنین محصول «${refProdName(existing)}» را پیش‌تر برای مجموعه‌های مشابه (از جمله ${name}) تعریف و تا سطح نمونه‌ی آزمایشگاهی توسعه داده‌ایم؛ محصول پیشنهادی این نامه مکمل آن است و روی مصرف سوخت و انرژی تمرکز دارد.\n\n`:"";
+  const util=slug==="mobin"||slug==="fajr";
+  return {
+   recipient:`مدیرعامل محترم ${name}\nهلدینگ خلیج فارس`,
+   subject:`پیشنهاد محصول هوشمند کنترل مصرف سوخت و بهینه‌سازی انرژی ${name}`,
+   body:`با سلام و احترام،
+
+شرکت پترو پالا توس برای مجموعه‌های پتروشیمی هلدینگ خلیج فارس محصولی با نام PetroEnergy تعریف کرده است: کنترل و بهینه‌سازی مصرف سوخت و انرژی، هوشمندسازی خط تولید و داشبورد هوشمند مدیریتی. نسخه‌ی اختصاصی ${name} تا سطح TRL 4 (اعتبارسنجی آزمایشگاهی) توسعه یافته و مخزن نرم‌افزار آن ساخته شده است.
+
+${ex}۱) آنچه محصول انجام می‌دهد
+${util?"• پایش راندمان دیگ‌ها و تقسیم بار با کمترین سوخت، تراز بخار و برق واحد خدمات جانبی":"• پایش راندمان کوره‌ها از روی اکسیژن و دمای دودکش و پیشنهاد نقطه‌ی بهینه‌ی هوای اضافی (بدون عبور از حد ایمن CO)\n• تقسیم بار دیگ‌های بخار با کمترین سوخت و تراز بخار"}
+• مصرف ویژه‌ی انرژی به‌ازای هر تن محصول، هشدار نشت هوا و روند رسوب‌گیری
+• داشبورد مدیریتی با شاخص‌های انرژی هر واحد برای مدیریت و دفتر انرژی
+
+۲) وضعیت فعلی (شفاف)
+نمونه‌ی ما با داده‌ی ساختگی و پارامترهای نمونه ارزیابی شده و داده‌ی واقعی ${name} را ندیده است؛ بنابراین عدد صرفه‌جویی را نمی‌توانیم اعلام کنیم. ارتقا به TRL 5 فقط با داده‌ی واقعی واحد شما و اندازه‌گیری در برابر خط مبنا انجام می‌شود.
+
+۳) پیشنهاد همکاری
+پایلوت ۸ تا ۱۲ هفته‌ای روی یک یا دو واحد: اتصال فقط‌خواندنی به Historian/DCS، تعیین خط مبنای مصرف، استقرار داشبورد و گزارش اندازه‌گیری‌شده‌ی صرفه‌جویی؛ بدون دخالت در حلقه‌های کنترل (توصیه به اپراتور، نه فرمان خودکار).
+
+در صورت تمایل، جلسه‌ی فنی کوتاهی برای معرفی و بررسی داده‌ی در دسترس هماهنگ شود.
+
+با تشکر`};
+}
+VIEWS["letters.hpc"] = () => {
+  const mine=S.products.find(p=>p.id==="hpc_petro_energy"), list=HPC_PLANTS.filter(([k,n])=>match(n,k));
+  return `<p class="note">محصول <b>PetroEnergy</b> (کنترل مصرف سوخت، بهینه‌سازی انرژی، هوشمندسازی خط تولید و داشبورد مدیریتی) برای شرکت‌های هلدینگ خلیج فارس تعریف شده و تا <b>TRL 4</b> با داده‌ی ساختگی توسعه یافته است؛ هر شرکت یک پیکربندی و یک داشبورد نمونه دارد. «ساخت نامه» متن را با سربرگ <b>پترو پالا توس</b> در «نامه‌ی جدید» باز می‌کند. فهرست شرکت‌ها از منابع عمومی است و با هلدینگ باید تأیید شود. <a href="${esc((mine&&mine.github)||HPC_REPO)}" target="_blank" rel="noopener">مخزن محصول</a>.</p>
+   <div class="banner bad"><b>ملاحظه‌ی تحریم:</b> هلدینگ خلیج فارس و چند زیرمجموعه‌اش در فهرست OFAC (۲۰۱۹) هستند. این کار فقط توسط شرکت ایرانی پترو پالاتوس انجام شود و پارسا اینت (استانبول) نقشی نداشته باشد؛ پیش از همکاری مشورت حقوقی بگیرید.</div>`+
+   kpis([["شرکت زیرمجموعه",faNum(HPC_PLANTS.length)],["دارای محصول دوقلوی فرایند",faNum(HPC_PLANTS.filter(x=>x[2]).length)],["پیکربندی PetroEnergy",faNum(HPC_PLANTS.length)],["سطح بلوغ","TRL 4"]])+
+   table(["شرکت","محصول از قبل","محصول PetroEnergy","داشبورد نمونه",""],list.map(([k,n,ex])=>`<tr>${td("شرکت",`<b>${esc(n)}</b>`,"t")}${td("از قبل",ex?`<span class="pill p-ok">${esc(refProdName(ex))}</span>`:"—")}${td("PetroEnergy",'<span class="pill p-info">TRL 4 · داده‌ی ساختگی</span>')}${td("داشبورد",link(`${HPC_REPO}/reports/${k}.html`,"نمونه"))}${td("",`<button class="btn sm sig" data-act="hpc-letter" data-id="${esc(k)}">ساخت نامه (سربرگ پترو پالا توس)</button>`)}</tr>`),"شرکتی با این جست‌وجو نیست.")+
+   `<h3>پتروشیمی‌هایی که پیش‌تر محصول و مخزن دارند</h3><p class="note">این شرکت‌ها در محصولات موجود سبد نام برده شده‌اند؛ عضویتشان در هلدینگ در جست‌وجوی عمومی تأیید نشد و باید با هلدینگ روشن شود. نامه‌ی آن‌ها همان قالب با اشاره‌ی صریح به محصول موجود است.</p>`+
+   table(["شرکت","محصول موجود",""],HPC_OTHERS.map(([n,pid])=>`<tr>${td("شرکت",`<b>${esc(n)}</b>`,"t")}${td("محصول",esc(refProdName(pid)))}${td("",`<button class="btn sm ghost" data-act="hpc-letter" data-id="other:${esc(n)}|${esc(pid)}">ساخت نامه</button>`)}</tr>`));
+};
 VIEWS["letters.refinery"] = () => {
   const list=REFINERIES.filter(r=>match(r.name,r.city,REF_TYPES[r.t].n));
   return `<p class="note">برای هر پالایشگاه پیشنهاد هوشمندسازی خط تولید و داشبورد صنعتی متناسب با ساختار آن نوشته شده است، با تمرکز بر بهینه‌سازی مصرف سوخت و کنترل انرژی. «ساخت نامه» متن را در «نامه‌ی جدید» با سربرگ <b>پترو پالا توس</b> باز می‌کند تا ویرایش، امضا و فایل Word بگیرید. ظرفیت‌ها ارقام گرد منابع عمومی‌اند (بین منابع فرق دارند) و فهرست واحدها بر پایه‌ی نوع پالایشگاه است؛ هر دو را با خود پالایشگاه تأیید کنید. نام مدیرعامل در نامه ننوشته شده است.</p>`+
@@ -3063,7 +3107,7 @@ VIEWS["articles.submit"] = () => {
      return `<tr>${td("مقصد",esc(a.name),"t")}${td("ددلاین",a.deadline?faDate(a.deadline):"—")}${td("مسئول",t?esc(memberName(t.assignee)):'<span class="meta">تعریف نشده</span>')}${td("وضعیت",t?`<span class="pill ${t.status==="done"||t.status==="approved"?"p-ok":t.status==="doing"?"p-info":"p-warn"}">${esc(TASK_ST[t.status]||t.status)}</span>`:'<span class="pill p-mute">—</span>')}${td("",absBtn(a)+(isAdmin()?`<button class="btn sm ghost" data-act="stk-one" data-id="${esc(a.id)}">${t?"واگذاری به مسئول انتخاب‌شده":"تعریف تسک برای مسئول انتخاب‌شده"}</button>`:""))}</tr>`; }; const H=["مقصد","ددلاین","مسئول","وضعیت",""], act=vs.filter(v=>!subDone(v)), dn=vs.filter(subDone);
      return table(H,act.map(rowf),vs.length?"همه‌ی مقصدها انجام شده‌اند.":"هنوز مقصدی در صف Claude نیست.")+(dn.length?`<details class="card"><summary>انجام‌شده (${faNum(dn.length)})</summary>${table(H,dn.map(rowf),"")}</details>`:""); })();
 };
-for(const k of ["letters.new","letters.archive","letters.pp","letters.sosh","letters.refinery"]){ const f=VIEWS[k]; VIEWS[k]=()=>canSeeLetters()?f():`<p class="empty">بخش نامه‌ها فقط برای کارکنان اداری و مالک سامانه قابل مشاهده است.</p>`; }
+for(const k of ["letters.new","letters.archive","letters.pp","letters.sosh","letters.refinery","letters.hpc"]){ const f=VIEWS[k]; VIEWS[k]=()=>canSeeLetters()?f():`<p class="empty">بخش نامه‌ها فقط برای کارکنان اداری و مالک سامانه قابل مشاهده است.</p>`; }
 // ---- human owner (مسئول انسانی) for Patent and Scholarship: one pick can be assigned to every item; tasks land in the BPMS board
 const HUM = {
   patent:{label:"اختراع‌های در جریان",kind:"human_patent",items:()=>S.patents.filter(p=>p.status!=="granted").map(p=>({id:p.id,name:p.title||"—",sub:`${PAT_ST[p.status]||""}${p.number?" · "+p.number:""}`,due:p.next_date||"",
@@ -3735,6 +3779,11 @@ document.addEventListener("click", async e => {
     case "task-quick": { const el=$("#qtTitle"), title=(el&&el.value||"").trim(); if(!title){ toast("عنوان تسک را بنویسید."); break; }
       const now=new Date().toISOString(), tid="t_"+newId();
       if(await save(`tasks/${tid}`,{title,assignee:S.me.id,created_by:S.me.id,team:(myMember()||{}).team||"ai",priority:"normal",due:today(),status:"todo",type:"task",blocked:false,points:null,sprint:"",desc:"",created:now,updated:now},"تسک ساخته شد")) { if(el) el.value=""; } break; }
+    case "hpc-letter": { let slug="", name="", ex="";
+      if(id.startsWith("other:")){ const [n,pid]=id.slice(6).split("|"); name=n; ex=pid; slug="other"; } else { const r=HPC_PLANTS.find(x=>x[0]===id); if(!r) break; [slug,name,ex]=r; }
+      const L=hpcLetter(slug,name,ex);
+      S.draft={identity:"ir",sector:"oil",date:today(),numAuto:true,number:nextLetterNo("ir",today()),recipient:L.recipient,subject:L.subject,body:L.body,attachments:"",cc:"",annex:"",signer:""};
+      S.mod="letters"; S.sub="new"; S.forceFull=true; render(); toast("پیش‌نویس نامه با سربرگ پترو پالا توس آماده شد؛ بازبینی و ذخیره کنید."); break; }
     case "ref-letter": { const r=REFINERIES.find(x=>x.id===id); if(!r) break; const L=refineryLetter(r);
       S.draft={identity:"ir",sector:"oil",date:today(),numAuto:true,number:nextLetterNo("ir",today()),recipient:L.recipient,subject:L.subject,body:L.body,attachments:"",cc:"",annex:"",signer:""};
       S.mod="letters"; S.sub="new"; S.forceFull=true; render(); toast("پیش‌نویس نامه با سربرگ پترو پالا توس آماده شد؛ بازبینی و ذخیره کنید."); break; }

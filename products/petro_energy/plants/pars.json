@@ -1,0 +1,52 @@
+{
+ "slug": "pars",
+ "name_fa": "پتروشیمی پارس",
+ "name_en": "Pars Petrochemical",
+ "kind": "process",
+ "production_tph": 84.0,
+ "steam_demand_tph": 228,
+ "furnaces": [
+  {
+   "id": "F-101",
+   "duty_mw": 48.0,
+   "o2_setpoint": 3.4,
+   "t_stack_c": 185
+  },
+  {
+   "id": "F-102",
+   "duty_mw": 44.2,
+   "o2_setpoint": 3.6,
+   "t_stack_c": 191
+  },
+  {
+   "id": "F-103",
+   "duty_mw": 40.3,
+   "o2_setpoint": 3.8,
+   "t_stack_c": 197
+  }
+ ],
+ "boilers": [
+  {
+   "id": "B-1",
+   "min_tph": 30,
+   "max_tph": 132,
+   "eta_max": 0.91
+  },
+  {
+   "id": "B-2",
+   "min_tph": 30,
+   "max_tph": 122,
+   "eta_max": 0.885
+  },
+  {
+   "id": "B-3",
+   "min_tph": 30,
+   "max_tph": 113,
+   "eta_max": 0.86
+  }
+ ],
+ "fuel_price": 1.0,
+ "existing_product": null,
+ "illustrative": true,
+ "notes": "پارامترهای واحد نمونه و ساختگی‌اند، نه داده‌ی اندازه‌گیری‌شده؛ با داده‌ی واقعی شرکت جایگزین شوند."
+}

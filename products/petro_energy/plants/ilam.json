@@ -1,0 +1,40 @@
+{
+ "slug": "ilam",
+ "name_fa": "پتروشیمی ایلام",
+ "name_en": "Ilam Petrochemical",
+ "kind": "process",
+ "production_tph": 49.0,
+ "steam_demand_tph": 92,
+ "furnaces": [
+  {
+   "id": "F-101",
+   "duty_mw": 28.0,
+   "o2_setpoint": 3.4,
+   "t_stack_c": 185
+  },
+  {
+   "id": "F-102",
+   "duty_mw": 25.8,
+   "o2_setpoint": 3.6,
+   "t_stack_c": 191
+  }
+ ],
+ "boilers": [
+  {
+   "id": "B-1",
+   "min_tph": 18,
+   "max_tph": 77,
+   "eta_max": 0.91
+  },
+  {
+   "id": "B-2",
+   "min_tph": 18,
+   "max_tph": 71,
+   "eta_max": 0.885
+  }
+ ],
+ "fuel_price": 1.0,
+ "existing_product": null,
+ "illustrative": true,
+ "notes": "پارامترهای واحد نمونه و ساختگی‌اند، نه داده‌ی اندازه‌گیری‌شده؛ با داده‌ی واقعی شرکت جایگزین شوند."
+}
