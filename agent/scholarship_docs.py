@@ -15,6 +15,10 @@ FONT = "Tahoma"
 OUT = ROOT / "outputs"
 REGIONS = [("uk", "بریتانیا"), ("europe", "اروپا"), ("other", "سایر نقاط جهان (بدون چین و روسیه)")]
 LEVEL = {"master": "ارشد", "phd": "دکتری"}
+# the only numbers given to institutions: verification codes and WhatsApp messages may come from them
+CONTACT_MOBILE = "09123344295"
+CONTACT_PHONE = "02188918530"
+CONTACT_NOTE = f"شماره‌ی تماس برای همه‌ی ثبت‌نام‌ها: فقط موبایل ایران {CONTACT_MOBILE} و تلفن ایران {CONTACT_PHONE}؛ کد تأیید و پیام واتس‌اپ نهادها به همین شماره‌ها می‌رسد."
 
 
 class Doc:
@@ -188,6 +192,7 @@ def todo_doc(state):
     d.para("کارهای لازم برای انجام توسط شما – بورسیه‌ی فول‌فاند", True, 16, (31, 58, 95), 2)
     d.para(f"تاریخ: {date.today().isoformat()} | این فایل هر روز با فهرست فرصت‌ها به‌روز می‌شود. کارهایی که هوش مصنوعی انجام می‌دهد در «بسته‌ی درخواست» آمده است.", False, 9, (90, 90, 90), 8)
 
+    d.para(CONTACT_NOTE, True, 10, (180, 40, 30), 6)
     d.h("۱) اقدام فوری (مهلت ≤ ۴۵ روز)")
     d.table(["مهلت", "برنامه", "کار شما", "لینک"],
             [(s["deadline"], s["name"], "ثبت‌نام در پورتال رسمی، بارگذاری مدارک، ارسال نهایی؛ درخواست توصیه‌نامه همین هفته", s["url"]) for s in urgent]
@@ -239,7 +244,7 @@ def derby_kit_doc():
            "(currently around £20,780 per year) is accompanied by payment of the overseas tuition fee; (2) the application deadline and start date; "
            "(3) the language and prior-experience requirements.\n\n"
            "I attach my CV and a short research outline and would be glad to discuss the project at your convenience.\n\n"
-           "Kind regards,\n[Name]\n[Phone / email / ORCID]")
+           f"Kind regards,\n[Name]\n{CONTACT_MOBILE} / {CONTACT_PHONE} / [email / ORCID]")
 
     d.h("2. Statement of purpose (draft, ~500 words)")
     d.para("I want to pursue a PhD in artificial intelligence because the hardest problems I meet in industry are not model-accuracy problems but "
