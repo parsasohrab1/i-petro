@@ -25,7 +25,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": -10,
+   "days_left": -11,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -66,7 +66,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": -11,
+   "days_left": -12,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -107,7 +107,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": -10,
+   "days_left": -11,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -148,7 +148,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": -10,
+   "days_left": -11,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -189,7 +189,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": -10,
+   "days_left": -11,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -230,7 +230,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": -9,
+   "days_left": -10,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -271,7 +271,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": -8,
+   "days_left": -9,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -312,7 +312,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": -4,
+   "days_left": -5,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -353,7 +353,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": -4,
+   "days_left": -5,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -394,7 +394,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": -3,
+   "days_left": -4,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -435,7 +435,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": -3,
+   "days_left": -4,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -476,7 +476,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": -1,
+   "days_left": -2,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -517,14 +517,19 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": 0,
+   "days_left": -1,
    "line": "ai",
-   "status": "new",
+   "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
    "history": [
     {
      "at": "2026-10-19T13:28:54",
      "status": "new"
+    },
+    {
+     "at": "2026-11-02T12:50:26",
+     "status": "expired",
+     "note": ""
     }
    ]
   },
@@ -551,7 +556,7 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": 1,
+   "days_left": 0,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -586,7 +591,7 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": 4,
+   "days_left": 3,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -621,7 +626,7 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": 9,
+   "days_left": 8,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -656,7 +661,7 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": 18,
+   "days_left": 17,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -690,7 +695,7 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": 15,
+   "days_left": 14,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -724,7 +729,7 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": 17,
+   "days_left": 16,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -759,7 +764,7 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": 29,
+   "days_left": 28,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -794,7 +799,7 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": 37,
+   "days_left": 36,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -829,7 +834,7 @@
    "domains": [
     "water"
    ],
-   "days_left": -5,
+   "days_left": -6,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -869,7 +874,7 @@
     "ai_cross_cutting",
     "medical"
    ],
-   "days_left": 15,
+   "days_left": 14,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -905,7 +910,7 @@
     "oil_gas",
     "urban"
    ],
-   "days_left": 22,
+   "days_left": 21,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -939,7 +944,7 @@
    "domains": [
     "urban"
    ],
-   "days_left": 19,
+   "days_left": 18,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-20T09:40:22",
@@ -973,7 +978,7 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": 72,
+   "days_left": 71,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-20T09:40:22",
@@ -1075,7 +1080,7 @@
    "domains": [
     "aerospace"
    ],
-   "days_left": -4,
+   "days_left": -5,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-21T09:36:20",
@@ -1114,7 +1119,7 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": 1,
+   "days_left": 0,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-21T09:36:20",
@@ -1149,7 +1154,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": 2,
+   "days_left": 1,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-21T09:36:20",
@@ -1183,7 +1188,7 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": 20,
+   "days_left": 19,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-21T09:36:20",
@@ -1217,7 +1222,7 @@
    "domains": [
     "web"
    ],
-   "days_left": 22,
+   "days_left": 21,
    "line": "web",
    "status": "new",
    "first_seen": "2026-10-21T09:36:20",
@@ -1285,7 +1290,7 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": 8,
+   "days_left": 7,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-22T09:39:52",
@@ -1319,7 +1324,7 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": 19,
+   "days_left": 18,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-22T09:39:52",
@@ -1353,7 +1358,7 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": 19,
+   "days_left": 18,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-22T09:39:52",
@@ -1387,7 +1392,7 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": 29,
+   "days_left": 28,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-22T09:39:52",
@@ -1421,7 +1426,7 @@
    "domains": [
     "aerospace"
    ],
-   "days_left": 24,
+   "days_left": 23,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-23T09:35:00",
@@ -1455,7 +1460,7 @@
    "domains": [
     "medical"
    ],
-   "days_left": 30,
+   "days_left": 29,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-23T09:35:00",
@@ -1489,7 +1494,7 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": 33,
+   "days_left": 32,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-23T09:35:00",
@@ -1625,7 +1630,7 @@
    "domains": [
     "urban"
    ],
-   "days_left": 8,
+   "days_left": 7,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-26T10:29:22",
@@ -1659,7 +1664,7 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": 22,
+   "days_left": 21,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-26T10:29:22",
@@ -1693,7 +1698,7 @@
    "domains": [
     "urban"
    ],
-   "days_left": 22,
+   "days_left": 21,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-26T10:29:22",
@@ -1761,7 +1766,7 @@
    "domains": [
     "urban"
    ],
-   "days_left": 9,
+   "days_left": 8,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-27T10:03:26",
@@ -1795,7 +1800,7 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": 22,
+   "days_left": 21,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-27T10:03:26",
@@ -1829,7 +1834,7 @@
    "domains": [
     "medical"
    ],
-   "days_left": 25,
+   "days_left": 24,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-27T10:03:26",
@@ -1863,7 +1868,7 @@
    "domains": [
     "urban"
    ],
-   "days_left": 26,
+   "days_left": 25,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-27T10:03:26",
@@ -1898,7 +1903,7 @@
    "domains": [
     "web"
    ],
-   "days_left": 8,
+   "days_left": 7,
    "line": "web",
    "status": "new",
    "first_seen": "2026-10-28T10:50:09",
@@ -1932,7 +1937,7 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": 26,
+   "days_left": 25,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-28T10:50:09",
@@ -1966,7 +1971,7 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": 36,
+   "days_left": 35,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-28T10:50:09",
@@ -2068,7 +2073,7 @@
    "domains": [
     "aerospace"
    ],
-   "days_left": 5,
+   "days_left": 4,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-29T11:07:42",
@@ -2102,7 +2107,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": 10,
+   "days_left": 9,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-29T11:07:42",
@@ -2136,7 +2141,7 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": 37,
+   "days_left": 36,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-29T11:07:42",
@@ -2205,7 +2210,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": 14,
+   "days_left": 13,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-30T11:05:47",
@@ -2239,7 +2244,7 @@
    "domains": [
     "aerospace"
    ],
-   "days_left": 29,
+   "days_left": 28,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-30T11:05:47",
@@ -2273,7 +2278,7 @@
    "domains": [
     "web"
    ],
-   "days_left": 46,
+   "days_left": 45,
    "line": "web",
    "status": "new",
    "first_seen": "2026-10-30T11:05:47",
@@ -2342,7 +2347,7 @@
    "domains": [
     "health_ai"
    ],
-   "days_left": 10,
+   "days_left": 9,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-30T22:04:27",
@@ -2389,7 +2394,7 @@
      "status": "new"
     }
    ],
-   "days_left": 108
+   "days_left": 107
   },
   "GRANT-HORIZON-HLTH-2027-03-TOOL-04": {
    "id": "GRANT-HORIZON-HLTH-2027-03-TOOL-04",
@@ -2503,7 +2508,383 @@
      "status": "new"
     }
    ],
-   "days_left": 94
+   "days_left": 93
+  },
+  "TED-760253-2026": {
+   "id": "TED-760253-2026",
+   "source": "TED (EU)",
+   "market": "international",
+   "title": "Germany – Command and control system – SCADA Hard- and Software Ukraine",
+   "description": "DDP Lieferung von SCADA Hard- und Software an ein Transport-Hub innerhalb Deutschlands (Eschborn +200km). DDP Lieferung von SCADA Hard- und Software an ein Transport-Hub innerhalb Deutschlands (Eschborn +200km). DDP Lieferung von SCADA Hard- und Software an ein Transport-Hub innerhalb Deutschlands (Eschborn +200km). DDP Lieferung von SCADA Hard- und Software an ein Transport-Hub innerhalb Deutschlands (Eschborn +200km).",
+   "buyer": "Deutsche Gesellschaft für Internationale Zusammenarbeit (GIZ) GmbH",
+   "country": "DEU",
+   "deadline": "2026-11-09",
+   "published": "2026-11-02",
+   "url": "https://ted.europa.eu/en/notice/-/detail/760253-2026",
+   "notice_type": "cn-standard",
+   "sector": "شرکت دولتی / عمومی",
+   "facts": {
+    "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "رویه‌ی باز اتحادیه اروپا – شرکت‌های خارج از EU معمولاً مجازند مگر محدودیت صریح در اسناد"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "oil_gas"
+   ],
+   "days_left": 7,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-11-02T12:50:26",
+   "history": [
+    {
+     "at": "2026-11-02T12:50:26",
+     "status": "new"
+    }
+   ]
+  },
+  "TED-756392-2026": {
+   "id": "TED-756392-2026",
+   "source": "TED (EU)",
+   "market": "international",
+   "title": "Spain – Leaded petrol – El objeto del contrato es el suministro de combustible de aviación AVGAS 100LL destinado a las aeronaves operadas por European Aviation College, S.A. (ADVENTIA)",
+   "description": "El objeto del contrato es el suministro de combustible de aviación AVGAS 100LL destinado a las aeronaves operadas por European Aviation College, S.A., ADVENTIA, en el desarrollo de sus actividades de formación de pilotos, conforme a lo dispuesto en el pliego de prescripciones técnicas particulares, que, junto con las presentes cláusulas administrativas particulares y sus anexos, rigen esta licitación y revestirán carácter contractual; por lo que la presentación de ofertas conllevará la declaración expresa de pleno conocimiento, conformidad y aceptación total por parte del licitador del contenido íntegro de dichas cláusulas, sin ningún tipo de objeción o salvedad. El suministro comprenderá la puesta a disposición y entrega del combustible mediante el sistema into-plane o modalidad equivalente autorizada, en los aeropuertos y aeródromos nacionales en los que las aeronaves de ADVENTIA precisen repostar y la empresa a la que se le adjudique el contrato preste servicio, de acuerdo con las condiciones establecidas en el pliego de prescripciones técnicas particulares.",
+   "buyer": "Presidencia de European Aviation College, S.A.",
+   "country": "ESP",
+   "deadline": "2026-11-16",
+   "published": "2026-11-02",
+   "url": "https://ted.europa.eu/en/notice/-/detail/756392-2026",
+   "notice_type": "cn-standard",
+   "sector": "دولتی",
+   "facts": {
+    "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "رویه‌ی باز اتحادیه اروپا – شرکت‌های خارج از EU معمولاً مجازند مگر محدودیت صریح در اسناد"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "aerospace"
+   ],
+   "days_left": 14,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-11-02T12:50:26",
+   "history": [
+    {
+     "at": "2026-11-02T12:50:26",
+     "status": "new"
+    }
+   ]
+  },
+  "TED-753255-2026": {
+   "id": "TED-753255-2026",
+   "source": "TED (EU)",
+   "market": "international",
+   "title": "Croatia – Parts of machinery for mining, quarrying and construction – REZERVNI DIJELOVI, POPRAVAK I SERVIS POSTROJENJA ZA OBRADU GRAĐEVINSKOG OTPADA",
+   "description": "Predmet nabave su REZERVNI DIJELOVI, POPRAVAK I SERVIS POSTROJENJA ZA OBRADU GRAĐEVINSKOG OTPADA CPV oznaka i naziv: 43600000 – Dijelovi strojeva za rudarstvo, kamenolome i građevinarstvo Naručitelj ovim postupkom javne nabave nabavlja dijelove za novo postrojenje za obradu građevinskog otpada koji se odnosi se na osiguravanje pravovremenog i kontinuiranog rada suvremene tehnološke linije, uzimajući u obzir dosadašnja iskustva s postojećim, dotrajalim postrojenjem. Zamjena starog postrojenja bila je nužna zbog izražene tehničke zastarjelosti, nepouzdanosti te povećanih troškova održavanja obilježeno čestim kvarovima kao i ograničenim kapacitetom obrade. Slijedom navedenog, nabava novog postrojenja predstavljala je optimalno rješenje, dok nabava rezervnih dijelova za novo postrojenje ima ključnu ulogu u osiguravanju njegove dugoročne pouzdanosti, učinkovitosti i neprekidnog rada. Sustavno planiranje i nabava rezervnih dijelova za novo postrojenje omogućit će pravovremenu zamjenu potrošnih komponenti, smanjenje neplaniranih zastoja te održavanje visokih operativnih standarda, čime se osigurava stabilno, sigurno i ekonomski održivo upravljanje procesima obrade građevinskog otpada. Naručitelj u ovom postupku nabave ne zahtjeva dostavu dodatnih dokumenata/dokaza osim traženih/propisanih ovom dokumentacijom o nabavi, Ponuditelj je dužan isporučiti robu traženu troškovnikom, odnosno roba koja će se isporučivati temeljem ovog provedenog postupku nabave mora odgovarati tehničkim karakteristikama iz troškovnika a Naručitelj će isto kontrolirati u fazi izvršenja ugovora o javnoj nabavi.",
+   "buyer": "GRAD ZAGREB ZAGREBAČKI HOLDING d.o.o.",
+   "country": "HRV",
+   "deadline": "2026-11-16",
+   "published": "2026-10-30",
+   "url": "https://ted.europa.eu/en/notice/-/detail/753255-2026",
+   "notice_type": "cn-standard",
+   "sector": "دولتی",
+   "facts": {
+    "price": "ارزش برآوردی: 700,000 EUR",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "رویه‌ی باز اتحادیه اروپا – شرکت‌های خارج از EU معمولاً مجازند مگر محدودیت صریح در اسناد"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "mining"
+   ],
+   "days_left": 14,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-11-02T12:50:26",
+   "history": [
+    {
+     "at": "2026-11-02T12:50:26",
+     "status": "new"
+    }
+   ]
+  },
+  "TED-759283-2026": {
+   "id": "TED-759283-2026",
+   "source": "TED (EU)",
+   "market": "international",
+   "title": "Croatia – Parts of machinery for mining, quarrying and construction – REZERVNI DIJELOVI, POPRAVAK I SERVIS POSTROJENJA ZA OBRADU GRAĐEVINSKOG OTPADA",
+   "description": "Predmet nabave su REZERVNI DIJELOVI, POPRAVAK I SERVIS POSTROJENJA ZA OBRADU GRAĐEVINSKOG OTPADA CPV oznaka i naziv: 43600000 – Dijelovi strojeva za rudarstvo, kamenolome i građevinarstvo Naručitelj ovim postupkom javne nabave nabavlja dijelove za novo postrojenje za obradu građevinskog otpada koji se odnosi se na osiguravanje pravovremenog i kontinuiranog rada suvremene tehnološke linije, uzimajući u obzir dosadašnja iskustva s postojećim, dotrajalim postrojenjem. Zamjena starog postrojenja bila je nužna zbog izražene tehničke zastarjelosti, nepouzdanosti te povećanih troškova održavanja obilježeno čestim kvarovima kao i ograničenim kapacitetom obrade. Slijedom navedenog, nabava novog postrojenja predstavljala je optimalno rješenje, dok nabava rezervnih dijelova za novo postrojenje ima ključnu ulogu u osiguravanju njegove dugoročne pouzdanosti, učinkovitosti i neprekidnog rada. Sustavno planiranje i nabava rezervnih dijelova za novo postrojenje omogućit će pravovremenu zamjenu potrošnih komponenti, smanjenje neplaniranih zastoja te održavanje visokih operativnih standarda, čime se osigurava stabilno, sigurno i ekonomski održivo upravljanje procesima obrade građevinskog otpada. Naručitelj u ovom postupku nabave ne zahtjeva dostavu dodatnih dokumenata/dokaza osim traženih/propisanih ovom dokumentacijom o nabavi, Ponuditelj je dužan isporučiti robu traženu troškovnikom, odnosno roba koja će se isporučivati temeljem ovog provedenog postupku nabave mora odgovarati tehničkim karakteristikama iz troškovnika a Naručitelj će isto kontrolirati u fazi izvršenja ugovora o javnoj nabavi.",
+   "buyer": "GRAD ZAGREB ZAGREBAČKI HOLDING d.o.o.",
+   "country": "HRV",
+   "deadline": "2026-11-16",
+   "published": "2026-11-02",
+   "url": "https://ted.europa.eu/en/notice/-/detail/759283-2026",
+   "notice_type": "cn-standard",
+   "sector": "دولتی",
+   "facts": {
+    "price": "ارزش برآوردی: 700,000 EUR",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "رویه‌ی باز اتحادیه اروپا – شرکت‌های خارج از EU معمولاً مجازند مگر محدودیت صریح در اسناد"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "mining"
+   ],
+   "days_left": 14,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-11-02T12:50:26",
+   "history": [
+    {
+     "at": "2026-11-02T12:50:26",
+     "status": "new"
+    }
+   ]
+  },
+  "WB-OP00477790": {
+   "id": "WB-OP00477790",
+   "source": "World Bank",
+   "market": "international",
+   "title": "Complementary Works for the Expansion of the Sewage Collection Network to Connect to the Zahle & Aitanit Wastewater Treatment Plants",
+   "description": "Lebanon Green Agrifood Transformation for Economic Recovery (GATE). Specific Procurement Notice Request for Bids Works (Two-envelope Bidding Process Without Prequalification) Country: Lebanon Employer : Council for Development and Reconstruction (CDR) Name of Project: Green Agri-Food Transformation for Economic Recovery (GATE) Contract Title: Complementary Works for the Expansion of the Sewage Collection Network to Connect to the Zahle & Aitanit Wastewater Treatment Plants Loan No.: 9576-LB RFB Reference No.: GC2W2c 1. The Republic of Lebanon has received financing from the World Bank toward the cost of the Green Agri-Food Transformation for Economic Recovery (GATE) ; and intends to apply part of the proceeds toward payments under the contract for Complementary Works for the Expansion of the Sewage Collection Network to Connect to the Zahle & Aitanit Wastewater Treatment Plants. For this contract, the Borrower shall process the payments using the Direct Payment disbursement method, as defined in the World Bank’s Disbursement Guidelines for Investment Project Financing. 2. The Council for Development and Reconstruction (CDR) acting as an implementing agency for and on behalf of the Republic of Lebanon now invites sealed Bids from eligible Bidders for the execution of Complementary Works for the Expansion of the Sewage Collection Network to Connect to the Zahle & Aitanit Wastewater Treatment Plants ( The Works ) . The successful Bidder shall complete the works within 6 (six) months from the Commencement Date. 3. The works consist of the execution of the following parts: Part 1 Complementary Network to Zahle WWTP Pipeworks (lm) House Connection (Nb.) Zahle - El Ferzol Sewer Network 13,739 224 Saadnyael - Taalbaya Sewer Network 4,681 172 Quaa El Rim Sewer Network 948 24 Hezzerta Sewer Network 1,900 48 Sub-Total - 1 21,268 468 Part 2 Complementary Network to Aitanit WWTP Pipeworks (lm) House Connection (Nb.) Sewer Lines in Baaloul - Qaraoun 6,081 90 Sub-Total - 2 6,081 90 Complementary Networks to Zahle and Aitanit WWTPs Pipeworks (lm) House Connection (Nb.) Sub-Total - 1 (Zahle) 21,268 468 Sub-Total - 2 (Aitanit) 6,081 90 Total 27,349 558 In addition to the solarization of the Existing Pumping Station (PS-7) in Qaraoun, and the supply and installation of 120 kVA generator set. The proposed 27 km of additional sewer lines represent complementary extensions to the existing collection network recently constructed. These lines will be directly connected to the currently operational sewer infrastructure, ensuring continuity and full integration within the overall wastewater collection system. The completed network will enable the proper collection and conveyance of wastewater to the Zahle and Aitanit Wastewater Treatment Plants, thereby contributing to improved wastewater management and environmental protection in the Bekaa region. 4. Eligible Bidders (single entity or joint venture) shall meet the following summarized qualifying criteria (detailed in the bidding documents) in order to be qualified for award of the contract: - Minimum average annual construction turnover of US$ Four Million (4 MUSD), calculated as total certified payments received for contracts in progress and/or completed within the last Ten years. - General experience under construction contracts of water or wastewater projects in the role of prime contractor, JV member, sub-contractor, or management contractor for at least the last Fifteen (15) years, starting 1st January 2011. - A minimum number of similar contracts specified below that have been satisfactorily and substantially completed as a prime contractor, joint venture member, management contractor or sub-contractor between 1st January 2011 and bid submission deadline: Two water or wastewater network contracts, with at least one wastewater network contract with a value of not less than Four Million US Dollars (4MUSD) - Bank certificate for access to liquid assets and/or evidence of access to or availability o",
+   "buyer": "Council for Development and Reconstruction",
+   "country": "Lebanon",
+   "deadline": "2026-11-23",
+   "published": "2026-10-28",
+   "url": "https://projects.worldbank.org/en/projects-operations/procurement-detail/OP00477790",
+   "notice_type": "Invitation for Bids",
+   "procurement_method": "Request for Bids",
+   "sector": "دولتی (پروژه با تأمین مالی بانک جهانی)",
+   "facts": {
+    "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "guarantee": "طبق آگهی: bid security of 100,000 usd (one hundred thousand united states dollars) valid for 28 days beyond the bid validity period",
+    "experience": "طبق آگهی: experience under construction contracts of water or wastewater projects in the role of prime contractor, jv member, sub-contractor, or management contractor for at least the last fifteen (15) years, starting 1st january ",
+    "international": "رقابت ملی – احتمالاً محدود به شرکت‌های داخلی کشور خریدار"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "water"
+   ],
+   "days_left": 21,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-11-02T12:50:26",
+   "history": [
+    {
+     "at": "2026-11-02T12:50:26",
+     "status": "new"
+    }
+   ]
+  },
+  "TED-757336-2026": {
+   "id": "TED-757336-2026",
+   "source": "TED (EU)",
+   "market": "international",
+   "title": "Poland – Wastewater treatment plant construction work – Przebudowa i rozbudowa istniejącej oczyszczalni ścieków w Nowogardzie",
+   "description": "1. Przedmiotem opracowania jest zaprojektowanie i wykonanie inwestycji pn.: „Przebudowa i rozbudowa istniejącej oczyszczalni ścieków w Nowogardzie”. Obecnie funkcjonująca oczyszczalnia ścieków zlokalizowana jest w Nowogardzie, w północno-wschodniej części miejscowości przy ulicy Zamkowej 9. Przedmiot zamówienia obejmuje kompleksową realizację Inwestycji, w szczególności: a) opracowanie kompletnej dokumentacji projektowej, uzyskanie wszelkich niezbędnych decyzji administracyjnych, opinii i uzgodnień wymaganych przepisami prawa, w tym m.in. pozwolenia na budowę oraz (jeśli dotyczy) aktualizacji pozwolenia wodnoprawnego; b) wykonanie wszystkich Robót budowlanych oraz dostaw maszyn i urządzeń zgodnie z zatwierdzoną dokumentacją projektową i PFU; c) sprawowanie nadzoru autorskiego w trakcie realizacji robót budowlanych; d) przeprowadzenie pełnego procesu Rozruchu oraz Ruchu Próbnego (Próby Eksploatacyjnej) wraz z potwierdzeniem osiągnięcia Parametrów Kontrolnych i Efektu Ekologicznego; e) uzyskanie w imieniu Zamawiającego ostatecznej decyzji o pozwoleniu na użytkowanie; f) udzielenie Gwarancji na zasadach określonych w umowie; Obecna mechaniczno-biologiczna oczyszczalnia ścieków w Nowogardzie posiada przepustowość projektową Qśrd= 3 420 m3/d, została wybudowana w latach 1972 – 1975 (Dokumentacja projektowa powstała w 1969r.). W realizacji przedmiotowej inwestycji należy uwzględnić rozbudowę i przebudowę (modernizację) istniejącej oczyszczalni w zakresie oczyszczalni mechanicznej, oczyszczalni biologicznej i gospodarki osadowej na działce istniejącej oczyszczalni Nowogard OBR. 3 – nr 200 o powierzchni 2,5090 ha. Osiągnięcie powyższych założeń związane jest ściśle z rozbudową i przebudową istniejących i wykonaniem nowych obiektów technologicznych na działce nr ew. 200 w konstrukcji żelbetowej z zaawansowanym technicznie wyposażeniem technologicznym oraz systemem AKPiA. Wymaga się automatyzacji procesów technologicznych bazującej na wysokosprawnych urządzeniach pomiarowych oraz zautomatyzowanym systemie sterowania dla optymalizacji procesu oczyszczania i jednoczesnego ograniczenia kosztów, których jednym z najwyższych czynników jest zużycie energii elektrycznej na proces napowietrzania i unieszkodliwianie osadów ściekowych. Analiza danych ilościowo-jakościowych ścieków surowych, stan i parametry techniczne kanalizacji sanitarnej na terenie gminy Nowogard warunkują zakres rozbudowy i przebudowy przedmiotowej oczyszczalni. Projektowane obciążenie oczyszczalni wyrażone Równoważną Liczbą Mieszkańców nie może być niższe od RLM=25920. Dla tej wielkości oczyszczalni, należy spełnić wymagania jakościowe w odprowadzanych ściekach oczyszczonych zawarte w obowiązującym rozporządzeniu Ministra gospodarki morskiej i żeglugi śródlądowej z dnia 12 lipca 2019 w sprawie substancji szczególnie szkodliwych dla środowiska wodnego oraz warunków, jakie należy spełnić przy wprowadzaniu do wód lub do ziemi ścieków, a także przy odprowadzaniu wód opadowych lub roztopowych do wód lub do urządzeń wodnych – Dz. U 2019, poz. 1311. Wymagany efekt ekologiczny należy uzyskać przy zastosowaniu wysokosprawnej oczyszczalni mechanicznej z piaskownikiem poziomym, nowoprojektowanego reaktora biologicznego w technologii A2O. Należy zaprojektować i wykonać gospodarkę osadową z tlenową stabilizacją i dwukierunkową higienizacją: mikrobiologiczną z zastosowaniem efektywnych mikroorganizmów i termiczną z wykorzystaniem Termicznego Higienizatora Osadów (THO). Każdy z wymaganych metod higienizacji musi zapewnić parametry wymagane do stosowania komunalnych osadów ściekowych w rolnictwie.",
+   "buyer": "Gmina Nowogard",
+   "country": "POL",
+   "deadline": "2026-11-24",
+   "published": "2026-11-02",
+   "url": "https://ted.europa.eu/en/notice/-/detail/757336-2026",
+   "notice_type": "cn-standard",
+   "sector": "دولتی",
+   "facts": {
+    "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "رویه‌ی باز اتحادیه اروپا – شرکت‌های خارج از EU معمولاً مجازند مگر محدودیت صریح در اسناد"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "water"
+   ],
+   "days_left": 22,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-11-02T12:50:26",
+   "history": [
+    {
+     "at": "2026-11-02T12:50:26",
+     "status": "new"
+    }
+   ]
+  },
+  "TED-755520-2026": {
+   "id": "TED-755520-2026",
+   "source": "TED (EU)",
+   "market": "international",
+   "title": "Ireland – Mechanical shovels, excavators and shovel loaders, and mining machinery – Supply of 2.8 Tonne Mini Excavator",
+   "description": "The Department of Housing, Local Government and Heritage have a requirement for a new 2.8 ton excavator with cab and 300 mm wide rubber tracks, long dipper arm, and the listed buckets. The excavator must be delivered to Government Buildings Convent Road Roscommon town F42 VX53 on or before the 28th February 2027. Parts for the excavator must be readily available in the republic of Ireland. The excavator must meet all regulations governing this type of machinery in the republic of Ireland.",
+   "buyer": "National Parks and Wildlife",
+   "country": "IRL",
+   "deadline": "2026-11-26",
+   "published": "2026-10-30",
+   "url": "https://ted.europa.eu/en/notice/-/detail/755520-2026",
+   "notice_type": "cn-desg",
+   "sector": "دولتی",
+   "facts": {
+    "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "رویه‌ی باز اتحادیه اروپا – شرکت‌های خارج از EU معمولاً مجازند مگر محدودیت صریح در اسناد"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "mining"
+   ],
+   "days_left": 24,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-11-02T12:50:26",
+   "history": [
+    {
+     "at": "2026-11-02T12:50:26",
+     "status": "new"
+    }
+   ]
+  },
+  "TED-757053-2026": {
+   "id": "TED-757053-2026",
+   "source": "TED (EU)",
+   "market": "international",
+   "title": "Spain – Video-surveillance system – Contrato de suministro e implantación de una solución Smart City de movilidad urbana, sensorización, información a la ciudadanía y videovigilancia, alarma y protección de dependencias, instalaciones y espacios municipales del Ayuntamiento de Los Palacios y Villafranca por procedimiento abierto, sujeto a regulación armonizada (SARA).",
+   "description": "Contrato de suministro e implantación de una solución Smart City de movilidad urbana, sensorización, información a la ciudadanía y videovigilancia, alarma y protección de dependencias, instalaciones y espacios municipales del Ayuntamiento de Los Palacios y Villafranca por procedimiento abierto, sujeto a regulación armonizada (SARA).",
+   "buyer": "Alcaldia del Ayuntamiento de Los Palacios y Villafranca",
+   "country": "ESP",
+   "deadline": "2026-11-30",
+   "published": "2026-11-02",
+   "url": "https://ted.europa.eu/en/notice/-/detail/757053-2026",
+   "notice_type": "cn-standard",
+   "sector": "دولتی",
+   "facts": {
+    "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "رویه‌ی باز اتحادیه اروپا – شرکت‌های خارج از EU معمولاً مجازند مگر محدودیت صریح در اسناد"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "urban"
+   ],
+   "days_left": 28,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-11-02T12:50:26",
+   "history": [
+    {
+     "at": "2026-11-02T12:50:26",
+     "status": "new"
+    }
+   ]
+  },
+  "TED-759325-2026": {
+   "id": "TED-759325-2026",
+   "source": "TED (EU)",
+   "market": "international",
+   "title": "Italy – Software development services – Procedura aperta per l’affidamento dei servizi di progettazione, fornitura, configurazione, integrazione, personalizzazione, collaudo, formazione, messa in esercizio e manutenzione di una piattaforma extended Airport Operations Plan (eAOP) per gli aeroporti di Milano Malpensa e Milano Linate",
+   "description": "Progettazione, fornitura, configurazione, integrazione, personalizzazione, collaudo, formazione, messa in esercizio e manutenzione di una piattaforma extended Airport Operations Plan (eAOP) per gli aeroporti di Milano Malpensa e Milano Linate",
+   "buyer": "Società per Azioni Esercizi Aeroportuali S.E.A.",
+   "country": "ITA",
+   "deadline": "2026-12-03",
+   "published": "2026-11-02",
+   "url": "https://ted.europa.eu/en/notice/-/detail/759325-2026",
+   "notice_type": "cn-standard",
+   "sector": "شرکت دولتی / عمومی",
+   "facts": {
+    "price": "ارزش برآوردی: 2,882,640 EUR",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "رویه‌ی باز اتحادیه اروپا – شرکت‌های خارج از EU معمولاً مجازند مگر محدودیت صریح در اسناد"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "aerospace"
+   ],
+   "days_left": 31,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-11-02T12:50:26",
+   "history": [
+    {
+     "at": "2026-11-02T12:50:26",
+     "status": "new"
+    }
+   ]
+  },
+  "WB-OP00474800": {
+   "id": "WB-OP00474800",
+   "source": "World Bank",
+   "market": "international",
+   "title": "Wastewater Treatment Plant, Pumping Stations, and Network Collection Development in Ta Khmau Municipality",
+   "description": "Water Supply and Sanitation Acceleration Project. KINGDOM OF CAMBODIA NATION RELIGION KING Ministry of Public Works and Transport Phnom Penh, 19-October-2026 Request for Bids (RFB No: MPWT-CW-03) Procurement of Works (Two-Envelope Bidding Process Without Prequalification) Employer : Ministry of Public Works and Transport Project: Water Supply and Sanitation Acceleration Project IDA Credit No.: IDA Credit No. 7427-KH and Project ID No.: P178417 Contract Title : Construction of Wastewater Treatment Plant and Network Collection Development in Ta Khmau City The Ministry of Public Works and Transport (MPWT) has received financing from the World Bank toward the cost of the Water Supply and Sanitation Acceleration Project (WASAC) and intends to apply part of the proceeds toward payments under the contract for Construction of Wastewater Treatment Plant and Network Collection Development in Ta Khmau City . The Ministry of Public Works and Transport (MPWT) now invites sealed Bids from eligible Bidders for Construction of Wastewater Treatment Plant and Network Collection Development in Ta Khmau City, located in Kandal Province. The construction period is 730 days from the Start Date. Bidding will be conducted through international competitive procurement using Request for Bids as specified in the World Bank’s “Procurement Regulations for IPF Borrowers- Procurement in Investment Projects Financing” Seventh Edition, dated September 2025 (“Procurement Regulations”), and is open to all eligible Bidders as defined in the Procurement Regulations. Bids will be evaluated in accordance with the evaluation process set out in the bidding documents. The following weightings shall apply for Rated Criteria (including technical and non-price factors): 60% and for Bid cost: 40% . Interested eligible Bidders may obtain further information from MPWT, Mr. Lun Heng, Project Manager, Email: lunhango@gmail.com during office hours from 8:00 A.M. to 12:00 P.M. and 1:30 P.M. to 5:30 P.M. at the address given below (specified in paragraph 10). The bidding documents in English may be downloaded for free by interested eligible Bidders from direct download link: https://drive.google.com/drive/folders/1YR90NGiohCccuWL6O17zREbbWPgs3-qG?usp=sharing , with a written request for access authorized by Mr. Lun Heng, through the email address given above (specified in paragraph 5), Cc: rosvanna258@gmail.com , cc: lunhango@gmail.com , chetra.saly@gmail.com. Bids must be delivered to the address below (specified in paragraph 10) on or before 10:00 A.M. (Cambodia Time) on 03-December-2026 . Electronic bidding will NOT be permitted. Late Bids will be rejected. The outer Bid envelopes marked “ORIGINAL BID”, and the inner envelopes marked “TECHNICAL PART” will be publicly opened in the presence of the Bidders’ designated representatives and anyone who chooses to attend, at the address below (specified in paragraph 10) at 10:00 A.M. (Cambodia Time) on 03-December-2026 . All envelopes marked “FINANCIAL PART” shall remain unopened and will be held in safe custody of the Employer until the second public Bid opening. All Bids must be accompanied by a “Bid Security” of at least USD 500,000.00 ; and (ii) Local Labour Method Statement. Attention is drawn to the Procurement Regulations requiring the Borrower to disclose information on the successful bidder’s beneficial ownership, as part of the Contract Award Notice, using the Beneficial Ownership Disclosure Form as included in the bidding document The address referred to above is: H.E. Dr. ROS VANNA Secretary of State, and Project Director Water Supply and Sanitation Acceleration Project (WASAC) Ministry of Public Works and Transport (MPWT) St. 598, Sangkat Chrang Chamres II, Khan Russey Keo, Phnom Penh, Cambodia Floor/ Room number: PMU-2 Office, 1st Floor Email: rosvanna258@gmail.com , cc: lunhango@gmail.com , chetra.saly@gmail.com , smcd.mpwt@gmail.com",
+   "buyer": "Ministry of Public Works and Transport (ENV-WAT PMU)",
+   "country": "Cambodia",
+   "deadline": "2026-12-03",
+   "published": "2026-10-15",
+   "url": "https://projects.worldbank.org/en/projects-operations/procurement-detail/OP00474800",
+   "notice_type": "Invitation for Bids",
+   "procurement_method": "Request for Bids",
+   "sector": "دولتی (پروژه با تأمین مالی بانک جهانی)",
+   "facts": {
+    "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "guarantee": "طبق آگهی: bid security” of at least usd 500,000",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "رقابت ملی – احتمالاً محدود به شرکت‌های داخلی کشور خریدار"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "water"
+   ],
+   "days_left": 31,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-11-02T12:50:26",
+   "history": [
+    {
+     "at": "2026-11-02T12:50:26",
+     "status": "new"
+    }
+   ]
+  },
+  "TED-753484-2026": {
+   "id": "TED-753484-2026",
+   "source": "TED (EU)",
+   "market": "international",
+   "title": "Germany – Machinery for mining, quarrying, construction equipment – Dörpen Radlader",
+   "description": "Auf dem Standort der Zentraldeponie Dörpen, Bundesstrasse 401 Nr. 100, 26892 Dörpen, sollen zwei Radlader mit je ca. 17 t Betriebsgewicht angeschafft und die Wartung als Vollwartungsvertrag für 5 Jahre ausgeschrieben werden. Auf dem Standort der Zentraldeponie Dörpen, Bundesstrasse 401 Nr. 100, 26892 Dörpen, sollen zwei Radlader mit je ca. 17 t Betriebsgewicht angeschafft und die Wartung als Vollwartungsvertrag für 5 Jahre ausgeschrieben werden.",
+   "buyer": "Abfallwirtschaftsbetrieb Landkreis Emsland",
+   "country": "DEU",
+   "deadline": "2026-12-08",
+   "published": "2026-10-30",
+   "url": "https://ted.europa.eu/en/notice/-/detail/753484-2026",
+   "notice_type": "cn-standard",
+   "sector": "دولتی",
+   "facts": {
+    "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "رویه‌ی باز اتحادیه اروپا – شرکت‌های خارج از EU معمولاً مجازند مگر محدودیت صریح در اسناد"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "mining"
+   ],
+   "days_left": 36,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-11-02T12:50:26",
+   "history": [
+    {
+     "at": "2026-11-02T12:50:26",
+     "status": "new"
+    }
+   ]
   }
  },
  "runs": [
@@ -3671,6 +4052,87 @@
     }
    ],
    "new_ids": [],
+   "actioned_ids": [],
+   "reminders": []
+  },
+  {
+   "at": "2026-11-02T12:50:28",
+   "collected": 302,
+   "matched": 22,
+   "partner_drafts": [],
+   "events_added": 0,
+   "scholarships_added": 0,
+   "investors_added": 0,
+   "investor_drafts": [
+    "revo",
+    "212",
+    "hub71",
+    "aramco-ventures",
+    "antler-menap",
+    "equinor-ventures",
+    "shell-ventures",
+    "ycombinator",
+    "techstars"
+   ],
+   "leads_added": 0,
+   "papers_lines": [],
+   "events_soon": [
+    {
+     "start": "2026-11-02",
+     "name": "ADIPEC 2026",
+     "name_fa": "نمایشگاه و کنفرانس نفت و گاز ابوظبی",
+     "city": "ابوظبی"
+    },
+    {
+     "start": "2026-11-03",
+     "name": "Smart City Expo World Congress 2026",
+     "name_fa": "کنگره جهانی شهر هوشمند",
+     "city": "بارسلونا"
+    },
+    {
+     "start": "2026-11-09",
+     "name": "Web Summit 2026",
+     "name_fa": "وب سامیت لیسبون",
+     "city": "لیسبون"
+    },
+    {
+     "start": "2026-11-16",
+     "name": "MEDICA 2026",
+     "name_fa": "نمایشگاه تجهیزات و فناوری پزشکی دوسلدورف",
+     "city": "دوسلدورف"
+    },
+    {
+     "start": "2026-12-06",
+     "name": "NeurIPS 2026",
+     "name_fa": "کنفرانس NeurIPS (سیدنی / آتلانتا / پاریس)",
+     "city": "سیدنی، آتلانتا، پاریس"
+    },
+    {
+     "start": "2026-12-07",
+     "name": "GITEX Global 2026",
+     "name_fa": "جیتکس دبی",
+     "city": "دبی (Expo City)"
+    },
+    {
+     "start": "2026-12-13",
+     "name": "Iran ITEX 1405 (5th) – Sharif University",
+     "name_fa": "پنجمین نمایشگاه ایران ایتکس دانشگاه صنعتی شریف",
+     "city": "تهران (دانشگاه صنعتی شریف)"
+    }
+   ],
+   "new_ids": [
+    "TED-760253-2026",
+    "TED-756392-2026",
+    "TED-753255-2026",
+    "TED-759283-2026",
+    "WB-OP00477790",
+    "TED-757336-2026",
+    "TED-755520-2026",
+    "TED-757053-2026",
+    "TED-759325-2026",
+    "WB-OP00474800",
+    "TED-753484-2026"
+   ],
    "actioned_ids": [],
    "reminders": []
   }
