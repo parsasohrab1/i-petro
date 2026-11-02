@@ -18,7 +18,7 @@ LEVEL = {"master": "ارشد", "phd": "دکتری"}
 # the only numbers given to institutions: verification codes and WhatsApp messages may come from them
 CONTACT_MOBILE = "09123344295"
 CONTACT_PHONE = "02188918530"
-CONTACT_NOTE = f"شماره‌ی تماس برای همه‌ی ثبت‌نام‌ها: فقط موبایل ایران {CONTACT_MOBILE} و تلفن ایران {CONTACT_PHONE}؛ کد تأیید و پیام واتس‌اپ نهادها به همین شماره‌ها می‌رسد."
+CONTACT_NOTE = f"شماره‌ی تماس برای همه‌ی ثبت‌نام‌ها: فقط موبایل ایران {CONTACT_MOBILE} و تلفن ایران {CONTACT_PHONE}؛ کد تأیید و پیام واتس‌اپ نهادها به همین شماره‌ها می‌رسد. در ایمیل به استادان و همه‌ی مکاتبات مدرک دکترای مدیریت کسب‌وکار یا DBA ذکر نشود."
 
 
 class Doc:

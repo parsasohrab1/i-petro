@@ -2022,7 +2022,7 @@ const schOrder = (a,b) => { const t=new Date().toISOString().slice(0,10), ka=!a.
 function schList(page){
   const gm=gmNote();
   const list=SCH.filter(p=>schStatus(p)===page).filter(p=>match(p.uni,p.country,p.city,p.field,p.kind)).sort(schOrder);
-  return gm+`<p class="note"><b>شماره‌ی تماس برای همه‌ی ثبت‌نام‌ها:</b> فقط ${SCH_CONTACT}؛ کد تأیید و پیام واتس‌اپ نهادها به همین شماره‌ها می‌رسد.</p><p class="note">فهرست بورسیه‌های کامل ارشد و دکتری که شهریه را پوشش می‌دهند و حقوق ماهیانه دارند. مهلت‌ها تقریبی‌اند؛ پیش از اقدام در سایت رسمی تأیید شوند.</p>`+
+  return gm+`<p class="note"><b>شماره‌ی تماس برای همه‌ی ثبت‌نام‌ها:</b> فقط ${SCH_CONTACT}؛ کد تأیید و پیام واتس‌اپ نهادها به همین شماره‌ها می‌رسد. در ایمیل به استادان و همه‌ی مکاتبات، مدرک دکترای مدیریت کسب‌وکار یا DBA ذکر نمی‌شود.</p><p class="note">فهرست بورسیه‌های کامل ارشد و دکتری که شهریه را پوشش می‌دهند و حقوق ماهیانه دارند. مهلت‌ها تقریبی‌اند؛ پیش از اقدام در سایت رسمی تأیید شوند.</p>`+
    kpis(Object.entries(SCH_ST).map(([k,l])=>[l,faNum(SCH.filter(p=>schStatus(p)===k).length),false]))+
    (list.length?list.map(p=>schCard(p,page)).join(""):'<p class="empty">موردی در این صفحه نیست.</p>');
 }
@@ -2108,7 +2108,7 @@ async function schSave(id,patch){
 const SCH_CONTACT = "موبایل ایران 09123344295 و تلفن ایران 02188918530";   // the only numbers to give institutions (verification codes and WhatsApp may come from them)
 function schPromptText(id){
   const p=SCH.find(x=>x.id===id), q=S.sp||{};
-  return `برای بورسیه «${p.kind}» در ${p.uni} (${p.country}) رشته‌ی ${p.field} برنامه‌ی اقدام بساز: رزومه‌ی آکادمیک، پیش‌نویس SOP و ایمیل به استاد. مشخصات من: رشته ${q.field||"—"}، مقطع ${q.target||"—"}، معدل ${q.gpa||"—"}، IELTS ${q.ielts||"—"}، مقاله ${q.pubs||"—"}. مهلت تقریبی: ${p.deadline}. در همه‌ی فرم‌ها، رزومه و ایمیل‌ها فقط از شماره‌های ایران استفاده کن: ${SCH_CONTACT}؛ شماره‌ی دیگری ننویس، چون کد تأیید یا پیام واتس‌اپ نهادها به همین شماره‌ها می‌رسد.`;
+  return `برای بورسیه «${p.kind}» در ${p.uni} (${p.country}) رشته‌ی ${p.field} برنامه‌ی اقدام بساز: رزومه‌ی آکادمیک، پیش‌نویس SOP و ایمیل به استاد. مشخصات من: رشته ${q.field||"—"}، مقطع ${q.target||"—"}، معدل ${q.gpa||"—"}، IELTS ${q.ielts||"—"}، مقاله ${q.pubs||"—"}. مهلت تقریبی: ${p.deadline}. در همه‌ی فرم‌ها، رزومه و ایمیل‌ها فقط از شماره‌های ایران استفاده کن: ${SCH_CONTACT}؛ شماره‌ی دیگری ننویس، چون کد تأیید یا پیام واتس‌اپ نهادها به همین شماره‌ها می‌رسد. در ایمیل به استادان و همه‌ی مکاتبات هرگز مدرک دکترای مدیریت کسب‌وکار یا DBA را ذکر نکن؛ فقط کارشناسی ارشد مهندسی نفت (حفاری) و سوابق صنعتی و پژوهشی.`;
 }
 function schShowText(t){ // clipboard API is blocked inside the artifact frame: show the text selected so Ctrl+C always works
   $("#layer").innerHTML=`<div class="scrim" data-act="close-scrim"><div class="drawer"><h3>دستور برای Claude</h3><p class="note">متن انتخاب شده است؛ با Ctrl+C کپی کنید و در گفتگو با Claude بچسبانید.</p><textarea id="schTxt" style="width:100%;min-height:180px" readonly>${esc(t)}</textarea><div class="row" style="margin-top:8px"><button class="btn ghost" data-act="close">بستن</button></div></div></div>`;
