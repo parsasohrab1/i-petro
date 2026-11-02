@@ -430,6 +430,10 @@ def proposals_doc():
             d.para("Subject: " + e["subject"], False, 9.5, None, 2)
             for chunk in e["body"].split("\n\n"):
                 d.para(chunk, False, 9.5, None, 4)
+        if v.get("sop"):
+            d.para("Statement of purpose / motivation letter", True, 10)
+            for chunk in v["sop"].split("\n\n"):
+                d.para(chunk, False, 9.5, None, 4)
         d.para("Proposal", True, 10)
         for chunk in v["proposal"].split("\n\n"):
             d.para(chunk, False, 9.5, None, 4)
