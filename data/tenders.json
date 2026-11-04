@@ -25,7 +25,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": -12,
+   "days_left": -13,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -66,7 +66,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": -13,
+   "days_left": -14,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -107,7 +107,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": -12,
+   "days_left": -13,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -148,7 +148,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": -12,
+   "days_left": -13,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -189,7 +189,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": -12,
+   "days_left": -13,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -230,7 +230,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": -11,
+   "days_left": -12,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -271,7 +271,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": -10,
+   "days_left": -11,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -312,7 +312,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": -6,
+   "days_left": -7,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -353,7 +353,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": -6,
+   "days_left": -7,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -394,7 +394,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": -5,
+   "days_left": -6,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -435,7 +435,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": -5,
+   "days_left": -6,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -476,7 +476,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": -3,
+   "days_left": -4,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -517,7 +517,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": -2,
+   "days_left": -3,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -556,7 +556,7 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": -1,
+   "days_left": -2,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -596,7 +596,7 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": 2,
+   "days_left": 1,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -631,7 +631,7 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": 7,
+   "days_left": 6,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -666,7 +666,7 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": 16,
+   "days_left": 15,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -700,7 +700,7 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": 13,
+   "days_left": 12,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -734,7 +734,7 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": 15,
+   "days_left": 14,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -769,7 +769,7 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": 27,
+   "days_left": 26,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -804,7 +804,7 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": 35,
+   "days_left": 34,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -839,7 +839,7 @@
    "domains": [
     "water"
    ],
-   "days_left": -7,
+   "days_left": -8,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -879,7 +879,7 @@
     "ai_cross_cutting",
     "medical"
    ],
-   "days_left": 13,
+   "days_left": 12,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -915,7 +915,7 @@
     "oil_gas",
     "urban"
    ],
-   "days_left": 20,
+   "days_left": 19,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -949,7 +949,7 @@
    "domains": [
     "urban"
    ],
-   "days_left": 17,
+   "days_left": 16,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-20T09:40:22",
@@ -983,7 +983,7 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": 70,
+   "days_left": 69,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-20T09:40:22",
@@ -1085,7 +1085,7 @@
    "domains": [
     "aerospace"
    ],
-   "days_left": -6,
+   "days_left": -7,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-21T09:36:20",
@@ -1124,7 +1124,7 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": -1,
+   "days_left": -2,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-21T09:36:20",
@@ -1164,14 +1164,19 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": 0,
+   "days_left": -1,
    "line": "ai",
-   "status": "new",
+   "status": "expired",
    "first_seen": "2026-10-21T09:36:20",
    "history": [
     {
      "at": "2026-10-21T09:36:20",
      "status": "new"
+    },
+    {
+     "at": "2026-11-04T12:29:43",
+     "status": "expired",
+     "note": ""
     }
    ]
   },
@@ -1198,7 +1203,7 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": 18,
+   "days_left": 17,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-21T09:36:20",
@@ -1232,7 +1237,7 @@
    "domains": [
     "web"
    ],
-   "days_left": 20,
+   "days_left": 19,
    "line": "web",
    "status": "new",
    "first_seen": "2026-10-21T09:36:20",
@@ -1300,7 +1305,7 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": 6,
+   "days_left": 5,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-22T09:39:52",
@@ -1334,7 +1339,7 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": 17,
+   "days_left": 16,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-22T09:39:52",
@@ -1368,7 +1373,7 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": 17,
+   "days_left": 16,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-22T09:39:52",
@@ -1402,7 +1407,7 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": 27,
+   "days_left": 26,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-22T09:39:52",
@@ -1436,7 +1441,7 @@
    "domains": [
     "aerospace"
    ],
-   "days_left": 22,
+   "days_left": 21,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-23T09:35:00",
@@ -1470,7 +1475,7 @@
    "domains": [
     "medical"
    ],
-   "days_left": 28,
+   "days_left": 27,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-23T09:35:00",
@@ -1504,7 +1509,7 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": 31,
+   "days_left": 30,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-23T09:35:00",
@@ -1640,7 +1645,7 @@
    "domains": [
     "urban"
    ],
-   "days_left": 6,
+   "days_left": 5,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-26T10:29:22",
@@ -1674,7 +1679,7 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": 20,
+   "days_left": 19,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-26T10:29:22",
@@ -1708,7 +1713,7 @@
    "domains": [
     "urban"
    ],
-   "days_left": 20,
+   "days_left": 19,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-26T10:29:22",
@@ -1776,7 +1781,7 @@
    "domains": [
     "urban"
    ],
-   "days_left": 7,
+   "days_left": 6,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-27T10:03:26",
@@ -1810,7 +1815,7 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": 20,
+   "days_left": 19,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-27T10:03:26",
@@ -1844,7 +1849,7 @@
    "domains": [
     "medical"
    ],
-   "days_left": 23,
+   "days_left": 22,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-27T10:03:26",
@@ -1878,7 +1883,7 @@
    "domains": [
     "urban"
    ],
-   "days_left": 24,
+   "days_left": 23,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-27T10:03:26",
@@ -1913,7 +1918,7 @@
    "domains": [
     "web"
    ],
-   "days_left": 6,
+   "days_left": 5,
    "line": "web",
    "status": "new",
    "first_seen": "2026-10-28T10:50:09",
@@ -1947,7 +1952,7 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": 24,
+   "days_left": 23,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-28T10:50:09",
@@ -1981,7 +1986,7 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": 34,
+   "days_left": 33,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-28T10:50:09",
@@ -2083,7 +2088,7 @@
    "domains": [
     "aerospace"
    ],
-   "days_left": 3,
+   "days_left": 2,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-29T11:07:42",
@@ -2117,7 +2122,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": 8,
+   "days_left": 7,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-29T11:07:42",
@@ -2151,7 +2156,7 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": 35,
+   "days_left": 34,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-29T11:07:42",
@@ -2220,7 +2225,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": 12,
+   "days_left": 11,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-30T11:05:47",
@@ -2254,7 +2259,7 @@
    "domains": [
     "aerospace"
    ],
-   "days_left": 27,
+   "days_left": 26,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-30T11:05:47",
@@ -2288,7 +2293,7 @@
    "domains": [
     "web"
    ],
-   "days_left": 44,
+   "days_left": 43,
    "line": "web",
    "status": "new",
    "first_seen": "2026-10-30T11:05:47",
@@ -2357,7 +2362,7 @@
    "domains": [
     "health_ai"
    ],
-   "days_left": 8,
+   "days_left": 7,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-30T22:04:27",
@@ -2404,7 +2409,7 @@
      "status": "new"
     }
    ],
-   "days_left": 106
+   "days_left": 105
   },
   "GRANT-HORIZON-HLTH-2027-03-TOOL-04": {
    "id": "GRANT-HORIZON-HLTH-2027-03-TOOL-04",
@@ -2518,7 +2523,7 @@
      "status": "new"
     }
    ],
-   "days_left": 92
+   "days_left": 91
   },
   "TED-760253-2026": {
    "id": "TED-760253-2026",
@@ -2543,7 +2548,7 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": 6,
+   "days_left": 5,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-02T12:50:26",
@@ -2577,7 +2582,7 @@
    "domains": [
     "aerospace"
    ],
-   "days_left": 13,
+   "days_left": 12,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-02T12:50:26",
@@ -2611,7 +2616,7 @@
    "domains": [
     "mining"
    ],
-   "days_left": 13,
+   "days_left": 12,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-02T12:50:26",
@@ -2645,7 +2650,7 @@
    "domains": [
     "mining"
    ],
-   "days_left": 13,
+   "days_left": 12,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-02T12:50:26",
@@ -2680,7 +2685,7 @@
    "domains": [
     "water"
    ],
-   "days_left": 20,
+   "days_left": 19,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-02T12:50:26",
@@ -2714,7 +2719,7 @@
    "domains": [
     "water"
    ],
-   "days_left": 21,
+   "days_left": 20,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-02T12:50:26",
@@ -2748,7 +2753,7 @@
    "domains": [
     "mining"
    ],
-   "days_left": 23,
+   "days_left": 22,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-02T12:50:26",
@@ -2782,7 +2787,7 @@
    "domains": [
     "urban"
    ],
-   "days_left": 27,
+   "days_left": 26,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-02T12:50:26",
@@ -2816,7 +2821,7 @@
    "domains": [
     "aerospace"
    ],
-   "days_left": 30,
+   "days_left": 29,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-02T12:50:26",
@@ -2851,7 +2856,7 @@
    "domains": [
     "water"
    ],
-   "days_left": 30,
+   "days_left": 29,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-02T12:50:26",
@@ -2885,7 +2890,7 @@
    "domains": [
     "mining"
    ],
-   "days_left": 35,
+   "days_left": 34,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-02T12:50:26",
@@ -2919,7 +2924,7 @@
    "domains": [
     "mining"
    ],
-   "days_left": 14,
+   "days_left": 13,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-03T12:17:26",
@@ -2953,7 +2958,7 @@
    "domains": [
     "aerospace"
    ],
-   "days_left": 30,
+   "days_left": 29,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-03T12:17:26",
@@ -2987,7 +2992,7 @@
    "domains": [
     "health_ai"
    ],
-   "days_left": 30,
+   "days_left": 29,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-03T12:17:26",
@@ -3028,6 +3033,636 @@
    "history": [
     {
      "at": "2026-11-03T12:17:26",
+     "status": "new"
+    }
+   ]
+  },
+  "TED-765795-2026": {
+   "id": "TED-765795-2026",
+   "source": "TED (EU)",
+   "market": "international",
+   "title": "Italy – Software-related services – ARIA_2026_478_F - Procedura aperta, ai sensi dell’art. 71 del D.lgs. 36/2023, per l’impl. del Clinical Decision Support System (CDSS)",
+   "description": "Appropriatezza prescrittiva Smart Triage (Disposition Care Setting) Supporto al processo di refertazione e analisi del dato clinico Prevenzione delle patologie infettive nosocomiali e della Sepsi Supporto ai processi di Imaging diagnostico",
+   "buyer": "Azienda Regionale per l'Innovazione e gli Acquisti S.p.A.",
+   "country": "ITA",
+   "deadline": "2026-12-02",
+   "published": "2026-11-04",
+   "url": "https://ted.europa.eu/en/notice/-/detail/765795-2026",
+   "notice_type": "cn-standard",
+   "sector": "دولتی",
+   "facts": {
+    "price": "ارزش برآوردی: 5,973,479 EUR (5 بخش)",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "رویه‌ی باز اتحادیه اروپا – شرکت‌های خارج از EU معمولاً مجازند مگر محدودیت صریح در اسناد"
+   },
+   "keyword_score": 6,
+   "domains": [
+    "ai_cross_cutting",
+    "medical"
+   ],
+   "days_left": 28,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-11-04T12:29:43",
+   "history": [
+    {
+     "at": "2026-11-04T12:29:43",
+     "status": "new"
+    }
+   ]
+  },
+  "TED-763892-2026": {
+   "id": "TED-763892-2026",
+   "source": "TED (EU)",
+   "market": "international",
+   "title": "Finland – Surveillance and security systems and devices – Remotely Operated Ground (UGV) and Aerial (UAV) Platforms with Ionizing Radiation Measurement Equipment",
+   "description": "UGV (Unmanned Ground Vehicle) is a ground-based vehicle that operates without an onboard human operator and is controlled either remotely or autonomously by onboard systems. In the context of this procurement Lot, a UGV includes the ground platform, propulsion and mobility systems (tracks and/or wheels), navigation and control systems, communication links, power systems and any sensors, manipulators or payloads required for RN operations. The UGV system may comprise one or more UGV platforms, operator control units, communication links, support equipment, software, interfaces and accessories required for safe and effective operation. The UGV shall be suitable for professional operational use in RN monitoring, survey, inspection and reconnaissance tasks in varied and potentially hazardous environments. RN sensors (Radiological and Nuclear sensors) are devices designed for the detection, measurement, monitoring and/or radionuclide identification of ionizing radiation and radiological and nuclear materials. In the context of this procurement, an RN sensor includes the sensor unit, associated electronics, power interfaces, data acquisition and processing components, and any required firmware/software necessary for its intended operational use. The RN sensors shall be suitable for professional operational use and capable of supporting RN monitoring, survey, detection, identification or reconnaissance tasks under varying environmental and operational conditions. The tenderer shall deliver fully integrated and operational UGV and RN sensor combinations, demonstrated as functional systems prior to acceptance. The tenderer shall be fully responsible for ensuring the mechanical, electrical and functional integration of all platform and RN sensor components offered under the same Lot, regardless of whether these components are supplied by the tenderer or by subcontractors or consortium partners. UAV (Unmanned Aerial Vehicle) is an aircraft that operates without a pilot on board and is controlled either remotely by a human operator or autonomously by onboard systems. In the context of this procurement, a UAV includes the aerial platform itself, its propulsion system, navigation and flight control systems, communication links, and any onboard sensors and payloads necessary for the intended operational use. The UAV shall be suitable for professional operational use and capable of performing missions related to radiological and nuclear (RN) monitoring, survey or reconnaissance tasks in varying environmental and operational conditions. The UAV may operate under visual line-of-sight (VLOS) or beyond visual line-of-sight (BVLOS) conditions subject to applicable European aviation regulations. RN sensors (Radiological and Nuclear sensors) are devices designed for the detection, measurement, monitoring and/or radionuclide identification of ionizing radiation and radiological and nuclear materials. In the context of this procurement, an RN sensor includes the sensor unit, associated electronics, power interfaces, data acquisition and processing components, and any required firmware/software necessary for its intended operational use. The RN sensors shall be suitable for professional operational use and capable of supporting RN monitoring, survey, detection, identification or reconnaissance tasks under varying environmental and operational conditions. The tenderer shall deliver fully integrated and operational UAV and RN sensor combinations, demonstrated as functional systems prior to acceptance. The tenderer shall be fully responsible for ensuring the mechanical, electrical and functional integration of all platform and RN sensor components offered under the same Lot, regardless of whether these components are supplied by the tenderer or by subcontractors or consortium partners. UGV (Unmanned Ground Vehicle) is a ground-based vehicle that operates without an onboard human operator and is controlled either remotely or autonomously by onboard systems",
+   "buyer": "Huoltovarmuuskeskus",
+   "country": "FIN",
+   "deadline": "2027-01-15",
+   "published": "2026-11-04",
+   "url": "https://ted.europa.eu/en/notice/-/detail/763892-2026",
+   "notice_type": "cn-standard",
+   "sector": "دولتی",
+   "facts": {
+    "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "رویه‌ی باز اتحادیه اروپا – شرکت‌های خارج از EU معمولاً مجازند مگر محدودیت صریح در اسناد"
+   },
+   "keyword_score": 4,
+   "domains": [
+    "aerospace"
+   ],
+   "days_left": 72,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-11-04T12:29:43",
+   "history": [
+    {
+     "at": "2026-11-04T12:29:43",
+     "status": "new"
+    }
+   ]
+  },
+  "TED-765150-2026": {
+   "id": "TED-765150-2026",
+   "source": "TED (EU)",
+   "market": "international",
+   "title": "Poland – Works for complete or part construction and civil engineering work – CONSTRUCTION OF A SEWAGE SLUDGE COMPOSTING FACILITY AT THE WASTEWATER TREATMENT PLANT IN JASŁO UNDER THE “ROZWIJAMY JASŁO!” PROJECT, IMPLEMENTED UNDER THE POLISH-SWISS URBAN DEVELOPMENT PROGRAMME",
+   "description": "The subject-matter of the contract is the “Construction of a Sewage Sludge Composting Facility at the Wastewater Treatment Plant in Jasło under the “RozwijaMY Jasło!” Project, implemented under the Polish-Swiss Urban Development Programme”. The construction is intended to ensure technological continuity and further treatment of sewage sludge generated at the wastewater treatment plant in Jasło. The scope of works includes the construction of the following facilities: 1. waste composting facility, 2. biofilter, 3. loading skip, 4. compost maturation area, 5. straw storage area, 6. compost weighing scale. The facilities listed above constitute the main facilities. The scope also includes other facilities and infrastructure, including a pumping station, switchgear and underground infrastructure.",
+   "buyer": "Miejskie Przedsiębiorstwo Gospodarki Komunalnej Sp. z o.o. w Jaśle",
+   "country": "POL",
+   "deadline": "2026-11-17",
+   "published": "2026-11-04",
+   "url": "https://ted.europa.eu/en/notice/-/detail/765150-2026",
+   "notice_type": "cn-standard",
+   "sector": "نامشخص",
+   "facts": {
+    "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "رویه‌ی باز اتحادیه اروپا – شرکت‌های خارج از EU معمولاً مجازند مگر محدودیت صریح در اسناد"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "water"
+   ],
+   "days_left": 13,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-11-04T12:29:43",
+   "history": [
+    {
+     "at": "2026-11-04T12:29:43",
+     "status": "new"
+    }
+   ]
+  },
+  "TED-767009-2026": {
+   "id": "TED-767009-2026",
+   "source": "TED (EU)",
+   "market": "international",
+   "title": "Greece – Desalination apparatus – Προμήθεια και εγκατάσταση φορητής μονάδας αφαλάτωσης θαλασσινού νερού ημερήσιας δυναμικότητας 1.000 m3 για το Δήμο Βέλου Βόχας",
+   "description": "Προμήθεια και εγκατάσταση φορητής μονάδας αφαλάτωσης θαλασσινού νερού ημερήσιας δυναμικότητας 1.000 m3 για το Δήμο Βέλου Βόχας, ενδεικτικού προϋπολογισμού 1.550.000,00€ συμπεριλαμβανομένου Φ.Π.Α. 24% και με κριτήριο την πλέον συμφέρουσας από οικονομική άποψη προσφοράς, βάσει της βέλτιστης σχέσης ποιότητας – τιμής.",
+   "buyer": "ΔΗΜΟΣ ΒΕΛΟΥ-ΒΟΧΑΣ",
+   "country": "GRC",
+   "deadline": "2026-12-07",
+   "published": "2026-11-04",
+   "url": "https://ted.europa.eu/en/notice/-/detail/767009-2026",
+   "notice_type": "cn-standard",
+   "sector": "دولتی",
+   "facts": {
+    "price": "ارزش برآوردی: 1,250,000 EUR",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "رویه‌ی باز اتحادیه اروپا – شرکت‌های خارج از EU معمولاً مجازند مگر محدودیت صریح در اسناد"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "water"
+   ],
+   "days_left": 33,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-11-04T12:29:43",
+   "history": [
+    {
+     "at": "2026-11-04T12:29:43",
+     "status": "new"
+    }
+   ]
+  },
+  "TED-763974-2026": {
+   "id": "TED-763974-2026",
+   "source": "TED (EU)",
+   "market": "international",
+   "title": "Poland – Machinery for mining, quarrying, construction equipment – Dzierżawa kombajnów chodnikowych wraz z zabezpieczeniem obsługi gwarancyjnej w całym okresie dzierżawy dla PGG S.A. KWK ROW Ruch Marcel i Ruch Rydułtowy” z podziałem na zadania",
+   "description": "Zadanie nr 1:Dzierżawa kombajnu chodnikowego klasy 130 kW wraz z zabezpieczeniem serwisowej obsługi gwarancyjnej w całym okresie dzierżawy dla Oddziału KWK ROW Ruch Marcel Zadanie nr 2: Dzierżawa kombajnu chodnikowego klasy 150 kW wraz z zabezpieczeniem serwisowej obsługi gwarancyjnej w całym okresie dzierżawy dla Oddziału KWK ROW Ruch Marcel Zadanie nr 3: Dzierżawa kombajnu chodnikowego klasy 150 kW wraz z zabezpieczeniem serwisowej obsługi gwarancyjnej w całym okresie dzierżawy dla Oddziału KWK ROW Ruch Marcel Zadanie nr 4: Dzierżawa kombajnu chodnikowego klasy 150 kW wraz z zabezpieczeniem serwisowej obsługi gwarancyjnej w całym okresie dzierżawy dla Oddziału KWK ROW Ruch Marcel Zadanie nr 5: Dzierżawa kombajnów chodnikowych klasy 150 kW wraz z zabezpieczeniem serwisowej obsługi gwarancyjnej w całym okresie dzierżawy dla Oddziału KWK ROW Ruch Rydułtowy i Ruch Marcel",
+   "buyer": "Polska Grupa Górnicza S.A.",
+   "country": "POL",
+   "deadline": "2026-12-07",
+   "published": "2026-11-04",
+   "url": "https://ted.europa.eu/en/notice/-/detail/763974-2026",
+   "notice_type": "cn-standard",
+   "sector": "نامشخص",
+   "facts": {
+    "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "رویه‌ی باز اتحادیه اروپا – شرکت‌های خارج از EU معمولاً مجازند مگر محدودیت صریح در اسناد"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "mining"
+   ],
+   "days_left": 33,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-11-04T12:29:43",
+   "history": [
+    {
+     "at": "2026-11-04T12:29:43",
+     "status": "new"
+    }
+   ]
+  },
+  "TED-766353-2026": {
+   "id": "TED-766353-2026",
+   "source": "TED (EU)",
+   "market": "international",
+   "title": "Italy – Software development services – Procedura aperta monolotto per l’affidamento tramite Accordo Quadro della progettazione, realizzazione, messa in esercizio e manutenzione di un sistema SCADA elettrico a supporto della supervisione e del controllo degli impianti elettrici a servizio degli scali aeroportuali di Milano Malpensa e Milano Linate",
+   "description": "Progettazione, realizzazione, messa in esercizio e manutenzione di un sistema SCADA elettrico a supporto della supervisione e del controllo degli impianti elettrici a servizio degli scali aeroportuali di Milano Malpensa e Milano Linate",
+   "buyer": "Società per Azioni Esercizi Aeroportuali S.E.A",
+   "country": "ITA",
+   "deadline": "2026-12-21",
+   "published": "2026-11-04",
+   "url": "https://ted.europa.eu/en/notice/-/detail/766353-2026",
+   "notice_type": "cn-standard",
+   "sector": "شرکت دولتی / عمومی",
+   "facts": {
+    "price": "ارزش برآوردی: 3,156,000 EUR",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "رویه‌ی باز اتحادیه اروپا – شرکت‌های خارج از EU معمولاً مجازند مگر محدودیت صریح در اسناد"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "oil_gas"
+   ],
+   "days_left": 47,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-11-04T12:29:43",
+   "history": [
+    {
+     "at": "2026-11-04T12:29:43",
+     "status": "new"
+    }
+   ]
+  },
+  "TED-765598-2026": {
+   "id": "TED-765598-2026",
+   "source": "TED (EU)",
+   "market": "international",
+   "title": "Italy – Surveillance and security systems and devices – Acquisizione sistemi robotici unmanned e autonomi prototipali nell'ambito della Campagna di sperimentazione su Robotics & Autonomous System (RAS) e Artificial Intelligence (AI)",
+   "description": "Fornitura Sistemi Robotici",
+   "buyer": "COMANDO GENIO",
+   "country": "ITA",
+   "deadline": "",
+   "published": "2026-11-04",
+   "url": "https://ted.europa.eu/en/notice/-/detail/765598-2026",
+   "notice_type": "cn-standard",
+   "sector": "نامشخص",
+   "facts": {
+    "price": "ارزش برآوردی: 628,514 EUR",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "ai_cross_cutting"
+   ],
+   "days_left": null,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-11-04T12:29:43",
+   "history": [
+    {
+     "at": "2026-11-04T12:29:43",
+     "status": "new"
+    }
+   ]
+  },
+  "TED-767044-2026": {
+   "id": "TED-767044-2026",
+   "source": "TED (EU)",
+   "market": "international",
+   "title": "Finland – Gas compressors – Reciprocating compressor packages for natural gas compression service",
+   "description": "Gasgrid Finland Oy (hereinafter “Contracting Authority”) is a state-owned gas transmission system operator (TSO) that started operating in early 2020. The company mission is to ensure cost-effective, safe and undisturbed gas transmission and to actively develop the gas market and the Finnish energy system. The company has the overall system responsibility for the entire methane gas transmission network in Finland. The Contracting Authority is planning to construct a natural gas compression station to Lempäälä, Finland. Construction work is scheduled to be started approx. Q2/2027. Installation of the compressor unit(s) is planned to be started approx. Q2/2028. The schedule mentioned is indicative and subject to changes. In this procurement the Contracting Authority is looking for a supplier for 2+1 (option) complete, electrically driven API 618 reciprocating compressor packages for natural gas compression service to Gasgrid’s Lempäälä gas compression station. The key specifications as follows (but not limited to these): - Each compressor package shall comprise one electrically driven API 618 reciprocating compressor unit, together with the associated process equipment, auxiliaries, electrical equipment, instrumentation, control and safety systems, and other equipment necessary to provide a complete, safe and operable compressor package suitable for integration into the Compressor Station. - The Supplier shall be responsible for the design, manufacture, testing, documentation, delivery, integration and conformity of the complete compressor package within the final agreed scope of supply. The Supplier shall also be responsible for defining and managing the necessary technical and safety interfaces between the compressor package and systems or equipment supplied by the Contracting Authority, EPCM Contractor or other parties, to the extent necessary for the safe integration and conformity of the compressor package. - The anticipated operating envelope of each compressor unit is approximately 3,000 Nm³/h, with suction pressure approximately 4–8 barg and discharge pressure up to approximately 54 barg. -The compressor packages shall comply with all applicable European Union and Finnish legislation and requirements, including the applicable requirements of the Machinery Regulation (EU) 2023/1230 Annex V, Part A – Declaration of Conformity for Completed Machinery, PED 2014/68/EU, ATEX 2014/34/EU and EMC 2014/30/EU. -The Supplier shall be capable of fulfilling the applicable manufacturer obligations and conformity assessment requirements for the complete compressor package, including provision of the required declarations, CE marking and conformity documentation. Site supervision and commissioning support, including support for the required on-site conformity and CE marking activities, are included. Installation at site is excluded from the scope of supply. Detailed technical requirements, operating conditions, performance requirements, scope boundaries, interfaces and documentation requirements will be defined in the procurement documentation issued during the subsequent phase of the procurement procedure.",
+   "buyer": "Gasgrid Finland Oy",
+   "country": "FIN",
+   "deadline": "",
+   "published": "2026-11-04",
+   "url": "https://ted.europa.eu/en/notice/-/detail/767044-2026",
+   "notice_type": "cn-standard",
+   "sector": "نامشخص",
+   "facts": {
+    "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "oil_gas"
+   ],
+   "days_left": null,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-11-04T12:29:43",
+   "history": [
+    {
+     "at": "2026-11-04T12:29:43",
+     "status": "new"
+    }
+   ]
+  },
+  "TED-765016-2026": {
+   "id": "TED-765016-2026",
+   "source": "TED (EU)",
+   "market": "international",
+   "title": "Ireland – World wide web (www) site design services – UCDOPP5638 Dynamic Purchasing System for Web Design and Services",
+   "description": "UCD would like to set up a DPS for web design and services. The DPS will be in two lots. Lot 1 will cover web design and development in TerminalFour. Lot 2 will cover web consultancy in areas such as SEO/AEO, Google Analytics and Accessibility. UCD would like to set up a DPS for web design and services. The DPS will be in two lots. Lot 1 will cover web design and development in TerminalFour. Lot 2 will cover web consultancy in areas such as SEO/AEO, Google Analytics and Accessibility.",
+   "buyer": "University College Dublin ( UCD )",
+   "country": "IRL",
+   "deadline": "",
+   "published": "2026-11-04",
+   "url": "https://ted.europa.eu/en/notice/-/detail/765016-2026",
+   "notice_type": "cn-standard",
+   "sector": "دولتی",
+   "facts": {
+    "price": "ارزش برآوردی: 3,000,000 EUR (2 بخش)",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "web"
+   ],
+   "days_left": null,
+   "line": "web",
+   "status": "new",
+   "first_seen": "2026-11-04T12:29:43",
+   "history": [
+    {
+     "at": "2026-11-04T12:29:43",
+     "status": "new"
+    }
+   ]
+  },
+  "WB-OP00478842": {
+   "id": "WB-OP00478842",
+   "source": "World Bank",
+   "market": "international",
+   "title": "Installation of 400 mm dia uPVC Pipe & Fittings Buried pipe line for Drainage Lakshmipur",
+   "description": "Bangladesh Sustainable Recovery, Emergency Preparedness and Response Project. View IFT /PQ / REOI / RFP / PPS Notice Details Ministry : Organization : Procuring Entity Code : Ministry of Agriculture Bangladesh Agricultural Development Corporation (BADC) Procurement Nature : Works Event Type : TENDER Invitation Reference No. : App ID : B-STRONG/BADC/WD 35 232132 Key Information and Funding Information : Division : Procuring Entity Name : Procuring Entity District : Procurement Type : Invitation for : Tender/Proposal ID : Office of the Deputy Project Director B STRONG-Agricultural System Restoration Component (BADC-Part) Dhaka NCT Tender - Single Lot 1335774 Procurement Method : Open Tendering Method (OTM) Source of Funds : Government, Aid or Grant Budget Type : Development Development Partner : World Bank Particular Information : Project Code : Tender/Proposal Package No. and Description : Category : Scheduled Tender/Proposal Publication Date and Time : Pre - Tender/Proposal meeting Start Date and Time : Tender/Proposal Closing 224411500 Project Name : B-STRONG/BADC/WD-35 Bangladesh Sustainable Recovery, Emergency preparedness and Response Project (B STRONG)- Agricultural System Restoration Component (BADC-Part) Insta lation of 400 mm dia uPVC Pipe & Fittings Buried pipe line for Drainage Lakshmipur (Y3) Site preparation work; Construction work; Works for complete or part construction and civil engineering work; Building instalation work; Construction work; Hire of construction and civil engineering machinery and equipment with operator; Agricultural services; Agricultural, forestry and horticultural services;Building demolition and wrecking work and earthmoving work;Test dri ling and boring work;Building construction work;Engineering works and construction works;Construction work for pipelines, communication and power lines, for highways, roads, airfields and railways; flatwork;Construction work for water projects;Construction works for plants, mining and manufacturing and for buildings relating to the oil and gas industry;Roof works and other special trade construction works;Electrical insta lation work;Insulation work;Plumbing and sanitary works;Fencing, railing and safety equipment instalation work;Mechanical instalations;Hire of cranes with operator;Hire of earthmoving equipment with operator;Services incidental to agricultural production;Composting services 03-Nov-2026 10:00 03-Nov-2026 12:00 17-Nov-2026 16:00 Tender/Proposal Document last seling / downloading Date and Time : Pre - Tender/Proposal meeting End Date and Time : Tender/Proposal Opening 17-Nov-2026 14:30 17-Nov-2026 12:00 17-Nov-2026 16:00 17-Nov-2026 15:00 Date and Time : Date and Time : Last Date and Time for Tender/Proposal Security Submission : Information for Tenderer/Consultant : Eligibility of Tenderer : As per ITT and TDS. Brief Description of Works : Insta lation of 400 mm dia uPVC Pipe & Fittings Buried pipe line for Drainage Lakshmipur (Y3) Evaluation Type : Document Available : Document Fees : Tender/Proposal Document Price (In BDT) : Mode of Payment : Tender/Proposal Security Valid Up to : Tender/Proposal Valid Up to : Lot No. Lot wise Package wise Package wise 2500 Payment through Bank 14-Apr-2027 17-Mar-2027 Identification of Lot 01 Instalation of 400 mm dia uPVC Pipe & Fittings Buried pipe line for Drainage Lakshmipur (Y3) Location Lakshmipur District Tender/Proposal security (Amount in BDT) 250000 Tentative Start Date Tentative Completion Date 06-Dec 2026 Procuring Entity Details: Name of Official Inviting Tender/Proposal : A. K. M. Jahangir Alam Sarker Address of Official Inviting Tender/Proposal : Address: BADC City : Dhaka Designation of Official Inviting Tender/Proposal : 26-Oct 2027 Deputy Project Director : 02 Contact details of Official Inviting Tender/Proposal : Phone No Thana : Dhaka South City Corporation District : Dhaka 1000 Country: Bangladesh Fax No 47120629 : The procuring entity reserves the right to accept or reject al Tenders",
+   "buyer": "Bangladesh Agricultural Development Corporation",
+   "country": "Bangladesh",
+   "deadline": "2026-11-17",
+   "published": "2026-11-03",
+   "url": "https://projects.worldbank.org/en/projects-operations/procurement-detail/OP00478842",
+   "notice_type": "Invitation for Bids",
+   "procurement_method": "Request for Bids",
+   "sector": "دولتی (پروژه با تأمین مالی بانک جهانی)",
+   "facts": {
+    "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "قواعد خرید بانک جهانی: باز برای شرکت‌های همه‌ی کشورهای واجد شرایط (Eligibility rules)"
+   },
+   "keyword_score": 2,
+   "domains": [
+    "mining",
+    "oil_gas"
+   ],
+   "days_left": 13,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-11-04T12:29:43",
+   "history": [
+    {
+     "at": "2026-11-04T12:29:43",
+     "status": "new"
+    }
+   ]
+  },
+  "WB-OP00478946": {
+   "id": "WB-OP00478946",
+   "source": "World Bank",
+   "market": "international",
+   "title": "Installation of 250 mm dia uPVC Pipe & Fittings to construction/ Extension of Irrigation Channel (1000m/pump) Noakhali",
+   "description": "Bangladesh Sustainable Recovery, Emergency Preparedness and Response Project. View IFT /PQ / REOI / RFP / PPS Notice Details Ministry : Organization : Procuring Entity Code : Ministry of Agriculture Bangladesh Agricultural Development Corporation (BADC) Procurement Nature : Works Event Type : TENDER Invitation Reference No. : App ID : B-STRONG/BADC/WD 46 232132 Key Information and Funding Information : Division : Procuring Entity Name : Procuring Entity District : Procurement Type : Invitation for : Tender/Proposal ID : Office of the Deputy Project Director B STRONG-Agricultural System Restoration Component (BADC-Part) Dhaka NCT Tender - Single Lot 1335778 Procurement Method : Open Tendering Method (OTM) Source of Funds : Government, Aid or Grant Budget Type : Development Development Partner : World Bank Particular Information : Project Code : Tender/Proposal Package No. and Description : Category : Scheduled Tender/Proposal Publication Date and Time : Pre - Tender/Proposal meeting Start Date and Time : Tender/Proposal Closing Date and Time : 224411500 Project Name : B-STRONG/BADC/WD-46 Bangladesh Sustainable Recovery, Emergency preparedness and Response Project (B STRONG)- Agricultural System Restoration Component (BADC-Part) Insta lation of 250 mm dia uPVC Pipe & Fittings to construction/ Extension of Irrigation Channel (1000m/pump) Noakhali (Y3) Site preparation work; Construction work; Works for complete or part construction and civil engineering work; Hire of construction and civil engineering machinery and equipment with operator; Construction work; Agricultural services;Building demolition and wrecking work and earthmoving work;Test driling and boring work;Building construction work;Engineering works and construction works;Construction work for pipelines, communication and power lines, for highways, roads, airfields and railways; flatwork;Construction work for water projects;Construction works for plants, mining and manufacturing and for buildings relating to the oil and gas industry;Roof works and other special trade construction works;Hire of cranes with operator;Hire of earthmoving equipment with operator;Services incidental to agricultural production;Composting services 03-Nov-2026 10:00 03-Nov-2026 12:00 17-Nov-2026 16:00 Tender/Proposal Document last seling / downloading Date and Time : Pre - Tender/Proposal meeting End Date and Time : Tender/Proposal Opening Date and Time : 17-Nov-2026 14:30 17-Nov-2026 12:00 17-Nov-2026 16:00 Last Date and Time for 17-Nov-2026 15:00 Tender/Proposal Security Submission : Information for Tenderer/Consultant : Eligibility of Tenderer : As per ITT and TDS. Brief Description of Works : Insta lation of 250 mm dia uPVC Pipe & Fittings to construction/ Extension of Irrigation Channel (1000m/pump) Noakhali (Y3) Evaluation Type : Document Available : Document Fees : Tender/Proposal Document Price (In BDT) : Mode of Payment : Tender/Proposal Security Valid Up to : Tender/Proposal Valid Up to : Lot No. Lot wise Package wise Package wise 2500 Payment through Bank 14-Apr-2027 17-Mar-2027 Identification of Lot 01 Instalation of 250 mm dia uPVC Pipe & Fittings to construction/ Extension of Irrigation Channel (1000m/pump) Noakhali (Y3) Location Noakhali Region Tender/Proposal security (Amount in BDT) 300000 Tentative Start Date Tentative Completion Date 06-Dec 2026 Procuring Entity Details: Name of Official Inviting Tender/Proposal : A. K. M. Jahangir Alam Sarker Address of Official Inviting Tender/Proposal : Address: BADC City : Dhaka Designation of Official Inviting Tender/Proposal : 26-Oct 2027 Deputy Project Director : 02 Contact details of Official Inviting Tender/Proposal : Phone No Thana : Dhaka South City Corporation District : Dhaka 1000 Country: Bangladesh Fax No 47120629 : The procuring entity reserves the right to accept or reject al Tenders/Proposals / Pre-Qualifications / EOIs Note: Bank wil update the payment transactions only at the end of the day, so the tenderers should make su",
+   "buyer": "Bangladesh Agricultural Development Corporation",
+   "country": "Bangladesh",
+   "deadline": "2026-11-17",
+   "published": "2026-11-03",
+   "url": "https://projects.worldbank.org/en/projects-operations/procurement-detail/OP00478946",
+   "notice_type": "Invitation for Bids",
+   "procurement_method": "Request for Bids",
+   "sector": "دولتی (پروژه با تأمین مالی بانک جهانی)",
+   "facts": {
+    "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "قواعد خرید بانک جهانی: باز برای شرکت‌های همه‌ی کشورهای واجد شرایط (Eligibility rules)"
+   },
+   "keyword_score": 2,
+   "domains": [
+    "mining",
+    "oil_gas"
+   ],
+   "days_left": 13,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-11-04T12:29:43",
+   "history": [
+    {
+     "at": "2026-11-04T12:29:43",
+     "status": "new"
+    }
+   ]
+  },
+  "WB-OP00478952": {
+   "id": "WB-OP00478952",
+   "source": "World Bank",
+   "market": "international",
+   "title": "Installation of 250 mm dia uPVC Pipe & Fittings to construction/ Extension of Irrigation Channel (1000m/pump) Feni",
+   "description": "Bangladesh Sustainable Recovery, Emergency Preparedness and Response Project. View IFT /PQ / REOI / RFP / PPS Notice Details Ministry : Organization : Procuring Entity Code : Ministry of Agriculture Bangladesh Agricultural Development Corporation (BADC) Procurement Nature : Works Event Type : TENDER Invitation Reference No. : App ID : B-STRONG/BADC/WD 47 232132 Key Information and Funding Information : Division : Procuring Entity Name : Procuring Entity District : Procurement Type : Invitation for : Tender/Proposal ID : Office of the Deputy Project Director B STRONG-Agricultural System Restoration Component (BADC-Part) Dhaka NCT Tender - Single Lot 1335779 Procurement Method : Open Tendering Method (OTM) Source of Funds : Government, Aid or Grant Budget Type : Development Development Partner : World Bank Particular Information : Project Code : Tender/Proposal Package No. and Description : Category : Scheduled Tender/Proposal Publication Date and Time : Pre - Tender/Proposal meeting Start Date and Time : Tender/Proposal Closing Date and Time : 224411500 Project Name : B-STRONG/BADC/WD-47. Bangladesh Sustainable Recovery, Emergency preparedness and Response Project (B STRONG)- Agricultural System Restoration Component (BADC-Part) Insta lation of 250 mm dia uPVC Pipe & Fittings to construction/ Extension of Irrigation Channel (1000m/pump) Feni (Y3) Site preparation work; Construction work; Works for complete or part construction and civil engineering work; Hire of construction and civil engineering machinery and equipment with operator; Construction work; Agricultural services;Building demolition and wrecking work and earthmoving work;Test driling and boring work;Building construction work;Engineering works and construction works;Construction work for pipelines, communication and power lines, for highways, roads, airfields and railways; flatwork;Construction work for water projects;Construction works for plants, mining and manufacturing and for buildings relating to the oil and gas industry;Roof works and other special trade construction works;Hire of cranes with operator;Hire of earthmoving equipment with operator;Services incidental to agricultural production;Composting services 03-Nov-2026 10:00 03-Nov-2026 12:00 17-Nov-2026 16:00 Tender/Proposal Document last seling / downloading Date and Time : Pre - Tender/Proposal meeting End Date and Time : Tender/Proposal Opening Date and Time : 17-Nov-2026 14:30 17-Nov-2026 12:00 17-Nov-2026 16:00 Last Date and Time for 17-Nov-2026 15:00 Tender/Proposal Security Submission : Information for Tenderer/Consultant : Eligibility of Tenderer : As per ITT and TDS. Brief Description of Works : Insta lation of 250 mm dia uPVC Pipe & Fittings to construction/ Extension of Irrigation Channel (1000m/pump) Feni (Y3) Evaluation Type : Document Available : Document Fees : Tender/Proposal Document Price (In BDT) : Mode of Payment : Tender/Proposal Security Valid Up to : Tender/Proposal Valid Up to : Lot No. Lot wise Package wise Package wise 2500 Payment through Bank 14-Apr-2027 17-Mar-2027 Identification of Lot 01 Instalation of 250 mm dia uPVC Pipe & Fittings to construction/ Extension of Irrigation Channel (1000m/pump) Feni (Y3) Location Feni District Tender/Proposal security (Amount in BDT) 150000 Tentative Start Date Tentative Completion Date 06-Dec 2026 Procuring Entity Details: Name of Official Inviting Tender/Proposal : A. K. M. Jahangir Alam Sarker Address of Official Inviting Tender/Proposal : Address: BADC City : Dhaka Designation of Official Inviting Tender/Proposal : 26-Oct 2027 Deputy Project Director : 02 Contact details of Official Inviting Tender/Proposal : Phone No Thana : Dhaka South City Corporation District : Dhaka 1000 Country: Bangladesh Fax No 47120629 : The procuring entity reserves the right to accept or reject al Tenders/Proposals / Pre-Qualifications / EOIs Note: Bank wil update the payment transactions only at the end of the day, so the tenderers should make sure the securi",
+   "buyer": "Bangladesh Agricultural Development Corporation",
+   "country": "Bangladesh",
+   "deadline": "2026-11-17",
+   "published": "2026-11-03",
+   "url": "https://projects.worldbank.org/en/projects-operations/procurement-detail/OP00478952",
+   "notice_type": "Invitation for Bids",
+   "procurement_method": "Request for Bids",
+   "sector": "دولتی (پروژه با تأمین مالی بانک جهانی)",
+   "facts": {
+    "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "قواعد خرید بانک جهانی: باز برای شرکت‌های همه‌ی کشورهای واجد شرایط (Eligibility rules)"
+   },
+   "keyword_score": 2,
+   "domains": [
+    "mining",
+    "oil_gas"
+   ],
+   "days_left": 13,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-11-04T12:29:43",
+   "history": [
+    {
+     "at": "2026-11-04T12:29:43",
+     "status": "new"
+    }
+   ]
+  },
+  "WB-OP00478935": {
+   "id": "WB-OP00478935",
+   "source": "World Bank",
+   "market": "international",
+   "title": "Installation of 400 mm dia uPVC Pipe & Fittings Buried pipe line for Drainage Cumilla, Feni & Lakshmipur",
+   "description": "Bangladesh Sustainable Recovery, Emergency Preparedness and Response Project. View IFT /PQ / REOI / RFP / PPS Notice Details Ministry : Organization : Procuring Entity Code : Ministry of Agriculture Bangladesh Agricultural Development Corporation (BADC) Procurement Nature : Works Event Type : TENDER Invitation Reference No. : App ID : B-STRONG/BADC/WD 36-37 232132 Key Information and Funding Information : Division : Procuring Entity Name : Procuring Entity District : Procurement Type : Invitation for : Tender/Proposal ID : Office of the Deputy Project Director B STRONG-Agricultural System Restoration Component (BADC-Part) Dhaka NCT Tender - Single Lot 1335775 Procurement Method : Open Tendering Method (OTM) Source of Funds : Government, Aid or Grant Budget Type : Development Development Partner : World Bank Particular Information : Project Code : Tender/Proposal Package No. and Description : Category : Scheduled Tender/Proposal Publication Date and Time : Pre - Tender/Proposal meeting Start Date and Time : Tender/Proposal Closing Date and Time : 224411500 Project Name : B-STRONG/BADC/WD-36-37 Bangladesh Sustainable Recovery, Emergency preparedness and Response Project (B STRONG)- Agricultural System Restoration Component (BADC-Part) Insta lation of 400 mm dia uPVC Pipe & Fittings Buried pipe line for Drainage Cumila, Feni & Lakshmipur (Y3) Site preparation work; Construction work; Works for complete or part construction and civil engineering work; Hire of construction and civil engineering machinery and equipment with operator; Construction work; Agricultural services;Building demolition and wrecking work and earthmoving work;Test driling and boring work;Building construction work;Engineering works and construction works;Construction work for pipelines, communication and power lines, for highways, roads, airfields and railways; flatwork;Construction work for water projects;Construction works for plants, mining and manufacturing and for buildings relating to the oil and gas industry;Roof works and other special trade construction works;Hire of cranes with operator;Hire of earthmoving equipment with operator;Services incidental to agricultural production;Composting services 03-Nov-2026 10:00 03-Nov-2026 12:00 17-Nov-2026 16:00 Tender/Proposal Document last seling / downloading Date and Time : Pre - Tender/Proposal meeting End Date and Time : Tender/Proposal Opening Date and Time : 17-Nov-2026 14:30 17-Nov-2026 12:00 17-Nov-2026 16:00 Last Date and Time for 17-Nov-2026 15:00 Tender/Proposal Security Submission : Information for Tenderer/Consultant : Eligibility of Tenderer : As per ITT and TDS. Brief Description of Works : Insta lation of 400 mm dia uPVC Pipe & Fittings Buried pipe line for Drainage Cumila, Feni & Lakshmipur (Y3) Evaluation Type : Document Available : Document Fees : Tender/Proposal Document Price (In BDT) : Mode of Payment : Tender/Proposal Security Valid Up to : Tender/Proposal Valid Up to : Lot No. Lot wise Package wise Package wise 2500 Payment through Bank 14-Apr-2027 17-Mar-2027 Identification of Lot 01 Instalation of 400 mm dia uPVC Pipe & Fittings Buried pipe line for Drainage Cumila, Feni & Lakshmipur (Y3) Location Under the Project Area Tender/Proposal security (Amount in BDT) 450000 Tentative Start Date Tentative Completion Date 06-Dec 2026 Procuring Entity Details: Name of Official Inviting Tender/Proposal : A. K. M. Jahangir Alam Sarker Address of Official Inviting Tender/Proposal : Address: BADC City : Dhaka Designation of Official Inviting Tender/Proposal : 26-Oct 2027 Deputy Project Director : 02 Contact details of Official Inviting Tender/Proposal : Phone No Thana : Dhaka South City Corporation District : Dhaka 1000 Country: Bangladesh Fax No 47120629 : The procuring entity reserves the right to accept or reject al Tenders/Proposals / Pre-Qualifications / EOIs Note: Bank wil update the payment transactions only at the end of the day, so the tenderers should make sure the securities and other paym",
+   "buyer": "Bangladesh Agricultural Development Corporation",
+   "country": "Bangladesh",
+   "deadline": "2026-11-17",
+   "published": "2026-11-03",
+   "url": "https://projects.worldbank.org/en/projects-operations/procurement-detail/OP00478935",
+   "notice_type": "Invitation for Bids",
+   "procurement_method": "Request for Bids",
+   "sector": "دولتی (پروژه با تأمین مالی بانک جهانی)",
+   "facts": {
+    "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "قواعد خرید بانک جهانی: باز برای شرکت‌های همه‌ی کشورهای واجد شرایط (Eligibility rules)"
+   },
+   "keyword_score": 2,
+   "domains": [
+    "mining",
+    "oil_gas"
+   ],
+   "days_left": 13,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-11-04T12:29:43",
+   "history": [
+    {
+     "at": "2026-11-04T12:29:43",
+     "status": "new"
+    }
+   ]
+  },
+  "WB-OP00478955": {
+   "id": "WB-OP00478955",
+   "source": "World Bank",
+   "market": "international",
+   "title": "Installation of 250 mm dia uPVC Pipe & Fittings to Extension of existing Irrigation Channel (500m/pump) Cumilla / Lakshmipur",
+   "description": "Bangladesh Sustainable Recovery, Emergency Preparedness and Response Project. View IFT /PQ / REOI / RFP / PPS Notice Details Ministry : Organization : Procuring Entity Code : Ministry of Agriculture Bangladesh Agricultural Development Corporation (BADC) Procurement Nature : Works Event Type : TENDER Invitation Reference No. : App ID : BSTRONG/BADC/WD 55-56 232132 Key Information and Funding Information : Division : Procuring Entity Name : Procuring Entity District : Procurement Type : Invitation for : Tender/Proposal ID : Office of the Deputy Project Director B STRONG-Agricultural System Restoration Component (BADC-Part) Dhaka NCT Tender - Single Lot 1335780 Procurement Method : Open Tendering Method (OTM) Source of Funds : Government, Aid or Grant Budget Type : Development Development Partner : World Bank Particular Information : Project Code : Tender/Proposal Package No. and Description : Category : Scheduled Tender/Proposal Publication Date and Time : Pre - Tender/Proposal meeting Start Date and Time : Tender/Proposal Closing Date and Time : 224411500 Project Name : BSTRONG/BADC/WD-55-56 Bangladesh Sustainable Recovery, Emergency preparedness and Response Project (B STRONG)- Agricultural System Restoration Component (BADC-Part) Insta lation of 250 mm dia uPVC Pipe & Fittings to Extension of existing Irrigation Channel (500m/pump) Cumila & Lakshmipur (Y3) Site preparation work; Construction work; Works for complete or part construction and civil engineering work; Hire of construction and civil engineering machinery and equipment with operator; Construction work; Agricultural services;Building demolition and wrecking work and earthmoving work;Test driling and boring work;Building construction work;Engineering works and construction works;Construction work for pipelines, communication and power lines, for highways, roads, airfields and railways; flatwork;Construction work for water projects;Construction works for plants, mining and manufacturing and for buildings relating to the oil and gas industry;Roof works and other special trade construction works;Hire of cranes with operator;Hire of earthmoving equipment with operator;Services incidental to agricultural production;Composting services 03-Nov-2026 10:00 03-Nov-2026 12:00 17-Nov-2026 16:00 Tender/Proposal Document last seling / downloading Date and Time : Pre - Tender/Proposal meeting End Date and Time : Tender/Proposal Opening Date and Time : 17-Nov-2026 14:30 17-Nov-2026 12:00 17-Nov-2026 16:00 Last Date and Time for 17-Nov-2026 15:00 Tender/Proposal Security Submission : Information for Tenderer/Consultant : Eligibility of Tenderer : As per ITT and TDS. Brief Description of Works : Insta lation of 250 mm dia uPVC Pipe & Fittings to Extension of existing Irrigation Channel (500m/pump) Cumila & Lakshmipur Evaluation Type : Document Available : Document Fees : Tender/Proposal Document Price (In BDT) : Mode of Payment : Tender/Proposal Security Valid Up to : Tender/Proposal Valid Up to : Lot No. Lot wise Package wise Package wise 2500 Payment through Bank 14-Apr-2027 17-Mar-2027 Identification of Lot 01 Instalation of 250 mm dia uPVC Pipe & Fittings to Extension of existing Irrigation Channel (500m/pump) Cumila & Lakshmipur (Y3) Location Under the Project Area Tender/Proposal security (Amount in BDT) 200000 Tentative Start Date Tentative Completion Date 06-Dec 2026 Procuring Entity Details: Name of Official Inviting Tender/Proposal : A. K. M. Jahangir Alam Sarker Address of Official Inviting Tender/Proposal : Address: BADC City : Dhaka Designation of Official Inviting Tender/Proposal : 26-Oct 2027 Deputy Project Director : 02 Contact details of Official Inviting Tender/Proposal : Phone No Thana : Dhaka South City Corporation District : Dhaka 1000 Country: Bangladesh Fax No 47120629 : The procuring entity reserves the right to accept or reject al Tenders/Proposals / Pre-Qualifications / EOIs Note: Bank wil update the payment transactions only at the end of the day, so the ten",
+   "buyer": "Bangladesh Agricultural Development Corporation",
+   "country": "Bangladesh",
+   "deadline": "2026-11-17",
+   "published": "2026-11-03",
+   "url": "https://projects.worldbank.org/en/projects-operations/procurement-detail/OP00478955",
+   "notice_type": "Invitation for Bids",
+   "procurement_method": "Request for Bids",
+   "sector": "دولتی (پروژه با تأمین مالی بانک جهانی)",
+   "facts": {
+    "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "قواعد خرید بانک جهانی: باز برای شرکت‌های همه‌ی کشورهای واجد شرایط (Eligibility rules)"
+   },
+   "keyword_score": 2,
+   "domains": [
+    "mining",
+    "oil_gas"
+   ],
+   "days_left": 13,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-11-04T12:29:43",
+   "history": [
+    {
+     "at": "2026-11-04T12:29:43",
+     "status": "new"
+    }
+   ]
+  },
+  "WB-OP00478944": {
+   "id": "WB-OP00478944",
+   "source": "World Bank",
+   "market": "international",
+   "title": "Installation of 315 mm dia uPVC Pipe & Fittings to construction/ Extension of Irrigation Channel (1200m/pump) / (750m/pump) Feni / Laxmipur",
+   "description": "Bangladesh Sustainable Recovery, Emergency Preparedness and Response Project. View IFT /PQ / REOI / RFP / PPS Notice Details Ministry : Organization : Procuring Entity Code : Ministry of Agriculture Bangladesh Agricultural Development Corporation (BADC) Procurement Nature : Works Event Type : TENDER Invitation Reference No. : App ID : BSTRONG/BADC/WD 39 and 62 232132 Key Information and Funding Information : Division : Procuring Entity Name : Procuring Entity District : Procurement Type : Invitation for : Tender/Proposal ID : Office of the Deputy Project Director B STRONG-Agricultural System Restoration Component (BADC-Part) Dhaka NCT Tender - Single Lot 1335777 Procurement Method : Open Tendering Method (OTM) Source of Funds : Government, Aid or Grant Budget Type : Development Development Partner : World Bank Particular Information : Project Code : Tender/Proposal Package No. and Description : Category : Scheduled Tender/Proposal Publication Date and Time : Pre - Tender/Proposal meeting Start Date and Time : Tender/Proposal Closing Date and Time : 224411500 Project Name : BSTRONG/BADC/WD-39 and 62 Bangladesh Sustainable Recovery, Emergency preparedness and Response Project (B STRONG)- Agricultural System Restoration Component (BADC-Part) Insta lation of 315 mm dia uPVC Pipe & Fittings to construction/ Extension of Irrigation Channel (1200m/pump) Brahmanbaria/Laxmipur (Y2) and Feni (Y3) Site preparation work; Construction work; Works for complete or part construction and civil engineering work; Hire of construction and civil engineering machinery and equipment with operator; Construction work; Agricultural services;Building demolition and wrecking work and earthmoving work;Test driling and boring work;Building construction work;Engineering works and construction works;Construction work for pipelines, communication and power lines, for highways, roads, airfields and railways; flatwork;Construction work for water projects;Construction works for plants, mining and manufacturing and for buildings relating to the oil and gas industry;Roof works and other special trade construction works;Hire of cranes with operator;Hire of earthmoving equipment with operator;Services incidental to agricultural production;Composting services 03-Nov-2026 10:00 03-Nov-2026 12:00 17-Nov-2026 16:00 Tender/Proposal Document last seling / downloading Date and Time : Pre - Tender/Proposal meeting End Date and Time : Tender/Proposal Opening Date and Time : 17-Nov-2026 14:30 17-Nov-2026 12:00 17-Nov-2026 16:00 Last Date and Time for 17-Nov-2026 15:00 Tender/Proposal Security Submission : Information for Tenderer/Consultant : Eligibility of Tenderer : As per ITT and TDS. Brief Description of Works : Insta lation of 315 mm dia uPVC Pipe & Fittings to construction/ Extension of Irrigation Channel (1200m/pump) Brahmanbaria/Laxmipur (Y2) and Feni (Y3) Evaluation Type : Document Available : Document Fees : Tender/Proposal Document Price (In BDT) : Mode of Payment : Tender/Proposal Security Valid Up to : Tender/Proposal Valid Up to : Lot No. Lot wise Package wise Package wise 2500 Payment through Bank 14-Apr-2027 17-Mar-2027 Identification of Lot 01 Instalation of 315 mm dia uPVC Pipe & Fittings to construction/ Extension of Irrigation Channel (1200m/pump) Brahmanbaria/Laxmipur (Y2) and Feni (Y3) Location Under the Project Area Tender/Proposal security (Amount in BDT) 200000 Tentative Start Date Tentative Completion Date 06-Dec 2026 Procuring Entity Details: Name of Official Inviting Tender/Proposal : A. K. M. Jahangir Alam Sarker Address of Official Inviting Tender/Proposal : Address: BADC City : Dhaka Designation of Official Inviting Tender/Proposal : 26-Oct 2027 Deputy Project Director : 02 Contact details of Official Inviting Tender/Proposal : Phone No Thana : Dhaka South City Corporation District : Dhaka 1000 Country: Bangladesh Fax No 47120629 : The procuring entity reserves the right to accept or reject al Tenders/Proposals / Pre-Qualifications / EOIs Note: ",
+   "buyer": "Bangladesh Agricultural Development Corporation",
+   "country": "Bangladesh",
+   "deadline": "2026-11-17",
+   "published": "2026-11-03",
+   "url": "https://projects.worldbank.org/en/projects-operations/procurement-detail/OP00478944",
+   "notice_type": "Invitation for Bids",
+   "procurement_method": "Request for Bids",
+   "sector": "دولتی (پروژه با تأمین مالی بانک جهانی)",
+   "facts": {
+    "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "قواعد خرید بانک جهانی: باز برای شرکت‌های همه‌ی کشورهای واجد شرایط (Eligibility rules)"
+   },
+   "keyword_score": 2,
+   "domains": [
+    "mining",
+    "oil_gas"
+   ],
+   "days_left": 13,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-11-04T12:29:43",
+   "history": [
+    {
+     "at": "2026-11-04T12:29:43",
+     "status": "new"
+    }
+   ]
+  },
+  "WB-OP00478938": {
+   "id": "WB-OP00478938",
+   "source": "World Bank",
+   "market": "international",
+   "title": "Installation of 315 mm dia uPVC Pipe & Fittings to construction/ Extension of Irrigation Channel (750m/pump) Lakshmipur",
+   "description": "Bangladesh Sustainable Recovery, Emergency Preparedness and Response Project. View IFT /PQ / REOI / RFP / PPS Notice Details Ministry : Organization : Procuring Entity Code : Ministry of Agriculture Bangladesh Agricultural Development Corporation (BADC) Procurement Nature : Works Event Type : TENDER Invitation Reference No. : App ID : BSTRONG/BADC/WD 61 232132 Key Information and Funding Information : Division : Procuring Entity Name : Procuring Entity District : Procurement Type : Invitation for : Tender/Proposal ID : Office of the Deputy Project Director B STRONG-Agricultural System Restoration Component (BADC-Part) Dhaka NCT Tender - Single Lot 1335776 Procurement Method : Open Tendering Method (OTM) Source of Funds : Government, Aid or Grant Budget Type : Development Development Partner : World Bank Particular Information : Project Code : Tender/Proposal Package No. and Description : Category : Scheduled Tender/Proposal Publication Date and Time : Pre - Tender/Proposal meeting Start Date and Time : Tender/Proposal Closing Date and Time : 224411500 Project Name : BSTRONG/BADC/WD-61 Bangladesh Sustainable Recovery, Emergency preparedness and Response Project (B STRONG)- Agricultural System Restoration Component (BADC-Part) Insta lation of 315 mm dia uPVC Pipe & Fittings to construction/ Extension of Irrigation Channel (750m/pump) Lakshmipur (Y3) Site preparation work; Construction work; Works for complete or part construction and civil engineering work; Hire of construction and civil engineering machinery and equipment with operator; Construction work; Agricultural services;Building demolition and wrecking work and earthmoving work;Test driling and boring work;Building construction work;Engineering works and construction works;Construction work for pipelines, communication and power lines, for highways, roads, airfields and railways; flatwork;Construction work for water projects;Construction works for plants, mining and manufacturing and for buildings relating to the oil and gas industry;Roof works and other special trade construction works;Hire of cranes with operator;Hire of earthmoving equipment with operator;Services incidental to agricultural production;Composting services 03-Nov-2026 10:00 03-Nov-2026 12:00 17-Nov-2026 16:00 Tender/Proposal Document last seling / downloading Date and Time : Pre - Tender/Proposal meeting End Date and Time : Tender/Proposal Opening Date and Time : 17-Nov-2026 14:30 17-Nov-2026 12:00 17-Nov-2026 16:00 Last Date and Time for 17-Nov-2026 15:00 Tender/Proposal Security Submission : Information for Tenderer/Consultant : Eligibility of Tenderer : As per ITT and TDS. Brief Description of Works : Insta lation of 315 mm dia uPVC Pipe & Fittings to construction/ Extension of Irrigation Channel (750m/pump) Lakshmipur (Y3) Evaluation Type : Document Available : Document Fees : Tender/Proposal Document Price (In BDT) : Mode of Payment : Tender/Proposal Security Valid Up to : Tender/Proposal Valid Up to : Lot No. Lot wise Package wise Package wise 2500 Payment through Bank 14-Apr-2027 17-Mar-2027 Identification of Lot 01 Instalation of 315 mm dia uPVC Pipe & Fittings to construction/ Extension of Irrigation Channel (750m/pump) Lakshmipur (Y3) Location Lakshmipur District Tender/Proposal security (Amount in BDT) 250000 Tentative Start Date Tentative Completion Date 06-Dec 2026 Procuring Entity Details: Name of Official Inviting Tender/Proposal : A. K. M. Jahangir Alam Sarker Address of Official Inviting Tender/Proposal : Address: BADC City : Dhaka Designation of Official Inviting Tender/Proposal : 26-Oct 2027 Deputy Project Director : 02 Contact details of Official Inviting Tender/Proposal : Phone No Thana : Dhaka South City Corporation District : Dhaka 1000 Country: Bangladesh Fax No 47120629 : The procuring entity reserves the right to accept or reject al Tenders/Proposals / Pre-Qualifications / EOIs Note: Bank wil update the payment transactions only at the end of the day, so the tenderers should ma",
+   "buyer": "Bangladesh Agricultural Development Corporation",
+   "country": "Bangladesh",
+   "deadline": "2026-11-17",
+   "published": "2026-11-03",
+   "url": "https://projects.worldbank.org/en/projects-operations/procurement-detail/OP00478938",
+   "notice_type": "Invitation for Bids",
+   "procurement_method": "Request for Bids",
+   "sector": "دولتی (پروژه با تأمین مالی بانک جهانی)",
+   "facts": {
+    "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "قواعد خرید بانک جهانی: باز برای شرکت‌های همه‌ی کشورهای واجد شرایط (Eligibility rules)"
+   },
+   "keyword_score": 2,
+   "domains": [
+    "mining",
+    "oil_gas"
+   ],
+   "days_left": 13,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-11-04T12:29:43",
+   "history": [
+    {
+     "at": "2026-11-04T12:29:43",
+     "status": "new"
+    }
+   ]
+  },
+  "WB-OP00478532": {
+   "id": "WB-OP00478532",
+   "source": "World Bank",
+   "market": "international",
+   "title": "Tourism Emergency Preparedness and Response",
+   "description": "Fiji Tourism Development Program in Vanua Levu. REQUEST FOR EXPRESSIONS OF INTEREST (CONSULTING SERVICES – FIRMS SELECTION) Name of Project Fiji Tourism Development Program in Vanua Levu or ‘Na Vualiku’ Loan Number IDA-73690 Assignment Title Tourism Emergency Preparedness and Response Reference Number FJ-MTCA-563794-CS-QCBS Country of Delivery Republic of Fiji The Government of Fiji, through the Ministry of Finance, Strategic Planning, National Development and Statistics, has received financing from the World Bank for the Fiji Tourism Development Program in Vanua Levu or “Na Vualiku” and intends to apply part of the proceeds for consulting services. The consulting services (“the Services”) will support the Ministry of Tourism and Civil Aviation (MTCA) in strengthening tourism sector disaster risk management, emergency preparedness, response and recovery, with particular focus on the Northern Division (Vanua Levu and Taveuni). The assignment will include: (i) assessment of the operational readiness of the Fiji Tourism Risk Management Framework and preparation of an implementation roadmap and supplementary protocols where required; (ii) assessment and strengthening of tourism crisis communications, including training and multi-agency simulation exercises; (iii) identification, assessment and prioritisation of tourism emergency preparedness and response investments in the Northern Division, including concept notes for at least ten prioritised investments; (iv) design and delivery of emergency preparedness and response training for tourism operators, communities, government agencies and emergency responders; and (v) preparation of procurement-ready packages for up to four selected priority investments, including the required environmental and social assessments and instruments, as applicable. The Services are expected to commence in April 2027 and be implemented over a 12-month period. The detailed Terms of Reference (“TOR”) for the assignment is available by contacting Mr. Akshay Chand on Akshay.chand01@mtca.gov.fj or clicking the link below. https://www.dropbox.com/scl/fi/xn59s9kl4plvidarxfrdf/TOR_Tourism_Emergency_Response_to-issue.docx?rlkey=z959g9cyx9kx5y1cihbmvf4d1&st=65janez0&dl=0 The MTCA now invites eligible consulting firms (“Consultants”) to indicate their interest in providing the Services. Interested Consultants should provide information demonstrating that they possess the required qualifications and relevant experience to perform the Services. The attention of interested Consultants is drawn to paragraphs 3.14, 3.16 and 3.17 of the World Bank’s Procurement Regulations for IPF Borrowers, regarding the World Bank’s policy on conflict of interest. The shortlisting criteria are: Relevant Corporate Experience: Demonstrated experience in successfully undertaking assignments of a similar nature, scope and complexity involving tourism emergency preparedness and response planning, tourism crisis management, disaster risk reduction, resilience planning, or related strategic planning assignments. Experience in Comparable Operating Environments: Demonstrated experience delivering similar assignments in tourism-dependent economies, Small Island Developing States (SIDS), or other comparable operating environments. Experience in the Pacific region, including Fiji, will be considered an advantage. Technical and Managerial Capability: Demonstrated technical and managerial capability to undertake assignments of similar scope and complexity, taking into account the firm's core business, organisational structure, relevant areas of expertise, and experience in delivering multidisciplinary consulting services. Stakeholder Engagement Experience: Demonstrated experience facilitating consultation and collaboration with government agencies, tourism sector stakeholders, development partners and local communities in assignments of similar nature and complexity. Interested firms should submit concise information about their core business and ye",
+   "buyer": "Ministry of Tourism and Civil Aviation",
+   "country": "Fiji",
+   "deadline": "2026-11-18",
+   "published": "2026-11-03",
+   "url": "https://projects.worldbank.org/en/projects-operations/procurement-detail/OP00478532",
+   "notice_type": "Request for Expression of Interest",
+   "procurement_method": "Quality And Cost-Based Selection",
+   "sector": "دولتی (پروژه با تأمین مالی بانک جهانی)",
+   "facts": {
+    "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "طبق آگهی: experience to perform the services",
+    "international": "قواعد خرید بانک جهانی: باز برای شرکت‌های همه‌ی کشورهای واجد شرایط (Eligibility rules)"
+   },
+   "keyword_score": 2,
+   "domains": [
+    "aerospace",
+    "urban"
+   ],
+   "days_left": 14,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-11-04T12:29:43",
+   "history": [
+    {
+     "at": "2026-11-04T12:29:43",
+     "status": "new"
+    }
+   ]
+  },
+  "TED-767422-2026": {
+   "id": "TED-767422-2026",
+   "source": "TED (EU)",
+   "market": "international",
+   "title": "Poland – Medical software package – Rozbudowa systemu szpitalnego (HIS) Katowickiego Centrum Onkologii o dodatkowe moduły",
+   "description": "Na przedmiot zamówienia składają się z następujące moduły wraz z licencjami: Moduł nr 1 - Monitorowanie incydentów sercowych u pacjentów będących w trakcie chemioterapii Moduł nr 2 - Monitorowanie cukrzycy ciężarnych Moduł nr 3 - e-Usługa: Portal pacjenta - Uczulenia, Zażywane leki Moduł nr 4 - Rejestracja do laboratorium Moduł nr 5 - CDSS (Clinical Decision Support System) - Moduł Przegląd lekowy Moduł nr 6 - Sprawdzenie przez lekarza czy są EDM z innych placówek Moduł nr 7 - Raportowanie - wzmocnienie procesów IT Moduł nr 8 - System monitorowania temperatury na workach z krwią podczas transportu",
+   "buyer": "Katowickie Centrum Onkologii",
+   "country": "POL",
+   "deadline": "2026-12-16",
+   "published": "2026-11-04",
+   "url": "https://ted.europa.eu/en/notice/-/detail/767422-2026",
+   "notice_type": "cn-standard",
+   "sector": "دولتی",
+   "facts": {
+    "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "رویه‌ی باز اتحادیه اروپا – شرکت‌های خارج از EU معمولاً مجازند مگر محدودیت صریح در اسناد"
+   },
+   "keyword_score": 2,
+   "domains": [
+    "ai_cross_cutting",
+    "medical"
+   ],
+   "days_left": 42,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-11-04T12:29:43",
+   "history": [
+    {
+     "at": "2026-11-04T12:29:43",
      "status": "new"
     }
    ]
@@ -4346,6 +4981,82 @@
     "TED-760865-2026",
     "TED-763257-2026",
     "TED-761145-2026"
+   ],
+   "actioned_ids": [],
+   "reminders": []
+  },
+  {
+   "at": "2026-11-04T12:29:43",
+   "collected": 352,
+   "matched": 35,
+   "partner_drafts": [],
+   "events_added": 0,
+   "scholarships_added": 0,
+   "investors_added": 0,
+   "investor_drafts": [
+    "revo",
+    "212",
+    "hub71",
+    "aramco-ventures",
+    "antler-menap",
+    "equinor-ventures",
+    "shell-ventures",
+    "ycombinator",
+    "techstars"
+   ],
+   "leads_added": 0,
+   "papers_lines": [],
+   "events_soon": [
+    {
+     "start": "2026-11-09",
+     "name": "Web Summit 2026",
+     "name_fa": "وب سامیت لیسبون",
+     "city": "لیسبون"
+    },
+    {
+     "start": "2026-11-16",
+     "name": "MEDICA 2026",
+     "name_fa": "نمایشگاه تجهیزات و فناوری پزشکی دوسلدورف",
+     "city": "دوسلدورف"
+    },
+    {
+     "start": "2026-12-06",
+     "name": "NeurIPS 2026",
+     "name_fa": "کنفرانس NeurIPS (سیدنی / آتلانتا / پاریس)",
+     "city": "سیدنی، آتلانتا، پاریس"
+    },
+    {
+     "start": "2026-12-07",
+     "name": "GITEX Global 2026",
+     "name_fa": "جیتکس دبی",
+     "city": "دبی (Expo City)"
+    },
+    {
+     "start": "2026-12-13",
+     "name": "Iran ITEX 1405 (5th) – Sharif University",
+     "name_fa": "پنجمین نمایشگاه ایران ایتکس دانشگاه صنعتی شریف",
+     "city": "تهران (دانشگاه صنعتی شریف)"
+    }
+   ],
+   "new_ids": [
+    "TED-765795-2026",
+    "TED-763892-2026",
+    "TED-765150-2026",
+    "TED-767009-2026",
+    "TED-763974-2026",
+    "TED-766353-2026",
+    "TED-765598-2026",
+    "TED-767044-2026",
+    "TED-765016-2026",
+    "WB-OP00478842",
+    "WB-OP00478946",
+    "WB-OP00478952",
+    "WB-OP00478935",
+    "WB-OP00478955",
+    "WB-OP00478944",
+    "WB-OP00478938",
+    "WB-OP00478532",
+    "TED-767422-2026"
    ],
    "actioned_ids": [],
    "reminders": []
