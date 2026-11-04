@@ -256,6 +256,7 @@ function setPath(key, val){ const [a,b]=key.split("."); if(b) S[a][b]=val; else 
 function subscribe(){
   for(const [path,key] of Object.entries(COLS)){
     S.db.collection(path).onSnapshot(snap => {
+      if(key==="members" && isAdmin()) S.roster = snap.docs.map(d => ({id:d.id, full_name:d.data().full_name||d.id, team:d.data().team||"ai"}));   // names and team only: the picker for taking or handing over items
       setPath(key, privateRows(key, snap.docs.map(d => ({id:d.id, ...d.data()}))));
       S.loaded = true; S.got.add(key); render(); if(key==="members") maybeWelcome();
     }, () => {});
@@ -279,6 +280,8 @@ function subscribe(){
   S.db.doc("settings/trl_data").onSnapshot(d => { S.trl = d.exists ? d.data() : {products:{}}; render(); }, ()=>{});   // real-data sources and measured results per TRL-4 product
   S.db.doc("settings/article_deny").onSnapshot(d => { S.artDeny = d.exists ? d.data() : {ids:[]}; render(); }, ()=>{});
   S.db.doc("settings/scholar_access").onSnapshot(d => { S.schAcc = d.exists ? d.data() : {ids:[]}; render(); }, ()=>{});
+  S.db.doc("settings/cv_tailor").onSnapshot(d => { S.cvT = d.exists ? (d.data().map||{}) : {}; render(); }, ()=>{});   // per-professor tailored CV content
+  S.db.doc("settings/sample_reply").onSnapshot(d => { S.sampleReply = d.exists ? d.data() : null; render(); }, ()=>{});   // lesson from a real professor reply
   S.db.doc("settings/article_access").onSnapshot(d => { S.artAcc = d.exists ? d.data() : {ids:[]}; render(); }, ()=>{});   // {ids:[memberId]}: people the owner lets see the Articles tab
   if(isAdmin()) S.db.collection("finance/_portal/items").onSnapshot(q => { S.portal={}; q.docs.forEach(d=>S.portal[d.id]=d.data()); render(); }, ()=>{});   // submission-portal logins per venue (admin-only rule of "finance"; not part of backups)
   S.db.doc("settings/article_status").onSnapshot(d => { S.artSt = d.exists ? (d.data().map||{}) : {}; render(); }, ()=>{});
@@ -562,8 +565,9 @@ const claimBtn = key => { const a=((S.asg||{})[key]); if(a&&a.doer&&a.doer!==S.m
 // Basket products can be handed out only by the owner. This is UI-level: the database cannot hide single rows from signed-in members.
 const asgOf = key => (S.asg||{})[key];
 const asgMine = mod => Object.entries(S.asg||{}).filter(([k,a])=>a.mod===mod&&a.doer&&a.doer===S.me.id).map(([k,a])=>({key:k,...a}));
-const asgWho = id => id===S.me.id?"شما":memberName(id);
-const asgAdmin = mod => mod==="basket" ? !!S.me.isOwner : isAdmin();
+const rosterName = id => ((S.roster||[]).find(r=>r.id===id)||{}).full_name || memberName(id);
+const asgWho = (id,a) => id===S.me.id?"شما":(isAdmin()||!a||a.doer===S.me.id||a.selector===S.me.id)?rosterName(id):"همکار";   // outsiders to an assignment see no names
+const asgAdmin = mod => mod==="basket" ? !!S.me.isOwner : isAdmin();   // admins hand items to anyone; every member can take an item for themselves; basket products stay owner-only
 const asgLocked = a => !!(a && a.doer);   // assigned: closed to everyone but the doer and the one who assigned it
 const asgCan = (a,mod) => asgLocked(a) ? (a.doer===S.me.id || a.selector===S.me.id) : (asgAdmin(mod) || mod!=="basket");
 // message for the doer; Telegram and e-mail open prefilled in the assigner's own app (the page holds no bot token or mail access)
@@ -578,22 +582,33 @@ function asgNotifyBtns(a){
 }
 function asgCell(key,title,mod){
   const a=asgOf(key)||{}, can=asgCan(a,mod);
-  const body=a.doer?`<div class="meta">انجام‌دهنده: <b>${esc(asgWho(a.doer))}</b>${a.selector&&a.selector!==a.doer?` · واگذارکننده: ${esc(asgWho(a.selector))}`:" · انتخاب شخصی"}</div>${a.task?`<details><summary class="meta">شرح تسک</summary><span style="white-space:pre-wrap">${esc(a.task)}</span></details>`:`<span class="meta">شرح تسک ثبت نشده</span>`}`:"";
-  const btn=can?`<button class="btn sm ghost" data-act="asg" data-id="${esc(key)}" data-m="${esc(mod)}" data-t="${esc(title)}">${a.doer?(a.selector===S.me.id&&a.doer!==S.me.id?"ویرایش / لغو واگذاری":"ویرایش / لغو"):(asgAdmin(mod)?"واگذاری به یک نفر":"خودم انجام می‌دهم")}</button>`:"";
+  const body=a.doer?`<div class="meta">انجام‌دهنده: <b>${esc(asgWho(a.doer,a))}</b>${a.selector&&a.selector!==a.doer?` · واگذارکننده: ${esc(asgWho(a.selector,a))}`:" · انتخاب شخصی"}</div>${a.task?`<details><summary class="meta">شرح تسک</summary><span style="white-space:pre-wrap">${esc(a.task)}</span></details>`:`<span class="meta">شرح تسک ثبت نشده</span>`}`:"";
+  const btn=can?`<button class="btn sm ghost" data-act="asg" data-id="${esc(key)}" data-m="${esc(mod)}" data-t="${esc(title)}">${a.doer?(a.selector===S.me.id&&a.doer!==S.me.id?"ویرایش / لغو واگذاری":"ویرایش / لغو"):(asgAdmin(mod)?"برای خودم بردار یا واگذار کن":"خودم انجام می‌دهم")}</button>`:"";
   return `<div class="asg" style="margin-top:4px">${body}${btn}${asgNotifyBtns(a)}</div>`;
+}
+// A taken or handed-over item also becomes a real task in BPMS (Today / Scrum board) for the doer; handing it over again moves the task, releasing it removes the task.
+const hashKey = str => { let h=5381; for(const c of String(str)) h=((h<<5)+h+c.charCodeAt(0))|0; return Math.abs(h).toString(36); };
+async function asgSyncTask(key,title,mod,doer,selector,text){
+  const tid=("asg_"+key).replace(/[^A-Za-z0-9_\-]/g,"_").slice(0,150), old=(S.tasks||[]).find(t=>t.id===tid), now=new Date().toISOString(), m=(S.roster||[]).find(x=>x.id===doer)||(S.members||[]).find(x=>x.id===doer)||{};
+  try{
+    if(!doer){ if(old) await S.db.doc("tasks/"+tid).delete(); return; }
+    await S.db.doc("tasks/"+tid).set({title,desc:(text||"")+(text?"\n\n":"")+`(از بخش «${MODULES.find(x=>x[0]===mod)?.[1]||mod}» برداشته یا واگذار شد؛ واگذارکننده: ${rosterName(selector)||"—"}.)`,assignee:doer,created_by:selector,team:m.team||"ai",priority:"normal",due:old&&old.assignee===doer&&old.due?old.due:addDays(today(),3),status:old&&old.assignee===doer?old.status:"todo",type:"task",blocked:false,points:null,sprint:old?old.sprint||"":"",created:old?old.created||now:now,updated:now,asg_key:key,asg_mod:mod});
+  }catch(e){ console.error("asg task",e); }
 }
 function asgForm(key,title,mod){
   const a=asgOf(key)||{}; if(!asgCan(a,mod)){ toast("این مورد واگذار شده است؛ فقط انجام‌دهنده یا واگذارکننده می‌تواند آن را تغییر یا لغو کند"); return; }
   const admin=asgAdmin(mod) && (!a.doer || a.selector===S.me.id);
-  const opts={"":"— بدون انجام‌دهنده —"}; (S.members||[]).forEach(m=>{opts[m.id]=m.full_name||m.id});
+  const opts={"":"— بدون انجام‌دهنده —"}; (S.roster&&S.roster.length?S.roster:(S.members||[])).forEach(m=>{opts[m.id]=m.id===S.me.id?"خودم":(m.full_name||m.id)});
   const fields=admin?[{k:"doer",label:"انجام‌دهنده",type:"select",options:opts,value:a.doer||""}]
     :[{k:"doer",label:"انجام‌دهنده",type:"select",options:{"":"— رها کردن —",[S.me.id]:"خودم انجام می‌دهم"},value:a.doer||""}];
   fields.push({k:"task",label:"شرح تسک (انجام‌دهنده و مدیر می‌توانند بنویسند)",type:"textarea",value:a.task||""});
   openForm({title:"انتخاب / واگذاری: "+title,fields,values:{},onSave:async o=>{
-    if(!o.doer){ if(a.doer) await remove(`assign/${key}`); return true; }
+    if(!o.doer){ if(a.doer){ await remove(`assign/${key}`); await asgSyncTask(key,title,mod,"",S.me.id,""); } return true; }
     const now=new Date().toISOString(), same=a.doer===o.doer;
-    return save(`assign/${key}`,{mod,title,doer:o.doer,selector:(same&&a.selector)||S.me.id,task:o.task||"",
+    const ok=await save(`assign/${key}`,{mod,title,doer:o.doer,selector:(same&&a.selector)||S.me.id,task:o.task||"",
       log:[...(a.log||[]),{at:now,by:S.me.id,note:same?"شرح تسک ویرایش شد":(o.doer===S.me.id?"انتخاب شخصی":"واگذار شد")}].slice(-30),updated:now,updated_by:S.me.id},(o.doer!==S.me.id?"ثبت شد؛ در سامانه برای انجام‌دهنده اعلان رفت. برای تلگرام یا ایمیل از دکمه‌های کنار ردیف استفاده کنید.":"ثبت شد"));
+    if(ok) await asgSyncTask(key,title,mod,o.doer,(same&&a.selector)||S.me.id,o.task||"");
+    return ok;
   }});
 }
 const asgMineBox = mod => { const l=asgMine(mod); return l.length?`<h3>مواردی که به شما واگذار شده یا خودتان انتخاب کرده‌اید</h3>`+table(["مورد","شرح تسک","واگذارکننده",""],l.map(a=>`<tr>${td("مورد",esc(a.title),"t")}${td("شرح",`<span style="white-space:pre-wrap">${esc(a.task||"—")}</span>`)}${td("واگذارکننده",esc(a.selector===S.me.id?"خودم":memberName(a.selector)))}${td("",`<button class="btn sm ghost" data-act="asg" data-id="${esc(a.key)}" data-m="${esc(mod)}" data-t="${esc(a.title)}">ویرایش شرح</button>`)}</tr>`)):""; };
@@ -848,12 +863,13 @@ VIEWS["market.techneeds"] = () => {
 };
 VIEWS["market.web"] = () => {
   const list = S.m.tenders.filter(t=>t.line==="web"&&ACTIVE.has(t.status)&&!owned(t.id)).filter(t=>match(t.title,t.country));
-  const leads = S.m.leads.filter(l=>!owned("ld_"+l.id)&&match(l.name,l.activity,l.city));
+  const lsk=(S.leadSort||"city"), lcmp=(a,b)=>String(a[lsk]||"").localeCompare(String(b[lsk]||""),"fa")||String(a.name||"").localeCompare(String(b.name||""),"fa");
+  const leads = S.m.leads.filter(l=>!owned("ld_"+l.id)&&match(l.name,l.activity,l.city)).sort(lcmp);
   const takenLeads = S.m.leads.filter(l=>owned("ld_"+l.id)&&match(l.name,l.activity,l.city));
   const takenWeb = S.m.tenders.filter(t=>t.line==="web"&&ACTIVE.has(t.status)&&owned(t.id));
   return `<h2>درخواست‌های طراحی سایت و سئو</h2><p class="note">پیشنهاد پیش‌فرض برای مشتریان داخلی: طراحی سایت + سئو.</p>${tenderTable(list)}
-   <h2>تولیدکنندگان بدون سایت (تماس تلفنی)</h2><p class="note">فقط اطلاعاتی که آگهی‌دهنده خودش منتشر کرده است. اگر مخاطب نخواست، او را از فهرست حذف کنید.</p>`+
-   table(["نام / مسئول","حوزه‌ی فعالیت","شهر","شماره تماس","منبع"], leads.map(l=>`<tr>${td("نام",esc(l.name||"—"),"t")}${td("فعالیت",esc(l.activity))}${td("شهر",esc(l.city||"—"))}${td("تماس",l.phone?`<span class="mono">${esc(l.phone)}</span>`:`<span class="meta">${esc(l.contact_note_fa||"—")}</span>`)}${td("منبع",link(l.url,l.source))}${td("",claimBtn("ld_"+l.id))}</tr>`), "تولیدکننده‌ی بدون مسئولی باقی نمانده است.")+
+   <h2>تولیدکنندگان بدون سایت (تماس تلفنی)</h2><p class="note">همه‌ی آگهی‌دهندگانی که سایت ندارند (${faNum(S.m.leads.length)} مورد). فقط اطلاعاتی که آگهی‌دهنده خودش منتشر کرده است. اگر مخاطب نخواست، او را از فهرست حذف کنید. هر مورد را می‌توانید برای خودتان بردارید یا به شخص دیگری واگذار کنید.</p><div class="toolbar"><span class="meta">مرتب‌سازی:</span>${[["city","شهر"],["activity","حوزه‌ی فعالیت"],["name","نام"]].map(([k,l])=>`<button class="btn sm ${lsk===k?"sig":"ghost"}" data-act="lead-sort" data-k="${k}">${l}</button>`).join(" ")}</div>`+
+   table(["نام / مسئول","حوزه‌ی فعالیت","شهر","شماره تماس","منبع"], leads.map(l=>`<tr>${td("نام",esc(l.name||"—"),"t")}${td("فعالیت",esc(l.activity))}${td("شهر",esc(l.city||"—"))}${td("تماس",l.phone?`<span class="mono">${esc(l.phone)}</span>`:`<span class="meta">${esc(l.contact_note_fa||"—")}</span>`)}${td("منبع",link(l.url,l.source))}${td("",claimBtn("ld_"+l.id)+asgCell("ld_"+l.id,l.name||l.activity||"تماس با تولیدکننده","market"))}</tr>`), "تولیدکننده‌ی بدون مسئولی باقی نمانده است.")+
    `<h2>در دست پیگیری</h2><p class="note">مواردی که کسی مسئولیتشان را گرفته از فهرست‌های بالا برداشته شده‌اند. مسئول یا مدیر می‌تواند مورد را به فهرست بازگرداند.</p>`+
    table(["مورد","نوع","مسئول",""], [
      ...takenWeb.map(t=>{const tr=S.tracking[t.id]||{};return `<tr>${td("مورد",link(t.url,t.title),"t")}${td("نوع","درخواست طراحی سایت")}${td("مسئول",esc(memberName(tr.owner)))}${td("",tr.owner===S.me.id||isAdmin()?`<button class="btn sm ghost" data-act="unclaim" data-id="${esc(t.id)}">بازگرداندن به فهرست</button>`:"")}</tr>`}),
@@ -863,7 +879,7 @@ VIEWS["market.web"] = () => {
 VIEWS["market.investors"] = () => {
   const list=S.m.investors.filter(v=>match(v.name,v.hq,v.focus_fa));
   return kpis([["کل",faNum(list.length)],["صندوق خطرپذیر",faNum(list.filter(v=>v.type==="vc").length)],["سرمایه‌گذار شرکتی",faNum(list.filter(v=>v.type==="cvc").length)],["شتاب‌دهنده",faNum(list.filter(v=>v.type==="accelerator").length)]])+
-  table(["سرمایه‌گذار","مقر","مرحله و مبلغ","اندازه‌ی صندوق","سرمایه‌گذاری‌ها","علاقه‌مندی","ارتباط","ملاحظات"], list.map(v=>`<tr>${td("نام",esc(v.name),"t")}${td("مقر",esc(v.hq))}${td("مرحله",`${esc(v.stage_fa)}<br><span class="meta">${esc(v.ticket_fa)}</span>`)}${td("صندوق",esc(v.fund_fa))}${td("سرمایه‌گذاری‌ها",esc(v.investments_fa))}${td("علاقه‌مندی",esc(v.focus_fa))}${td("ارتباط",`${link(v.website,"وب‌سایت")}${v.apply&&v.apply!==v.website?" · "+link(v.apply,"ارائه‌ی طرح"):""}${v.email?`<br><span class="mono">${esc(v.email)}</span>`:""}`)}${td("ملاحظات",esc(v.compliance_fa||"—"))}</tr>`));
+  table(["سرمایه‌گذار","مقر","مرحله و مبلغ","اندازه‌ی صندوق","سرمایه‌گذاری‌ها","علاقه‌مندی","ارتباط","ملاحظات","واگذاری"], list.map(v=>`<tr>${td("نام",esc(v.name),"t")}${td("مقر",esc(v.hq))}${td("مرحله",`${esc(v.stage_fa)}<br><span class="meta">${esc(v.ticket_fa)}</span>`)}${td("صندوق",esc(v.fund_fa))}${td("سرمایه‌گذاری‌ها",esc(v.investments_fa))}${td("علاقه‌مندی",esc(v.focus_fa))}${td("ارتباط",`${link(v.website,"وب‌سایت")}${v.apply&&v.apply!==v.website?" · "+link(v.apply,"ارائه‌ی طرح"):""}${v.email?`<br><span class="mono">${esc(v.email)}</span>`:""}`)}${td("ملاحظات",esc(v.compliance_fa||"—"))}${td("واگذاری",asgCell("inv_"+(v.id||hashKey(v.name)),"تماس با سرمایه‌گذار: "+v.name,"market"))}</tr>`));
 };
 // inline owner picker for Project Tracking: admins pick anyone; a member may take an unowned project or release their own
 const ownerSelect = (id,tr) => { const cur=tr.owner||"", locked=!isAdmin()&&cur&&cur!==S.me.id;
@@ -959,60 +975,23 @@ VIEWS["erp.ops"] = () => {
    (list.length?table(["بخش","مورد","دوره","سررسید","وضعیت","انجام‌دهنده و واگذاری",""],list.sort((a,b)=>(erpDue(b).late-erpDue(a).late)||erpDue(a).due.localeCompare(erpDue(b).due)).map(o=>{ const du=erpDue(o), lg=(S.erpLog||{})[o.id]||{}, a=asgOf("erp_"+o.id)||{}, can=isAdmin()||a.doer===S.me.id;
      return `<tr>${td("بخش",esc(ERP_DEPTS[o.d]))}${td("مورد",`<b>${esc(o.t)}</b><br><span class="meta">${esc(o.x)}</span>`,"t")}${td("دوره",esc(ERP_PERIOD[o.p][0]))}${td("سررسید",du.never?'<span class="pill p-warn">هنوز انجام نشده</span>':`${faDate(du.due)}<br><span class="meta">${du.left<0?faNum(-du.left)+" روز گذشته":faNum(du.left)+" روز دیگر"}</span>`)}${td("وضعیت",du.late?'<span class="pill p-bad">سررسید</span>':'<span class="pill p-ok">به‌روز</span>')}${td("انجام‌دهنده",asgCell("erp_"+o.id,o.t,"erp")+(lg.last_done?`<div class="meta">آخرین انجام: ${faDate(lg.last_done)} · ${esc(asgWho(lg.by))}${lg.count?` · ${faNum(lg.count)} بار`:""}</div>`:""))}${td("",`${can?`<button class="btn sm sig" data-act="erp-done" data-id="${esc(o.id)}">ثبت انجام</button> `:""}${o.go?`<button class="btn sm ghost" data-act="goto" data-mod="${o.go[0]}" data-sub="${o.go[1]}">باز کردن بخش</button>`:""}`)}</tr>`}),"موردی با این فیلتر نیست."):'<p class="empty">موردی با این فیلتر نیست.</p>');
 };
-// ---------- Daily planner: standing tasks repeat, and a person with nothing open gets tasks chosen from the work still left in the system.
+// ---------- Daily planner: only tasks the owner marked as repeating are reopened on the next office day. Tasks are never created automatically.
 // Runs when an admin has the dashboard open (once per day; ids are deterministic so two admins cannot create duplicates). The owner's expectation level
 // (settings/planner.level) sets how many tasks an idle person receives: standard 1, high 2, intense 3.
-const AI_CORE = [{"key": "rfp_ir", "title": "ثبت نهایی یک RFP داخلی", "desc": "دست‌کم یک RFP داخلی (Iran AI Projects) را تا مرحله‌ی «ارسال پیشنهاد» ببرید و ثبت نهایی کنید.\n\nگام‌ها: ۱) از فهرست موارد باز با مهلت آینده یکی را با «مسئولیت را می‌گیرم» بردارید. ۲) مدارک پترو پالاتوس را از «مدارک پترو پالاتوس (داخلی)» بردارید. ۳) پیشنهاد را بنویسید و در سامانه‌ی کارفرما (ستاد/ساتع) بارگذاری و ثبت نهایی کنید. ۴) در Project Tracking مرحله را «ارسال پیشنهاد» کنید و شماره‌ی ثبت را بنویسید.\n\nمعیار پذیرش: شماره‌ی ثبت یا تأییدیه‌ی سامانه‌ی کارفرما در Project Tracking نوشته شده باشد."}, {"key": "rfp_intl", "title": "ثبت نهایی یک RFP بین‌المللی", "desc": "دست‌کم یک RFP بین‌المللی (Overseas AI Projects) را تا ارسال پیشنهاد یا ثبت نهایی ببرید.\n\nگام‌ها: ۱) مورد باز با مهلت آینده را با «مسئولیت را می‌گیرم» بردارید. ۲) مدارک پارسا اینت را از «مدارک پارسا اینت (بین‌المللی)» بردارید و شریک را در «شرکای تجاری» پیدا کنید. ۳) پیشنهاد را در پورتال کارفرما ثبت کنید. ۴) مرحله و شماره‌ی ثبت را در Project Tracking بنویسید.\n\nمعیار پذیرش: شماره‌ی ثبت یا رسید پورتال در Project Tracking باشد."}, {"key": "article_reg", "title": "ثبت مقاله (ثبت کامل در Articles)", "desc": "دست‌کم یک مقاله را کامل ثبت کنید: انتخاب مقصد از «فهرست کامل» یا «در دست اقدام» با نزدیک‌ترین مهلت، تکمیل چکیده با «چکیده (Word)»، ثبت وضعیت، شماره‌ی پیگیری، گام بعدی و مسیر ایمیل (ثبت · تاییدیه · مقاله کامل).\n\nمعیار پذیرش: وضعیت مقصد در Articles به «در دست اقدام» یا «اقدام‌شده» تغییر کرده و به نام شما ثبت شده باشد (نمره‌دهی همین ثبت سامانه را می‌شمارد، نه متن گزارش)."}, {"key": "optimize", "title": "بهینه‌سازی یک محصول موجود در سبد محصولات", "desc": "یک محصول از Products Basket را انتخاب و بهینه کنید: ارتقای مدل یا کد، افزودن تست، رفع مشکل داده یا مستندات، و push در ریپوی همان محصول. محصول با پایین‌ترین TRL یا محصولی که برای مقاله/مشتری نیاز دارد اولویت دارد.\n\nمعیار پذیرش: لینک commit یا PR، فهرست تغییرها و نتیجه‌ی تست (قبل و بعد) در توضیح تسک نوشته شود."}, {"key": "letters", "title": "نامه‌نگاری برای معرفی محصول جدید", "desc": "دست‌کم یک نامه برای معرفی محصول جدید به مشتری یا سازمان هدف بنویسید (Letters ← نامه‌ی جدید؛ سربرگ پترو پالاتوس برای ایران، پارسا اینت برای خارج). گیرنده باید با تحقیق مشخص باشد و محصول متناسب با نیاز او انتخاب شود.\n\nمعیار پذیرش: نامه در بایگانی نامه‌ها ثبت و فایل Word ساخته شده باشد؛ نام گیرنده و محصول در توضیح تسک بیاید."}, {"key": "newprod", "title": "توسعه‌ی محصول جدید تا TRL ۴ و بارگذاری در ریپوی اصلی", "desc": "یک محصول جدید را (از «محصولات پیشنهادی نو» یا پیشنهاد خودتان) تا سطح TRL ۴ توسعه دهید و در ریپوی اصلی بارگذاری کنید.\n\nTRL ۴ یعنی: ماژول‌های اصلی کار می‌کنند، تست خودکار دارند، با داده‌ی شبیه‌سازی یا نمونه در آزمایشگاه اعتبارسنجی شده‌اند (نه داده‌ی واقعی)، README و نمونه‌ی اجرا دارند. هر روز پیشرفت را commit کنید.\n\nمعیار پذیرش: لینک ریپو/commit، تست سبز و README؛ پس از TRL ۴ محصول را در سبد ثبت کنید."}];   // standing duties of every AI-team member, on top of the personal minimums set for individuals
-async function ensureCore(){   // every AI-team member always holds each core duty as a standing daily task (ids are deterministic, so repeated runs and two admins never duplicate)
-  const day=today(); if(!S.db||!isAdmin()||!["members","tasks"].every(k=>S.got.has(k))) return 0;
-  let n=0, now=new Date().toISOString();
-  for(const m of S.members){ if((m.team||"ai")!=="ai"||!isOfficeDay(m,day)) continue;
-    for(const d of AI_CORE){
-      if(S.tasks.some(t=>t.assignee===m.id&&t.core_key===d.key)) continue;
-      const id=`core_${m.id.slice(-6)}_${d.key}`.replace(/[^A-Za-z0-9_\-]/g,"_");
-      if(S.tasks.some(t=>t.id===id)) continue;
-      try{ await S.db.doc("tasks/"+id).set({title:d.title,desc:d.desc+"\n\n(وظیفه‌ی ثابت تیم هوش مصنوعی؛ تکرارشونده: پس از انجام، برنامه‌ریز در روز کاری بعد دوباره آن را باز می‌کند. جدا از حداقل‌هایی است که برای افراد تعریف شده است.)",assignee:m.id,created_by:S.me.id,team:"ai",priority:"high",due:day,status:"todo",type:"task",blocked:false,points:null,sprint:"",created:now,updated:now,repeat:"daily",core_key:d.key,auto:true}); n++; }catch(e){ console.error("core",id,e); } } }
-  return n;
-}
-const PLAN_LEVELS = {standard:["استاندارد (۱ تسک خودکار)",1],high:["بالا (۲ تسک خودکار)",2],intense:["شدید (۳ تسک خودکار)",3]};
-const PLAN_TEAM_DEPT = {finance:["fin"],admin:["hr","legal"],ai:["sales","it","prod"],content:["prod","sales"]};
-function planCandidates(m){
-  const out=[], day=today(), team=m.team||"ai", depts=PLAN_TEAM_DEPT[team]||[];
-  ERP_OPS.forEach(o=>{ const a=asgOf("erp_"+o.id)||{}, mine=a.doer===m.id, free=!a.doer&&depts.includes(o.d);
-    if((mine||free)&&erpDue(o).late) out.push({key:"erp_"+o.id,title:o.t,desc:o.x+"\n\nثبت انجام: ERP ← برنامه‌ی عملیات و واگذاری.",prio:mine?0:3,priority:"normal"}); });
-  Object.entries((S.trl&&S.trl.products)||{}).forEach(([pid,t])=>{ const a=asgOf("basket_"+pid)||{};
-    if(a.doer===m.id&&(t.sources||[]).some(x=>x.status==="not_downloaded")) out.push({key:"trl_"+pid,title:`دانلود داده‌ی واقعی و جانمایی در الگوریتم «${t.name||pid}»`,desc:"منابع داده و لینک‌ها در Products Basket ← «داده‌ی واقعی و ارتقای TRL» است؛ پس از دانلود وضعیت منبع و معیار اندازه‌گیری‌شده را ثبت کنید.",prio:1,priority:"high"}); });
-  if(team==="ai"||team==="admin"){ const t=(S.m.tenders||[]).filter(x=>ACTIVE.has(x.status)&&!owned(x.id)&&x.line!=="web"&&(x.deadline||"9999")>=day).sort((a,b)=>(a.deadline||"9999").localeCompare(b.deadline||"9999")||(b.keyword_score||0)-(a.keyword_score||0))[0];
-    if(t) out.push({key:"tn_"+t.id,title:`بررسی فرصت و برداشتن مسئولیت: ${String(t.title).slice(0,90)}`,desc:`${t.country||""} · مهلت ${t.deadline||"نامشخص"}\n${t.url||""}\nدر Market با «مسئولیت را می‌گیرم» بردارید و مرحله‌ی پیگیری را ثبت کنید.`,prio:2,priority:"normal"}); }
-  if(team==="admin"){ const a=(S.lettersArchive||[]).filter(archStale)[0];
-    if(a) out.push({key:"ar_"+a.id,title:`پیگیری نامه‌ی بی‌پاسخ: ${String(a.subject||"").slice(0,80)}`,desc:`گیرنده: ${a.recipient||"—"} · آخرین اقدام بیش از ۱۴ روز پیش. وضعیت و گام بعدی را در بایگانی نامه‌ها به‌روز کنید.`,prio:2,priority:"normal"}); }
-  if(team==="content"||team==="ai"){ const e=(S.m.events||[]).filter(x=>(x.start||"")>=day&&(x.start||"")<=addDays(day,30)&&!owned("ev_"+x.id)).sort((a,b)=>(a.start||"").localeCompare(b.start||""))[0];
-    if(e) out.push({key:"ev_"+e.id,title:`برنامه‌ریزی حضور در رویداد: ${e.name_fa||e.name}`,desc:`${e.start||""} · ${e.city||""}. نماینده و هدف حضور را مشخص و در Events مسئول را ثبت کنید.`,prio:3,priority:"normal"}); }
-  return out.sort((a,b)=>a.prio-b.prio);
-}
 async function runPlanner(force){
   if(!S.db||!isAdmin()) return;
-  const nc=await ensureCore();   // independent of the once-a-day guard below
-  if(nc&&force) toast(faNum(nc)+" وظیفه‌ی ثابت تیم هوش مصنوعی ساخته شد.");
   const cfg=S.planner||{}, day=today();
   if(!force&&(cfg.auto===false||cfg.last_run===day)) return;
   if(!["members","tasks"].every(k=>S.got.has(k))) return;
-  const level=(PLAN_LEVELS[cfg.level]||PLAN_LEVELS.high)[1], now=new Date().toISOString(), writes=[], busy=new Set();
-  let reopened=0, created=0;
+  const now=new Date().toISOString(), writes=[];
+  let reopened=0;
   for(const t of S.tasks){   // standing tasks repeat on their owner's office days once the last round is finished
     if(!t.repeat||!isDone(t)||(t.due||"")>=day) continue;
     const m=S.members.find(x=>x.id===t.assignee); if(!isOfficeDay(m,day)) continue;
-    const {id,...rest}=t; writes.push([`tasks/${id}`,{...rest,status:"todo",due:day,updated:now,runs:[...(t.runs||[]),{due:t.due,done:t.updated||""}].slice(-60)}]); busy.add(t.assignee); reopened++; }
-  for(const m of S.members){   // nobody is left without work: pick from what remains in the system
-    if(!isOfficeDay(m,day)||busy.has(m.id)||S.tasks.some(t=>t.assignee===m.id&&!isDone(t))) continue;
-    const have=new Set(S.tasks.filter(t=>t.assignee===m.id&&t.auto_key&&(t.created||"")>=addDays(day,-7)).map(t=>t.auto_key));
-    for(const c of planCandidates(m).filter(c=>!have.has(c.key)).slice(0,level)){
-      const id=`pl_${day}_${m.id.slice(-6)}_${c.key}`.replace(/[^A-Za-z0-9_\-]/g,"_").slice(0,150);
-      if(S.tasks.some(t=>t.id===id)) continue;
-      writes.push([`tasks/${id}`,{title:c.title,desc:c.desc+"\n\n(تسک خودکار برنامه‌ریز هوشمند: از کارهای باقی‌مانده‌ی سامانه و سطح انتظار مالک انتخاب شده است.)",assignee:m.id,created_by:S.me.id,team:m.team||"ai",priority:c.priority||"normal",due:day,status:"todo",type:"task",blocked:false,points:null,sprint:"",created:now,updated:now,auto:true,auto_key:c.key}]); created++; } }
+    const {id,...rest}=t; writes.push([`tasks/${id}`,{...rest,status:"todo",due:day,updated:now,runs:[...(t.runs||[]),{due:t.due,done:t.updated||""}].slice(-60)}]); reopened++; }
   for(const [path,data] of writes){ try{ await S.db.doc(path).set(data); }catch(e){ console.error("planner",path,e); } }
-  try{ await S.db.doc("settings/planner").set({...cfg,last_run:day,last_reopened:reopened,last_created:created,updated:now}); }catch(e){}
-  if(force) toast(`برنامه‌ریز اجرا شد: ${faNum(reopened)} تسک تکرارشونده باز شد، ${faNum(created)} تسک تازه ساخته شد.`);
+  try{ await S.db.doc("settings/planner").set({...cfg,last_run:day,last_reopened:reopened,updated:now}); }catch(e){}
+  if(force) toast(`${faNum(reopened)} تسک تکرارشونده باز شد.`);
 }
 VIEWS["erp.domains"] = () => {
   const d = (S.settings.domains && S.settings.domains.length) ? S.settings.domains : DOMAINS_DEFAULT;
@@ -1116,9 +1095,9 @@ VIEWS["bpms.home"] = () => {
     <div class="stack">
      ${toApprove.length?`<div class="card"><h3 style="margin:0 0 6px">منتظر تأیید شما (${faNum(toApprove.length)})</h3>${toApprove.map(t=>`<div class="row" style="gap:8px;align-items:center;padding:4px 0"><span style="flex:1"><b>${esc(t.title)}</b><br><span class="meta">${esc(memberName(t.assignee))}</span></span><button class="btn sm sig" data-act="task-st" data-id="${esc(t.id)}" data-st="approved">تأیید</button></div>`).join("")}</div>`:""}
      ${team.length?`<div class="card"><h3 style="margin:0 0 6px">وضعیت تیم</h3>${table(["نام","تسک باز","عقب‌افتاده"],team.map(x=>`<tr>${td("نام",`<a href="#" data-act="who-go" data-m="${esc(x.m.id)}">${esc(x.m.full_name||x.m.id)}</a>`,"t")}${td("باز",faNum(x.open.length))}${td("عقب‌افتاده",x.late?`<span class="p-bad">${faNum(x.late)}</span>`:"—")}</tr>`))}</div>`:""}
-     ${isAdmin()?`<div class="card"><h3 style="margin:0 0 6px">برنامه‌ریز هوشمند روزانه</h3><p class="meta">تسک‌های تکرارشونده هر روز کاری دوباره باز می‌شوند و کسی که تسک بازی ندارد از کارهای باقی‌مانده‌ی سامانه (پیگیری‌ها، داده‌ی واقعی، نامه‌های بی‌پاسخ، رویدادها، وظایف ERP) تسک می‌گیرد.</p>
-       <div class="row" style="gap:8px;align-items:center"><label class="meta">سطح انتظار <select data-pl="level">${Object.entries(PLAN_LEVELS).map(([k,[l]])=>`<option value="${k}"${(S.planner.level||"high")===k?" selected":""}>${esc(l)}</option>`).join("")}</select></label><label class="meta"><input type="checkbox" data-pl="auto"${S.planner.auto===false?"":" checked"}> اجرای خودکار هر روز</label><button class="btn sm sig" data-act="plan-run">اجرا همین حالا</button></div>
-       <p class="meta">${S.planner.last_run?`آخرین اجرا: ${faDate(S.planner.last_run)} · ${faNum(S.planner.last_reopened||0)} تکرار، ${faNum(S.planner.last_created||0)} تسک تازه`:"هنوز اجرا نشده است."}</p></div>`:""}
+     ${isAdmin()?`<div class="card"><h3 style="margin:0 0 6px">تسک‌های تکرارشونده</h3><p class="meta">فقط تسک‌هایی که خودتان «تکرارشونده» تعریف کرده‌اید پس از انجام، در روز کاری بعد دوباره باز می‌شوند. هیچ تسکی خودکار ساخته نمی‌شود.</p>
+       <div class="row" style="gap:8px;align-items:center"><label class="meta"><input type="checkbox" data-pl="auto"${S.planner.auto===false?"":" checked"}> بازشدن خودکار تسک‌های تکرارشونده هر روز</label><button class="btn sm sig" data-act="plan-run">بازکردن تکرارشونده‌ها همین حالا</button></div>
+       <p class="meta">${S.planner.last_run?`آخرین اجرا: ${faDate(S.planner.last_run)} · ${faNum(S.planner.last_reopened||0)} تسک تکرارشونده باز شد`:"هنوز اجرا نشده است."}</p></div>`:""}
      <div class="card"><h3 style="margin:0 0 8px">میان‌بر</h3><div class="row" style="gap:8px;flex-wrap:wrap"><button class="btn sig" data-act="report-new">ثبت گزارش امروز</button><button class="btn" data-act="task-new">تسک کامل جدید</button><button class="btn ghost" data-act="sub" data-k="myday">ورود و خروج</button><button class="btn ghost" data-act="sub" data-k="board">تخته‌ی اسکرام</button></div></div></div></div>`+
    `<details style="margin-top:12px"><summary>همه‌ی بخش‌های BPMS</summary><div class="grid2" style="margin-top:8px">`+
    grp("کار و تسک",[["tasks","فهرست تسک‌ها"],["backlog","بک‌لاگ و برنامه‌ریزی"],["sprints","اسپرینت‌ها"],["calendar","تقویم"]])+
@@ -1211,7 +1190,7 @@ VIEWS["basket.ideas"] = () => {
     <p><b>نیاز جهانی:</b> ${esc(x.need)} ${x.url?link(x.url,"منبع"):""}</p>
     <div class="grid2"><div><b>آنچه در سبد داریم</b><p class="meta">${esc(x.existing||"چیزی نیست؛ محصول تازه")}</p></div><div><b>آنچه باقی مانده</b><p class="meta">${esc(x.remaining||"")}</p></div></div>
     <p><b>اولین گام:</b> <span class="meta">${esc(x.first||"")}</span></p>
-    ${isAdmin()?`<button class="btn sm sig" data-act="bi-task" data-i="${i}">📥 ثبت در صف: اسکافلد و توسعه برای Claude</button>`:""}</div>`).join(""):'<p class="empty">هنوز فهرستی ثبت نشده است.</p>');
+    ${isAdmin()?`<button class="btn sm sig" data-act="bi-task" data-i="${i}">📥 ثبت در صف: اسکافلد و توسعه برای Claude</button>`:""}${asgCell("idea_"+hashKey(x.name),"توسعه‌ی محصول پیشنهادی: "+x.name,"basket")}</div>`).join(""):'<p class="empty">هنوز فهرستی ثبت نشده است.</p>');
 };
 // ---------- world products / patents / papers compared with our basket, and new-product proposals (settings/world_products)
 const WP_KIND = {product:"محصول",patent:"ثبت اختراع",paper:"مقاله"}, WP_AREA = {oil_gas:"نفت و گاز",aerospace:"هوا فضا",nuclear:"هسته‌ای",water:"آب",mining:"معدن",medical:"پزشکی"};
@@ -1930,7 +1909,7 @@ function schSupBlock(p){
   const warn=phd?`<div class="banner" style="margin:6px 0"><b>پیش از دریافت بورسیه:</b> مکاتبه با استاد راهنما و دریافت تأیید کتبی او لازم است؛ پروپوزال هم باید طبق قالب همین دانشگاه نوشته شود.</div>`:"";
   if(pr&&pr.na) return `<div style="margin-top:8px">${warn}<div class="banner" style="margin:6px 0;border-color:var(--muted);background:var(--sunken)"><b>وضعیت استاد و پروپوزال:</b> ${esc(pr.na)}</div>${pr.proposal?`<details style="margin-top:8px"><summary><b>پروپوزال پژوهشی (پیش‌نویس)</b></summary><textarea readonly style="min-height:420px;direction:ltr;text-align:left">${esc(pr.proposal)}</textarea></details>`:""}${pr.sop?`<details style="margin-top:8px"><summary><b>انگیزه‌نامه (SOP – پیش‌نویس)</b></summary><textarea readonly style="min-height:420px;direction:ltr;text-align:left">${esc(pr.sop)}</textarea></details>`:""}</div>`;
   if(!pr) return `<div style="margin-top:8px">${warn}${SCH_PROP[p.id]?"":`<p class="meta">استادان و ایمیل این دانشگاه هنوز آماده نشده است؛ در «تسک برای Claude» درخواست دهید.</p>`}</div>`;
-  const sup=(pr.supervisors||[]).map(s=>`<li><b>${esc(s.name)}</b> – ${esc(s.role||"")} · <span class="meta">${esc(s.area||"")}</span> ${s.url?link(s.url):""}</li>`).join("");
+  const sup=(pr.supervisors||[]).map((s,j)=>{ const t=((S.cvT||{})[p.id]||{})[s.name]; return `<li><b>${esc(s.name)}</b> – ${esc(s.role||"")} · <span class="meta">${esc(s.area||"")}</span> ${s.url?link(s.url):""}${t?`<details style="margin:4px 0 8px"><summary><b>رزومه‌ی اختصاصی برای ${esc(s.name)}</b> <span class="meta">(بر پایه‌ی حوزه‌ی او: ${esc(t.focus)})</span></summary><p class="meta" style="direction:ltr;text-align:left"><b>Headline:</b> ${esc(t.headline)}</p><p class="meta" style="direction:ltr;text-align:left"><b>Opening paragraph for the email / CV profile:</b> ${esc(t.pitch)}</p><ul style="direction:ltr;text-align:left">${(t.bullets||[]).map(b=>`<li>${esc(b)}</li>`).join("")}</ul><div class="row"><button class="btn sm sig" data-act="sup-cv" data-id="${esc(p.id)}" data-j="${j}">دریافت رزومه‌ی Word اختصاصی این استاد</button></div><p class="meta">برای هر استاد فقط همین رزومه‌ی اختصاصی ارسال شود؛ ارسال یک رزومه‌ی واحد پذیرفته نیست.</p></details>`:`<p class="meta" style="margin:2px 0">رزومه‌ی اختصاصی این استاد هنوز تهیه نشده؛ در «تسک برای Claude» درخواست دهید.</p>`}</li>`; }).join("");
   const em=(pr.emails||[]).map((e0,i)=>{ const e=effEmail(e0); return `<details style="margin:6px 0"><summary>${supPill(e)} ایمیل به ${esc(e.to_name)}${e.to_email?` ‹${esc(e.to_email)}›`:" (آدرس گیرنده را وارد کنید)"}${e.draft_url?` – <a href="${esc(e.draft_url)}" target="_blank" rel="noopener noreferrer">باز کردن درافت در Gmail</a>`:""}</summary><p class="meta">موضوع: ${esc(e.subject)}</p><textarea readonly style="min-height:260px;direction:ltr;text-align:left">${esc(e.body)}</textarea><div class="row" style="margin-top:6px;gap:8px;flex-wrap:wrap"><label class="meta">وضعیت: <select id="sst_${esc(p.id)}_${i}">${Object.entries(SUP_ST).map(([k,v])=>`<option value="${k}"${(e.status||"draft")===k?" selected":""}>${v[1]}</option>`).join("")}</select></label><input id="srs_${esc(p.id)}_${i}" value="${esc(e.result||"")}" placeholder="نتیجه / خلاصه‌ی پاسخ استاد" style="flex:1;min-width:220px"><button class="btn sm sig" data-act="sup-save" data-id="${esc(p.id)}" data-i="${i}">ثبت وضعیت</button>${e.at?`<span class="meta">آخرین به‌روزرسانی: ${esc(e.at)}</span>`:""}</div></details>`; }).join("");
   return `<details style="margin-top:8px"><summary><b>استاد راهنما، ایمیل و پروپوزال</b> – تهیه‌شده ${esc(pr.updated||"")} · ایمیل: ${["draft","sent","replied","declined"].map(k=>{const n=(pr.emails||[]).filter(e=>(effEmail(e).status||"draft")===k).length; return n?`${faNum(n)} ${SUP_ST[k][1]}`:"";}).filter(Boolean).join("، ")||"—"}</summary>${warn}
    <h4>استادان پیشنهادی (از صفحه‌های رسمی؛ علاقه‌مندی آن‌ها را خودشان تأیید کنند)</h4><ul>${sup}</ul>
@@ -2022,7 +2001,8 @@ const schOrder = (a,b) => { const t=new Date().toISOString().slice(0,10), ka=!a.
 function schList(page){
   const gm=gmNote();
   const list=SCH.filter(p=>schStatus(p)===page).filter(p=>match(p.uni,p.country,p.city,p.field,p.kind)).sort(schOrder);
-  return gm+`<p class="note"><b>شماره‌ی تماس برای همه‌ی ثبت‌نام‌ها:</b> فقط ${SCH_CONTACT}؛ کد تأیید و پیام واتس‌اپ نهادها به همین شماره‌ها می‌رسد. در ایمیل به استادان و همه‌ی مکاتبات، مدرک دکترای مدیریت کسب‌وکار یا DBA ذکر نمی‌شود.</p><p class="note">فهرست بورسیه‌های کامل ارشد و دکتری که شهریه را پوشش می‌دهند و حقوق ماهیانه دارند. مهلت‌ها تقریبی‌اند؛ پیش از اقدام در سایت رسمی تأیید شوند.</p>`+
+  const sr=S.sampleReply, srCard=sr?`<details class="card" style="margin:8px 0"><summary><b>پاسخ نمونه‌ی استاد (درس‌آموخته):</b> ${esc(sr.from||"")} – ${esc(sr.kind||"")}</summary><p class="meta">ایمیل ما فقط وقتی جواب می‌گیرد که رزومه و پروپوزال دقیقاً با حوزه‌ی همان استاد هماهنگ باشد؛ رزومه‌ی واحد برای همه‌ی استادان پذیرفته نیست.</p><textarea readonly style="min-height:200px;direction:ltr;text-align:left">${esc(sr.text||"")}</textarea><ul>${(sr.lessons||[]).map(x=>`<li>${esc(x)}</li>`).join("")}</ul></details>`:"";
+  return gm+srCard+`<p class="note"><b>شماره‌ی تماس برای همه‌ی ثبت‌نام‌ها:</b> فقط ${SCH_CONTACT}؛ کد تأیید و پیام واتس‌اپ نهادها به همین شماره‌ها می‌رسد. در ایمیل به استادان و همه‌ی مکاتبات، مدرک دکترای مدیریت کسب‌وکار یا DBA ذکر نمی‌شود.</p><p class="note">فهرست بورسیه‌های کامل ارشد و دکتری که شهریه را پوشش می‌دهند و حقوق ماهیانه دارند. مهلت‌ها تقریبی‌اند؛ پیش از اقدام در سایت رسمی تأیید شوند.</p>`+
    kpis(Object.entries(SCH_ST).map(([k,l])=>[l,faNum(SCH.filter(p=>schStatus(p)===k).length),false]))+
    (list.length?list.map(p=>schCard(p,page)).join(""):'<p class="empty">موردی در این صفحه نیست.</p>');
 }
@@ -2083,6 +2063,19 @@ async function buildCvDocx(m){
   const rels=items=>`<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">${items.map(([id,t,tg])=>`<Relationship Id="${id}" Type="${RELNS}/${t}" Target="${tg}"/>`).join("")}</Relationships>`;
   return zipStore([{name:"[Content_Types].xml",data:ct},{name:"_rels/.rels",data:rels([["rId1","officeDocument","word/document.xml"]])},{name:"word/document.xml",data:doc},{name:"word/styles.xml",data:styles},{name:"word/_rels/document.xml.rels",data:rels([["rIdSty","styles","styles.xml"]])}]);
 }
+function cvModelFor(pid,j){
+  const pr=(schState(pid)||{}).prop, s=((pr||{}).supervisors||[])[j], t=s&&((S.cvT||{})[pid]||{})[s.name]; if(!t) return null;
+  const base=cvModel(), prof=t.headline.replace(/^Tailored for [^:]+:\s*/,"");
+  const sec=[{h:"Profile",lines:[prof.charAt(0).toUpperCase()+prof.slice(1)]},{h:"Strengths Relevant to "+t.focus.charAt(0).toUpperCase()+t.focus.slice(1),lines:(t.bullets||[]).map(b=>"- "+b)}];
+  return {...base,sec:sec.concat(base.sec.filter(x=>x.h!=="Research Interests"))};
+}
+async function downloadSupCv(pid,j){
+  if(!S.downloads){ toast("دریافت فایل فقط داخل claude.ai فعال است."); return; }
+  const m=cvModelFor(pid,j); if(!m){ toast("رزومه‌ی اختصاصی این استاد هنوز تهیه نشده است."); return; }
+  const nm=((((schState(pid)||{}).prop||{}).supervisors||[])[j].name||"professor").replace(/[^A-Za-z0-9]+/g,"-").replace(/^-|-$/g,"");
+  try{ await S.downloads.save({filename:`Sohrabi-CV-${nm}-${today()}.docx`,data:new Blob([await buildCvDocx(m)],{type:ABS_DOCX})}); }
+  catch(err){ if(!err||err.code!=="declined"){ toast("ساخت یا دریافت فایل Word رزومه انجام نشد."); console.error(err); } }
+}
 async function downloadCv(){
   if(!S.downloads){ toast("دریافت فایل فقط داخل claude.ai فعال است."); return; }
   try{ await S.downloads.save({filename:`Mohammad-Parsa-Sohrabi-CV-${today()}.docx`,data:new Blob([await buildCvDocx(cvModel())],{type:ABS_DOCX})}); }
@@ -2090,7 +2083,7 @@ async function downloadCv(){
 }
 VIEWS["scholar.cv"]=schOnly(()=>{
   const m=cvModel(), pl=cvPlanned();
-  return `<div class="toolbar"><button class="btn sig" data-act="cv-docx">دریافت رزومه (Word)</button><button class="btn ghost" data-act="print-sheet" data-sel="#cvSheet2">چاپ / ذخیره PDF</button><button class="btn ghost" data-act="sch-profile">ویرایش مشخصات</button></div>
+  return `<div class="toolbar"><button class="btn sig" data-act="cv-docx">دریافت رزومه (Word)</button><button class="btn ghost" data-act="print-sheet" data-sel="#cvSheet2">چاپ / ذخیره PDF</button><button class="btn ghost" data-act="sch-profile">ویرایش مشخصات</button><a class="btn ghost" href="/_blob/81aff829064fea8def45278094dcc928" target="_blank" rel="noopener">نسخهٔ تأییدشده PDF (۲ نوامبر ۲۰۲۶)</a><a class="btn ghost" href="/_blob/441212a617735633d07e32c5dea634f0" target="_blank" rel="noopener">رزومه‌ی تأییدشده‌ی زیست‌پزشکی و ژنومیک (PDF)</a></div>
   <p class="note">این رزومه خودکار از «مشخصات و رزومه من» و فهرست مقالات هدف‌گذاری‌شده در تب Articles ساخته می‌شود (${faNum(pl.filter(x=>x.status!=="submitted").length)} مقاله در دست تهیه). مقالات فقط با وضعیت واقعی خود درج می‌شوند: «در دست تهیه» یعنی هنوز ارسال، پذیرفته یا منتشر نشده؛ پذیرش‌نشده را «منتشرشده» ننویسید. با تغییر وضعیت در تب مقالات، رزومه خودکار به‌روز می‌شود.</p>`+cvHtml(m);
 });
 function schProfileForm(){
@@ -2823,16 +2816,16 @@ VIEWS["letters.hpc"] = () => {
   return `<p class="note">محصول <b>PetroEnergy</b> (کنترل مصرف سوخت، بهینه‌سازی انرژی، هوشمندسازی خط تولید و داشبورد مدیریتی) برای شرکت‌های هلدینگ خلیج فارس تعریف شده و تا <b>TRL 4</b> با داده‌ی ساختگی توسعه یافته است؛ هر شرکت یک پیکربندی و یک داشبورد نمونه دارد. «ساخت نامه» متن را با سربرگ <b>پترو پالا توس</b> در «نامه‌ی جدید» باز می‌کند. فهرست شرکت‌ها از منابع عمومی است و با هلدینگ باید تأیید شود. <a href="${esc((mine&&mine.github)||HPC_REPO)}" target="_blank" rel="noopener">مخزن محصول</a>.</p>
    <div class="banner bad"><b>ملاحظه‌ی تحریم:</b> هلدینگ خلیج فارس و چند زیرمجموعه‌اش در فهرست OFAC (۲۰۱۹) هستند. این کار فقط توسط شرکت ایرانی پترو پالاتوس انجام شود و پارسا اینت (استانبول) نقشی نداشته باشد؛ پیش از همکاری مشورت حقوقی بگیرید.</div>`+
    kpis([["شرکت زیرمجموعه",faNum(HPC_PLANTS.length)],["دارای محصول دوقلوی فرایند",faNum(HPC_PLANTS.filter(x=>x[2]).length)],["پیکربندی PetroEnergy",faNum(HPC_PLANTS.length)],["سطح بلوغ","TRL 4"]])+
-   table(["شرکت","محصول از قبل","محصول PetroEnergy","داشبورد نمونه",""],list.map(([k,n,ex])=>`<tr>${td("شرکت",`<b>${esc(n)}</b>`,"t")}${td("از قبل",ex?`<span class="pill p-ok">${esc(refProdName(ex))}</span>`:"—")}${td("PetroEnergy",'<span class="pill p-info">TRL 4 · داده‌ی ساختگی</span>')}${td("داشبورد",link(`${HPC_REPO}/reports/${k}.html`,"نمونه"))}${td("",`<button class="btn sm sig" data-act="hpc-letter" data-id="${esc(k)}">ساخت نامه (سربرگ پترو پالا توس)</button>`)}</tr>`),"شرکتی با این جست‌وجو نیست.")+
+   table(["شرکت","محصول از قبل","محصول PetroEnergy","داشبورد نمونه",""],list.map(([k,n,ex])=>`<tr>${td("شرکت",`<b>${esc(n)}</b>`,"t")}${td("از قبل",ex?`<span class="pill p-ok">${esc(refProdName(ex))}</span>`:"—")}${td("PetroEnergy",'<span class="pill p-info">TRL 4 · داده‌ی ساختگی</span>')}${td("داشبورد",link(`${HPC_REPO}/reports/${k}.html`,"نمونه"))}${td("",`<button class="btn sm sig" data-act="hpc-letter" data-id="${esc(k)}">ساخت نامه (سربرگ پترو پالا توس)</button>`+asgCell("hpc_"+k,"نامه و پیگیری: "+n,"letters"))}</tr>`),"شرکتی با این جست‌وجو نیست.")+
    `<h3>پتروشیمی‌هایی که پیش‌تر محصول و مخزن دارند</h3><p class="note">این شرکت‌ها در محصولات موجود سبد نام برده شده‌اند؛ عضویتشان در هلدینگ در جست‌وجوی عمومی تأیید نشد و باید با هلدینگ روشن شود. نامه‌ی آن‌ها همان قالب با اشاره‌ی صریح به محصول موجود است.</p>`+
-   table(["شرکت","محصول موجود",""],HPC_OTHERS.map(([n,pid])=>`<tr>${td("شرکت",`<b>${esc(n)}</b>`,"t")}${td("محصول",esc(refProdName(pid)))}${td("",`<button class="btn sm ghost" data-act="hpc-letter" data-id="other:${esc(n)}|${esc(pid)}">ساخت نامه</button>`)}</tr>`));
+   table(["شرکت","محصول موجود",""],HPC_OTHERS.map(([n,pid])=>`<tr>${td("شرکت",`<b>${esc(n)}</b>`,"t")}${td("محصول",esc(refProdName(pid)))}${td("",`<button class="btn sm ghost" data-act="hpc-letter" data-id="other:${esc(n)}|${esc(pid)}">ساخت نامه</button>`+asgCell("hpco_"+hashKey(n),"نامه و پیگیری: "+n,"letters"))}</tr>`));
 };
 VIEWS["letters.refinery"] = () => {
   const list=REFINERIES.filter(r=>match(r.name,r.city,REF_TYPES[r.t].n));
   return `<p class="note">برای هر پالایشگاه پیشنهاد هوشمندسازی خط تولید و داشبورد صنعتی متناسب با ساختار آن نوشته شده است، با تمرکز بر بهینه‌سازی مصرف سوخت و کنترل انرژی. «ساخت نامه» متن را در «نامه‌ی جدید» با سربرگ <b>پترو پالا توس</b> باز می‌کند تا ویرایش، امضا و فایل Word بگیرید. ظرفیت‌ها ارقام گرد منابع عمومی‌اند (بین منابع فرق دارند) و فهرست واحدها بر پایه‌ی نوع پالایشگاه است؛ هر دو را با خود پالایشگاه تأیید کنید. نام مدیرعامل در نامه ننوشته شده است.</p>`+
    kpis([["پالایشگاه",faNum(REFINERIES.length)],["تبدیلی",faNum(REFINERIES.filter(r=>r.t==="conv").length)],["ساده/نیمه‌تبدیلی",faNum(REFINERIES.filter(r=>r.t==="simple").length)],["میعانات گازی",faNum(REFINERIES.filter(r=>r.t==="cond").length)]])+
    table(["پالایشگاه","ظرفیت (تقریبی)","نوع و واحدهای رایج","تمرکز سوخت و انرژی","داشبورد پیشنهادی",""],list.map(r=>{ const T=REF_TYPES[r.t];
-    return `<tr>${td("پالایشگاه",`<b>${esc(r.name)}</b><br><span class="meta">${esc(r.city)}</span>${r.note?`<br><span class="meta">${esc(r.note)}</span>`:""}`,"t")}${td("ظرفیت",esc(r.cap))}${td("نوع",`${esc(T.n)}<br><span class="meta">${esc(T.units)}</span>`)}${td("سوخت و انرژی",`<ul style="margin:0;padding-inline-start:16px">${T.fuel.map(x=>`<li>${esc(x)}</li>`).join("")}</ul>`)}${td("داشبورد",`<ul style="margin:0;padding-inline-start:16px">${T.dash.map(x=>`<li>${esc(x)}</li>`).join("")}</ul><span class="meta">محصولات: ${esc(T.prods.map(refProdName).join("، "))}</span>`)}${td("",`<button class="btn sm sig" data-act="ref-letter" data-id="${esc(r.id)}">ساخت نامه (سربرگ پترو پالا توس)</button><details><summary class="meta">متن نامه</summary><pre style="white-space:pre-wrap;font:inherit;max-width:420px">${esc(refineryLetter(r).body)}</pre></details>`)}</tr>`}),"پالایشگاهی با این جست‌وجو نیست.");
+    return `<tr>${td("پالایشگاه",`<b>${esc(r.name)}</b><br><span class="meta">${esc(r.city)}</span>${r.note?`<br><span class="meta">${esc(r.note)}</span>`:""}`,"t")}${td("ظرفیت",esc(r.cap))}${td("نوع",`${esc(T.n)}<br><span class="meta">${esc(T.units)}</span>`)}${td("سوخت و انرژی",`<ul style="margin:0;padding-inline-start:16px">${T.fuel.map(x=>`<li>${esc(x)}</li>`).join("")}</ul>`)}${td("داشبورد",`<ul style="margin:0;padding-inline-start:16px">${T.dash.map(x=>`<li>${esc(x)}</li>`).join("")}</ul><span class="meta">محصولات: ${esc(T.prods.map(refProdName).join("، "))}</span>`)}${td("",`<button class="btn sm sig" data-act="ref-letter" data-id="${esc(r.id)}">ساخت نامه (سربرگ پترو پالا توس)</button><details><summary class="meta">متن نامه</summary><pre style="white-space:pre-wrap;font:inherit;max-width:420px">${esc(refineryLetter(r).body)}</pre></details>`+asgCell("ref_"+r.id,"نامه و پیگیری پالایشگاه: "+r.name,"letters"))}</tr>`}),"پالایشگاهی با این جست‌وجو نیست.");
 };
 
 const memberOpts = () => Object.fromEntries([["","—"],...S.members.map(m=>[m.id,m.full_name])]);
@@ -2878,7 +2871,7 @@ const opsSec = o => { const pr=S.products.find(x=>x.name===o.product_name||x.id=
 VIEWS["patent.ops"] = () => {
   const list=S.opsList.filter(o=>match(o.product_name,o.claim,o.verdict)).filter(o=>secOn("po",opsSec(o))).sort((a,b)=>(b.date||"").localeCompare(a.date||""));
   return `<p class="note">فهرست روزانه‌ی محصولاتی که با ارجاع به جست‌وجوی سابقه، قابلیت ثبت اختراع دارند. ستون «منابع» شواهد جست‌وجو را نشان می‌دهد.</p>`+secBar("po")+
-  table(["تاریخ","محصول","ادعای قابل ثبت","سوابق مشابه یافت‌شده","نتیجه","منابع"], list.map(o=>`<tr>${td("تاریخ",faDate(o.date))}${td("محصول",esc(o.product_name)+" "+secPill(opsSec(o)),"t")}${td("ادعا",esc(o.claim))}${td("سوابق",esc(o.prior_art||"—"))}${td("نتیجه",`<span class="pill ${o.verdict_code==="patentable"?"p-ok":o.verdict_code==="unclear"?"p-warn":"p-bad"}">${esc(o.verdict)}</span>`)}${td("منابع",(o.sources||[]).map((s,i)=>link(s,"منبع "+(i+1))).join(" · "))}</tr>`),"هنوز جست‌وجوی روزانه انجام نشده است؛ نخستین نتایج پس از اجرای ایجنت با کلید Claude نمایش داده می‌شود.");
+  table(["تاریخ","محصول","ادعای قابل ثبت","سوابق مشابه یافت‌شده","نتیجه","منابع","واگذاری"], list.map(o=>`<tr>${td("تاریخ",faDate(o.date))}${td("محصول",esc(o.product_name)+" "+secPill(opsSec(o)),"t")}${td("ادعا",esc(o.claim))}${td("سوابق",esc(o.prior_art||"—"))}${td("نتیجه",`<span class="pill ${o.verdict_code==="patentable"?"p-ok":o.verdict_code==="unclear"?"p-warn":"p-bad"}">${esc(o.verdict)}</span>`)}${td("منابع",(o.sources||[]).map((s,i)=>link(s,"منبع "+(i+1))).join(" · "))}${td("واگذاری",asgCell("pops_"+hashKey((o.product_name||"")+(o.claim||"")),"بررسی ثبت اختراع: "+(o.product_name||""),"patent"))}</tr>`),"هنوز جست‌وجوی روزانه انجام نشده است؛ نخستین نتایج پس از اجرای ایجنت با کلید Claude نمایش داده می‌شود.");
 };
 VIEWS["patent.products"] = () => table(["محصول","TRL","حوزه","گیت‌هاب","اختراع‌های ما","قابلیت ثبت"], S.products.filter(p=>match(p.name)).map(p=>`<tr>${td("محصول",esc(p.name),"t")}${td("TRL",`<span class="mono">${esc(p.trl??"—")}</span>`)}${td("حوزه",esc((p.domains||[]).map(d=>LABELS[d]||d).join("، ")))}${td("گیت‌هاب",p.github?ghLink(p.github,"ریپو"):"—")}${td("اختراع",faNum(S.patents.filter(x=>x.product===p.id).length))}${td("قابلیت",esc((p.patentability||"در انتظار جست‌وجو").slice(0,140)))}</tr>`),"محصولی همگام نشده است.");
 
@@ -4015,7 +4008,9 @@ document.addEventListener("click", async e => {
     case "register": registerForm(); break;
     case "print-sheet": printSheet(b.dataset.sel); break;
     case "cv-docx": await downloadCv(); break;
+    case "sup-cv": await downloadSupCv(b.dataset.id,Number(b.dataset.j)); break;
     case "up-done": await upDone(b.dataset.id); break;
+    case "lead-sort": S.leadSort=b.dataset.k; render(); break;
     case "regrade": await regradeRecent(3); break;
     case "dl-add": { const key=b.dataset.key, el=document.getElementById("dl_"+key), v=(el&&el.value||"").trim(); if(!v) break; let name="",url=v; if(v.includes("|")){ const k=v.indexOf("|"); name=v.slice(0,k).trim(); url=v.slice(k+1).trim(); }
       if(!/^https?:\/\//i.test(url)){ toast("لینک باید با http یا https شروع شود."); break; }
@@ -4195,5 +4190,3 @@ if(mq&&mq.addEventListener)mq.addEventListener('change',render);
 if(typeof MutationObserver!=='undefined')new MutationObserver(render).observe(root,{attributes:true,attributeFilter:['data-theme']});
 })();</script>
 <!--claude-mermaid-runtime-end-->
-</body></html>
-</body></html>
