@@ -256,7 +256,7 @@ function setPath(key, val){ const [a,b]=key.split("."); if(b) S[a][b]=val; else 
 function subscribe(){
   for(const [path,key] of Object.entries(COLS)){
     S.db.collection(path).onSnapshot(snap => {
-      if(key==="members") S.roster = snap.docs.map(d => ({id:d.id, full_name:d.data().full_name||d.id, team:d.data().team||"ai"}));   // names and team only: the picker for taking or handing over items
+      if(key==="members" && isAdmin()) S.roster = snap.docs.map(d => ({id:d.id, full_name:d.data().full_name||d.id, team:d.data().team||"ai"}));   // names and team only: the picker for taking or handing over items
       setPath(key, privateRows(key, snap.docs.map(d => ({id:d.id, ...d.data()}))));
       S.loaded = true; S.got.add(key); render(); if(key==="members") maybeWelcome();
     }, () => {});
@@ -565,7 +565,7 @@ const asgOf = key => (S.asg||{})[key];
 const asgMine = mod => Object.entries(S.asg||{}).filter(([k,a])=>a.mod===mod&&a.doer&&a.doer===S.me.id).map(([k,a])=>({key:k,...a}));
 const rosterName = id => ((S.roster||[]).find(r=>r.id===id)||{}).full_name || memberName(id);
 const asgWho = (id,a) => id===S.me.id?"شما":(isAdmin()||!a||a.doer===S.me.id||a.selector===S.me.id)?rosterName(id):"همکار";   // outsiders to an assignment see no names
-const asgAdmin = mod => mod==="basket" ? !!S.me.isOwner : true;   // every member can take an item for themselves or hand it to someone else; basket products stay owner-only
+const asgAdmin = mod => mod==="basket" ? !!S.me.isOwner : isAdmin();   // admins hand items to anyone; every member can take an item for themselves; basket products stay owner-only
 const asgLocked = a => !!(a && a.doer);   // assigned: closed to everyone but the doer and the one who assigned it
 const asgCan = (a,mod) => asgLocked(a) ? (a.doer===S.me.id || a.selector===S.me.id) : (asgAdmin(mod) || mod!=="basket");
 // message for the doer; Telegram and e-mail open prefilled in the assigner's own app (the page holds no bot token or mail access)
@@ -581,7 +581,7 @@ function asgNotifyBtns(a){
 function asgCell(key,title,mod){
   const a=asgOf(key)||{}, can=asgCan(a,mod);
   const body=a.doer?`<div class="meta">انجام‌دهنده: <b>${esc(asgWho(a.doer,a))}</b>${a.selector&&a.selector!==a.doer?` · واگذارکننده: ${esc(asgWho(a.selector,a))}`:" · انتخاب شخصی"}</div>${a.task?`<details><summary class="meta">شرح تسک</summary><span style="white-space:pre-wrap">${esc(a.task)}</span></details>`:`<span class="meta">شرح تسک ثبت نشده</span>`}`:"";
-  const btn=can?`<button class="btn sm ghost" data-act="asg" data-id="${esc(key)}" data-m="${esc(mod)}" data-t="${esc(title)}">${a.doer?(a.selector===S.me.id&&a.doer!==S.me.id?"ویرایش / لغو واگذاری":"ویرایش / لغو"):(mod==="basket"?"خودم انجام می‌دهم":"برای خودم بردار یا واگذار کن")}</button>`:"";
+  const btn=can?`<button class="btn sm ghost" data-act="asg" data-id="${esc(key)}" data-m="${esc(mod)}" data-t="${esc(title)}">${a.doer?(a.selector===S.me.id&&a.doer!==S.me.id?"ویرایش / لغو واگذاری":"ویرایش / لغو"):(asgAdmin(mod)?"برای خودم بردار یا واگذار کن":"خودم انجام می‌دهم")}</button>`:"";
   return `<div class="asg" style="margin-top:4px">${body}${btn}${asgNotifyBtns(a)}</div>`;
 }
 // A taken or handed-over item also becomes a real task in BPMS (Today / Scrum board) for the doer; handing it over again moves the task, releasing it removes the task.
