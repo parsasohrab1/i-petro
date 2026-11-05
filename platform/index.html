@@ -173,7 +173,7 @@ const SUBS = {
   erp:[["ops","برنامه‌ی عملیات و واگذاری"],["domains","حوزه‌های فعالیت"],["products","توسعه‌ی محصول هوشمند"],["people","نیروی انسانی"],["finance","مالی"],["clients","مشتریان و قراردادها"],["backup","پشتیبان‌گیری"]],
   bpms:[["home","خانه‌ی BPMS"],["contacts","مخاطبین و ارتباط"],["myday","روز من"],["mind","ذهن‌نگار (آزمون خصوصی)"],["board","تخته‌ی اسکرام"],["backlog","بک‌لاگ و برنامه‌ریزی"],["sprints","اسپرینت‌ها"],["tasks","فهرست تسک‌ها"],["reports","گزارش عملکرد"],["rarchive","بایگانی گزارش‌ها"],["teams","تیم‌ها"],["process","فرایندها"],["calendar","تقویم"],["members","اعضا و ثبت‌نام"],["nda","قرارداد محرمانگی"],["training","فرم آموزش"]],
   letters:[["new","نامه‌ی جدید (ساخت فایل Word)"],["refinery","پالایشگاه‌ها"],["hpc","پتروشیمی‌های خلیج فارس"],["pp","نامه‌های پترو پالاتوس"],["sosh","نامه‌های سوشیانت"],["sec_med","نامه‌های پزشکی"],["archive","همه‌ی نامه‌ها"]],
-  scholar:[["applied","اقدام‌شده و در دست بررسی"],["human","مسئول انسانی"],["doing","در دست اقدام"],["todo","اقدام‌نشده"],["profile","مشخصات و رزومه من"],["cv","رزومه محمد پارسا سهرابی"]],
+  scholar:[["applied","اقدام‌شده و در دست بررسی"],["human","مسئول انسانی"],["doing","در دست اقدام"],["todo","اقدام‌نشده"],["target","فهرست هدف: AI · CS · IT · مدیریت"],["profile","مشخصات و رزومه من"],["cv","رزومه محمد پارسا سهرابی"]],
   articles:[["applied","اقدام‌شده و در دست بررسی"],["doing","در دست اقدام"],["todo","اقدام‌نشده"],["product","محصول ویژه‌ی مقاله"],["claude","تسک برای Claude"],["evidence","شواهد و داده‌ی واقعی"],["submit","ثبت چکیده و ثبت‌نام (مسئول انسانی)"],["list","فهرست کامل"],["pipe","خط لوله تا ویزا"],["mail","مسیر ایمیل: ثبت · تاییدیه · مقاله کامل"],["fees","هزینه ورودی و ارائه آنلاین"],["ready","آمادگی ثبت (۶ معیار)"],["upload","آپلود داده‌ها"],["access","دسترسی افراد"]],
   patent:[["home","پتنت‌ها"],["human","مسئول انسانی"],["ops","فرصت‌های ثبت اختراع"],["products","محصولات ریپو"]]
 };
@@ -2084,6 +2084,19 @@ async function downloadCv(){
   try{ await S.downloads.save({filename:`Mohammad-Parsa-Sohrabi-CV-${today()}.docx`,data:new Blob([await buildCvDocx(cvModel())],{type:ABS_DOCX})}); }
   catch(err){ if(!err||err.code!=="declined"){ toast("ساخت یا دریافت فایل Word رزومه انجام نشد."); console.error(err); } }
 }
+
+// Target list: AI, computer science, IT and business management; master and PhD; no Asia (Turkey, Gulf, Japan, Korea, Singapore), China or Russia.
+const SCH_TARGET = ["daad_epos", "daad_phd", "erasmus", "si", "hungary", "eth", "eiffel", "gates", "chevening", "tum", "austria", "norway", "edinburgh", "netherlands", "crick", "commonwealth", "eskas", "aus_awards", "monash", "auckland", "melbourne", "decodes", "derby_ai_phd", "ucl_dla", "imperial_president", "imperial_ada", "kcl_hri", "oxford_clarendon", "oxford_ellison", "ukri_dtp", "cranfield_agentic", "ellis", "elle_msca", "mpi_eth_cls", "st_gallen", "mps_bioai", "mpi_inf", "eth_robotics", "ucph_phd", "ucph_msca_ai_reg", "dtu_phd", "ca_admission", "mila", "vector_gsp", "nvidia_fellow", "weidenfeld", "emjm_imaging", "maia", "kingston_bs", "kingston_niloufar", "imperial_bs", "liverpool_ms", "bristol_bs", "edinburgh_bs", "ambs", "imprs_is", "dkfz_ds_health", "erfurt"];
+const SCH_TARGET_WEAK = new Set(["weidenfeld", "daad_epos", "erfurt", "crick", "kcl_hri", "decodes"]);   // weaker fit with the fields
+VIEWS["scholar.target"]=schTeam(()=>{
+  const list=SCH_TARGET.map(id=>SCH.find(p=>p.id===id)).filter(Boolean).filter(p=>match(p.uni,p.country,p.field,p.kind));
+  const t=today(), key=p=>p.deadline||"9999", open=list.filter(p=>!p.deadline||p.deadline>=t).sort((a,b)=>key(a).localeCompare(key(b))), gone=list.filter(p=>p.deadline&&p.deadline<t).sort((a,b)=>key(a).localeCompare(key(b)));
+  const row=p=>{ const s=schStatus(p), tk=schTaker(p), pill=s==="applied"?"p-ok":s==="doing"?"p-warn":"p-mute";
+    return `<tr><td class="t">${esc(p.uni)}${SCH_TARGET_WEAK.has(p.id)?` <span class="pill p-warn" title="تناسب کمتر با رشته‌ها">⚠</span>`:""}</td><td>${esc(p.country)}</td><td>${p.levels.map(l=>SCH_LV[l]).join(" / ")}</td><td>${esc(p.field)}</td><td>${p.deadline?faDate(p.deadline):"مستمر / نامشخص"}</td><td><span class="pill ${pill}">${SCH_ST[s]}</span>${tk?` <span class="meta">${esc(rosterName(tk))}</span>`:""}</td><td><button class="btn sm ghost" data-act="sub" data-k="${esc(s)}">کارت در تب «${SCH_ST[s]}»</button></td></tr>`; };
+  const tbl=(rows,title)=>`<h3>${title} (${faNum(rows.length)})</h3><div class="tablewrap rows"><table><thead><tr><th>دانشگاه / برنامه</th><th>کشور</th><th>مقطع</th><th>رشته</th><th>مهلت</th><th>وضعیت</th><th></th></tr></thead><tbody>${rows.map(row).join("")}</tbody></table></div>`;
+  return `<h2>فهرست هدف: هوش مصنوعی، علوم کامپیوتر، IT و مدیریت کسب‌وکار</h2><p class="note">مقاطع ارشد و دکتری؛ بدون آسیا (ترکیه، عربستان، قطر، ژاپن، کره، سنگاپور)، چین و روسیه. علامت ⚠ یعنی تناسب کمتر با رشته‌ها. مهلت‌ها تقریبی‌اند و باید در سایت رسمی تأیید شوند. وضعیت و برداشتن تسک از همان تب‌های بورسیه تغییر می‌کند.</p>`+
+   kpis([["کل فهرست",faNum(list.length),false],["مهلت باز",faNum(open.length),false],["مهلت گذشته",faNum(gone.length),false]])+tbl(open,"مهلت باز")+tbl(gone,"مهلت گذشته");
+});
 VIEWS["scholar.cv"]=schOnly(()=>{
   const m=cvModel(), pl=cvPlanned();
   return `<div class="toolbar"><button class="btn sig" data-act="cv-docx">دریافت رزومه (Word)</button><button class="btn ghost" data-act="print-sheet" data-sel="#cvSheet2">چاپ / ذخیره PDF</button><button class="btn ghost" data-act="sch-profile">ویرایش مشخصات</button><a class="btn ghost" href="/_blob/81aff829064fea8def45278094dcc928" target="_blank" rel="noopener">نسخهٔ تأییدشده PDF (۲ نوامبر ۲۰۲۶)</a><a class="btn ghost" href="/_blob/441212a617735633d07e32c5dea634f0" target="_blank" rel="noopener">رزومه‌ی تأییدشده‌ی زیست‌پزشکی و ژنومیک (PDF)</a></div>
