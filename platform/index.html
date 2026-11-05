@@ -602,6 +602,8 @@ async function asgSyncTask(key,title,mod,doer,selector,text){
     await S.db.doc("tasks/"+tid).set({title,desc:(text||"")+(text?"\n\n":"")+`(از بخش «${MODULES.find(x=>x[0]===mod)?.[1]||mod}» برداشته یا واگذار شد؛ واگذارکننده: ${rosterName(selector)||"—"}.)`,assignee:doer,created_by:selector,team:m.team||"ai",priority:"normal",due:old&&old.assignee===doer&&old.due?old.due:addDays(today(),3),status:old&&old.assignee===doer?old.status:"todo",type:"task",blocked:false,points:null,sprint:old?old.sprint||"":"",created:old?old.created||now:now,updated:now,asg_key:key,asg_mod:mod,...cx});
   }catch(e){ console.error("asg task",e); }
 }
+// One scholarship at a time: a person who holds a scholarship cannot take another until it is marked as applied (registration finished).
+const schActiveFor = (who,exceptKey) => Object.entries(S.asg||{}).filter(([k,a])=>a.mod==="scholar"&&a.doer===who&&k!==exceptKey).map(([k])=>SCH.find(p=>"sch_"+p.id===k)).filter(p=>p&&schStatus(p)!=="applied");
 function asgForm(key,title,mod){
   const a=asgOf(key)||{}; if(!asgCan(a,mod)){ toast("این مورد واگذار شده است؛ فقط انجام‌دهنده یا واگذارکننده می‌تواند آن را تغییر یا لغو کند"); return; }
   const admin=asgAdmin(mod) && (!a.doer || a.selector===S.me.id);
@@ -611,6 +613,8 @@ function asgForm(key,title,mod){
   fields.push({k:"task",label:"شرح تسک (انجام‌دهنده و مدیر می‌توانند بنویسند)",type:"textarea",value:a.task||""});
   openForm({title:"انتخاب / واگذاری: "+title,fields,values:{},onSave:async o=>{
     if(!o.doer){ if(a.doer){ await remove(`assign/${key}`); await asgSyncTask(key,title,mod,"",S.me.id,""); } return true; }
+    if(mod==="scholar"&&o.doer&&o.doer!==a.doer){ const act=schActiveFor(o.doer,key);
+      if(act.length&&!(S.me.isOwner&&confirm(rosterName(o.doer)+" هنوز بورسیه‌ی «"+act[0].uni+"» را تمام نکرده است. با این حال واگذار شود؟"))){ toast((o.doer===S.me.id?"شما":rosterName(o.doer))+" بورسیه‌ی «"+act[0].uni+"» را در دست دارد؛ تا ثبت‌نام نهایی آن (اقدام‌شده) انجام نشود، بورسیه‌ی دیگری قابل دریافت نیست."); return false; } }
     const now=new Date().toISOString(), same=a.doer===o.doer;
     const ok=await save(`assign/${key}`,{mod,title,doer:o.doer,selector:(same&&a.selector)||S.me.id,task:o.task||"",
       log:[...(a.log||[]),{at:now,by:S.me.id,note:same?"شرح تسک ویرایش شد":(o.doer===S.me.id?"انتخاب شخصی":"واگذار شد")}].slice(-30),updated:now,updated_by:S.me.id},(o.doer!==S.me.id?"ثبت شد؛ در سامانه برای انجام‌دهنده اعلان رفت. برای تلگرام یا ایمیل از دکمه‌های کنار ردیف استفاده کنید.":"ثبت شد"));
@@ -1993,7 +1997,7 @@ function schCard(p,page){
     : page==="doing"?(schTaker(p)?"":`<button class="btn sm ghost" data-act="sch-set" data-id="${esc(p.id)}" data-st="todo">بازگشت به اقدام‌نشده</button>`)
     : `<button class="btn sm ghost" data-act="sch-set" data-id="${esc(p.id)}" data-st="doing">بازگردانی به در دست اقدام</button>`;
   return `<div class="card" style="margin-bottom:12px">
-  <div class="row" style="align-items:flex-start;gap:10px;flex-wrap:wrap"><h3 style="flex:1;margin:0;min-width:220px">${esc(p.uni)}</h3>${schTaker(p)?`<span class="pill p-ok" title="این بورسیه برداشته شده و برای دیگران بسته است">${schTaker(p)===S.me.id?"شما این بورسیه را برداشته‌اید":esc(rosterName(schTaker(p)))+" این بورسیه را برداشته است"}</span>`:""}${asgCell("sch_"+p.id,p.uni,"scholar")}${p.levels.map(l=>`<span class="pill p-mute">${SCH_LV[l]}</span>`).join("")}${ch?`<span class="pill ${ch.pct>=55?"p-ok":"p-mute"}" title="تخمین ساده بر اساس مشخصات شما">شانس من: ${esc(ch.label)} (${faNum(ch.pct)}٪)</span>`:`<span class="pill p-mute">شانس من: ابتدا مشخصات را کامل کنید</span>`}</div>
+  <div class="row" style="align-items:flex-start;gap:10px;flex-wrap:wrap"><h3 style="flex:1;margin:0;min-width:220px">${esc(p.uni)}</h3>${(!schTaker(p)&&schActiveFor(S.me.id,"sch_"+p.id).length)?`<span class="pill p-warn" title="هر نفر هم‌زمان فقط یک بورسیه">شما «${esc(schActiveFor(S.me.id,"sch_"+p.id)[0].uni)}» را در دست دارید؛ تا ثبت‌نام نهایی آن، بورسیه‌ی دیگری برنمی‌دارید</span>`:""}${schTaker(p)?`<span class="pill p-ok" title="این بورسیه برداشته شده و برای دیگران بسته است">${schTaker(p)===S.me.id?"شما این بورسیه را برداشته‌اید":esc(rosterName(schTaker(p)))+" این بورسیه را برداشته است"}</span>`:""}${asgCell("sch_"+p.id,p.uni,"scholar")}${p.levels.map(l=>`<span class="pill p-mute">${SCH_LV[l]}</span>`).join("")}${ch?`<span class="pill ${ch.pct>=55?"p-ok":"p-mute"}" title="تخمین ساده بر اساس مشخصات شما">شانس من: ${esc(ch.label)} (${faNum(ch.pct)}٪)</span>`:`<span class="pill p-mute">شانس من: ابتدا مشخصات را کامل کنید</span>`}</div>
   <table style="width:100%;margin-top:6px"><tbody>
   <tr><td style="width:26%;color:var(--muted)">رشته‌ی درسی</td><td>${esc(p.field)}</td></tr>
   <tr><td style="color:var(--muted)">کشور و شهر</td><td>${esc(p.country)} – ${esc(p.city)}</td></tr>
@@ -2007,7 +2011,7 @@ function schCard(p,page){
    <div class="grid2" style="margin-top:8px"><div><h4>Claude انجام می‌دهد</h4>${items.filter(i=>i.by==="ai").map(row).join("")}</div><div><h4>خودتان باید انجام دهید</h4>${items.filter(i=>i.by==="me").map(row).join("")}</div></div></details>${schSupBlock(p)}</div>`;
 }
 function schPublicCard(p){ const items=schItems(p), pubRow=i=>`<div class="row" style="align-items:center;gap:8px;padding:3px 0"><span class="meta">☐</span> <span>${esc(i.t)}</span></div>`;
-  return `<div class="card" style="margin-top:12px"><div class="row" style="align-items:flex-start;gap:10px;flex-wrap:wrap"><h3 style="flex:1;margin:0;min-width:220px">${esc(p.uni)}</h3>${schTaker(p)?`<span class="pill p-ok" title="این بورسیه برداشته شده و برای دیگران بسته است">${schTaker(p)===S.me.id?"شما این بورسیه را برداشته‌اید":esc(rosterName(schTaker(p)))+" این بورسیه را برداشته است"}</span>`:""}${asgCell("sch_"+p.id,p.uni,"scholar")}${p.levels.map(l=>`<span class="pill p-mute">${SCH_LV[l]}</span>`).join("")}</div>
+  return `<div class="card" style="margin-top:12px"><div class="row" style="align-items:flex-start;gap:10px;flex-wrap:wrap"><h3 style="flex:1;margin:0;min-width:220px">${esc(p.uni)}</h3>${(!schTaker(p)&&schActiveFor(S.me.id,"sch_"+p.id).length)?`<span class="pill p-warn" title="هر نفر هم‌زمان فقط یک بورسیه">شما «${esc(schActiveFor(S.me.id,"sch_"+p.id)[0].uni)}» را در دست دارید؛ تا ثبت‌نام نهایی آن، بورسیه‌ی دیگری برنمی‌دارید</span>`:""}${schTaker(p)?`<span class="pill p-ok" title="این بورسیه برداشته شده و برای دیگران بسته است">${schTaker(p)===S.me.id?"شما این بورسیه را برداشته‌اید":esc(rosterName(schTaker(p)))+" این بورسیه را برداشته است"}</span>`:""}${asgCell("sch_"+p.id,p.uni,"scholar")}${p.levels.map(l=>`<span class="pill p-mute">${SCH_LV[l]}</span>`).join("")}</div>
   <table style="width:100%;margin-top:6px"><tbody>
   <tr><td style="width:26%;color:var(--muted)">رشته‌ی درسی</td><td>${esc(p.field)}</td></tr>
   <tr><td style="color:var(--muted)">کشور و شهر</td><td>${esc(p.country)} – ${esc(p.city)}</td></tr>
