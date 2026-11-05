@@ -174,7 +174,7 @@ const SUBS = {
   erp:[["ops","برنامه‌ی عملیات و واگذاری"],["domains","حوزه‌های فعالیت"],["products","توسعه‌ی محصول هوشمند"],["people","نیروی انسانی"],["finance","مالی"],["clients","مشتریان و قراردادها"],["backup","پشتیبان‌گیری"]],
   bpms:[["home","خانه‌ی BPMS"],["contacts","مخاطبین و ارتباط"],["myday","روز من"],["mind","ذهن‌نگار (آزمون خصوصی)"],["board","تخته‌ی اسکرام"],["backlog","بک‌لاگ و برنامه‌ریزی"],["sprints","اسپرینت‌ها"],["tasks","فهرست تسک‌ها"],["reports","گزارش عملکرد"],["rarchive","بایگانی گزارش‌ها"],["teams","تیم‌ها"],["process","فرایندها"],["calendar","تقویم"],["members","اعضا و ثبت‌نام"],["nda","قرارداد محرمانگی"],["training","فرم آموزش"]],
   letters:[["new","نامه‌ی جدید (ساخت فایل Word)"],["pp","پترو پالا توس"],["sosh","سوشیانت"]],
-  scholar:[["applied","اقدام‌شده و در دست بررسی"],["human","مسئول انسانی"],["doing","در دست اقدام"],["todo","اقدام‌نشده"],["target","فهرست هدف: AI · CS · IT · مدیریت"],["profile","مشخصات و رزومه من"],["cv","رزومه محمد پارسا سهرابی"]],
+  scholar:[["applied","اقدام‌شده و در دست بررسی"],["human","مسئول انسانی"],["doing","در دست اقدام"],["todo","اقدام‌نشده"],["failed","ناموفق (بسته‌شده)"],["target","فهرست هدف: AI · CS · IT · مدیریت"],["profile","مشخصات و رزومه من"],["cv","رزومه محمد پارسا سهرابی"]],
   articles:[["applied","اقدام‌شده و در دست بررسی"],["doing","در دست اقدام"],["todo","اقدام‌نشده"],["product","محصول ویژه‌ی مقاله"],["claude","تسک برای Claude"],["evidence","شواهد و داده‌ی واقعی"],["submit","ثبت چکیده و ثبت‌نام (مسئول انسانی)"],["list","فهرست کامل"],["pipe","خط لوله تا ویزا"],["mail","مسیر ایمیل: ثبت · تاییدیه · مقاله کامل"],["fees","هزینه ورودی و ارائه آنلاین"],["ready","آمادگی ثبت (۶ معیار)"],["upload","آپلود داده‌ها"],["access","دسترسی افراد"]],
   patent:[["home","پتنت‌ها"],["human","مسئول انسانی"],["ops","فرصت‌های ثبت اختراع"],["products","محصولات ریپو"]]
 };
@@ -603,7 +603,7 @@ async function asgSyncTask(key,title,mod,doer,selector,text){
   }catch(e){ console.error("asg task",e); }
 }
 // One scholarship at a time: a person who holds a scholarship cannot take another until it is marked as applied (registration finished).
-const schActiveFor = (who,exceptKey) => Object.entries(S.asg||{}).filter(([k,a])=>a.mod==="scholar"&&a.doer===who&&k!==exceptKey).map(([k])=>SCH.find(p=>"sch_"+p.id===k)).filter(p=>p&&schStatus(p)!=="applied");
+const schActiveFor = (who,exceptKey) => Object.entries(S.asg||{}).filter(([k,a])=>a.mod==="scholar"&&a.doer===who&&k!==exceptKey).map(([k])=>SCH.find(p=>"sch_"+p.id===k)).filter(p=>p&&!["applied","failed"].includes(schStatus(p)));
 function asgForm(key,title,mod){
   const a=asgOf(key)||{}; if(!asgCan(a,mod)){ toast("این مورد واگذار شده است؛ فقط انجام‌دهنده یا واگذارکننده می‌تواند آن را تغییر یا لغو کند"); return; }
   const admin=asgAdmin(mod) && (!a.doer || a.selector===S.me.id);
@@ -1894,7 +1894,7 @@ const SCH_SPEC = {
 };
 SCH.forEach(p=>Object.assign(p,SCH_SPEC[p.id]||{}));
 const SCH_LV = {master:"ارشد",phd:"دکتری"};
-const SCH_ST = {todo:"اقدام‌نشده",doing:"در دست اقدام",applied:"اقدام‌شده و در دست بررسی"};
+const SCH_ST = {todo:"اقدام‌نشده",doing:"در دست اقدام",applied:"اقدام‌شده و در دست بررسی",failed:"ناموفق (بسته‌شده)"};   // failed: every suitable professor declined and no other fit was found
 const schTaker = p => { const a=asgOf("sch_"+p.id); return a&&a.doer?a.doer:""; };   // whoever picked or was handed the scholarship
 const schLockedForMe = p => { const d=schTaker(p); return !!d && d!==S.me.id && !isOwnerOnly(); };   // taken by someone else: closed to everyone but the owner
 const schStatus = p => { const s=schState(p.id).status || p.status0 || "todo"; return s==="todo"&&schTaker(p)?"doing":s; };   // taking a scholarship moves it to "in progress"
@@ -1923,12 +1923,12 @@ function schSupBlock(p){
   const warn=phd?`<div class="banner" style="margin:6px 0"><b>پیش از دریافت بورسیه:</b> مکاتبه با استاد راهنما و دریافت تأیید کتبی او لازم است؛ پروپوزال هم باید طبق قالب همین دانشگاه نوشته شود.</div>`:"";
   if(pr&&pr.na) return `<div style="margin-top:8px">${warn}<div class="banner" style="margin:6px 0;border-color:var(--muted);background:var(--sunken)"><b>وضعیت استاد و پروپوزال:</b> ${esc(pr.na)}</div>${pr.proposal?`<details style="margin-top:8px"><summary><b>پروپوزال پژوهشی (پیش‌نویس)</b></summary><textarea readonly style="min-height:420px;direction:ltr;text-align:left">${esc(pr.proposal)}</textarea></details>`:""}${pr.sop?`<details style="margin-top:8px"><summary><b>انگیزه‌نامه (SOP – پیش‌نویس)</b></summary><textarea readonly style="min-height:420px;direction:ltr;text-align:left">${esc(pr.sop)}</textarea></details>`:""}</div>`;
   if(!pr) return `<div style="margin-top:8px">${warn}${SCH_PROP[p.id]?"":`<p class="meta">استادان و ایمیل این دانشگاه هنوز آماده نشده است؛ در «تسک برای Claude» درخواست دهید.</p>`}</div>`;
-  const sup=(pr.supervisors||[]).map((s,j)=>{ const t=((S.cvT||{})[p.id]||{})[s.name]; return `<li><b>${esc(s.name)}</b> – ${esc(s.role||"")} · <span class="meta">${esc(s.area||"")}</span> ${s.url?link(s.url):""}${t?`<details style="margin:4px 0 8px"><summary><b>رزومه‌ی اختصاصی برای ${esc(s.name)}</b> <span class="meta">(بر پایه‌ی حوزه‌ی او: ${esc(t.focus)})</span></summary><p class="meta" style="direction:ltr;text-align:left"><b>Headline:</b> ${esc(t.headline)}</p><p class="meta" style="direction:ltr;text-align:left"><b>Opening paragraph for the email / CV profile:</b> ${esc(t.pitch)}</p><ul style="direction:ltr;text-align:left">${(t.bullets||[]).map(b=>`<li>${esc(b)}</li>`).join("")}</ul><div class="row"><button class="btn sm sig" data-act="sup-cv" data-id="${esc(p.id)}" data-j="${j}">دریافت رزومه‌ی Word اختصاصی این استاد</button><button class="btn sm sig" data-act="sup-prop" data-id="${esc(p.id)}" data-j="${j}">دریافت پروپوزال Word اختصاصی این استاد</button></div><details style="margin:6px 0"><summary><b>پروپوزال اختصاصی برای ${esc(s.name)}</b> <span class="meta">(بر پایه‌ی حوزه‌ی او و توانمندی‌های شما)</span></summary><textarea readonly style="min-height:380px;direction:ltr;text-align:left">${esc(profPropText(p.id,j))}</textarea></details><p class="meta">برای هر استاد فقط همین رزومه‌ی اختصاصی ارسال شود؛ ارسال یک رزومه‌ی واحد پذیرفته نیست.</p></details>`:`<p class="meta" style="margin:2px 0">رزومه‌ی اختصاصی این استاد هنوز تهیه نشده؛ در «تسک برای Claude» درخواست دهید.</p>`}</li>`; }).join("");
+  const sup=supList(pr).map((s,j)=>{ const t=((S.cvT||{})[p.id]||{})[s.name]; return `<li><b>${esc(s.name)}</b> – ${esc(s.role||"")} · <span class="meta">${esc(s.area||"")}</span> ${s.url?link(s.url):""}${t?`<details style="margin:4px 0 8px"><summary><b>رزومه‌ی اختصاصی برای ${esc(s.name)}</b> <span class="meta">(بر پایه‌ی حوزه‌ی او: ${esc(t.focus)})</span></summary><p class="meta" style="direction:ltr;text-align:left"><b>Headline:</b> ${esc(t.headline)}</p><p class="meta" style="direction:ltr;text-align:left"><b>Opening paragraph for the email / CV profile:</b> ${esc(t.pitch)}</p><ul style="direction:ltr;text-align:left">${(t.bullets||[]).map(b=>`<li>${esc(b)}</li>`).join("")}</ul><div class="row"><button class="btn sm sig" data-act="sup-cv" data-id="${esc(p.id)}" data-j="${j}">دریافت رزومه‌ی Word اختصاصی این استاد</button><button class="btn sm sig" data-act="sup-prop" data-id="${esc(p.id)}" data-j="${j}">دریافت پروپوزال Word اختصاصی این استاد</button></div><details style="margin:6px 0"><summary><b>پروپوزال اختصاصی برای ${esc(s.name)}</b> <span class="meta">(بر پایه‌ی حوزه‌ی او و توانمندی‌های شما)</span></summary><textarea readonly style="min-height:380px;direction:ltr;text-align:left">${esc(profPropText(p.id,j))}</textarea></details><p class="meta">برای هر استاد فقط همین رزومه‌ی اختصاصی ارسال شود؛ ارسال یک رزومه‌ی واحد پذیرفته نیست.</p></details>`:`<p class="meta" style="margin:2px 0">رزومه‌ی اختصاصی این استاد هنوز تهیه نشده؛ در «تسک برای Claude» درخواست دهید.</p>`}</li>`; }).join("");
   const em=(pr.emails||[]).map((e0,i)=>{ const e=effEmail(e0); return `<details style="margin:6px 0"><summary>${supPill(e)} ایمیل به ${esc(e.to_name)}${e.to_email?` ‹${esc(e.to_email)}›`:" (آدرس گیرنده را وارد کنید)"}${e.draft_url?` – <a href="${esc(e.draft_url)}" target="_blank" rel="noopener noreferrer">باز کردن درافت در Gmail</a>`:""}</summary><p class="meta">موضوع: ${esc(e.subject)}</p><textarea readonly style="min-height:260px;direction:ltr;text-align:left">${esc(e.body)}</textarea><div class="row" style="margin-top:6px;gap:8px;flex-wrap:wrap"><label class="meta">وضعیت: <select id="sst_${esc(p.id)}_${i}">${Object.entries(SUP_ST).map(([k,v])=>`<option value="${k}"${(e.status||"draft")===k?" selected":""}>${v[1]}</option>`).join("")}</select></label><input id="srs_${esc(p.id)}_${i}" value="${esc(e.result||"")}" placeholder="نتیجه / خلاصه‌ی پاسخ استاد" style="flex:1;min-width:220px"><button class="btn sm sig" data-act="sup-save" data-id="${esc(p.id)}" data-i="${i}">ثبت وضعیت</button>${e.at?`<span class="meta">آخرین به‌روزرسانی: ${esc(e.at)}</span>`:""}</div></details>`; }).join("");
   return `<details style="margin-top:8px"><summary><b>استاد راهنما، ایمیل و پروپوزال</b> – تهیه‌شده ${esc(pr.updated||"")} · ایمیل: ${["draft","sent","replied","declined"].map(k=>{const n=(pr.emails||[]).filter(e=>(effEmail(e).status||"draft")===k).length; return n?`${faNum(n)} ${SUP_ST[k][1]}`:"";}).filter(Boolean).join("، ")||"—"}</summary>${warn}
    <h4>استادان پیشنهادی (از صفحه‌های رسمی؛ علاقه‌مندی آن‌ها را خودشان تأیید کنند)</h4><ul>${sup}</ul>
    <p class="meta">${esc(pr.format_note||"")}</p>
-   <h4>ایمیل آماده (درافت در Gmail؛ آدرس گیرنده را از صفحه‌ی استاد وارد کنید)</h4>${em}
+   <h4>ایمیل آماده (درافت در Gmail؛ آدرس گیرنده را از صفحه‌ی استاد وارد کنید)</h4>${em}${(pr.alt_emails||[]).map(e0=>{ const e=effEmail(e0); return `<div class="meta" style="margin:6px 0">${supPill(e)} استاد جایگزین: ${esc(e.to_name)} ‹${esc(e.to_email||"")}› – ${e.draft_url?`<a href="${esc(e.draft_url)}" target="_blank" rel="noopener noreferrer">باز کردن درافت در Gmail</a>`:""}<br>موضوع: ${esc(e.subject||"")}</div>`; }).join("")}
    ${(schState(p.id)||{}).letter?`<h4>${esc(schState(p.id).letter.title||"انگیزه‌نامه")}</h4><textarea readonly style="min-height:520px;direction:ltr;text-align:left">${esc(schState(p.id).letter.text)}</textarea>`:""}${pr.sop?`<h4>انگیزه‌نامه (SOP – پیش‌نویس)</h4><textarea readonly style="min-height:420px;direction:ltr;text-align:left">${esc(pr.sop)}</textarea>`:""}${pr.proposal?`<h4>پروپوزال پژوهشی (پیش‌نویس)</h4><textarea readonly style="min-height:420px;direction:ltr;text-align:left">${esc(pr.proposal)}</textarea>`:""}</details>`;
 }
 function schChance(p){
@@ -1995,7 +1995,9 @@ function schCard(p,page){
     (it.owner?`<span class="pill p-ok">${esc(memberName(it.owner))}</span>${schLockedForMe(p)&&it.owner!==S.me.id?"":` <button class="btn sm ghost" data-act="sch-unclaim" data-id="${esc(p.id)}" data-k="${esc(i.k)}">رها کردن</button>`}`:(schLockedForMe(p)?`<span class="meta">بسته – ${esc(rosterName(schTaker(p)))} این بورسیه را برداشته است</span>`:`<button class="btn sm ghost" data-act="sch-claim" data-id="${esc(p.id)}" data-k="${esc(i.k)}">${i.by==="ai"?"دریافت محتوای مورد نیاز":"دریافت تسک"}</button>`))+`</div>`; };
   const move = page==="todo"?`<button class="btn sm sig" data-act="sch-set" data-id="${esc(p.id)}" data-st="doing">شروع اقدام</button>`
     : page==="doing"?(schTaker(p)?"":`<button class="btn sm ghost" data-act="sch-set" data-id="${esc(p.id)}" data-st="todo">بازگشت به اقدام‌نشده</button>`)
+    : page==="failed"?`<button class="btn sm ghost" data-act="sch-set" data-id="${esc(p.id)}" data-st="todo">بازگشایی پروژه</button>`
     : `<button class="btn sm ghost" data-act="sch-set" data-id="${esc(p.id)}" data-st="doing">بازگردانی به در دست اقدام</button>`;
+  const failBtn = (page==="failed"||page==="applied")?"":`<button class="btn sm ghost" data-act="sch-fail" data-id="${esc(p.id)}" title="وقتی همه‌ی استادان مناسب پاسخ منفی داده‌اند و استاد دیگری نیست">بستن پروژه (ناموفق)</button>`;
   return `<div class="card" style="margin-bottom:12px">
   <div class="row" style="align-items:flex-start;gap:10px;flex-wrap:wrap"><h3 style="flex:1;margin:0;min-width:220px">${esc(p.uni)}</h3>${(!schTaker(p)&&schActiveFor(S.me.id,"sch_"+p.id).length)?`<span class="pill p-warn" title="هر نفر هم‌زمان فقط یک بورسیه">شما «${esc(schActiveFor(S.me.id,"sch_"+p.id)[0].uni)}» را در دست دارید؛ تا ثبت‌نام نهایی آن، بورسیه‌ی دیگری برنمی‌دارید</span>`:""}${schTaker(p)?`<span class="pill p-ok" title="این بورسیه برداشته شده و برای دیگران بسته است">${schTaker(p)===S.me.id?"شما این بورسیه را برداشته‌اید":esc(rosterName(schTaker(p)))+" این بورسیه را برداشته است"}</span>`:""}${asgCell("sch_"+p.id,p.uni,"scholar")}${p.levels.map(l=>`<span class="pill p-mute">${SCH_LV[l]}</span>`).join("")}${ch?`<span class="pill ${ch.pct>=55?"p-ok":"p-mute"}" title="تخمین ساده بر اساس مشخصات شما">شانس من: ${esc(ch.label)} (${faNum(ch.pct)}٪)</span>`:`<span class="pill p-mute">شانس من: ابتدا مشخصات را کامل کنید</span>`}</div>
   <table style="width:100%;margin-top:6px"><tbody>
@@ -2004,8 +2006,8 @@ function schCard(p,page){
   <tr><td style="color:var(--muted)">شرایط حمایت</td><td><b>${esc(p.kind)}</b> · ${esc(p.support)}</td></tr>
   <tr><td style="color:var(--muted)">مهلت ثبت‌نام</td><td>${schDeadline(p)}</td></tr>
   <tr><td style="color:var(--muted)">سایت رسمی</td><td>${link(p.url)}</td></tr></tbody></table>${p.warn?`<div class="banner bad" style="margin:6px 0">${esc(p.warn)}</div>`:""}
-  <div class="row" style="margin:8px 0;gap:10px;flex-wrap:wrap">${page!=="applied"?`<label><input type="checkbox" data-act="sch-set" data-id="${esc(p.id)}" data-st="applied"> قبلاً اقدام شده است</label>`:`<span class="pill p-ok">اقدام شده – در دست بررسی</span>`}${move}<button class="btn sm sig" data-act="sch-task" data-id="${esc(p.id)}">ثبت تسک برای Claude</button><button class="btn sm ghost" data-act="sch-copy" data-id="${esc(p.id)}">کپی دستور</button>${st.claude_task?`<span class="pill ${st.claude_task.status==="open"?"p-warn":"p-ok"}">${st.claude_task.status==="open"?"تسک Claude در انتظار انجام":"تسک Claude انجام شد"}</span>`:""}</div>
-  ${page==="doing"?schProgBox(p,st,items):""}
+  <div class="row" style="margin:8px 0;gap:10px;flex-wrap:wrap">${page!=="applied"?`<label><input type="checkbox" data-act="sch-set" data-id="${esc(p.id)}" data-st="applied"> قبلاً اقدام شده است</label>`:`<span class="pill p-ok">اقدام شده – در دست بررسی</span>`}${move}${failBtn}<button class="btn sm sig" data-act="sch-task" data-id="${esc(p.id)}">ثبت تسک برای Claude</button><button class="btn sm ghost" data-act="sch-copy" data-id="${esc(p.id)}">کپی دستور</button>${st.claude_task?`<span class="pill ${st.claude_task.status==="open"?"p-warn":"p-ok"}">${st.claude_task.status==="open"?"تسک Claude در انتظار انجام":"تسک Claude انجام شد"}</span>`:""}</div>
+  ${page==="doing"?schProgBox(p,st,items):""}${page==="failed"?`<div class="banner bad" style="margin:6px 0"><b>پروژه بسته شد (ناموفق):</b> ${esc(st.fail_reason||"دلیل ثبت نشده")}</div>`:""}
   <details open><summary><b>مدارک و کارها</b> – ${faNum(done)} از ${faNum(items.length)} (${faNum(pct)}٪)</summary>
    ${propBox(p)}
    <div class="grid2" style="margin-top:8px"><div><h4>Claude انجام می‌دهد</h4>${items.filter(i=>i.by==="ai").map(row).join("")}</div><div><h4>خودتان باید انجام دهید</h4>${items.filter(i=>i.by==="me").map(row).join("")}</div></div></details>${schSupBlock(p)}</div>`;
@@ -2042,6 +2044,7 @@ const schTeam = fn => () => (isOwnerOnly()||schAccess()) ? fn() : `<p class="emp
 VIEWS["scholar.human"] = schTeam(() => humView("scholar"));
 VIEWS["scholar.applied"]=schTeam(()=>schList("applied"));
 VIEWS["scholar.doing"]=schTeam(()=>schList("doing"));
+VIEWS["scholar.failed"]=schTeam(()=>schList("failed"));
 VIEWS["scholar.todo"]=schTeam(()=>schList("todo"));
 const SCH_DOCS = ["رزومه‌ی آکادمیک (CV)","انگیزه‌نامه (SOP)","پیشنهاد پژوهشی (برای دکتری)","ریز نمرات و مدرک تحصیلی با ترجمه‌ی رسمی","مدرک زبان (IELTS/TOEFL)","۲ تا ۳ توصیه‌نامه","پاسپورت","مقالات و سوابق پژوهشی (در صورت وجود)","گواهی سابقه‌ی کار (در صورت نیاز)"];
 function schCv(){
@@ -2094,11 +2097,12 @@ async function buildCvDocx(m){
   const rels=items=>`<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">${items.map(([id,t,tg])=>`<Relationship Id="${id}" Type="${RELNS}/${t}" Target="${tg}"/>`).join("")}</Relationships>`;
   return zipStore([{name:"[Content_Types].xml",data:ct},{name:"_rels/.rels",data:rels([["rId1","officeDocument","word/document.xml"]])},{name:"word/document.xml",data:doc},{name:"word/styles.xml",data:styles},{name:"word/_rels/document.xml.rels",data:rels([["rIdSty","styles","styles.xml"]])}]);
 }
+const supList = pr => [...((pr||{}).supervisors||[]),...((pr||{}).alt_supervisors||[])];   // alt_*: replacement professors added after a decline
 const SCH_BIZ = new Set(["liverpool_ms","bristol_bs","ambs","imperial_bs","edinburgh_bs","kingston_bs","kingston_niloufar"]);   // business programmes: the business doctorate and business record count as a plus; never used elsewhere
 const BIZ_EDU = "Professional doctorate in business management – University of Tehran";
 const BIZ_EXP = ["- Founder of two brands: Petro Pala Toos (Iran) and Parsa International Group (Türkiye).","- Start-up mentor; instructor in business-model-canvas design and in value-proposition design.","- Consultant on patent filing, knowledge-based company status and market development."];
 function cvModelFor(pid,j){
-  const pr=(schState(pid)||{}).prop, s=((pr||{}).supervisors||[])[j], t=s&&((S.cvT||{})[pid]||{})[s.name]; if(!t) return null;
+  const pr=(schState(pid)||{}).prop, s=supList(pr)[j], t=s&&((S.cvT||{})[pid]||{})[s.name]; if(!t) return null;
   const base=cvModel(), prof=t.headline.replace(/^Tailored for [^:]+:\s*/,"");
   const sec=[{h:"Profile",lines:[prof.charAt(0).toUpperCase()+prof.slice(1)]},{h:"Strengths Relevant to "+t.focus.charAt(0).toUpperCase()+t.focus.slice(1),lines:(t.bullets||[]).map(b=>"- "+b)}];
   let rest=base.sec.filter(x=>x.h!=="Research Interests");
@@ -2106,7 +2110,7 @@ function cvModelFor(pid,j){
   return {...base,sec:sec.concat(rest)};
 }
 function profPropText(pid,j){
-  const pr=(schState(pid)||{}).prop||{}, s=(pr.supervisors||[])[j], t=s&&((S.cvT||{})[pid]||{})[s.name]; if(!t||!pr.proposal) return "";
+  const pr=(schState(pid)||{}).prop||{}, s=supList(pr)[j], t=s&&((S.cvT||{})[pid]||{})[s.name]; if(!t||!pr.proposal) return "";
   const bl=pr.proposal.split("\n\n"), prep=((bl[0].match(/^Prepared for: (.*)/)||[])[1])||"this programme", rest=bl.slice(1).filter(b=>!/^Fit/.test(b));
   return `Prepared for: ${s.name} (${s.role||""}), ${prep}\n\nResearch alignment with ${s.name}\n${t.pitch}\n\nWhat I bring to your group\n${(t.bullets||[]).map(b=>"- "+b).join("\n")}\n\nRequest\nI would be grateful to know whether you might be open to supervising a doctoral project of this kind within ${prep}, and whether you would support my application. I would adapt the methods and case studies to the interests of your group.\n\n`+rest.join("\n\n")+(SCH_BIZ.has(pid)?"\n\nBusiness background\nProfessional doctorate in business management; start-up mentor; instructor in business-model-canvas and value-proposition design; consultant on patents, knowledge-based status and market development; founder of two brands (Petro Pala Toos, Iran; Parsa International Group, Türkiye).":"");
 }
@@ -2118,14 +2122,14 @@ function profPropModel(pid,j){
 async function downloadSupProp(pid,j){
   if(!S.downloads){ toast("دریافت فایل فقط داخل claude.ai فعال است."); return; }
   const m=profPropModel(pid,j); if(!m){ toast("پروپوزال اختصاصی این استاد هنوز آماده نیست."); return; }
-  const nm=((((schState(pid)||{}).prop||{}).supervisors||[])[j].name||"professor").replace(/[^A-Za-z0-9]+/g,"-").replace(/^-|-$/g,"");
+  const nm=(supList((schState(pid)||{}).prop)[j].name||"professor").replace(/[^A-Za-z0-9]+/g,"-").replace(/^-|-$/g,"");
   try{ await S.downloads.save({filename:`Sohrabi-Proposal-${nm}-${today()}.docx`,data:new Blob([await buildCvDocx(m)],{type:ABS_DOCX})}); }
   catch(err){ if(!err||err.code!=="declined"){ toast("ساخت یا دریافت فایل Word پروپوزال انجام نشد."); console.error(err); } }
 }
 async function downloadSupCv(pid,j){
   if(!S.downloads){ toast("دریافت فایل فقط داخل claude.ai فعال است."); return; }
   const m=cvModelFor(pid,j); if(!m){ toast("رزومه‌ی اختصاصی این استاد هنوز تهیه نشده است."); return; }
-  const nm=((((schState(pid)||{}).prop||{}).supervisors||[])[j].name||"professor").replace(/[^A-Za-z0-9]+/g,"-").replace(/^-|-$/g,"");
+  const nm=(supList((schState(pid)||{}).prop)[j].name||"professor").replace(/[^A-Za-z0-9]+/g,"-").replace(/^-|-$/g,"");
   try{ await S.downloads.save({filename:`Sohrabi-CV-${nm}-${today()}.docx`,data:new Blob([await buildCvDocx(m)],{type:ABS_DOCX})}); }
   catch(err){ if(!err||err.code!=="declined"){ toast("ساخت یا دریافت فایل Word رزومه انجام نشد."); console.error(err); } }
 }
@@ -4338,6 +4342,7 @@ document.addEventListener("click", async e => {
     case "sup-save": await supSave(b.dataset.id,Number(b.dataset.i)); break;
     case "sch-copy": await schCopyPrompt(b.dataset.id); break;
     case "sch-task": await schClaudeTask(b.dataset.id); break;
+    case "sch-fail": { const r=prompt("دلیل بستن پروژه (مثلاً: همه‌ی استادان مناسب پاسخ منفی دادند و استاد دیگری با پروژه همپوشانی ندارد)"); if(r===null) break; await schSave(b.dataset.id,{status:"failed",fail_reason:r,status_at:new Date().toISOString(),status_by:S.me.id}); break; }
     case "sch-set": { const st=b.dataset.st; if(b.type==="checkbox"&&!b.checked) break; await schSave(b.dataset.id,{status:st,status_at:new Date().toISOString(),status_by:S.me.id}); break; }
     case "sch-done": { const cur=schState(b.dataset.id), it={...(cur.items||{})}; it[b.dataset.k]={...(it[b.dataset.k]||{}),done:b.checked}; await schSave(b.dataset.id,{items:it}); break; }
     case "sch-claim": { { const pp=SCH.find(x=>x.id===b.dataset.id); if(pp&&schLockedForMe(pp)){ toast(rosterName(schTaker(pp))+" این بورسیه را برداشته است؛ برای دیگران بسته است."); break; } } const cur=schState(b.dataset.id), it={...(cur.items||{})}; if(!S.me.id){toast("ابتدا وارد شوید.");break;} it[b.dataset.k]={...(it[b.dataset.k]||{}),owner:S.me.id}; await schSave(b.dataset.id,{items:it}); break; }
