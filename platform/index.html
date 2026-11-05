@@ -2862,6 +2862,7 @@ const CO_T = {
 };
 // [name, type] per company; parent companies first. Names are as written in the user's brief (NIOC, NIGC, Mapna) or public knowledge (refining and petrochemicals).
 const PP_CO = {
+ shasta:{label:"هلدینگ شستا",parent:["شرکت سرمایه‌گذاری نفت و گاز و پتروشیمی تأمین","hold"],list:[["شرکت صنایع کاغذ سازی بیستون تامین","mfg"]]},   // Shasta companies named by the user that have no letter yet (names as on the company sites)
  nioc:{label:"شرکت ملی نفت ایران",parent:["شرکت ملی نفت ایران","hold"],list:[["شرکت نفت مناطق مرکزی ایران","up"],["شرکت ملی مناطق نفت‌خیز جنوب","up"],["شرکت نفت فلات قاره ایران","up"],["شرکت نفت و گاز پارس","up"],["شرکت نفت خزر","up"],["شرکت نفت و گاز اروندان","up"],["شرکت ملی حفاری ایران","drill"],["شرکت مهندسی و توسعه نفت","eng"],["شرکت پشتیبانی ساخت و تهیه کالای نفت","supply"],["شرکت پایانه‌های نفتی ایران","term"]]},
  nigc:{label:"شرکت ملی گاز ایران",parent:["شرکت ملی گاز ایران","hold"],list:[["شرکت انتقال گاز ایران","gtr"],["شرکت مهندسی و توسعه گاز ایران","eng"],["شرکت بازرگانی گاز ایران","gtrade"],["شرکت پالایش گاز ایلام","gref"],["شرکت پالایش گاز پارسیان","gref"],["شرکت پالایش گاز بیدبلند","gref"],["شرکت پالایش گاز سرخون و قشم","gref"],["شرکت پالایش گاز هاشمی‌نژاد","gref"],["شرکت پالایش گاز فجر جم","gref"],["شرکت پالایش گاز پارس جنوبی","gref"]]},
  mapna:{label:"مپنا",parent:["گروه مپنا (شرکت مدیریت پروژه‌های نیروگاهی ایران – مپنا)","hold"],list:[
@@ -2896,8 +2897,8 @@ function coLetter(c){
 const ppDraft = c => { const L=coLetter(c);
   S.draft={identity:"ir",sector:"oil",date:today(),numAuto:true,number:nextLetterNo("ir",today()),recipient:L.recipient,subject:L.subject,body:L.body,attachments:L.attachments,cc:"",annex:L.annex,signer:""};
   S.mod="letters"; S.sub="new"; S.forceFull=true; render(); toast("پیش‌نویس نامه با سربرگ پترو پالا توس آماده شد؛ نام مدیرعامل را تکمیل و ذخیره کنید."); };
-const ppGroupCount = gk => gk==="hpc"?HPC_PLANTS.length:gk==="niordc"?REFINERIES.length+1+PP_CO.niordc.list.length:PP_CO[gk]?ppCos(gk).length:S.lettersArchive.filter(a=>archIdent(a)==="ir"&&archGrp(a)===gk).length;
-function ppCoView(gk){
+const ppGroupCount = gk => gk==="hpc"?HPC_PLANTS.length:gk==="niordc"?REFINERIES.length+1+PP_CO.niordc.list.length:PP_CO[gk]&&gk!=="shasta"?ppCos(gk).length:S.lettersArchive.filter(a=>archIdent(a)==="ir"&&archGrp(a)===gk).length;
+function ppCoView(gk,quiet){
   const list=ppCos(gk), g=PP_CO[gk], sel=S.ppSub&&list.find(c=>c.k===S.ppSub);
   const chips=`<div class="toolbar"><span class="meta">شرکت:</span><button class="btn sm ${sel?"ghost":""}" data-act="pp-sub" data-k="">همه (${faNum(list.length)})</button>${list.map(c=>`<button class="btn sm ${sel&&sel.k===c.k?"":"ghost"}" data-act="pp-sub" data-k="${esc(c.k)}">${esc(c.n.replace(/^شرکت\s+/,"")+(c.parent?" (مادر)":""))}</button>`).join("")}</div>`;
   const row=c=>{ const sent=ppCoLetters(c), T=CO_T[c.t];
@@ -2907,7 +2908,7 @@ function ppCoView(gk){
   const body = sel
    ? `<div class="card"><h3 style="margin-top:0">${esc(sel.n)}</h3><p class="meta">${esc(CO_T[sel.t].n)} · محصول پیشنهادی: ${esc(CO_T[sel.t].product)}</p><div class="row"><button class="btn sig" data-act="pp-letter" data-id="${esc(sel.k)}">ساخت نامه (سربرگ پترو پالا توس)</button></div>${asgCell("co_"+hashKey(sel.n),"نامه و پیگیری: "+sel.n,"letters")}<h3>متن نامه‌ی اعلام آمادگی</h3><pre style="white-space:pre-wrap;font:inherit">${esc(coLetter(sel).body)}</pre><h3>نامه‌های ثبت‌شده برای این شرکت</h3>${ppCoLetters(sel).length?ppCoLetters(sel).map(a=>`<p>${esc(a.number||"—")} · ${esc(ARCH_STAGES[a.stage]||"")} · ${esc(a.subject||"")}</p>`).join(""):'<p class="meta">نامه‌ای ثبت نشده است.</p>'}</div>`
    : table(["شرکت","حوزه","محصول پیشنهادی","وضعیت",""],list.filter(c=>match(c.n,CO_T[c.t].n)).map(row),"شرکتی با این جست‌وجو نیست.");
-  return `<h2>${esc(g.label)}</h2>${note}${banner}${kpis([["شرکت (با شرکت مادر)",faNum(list.length)],["نامه‌ی ثبت‌شده",faNum(list.filter(c=>ppCoLetters(c).length).length)],["بدون نامه",faNum(list.filter(c=>!ppCoLetters(c).length).length)]])}${chips}${body}`;
+  return `${quiet?"":`<h2>${esc(g.label)}</h2>`}${note}${quiet?"":banner}${kpis([["شرکت (با شرکت مادر)",faNum(list.length)],["نامه‌ی ثبت‌شده",faNum(list.filter(c=>ppCoLetters(c).length).length)],["بدون نامه",faNum(list.filter(c=>!ppCoLetters(c).length).length)]])}${chips}${body}`;
 }
 VIEWS["letters.pp"] = () => {
   const gk=S.ppGrp||"shasta";
@@ -2916,6 +2917,7 @@ VIEWS["letters.pp"] = () => {
   let inner="";
   if(gk==="hpc") inner=VIEWS["letters.hpc"]()+`<h3>نامه‌های ثبت‌شده‌ی این گروه</h3>`+archView(null,"ir","hpc");
   else if(gk==="niordc"){ const ex=ppCos("niordc"); inner=VIEWS["letters.refinery"]()+`<h3>شرکت مادر و توزیع</h3>`+ppCoView("niordc")+`<h3>نامه‌های ثبت‌شده‌ی این گروه</h3>`+archView(null,"ir","niordc"); }
+  else if(gk==="shasta") inner=archView(null,"ir","shasta")+`<h3>شرکت‌های شستا که هنوز نامه ندارند</h3>`+ppCoView("shasta",true);
   else if(PP_CO[gk]) inner=ppCoView(gk)+(gk==="npc"||gk==="nioc"||gk==="nigc"||gk==="mapna"?`<h3>نامه‌های ثبت‌شده‌ی این گروه</h3>`+archView(null,"ir",gk):"");
   else inner=archView(null,"ir",gk);
   return head+bar+inner;
