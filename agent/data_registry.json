@@ -178,6 +178,21 @@
     "parkinsons.names"
    ],
    "status": "blocked"
+  },
+  {
+   "id": "ntsb_avdata",
+   "article": "c_aei-ai-trust-aviation",
+   "product": "avguard",
+   "repo": "articles-avguard-grounding",
+   "module": "avguard",
+   "name": "NTSB Aviation Accident Database \u2013 events \u0648 narratives",
+   "license": "public data of the US government (NTSB)",
+   "url": "https://data.ntsb.gov/avdata",
+   "files": [
+    "events.csv.gz",
+    "narratives.csv.gz"
+   ],
+   "status": "blocked"
   }
  ]
 }
