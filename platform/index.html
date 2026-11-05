@@ -448,14 +448,14 @@ function deadlineRisks(id){
   for(const t of S.tasks) if(t.assignee===id&&t.due&&!["done","approved"].includes(t.status)) add({k:"t"+t.id,type:"task",id:t.id,title:t.title},t.due);
   for(const p of SCH){ if(!p.deadline||schStatus(p)==="applied") continue;
     const st=schState(p.id), mine=Object.values(st.items||{}).some(it=>it&&it.owner===id&&!it.done), a=asgOf("sch_"+p.id);
-    if(mine||(a&&a.doer===id)) add({k:"s"+p.id,type:"sch",id:p.id,title:p.uni},p.deadline); }
+    if(a&&a.doer===id) add({k:"s"+p.id,type:"sch",id:p.id,title:p.uni},p.deadline); }   // only the scholarship a person has actually taken counts (one at a time)
   for(const t of ((S.m||{}).tenders||[])){ const tr=S.tracking[t.id]||{};
     if(tr.owner===id&&!tr.outcome&&ACTIVE.has(t.status)&&t.days_left!=null&&t.days_left>=0) add({k:"k"+t.id,type:"trk",id:t.id,title:t.title},addDays(today(),t.days_left)); }
   return out;
 }
 const riskWhen = r => `ددلاین ${faDate(r.to)} (${r.days===0?"امروز":faNum(r.days)+" روز دیگر"})`;
 function riskBanner(rs){
-  return `<div class="banner ${rs.some(r=>r.lvl==="bad")?"bad":""}"><b>هشدار ددلاین:</b> با توجه به روزهای حضور شما در شرکت، برای موارد زیر احتمال نرسیدن به ددلاین هست. اگر نمی‌رسید، آن را بازگردانید تا شخص دیگری انجام دهد.<ul style="margin:4px 0">${rs.map(r=>`<li>«${esc(r.title)}» – ${riskWhen(r)}؛ ${r.left===0?"تا آن روز روز حضوری ندارید":"فقط "+faNum(r.left)+" روز حضور مانده"} <button class="btn sm sig" data-act="risk-return" data-t="${r.type}" data-id="${esc(r.id)}">بازگرداندن</button></li>`).join("")}</ul></div>`;
+  return `<div class="banner ${rs.some(r=>r.lvl==="bad")?"bad":""}"><b>هشدار ددلاین:</b> با توجه به روزهای حضور شما در شرکت، برای موارد زیر احتمال نرسیدن به ددلاین هست. اگر نمی‌رسید، آن را بازگردانید تا شخص دیگری انجام دهد.<ul style="margin:4px 0">${rs.map(r=>`<li>«${esc(r.title)}» – ${riskWhen(r)}؛ ${r.left===0?"تا آن روز روز حضوری ندارید":"فقط "+faNum(r.left)+" روز حضور مانده"} <button class="btn sm sig" data-act="risk-return" data-t="${r.type}" data-id="${esc(r.id)}">بازگرداندن</button> <button class="btn sm ghost" data-act="risk-open" data-t="${r.type}" data-id="${esc(r.id)}">نمایش در سامانه</button></li>`).join("")}</ul></div>`;
 }
 function teamRiskBanner(){
   const me=S.me.id, rows=[], since=addDays(today(),-7);
@@ -4346,6 +4346,11 @@ document.addEventListener("click", async e => {
     case "sch-set": { const st=b.dataset.st; if(b.type==="checkbox"&&!b.checked) break; await schSave(b.dataset.id,{status:st,status_at:new Date().toISOString(),status_by:S.me.id}); break; }
     case "sch-done": { const cur=schState(b.dataset.id), it={...(cur.items||{})}; it[b.dataset.k]={...(it[b.dataset.k]||{}),done:b.checked}; await schSave(b.dataset.id,{items:it}); break; }
     case "sch-claim": { { const pp=SCH.find(x=>x.id===b.dataset.id); if(pp&&schLockedForMe(pp)){ toast(rosterName(schTaker(pp))+" این بورسیه را برداشته است؛ برای دیگران بسته است."); break; } } const cur=schState(b.dataset.id), it={...(cur.items||{})}; if(!S.me.id){toast("ابتدا وارد شوید.");break;} it[b.dataset.k]={...(it[b.dataset.k]||{}),owner:S.me.id}; await schSave(b.dataset.id,{items:it}); break; }
+    case "risk-open": { const t=b.dataset.t, id=b.dataset.id;
+      if(t==="sch"){ const pp=SCH.find(x=>x.id===id); S.mod="scholar"; S.sub=pp?schStatus(pp):"doing"; }
+      else if(t==="task"){ S.mod="bpms"; S.sub="tasks"; }
+      else { S.mod="market"; S.sub="tracking"; }
+      S.q=""; S.forceFull=true; render(); window.scrollTo(0,0); break; }
     case "risk-return": if(confirm("این مورد به‌دلیل ددلاین بازگردانده شود تا شخص دیگری انجام دهد؟")) await riskReturn(b.dataset.t,b.dataset.id); break;
     case "sch-unclaim": { { const pp=SCH.find(x=>x.id===b.dataset.id); if(pp&&schLockedForMe(pp)){ toast("فقط کسی که بورسیه را برداشته یا مالک می‌تواند رها کند."); break; } } const cur=schState(b.dataset.id), it={...(cur.items||{})}; it[b.dataset.k]={...(it[b.dataset.k]||{}),owner:null}; await schSave(b.dataset.id,{items:it}); break; }
     case "nda-open": ndaView(b.dataset.m); break;
