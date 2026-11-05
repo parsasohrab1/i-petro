@@ -25,7 +25,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": -13,
+   "days_left": -14,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -66,7 +66,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": -14,
+   "days_left": -15,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -107,7 +107,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": -13,
+   "days_left": -14,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -148,7 +148,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": -13,
+   "days_left": -14,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -189,7 +189,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": -13,
+   "days_left": -14,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -230,7 +230,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": -12,
+   "days_left": -13,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -271,7 +271,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": -11,
+   "days_left": -12,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -312,7 +312,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": -7,
+   "days_left": -8,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -353,7 +353,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": -7,
+   "days_left": -8,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -394,7 +394,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": -6,
+   "days_left": -7,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -435,7 +435,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": -6,
+   "days_left": -7,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -476,7 +476,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": -4,
+   "days_left": -5,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -517,7 +517,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": -3,
+   "days_left": -4,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -556,7 +556,7 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": -2,
+   "days_left": -3,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -596,7 +596,7 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": 1,
+   "days_left": 0,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -631,7 +631,7 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": 6,
+   "days_left": 5,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -666,7 +666,7 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": 15,
+   "days_left": 14,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -700,7 +700,7 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": 12,
+   "days_left": 11,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -734,7 +734,7 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": 14,
+   "days_left": 13,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -769,7 +769,7 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": 26,
+   "days_left": 25,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -804,7 +804,7 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": 34,
+   "days_left": 33,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -839,7 +839,7 @@
    "domains": [
     "water"
    ],
-   "days_left": -8,
+   "days_left": -9,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -879,7 +879,7 @@
     "ai_cross_cutting",
     "medical"
    ],
-   "days_left": 12,
+   "days_left": 11,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -915,7 +915,7 @@
     "oil_gas",
     "urban"
    ],
-   "days_left": 19,
+   "days_left": 18,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -949,7 +949,7 @@
    "domains": [
     "urban"
    ],
-   "days_left": 16,
+   "days_left": 15,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-20T09:40:22",
@@ -983,7 +983,7 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": 69,
+   "days_left": 68,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-20T09:40:22",
@@ -1085,7 +1085,7 @@
    "domains": [
     "aerospace"
    ],
-   "days_left": -7,
+   "days_left": -8,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-21T09:36:20",
@@ -1124,7 +1124,7 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": -2,
+   "days_left": -3,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-21T09:36:20",
@@ -1164,7 +1164,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": -1,
+   "days_left": -2,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-21T09:36:20",
@@ -1203,7 +1203,7 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": 17,
+   "days_left": 16,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-21T09:36:20",
@@ -1237,7 +1237,7 @@
    "domains": [
     "web"
    ],
-   "days_left": 19,
+   "days_left": 18,
    "line": "web",
    "status": "new",
    "first_seen": "2026-10-21T09:36:20",
@@ -1305,7 +1305,7 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": 5,
+   "days_left": 4,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-22T09:39:52",
@@ -1339,7 +1339,7 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": 16,
+   "days_left": 15,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-22T09:39:52",
@@ -1373,7 +1373,7 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": 16,
+   "days_left": 15,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-22T09:39:52",
@@ -1407,7 +1407,7 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": 26,
+   "days_left": 25,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-22T09:39:52",
@@ -1441,7 +1441,7 @@
    "domains": [
     "aerospace"
    ],
-   "days_left": 21,
+   "days_left": 20,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-23T09:35:00",
@@ -1475,7 +1475,7 @@
    "domains": [
     "medical"
    ],
-   "days_left": 27,
+   "days_left": 26,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-23T09:35:00",
@@ -1509,7 +1509,7 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": 30,
+   "days_left": 29,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-23T09:35:00",
@@ -1645,7 +1645,7 @@
    "domains": [
     "urban"
    ],
-   "days_left": 5,
+   "days_left": 4,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-26T10:29:22",
@@ -1679,7 +1679,7 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": 19,
+   "days_left": 18,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-26T10:29:22",
@@ -1713,7 +1713,7 @@
    "domains": [
     "urban"
    ],
-   "days_left": 19,
+   "days_left": 18,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-26T10:29:22",
@@ -1781,7 +1781,7 @@
    "domains": [
     "urban"
    ],
-   "days_left": 6,
+   "days_left": 5,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-27T10:03:26",
@@ -1815,7 +1815,7 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": 19,
+   "days_left": 18,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-27T10:03:26",
@@ -1849,7 +1849,7 @@
    "domains": [
     "medical"
    ],
-   "days_left": 22,
+   "days_left": 21,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-27T10:03:26",
@@ -1883,7 +1883,7 @@
    "domains": [
     "urban"
    ],
-   "days_left": 23,
+   "days_left": 22,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-27T10:03:26",
@@ -1918,7 +1918,7 @@
    "domains": [
     "web"
    ],
-   "days_left": 5,
+   "days_left": 4,
    "line": "web",
    "status": "new",
    "first_seen": "2026-10-28T10:50:09",
@@ -1952,7 +1952,7 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": 23,
+   "days_left": 22,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-28T10:50:09",
@@ -1986,7 +1986,7 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": 33,
+   "days_left": 32,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-28T10:50:09",
@@ -2088,7 +2088,7 @@
    "domains": [
     "aerospace"
    ],
-   "days_left": 2,
+   "days_left": 1,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-29T11:07:42",
@@ -2122,7 +2122,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": 7,
+   "days_left": 6,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-29T11:07:42",
@@ -2156,7 +2156,7 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": 34,
+   "days_left": 33,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-29T11:07:42",
@@ -2225,7 +2225,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": 11,
+   "days_left": 10,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-30T11:05:47",
@@ -2259,7 +2259,7 @@
    "domains": [
     "aerospace"
    ],
-   "days_left": 26,
+   "days_left": 25,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-30T11:05:47",
@@ -2293,7 +2293,7 @@
    "domains": [
     "web"
    ],
-   "days_left": 43,
+   "days_left": 42,
    "line": "web",
    "status": "new",
    "first_seen": "2026-10-30T11:05:47",
@@ -2362,7 +2362,7 @@
    "domains": [
     "health_ai"
    ],
-   "days_left": 7,
+   "days_left": 6,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-30T22:04:27",
@@ -2409,7 +2409,7 @@
      "status": "new"
     }
    ],
-   "days_left": 105
+   "days_left": 104
   },
   "GRANT-HORIZON-HLTH-2027-03-TOOL-04": {
    "id": "GRANT-HORIZON-HLTH-2027-03-TOOL-04",
@@ -2523,7 +2523,7 @@
      "status": "new"
     }
    ],
-   "days_left": 91
+   "days_left": 90
   },
   "TED-760253-2026": {
    "id": "TED-760253-2026",
@@ -2548,7 +2548,7 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": 5,
+   "days_left": 4,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-02T12:50:26",
@@ -2582,7 +2582,7 @@
    "domains": [
     "aerospace"
    ],
-   "days_left": 12,
+   "days_left": 11,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-02T12:50:26",
@@ -2616,7 +2616,7 @@
    "domains": [
     "mining"
    ],
-   "days_left": 12,
+   "days_left": 11,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-02T12:50:26",
@@ -2650,7 +2650,7 @@
    "domains": [
     "mining"
    ],
-   "days_left": 12,
+   "days_left": 11,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-02T12:50:26",
@@ -2685,7 +2685,7 @@
    "domains": [
     "water"
    ],
-   "days_left": 19,
+   "days_left": 18,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-02T12:50:26",
@@ -2719,7 +2719,7 @@
    "domains": [
     "water"
    ],
-   "days_left": 20,
+   "days_left": 19,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-02T12:50:26",
@@ -2753,7 +2753,7 @@
    "domains": [
     "mining"
    ],
-   "days_left": 22,
+   "days_left": 21,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-02T12:50:26",
@@ -2787,7 +2787,7 @@
    "domains": [
     "urban"
    ],
-   "days_left": 26,
+   "days_left": 25,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-02T12:50:26",
@@ -2821,7 +2821,7 @@
    "domains": [
     "aerospace"
    ],
-   "days_left": 29,
+   "days_left": 28,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-02T12:50:26",
@@ -2856,7 +2856,7 @@
    "domains": [
     "water"
    ],
-   "days_left": 29,
+   "days_left": 28,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-02T12:50:26",
@@ -2890,7 +2890,7 @@
    "domains": [
     "mining"
    ],
-   "days_left": 34,
+   "days_left": 33,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-02T12:50:26",
@@ -2924,7 +2924,7 @@
    "domains": [
     "mining"
    ],
-   "days_left": 13,
+   "days_left": 12,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-03T12:17:26",
@@ -2958,7 +2958,7 @@
    "domains": [
     "aerospace"
    ],
-   "days_left": 29,
+   "days_left": 28,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-03T12:17:26",
@@ -2992,7 +2992,7 @@
    "domains": [
     "health_ai"
    ],
-   "days_left": 29,
+   "days_left": 28,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-03T12:17:26",
@@ -3061,7 +3061,7 @@
     "ai_cross_cutting",
     "medical"
    ],
-   "days_left": 28,
+   "days_left": 27,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-04T12:29:43",
@@ -3095,7 +3095,7 @@
    "domains": [
     "aerospace"
    ],
-   "days_left": 72,
+   "days_left": 71,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-04T12:29:43",
@@ -3129,7 +3129,7 @@
    "domains": [
     "water"
    ],
-   "days_left": 13,
+   "days_left": 12,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-04T12:29:43",
@@ -3163,7 +3163,7 @@
    "domains": [
     "water"
    ],
-   "days_left": 33,
+   "days_left": 32,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-04T12:29:43",
@@ -3197,7 +3197,7 @@
    "domains": [
     "mining"
    ],
-   "days_left": 33,
+   "days_left": 32,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-04T12:29:43",
@@ -3231,7 +3231,7 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": 47,
+   "days_left": 46,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-04T12:29:43",
@@ -3369,7 +3369,7 @@
     "mining",
     "oil_gas"
    ],
-   "days_left": 13,
+   "days_left": 12,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-04T12:29:43",
@@ -3405,7 +3405,7 @@
     "mining",
     "oil_gas"
    ],
-   "days_left": 13,
+   "days_left": 12,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-04T12:29:43",
@@ -3441,7 +3441,7 @@
     "mining",
     "oil_gas"
    ],
-   "days_left": 13,
+   "days_left": 12,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-04T12:29:43",
@@ -3477,7 +3477,7 @@
     "mining",
     "oil_gas"
    ],
-   "days_left": 13,
+   "days_left": 12,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-04T12:29:43",
@@ -3513,7 +3513,7 @@
     "mining",
     "oil_gas"
    ],
-   "days_left": 13,
+   "days_left": 12,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-04T12:29:43",
@@ -3549,7 +3549,7 @@
     "mining",
     "oil_gas"
    ],
-   "days_left": 13,
+   "days_left": 12,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-04T12:29:43",
@@ -3585,7 +3585,7 @@
     "mining",
     "oil_gas"
    ],
-   "days_left": 13,
+   "days_left": 12,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-04T12:29:43",
@@ -3621,7 +3621,7 @@
     "aerospace",
     "urban"
    ],
-   "days_left": 14,
+   "days_left": 13,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-04T12:29:43",
@@ -3656,13 +3656,217 @@
     "ai_cross_cutting",
     "medical"
    ],
-   "days_left": 42,
+   "days_left": 41,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-04T12:29:43",
    "history": [
     {
      "at": "2026-11-04T12:29:43",
+     "status": "new"
+    }
+   ]
+  },
+  "TED-767769-2026": {
+   "id": "TED-767769-2026",
+   "source": "TED (EU)",
+   "market": "international",
+   "title": "Ireland – Business development consultancy services – Ireland West SDZ Designated Activity Company DAC is seeking consultancy services to support the development of an Aviation Circular Economy Hub at Ireland West Airport Knock.",
+   "description": "MCC are publishing this competition on behalf of Ireland West SDZ Designated Activity Company. The brief is to undertake the market validation, technical, commercial and operational planning development work necessary to establish the proposed Hub’s viability. The tenderer shall identify an appropriate operating model and develop the project to a sufficiently advanced stage to support future applications for capital funding.",
+   "buyer": "Mayo County Council_1127",
+   "country": "IRL",
+   "deadline": "2026-11-24",
+   "published": "2026-11-05",
+   "url": "https://ted.europa.eu/en/notice/-/detail/767769-2026",
+   "notice_type": "cn-standard",
+   "sector": "دولتی",
+   "facts": {
+    "price": "ارزش برآوردی: 125,000 EUR",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "رویه‌ی باز اتحادیه اروپا – شرکت‌های خارج از EU معمولاً مجازند مگر محدودیت صریح در اسناد"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "aerospace"
+   ],
+   "days_left": 19,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-11-05T12:45:15",
+   "history": [
+    {
+     "at": "2026-11-05T12:45:15",
+     "status": "new"
+    }
+   ]
+  },
+  "TED-769129-2026": {
+   "id": "TED-769129-2026",
+   "source": "TED (EU)",
+   "market": "international",
+   "title": "Malta – Overhaul and refurbishment work – SPD8/2026/135 TENDER FOR THE RESTORATION OF A HISTORIC COASTAL ARTILLERY SEARCHLIGHT POST TO HIGH ENERGY EFFICIENCY STANDARDS USING ENVIRONMENTALLY FRIENDLY MATERIALS AND PRODUCTS AT THE INWADAR PARK.",
+   "description": "The subject of this tender is the restoration of a Historic Coastal artillery searchlight post to High Energy Efficiency Standards Using Environmentally Friendly Materials and Products at the Inwadar Park.",
+   "buyer": "Sectoral Procurement Directorate",
+   "country": "MLT",
+   "deadline": "2026-12-04",
+   "published": "2026-11-05",
+   "url": "https://ted.europa.eu/en/notice/-/detail/769129-2026",
+   "notice_type": "cn-standard",
+   "sector": "دولتی",
+   "facts": {
+    "price": "ارزش برآوردی: 88,350 EUR",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "رویه‌ی باز اتحادیه اروپا – شرکت‌های خارج از EU معمولاً مجازند مگر محدودیت صریح در اسناد"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "oil_gas"
+   ],
+   "days_left": 29,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-11-05T12:45:15",
+   "history": [
+    {
+     "at": "2026-11-05T12:45:15",
+     "status": "new"
+    }
+   ]
+  },
+  "TED-768434-2026": {
+   "id": "TED-768434-2026",
+   "source": "TED (EU)",
+   "market": "international",
+   "title": "Romania – Traffic-monitoring equipment – FURNIZAREA ȘI INTEGRAREA SISTEMELOR ITS (INTELLIGENT TRANSPORT SYSTEM) DE INFORMARE A CĂLĂTORILOR, MONITORIZARE VIDEO ȘI NUMĂRARE A CĂLĂTORILOR PENTRU FLOTA DE AUTOBUZE ȘI MICROBUZE DESTINATĂ TRANSPORTULUI PUBLIC DE PERSOANE DIN MUNICIPIUL BACĂU",
+   "description": "Prezenta procedură are ca obiect furnizarea, transportul, livrarea, montarea, instalarea, testarea, integrarea cu sistemul existent, punerea în funcțiune, și instruirea personalului beneficiarului pentru sisteme ITS (Intelligent Transport Systems) de informare a călătorilor, monitorizare video și numărare a călătorilor și sistem pentru asigurarea priorității de trecere în intersecții destinate flotei de autobuze și microbuze utilizate pentru prestarea serviciului public de transport de persoane din Municipiul Bacău, compus din: A. Calculator de bord cu ecran șofer pentru gestiune și management trafic (CGMT) si AVL cu sistem pentru asigurarea priorității de trecere în intersecții inclus; B. Sistem de supraveghere video, cu stocare locală si licență cu acces de la distanță; C. Sistem audio-video de informare a călătorilor; D. Sistem pentru numărarea călătorilor; E. Switch pentru conectarea echipamentelor; F. Router wireless pentru asigurarea accesului călătorilor la Internet. Obiectul procedurii il constituie: - achizitia de sisteme ITS de informare a călătorilor, monitorizare video si numărare a călătorilor pentru flota de autobuze și microbuze destinată transportului public de persoane din municipiul Bacău; - integrarea echipamentelor existente, instalate pe cele 48 autobuze și 10 microbuze electrice, aflate in exploatare la Transport Public SA Bacau cu sistemul ITS; - integrarea cu sistemele existente la nivelul Municipiului BACAU, achiziționate prin proiectul “Înnoirea parcului de vehicule destinate transportului public - achiziție de vehicule nepoluante”, precum si cu „Sistem de management al traficului pentru prioritizarea coridoarelor de transport public local și a deplasărilor cu bicicleta în municipiul Bacău”, cu sistemul ITS; Având în vedere că autobuzele electrice achiziționate prin proiectul „Înnoirea parcului de vehicule destinate transportului public – achiziție de vehicule nepoluante” au fost prevăzute cu infrastructura necesară instalării și integrării sistemelor ITS, iar furnizorul acestora și-a asumat colaborarea cu furnizorul echipamentelor ITS, ofertantul va avea obligația de a asigura integrarea funcțională a echipamentelor furnizate prin prezentul contract cu sistemele ITS existente la nivelul S.C. TRANSPORT PUBLIC S.A. Bacău. Conform caietului de sarcini achiziţia include şi servicii asociate (instruirea personalului desemnat de beneficiar privind exploatarea, întreținerea și utilizarea în condiții de siguranță, integrarea cu sistemul existent, verificările tehnice, probele de funcționare și testele de performanță, service si mentenanta in perioada de garantie şi orice alte costuri necesare îndeplinirii cerințelor din caietul de sarcini) care sunt incluse în preţul produselor. Contractul are caracter integrat, de tip „la cheie”, iar prețul ofertat va include toate costurile aferente furnizării, transportului, montării, instalării, configurării, testării, integrării, punerii în funcțiune, instruirii personalului, precum și toate materialele, accesoriile, consumabilele, licențele și serviciile necesare pentru realizarea integrală a obiectului contractului și obținerea unei soluții funcționale, complete și interoperabile cu infrastructura existentă.",
+   "buyer": "TRANSPORT PUBLIC SA",
+   "country": "ROU",
+   "deadline": "2026-12-04",
+   "published": "2026-11-05",
+   "url": "https://ted.europa.eu/en/notice/-/detail/768434-2026",
+   "notice_type": "cn-standard",
+   "sector": "دولتی",
+   "facts": {
+    "price": "ارزش برآوردی: 2,540,863 RON",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "رویه‌ی باز اتحادیه اروپا – شرکت‌های خارج از EU معمولاً مجازند مگر محدودیت صریح در اسناد"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "urban"
+   ],
+   "days_left": 29,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-11-05T12:45:15",
+   "history": [
+    {
+     "at": "2026-11-05T12:45:15",
+     "status": "new"
+    }
+   ]
+  },
+  "TED-770871-2026": {
+   "id": "TED-770871-2026",
+   "source": "TED (EU)",
+   "market": "international",
+   "title": "Sweden – Chemical products for the oil and gas industry – Kemikalie- och gasskåp till Försvarsmakten",
+   "description": ". . .",
+   "buyer": "Försvarsmakten",
+   "country": "SWE",
+   "deadline": "2026-12-15",
+   "published": "2026-11-05",
+   "url": "https://ted.europa.eu/en/notice/-/detail/770871-2026",
+   "notice_type": "cn-standard",
+   "sector": "دولتی",
+   "facts": {
+    "price": "ارزش برآوردی: 60,000,000 SEK (3 بخش)",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "رویه‌ی باز اتحادیه اروپا – شرکت‌های خارج از EU معمولاً مجازند مگر محدودیت صریح در اسناد"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "oil_gas"
+   ],
+   "days_left": 40,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-11-05T12:45:15",
+   "history": [
+    {
+     "at": "2026-11-05T12:45:15",
+     "status": "new"
+    }
+   ]
+  },
+  "TED-767993-2026": {
+   "id": "TED-767993-2026",
+   "source": "TED (EU)",
+   "market": "international",
+   "title": "France – Kerosene jet type fuels – Approvisionnement du service de l’énergie opérationnelle (SEO) en carburéacteur pour turbomachines d’aviation, type kérosène F-35, par introduction dans le central europe pipeline system (CEPS) de l’OTAN",
+   "description": "Approvisionnement d’un volume fixe de carburéacteur F-35 durant une année, avec introduction au HAVRE et à LAVÉRA. Les MS sont distincts en fonction du point d’introduction au HAVRE et à LAVERA (volume annuel estimé de 130 000 m3). S Description (BT-24-Lot) : Cette catégorie a pour objet la contractualisation des approvisionnements de volumes variables en carburéacteurs F-35, avec introduction dans le CEPS. Le lieu d’introduction est précisé dans le MS. Un MS est publié pour chaque besoin ponctuel (volume annuel estimé : 150 000m3).",
+   "buyer": "Centre de soutien technique et administratif (CSTA)",
+   "country": "FRA",
+   "deadline": "",
+   "published": "2026-11-05",
+   "url": "https://ted.europa.eu/en/notice/-/detail/767993-2026",
+   "notice_type": "cn-standard",
+   "sector": "دولتی",
+   "facts": {
+    "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "aerospace"
+   ],
+   "days_left": null,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-11-05T12:45:15",
+   "history": [
+    {
+     "at": "2026-11-05T12:45:15",
+     "status": "new"
+    }
+   ]
+  },
+  "TED-770257-2026": {
+   "id": "TED-770257-2026",
+   "source": "TED (EU)",
+   "market": "international",
+   "title": "Albania – Architectural, construction, engineering and inspection services – Preparation of audits, detailed design, tender documents, supervision of civil works for the implementation of energy efficiency measures in local public buildings across all four municipalities",
+   "description": "This Contract covers the preparation of investment-ready documentation for 50 pre-selected local public buildings in the municipalities of Berat, Shkodër, Korçë and Përmet, including offices, kindergartens, libraries, and social and cultural centres. The Assignment includes the preparation of energy audits, detailed technical designs, building permit documentation, Bills of Quantities, Environmental and Social Management Plans, and PRAG-compliant tender documentation. All 50 buildings will be assessed and prioritised in accordance with DCM No. 468/2024 . Based on this prioritisation, buildings with a total gross floor area of at least 22,000 m² will be selected for the implementation of energy-efficiency measures under a subsequent Works Contract. The Contract also includes the supervision of the civil works implemented in the selected buildings. The Service Contract is structured in two phases, comprising a total of 60 months of service provision, with a 12-month interim period between the two phases. Phase 1, lasting 24 months, covers the energy audit, preparation of the detailed technical design and preparation of the tender dossier for the Works Contract. This phase will be followed by a 12-month interim period, during which the procurement procedure for the Works Contract is expected to take place and no services will be required under the Service Contract. Phase 2, lasting 36 months, will cover the supervision and monitoring of the Works, commencing upon the start of the Works Contract.",
+   "buyer": "Ministry of Finance",
+   "country": "ALB",
+   "deadline": "",
+   "published": "2026-11-05",
+   "url": "https://ted.europa.eu/en/notice/-/detail/770257-2026",
+   "notice_type": "cn-standard",
+   "sector": "دولتی",
+   "facts": {
+    "price": "ارزش برآوردی: 2,100,000 EUR",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "oil_gas"
+   ],
+   "days_left": null,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-11-05T12:45:15",
+   "history": [
+    {
+     "at": "2026-11-05T12:45:15",
      "status": "new"
     }
    ]
@@ -5057,6 +5261,76 @@
     "WB-OP00478938",
     "WB-OP00478532",
     "TED-767422-2026"
+   ],
+   "actioned_ids": [],
+   "reminders": []
+  },
+  {
+   "at": "2026-11-05T12:45:17",
+   "collected": 397,
+   "matched": 40,
+   "partner_drafts": [],
+   "events_added": 0,
+   "scholarships_added": 0,
+   "investors_added": 0,
+   "investor_drafts": [
+    "revo",
+    "212",
+    "hub71",
+    "aramco-ventures",
+    "antler-menap",
+    "equinor-ventures",
+    "shell-ventures",
+    "ycombinator",
+    "techstars"
+   ],
+   "leads_added": 0,
+   "papers_lines": [],
+   "events_soon": [
+    {
+     "start": "2026-11-09",
+     "name": "Web Summit 2026",
+     "name_fa": "وب سامیت لیسبون",
+     "city": "لیسبون"
+    },
+    {
+     "start": "2026-11-16",
+     "name": "MEDICA 2026",
+     "name_fa": "نمایشگاه تجهیزات و فناوری پزشکی دوسلدورف",
+     "city": "دوسلدورف"
+    },
+    {
+     "start": "2026-12-06",
+     "name": "NeurIPS 2026",
+     "name_fa": "کنفرانس NeurIPS (سیدنی / آتلانتا / پاریس)",
+     "city": "سیدنی، آتلانتا، پاریس"
+    },
+    {
+     "start": "2026-12-07",
+     "name": "GITEX Global 2026",
+     "name_fa": "جیتکس دبی",
+     "city": "دبی (Expo City)"
+    },
+    {
+     "start": "2026-12-13",
+     "name": "Iran ITEX 1405 (5th) – Sharif University",
+     "name_fa": "پنجمین نمایشگاه ایران ایتکس دانشگاه صنعتی شریف",
+     "city": "تهران (دانشگاه صنعتی شریف)"
+    },
+    {
+     "start": "2026-12-20",
+     "name": "7th Iran Smart City & AI Conference and Exhibition",
+     "name_fa": "هفتمین نمایشگاه و کنفرانس بین‌المللی شهر هوشمند و هوش مصنوعی ایران (ایرانداک)",
+     "city": "تهران"
+    }
+   ],
+   "new_ids": [
+    "TED-767769-2026",
+    "TED-769129-2026",
+    "TED-768434-2026",
+    "TED-770871-2026",
+    "TED-767993-2026",
+    "TED-770257-2026"
    ],
    "actioned_ids": [],
    "reminders": []
