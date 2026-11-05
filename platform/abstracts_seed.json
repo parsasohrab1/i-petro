@@ -1,0 +1,463 @@
+{
+ "_note": "Abstract drafts for the Articles tab, one per venue id of ARTICLES_SEED. Quantitative results are bracketed placeholders [..] on purpose: fill them from the team's own measurements before submitting. Profiles give the typical abstract rules of each venue family; confirm them in the venue's official author guidelines.",
+ "profiles": {
+  "keai": {
+   "label": "Elsevier / KeAi journal",
+   "max": 250,
+   "min": 150,
+   "kw": "4–6",
+   "kw_label": "Keywords",
+   "rule": "Single unstructured paragraph, no references, no undefined abbreviations; state objective, method, main results and conclusion."
+  },
+  "ieee": {
+   "label": "IEEE conference",
+   "max": 250,
+   "min": 150,
+   "kw": "4–8",
+   "kw_label": "Index Terms",
+   "rule": "Single paragraph of 150–250 words; no equations, citations or undefined abbreviations; Index Terms in alphabetical order."
+  },
+  "springer": {
+   "label": "Springer / EasyChair conference",
+   "max": 250,
+   "min": 150,
+   "kw": "3–5",
+   "kw_label": "Keywords",
+   "rule": "Single paragraph of 150–250 words, written for the full-paper track; 3–5 keywords."
+  },
+  "easychair": {
+   "label": "EasyChair conference",
+   "max": 250,
+   "min": 150,
+   "kw": "3–6",
+   "kw_label": "Keywords",
+   "rule": "Plain-text abstract pasted into the EasyChair form; avoid formatting, special symbols and references."
+  },
+  "mdpi": {
+   "label": "MDPI journal",
+   "max": 200,
+   "min": 150,
+   "kw": "3–10",
+   "kw_label": "Keywords",
+   "rule": "Single paragraph, about 200 words maximum, no citations; a graphical abstract is optional."
+  },
+  "bentham": {
+   "label": "Bentham Science journal",
+   "max": 250,
+   "min": 150,
+   "kw": "4–6",
+   "kw_label": "Keywords",
+   "rule": "Single paragraph of up to 250 words, no references; objective, methods, results, conclusion in running text."
+  },
+  "npj": {
+   "label": "Nature Portfolio (npj Digital Medicine)",
+   "max": 150,
+   "min": 100,
+   "kw": "—",
+   "kw_label": "Keywords",
+   "rule": "Unstructured summary of up to about 150 words, no references, no abbreviations where avoidable; keywords are entered in the submission system."
+  },
+  "frontiers": {
+   "label": "Frontiers Research Topic",
+   "max": 350,
+   "min": 200,
+   "kw": "5–8",
+   "kw_label": "Keywords",
+   "rule": "Up to 350 words; state the problem, approach, findings and implications; 5–8 keywords."
+  },
+  "poster": {
+   "label": "Conference poster abstract",
+   "max": 250,
+   "min": 120,
+   "kw": "3–5",
+   "kw_label": "Keywords",
+   "rule": "Short plain-text abstract for the poster track; state the question, approach and what will be shown on the poster."
+  }
+ },
+ "abstracts": {
+  "s_iqim": {
+   "profile": "easychair",
+   "product": "hqca",
+   "title": "Distribution-Free Uncertainty Intervals for Binding-Affinity Predictions: Global versus Mondrian Conformal Calibration on COX-2 and EGFR",
+   "abstract": "Reliable use of machine-learning predictions in drug discovery requires an estimate of how far a predicted binding affinity can be trusted. We add distribution-free uncertainty intervals to the affinity predictions of a hybrid quantum–classical drug-discovery platform, treating the platform's predictor as a black box. Split conformal prediction gives intervals with a guaranteed marginal coverage, and a Mondrian variant calibrates separately within strata of the predicted value. We evaluated both on two real targets with measured activity from ChEMBL: 4,392 COX-2 molecules, where the empirical coverage for a nominal 0.90 was between 0.88 and 0.90, and 3,884 EGFR molecules, with ten random seeds and both random and scaffold-based splits. On EGFR the coverage was 0.896 (95% interval ± 0.009) for a random split and 0.894 (± 0.014) when whole chemical scaffolds were held out, so the marginal guarantee held under chemical-series shift. The Mondrian variant did not improve it: worst-stratum coverage was 0.870 against 0.868 for the global variant on a random split. Coverage within groups of true activity was weaker, with the worst group at 0.83 for a random split and 0.78 for the scaffold split for both variants, and the intervals were wide (about 2.8 pIC50 units, 3.3 under scaffold shift). We report this as a negative result for stratification and a caution for activity-conditional claims. Further targets and a comparison with the platform's own predictor are [to be measured].",
+   "keywords": [
+    "conformal prediction",
+    "binding affinity",
+    "uncertainty quantification",
+    "ChEMBL",
+    "drug discovery"
+   ],
+   "draft_note": "COX-2 numbers come from the owner's earlier local run; EGFR numbers were measured with research/s_iqim_hqca (ChEMBL 25 data from a public GitHub copy, CC BY 4.0), results in research/s_iqim_hqca/results.json. The uncertainty layer treats the predictor as a black box and does not disclose any claimed method; a patent attorney must still review before submission."
+  },
+  "s_eg": {
+   "profile": "keai",
+   "product": "stratguard",
+   "title": "Certified Facies Sets from Well Logs: Conformal Coverage, Per-Well Reliability and Stratigraphic Decoding on the SEG 2016 and FORCE 2020 Data",
+   "abstract": "Machine-learning facies interpretation from well logs rarely states how uncertain each depth is. We present StratGuard, a framework that returns, for every depth, a calibrated set of admissible facies using split conformal prediction, decodes the facies sequence with a learned stratigraphic transition grammar, and refers uncertain depths to a geologist. We evaluated it on two public data sets with splits by well: SEG 2016 (10 Kansas wells, 9 facies) and FORCE 2020 (81 North Sea wells, lithology). With a 0.90 target, mean coverage was 0.904 and 0.889, but coverage in the worst well was only 0.735 and 0.599, and 19 of 81 FORCE wells fell below 0.85, so the marginal guarantee does not hold well by well. Decoding removed all grammar-violating transitions (80 and 726 to zero) but changed accuracy only from 0.531 to 0.547 on SEG 2016 and lowered it from 0.689 to 0.666 on FORCE. Referral worked on FORCE (61.6% of depths referred, accuracy on retained depths 0.855; 40.8% with a boundary-aware rule, 0.796) but was impractical on SEG 2016, where mean set size was 3.3 and 89% of depths were referred. Certified sets make facies uncertainty explicit and auditable, but per-well calibration is needed before they support subsurface decisions. Per-class coverage and the FORCE licence check are [to be measured].",
+   "keywords": [
+    "facies interpretation",
+    "well logs",
+    "conformal prediction",
+    "uncertainty quantification",
+    "subsurface engineering"
+   ],
+   "draft_note": "Numbers measured in research/s_eg_stratguard (private repo, branch research-real-data-validation) on SEG 2016 + FORCE 2020; verify FORCE licence; re-run before submission."
+  },
+  "s_qip": {
+   "profile": "poster",
+   "product": "qshot",
+   "title": "Shot-Budget Allocation for Pauli-Sum Observables: A Simulation Study of Weighted Allocation and Classical Shadows",
+   "abstract": "Estimating the expectation value of a Hamiltonian on a quantum computer requires many repeated measurements, and the way a fixed budget of shots is divided among the Pauli terms determines the accuracy of the estimate. We compare uniform allocation, allocation weighted by coefficient magnitude and random-Pauli classical shadows at equal total shot budget for the ground states of H2 (4 qubits, 14 Pauli terms) and LiH (12 qubits, 630 terms) in the STO-3G basis. The Hamiltonians are computed with PySCF and OpenFermion and not measured on a device, because no public hardware measurement data set was found. Variances of the term-wise allocations were computed exactly and those of the shadows by Monte Carlo. Relative to uniform allocation, weighting by coefficient magnitude lowered the root-mean-square error by 14% for LiH but raised it by 35% for H2, and classical shadows gave about three times the error of uniform allocation for both molecules. An oracle allocation that uses the unknown state reached 0.57 (LiH) and 0.75 (H2) of the uniform error, and no scheme without grouping reached chemical accuracy (1.6 mHa) for LiH at 10^6 shots (best: 5.9 mHa without the oracle). The poster will show the protocol, this negative result for shadows and the limits of a simulation-only study. Grouping of commuting terms, larger molecules and hardware noise are [to be measured]; we make no claim about performance on hardware.",
+   "keywords": [
+    "shot budget",
+    "Pauli observables",
+    "classical shadows",
+    "measurement allocation",
+    "quantum simulation"
+   ],
+   "draft_note": "Measured in research/s_qip_shotlab (private repo, branch research-real-data-validation) with PySCF/OpenFermion Hamiltonians; replaces the earlier claim of 11-12% lower RMSE for weighted allocation and shadows, which the exact variances do not support. Re-run before submission."
+  },
+  "s_icmhi": {
+   "profile": "easychair",
+   "product": "ipind",
+   "title": "Applicability Domain of Lipid-Nanoparticle Property Models: Conformal Coverage under Chemical-Series Shift",
+   "abstract": "Machine-learning models for the design of lipid nanoparticles are trained on libraries of related lipids and then used on new chemical series, where their error estimates may no longer hold. We study the applicability domain of a property-prediction model for ionisable lipids and test whether conformal prediction intervals stay valid when the test lipids belong to a chemical series that was not seen in training. Using the public LANTERN/AGILE data of about 1,100 lipids, we compare random splits with series-level splits. Under series-level shift the empirical coverage of the intervals was 0.72 against a nominal 0.90, a clear warning that random-split evaluation overstates reliability. Series-aware cross-conformal calibration, a second regressor (a graph model or a pretrained chemistry model), a second lipid data set and repeated seeds are [to be measured]. We conclude that uncertainty claims for delivery-system design models should be tested under chemical-series shift, and we provide a reproducible protocol for doing so, relevant to medical and health informatics applications of AI-designed delivery systems.",
+   "keywords": [
+    "lipid nanoparticles",
+    "applicability domain",
+    "conformal prediction",
+    "distribution shift",
+    "health informatics"
+   ],
+   "draft_note": "Numbers are the results recorded for this venue in the page database (owner's own runs). Check them against the paper-drafts before use; anything marked [to be measured] has not been measured. Topic fit with a medical-informatics venue should be checked."
+  },
+  "s_isie": {
+   "profile": "ieee",
+   "product": "apexasset",
+   "title": "A Conservative Lower Bound on Remaining Useful Life as an Add-On to an Asset Digital Twin: Validation on NASA IMS Bearing Failures",
+   "abstract": "Digital twins of industrial assets use remaining useful life (RUL) predictions to plan maintenance, but a single predicted value hides how often it is too optimistic. This paper studies a conservative lower bound on RUL as an add-on to an asset life-cycle digital twin. The add-on subtracts from the RUL estimate a calibrated quantile of its past overestimation errors, obtained by leave-one-bearing-out prediction on the training machines, and it does not depend on how the estimate itself is produced. We evaluated it on the four documented failures of the NASA IMS (Intelligent Maintenance Systems) bearing run-to-failure experiments, holding out one failure at a time and comparing it with a constant-life baseline and with the uncorrected estimate from a monotone map of a vibration health index. In the last 48 hours before failure, the uncorrected estimate overestimated the remaining life 66% of the time on average, whereas the lower bound at a 90% target never did in any of the four held-out failures. Over the whole life the lower bound overestimated 18% of the time instead of 48%, which is above the 10% target and reached 55% in one failure. The price of the conservatism was early alerts: 23% of the time the bound signalled less than 48 hours of remaining life while more than 192 hours remained, mainly for the longest-lived bearing. With only four failures the results are indicative only. A second run-to-failure data set and a comparison with learned RUL models are [to be measured].",
+   "keywords": [
+    "remaining useful life",
+    "digital twin",
+    "predictive maintenance",
+    "bearing failure",
+    "conservative prediction",
+    "uncertainty"
+   ],
+   "draft_note": "Numbers were measured with the research/s_isie_apexasset module on the four NASA IMS failures (feature tables from a public GitHub mirror, MIT licence; cite Lee et al. 2007 and Hora & Rezapour). Results file: research/s_isie_apexasset/results.json. The add-on is independent of the product's claimed functions; a patent attorney must still review before submission."
+  },
+  "s_hydro": {
+   "profile": "mdpi",
+   "product": "hydrogate",
+   "title": "Does Hydrograph-State Gating Improve Seven-Day Streamflow Forecasts? A Negative-Result Benchmark on Five USGS Rivers",
+   "abstract": "Streamflow behaves differently on rising, receding and stable limbs of the hydrograph, and separate models for each state are often proposed. This study tests whether such state gating improves seven-day-ahead forecasts. For five USGS rivers (2000–2024), a global gradient-boosting model with lagged and seasonal features is compared with persistence and with a hard-gated model that selects a state-specific model from the hydrograph state of the current day, using chronological splits, RMSE and Nash–Sutcliffe efficiency. The global model outperformed persistence. The gated model was worse than the global model at all five stations. We report this as a negative result: gating divides the training data into smaller samples and adds no information beyond the lagged and seasonal features. Precipitation and snow forcing (for example from NLDAS or CAMELS-US), a deep-learning learner, the separation of dam-regulated gauges and rolling-origin evaluation with confidence intervals are [to be measured]. The benchmark and code are provided so that others can test gating in other basins.",
+   "keywords": [
+    "streamflow forecasting",
+    "hydrograph state",
+    "gradient boosting",
+    "benchmark",
+    "negative result"
+   ],
+   "draft_note": "Numbers are the results recorded for this venue in the page database (owner's own runs). Check them against the paper-drafts before use; anything marked [to be measured] has not been measured."
+  },
+  "s_iai": {
+   "profile": "springer",
+   "product": "fidps",
+   "title": "Log Zonation by Change-Point Segmentation for Drilling and Completion Data: A Neutral Result on Eight SEG 2016 Wells",
+   "abstract": "Industrial AI for drilling and completion depends on dividing continuous log data into zones before further analysis, and change-point segmentation is a natural candidate. This paper evaluates a log-zonation module that was added next to a formation-integrity damage prevention system and is independent of its claimed functions. We tested PELT change-point segmentation against a smoothed-gradient peak baseline on 62 wells of the public FORCE 2020 data set (gamma ray, density, neutron porosity and sonic logs), using stratigraphic group boundaries as a surrogate ground truth, a tolerance of 15 m and one tuning parameter per method chosen on half of the wells. On the other half, the F1 score for boundaries was 0.33 for PELT, 0.30 for the baseline and 0.09 for random boundaries over five splits by well. The advantage of 0.03 is small and no significance test was done; both methods over-segmented, with 9 and 13 predicted boundaries per well against 5 true ones. An earlier test on the SEG 2016 wells had favoured the baseline (0.62 against 0.55), so the ranking depends on the data. We report this neutral result because it shows that, on public wells, a simple baseline is hard to beat for this task. No real formation-damage data were available, so no claim is made about damage prediction. Real drilling or damage data (for example the Volve data after a licence check), a redefinition of the contribution towards formation integrity and significance tests are [to be measured].",
+   "keywords": [
+    "log zonation",
+    "change-point detection",
+    "well logs",
+    "drilling data",
+    "industrial AI"
+   ],
+   "draft_note": "Measured in research/s_iai_fidps (private repo, branch research-real-data-validation) on FORCE 2020 (62 wells); surrogate ground truth = group boundaries; verify FORCE licence. Re-run before submission."
+  },
+  "s_iqicsa": {
+   "profile": "easychair",
+   "product": "qgridpart",
+   "title": "QAOA for Splitting a Power Network into Two Islands: A Comparison with Greedy and Spectral Partitioning on the IEEE 14-Bus Case",
+   "abstract": "Splitting a power network into two islands can be written as a combinatorial optimisation problem and has been proposed as an application of the quantum approximate optimisation algorithm (QAOA). We compare QAOA, simulated exactly with state vectors, with greedy local search and a spectral heuristic on two IEEE test systems (9 and 14 buses; MATPOWER data distributed with pandapower), with edge weights equal to the active-power flows of an AC power flow. For weighted MaxCut at depths p = 1, 2 and 3, QAOA reached approximation ratios of 0.742, 0.797 and 0.714 on the 9-bus system and 0.760, 0.820 and 0.753 on the 14-bus system, whereas greedy search found the optimum in both (1.00) and the spectral heuristic reached 1.00 and 0.62. The ratio did not increase monotonically with depth, which points to the classical optimiser as the limit. For an islanding objective that adds the power imbalance of an island and requires at least three buses per island, QAOA's expected cost remained close to that of random splits (normalised score 0.10 to 0.31) while single-flip descent found the exact optimum. We report this as a neutral result at this size: the quantum method does not improve on cheap classical baselines. Larger networks (30 buses and more) with tensor-network simulation, noise models, other optimisers and hardware data are [to be measured].",
+   "keywords": [
+    "QAOA",
+    "power system islanding",
+    "MaxCut",
+    "IEEE 14-bus",
+    "quantum optimisation"
+   ],
+   "draft_note": "Measured in research/s_iqicsa_qgrid (private repo, branch research-real-data-validation) on pandapower-bundled IEEE case9/case14 with AC power-flow weights; replaces the owner's unit-weight case14 run. Re-run before submission."
+  },
+  "s_mimar": {
+   "profile": "springer",
+   "product": "gas_turbine",
+   "title": "Monitoring Drift in Predictive Emission Models of Gas Turbines with Adaptive Conformal Intervals",
+   "abstract": "Predictive emission monitoring systems (PEMS) estimate gas-turbine emissions from process variables, but their error grows when the operating conditions drift. This paper studies conformal prediction intervals for the prediction of nitrogen oxides (NOx) under drift, as a monitoring add-on to a digital twin of a gas turbine. We use the public UCI gas-turbine data set (36,733 records, 2011–2015) and compare a conformal interval calibrated once with an adaptive conformal inference (ACI) scheme that updates its level online. With the fixed calibration the empirical coverage of the NOx interval fell to 0.32 as the data drifted, while ACI stayed at the nominal 0.90 level at the cost of intervals about twice as wide. The use of a small share (1–5%) of reference labels, a sweep of the ACI step size, a physics-based baseline and a second PEMS data set are [to be measured]. The results show that fixed conformal calibration should not be used for emission monitoring under drift and that the width of the adaptive interval is the price of keeping its coverage.",
+   "keywords": [
+    "predictive emission monitoring",
+    "conformal prediction",
+    "concept drift",
+    "gas turbine",
+    "digital twin"
+   ],
+   "draft_note": "Numbers are the results recorded for this venue in the page database (owner's own runs). Check them against the paper-drafts before use; anything marked [to be measured] has not been measured. Only claim 8421 was read for this product; other digital-twin filings must be checked by the patent attorney."
+  },
+  "s_aimh": {
+   "profile": "easychair",
+   "product": "lnp",
+   "title": "Stereochemistry-Aware Representations for Predicting Lipid-Nanoparticle Transfection: A Preliminary Study on Cis/Trans Lipids",
+   "abstract": "The transfection efficiency of lipid nanoparticles depends on the molecular structure of the ionisable lipid, including its cis/trans stereochemistry, which many molecular representations ignore. This preliminary study tests whether a stereo-sensitive representation improves the prediction of transfection. We use the public LANTERN data: the AGILE set of about 1,100 lipids and the CisTrans set of 200 lipids. Compared with a representation that is blind to stereochemistry, the stereo-sensitive one reduced the RMSE from 2.24 to 1.83 and raised the Spearman correlation from 0.50 to 0.58. The result comes from a single random seed and the data contain no matched isomer pairs, so it cannot separate the effect of stereochemistry from other differences between lipids. At least ten seeds with confidence intervals, a graph-based model, matched isomer pairs from a new source and a comparison with the filed claims are [to be measured]. The study indicates that stereochemistry deserves explicit treatment in AI for gene-delivery design, in the context of AI in medicine and healthcare.",
+   "keywords": [
+    "lipid nanoparticles",
+    "stereochemistry",
+    "gene delivery",
+    "molecular representation",
+    "AI in medicine"
+   ],
+   "draft_note": "Numbers are the results recorded for this venue in the page database (owner's own runs). Check them against the paper-drafts before use; anything marked [to be measured] has not been measured. Only part of the claims was compared (claim 3426)."
+  },
+  "s_quantics": {
+   "profile": "easychair",
+   "product": "qrngaudit",
+   "title": "QRNG-Audit: Statistical Health Audit of Quantum Random Bits from Nine IBM Quantum Computers",
+   "abstract": "Quantum random number generators are used in communication and security systems, and their output must be checked because a faulty device can produce biased or correlated bits. Applying a battery of statistical tests to many bit strings and flagging any string with a small p-value causes many false alarms at device level. We present QRNG-Audit, which runs five basic statistical tests per bit string, tests the uniformity of the p-values per device and circuit, and applies Benjamini–Hochberg correction at a target false discovery rate. We applied it to raw output from nine IBM quantum computers (Zenodo record 10542216, CC BY 4.0). Ideal control sources raised no alarm, and pseudo-random generators with a bias of 1% to 9% were detected. Of 28 device and circuit combinations, 23 were flagged, mostly because of slightly more zeros than ones. This confirms earlier findings on IBM devices (arXiv 2401.12250), and we do not claim novelty over them. The full NIST SP 800-90B estimator set, a power curve against bias, fresh data from an IBM account and an explicit comparison with the earlier work are [to be measured].",
+   "keywords": [
+    "quantum random number generator",
+    "statistical testing",
+    "false discovery rate",
+    "IBM Quantum",
+    "randomness audit"
+   ],
+   "draft_note": "Numbers are the results recorded for this venue in the page database (owner's own runs). Check them against the paper-drafts before use; anything marked [to be measured] has not been measured."
+  },
+  "s_jimg": {
+   "profile": "mdpi",
+   "product": "pgx",
+   "title": "Population Equity of Pharmacogenomic Panels: How Many Actionable CPIC Alleles Does a European-Designed Panel Miss?",
+   "abstract": "Pharmacogenomic panels are usually designed with allele frequencies measured in European populations, and their value for other populations is rarely quantified. Using the CPIC guideline data for nine genes and nine population groups, we compute the share of actionable (abnormal-function) alleles that a panel designed from European frequencies would not capture. Such a panel misses about 49% of the abnormal alleles in sub-Saharan African populations and about 47% in East Asian populations, against 19% in Europeans. The analysis uses published frequencies and no individual-level data. Verification against the 1000 Genomes data, the gene CYP2D6 with its structural variants, sampling-based confidence intervals and a group close to the Iranian population are [to be measured]. The result shows that panel design needs population-specific frequency data to avoid unequal clinical benefit. The topic is genomic rather than imaging, and its fit with this special issue must be confirmed with the editors before submission.",
+   "keywords": [
+    "pharmacogenomics",
+    "CPIC",
+    "population equity",
+    "allele frequency",
+    "clinical decision support"
+   ],
+   "draft_note": "Numbers are the results recorded for this venue in the page database (owner's own runs). Check them against the paper-drafts before use; anything marked [to be measured] has not been measured. The owner's task list warns that the topic does not match Journal of Imaging; a better journal should be proposed. The adjacent claim 2 of filing 3428 must be reviewed by the attorney."
+  },
+  "s_icqe": {
+   "profile": "easychair",
+   "product": "stretchwatch",
+   "title": "StretchWatch: Loss of the Hartree–Fock Reference along Bond-Stretching Curves, with Relevance to Quantum Energy Materials",
+   "abstract": "Quantum algorithms for energy materials, such as battery and fuel molecules, often start from the Hartree–Fock (HF) state, but HF becomes a poor approximation of the ground state when bonds are stretched. We quantify this for H2, LiH, BeH2 and H2O in the STO-3G basis (and LiH in 6-31G) with Hamiltonians computed in PySCF, not measured, and compare the squared overlap of the HF determinant with the full-configuration-interaction (FCI) ground state and the entropy of the natural-orbital occupations as indicators of starting-point quality. H2 at 0.74 Å reproduces the literature energy of −1.1373 Ha. The squared overlap falls from 0.98 near equilibrium to 0.50 for H2 at 4 Å, 0.56 for LiH at 4 Å, 0.38 for BeH2 at 3.5 Å and 0.36 for H2O at 2.2 Å. Within each molecule, overlap and entropy were almost perfectly rank-anticorrelated (Spearman −0.99 to −1.0), so combining them in one index adds little information. CCSD(T) agreed with FCI to better than 1 mHa near equilibrium and failed at long distances, where a restricted HF calculation can also converge to a wrong ionic solution; five such points are flagged and excluded, including the extreme LiH distance reported earlier. The study offers a simple, reproducible check of when an HF start is unsuitable. Active spaces for larger molecules, other reference states and a link to specific energy materials with references are [to be measured].",
+   "keywords": [
+    "Hartree–Fock",
+    "VQE",
+    "bond stretching",
+    "quantum energy",
+    "natural-orbital entropy"
+   ],
+   "draft_note": "Measured in research/s_icqe_stretchwatch (private repo, branch research-real-data-validation) with PySCF FCI/CCSD(T); replaces the earlier LiH 8 A overlap 0.008, which was an SCF artefact. Re-run before submission."
+  },
+  "s_cmi": {
+   "profile": "bentham",
+   "product": "explainguard",
+   "title": "ExplainGuard: Faithfulness Testing of Saliency Maps on Chest X-Rays, and Why Gradient Explanations Can Be Worse than Random",
+   "abstract": "Saliency maps are widely shown next to medical image predictions, yet they are rarely tested for whether they reflect what a model uses. This study presents ExplainGuard, a framework that measures explanation faithfulness with perturbation tests and compares explanation methods with a random map. We applied it to PneumoniaMNIST chest X-ray images at 64×64 pixels (Zenodo). Gradient and gradient×input maps were less faithful than a random map, with a confidence interval that excludes zero, whereas occlusion was more faithful and more stable. The advantage of occlusion is partly structural because its perturbation is of the same kind as the faithfulness metric. No foundation model was evaluated, although this is the topic of the special issue. A pretrained medical encoder (weights and a GPU are needed), a real localisation reference such as RSNA bounding boxes, more seeds and a weight-randomisation check are [to be measured]. The results suggest that faithfulness testing should precede the clinical display of saliency maps.",
+   "keywords": [
+    "explainable AI",
+    "faithfulness",
+    "saliency maps",
+    "chest X-ray",
+    "model validation"
+   ],
+   "draft_note": "Numbers are the results recorded for this venue in the page database (owner's own runs). Check them against the paper-drafts before use; anything marked [to be measured] has not been measured. No foundation model was evaluated, which is the topic of the special issue."
+  },
+  "s_front_nuc": {
+   "profile": "frontiers",
+   "product": "nuclear",
+   "title": "Open-Set Identification of Nuclear Plant Accidents: How Reliably Are Unknown Accident Types Detected in Simulator Data?",
+   "abstract": "Machine-learning classifiers for accident identification in nuclear power plants are trained on a fixed list of accident types, but an operator must also be warned when an accident of an unknown type occurs. This study evaluates open-set identification on the NPPAD data set, which comes from PCTRAN simulation (246 runs, 18 accident types) and not from a real plant. We measure the false rejection of known accidents and the detection of accident types that were held out of training. The false rejection of known accidents was about 0.10. The detection of unknown types depended strongly on the type and was on average between 27% and 49%. Open-set methods of this kind have been published before, and we claim no novelty in method. The full set of 1,217 NPPAD runs, the alignment of the analysis window with the accident onset, OpenMax and prototype-based CNN variants, and a comparison with the filed claims are [to be measured]. All results come from simulation and not from plant records, so they should be read as an upper bound on field performance. The results show that a simulator-trained classifier cannot yet be relied upon to flag unknown accidents, and the paper discusses the verification and validation needed before any use in an operating plant, where such a system would only support licensed operators.",
+   "keywords": [
+    "nuclear power plant",
+    "accident identification",
+    "open-set recognition",
+    "machine learning",
+    "simulator data"
+   ],
+   "draft_note": "Numbers are the results recorded for this venue in the page database (owner's own runs). Check them against the paper-drafts before use; anything marked [to be measured] has not been measured. Claims 1654 and 1782 are adjacent; the attorney must review."
+  },
+  "s_jpse": {
+   "profile": "keai",
+   "product": "terminals",
+   "title": "Conformal Forecast Intervals for Crude-Oil Inventories: Weekly US Data as a Proxy for Terminal-Level Monitoring",
+   "abstract": "Operators of storage terminals need forecasts of inventory with a stated uncertainty, but terminal-level tank data are rarely public. As a proxy we use the weekly US crude-oil inventories of the EIA (1982–2026, 2,299 weeks) and test a ridge-regression forecast with conformal prediction intervals at horizons of one to four weeks. The ridge model reduced the error by 5% to 11% compared with persistence, and the conformal intervals achieved a coverage between 0.86 and 0.91 for a nominal 0.90. The data are national inventories and not tank levels, and the journal is about pipelines, so the fit of the study with the journal is weak. Real tank-level data from the owner, exogenous drivers such as refinery runs and imports, a comparison with consensus forecasts and the identification of the filed claims of the product are [to be measured]. The study shows that simple interval forecasts are feasible for inventory monitoring and sets a baseline for terminal-level data.",
+   "keywords": [
+    "inventory forecasting",
+    "conformal prediction",
+    "storage terminals",
+    "crude oil",
+    "uncertainty"
+   ],
+   "draft_note": "Numbers are the results recorded for this venue in the page database (owner's own runs). Check them against the paper-drafts before use; anything marked [to be measured] has not been measured. Weak fit with the journal; the owner's task list asks for a better journal to be proposed. No claim document for the product was found."
+  },
+  "s_mie": {
+   "profile": "easychair",
+   "product": "readmitcal",
+   "title": "ReadmitCal: Are 30-Day Readmission Models for Patients with Diabetes Already Calibrated? A Negative Result on 69,990 Patients",
+   "abstract": "Hospital readmission risk models are used to allocate follow-up resources, and calibration of their probabilities is often recommended. We test whether post-hoc recalibration, overall and within subgroups, improves 30-day readmission models for patients with diabetes. Using the UCI Diabetes 130-US hospitals data (69,990 patients) with patient-level splits, we trained standard classifiers and compared Platt scaling, isotonic regression, temperature scaling and the same methods fitted per subgroup. The models were already well calibrated before any correction, with an expected calibration error of about 0.007, and neither recalibration nor subgroup recalibration helped. Discrimination was modest, with an AUROC of only 0.645. We report this as a negative result: for this data set calibration is not the limiting problem and discrimination is. Temporal validation, confidence intervals over several splits and a comparison with published fairness audits are [to be measured]. The study indicates that calibration auditing should check first whether a model is already calibrated and gives a reproducible benchmark for health informatics.",
+   "keywords": [
+    "hospital readmission",
+    "calibration",
+    "diabetes",
+    "negative result",
+    "medical informatics"
+   ],
+   "draft_note": "Numbers are the results recorded for this venue in the page database (owner's own runs). Check them against the paper-drafts before use; anything marked [to be measured] has not been measured."
+  },
+  "s_npj": {
+   "profile": "npj",
+   "product": "wearshift",
+   "title": "Random Splits Overstate Wearable Activity Recognition: Per-Subject Accuracy on UCI HAR",
+   "abstract": "Reported accuracy of wearable activity recognition depends on how the data are split. Using the UCI HAR data of 30 subjects, we compare random window splits with subject-level splits. Random splitting overstated accuracy by 3 to 5 percentage points, and some subjects reached only 72% to 79% accuracy. Conformal prediction intervals kept coverage above 0.9 in both settings, so no leakage effect on coverage was seen. The study is small and its fit with this journal is doubtful. Several seeds with confidence intervals, deep models and harder free-living or clinical data are [to be measured]. We recommend subject-level evaluation and per-subject reporting for digital-health claims based on wearable sensors.",
+   "keywords": [
+    "wearable sensors",
+    "activity recognition",
+    "evaluation protocol",
+    "data leakage",
+    "digital health"
+   ],
+   "draft_note": "Numbers are the results recorded for this venue in the page database (owner's own runs). Check them against the paper-drafts before use; anything marked [to be measured] has not been measured. The owner's task list marks the fit with npj Digital Medicine as doubtful; step 0 is to assess the fit or choose a better journal."
+  },
+  "s_pet": {
+   "profile": "keai",
+   "product": "ilift",
+   "title": "Conformal Alarm Thresholds for Oil-Well Fault Detection on Real Petrobras 3W Data: A Well-Level Evaluation of False-Alarm Control and Detection",
+   "abstract": "Fault detection in oil wells must keep false alarms low while still detecting faults. We study a conformal alarm threshold as an add-on to an artificial-lift management system, using the public Petrobras 3W data, version 2: 1,119 real instances from 40 wells (594 normal, 525 faults of nine types). A robust z-score statistic is computed from seven sensors against a reference taken at the start of each instance, and the threshold is the conformal quantile of the maxima of normal calibration instances at a target false-alarm rate of 0.10. Wells were split between calibration and test in 20 random repetitions. The false-alarm rate on unseen wells was 0.147 on average, but ranged from 0.009 to 0.551 between splits and exceeded the target in half of them; fixed thresholds of z = 5, 10 and 20 gave 0.195, 0.103 and 0.067. Hence the instance-level guarantee does not transfer to new wells, because instances of one well are not exchangeable with those of others. From the labelled onset, alarms were raised for 87% and 96% of the instances of two fault types but for only 9% of the 343 instances of the largest class, which these sensors barely reveal. Alarms before the onset cannot be distinguished from false alarms and are not counted as early warning. Calibration by well and fault-specific sensors are needed. A comparison with Isolation Forest and CUSUM is [to be measured].",
+   "keywords": [
+    "artificial lift",
+    "fault detection",
+    "conformal prediction",
+    "alarm threshold",
+    "Petrobras 3W"
+   ],
+   "draft_note": "Measured in research/s_pet_intellilift (private repo, branch research-real-data-validation) on 3W v2 real instances; replaces the owner's earlier 114-instance run. Check the 3W version/licence citation and re-run before submission."
+  },
+  "s_ps": {
+   "profile": "keai",
+   "product": "process_twin",
+   "title": "Soft Sensing of Melt Index in Multi-Grade Polyethylene Production: Benchmarking against the Last-Laboratory-Value Baseline",
+   "abstract": "Soft sensors that estimate the melt index of polyethylene online are proposed to replace delayed laboratory results, but to be useful they must beat the simplest possible baseline. We plan to evaluate soft sensors for a multi-grade polyethylene process on the public industrial SRMG data (research use only, after Liu, Gao and Chen, 2013), comparing linear models, tree-based models and just-in-time learning with a baseline that repeats the last laboratory value of the same grade. Models will be assessed by rolling-origin evaluation, with RMSE, R² and MAPE reported per grade and for grade transitions, and compared with published SRMG results. The number of samples used, the validity of the linear models, the error of every model and of the baseline, and whether any model beats the baseline are [to be measured]. The overlap with the adjacent filing 3869 is [to be checked]. The study aims to give plant engineers a clear benchmark that any proposed soft sensor for grade transitions should be required to beat.",
+   "keywords": [
+    "soft sensor",
+    "melt index",
+    "polyethylene",
+    "grade transition",
+    "benchmark"
+   ],
+   "draft_note": "Reverted to a design-only abstract on the owner's instruction: every result is [to be measured]. The earlier numbers (owner's own SRMG runs recorded in the page database) were removed and must be re-run before any result is stated. The product repository (inno-Khalij-AryaSasol...) now has a TRL 4 scaffold on synthetic data only; no plant data. The claim document of the product was not found; filing 3869 is adjacent. The SRMG data licence allows academic research only."
+  }
+ },
+ "products": {
+  "hqca": {
+   "name": "HQCA – Hybrid quantum-classical drug discovery",
+   "new": false,
+   "repo": "HQCA-Hybrid-Quantum-Classical-Drug-Discovery"
+  },
+  "stratguard": {
+   "name": "StratGuard – Certified facies interpretation",
+   "new": true,
+   "repo": "articles-stratguard-facies"
+  },
+  "qshot": {
+   "name": "Shot-Budget Lab (qshot-lab)",
+   "new": true,
+   "repo": "articles-qshot-lab"
+  },
+  "ipind": {
+   "name": "IPIND – Intelligent nanocarrier design",
+   "new": false,
+   "repo": "N---Barekat---IPIND---Intelligent-Platform-for-Integrated-Nanocarrier-Design"
+  },
+  "apexasset": {
+   "name": "ApexAsset AI – Asset life-cycle digital twin",
+   "new": false,
+   "repo": "-ApexAsset-AI"
+  },
+  "hydrogate": {
+   "name": "HydroGate – Streamflow forecasting",
+   "new": true,
+   "repo": "articles-hydrogate-streamflow"
+  },
+  "fidps": {
+   "name": "FIDPS / FCDD – Formation damage prevention",
+   "new": false,
+   "repo": "FIDPS---Intelligent-Formation-Integrity-damage-prevention-system-"
+  },
+  "qgridpart": {
+   "name": "QGrid-Part",
+   "new": true,
+   "repo": "articles-qgrid-part"
+  },
+  "gas_turbine": {
+   "name": "Gas turbine digital twin",
+   "new": false,
+   "repo": "digital-twine-gas-turbine"
+  },
+  "lnp": {
+   "name": "LNP – Gene-carrier design",
+   "new": false,
+   "repo": "barekat-gen-therapy"
+  },
+  "qrngaudit": {
+   "name": "QRNG-Audit",
+   "new": true,
+   "repo": "articles-qrng-audit"
+  },
+  "pgx": {
+   "name": "Genomics & pharmacogenomics platform",
+   "new": false,
+   "repo": "barekat-Genomics"
+  },
+  "stretchwatch": {
+   "name": "StretchWatch – VQE starting-point quality",
+   "new": true,
+   "repo": "articles-stretchwatch-vqe"
+  },
+  "explainguard": {
+   "name": "ExplainGuard – Explanation faithfulness",
+   "new": true,
+   "repo": "articles-explainguard-faithfulness"
+  },
+  "nuclear": {
+   "name": "Nuclear reactor digital twin",
+   "new": false,
+   "repo": "Digital-twin---nuc---reac"
+  },
+  "terminals": {
+   "name": "Smart terminals & tanks",
+   "new": false,
+   "repo": "inno-terminals-tanks"
+  },
+  "readmitcal": {
+   "name": "ReadmitCal – Readmission risk calibration (diabetes)",
+   "new": true,
+   "repo": "articles-readmitcal-diabetes"
+  },
+  "wearshift": {
+   "name": "WearShift – Distribution shift in wearable HAR",
+   "new": true,
+   "repo": "articles-wearshift-har"
+  },
+  "ilift": {
+   "name": "IntelliLift – Artificial lift management",
+   "new": false,
+   "repo": "i-lift---AI-Powered-Artificial-Lift-Management-Dashboard"
+  },
+  "process_twin": {
+   "name": "Petrochemical process digital twin",
+   "new": false,
+   "repo": "inno-Khalij-AryaSasol-MultiGrade-PE-Transition-Optimization-System-"
+  }
+ },
+ "branch": "article-submission-content"
+}

@@ -1,0 +1,56 @@
+# iPetro on a single Iranian VPS: PostgreSQL + API (serves the dashboard) + nginx (TLS).
+# Run from this folder:  cp .env.example .env  &&  docker compose up -d --build
+services:
+  db:
+    image: postgres:16
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ipetro
+      POSTGRES_USER: ipetro
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD in .env}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ipetro -d ipetro"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    networks: [internal]
+    deploy:
+      resources:
+        limits: { cpus: "2", memory: 4g }
+
+  app:
+    build:
+      context: ..
+      dockerfile: server/Dockerfile
+    restart: unless-stopped
+    depends_on:
+      db: { condition: service_healthy }
+    environment:
+      DATABASE_URL: postgresql://ipetro:${POSTGRES_PASSWORD}@db:5432/ipetro
+      COOKIE_SECURE: ${COOKIE_SECURE:-1}
+      SESSION_DAYS: ${SESSION_DAYS:-14}
+      MAX_UPLOAD_MB: ${MAX_UPLOAD_MB:-20}
+    networks: [internal]
+    deploy:
+      resources:
+        limits: { cpus: "2", memory: 2g }
+
+  nginx:
+    image: nginx:1.27-alpine
+    restart: unless-stopped
+    depends_on: [app]
+    ports: ["80:80", "443:443"]
+    volumes:
+      - ./nginx.conf:/etc/nginx/templates/default.conf.template:ro
+      - ${CERT_DIR:-./certs}:/etc/nginx/certs:ro
+    environment:
+      DOMAIN: ${DOMAIN:?set DOMAIN in .env}
+    networks: [internal]
+
+networks:
+  internal:
+
+volumes:
+  pgdata:

@@ -1,0 +1,65 @@
+{
+ "data": "EGFR IC50 from ChEMBL 25 (TeachOpenCADD talktorial data, CC BY 4.0)",
+ "n_compounds": 3884,
+ "n_scaffolds": 1444,
+ "seeds": 10,
+ "alpha": 0.1,
+ "summary": [
+  {
+   "split": "random",
+   "method": "global",
+   "coverage_by_pred": 0.896,
+   "coverage_by_pred_ci95": 0.009,
+   "worst_group_by_pred": 0.868,
+   "worst_group_by_pred_ci95": 0.013,
+   "worst_group_by_true": 0.831,
+   "worst_group_by_true_ci95": 0.012,
+   "width_by_pred": 2.763,
+   "width_by_pred_ci95": 0.073,
+   "rmse": 0.863,
+   "rmse_ci95": 0.019
+  },
+  {
+   "split": "random",
+   "method": "mondrian",
+   "coverage_by_pred": 0.895,
+   "coverage_by_pred_ci95": 0.01,
+   "worst_group_by_pred": 0.87,
+   "worst_group_by_pred_ci95": 0.011,
+   "worst_group_by_true": 0.837,
+   "worst_group_by_true_ci95": 0.013,
+   "width_by_pred": 2.778,
+   "width_by_pred_ci95": 0.079,
+   "rmse": 0.863,
+   "rmse_ci95": 0.019
+  },
+  {
+   "split": "scaffold",
+   "method": "global",
+   "coverage_by_pred": 0.894,
+   "coverage_by_pred_ci95": 0.014,
+   "worst_group_by_pred": 0.863,
+   "worst_group_by_pred_ci95": 0.019,
+   "worst_group_by_true": 0.783,
+   "worst_group_by_true_ci95": 0.032,
+   "width_by_pred": 3.263,
+   "width_by_pred_ci95": 0.155,
+   "rmse": 1.015,
+   "rmse_ci95": 0.032
+  },
+  {
+   "split": "scaffold",
+   "method": "mondrian",
+   "coverage_by_pred": 0.891,
+   "coverage_by_pred_ci95": 0.016,
+   "worst_group_by_pred": 0.851,
+   "worst_group_by_pred_ci95": 0.026,
+   "worst_group_by_true": 0.785,
+   "worst_group_by_true_ci95": 0.03,
+   "width_by_pred": 3.254,
+   "width_by_pred_ci95": 0.148,
+   "rmse": 1.015,
+   "rmse_ci95": 0.032
+  }
+ ]
+}

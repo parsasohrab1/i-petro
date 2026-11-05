@@ -1,0 +1,52 @@
+{
+ "slug": "bu_ali_sina",
+ "name_fa": "پتروشیمی بوعلی‌سینا",
+ "name_en": "Bu Ali Sina Petrochemical",
+ "kind": "process",
+ "production_tph": 77.0,
+ "steam_demand_tph": 208,
+ "furnaces": [
+  {
+   "id": "F-101",
+   "duty_mw": 44.0,
+   "o2_setpoint": 3.4,
+   "t_stack_c": 185
+  },
+  {
+   "id": "F-102",
+   "duty_mw": 40.5,
+   "o2_setpoint": 3.6,
+   "t_stack_c": 191
+  },
+  {
+   "id": "F-103",
+   "duty_mw": 37.0,
+   "o2_setpoint": 3.8,
+   "t_stack_c": 197
+  }
+ ],
+ "boilers": [
+  {
+   "id": "B-1",
+   "min_tph": 28,
+   "max_tph": 121,
+   "eta_max": 0.91
+  },
+  {
+   "id": "B-2",
+   "min_tph": 28,
+   "max_tph": 112,
+   "eta_max": 0.885
+  },
+  {
+   "id": "B-3",
+   "min_tph": 28,
+   "max_tph": 103,
+   "eta_max": 0.86
+  }
+ ],
+ "fuel_price": 1.0,
+ "existing_product": null,
+ "illustrative": true,
+ "notes": "پارامترهای واحد نمونه و ساختگی‌اند، نه داده‌ی اندازه‌گیری‌شده؛ با داده‌ی واقعی شرکت جایگزین شوند."
+}

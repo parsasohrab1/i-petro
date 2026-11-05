@@ -93,6 +93,7 @@ const shot = async (pg) => "data:image/png;base64," + (await pg.screenshot()).to
   await pg.fill("[data-c=recipient]", "Mr. John Smith\nProcurement Manager\nExample Energy Co."); await pg.fill("[data-c=subject]", "Proposal for predictive maintenance services");
   await pg.fill("[data-c=body]", "We would like to introduce our AI-based predictive maintenance platform.\nWe would welcome a short call to discuss your requirements."); await pg.waitForTimeout(200); const intl = await shot(pg);
   await pg.click("[data-act=mod][data-k=articles]"); await pg.waitForTimeout(300); const artShot = await shot(pg);
+  await pg.locator("table").first().scrollIntoViewIfNeeded(); await pg.mouse.wheel(0, 150); await pg.waitForTimeout(250); const artRows = await shot(pg);
   const pg2 = await open(browser, true);
   const reg = await shot(pg2); await pg2.fill("#f_full_name", "کاربر جدید");
   await pg2.evaluate(() => document.querySelector("#drawer").requestSubmit()); await pg2.waitForTimeout(1200);
@@ -103,7 +104,7 @@ const shot = async (pg) => "data:image/png;base64," + (await pg.screenshot()).to
   let toc = "", body = "", n = 0, lastMod = "";
   for (const st of TOUR) {
     if (st.mod && !st.sub) { n++; lastMod = st.mod; toc += `<li>${E(MODS[st.mod])}</li>`;
-      body += `<section class="mod"><h2>${E(MODS[st.mod])}</h2><p>${E(st.text)}</p>${st.mod === "articles" ? img(artShot, "تصویر نمونه با داده‌ی فرضی") : ""}</section>`; continue; }
+      body += `<section class="mod"><h2>${E(MODS[st.mod])}</h2><p>${E(st.text)}</p>${st.mod === "articles" ? img(artShot, "تصویر نمونه با داده‌ی فرضی") + img(artRows, "ستون جزئیات: محصول مقاله و لینک ریپو یا شاخه؛ ستون آخر: دکمه‌ی چکیده (Word)") : ""}</section>`; continue; }
     if (st.mod && st.sub) body += `<section class="tab"><h3>${E(st.title)}</h3><p>${E(st.text)}</p>${img(shots[st.mod + "." + st.sub], "تصویر نمونه با داده‌ی فرضی")}</section>`;
   }
   const firstSteps = TOUR[TOUR.length - 1].text, bell = TOUR.find(s => s.sel === "#bell");
@@ -128,6 +129,7 @@ const shot = async (pg) => "data:image/png;base64," + (await pg.screenshot()).to
    <div class="tab"><h3>مسئولیت گرفتن و پیگیری پروژه</h3><p>در Market دکمه‌ی «مسئولیت را می‌گیرم» را بزنید؛ مورد از فهرست باز برداشته می‌شود. سپس در Project Tracking با «ویرایش» مرحله، اقدام بعدی، ارزش و احتمال برد را ثبت کنید. هنگام پایان، نتیجه و دلیل را بنویسید تا ایجنت یاد بگیرد.</p>${img(trackForm, "فرم پیگیری پروژه")}</div>
    <div class="tab"><h3>Go / No-Go</h3><p>برای هر مناقصه‌ی تحلیل‌شده امتیازی از ۱۰۰ نمایش داده می‌شود: تطابق با محصولات ۴۰٪، صلاحیت ۲۵٪، زمان ۱۵٪، پذیرش شرکت خارجی ۱۰٪ و انطباق ۱۰٪. زیر «دلایل» می‌بینید امتیاز از کجا آمده است.</p>${img(gng, "ستون Go/No-Go و دلایل امتیاز")}</div>
    <div class="tab"><h3>نامه‌ی بین‌المللی</h3><p>در «نامه‌ی جدید» هویت فرستنده را «بین‌المللی» بگذارید تا نامه به انگلیسی و با سربرگ Parsa International Group ساخته شود. شماره‌ی نامه با PIG شروع می‌شود.</p>${img(intl, "نامه‌ی بین‌المللی و پیش‌نمایش")}</div>
+   <div class="tab"><h3>چکیده‌ی آماده برای ژورنال یا کنفرانس</h3><p>در Articles برای هر ژورنال یا کنفرانس یک محصول مشخص شده است: محصول تازه ریپوی جدید دارد و محصول قدیمی شاخه‌ی «article-submission-content» با متن چکیده. دکمه‌ی «چکیده (Word)» فایلی می‌دهد که صفحه‌ی اول آن عنوان، چکیده و کلیدواژه‌ها طبق قالب همان مرجع (حداکثر واژه، تک‌پاراگراف، تعداد کلیدواژه) و صفحه‌ی دوم برگه‌ی داخلی با ددلاین، لینک رسمی و کارهای پیش از ثبت است. جاهای [داخل کروشه] نتایج واقعی‌اند که باید از آزمایش‌های تیم پر شود؛ هیچ عددی در متن پیش‌نویس نتیجه نیست. پیش از ثبت، محدودیت واژه را در راهنمای نویسندگان همان ژورنال یا کنفرانس بازبینی کنید. «همه‌ی چکیده‌ها (ZIP)» همه‌ی فایل‌ها را یک‌جا می‌دهد.</p></div>
   </section>
   <div class="box"><b>شروع کنید.</b> ${E(firstSteps)}</div>
   <p style="font-size:10.5px;color:#615b59">همه‌ی تصاویر با داده‌ی فرضی ساخته شده‌اند. این فایل با دستور <code>node docs/ipetro/build_guide.js</code> از روی خود سامانه دوباره ساخته می‌شود.</p></body></html>`;

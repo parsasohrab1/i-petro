@@ -1,0 +1,87 @@
+{
+ "n_wells": 62,
+ "mean_true_boundaries": 4.983870967741935,
+ "tol_m": 15.0,
+ "splits": [
+  {
+   "pelt": {
+    "param": 40,
+    "f1_train": 0.3664459161147903,
+    "f1_test": 0.3410138248847926,
+    "boundaries_per_well": 9.193548387096774
+   },
+   "gradient": {
+    "param": 0.2,
+    "f1_train": 0.3184257602862254,
+    "f1_test": 0.2956810631229236,
+    "boundaries_per_well": 14.612903225806452
+   },
+   "random_same_count_f1_test": 0.08993288590604027
+  },
+  {
+   "pelt": {
+    "param": 80,
+    "f1_train": 0.3473053892215569,
+    "f1_test": 0.3190184049079755,
+    "boundaries_per_well": 5.67741935483871
+   },
+   "gradient": {
+    "param": 0.2,
+    "f1_train": 0.3110367892976589,
+    "f1_test": 0.3019538188277087,
+    "boundaries_per_well": 13.32258064516129
+   },
+   "random_same_count_f1_test": 0.09003322259136212
+  },
+  {
+   "pelt": {
+    "param": 40,
+    "f1_train": 0.379862700228833,
+    "f1_test": 0.3288888888888889,
+    "boundaries_per_well": 9.451612903225806
+   },
+   "gradient": {
+    "param": 0.2,
+    "f1_train": 0.2905405405405405,
+    "f1_test": 0.3233743409490334,
+    "boundaries_per_well": 13.290322580645162
+   },
+   "random_same_count_f1_test": 0.08535031847133759
+  },
+  {
+   "pelt": {
+    "param": 40,
+    "f1_train": 0.36444444444444446,
+    "f1_test": 0.34324942791762014,
+    "boundaries_per_well": 9.258064516129032
+   },
+   "gradient": {
+    "param": 0.2,
+    "f1_train": 0.31393298059964725,
+    "f1_test": 0.2996632996632997,
+    "boundaries_per_well": 14.32258064516129
+   },
+   "random_same_count_f1_test": 0.10631229235880398
+  },
+  {
+   "pelt": {
+    "param": 40,
+    "f1_train": 0.38241758241758245,
+    "f1_test": 0.32407407407407407,
+    "boundaries_per_well": 9.064516129032258
+   },
+   "gradient": {
+    "param": 0.2,
+    "f1_train": 0.31921824104234525,
+    "f1_test": 0.29250457038391225,
+    "boundaries_per_well": 12.774193548387096
+   },
+   "random_same_count_f1_test": 0.08355263157894736
+  }
+ ],
+ "pelt_f1_test_mean": 0.3312489241346702,
+ "pelt_f1_test_sd": 0.009444566882734769,
+ "gradient_f1_test_mean": 0.3026354185893755,
+ "gradient_f1_test_sd": 0.010866444819734445,
+ "random_f1_test_mean": 0.09103627018129827
+}

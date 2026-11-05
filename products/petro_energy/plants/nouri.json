@@ -1,0 +1,64 @@
+{
+ "slug": "nouri",
+ "name_fa": "پتروشیمی نوری",
+ "name_en": "Nouri (Borzouyeh) Petrochemical",
+ "kind": "process",
+ "production_tph": 105.0,
+ "steam_demand_tph": 365,
+ "furnaces": [
+  {
+   "id": "F-101",
+   "duty_mw": 60.0,
+   "o2_setpoint": 3.4,
+   "t_stack_c": 185
+  },
+  {
+   "id": "F-102",
+   "duty_mw": 55.2,
+   "o2_setpoint": 3.6,
+   "t_stack_c": 191
+  },
+  {
+   "id": "F-103",
+   "duty_mw": 50.4,
+   "o2_setpoint": 3.8,
+   "t_stack_c": 197
+  },
+  {
+   "id": "F-104",
+   "duty_mw": 45.6,
+   "o2_setpoint": 3.4,
+   "t_stack_c": 203
+  }
+ ],
+ "boilers": [
+  {
+   "id": "B-1",
+   "min_tph": 38,
+   "max_tph": 165,
+   "eta_max": 0.91
+  },
+  {
+   "id": "B-2",
+   "min_tph": 38,
+   "max_tph": 153,
+   "eta_max": 0.885
+  },
+  {
+   "id": "B-3",
+   "min_tph": 38,
+   "max_tph": 141,
+   "eta_max": 0.86
+  },
+  {
+   "id": "B-4",
+   "min_tph": 38,
+   "max_tph": 129,
+   "eta_max": 0.835
+  }
+ ],
+ "fuel_price": 1.0,
+ "existing_product": null,
+ "illustrative": true,
+ "notes": "پارامترهای واحد نمونه و ساختگی‌اند، نه داده‌ی اندازه‌گیری‌شده؛ با داده‌ی واقعی شرکت جایگزین شوند."
+}
