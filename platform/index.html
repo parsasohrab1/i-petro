@@ -2030,19 +2030,6 @@ function schDoingTable(list){
     return `<tr><td>${schDayChip(p)}<div class="meta">${p.deadline?faDate(p.deadline):""}</div></td><td class="t">${esc(p.uni)}</td><td><div style="height:6px;width:90px;background:var(--line);border-radius:3px"><i style="display:block;height:6px;width:${pct}%;background:var(--ok);border-radius:3px"></i></div><span class="meta">${faNum(dn)}/${faNum(items.length)}</span></td><td class="meta">${rest.map(esc).join("؛ ")||"—"}</td><td>${tk?esc(rosterName(tk)):"—"}</td></tr>`; }).join("");
   return `<h3>خلاصه‌ی در دست اقدام، به ترتیب ددلاین</h3><div class="tablewrap rows"><table><thead><tr><th>ددلاین</th><th>برنامه</th><th>پیشرفت</th><th>مرحله‌ی بعد</th><th>مسئول</th></tr></thead><tbody>${rows}</tbody></table></div>`;
 }
-function schPublicCard(p){ const items=schItems(p), pubRow=i=>`<div class="row" style="align-items:center;gap:8px;padding:3px 0"><span class="meta">☐</span> <span>${esc(i.t)}</span></div>`;
-  return `<div class="card" style="margin-top:12px"><div class="row" style="align-items:flex-start;gap:10px;flex-wrap:wrap"><h3 style="flex:1;margin:0;min-width:220px">${esc(p.uni)}</h3>${schTaker(p)?`<span class="pill p-ok" title="این بورسیه برداشته شده و برای دیگران بسته است">${schTaker(p)===S.me.id?"شما این بورسیه را برداشته‌اید":esc(rosterName(schTaker(p)))+" این بورسیه را برداشته است"}</span>`:""}${asgCell("sch_"+p.id,p.uni,"scholar")}${p.levels.map(l=>`<span class="pill p-mute">${SCH_LV[l]}</span>`).join("")}</div>
-  <table style="width:100%;margin-top:6px"><tbody>
-  <tr><td style="width:26%;color:var(--muted)">رشته‌ی درسی</td><td>${esc(p.field)}</td></tr>
-  <tr><td style="color:var(--muted)">کشور و شهر</td><td>${esc(p.country)} – ${esc(p.city)}</td></tr>
-  <tr><td style="color:var(--muted)">شرایط حمایت</td><td><b>${esc(p.kind)}</b> · ${esc(p.support)}</td></tr>
-  <tr><td style="color:var(--muted)">مهلت ثبت‌نام</td><td>${schDeadline(p)}</td></tr>
-  <tr><td style="color:var(--muted)">سایت رسمی</td><td>${link(p.url)}</td></tr></tbody></table>${p.warn?`<div class="banner bad" style="margin:6px 0">${esc(p.warn)}</div>`:""}
-  ${propBox(p)}<details open><summary><b>مدارک و کارها</b> – ${faNum(items.length)} مورد</summary>
-   <div class="grid2" style="margin-top:8px"><div><h4>Claude انجام می‌دهد</h4>${items.filter(i=>i.by==="ai").map(pubRow).join("")}</div><div><h4>خودتان باید انجام دهید</h4>${items.filter(i=>i.by==="me").map(pubRow).join("")}</div></div>
-   <p class="meta">تیک «انجام شد» و ثبت وضعیت را مالک سامانه انجام می‌دهد؛ اطلاعات شخصی و رزومه‌ی او برای مسئول نمایش داده نمی‌شود.</p></details></div>`; }
-const schOrder = (a,b) => { const t=new Date().toISOString().slice(0,10), ka=!a.deadline?2:a.deadline<t?1:0, kb=!b.deadline?2:b.deadline<t?1:0;   // open deadlines first (soonest first), then past, then rolling
-  return ka-kb || (a.deadline||"").localeCompare(b.deadline||"") || String(a.uni).localeCompare(String(b.uni)); };
 function schList(page){
   const gm=gmNote();
   const list=SCH.filter(p=>schStatus(p)===page).filter(p=>match(p.uni,p.country,p.city,p.field,p.kind)).sort(schOrder);
