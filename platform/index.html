@@ -164,16 +164,17 @@ th.rownum,td.rownum{width:44px;min-width:44px;text-align:center;color:var(--mute
 document.documentElement.lang="fa"; document.documentElement.dir="rtl"; // the layout is designed right-to-left
 // ------------------------------------------------------------------ constants
 const MODULES = [
-  ["market","REQUEST FOR PROPOSALS"],["events","Events"],["erp","ERP"],["bpms","BPMS"],["letters","Letters"],["patent","Patent"],["scholar","Scholarship"],["articles","Articles"],["basket","Products Basket"],["news","News"]];
+  ["market","REQUEST FOR PROPOSALS"],["events","Events"],["erp","ERP"],["bpms","BPMS"],["content","Content"],["letters","Letters"],["patent","Patent"],["scholar","Scholarship"],["articles","Articles"],["basket","Products Basket"],["news","News"]];
 const SUBS = {
+  content:[["hamraz","همراز"],["ppt","پترو پالاتوس"],["ithub","آیتی هاب"],["pig","پارسا اینترنشنال گروپ"],["all","همه‌ی برندها"]],
   basket:[["list","محصولات سبد"],["data","داده‌ها و آپلود"],["trl","داده‌ی واقعی و ارتقای TRL ۴ به ۵"],["ideas","محصولات پیشنهادی نو"]],
   news:[["feed","اخبار هوش مصنوعی"]],
   market:[["iran","Iran AI Projects"],["docs_ir","مدارک پترو پالاتوس (داخلی)"],["overseas","Overseas AI Projects"],["techneeds","نیازهای فناورانه"],["docs_int","مدارک پارسا اینت (بین‌المللی)"],["partners","شرکای تجاری بین‌المللی"],["web","Web Design & SEO"],["investors","AI Investors & Accelerators"],["tracking","Project Tracking"],["pipeline","Pipeline"],["memory","Team Memory"]],
   events:[["iran","ایران"],["world","جهان"],["all","همه"],["taken","در دست پیگیری"]],
   erp:[["ops","برنامه‌ی عملیات و واگذاری"],["domains","حوزه‌های فعالیت"],["products","توسعه‌ی محصول هوشمند"],["people","نیروی انسانی"],["finance","مالی"],["clients","مشتریان و قراردادها"],["backup","پشتیبان‌گیری"]],
   bpms:[["home","خانه‌ی BPMS"],["contacts","مخاطبین و ارتباط"],["myday","روز من"],["mind","ذهن‌نگار (آزمون خصوصی)"],["board","تخته‌ی اسکرام"],["backlog","بک‌لاگ و برنامه‌ریزی"],["sprints","اسپرینت‌ها"],["tasks","فهرست تسک‌ها"],["reports","گزارش عملکرد"],["rarchive","بایگانی گزارش‌ها"],["teams","تیم‌ها"],["process","فرایندها"],["calendar","تقویم"],["members","اعضا و ثبت‌نام"],["nda","قرارداد محرمانگی"],["training","فرم آموزش"]],
-  letters:[["new","نامه‌ی جدید (ساخت فایل Word)"],["refinery","پالایشگاه‌ها"],["hpc","پتروشیمی‌های خلیج فارس"],["pp","نامه‌های پترو پالاتوس"],["sosh","نامه‌های سوشیانت"],["sec_med","نامه‌های پزشکی"],["archive","همه‌ی نامه‌ها"]],
-  scholar:[["applied","اقدام‌شده و در دست بررسی"],["human","مسئول انسانی"],["doing","در دست اقدام"],["todo","اقدام‌نشده"],["target","فهرست هدف: AI · CS · IT · مدیریت"],["profile","مشخصات و رزومه من"],["cv","رزومه محمد پارسا سهرابی"]],
+  letters:[["new","نامه‌ی جدید (ساخت فایل Word)"],["pp","پترو پالا توس"],["sosh","سوشیانت"]],
+  scholar:[["applied","اقدام‌شده و در دست بررسی"],["human","مسئول انسانی"],["doing","در دست اقدام"],["todo","اقدام‌نشده"],["failed","ناموفق (بسته‌شده)"],["target","فهرست هدف: AI · CS · IT · مدیریت"],["profile","مشخصات و رزومه من"],["cv","رزومه محمد پارسا سهرابی"]],
   articles:[["applied","اقدام‌شده و در دست بررسی"],["doing","در دست اقدام"],["todo","اقدام‌نشده"],["product","محصول ویژه‌ی مقاله"],["claude","تسک برای Claude"],["evidence","شواهد و داده‌ی واقعی"],["submit","ثبت چکیده و ثبت‌نام (مسئول انسانی)"],["list","فهرست کامل"],["pipe","خط لوله تا ویزا"],["mail","مسیر ایمیل: ثبت · تاییدیه · مقاله کامل"],["fees","هزینه ورودی و ارائه آنلاین"],["ready","آمادگی ثبت (۶ معیار)"],["upload","آپلود داده‌ها"],["access","دسترسی افراد"]],
   patent:[["home","پتنت‌ها"],["human","مسئول انسانی"],["ops","فرصت‌های ثبت اختراع"],["products","محصولات ریپو"]]
 };
@@ -266,11 +267,13 @@ function subscribe(){
   S.db.collection("assign").onSnapshot(snap => { const t={}; snap.docs.forEach(d=>t[d.id]=d.data()); S.asg=t; render(); }, ()=>{});   // assign/<item key>: {mod,title,doer,selector,task,log}
   S.db.doc("settings/intl_partners").onSnapshot(d => { S.ip = d.exists ? d.data() : {countries:{},drafts:{}}; render(); }, ()=>{});
   S.db.doc("settings/news").onSnapshot(d => { S.news = d.exists ? d.data() : {items:[]}; render(); }, ()=>{});
+  S.db.doc("settings/news_extra").onSnapshot(d => { S.newsExtra = d.exists ? d.data() : {items:[]}; render(); }, ()=>{});   // items added by hand; the daily job rewrites settings/news only
   S.db.doc("settings/article_fees").onSnapshot(d => { S.fees = d.exists ? d.data() : {list:[]}; render(); }, ()=>{});   // {list:[{id,type,name,model,amount,online,pay_when,risk,decision,src,checked,note,declined}]}
   S.db.doc("settings/basket_access").onSnapshot(d => { S.basAcc = d.exists ? d.data() : {ids:[]}; render(); }, ()=>{});   // {ids:[memberId]}: people who see the medical products of the basket without a per-product assignment
   S.db.doc("settings/basket_ideas").onSnapshot(d => { S.bi = d.exists ? d.data() : {list:[]}; render(); }, ()=>{});
   S.db.doc("settings/world_products").onSnapshot(d => { S.wp = d.exists ? d.data() : {items:[],proposals:[]}; render(); }, ()=>{});   // world products, patents and papers compared with ours, plus new-product proposals
   S.db.doc("settings/company_docs").onSnapshot(d => { S.cdocs = d.exists ? d.data() : {}; render(); }, ()=>{});
+  S.ccD = {}; for(const dn of ["content_calendar","content_calendar_2","content_calendar_3"]) S.db.doc("settings/"+dn).onSnapshot(d => { S.ccD[dn] = d.exists ? (d.data().items||[]) : []; S.cc = Object.values(S.ccD).flat(); render(); }, ()=>{});   // content calendar items {id,brand,title,desc,format,date}; each can be taken or handed over via assign/cc_<id>
   S.db.doc("settings/claude_tasks").onSnapshot(d => { S.ct = d.exists ? (d.data().list||[]) : []; render(); }, ()=>{});
   S.db.doc("settings/paper_evidence").onSnapshot(d => { S.pev = d.exists ? d.data() : {list:[]}; render(); }, ()=>{});
   S.db.doc("settings/data_links").onSnapshot(d => { S.dlinks = d.exists ? (d.data().map||{}) : {}; render(); }, ()=>{});
@@ -280,7 +283,8 @@ function subscribe(){
   S.db.doc("settings/trl_data").onSnapshot(d => { S.trl = d.exists ? d.data() : {products:{}}; render(); }, ()=>{});   // real-data sources and measured results per TRL-4 product
   S.db.doc("settings/article_deny").onSnapshot(d => { S.artDeny = d.exists ? d.data() : {ids:[]}; render(); }, ()=>{});
   S.db.doc("settings/scholar_access").onSnapshot(d => { S.schAcc = d.exists ? d.data() : {ids:[]}; render(); }, ()=>{});
-  S.db.doc("settings/cv_tailor").onSnapshot(d => { S.cvT = d.exists ? (d.data().map||{}) : {}; render(); }, ()=>{});   // per-professor tailored CV content
+  S.db.doc("settings/cv_tailor").onSnapshot(d => { S.cvT1 = d.exists ? (d.data().map||{}) : {}; S.cvT = {...S.cvT1,...(S.cvT2||{})}; render(); }, ()=>{});
+  S.db.doc("settings/cv_tailor_biz").onSnapshot(d => { S.cvT2 = d.exists ? (d.data().map||{}) : {}; S.cvT = {...(S.cvT1||{}),...S.cvT2}; render(); }, ()=>{});   // business-school supervisors   // per-professor tailored CV content
   S.db.doc("settings/sample_reply").onSnapshot(d => { S.sampleReply = d.exists ? d.data() : null; render(); }, ()=>{});   // lesson from a real professor reply
   S.db.doc("settings/article_access").onSnapshot(d => { S.artAcc = d.exists ? d.data() : {ids:[]}; render(); }, ()=>{});   // {ids:[memberId]}: people the owner lets see the Articles tab
   if(isAdmin()) S.db.collection("finance/_portal/items").onSnapshot(q => { S.portal={}; q.docs.forEach(d=>S.portal[d.id]=d.data()); render(); }, ()=>{});   // submission-portal logins per venue (admin-only rule of "finance"; not part of backups)
@@ -593,9 +597,13 @@ async function asgSyncTask(key,title,mod,doer,selector,text){
   const tid=("asg_"+key).replace(/[^A-Za-z0-9_\-]/g,"_").slice(0,150), old=(S.tasks||[]).find(t=>t.id===tid), now=new Date().toISOString(), m=(S.roster||[]).find(x=>x.id===doer)||(S.members||[]).find(x=>x.id===doer)||{};
   try{
     if(!doer){ if(old) await S.db.doc("tasks/"+tid).delete(); return; }
-    await S.db.doc("tasks/"+tid).set({title,desc:(text||"")+(text?"\n\n":"")+`(از بخش «${MODULES.find(x=>x[0]===mod)?.[1]||mod}» برداشته یا واگذار شد؛ واگذارکننده: ${rosterName(selector)||"—"}.)`,assignee:doer,created_by:selector,team:m.team||"ai",priority:"normal",due:old&&old.assignee===doer&&old.due?old.due:addDays(today(),3),status:old&&old.assignee===doer?old.status:"todo",type:"task",blocked:false,points:null,sprint:old?old.sprint||"":"",created:old?old.created||now:now,updated:now,asg_key:key,asg_mod:mod});
+    const cit=mod==="content"?(S.cc||[]).find(x=>"cc_"+x.id===key):null; if(cit&&!text) text=cit.desc||"";
+    const cx=cit?{kind:"content",brand:cit.brand||"",format:cit.format||"",due:(old&&old.assignee===doer&&old.due)?old.due:(cit.date||addDays(today(),3))}:(mod==="content"?{kind:"content"}:{});
+    await S.db.doc("tasks/"+tid).set({title,desc:(text||"")+(text?"\n\n":"")+`(از بخش «${MODULES.find(x=>x[0]===mod)?.[1]||mod}» برداشته یا واگذار شد؛ واگذارکننده: ${rosterName(selector)||"—"}.)`,assignee:doer,created_by:selector,team:m.team||"ai",priority:"normal",due:old&&old.assignee===doer&&old.due?old.due:addDays(today(),3),status:old&&old.assignee===doer?old.status:"todo",type:"task",blocked:false,points:null,sprint:old?old.sprint||"":"",created:old?old.created||now:now,updated:now,asg_key:key,asg_mod:mod,...cx});
   }catch(e){ console.error("asg task",e); }
 }
+// One scholarship at a time: a person who holds a scholarship cannot take another until it is marked as applied (registration finished).
+const schActiveFor = (who,exceptKey) => Object.entries(S.asg||{}).filter(([k,a])=>a.mod==="scholar"&&a.doer===who&&k!==exceptKey).map(([k])=>SCH.find(p=>"sch_"+p.id===k)).filter(p=>p&&!["applied","failed"].includes(schStatus(p)));
 function asgForm(key,title,mod){
   const a=asgOf(key)||{}; if(!asgCan(a,mod)){ toast("این مورد واگذار شده است؛ فقط انجام‌دهنده یا واگذارکننده می‌تواند آن را تغییر یا لغو کند"); return; }
   const admin=asgAdmin(mod) && (!a.doer || a.selector===S.me.id);
@@ -605,6 +613,8 @@ function asgForm(key,title,mod){
   fields.push({k:"task",label:"شرح تسک (انجام‌دهنده و مدیر می‌توانند بنویسند)",type:"textarea",value:a.task||""});
   openForm({title:"انتخاب / واگذاری: "+title,fields,values:{},onSave:async o=>{
     if(!o.doer){ if(a.doer){ await remove(`assign/${key}`); await asgSyncTask(key,title,mod,"",S.me.id,""); } return true; }
+    if(mod==="scholar"&&o.doer&&o.doer!==a.doer){ const act=schActiveFor(o.doer,key);
+      if(act.length&&!(S.me.isOwner&&confirm(rosterName(o.doer)+" هنوز بورسیه‌ی «"+act[0].uni+"» را تمام نکرده است. با این حال واگذار شود؟"))){ toast((o.doer===S.me.id?"شما":rosterName(o.doer))+" بورسیه‌ی «"+act[0].uni+"» را در دست دارد؛ تا ثبت‌نام نهایی آن (اقدام‌شده) انجام نشود، بورسیه‌ی دیگری قابل دریافت نیست."); return false; } }
     const now=new Date().toISOString(), same=a.doer===o.doer;
     const ok=await save(`assign/${key}`,{mod,title,doer:o.doer,selector:(same&&a.selector)||S.me.id,task:o.task||"",
       log:[...(a.log||[]),{at:now,by:S.me.id,note:same?"شرح تسک ویرایش شد":(o.doer===S.me.id?"انتخاب شخصی":"واگذار شد")}].slice(-30),updated:now,updated_by:S.me.id},(o.doer!==S.me.id?"ثبت شد؛ در سامانه برای انجام‌دهنده اعلان رفت. برای تلگرام یا ایمیل از دکمه‌های کنار ردیف استفاده کنید.":"ثبت شد"));
@@ -1230,12 +1240,13 @@ function worldBox(){
      ${wpScores(p)}<p><b>اولین گام:</b> <span class="meta">${esc(p.first||"")}</span></p><p><b>ریسک و مانع:</b> <span class="meta">${esc(p.risk||"")}</span></p>${wpSearch(p)}</div>`).join(""):'<p class="empty">پیشنهادی با این فیلتر نیست.</p>');
 }
 { const _bi=VIEWS["basket.ideas"]; VIEWS["basket.ideas"]=()=>_bi()+(S.me.isOwner?worldBox():""); }
+const NEWS_ALL = () => [...((S.newsExtra&&S.newsExtra.items)||[]),...((S.news&&S.news.items)||[])];
 VIEWS["news.feed"] = () => {
-  const f=S.artF.newsInd||"", items=((S.news&&S.news.items)||[]).filter(n=>!f||n.industry===f).filter(n=>match(n.title_fa,n.summary_fa,n.industry));
-  const inds=[...new Set(((S.news&&S.news.items)||[]).map(n=>n.industry))];
+  const f=S.artF.newsInd||"", items=NEWS_ALL().filter(n=>!f||n.industry===f).filter(n=>match(n.title_fa,n.summary_fa,n.industry));
+  const inds=[...new Set(NEWS_ALL().map(n=>n.industry))];
   const upd=S.news&&S.news.updated?faDate(String(S.news.updated).slice(0,10)):"—";
   return `<p class="note">اخبار روز هوش مصنوعی در صنایع مختلف دنیا، به فارسی و با منبع. هر روز به‌روز می‌شود. آخرین به‌روزرسانی: <b>${upd}</b>. خبرهای با برچسب «تأیید نشده» از منبع ثانویه‌اند و پیش از استفاده باید در منبع اصلی بررسی شوند.</p>`+
-   kpis([["خبر",faNum(((S.news&&S.news.items)||[]).length)],["صنعت",faNum(inds.length)]])+
+   kpis([["خبر",faNum(NEWS_ALL().length)],["صنعت",faNum(inds.length)]])+
    `<div class="toolbar"><select data-af="newsInd"><option value="">همه‌ی صنایع</option>${inds.map(v=>`<option value="${esc(v)}"${f===v?" selected":""}>${esc(v)}</option>`).join("")}</select></div>`+
    (items.length?items.map((n,i)=>`<div class="card" style="margin-bottom:10px"><div class="row" style="align-items:center;gap:8px;flex-wrap:wrap"><span class="pill p-mute mono">${faNum(i+1)}</span><b style="flex:1;min-width:220px">${esc(n.title_fa)}</b><span class="pill p-info">${esc(n.industry)}</span>${n.verified===false?'<span class="pill p-warn">تأیید نشده</span>':""}<span class="meta">${n.date?faDate(n.date):""}</span></div><p>${esc(n.summary_fa)}</p>${n.url?`<p class="meta">منبع: ${link(n.url,n.source||n.url)}</p>`:""}</div>`).join(""):'<p class="empty">خبری ثبت نشده است.</p>');
 };
@@ -1883,7 +1894,7 @@ const SCH_SPEC = {
 };
 SCH.forEach(p=>Object.assign(p,SCH_SPEC[p.id]||{}));
 const SCH_LV = {master:"ارشد",phd:"دکتری"};
-const SCH_ST = {todo:"اقدام‌نشده",doing:"در دست اقدام",applied:"اقدام‌شده و در دست بررسی"};
+const SCH_ST = {todo:"اقدام‌نشده",doing:"در دست اقدام",applied:"اقدام‌شده و در دست بررسی",failed:"ناموفق (بسته‌شده)"};   // failed: every suitable professor declined and no other fit was found
 const schTaker = p => { const a=asgOf("sch_"+p.id); return a&&a.doer?a.doer:""; };   // whoever picked or was handed the scholarship
 const schLockedForMe = p => { const d=schTaker(p); return !!d && d!==S.me.id && !isOwnerOnly(); };   // taken by someone else: closed to everyone but the owner
 const schStatus = p => { const s=schState(p.id).status || p.status0 || "todo"; return s==="todo"&&schTaker(p)?"doing":s; };   // taking a scholarship moves it to "in progress"
@@ -1912,12 +1923,12 @@ function schSupBlock(p){
   const warn=phd?`<div class="banner" style="margin:6px 0"><b>پیش از دریافت بورسیه:</b> مکاتبه با استاد راهنما و دریافت تأیید کتبی او لازم است؛ پروپوزال هم باید طبق قالب همین دانشگاه نوشته شود.</div>`:"";
   if(pr&&pr.na) return `<div style="margin-top:8px">${warn}<div class="banner" style="margin:6px 0;border-color:var(--muted);background:var(--sunken)"><b>وضعیت استاد و پروپوزال:</b> ${esc(pr.na)}</div>${pr.proposal?`<details style="margin-top:8px"><summary><b>پروپوزال پژوهشی (پیش‌نویس)</b></summary><textarea readonly style="min-height:420px;direction:ltr;text-align:left">${esc(pr.proposal)}</textarea></details>`:""}${pr.sop?`<details style="margin-top:8px"><summary><b>انگیزه‌نامه (SOP – پیش‌نویس)</b></summary><textarea readonly style="min-height:420px;direction:ltr;text-align:left">${esc(pr.sop)}</textarea></details>`:""}</div>`;
   if(!pr) return `<div style="margin-top:8px">${warn}${SCH_PROP[p.id]?"":`<p class="meta">استادان و ایمیل این دانشگاه هنوز آماده نشده است؛ در «تسک برای Claude» درخواست دهید.</p>`}</div>`;
-  const sup=(pr.supervisors||[]).map((s,j)=>{ const t=((S.cvT||{})[p.id]||{})[s.name]; return `<li><b>${esc(s.name)}</b> – ${esc(s.role||"")} · <span class="meta">${esc(s.area||"")}</span> ${s.url?link(s.url):""}${t?`<details style="margin:4px 0 8px"><summary><b>رزومه‌ی اختصاصی برای ${esc(s.name)}</b> <span class="meta">(بر پایه‌ی حوزه‌ی او: ${esc(t.focus)})</span></summary><p class="meta" style="direction:ltr;text-align:left"><b>Headline:</b> ${esc(t.headline)}</p><p class="meta" style="direction:ltr;text-align:left"><b>Opening paragraph for the email / CV profile:</b> ${esc(t.pitch)}</p><ul style="direction:ltr;text-align:left">${(t.bullets||[]).map(b=>`<li>${esc(b)}</li>`).join("")}</ul><div class="row"><button class="btn sm sig" data-act="sup-cv" data-id="${esc(p.id)}" data-j="${j}">دریافت رزومه‌ی Word اختصاصی این استاد</button><button class="btn sm sig" data-act="sup-prop" data-id="${esc(p.id)}" data-j="${j}">دریافت پروپوزال Word اختصاصی این استاد</button></div><details style="margin:6px 0"><summary><b>پروپوزال اختصاصی برای ${esc(s.name)}</b> <span class="meta">(بر پایه‌ی حوزه‌ی او و توانمندی‌های شما)</span></summary><textarea readonly style="min-height:380px;direction:ltr;text-align:left">${esc(profPropText(p.id,j))}</textarea></details><p class="meta">برای هر استاد فقط همین رزومه‌ی اختصاصی ارسال شود؛ ارسال یک رزومه‌ی واحد پذیرفته نیست.</p></details>`:`<p class="meta" style="margin:2px 0">رزومه‌ی اختصاصی این استاد هنوز تهیه نشده؛ در «تسک برای Claude» درخواست دهید.</p>`}</li>`; }).join("");
+  const sup=supList(pr).map((s,j)=>{ const t=((S.cvT||{})[p.id]||{})[s.name]; return `<li><b>${esc(s.name)}</b> – ${esc(s.role||"")} · <span class="meta">${esc(s.area||"")}</span> ${s.url?link(s.url):""}${t?`<details style="margin:4px 0 8px"><summary><b>رزومه‌ی اختصاصی برای ${esc(s.name)}</b> <span class="meta">(بر پایه‌ی حوزه‌ی او: ${esc(t.focus)})</span></summary><p class="meta" style="direction:ltr;text-align:left"><b>Headline:</b> ${esc(t.headline)}</p><p class="meta" style="direction:ltr;text-align:left"><b>Opening paragraph for the email / CV profile:</b> ${esc(t.pitch)}</p><ul style="direction:ltr;text-align:left">${(t.bullets||[]).map(b=>`<li>${esc(b)}</li>`).join("")}</ul><div class="row"><button class="btn sm sig" data-act="sup-cv" data-id="${esc(p.id)}" data-j="${j}">دریافت رزومه‌ی Word اختصاصی این استاد</button><button class="btn sm sig" data-act="sup-prop" data-id="${esc(p.id)}" data-j="${j}">دریافت پروپوزال Word اختصاصی این استاد</button></div><details style="margin:6px 0"><summary><b>پروپوزال اختصاصی برای ${esc(s.name)}</b> <span class="meta">(بر پایه‌ی حوزه‌ی او و توانمندی‌های شما)</span></summary><textarea readonly style="min-height:380px;direction:ltr;text-align:left">${esc(profPropText(p.id,j))}</textarea></details><p class="meta">برای هر استاد فقط همین رزومه‌ی اختصاصی ارسال شود؛ ارسال یک رزومه‌ی واحد پذیرفته نیست.</p></details>`:`<p class="meta" style="margin:2px 0">رزومه‌ی اختصاصی این استاد هنوز تهیه نشده؛ در «تسک برای Claude» درخواست دهید.</p>`}</li>`; }).join("");
   const em=(pr.emails||[]).map((e0,i)=>{ const e=effEmail(e0); return `<details style="margin:6px 0"><summary>${supPill(e)} ایمیل به ${esc(e.to_name)}${e.to_email?` ‹${esc(e.to_email)}›`:" (آدرس گیرنده را وارد کنید)"}${e.draft_url?` – <a href="${esc(e.draft_url)}" target="_blank" rel="noopener noreferrer">باز کردن درافت در Gmail</a>`:""}</summary><p class="meta">موضوع: ${esc(e.subject)}</p><textarea readonly style="min-height:260px;direction:ltr;text-align:left">${esc(e.body)}</textarea><div class="row" style="margin-top:6px;gap:8px;flex-wrap:wrap"><label class="meta">وضعیت: <select id="sst_${esc(p.id)}_${i}">${Object.entries(SUP_ST).map(([k,v])=>`<option value="${k}"${(e.status||"draft")===k?" selected":""}>${v[1]}</option>`).join("")}</select></label><input id="srs_${esc(p.id)}_${i}" value="${esc(e.result||"")}" placeholder="نتیجه / خلاصه‌ی پاسخ استاد" style="flex:1;min-width:220px"><button class="btn sm sig" data-act="sup-save" data-id="${esc(p.id)}" data-i="${i}">ثبت وضعیت</button>${e.at?`<span class="meta">آخرین به‌روزرسانی: ${esc(e.at)}</span>`:""}</div></details>`; }).join("");
   return `<details style="margin-top:8px"><summary><b>استاد راهنما، ایمیل و پروپوزال</b> – تهیه‌شده ${esc(pr.updated||"")} · ایمیل: ${["draft","sent","replied","declined"].map(k=>{const n=(pr.emails||[]).filter(e=>(effEmail(e).status||"draft")===k).length; return n?`${faNum(n)} ${SUP_ST[k][1]}`:"";}).filter(Boolean).join("، ")||"—"}</summary>${warn}
    <h4>استادان پیشنهادی (از صفحه‌های رسمی؛ علاقه‌مندی آن‌ها را خودشان تأیید کنند)</h4><ul>${sup}</ul>
    <p class="meta">${esc(pr.format_note||"")}</p>
-   <h4>ایمیل آماده (درافت در Gmail؛ آدرس گیرنده را از صفحه‌ی استاد وارد کنید)</h4>${em}
+   <h4>ایمیل آماده (درافت در Gmail؛ آدرس گیرنده را از صفحه‌ی استاد وارد کنید)</h4>${em}${(pr.alt_emails||[]).map(e0=>{ const e=effEmail(e0); return `<div class="meta" style="margin:6px 0">${supPill(e)} استاد جایگزین: ${esc(e.to_name)} ‹${esc(e.to_email||"")}› – ${e.draft_url?`<a href="${esc(e.draft_url)}" target="_blank" rel="noopener noreferrer">باز کردن درافت در Gmail</a>`:""}<br>موضوع: ${esc(e.subject||"")}</div>`; }).join("")}
    ${(schState(p.id)||{}).letter?`<h4>${esc(schState(p.id).letter.title||"انگیزه‌نامه")}</h4><textarea readonly style="min-height:520px;direction:ltr;text-align:left">${esc(schState(p.id).letter.text)}</textarea>`:""}${pr.sop?`<h4>انگیزه‌نامه (SOP – پیش‌نویس)</h4><textarea readonly style="min-height:420px;direction:ltr;text-align:left">${esc(pr.sop)}</textarea>`:""}${pr.proposal?`<h4>پروپوزال پژوهشی (پیش‌نویس)</h4><textarea readonly style="min-height:420px;direction:ltr;text-align:left">${esc(pr.proposal)}</textarea>`:""}</details>`;
 }
 function schChance(p){
@@ -1966,6 +1977,16 @@ function propShow(id){
   $("#layer").innerHTML=`<div class="scrim" data-act="close-scrim"><div class="drawer" style="width:min(860px,100%)"><div class="row"><h3 style="flex:1">پروپوزال دکتری</h3><button class="btn sm sig" data-act="prop-docx" data-id="${esc(id)}">دریافت Word</button><button class="btn sm ghost" data-act="print-sheet" data-sel="#propSheet">چاپ / PDF</button><button class="btn sm ghost" data-act="close">بستن</button></div>${propHtml(pr)}</div></div>`;
 }
 const propBox = p => SCH_PROP[p.id] ? `<div class="banner" style="margin:8px 0;border-color:var(--info);background:var(--sunken)"><b>پروپوزال دکتری آماده است:</b> «${esc(SCH_PROP[p.id].title)}» (انگلیسی، ۱۱ بخش، حدود ۳٬۰۰۰ کلمه).<div class="row" style="margin-top:6px"><button class="btn sm sig" data-act="prop-docx" data-id="${esc(p.id)}">دریافت پروپوزال (Word)</button><button class="btn sm ghost" data-act="prop-show" data-id="${esc(p.id)}">مشاهده</button></div><p class="meta" style="margin:6px 0 0">پیش‌نویس است: استاد راهنما باید نام‌برده و بخش روش با پروژه‌ی او هماهنگ شود؛ ارجاعات پیش از ارسال با منبع اصلی تطبیق داده شوند؛ هیچ نتیجه‌ای از پژوهش پیشنهادی ادعا نشده است.</p></div>` : "";
+const schDays = p => { if(!p.deadline) return null; return Math.ceil((new Date(p.deadline+"T23:59:00")-new Date())/864e5); };
+const schDayChip = p => { const d=schDays(p); if(d===null) return `<span class="pill p-mute">مهلت نامشخص</span>`; if(d<0) return `<span class="pill p-bad">مهلت گذشته (${faNum(-d)} روز پیش)</span>`; return `<span class="pill ${d<=7?"p-bad":d<=21?"p-warn":"p-ok"}">${faNum(d)} روز مانده</span>`; };
+function schProgBox(p,st,items){
+  const it=st.items||{}, dn=items.filter(i=>(it[i.k]||{}).done), rest=items.filter(i=>!(it[i.k]||{}).done), pct=Math.round(dn.length/items.length*100);
+  const pr=st.prop||{}, em=(pr.emails||[]).map(e=>(effEmail(e).status||"draft")), cnt=k=>em.filter(x=>x===k).length;
+  const mail=em.length?`ایمیل به استادان: ${faNum(em.length)} (درافت ${faNum(cnt("draft"))}، ارسال‌شده ${faNum(cnt("sent"))}، پاسخ ${faNum(cnt("replied"))}، منفی ${faNum(cnt("declined"))})`:"ایمیل به استاد: ثبت نشده";
+  return `<div class="card" style="background:var(--sunken);margin:8px 0"><div class="row" style="gap:10px;flex-wrap:wrap;align-items:center"><b>وضعیت اقدام:</b> ${schDayChip(p)}<span class="pill ${pct>=100?"p-ok":pct>=50?"p-warn":"p-risk"}">${faNum(dn.length)} از ${faNum(items.length)} مرحله انجام شده (${faNum(pct)}٪)</span><span class="meta">${mail}</span></div>
+   <div style="height:6px;background:var(--line);border-radius:3px;margin:6px 0"><i style="display:block;height:6px;width:${pct}%;background:var(--ok);border-radius:3px"></i></div>
+   <div class="grid2"><div><b class="p-ok">انجام‌شده</b><ul style="margin:4px 0">${dn.map(i=>`<li>✓ ${esc(i.t)}</li>`).join("")||'<li class="meta">هنوز موردی انجام نشده</li>'}</ul></div><div><b class="p-risk">مانده</b><ul style="margin:4px 0">${rest.map(i=>`<li>○ ${esc(i.t)} <span class="meta">(${i.by==="ai"?"Claude":"شما / تیم"})</span></li>`).join("")||'<li class="meta">همه‌ی مراحل انجام شده؛ ارسال نهایی را بررسی کنید</li>'}</ul></div></div></div>`;
+}
 function schCard(p,page){
   const st=schState(p.id), items=schItems(p), done=items.filter(i=>(st.items||{})[i.k]&&(st.items[i.k].done)).length;
   const ch=schChance(p), pct=Math.round(done/items.length*100);
@@ -1974,22 +1995,25 @@ function schCard(p,page){
     (it.owner?`<span class="pill p-ok">${esc(memberName(it.owner))}</span>${schLockedForMe(p)&&it.owner!==S.me.id?"":` <button class="btn sm ghost" data-act="sch-unclaim" data-id="${esc(p.id)}" data-k="${esc(i.k)}">رها کردن</button>`}`:(schLockedForMe(p)?`<span class="meta">بسته – ${esc(rosterName(schTaker(p)))} این بورسیه را برداشته است</span>`:`<button class="btn sm ghost" data-act="sch-claim" data-id="${esc(p.id)}" data-k="${esc(i.k)}">${i.by==="ai"?"دریافت محتوای مورد نیاز":"دریافت تسک"}</button>`))+`</div>`; };
   const move = page==="todo"?`<button class="btn sm sig" data-act="sch-set" data-id="${esc(p.id)}" data-st="doing">شروع اقدام</button>`
     : page==="doing"?(schTaker(p)?"":`<button class="btn sm ghost" data-act="sch-set" data-id="${esc(p.id)}" data-st="todo">بازگشت به اقدام‌نشده</button>`)
+    : page==="failed"?`<button class="btn sm ghost" data-act="sch-set" data-id="${esc(p.id)}" data-st="todo">بازگشایی پروژه</button>`
     : `<button class="btn sm ghost" data-act="sch-set" data-id="${esc(p.id)}" data-st="doing">بازگردانی به در دست اقدام</button>`;
+  const failBtn = (page==="failed"||page==="applied")?"":`<button class="btn sm ghost" data-act="sch-fail" data-id="${esc(p.id)}" title="وقتی همه‌ی استادان مناسب پاسخ منفی داده‌اند و استاد دیگری نیست">بستن پروژه (ناموفق)</button>`;
   return `<div class="card" style="margin-bottom:12px">
-  <div class="row" style="align-items:flex-start;gap:10px;flex-wrap:wrap"><h3 style="flex:1;margin:0;min-width:220px">${esc(p.uni)}</h3>${schTaker(p)?`<span class="pill p-ok" title="این بورسیه برداشته شده و برای دیگران بسته است">${schTaker(p)===S.me.id?"شما این بورسیه را برداشته‌اید":esc(rosterName(schTaker(p)))+" این بورسیه را برداشته است"}</span>`:""}${asgCell("sch_"+p.id,p.uni,"scholar")}${p.levels.map(l=>`<span class="pill p-mute">${SCH_LV[l]}</span>`).join("")}${ch?`<span class="pill ${ch.pct>=55?"p-ok":"p-mute"}" title="تخمین ساده بر اساس مشخصات شما">شانس من: ${esc(ch.label)} (${faNum(ch.pct)}٪)</span>`:`<span class="pill p-mute">شانس من: ابتدا مشخصات را کامل کنید</span>`}</div>
+  <div class="row" style="align-items:flex-start;gap:10px;flex-wrap:wrap"><h3 style="flex:1;margin:0;min-width:220px">${esc(p.uni)}</h3>${(!schTaker(p)&&schActiveFor(S.me.id,"sch_"+p.id).length)?`<span class="pill p-warn" title="هر نفر هم‌زمان فقط یک بورسیه">شما «${esc(schActiveFor(S.me.id,"sch_"+p.id)[0].uni)}» را در دست دارید؛ تا ثبت‌نام نهایی آن، بورسیه‌ی دیگری برنمی‌دارید</span>`:""}${schTaker(p)?`<span class="pill p-ok" title="این بورسیه برداشته شده و برای دیگران بسته است">${schTaker(p)===S.me.id?"شما این بورسیه را برداشته‌اید":esc(rosterName(schTaker(p)))+" این بورسیه را برداشته است"}</span>`:""}${asgCell("sch_"+p.id,p.uni,"scholar")}${p.levels.map(l=>`<span class="pill p-mute">${SCH_LV[l]}</span>`).join("")}${ch?`<span class="pill ${ch.pct>=55?"p-ok":"p-mute"}" title="تخمین ساده بر اساس مشخصات شما">شانس من: ${esc(ch.label)} (${faNum(ch.pct)}٪)</span>`:`<span class="pill p-mute">شانس من: ابتدا مشخصات را کامل کنید</span>`}</div>
   <table style="width:100%;margin-top:6px"><tbody>
   <tr><td style="width:26%;color:var(--muted)">رشته‌ی درسی</td><td>${esc(p.field)}</td></tr>
   <tr><td style="color:var(--muted)">کشور و شهر</td><td>${esc(p.country)} – ${esc(p.city)}</td></tr>
   <tr><td style="color:var(--muted)">شرایط حمایت</td><td><b>${esc(p.kind)}</b> · ${esc(p.support)}</td></tr>
   <tr><td style="color:var(--muted)">مهلت ثبت‌نام</td><td>${schDeadline(p)}</td></tr>
   <tr><td style="color:var(--muted)">سایت رسمی</td><td>${link(p.url)}</td></tr></tbody></table>${p.warn?`<div class="banner bad" style="margin:6px 0">${esc(p.warn)}</div>`:""}
-  <div class="row" style="margin:8px 0;gap:10px;flex-wrap:wrap">${page!=="applied"?`<label><input type="checkbox" data-act="sch-set" data-id="${esc(p.id)}" data-st="applied"> قبلاً اقدام شده است</label>`:`<span class="pill p-ok">اقدام شده – در دست بررسی</span>`}${move}<button class="btn sm sig" data-act="sch-task" data-id="${esc(p.id)}">ثبت تسک برای Claude</button><button class="btn sm ghost" data-act="sch-copy" data-id="${esc(p.id)}">کپی دستور</button>${st.claude_task?`<span class="pill ${st.claude_task.status==="open"?"p-warn":"p-ok"}">${st.claude_task.status==="open"?"تسک Claude در انتظار انجام":"تسک Claude انجام شد"}</span>`:""}</div>
+  <div class="row" style="margin:8px 0;gap:10px;flex-wrap:wrap">${page!=="applied"?`<label><input type="checkbox" data-act="sch-set" data-id="${esc(p.id)}" data-st="applied"> قبلاً اقدام شده است</label>`:`<span class="pill p-ok">اقدام شده – در دست بررسی</span>`}${move}${failBtn}<button class="btn sm sig" data-act="sch-task" data-id="${esc(p.id)}">ثبت تسک برای Claude</button><button class="btn sm ghost" data-act="sch-copy" data-id="${esc(p.id)}">کپی دستور</button>${st.claude_task?`<span class="pill ${st.claude_task.status==="open"?"p-warn":"p-ok"}">${st.claude_task.status==="open"?"تسک Claude در انتظار انجام":"تسک Claude انجام شد"}</span>`:""}</div>
+  ${page==="doing"?schProgBox(p,st,items):""}${page==="failed"?`<div class="banner bad" style="margin:6px 0"><b>پروژه بسته شد (ناموفق):</b> ${esc(st.fail_reason||"دلیل ثبت نشده")}</div>`:""}
   <details open><summary><b>مدارک و کارها</b> – ${faNum(done)} از ${faNum(items.length)} (${faNum(pct)}٪)</summary>
    ${propBox(p)}
    <div class="grid2" style="margin-top:8px"><div><h4>Claude انجام می‌دهد</h4>${items.filter(i=>i.by==="ai").map(row).join("")}</div><div><h4>خودتان باید انجام دهید</h4>${items.filter(i=>i.by==="me").map(row).join("")}</div></div></details>${schSupBlock(p)}</div>`;
 }
 function schPublicCard(p){ const items=schItems(p), pubRow=i=>`<div class="row" style="align-items:center;gap:8px;padding:3px 0"><span class="meta">☐</span> <span>${esc(i.t)}</span></div>`;
-  return `<div class="card" style="margin-top:12px"><div class="row" style="align-items:flex-start;gap:10px;flex-wrap:wrap"><h3 style="flex:1;margin:0;min-width:220px">${esc(p.uni)}</h3>${schTaker(p)?`<span class="pill p-ok" title="این بورسیه برداشته شده و برای دیگران بسته است">${schTaker(p)===S.me.id?"شما این بورسیه را برداشته‌اید":esc(rosterName(schTaker(p)))+" این بورسیه را برداشته است"}</span>`:""}${asgCell("sch_"+p.id,p.uni,"scholar")}${p.levels.map(l=>`<span class="pill p-mute">${SCH_LV[l]}</span>`).join("")}</div>
+  return `<div class="card" style="margin-top:12px"><div class="row" style="align-items:flex-start;gap:10px;flex-wrap:wrap"><h3 style="flex:1;margin:0;min-width:220px">${esc(p.uni)}</h3>${(!schTaker(p)&&schActiveFor(S.me.id,"sch_"+p.id).length)?`<span class="pill p-warn" title="هر نفر هم‌زمان فقط یک بورسیه">شما «${esc(schActiveFor(S.me.id,"sch_"+p.id)[0].uni)}» را در دست دارید؛ تا ثبت‌نام نهایی آن، بورسیه‌ی دیگری برنمی‌دارید</span>`:""}${schTaker(p)?`<span class="pill p-ok" title="این بورسیه برداشته شده و برای دیگران بسته است">${schTaker(p)===S.me.id?"شما این بورسیه را برداشته‌اید":esc(rosterName(schTaker(p)))+" این بورسیه را برداشته است"}</span>`:""}${asgCell("sch_"+p.id,p.uni,"scholar")}${p.levels.map(l=>`<span class="pill p-mute">${SCH_LV[l]}</span>`).join("")}</div>
   <table style="width:100%;margin-top:6px"><tbody>
   <tr><td style="width:26%;color:var(--muted)">رشته‌ی درسی</td><td>${esc(p.field)}</td></tr>
   <tr><td style="color:var(--muted)">کشور و شهر</td><td>${esc(p.country)} – ${esc(p.city)}</td></tr>
@@ -2001,11 +2025,17 @@ function schPublicCard(p){ const items=schItems(p), pubRow=i=>`<div class="row" 
    <p class="meta">تیک «انجام شد» و ثبت وضعیت را مالک سامانه انجام می‌دهد؛ اطلاعات شخصی و رزومه‌ی او برای مسئول نمایش داده نمی‌شود.</p></details></div>`; }
 const schOrder = (a,b) => { const t=new Date().toISOString().slice(0,10), ka=!a.deadline?2:a.deadline<t?1:0, kb=!b.deadline?2:b.deadline<t?1:0;   // open deadlines first (soonest first), then past, then rolling
   return ka-kb || (a.deadline||"").localeCompare(b.deadline||"") || String(a.uni).localeCompare(String(b.uni)); };
+function schDoingTable(list){
+  const rows=list.map(p=>{ const st=schState(p.id), items=schItems(p), it=st.items||{}, dn=items.filter(i=>(it[i.k]||{}).done).length, pct=Math.round(dn/items.length*100), rest=items.filter(i=>!(it[i.k]||{}).done).slice(0,2).map(i=>i.t.slice(0,48)), tk=schTaker(p);
+    return `<tr><td>${schDayChip(p)}<div class="meta">${p.deadline?faDate(p.deadline):""}</div></td><td class="t">${esc(p.uni)}</td><td><div style="height:6px;width:90px;background:var(--line);border-radius:3px"><i style="display:block;height:6px;width:${pct}%;background:var(--ok);border-radius:3px"></i></div><span class="meta">${faNum(dn)}/${faNum(items.length)}</span></td><td class="meta">${rest.map(esc).join("؛ ")||"—"}</td><td>${tk?esc(rosterName(tk)):"—"}</td></tr>`; }).join("");
+  return `<h3>خلاصه‌ی در دست اقدام، به ترتیب ددلاین</h3><div class="tablewrap rows"><table><thead><tr><th>ددلاین</th><th>برنامه</th><th>پیشرفت</th><th>مرحله‌ی بعد</th><th>مسئول</th></tr></thead><tbody>${rows}</tbody></table></div>`;
+}
 function schList(page){
   const gm=gmNote();
   const list=SCH.filter(p=>schStatus(p)===page).filter(p=>match(p.uni,p.country,p.city,p.field,p.kind)).sort(schOrder);
-  const sr=S.sampleReply, srCard=sr?`<details class="card" style="margin:8px 0"><summary><b>پاسخ نمونه‌ی استاد (درس‌آموخته):</b> ${esc(sr.from||"")} – ${esc(sr.kind||"")}</summary><p class="meta">ایمیل ما فقط وقتی جواب می‌گیرد که رزومه و پروپوزال دقیقاً با حوزه‌ی همان استاد هماهنگ باشد؛ رزومه‌ی واحد برای همه‌ی استادان پذیرفته نیست.</p><textarea readonly style="min-height:200px;direction:ltr;text-align:left">${esc(sr.text||"")}</textarea><ul>${(sr.lessons||[]).map(x=>`<li>${esc(x)}</li>`).join("")}</ul></details>`:"";
-  return gm+srCard+`<p class="note"><b>شماره‌ی تماس برای همه‌ی ثبت‌نام‌ها:</b> فقط ${SCH_CONTACT}؛ کد تأیید و پیام واتس‌اپ نهادها به همین شماره‌ها می‌رسد. در ایمیل به استادان و همه‌ی مکاتبات، مدرک دکترای مدیریت کسب‌وکار یا DBA ذکر نمی‌شود.</p><p class="note">فهرست بورسیه‌های کامل ارشد و دکتری که شهریه را پوشش می‌دهند و حقوق ماهیانه دارند. مهلت‌ها تقریبی‌اند؛ پیش از اقدام در سایت رسمی تأیید شوند.</p>`+
+  const sr=S.sampleReply, srCard=sr?`<details class="card" style="margin:8px 0"><summary><b>پاسخ نمونه‌ی استاد (درس‌آموخته):</b> ${esc(sr.from||"")} – ${esc(sr.kind||"")}</summary><p class="meta">ایمیل ما فقط وقتی جواب می‌گیرد که رزومه و پروپوزال دقیقاً با حوزه‌ی همان استاد هماهنگ باشد؛ رزومه‌ی واحد برای همه‌ی استادان پذیرفته نیست.</p><textarea readonly style="min-height:200px;direction:ltr;text-align:left">${esc(sr.text||"")}</textarea><ul>${(sr.lessons||[]).map(x=>`<li>${esc(x)}</li>`).join("")}</ul>${(sr.more||[]).map(m=>`<p class="meta"><b>${esc(m.from||"")}</b> – ${esc(m.kind||"")}</p><textarea readonly style="min-height:120px;direction:ltr;text-align:left">${esc(m.text||"")}</textarea>`).join("")}</details>`:"";
+  const sum=page==="doing"&&list.length?schDoingTable(list):"";
+  return gm+srCard+sum+`<p class="note"><b>شماره‌ی تماس برای همه‌ی ثبت‌نام‌ها:</b> فقط ${SCH_CONTACT}؛ کد تأیید و پیام واتس‌اپ نهادها به همین شماره‌ها می‌رسد. در ایمیل به استادان و همه‌ی مکاتبات برنامه‌های هوش مصنوعی، علوم کامپیوتر، IT و بقیه‌ی رشته‌ها مدرک دکترای مدیریت کسب‌وکار یا DBA هرگز ذکر نمی‌شود (دکتری با حقوق فقط برای دارندگان ارشد پذیرفته می‌شود). فقط برای بیزنس‌اسکول‌ها سابقه‌ی مطالعاتی و دکترای کسب‌وکار، منتورینگ استارتاپ، تدریس بوم مدل کسب‌وکار و ارزش پیشنهادی، مشاوره‌ی ثبت اختراع، دانش‌بنیان و توسعه‌ی بازار و بنیان‌گذاری دو برند (پتروپالاتوس و پارسا اینترنشنال گروپ) امتیاز است و ذکر می‌شود.</p><p class="note">فهرست بورسیه‌های کامل ارشد و دکتری که شهریه را پوشش می‌دهند و حقوق ماهیانه دارند. مهلت‌ها تقریبی‌اند؛ پیش از اقدام در سایت رسمی تأیید شوند.</p>`+
    kpis(Object.entries(SCH_ST).map(([k,l])=>[l,faNum(SCH.filter(p=>schStatus(p)===k).length),false]))+
    (list.length?list.map(p=>schCard(p,page)).join(""):'<p class="empty">موردی در این صفحه نیست.</p>');
 }
@@ -2014,6 +2044,7 @@ const schTeam = fn => () => (isOwnerOnly()||schAccess()) ? fn() : `<p class="emp
 VIEWS["scholar.human"] = schTeam(() => humView("scholar"));
 VIEWS["scholar.applied"]=schTeam(()=>schList("applied"));
 VIEWS["scholar.doing"]=schTeam(()=>schList("doing"));
+VIEWS["scholar.failed"]=schTeam(()=>schList("failed"));
 VIEWS["scholar.todo"]=schTeam(()=>schList("todo"));
 const SCH_DOCS = ["رزومه‌ی آکادمیک (CV)","انگیزه‌نامه (SOP)","پیشنهاد پژوهشی (برای دکتری)","ریز نمرات و مدرک تحصیلی با ترجمه‌ی رسمی","مدرک زبان (IELTS/TOEFL)","۲ تا ۳ توصیه‌نامه","پاسپورت","مقالات و سوابق پژوهشی (در صورت وجود)","گواهی سابقه‌ی کار (در صورت نیاز)"];
 function schCv(){
@@ -2066,33 +2097,39 @@ async function buildCvDocx(m){
   const rels=items=>`<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">${items.map(([id,t,tg])=>`<Relationship Id="${id}" Type="${RELNS}/${t}" Target="${tg}"/>`).join("")}</Relationships>`;
   return zipStore([{name:"[Content_Types].xml",data:ct},{name:"_rels/.rels",data:rels([["rId1","officeDocument","word/document.xml"]])},{name:"word/document.xml",data:doc},{name:"word/styles.xml",data:styles},{name:"word/_rels/document.xml.rels",data:rels([["rIdSty","styles","styles.xml"]])}]);
 }
+const supList = pr => [...((pr||{}).supervisors||[]),...((pr||{}).alt_supervisors||[])];   // alt_*: replacement professors added after a decline
+const SCH_BIZ = new Set(["liverpool_ms","bristol_bs","ambs","imperial_bs","edinburgh_bs","kingston_bs","kingston_niloufar"]);   // business programmes: the business doctorate and business record count as a plus; never used elsewhere
+const BIZ_EDU = "Professional doctorate in business management – University of Tehran";
+const BIZ_EXP = ["- Founder of two brands: Petro Pala Toos (Iran) and Parsa International Group (Türkiye).","- Start-up mentor; instructor in business-model-canvas design and in value-proposition design.","- Consultant on patent filing, knowledge-based company status and market development."];
 function cvModelFor(pid,j){
-  const pr=(schState(pid)||{}).prop, s=((pr||{}).supervisors||[])[j], t=s&&((S.cvT||{})[pid]||{})[s.name]; if(!t) return null;
+  const pr=(schState(pid)||{}).prop, s=supList(pr)[j], t=s&&((S.cvT||{})[pid]||{})[s.name]; if(!t) return null;
   const base=cvModel(), prof=t.headline.replace(/^Tailored for [^:]+:\s*/,"");
   const sec=[{h:"Profile",lines:[prof.charAt(0).toUpperCase()+prof.slice(1)]},{h:"Strengths Relevant to "+t.focus.charAt(0).toUpperCase()+t.focus.slice(1),lines:(t.bullets||[]).map(b=>"- "+b)}];
-  return {...base,sec:sec.concat(base.sec.filter(x=>x.h!=="Research Interests"))};
+  let rest=base.sec.filter(x=>x.h!=="Research Interests");
+  if(SCH_BIZ.has(pid)) rest=rest.map(x=>x.h==="Education"?{...x,lines:[...x.lines,BIZ_EDU]}:x.h==="Professional Experience"?{...x,lines:[...BIZ_EXP,...x.lines]}:x);
+  return {...base,sec:sec.concat(rest)};
 }
 function profPropText(pid,j){
-  const pr=(schState(pid)||{}).prop||{}, s=(pr.supervisors||[])[j], t=s&&((S.cvT||{})[pid]||{})[s.name]; if(!t||!pr.proposal) return "";
+  const pr=(schState(pid)||{}).prop||{}, s=supList(pr)[j], t=s&&((S.cvT||{})[pid]||{})[s.name]; if(!t||!pr.proposal) return "";
   const bl=pr.proposal.split("\n\n"), prep=((bl[0].match(/^Prepared for: (.*)/)||[])[1])||"this programme", rest=bl.slice(1).filter(b=>!/^Fit/.test(b));
-  return `Prepared for: ${s.name} (${s.role||""}), ${prep}\n\nResearch alignment with ${s.name}\n${t.pitch}\n\nWhat I bring to your group\n${(t.bullets||[]).map(b=>"- "+b).join("\n")}\n\nRequest\nI would be grateful to know whether you might be open to supervising a doctoral project of this kind within ${prep}, and whether you would support my application. I would adapt the methods and case studies to the interests of your group.\n\n`+rest.join("\n\n");
+  return `Prepared for: ${s.name} (${s.role||""}), ${prep}\n\nResearch alignment with ${s.name}\n${t.pitch}\n\nWhat I bring to your group\n${(t.bullets||[]).map(b=>"- "+b).join("\n")}\n\nRequest\nI would be grateful to know whether you might be open to supervising a doctoral project of this kind within ${prep}, and whether you would support my application. I would adapt the methods and case studies to the interests of your group.\n\n`+rest.join("\n\n")+(SCH_BIZ.has(pid)?"\n\nBusiness background\nProfessional doctorate in business management; start-up mentor; instructor in business-model-canvas and value-proposition design; consultant on patents, knowledge-based status and market development; founder of two brands (Petro Pala Toos, Iran; Parsa International Group, Türkiye).":"");
 }
 function profPropModel(pid,j){
   const txt=profPropText(pid,j); if(!txt) return null; const base=cvModel(), bl=txt.split("\n\n"), sec=[];
-  bl.slice(1).forEach(b=>{ const ls=b.split("\n"); if(/^(\d+\.\s|Title$|Research alignment|What I bring|Request)/.test(ls[0])||!sec.length) sec.push({h:ls[0],lines:ls.slice(1)}); else sec[sec.length-1].lines.push(...ls); });
+  bl.slice(1).forEach(b=>{ const ls=b.split("\n"); if(/^(\d+\.\s|Title$|Research alignment|What I bring|Request|Business background)/.test(ls[0])||!sec.length) sec.push({h:ls[0],lines:ls.slice(1)}); else sec[sec.length-1].lines.push(...ls); });
   return {name:"Research Proposal (draft)",aff:bl[0].replace(/^Prepared for: /,"Prepared for: "),contact:base.name+" · "+base.contact,sec};
 }
 async function downloadSupProp(pid,j){
   if(!S.downloads){ toast("دریافت فایل فقط داخل claude.ai فعال است."); return; }
   const m=profPropModel(pid,j); if(!m){ toast("پروپوزال اختصاصی این استاد هنوز آماده نیست."); return; }
-  const nm=((((schState(pid)||{}).prop||{}).supervisors||[])[j].name||"professor").replace(/[^A-Za-z0-9]+/g,"-").replace(/^-|-$/g,"");
+  const nm=(supList((schState(pid)||{}).prop)[j].name||"professor").replace(/[^A-Za-z0-9]+/g,"-").replace(/^-|-$/g,"");
   try{ await S.downloads.save({filename:`Sohrabi-Proposal-${nm}-${today()}.docx`,data:new Blob([await buildCvDocx(m)],{type:ABS_DOCX})}); }
   catch(err){ if(!err||err.code!=="declined"){ toast("ساخت یا دریافت فایل Word پروپوزال انجام نشد."); console.error(err); } }
 }
 async function downloadSupCv(pid,j){
   if(!S.downloads){ toast("دریافت فایل فقط داخل claude.ai فعال است."); return; }
   const m=cvModelFor(pid,j); if(!m){ toast("رزومه‌ی اختصاصی این استاد هنوز تهیه نشده است."); return; }
-  const nm=((((schState(pid)||{}).prop||{}).supervisors||[])[j].name||"professor").replace(/[^A-Za-z0-9]+/g,"-").replace(/^-|-$/g,"");
+  const nm=(supList((schState(pid)||{}).prop)[j].name||"professor").replace(/[^A-Za-z0-9]+/g,"-").replace(/^-|-$/g,"");
   try{ await S.downloads.save({filename:`Sohrabi-CV-${nm}-${today()}.docx`,data:new Blob([await buildCvDocx(m)],{type:ABS_DOCX})}); }
   catch(err){ if(!err||err.code!=="declined"){ toast("ساخت یا دریافت فایل Word رزومه انجام نشد."); console.error(err); } }
 }
@@ -2134,7 +2171,7 @@ async function schSave(id,patch){
 const SCH_CONTACT = "موبایل ایران 09123344295 و تلفن ایران 02188918530";   // the only numbers to give institutions (verification codes and WhatsApp may come from them)
 function schPromptText(id){
   const p=SCH.find(x=>x.id===id), q=S.sp||{};
-  return `برای بورسیه «${p.kind}» در ${p.uni} (${p.country}) رشته‌ی ${p.field} برنامه‌ی اقدام بساز: رزومه‌ی آکادمیک، پیش‌نویس SOP و ایمیل به استاد. مشخصات من: رشته ${q.field||"—"}، مقطع ${q.target||"—"}، معدل ${q.gpa||"—"}، IELTS ${q.ielts||"—"}، مقاله ${q.pubs||"—"}. مهلت تقریبی: ${p.deadline}. در همه‌ی فرم‌ها، رزومه و ایمیل‌ها فقط از شماره‌های ایران استفاده کن: ${SCH_CONTACT}؛ شماره‌ی دیگری ننویس، چون کد تأیید یا پیام واتس‌اپ نهادها به همین شماره‌ها می‌رسد. در ایمیل به استادان و همه‌ی مکاتبات هرگز مدرک دکترای مدیریت کسب‌وکار یا DBA را ذکر نکن؛ فقط کارشناسی ارشد مهندسی نفت (حفاری) و سوابق صنعتی و پژوهشی.`;
+  return `برای بورسیه «${p.kind}» در ${p.uni} (${p.country}) رشته‌ی ${p.field} برنامه‌ی اقدام بساز: رزومه‌ی آکادمیک، پیش‌نویس SOP و ایمیل به استاد. مشخصات من: رشته ${q.field||"—"}، مقطع ${q.target||"—"}، معدل ${q.gpa||"—"}، IELTS ${q.ielts||"—"}، مقاله ${q.pubs||"—"}. مهلت تقریبی: ${p.deadline}. در همه‌ی فرم‌ها، رزومه و ایمیل‌ها فقط از شماره‌های ایران استفاده کن: ${SCH_CONTACT}؛ شماره‌ی دیگری ننویس، چون کد تأیید یا پیام واتس‌اپ نهادها به همین شماره‌ها می‌رسد. در ایمیل به استادان و همه‌ی مکاتبات برای برنامه‌های هوش مصنوعی، علوم کامپیوتر، IT و رشته‌های غیر از کسب‌وکار هرگز مدرک دکترای مدیریت کسب‌وکار یا DBA را ذکر نکن؛ فقط کارشناسی ارشد مهندسی نفت (حفاری) و سوابق صنعتی و پژوهشی. فقط اگر برنامه بیزنس‌اسکول یا مدیریت است، دکترای حرفه‌ای مدیریت کسب‌وکار، منتورینگ استارتاپ، تدریس بوم مدل کسب‌وکار و ارزش پیشنهادی، مشاوره‌ی ثبت اختراع و دانش‌بنیان و توسعه‌ی بازار و بنیان‌گذاری پتروپالاتوس (ایران) و پارسا اینترنشنال گروپ (ترکیه) را به‌عنوان امتیاز بنویس.`;
 }
 function schShowText(t){ // clipboard API is blocked inside the artifact frame: show the text selected so Ctrl+C always works
   $("#layer").innerHTML=`<div class="scrim" data-act="close-scrim"><div class="drawer"><h3>دستور برای Claude</h3><p class="note">متن انتخاب شده است؛ با Ctrl+C کپی کنید و در گفتگو با Claude بچسبانید.</p><textarea id="schTxt" style="width:100%;min-height:180px" readonly>${esc(t)}</textarea><div class="row" style="margin-top:8px"><button class="btn ghost" data-act="close">بستن</button></div></div></div>`;
@@ -2716,17 +2753,20 @@ const IDENT_NAME = {ir:"پترو پالاتوس",soshiant:"سوشیانت"};
 const IDENT_SECTORS = {ir:["oil"],soshiant:["med","water","energy","power","shasta","hpc"]};
 const sectorIdent = k => k==="oil"?"ir":"soshiant";   // oil & gas letters go out on the Petro Pala letterhead; every other field on Soshiant's
 const archIdent = a => { if(a.identity==="soshiant"||a.identity==="ir") return a.identity; const l=a.letter_id&&S.letters.find(x=>x.id===a.letter_id); if(l&&l.identity) return l.identity==="soshiant"?"soshiant":"ir"; return a.sector?sectorIdent(a.sector):"ir"; };
-const archView = (sector0, ident) => {
-  if(ident){ if(S._asI!==ident){ S.archSec=""; S._asI=ident; } }
-  const sector = ident ? (S.archSec||null) : sector0;
-  const inIdent = ident ? S.lettersArchive.filter(a=>archIdent(a)===ident) : S.lettersArchive;
-  const secChips = ident ? `<div class="toolbar"><span class="meta">گروه:</span><button class="btn sm ${!sector?"":"ghost"}" data-act="arch-sec" data-k="">همه (${faNum(inIdent.length)})</button>${Object.keys(ARCH_SECT).filter(k=>inIdent.some(a=>a.sector===k)||IDENT_SECTORS[ident].includes(k)).map(k=>`<button class="btn sm ${sector===k?"":"ghost"}" data-act="arch-sec" data-k="${k}">${esc(ARCH_SECT[k])} (${faNum(inIdent.filter(a=>a.sector===k||(a.also||[]).includes(k)).length)})</button>`).join("")}</div>` : "";
-  const identBanner = ident ? `<div class="banner" style="border-color:${ident==="soshiant"?"var(--info)":"var(--signal)"}"><b>${ident==="soshiant"?"شرکت سوشیانت":"شرکت پترو پالا توس"}</b> — این فهرست فقط نامه‌هایی است که با سربرگ ${ident==="soshiant"?"سوشیانت":"پترو پالا توس"} صادر می‌شوند. ${ident==="soshiant"?(S.lhs?`<button class="btn sm sig" data-act="lhs-dl">دریافت فرم خام نامه (سربرگ سوشیانت)</button>`:"فایل سربرگ سوشیانت هنوز ثبت نشده است."):""}</div>` : "";
+const archView = (sector0, ident, grp) => {
+  if(ident&&!grp){ if(S._asI!==ident){ S.archSec=""; S._asI=ident; } }
+  const sector = ident&&!grp ? (S.archSec||null) : sector0;
+  const base = ident ? S.lettersArchive.filter(a=>archIdent(a)===ident&&(!grp||archGrp(a)===grp)) : S.lettersArchive;
+  const cat = grp==="shasta"&&SHASTA_CATS[S.ppSub] ? S.ppSub : "";
+  const inIdent = base.filter(a=>!cat||archCat(a)===cat);
+  const grpHead = grp==="shasta" ? `<div class="toolbar"><span class="meta">نوع شرکت:</span><button class="btn sm ${cat?"ghost":""}" data-act="pp-sub" data-k="">همه (${faNum(base.length)})</button>${Object.entries(SHASTA_CATS).map(([k,l])=>`<button class="btn sm ${cat===k?"":"ghost"}" data-act="pp-sub" data-k="${k}">${esc(l)} (${faNum(base.filter(a=>archCat(a)===k).length)})</button>`).join("")}</div>` : "";
+  const secChips = ident&&!grp ? `<div class="toolbar"><span class="meta">گروه:</span><button class="btn sm ${!sector?"":"ghost"}" data-act="arch-sec" data-k="">همه (${faNum(inIdent.length)})</button>${Object.keys(ARCH_SECT).filter(k=>inIdent.some(a=>a.sector===k)||IDENT_SECTORS[ident].includes(k)).map(k=>`<button class="btn sm ${sector===k?"":"ghost"}" data-act="arch-sec" data-k="${k}">${esc(ARCH_SECT[k])} (${faNum(inIdent.filter(a=>a.sector===k||(a.also||[]).includes(k)).length)})</button>`).join("")}</div>` : "";
+  const identBanner = ident&&!grp ? `<div class="banner" style="border-color:${ident==="soshiant"?"var(--info)":"var(--signal)"}"><b>${ident==="soshiant"?"شرکت سوشیانت":"شرکت پترو پالا توس"}</b> — این فهرست فقط نامه‌هایی است که با سربرگ ${ident==="soshiant"?"سوشیانت":"پترو پالا توس"} صادر می‌شوند. ${ident==="soshiant"?(S.lhs?`<button class="btn sm sig" data-act="lhs-dl">دریافت فرم خام نامه (سربرگ سوشیانت)</button>`:"فایل سربرگ سوشیانت هنوز ثبت نشده است."):""}</div>` : "";
   const all=inIdent.filter(a=>(!sector||a.sector===sector||(a.also||[]).includes(sector))&&match(a.subject,a.recipient,a.number,a.employer_no,a.summary));
   const flt={all:()=>true,active:a=>archOpen(a)&&a.status!=="stalled",stalled:a=>archOpen(a)&&a.status==="stalled",overdue:archOverdue,stale:archStale,closed:a=>!archOpen(a)}[S.archF]||(()=>true);
   const list=all.filter(flt).sort((a,b)=>(b.date||"").localeCompare(a.date||""));
   const keys=Object.keys(ARCH_STAGES);
-  return `${ident?`<h2>نامه‌های ${esc(IDENT_NAME[ident])}${sector?` – ${esc(ARCH_SECT[sector])}`:""}</h2>${identBanner}${secChips}`:sector?`<h2>نامه‌های ${esc(ARCH_SECT[sector])}</h2>`:""}${!ident&&sector==="med"?`<div class="banner">نامه‌های پزشکی با سربرگ شرکت سوشیانت صادر می‌شوند. ${S.lhs?`سربرگ ثبت شده است: «${esc(S.lhs.name||"")}». در «نامه‌ی جدید» هویت فرستنده را «سوشیانت» انتخاب کنید. <button class="btn sm sig" data-act="lhs-dl">دریافت فرم خام نامه (سربرگ سوشیانت)</button>`:"فایل سربرگ هنوز ثبت نشده است."}</div>`:""}${(sector==="water"||sector==="energy")?`<div class="banner">نامه‌های این گروه روی سربرگ سوشیانت ساخته می‌شوند. ${S.lhs?`<button class="btn sm sig" data-act="lhs-dl">دریافت فرم خام نامه (سربرگ سوشیانت)</button>`:"فایل سربرگ هنوز ثبت نشده است."}</div>`:""}<div class="banner">این بخش جدا از «نامه‌ی جدید» است: نامه‌هایی که ارسال می‌شوند یا ارسال شده‌اند (چه قبلاً بدون ایجنت، چه نامه‌های آماده‌شده در همین سامانه) و پیگیری‌شان. برای هر نامه مشخص است در کدام مرحله هستیم، آخرین اقدام چه بوده و گام بعدی کِی است.</div>
+  return `${grpHead}${ident&&!grp?`<h2>نامه‌های ${esc(IDENT_NAME[ident])}${sector?` – ${esc(ARCH_SECT[sector])}`:""}</h2>${identBanner}${secChips}`:sector?`<h2>نامه‌های ${esc(ARCH_SECT[sector])}</h2>`:""}${!ident&&sector==="med"?`<div class="banner">نامه‌های پزشکی با سربرگ شرکت سوشیانت صادر می‌شوند. ${S.lhs?`سربرگ ثبت شده است: «${esc(S.lhs.name||"")}». در «نامه‌ی جدید» هویت فرستنده را «سوشیانت» انتخاب کنید. <button class="btn sm sig" data-act="lhs-dl">دریافت فرم خام نامه (سربرگ سوشیانت)</button>`:"فایل سربرگ هنوز ثبت نشده است."}</div>`:""}${(sector==="water"||sector==="energy")?`<div class="banner">نامه‌های این گروه روی سربرگ سوشیانت ساخته می‌شوند. ${S.lhs?`<button class="btn sm sig" data-act="lhs-dl">دریافت فرم خام نامه (سربرگ سوشیانت)</button>`:"فایل سربرگ هنوز ثبت نشده است."}</div>`:""}<div class="banner">این بخش جدا از «نامه‌ی جدید» است: نامه‌هایی که ارسال می‌شوند یا ارسال شده‌اند (چه قبلاً بدون ایجنت، چه نامه‌های آماده‌شده در همین سامانه) و پیگیری‌شان. برای هر نامه مشخص است در کدام مرحله هستیم، آخرین اقدام چه بوده و گام بعدی کِی است.</div>
   <div class="toolbar"><button class="btn sig" data-act="arch-new">ثبت نامه‌ی ارسال‌شده‌ی پیشین</button>${Object.entries(ARCH_F).map(([k,l])=>`<button class="btn sm ${S.archF===k?"":"ghost"}" data-act="arch-f" data-k="${k}">${esc(l)}</button>`).join("")}</div>`+
   kpis([["کل نامه‌های بایگانی",faNum(all.length)],["در جریان",faNum(all.filter(a=>archOpen(a)&&a.status!=="stalled").length)],["متوقف",faNum(all.filter(a=>archOpen(a)&&a.status==="stalled").length),all.some(a=>archOpen(a)&&a.status==="stalled")],["اقدام بعدی سررسیده",faNum(all.filter(archOverdue).length),all.some(archOverdue)],["بدون پیگیری بیش از ۱۴ روز",faNum(all.filter(archStale).length),all.some(archStale)],["بسته‌شده",faNum(all.filter(a=>!archOpen(a)).length)]])+
   table(["شماره / تاریخ ارسال","موضوع","گیرنده","پیشرفت","آخرین وضعیت","اقدام بعدی","مسئول",""], list.map(a=>{
@@ -2741,8 +2781,187 @@ const archView = (sector0, ident) => {
      ${td("",`<div class="row"><button class="btn sm" data-act="arch-progress" data-id="${esc(a.id)}">به‌روزرسانی پیشرفت</button><button class="btn sm ghost" data-act="arch-edit" data-id="${esc(a.id)}">ویرایش</button>${a.letter_id&&S.downloads?`<button class="btn sm ghost" data-act="letter-dl" data-id="${esc(a.letter_id)}">Word</button>`:""}</div>`)}</tr>`}),
    "هنوز نامه‌ای در این گروه ثبت نشده است. نامه‌های ارسال‌شده‌ی پیشین را با «ثبت نامه‌ی ارسال‌شده‌ی پیشین» وارد کنید یا گروه نامه‌ی موجود را از «ویرایش» تغییر دهید.");
 };
+// ---------- PETRO PALA LETTERS TREE: group tabs (Shasta, Persian Gulf Holding, NIOC, NIGC, Mapna, refining and distribution, petrochemicals)
+// with a company sub-tab inside each group. Letters are drafted on demand from a per-company-type template (Petro Pala letterhead, sector oil);
+// the company lists come from the user's brief or from public knowledge and the names must be confirmed against each company's own website.
+const PP_GROUPS = [["shasta","هلدینگ شستا"],["hpc","هلدینگ خلیج فارس"],["pic","سرمایه‌گذاری صنایع پتروشیمی"],["nioc","شرکت ملی نفت ایران"],["nigc","شرکت ملی گاز ایران"],["mapna","مپنا"],["niordc","پخش و پالایش"],["npc","پتروشیمی (شرکت ملی صنایع پتروشیمی)"],["other","سایر"]];
+const PP_GRP_NAME = Object.fromEntries(PP_GROUPS);
+const archGrp = a => { if(a.grp) return a.grp; const t=`${a.recipient||""} ${a.subject||""}`;
+  if(/ستاره خلیج فارس|پالایش نفت|پخش فرآورده/.test(t)) return "niordc";
+  if(/صنایع پتروشیمی خلیج فارس|هلدینگ خلیج فارس/.test(t)) return "hpc";
+  if(/سرمایه‌گذاری صنایع پتروشیمی/.test(t)) return "pic";
+  if(/مپنا/.test(t)) return "mapna";
+  if(/شرکت ملی گاز|پالایش گاز|انتقال گاز/.test(t)) return "nigc";
+  if(/شرکت ملی نفت|نفت مناطق|فلات قاره|حفاری ایران|نفت خزر|اروندان/.test(t)) return "nioc";
+  return "shasta"; };   // most letters sent so far belong to companies of Shasta
+const SHASTA_CATS = {petro:"پتروشیمی",rubber:"لاستیک و تایر",cell:"سلولزی، چوب و کاغذ",oilsvc:"نفت، گاز و خدمات صنعتی",other:"سایر"};
+const archCat = a => { const t=`${a.recipient||""} ${a.subject||""}`;
+  if(/پتروشیمی/.test(t)) return "petro"; if(/لاستیک|تایر/.test(t)) return "rubber"; if(/چوب|کاغذ|سلولزی|حریر|کارتن|لطیف|تاسیکو/.test(t)) return "cell";
+  if(/نفت|گاز|حفاری|نگهداشت|ماشین‌سازی|ماشین سازی|فیرمکو|دوده|کربن|بازرسی|بارز|مهندسی/.test(t)) return "oilsvc"; return "other"; };
+
+const TAX_BLOCK = [
+ "در تامین بودجه هزینه تحقیق و توسعه از محل مالیات پرداختی ( اعتبار مالیاتی ) مشوق‌ های مالیاتی برای فعالیت‌های تحقیق و توسعه شرکتها، عمدتاً بر اساس قانون جهش تولید دانش ‌بنیان (مصوب ۱۴۰۱) و با اجرایی شدن از سال ۱۴۰۲، در قالب اعتبار مالیاتی  ارائه می‌شود.( ویژه شرکت های دانش بنیان و غیر دانش بنیان)",
+ "این مشوق‌ها جایگزین معافیت‌ های سنتی شده و هزینه‌ های شما را به ‌طور مستقیم از مالیات عملکردتان کسر می‌کند. بر اساس اطلاعات موجود، مهم‌ترین مسیرهای قانونی به شرح زیر است:",
+ "سازوکار اصلی: اعتبار مالیاتی تحقیق و توسعه",
+ "بر اساس بند «ب» ماده ۱۱ قانون، اگر هزینه‌های تحقیق و توسعه شما توسط معاونت علمی و فناوری ریاست‌ جمهوری تأیید شود، معادل کل هزینه‌های مصوب، از مالیات عملکرد شرکت کسر خواهد شد. این اعتبار حتی  قابل انتقال به سال ‌های مالی آینده است تا ریسک سرمایه ‌گذاری کاهش یابد. برای بهره‌مندی، طرح باید نظام‌مند، نوآورانه و فناورانه بوده و خروجی مشخصی مانند تولید محصول یا بهبود فرآیند داشته باشد که طرح پیشنهادی این شرکت جهت پیاده سازی تمامی پیش نیاز های مطرح شده را دارا می باشد.",
+ "برای شفاف ‌سازی، سرفصل ‌های هزینه‌ های قابل ‌پذیرش در این طرح عبارتند از:",
+ "خرید ماشین‌ آلات و تجهیزات","هزینه ‌های نیروی انسانی","خرید مواد اولیه، اجزا و قطعات","هزینه آزمون‌ها و تست‌ها",
+ "لذا با مراجعه به سامانه www.etebar14.ir امکان ثبت درخواست شرکت متبوع و رسیدگی توسط معاونت علمی و فناوری ریاست جمهوری جهت دریافت تایید  وجود دارد."];
+// Energy-saving certificates (گواهی صرفه‌جویی انرژی): tradable on the Iran Energy Exchange (not shares); basis: clause «پ» of article 46 of the 7th development plan law.
+const CERT_PARA = "در کنار تأمین هزینه‌ی این خدمت از محل اعتبار مالیاتی، برای مجموعه‌هایی که مصرف گاز و انرژی بالایی دارند، هوشمندسازی خط تولید می‌تواند دستاورد مالی دیگری هم داشته باشد: کاهش مصرف سوخت (گاز و برق) که پس از اندازه‌گیری و راستی‌آزمایی مستقل و در صورت احراز شرایط، مطابق سازوکار «گواهی صرفه‌جویی انرژی» (بند «پ» ماده ۴۶ قانون برنامه هفتم؛ برق از طریق توانیر و سازمان بهینه‌سازی و مدیریت راهبردی انرژی، گاز از طریق شرکت ملی گاز ایران) قابلیت صدور گواهی و عرضه در بورس انرژی ایران را دارد و درآمد حاصل از فروش آن می‌تواند بخشی از هزینه‌ی طرح را جبران کند. تذکر: این گواهی‌ها اوراق قابل معامله در بورس انرژی هستند و سهم یا سهام شرکت نیستند؛ شمول و نرخ آن‌ها تابع مقررات روز و تأیید مراجع ذی‌ربط است.";
+
+const CO_T = {
+ up:{n:"تولید نفت و گاز (بالادست)",product:"سامانه هوشمند بهینه‌سازی تولید و کاهش مصرف سوخت میادین",
+  intro:"این سامانه با یکپارچه‌سازی داده‌های چاه، تأسیسات سرچاهی و واحدهای بهره‌برداری، پایش لحظه‌ای تولید، نگهداری پیش‌بینانه‌ی تجهیزات دوار و کنترل مصرف سوخت و گاز مشعل را فراهم می‌کند.",
+  energy:["بهینه‌سازی مصرف گاز سوخت توربین‌ها و کمپرسورها و کاهش گاز مشعل (فلر)","پایش انتشار متان و آلاینده‌ها و گزارش خودکار برای الزامات زیست‌محیطی","نگهداری پیش‌بینانه‌ی تجهیزات دوار و کاهش توقف ناخواسته و سوخت‌سوزی ناشی از راه‌اندازی مجدد"],
+  mods:[["پایش و بهینه‌سازی تولید چاه‌ها","نوسان تولید و افت بهره‌وری چاه‌ها دیرتر از لازم دیده می‌شود.","مدل‌های یادگیری ماشین روی داده‌ی چاه و تأسیسات، افت تولید را زودتر هشدار می‌دهند و نقطه‌ی کار پیشنهادی ارائه می‌کنند."],["نگهداری پیش‌بینانه‌ی تجهیزات دوار","خرابی ناگهانی پمپ‌ها و کمپرسورها تولید را متوقف می‌کند.","تحلیل ارتعاش، دما و فشار با الگوریتم‌های هوش مصنوعی، زمان خرابی را پیش‌بینی می‌کند."],["کنترل مصرف سوخت و گاز مشعل","سوخت‌سوزی و فلر بدون شاخص لحظه‌ای مدیریت می‌شود.","داشبورد شدت مصرف انرژی هر واحد و هشدار انحراف از خط مبنا."]],
+  gains:["کاهش مصرف گاز سوخت و گاز مشعل","کاهش توقف ناخواسته‌ی تجهیزات","شفافیت شاخص‌های انرژی و آلایندگی هر تأسیسات"]},
+ drill:{n:"حفاری",product:"سامانه هوشمند بهینه‌سازی حفاری و کاهش زمان غیرمولد",
+  intro:"این سامانه با تحلیل داده‌ی لحظه‌ای دکل، نرخ نفوذ، گشتاور و فشار را بهینه می‌کند و زمان غیرمولد و مصرف سوخت دکل‌ها را کاهش می‌دهد.",
+  energy:["کاهش مصرف گازوئیل و سوخت ژنراتورهای دکل با تقسیم بار بهینه","کاهش زمان غیرمولد و در نتیجه سوخت‌سوزی و انتشار آلاینده‌ها","پایش و گزارش خودکار انتشار هر دکل"],
+  mods:[["بهینه‌سازی پارامترهای حفاری","پارامترها بیشتر بر پایه‌ی تجربه تنظیم می‌شوند.","مدل پیش‌بینی نرخ نفوذ و توصیه‌ی پارامتر بهینه به حفار."],["پیش‌بینی زمان غیرمولد و گیرکردن لوله","گیرکردن لوله و مشکلات گل حفاری هزینه‌ی سنگینی دارد.","تشخیص زودهنگام الگوهای پیش‌درآمد مشکل و هشدار."],["مدیریت انرژی دکل","مصرف سوخت ژنراتورها پایش دقیق ندارد.","داشبورد مصرف سوخت و تقسیم بار پیشنهادی."]],
+  gains:["کاهش زمان غیرمولد","کاهش مصرف سوخت دکل","کاهش هزینه‌ی هر متر حفاری"]},
+ eng:{n:"مهندسی، طراحی و مدیریت پروژه",product:"پلتفرم هوشمند مهندسی، کنترل پروژه و دوقلوی دیجیتال",
+  intro:"این پلتفرم با تحلیل اسناد مهندسی، برنامه‌ی زمانی و هزینه‌ی پروژه‌ها و ساخت دوقلوی دیجیتال، تصمیم‌سازی مدیران پروژه را پشتیبانی می‌کند و در مرحله‌ی طراحی، مصرف انرژی و آلایندگی بهینه‌ی تأسیسات را ارزیابی می‌نماید.",
+  energy:["ارزیابی مصرف انرژی و سوخت طرح‌ها در مرحله‌ی طراحی و انتخاب گزینه‌ی کم‌مصرف‌تر","شبیه‌سازی انتشار آلاینده‌ها برای تأسیسات جدید","پایش مصرف انرژی کارگاه‌ها و پروژه‌ها"],
+  mods:[["تحلیل هوشمند اسناد مهندسی","اسناد و نقشه‌ها حجیم و پراکنده‌اند و بازیابی دانش وقت‌گیر است.","جست‌وجو و استخراج معنایی از اسناد با هوش مصنوعی."],["پیش‌بینی انحراف زمان و هزینه‌ی پروژه","انحراف پروژه دیر آشکار می‌شود.","مدل پیش‌بینی ریسک بر پایه‌ی داده‌ی پروژه‌های گذشته."],["دوقلوی دیجیتال طرح","ارزیابی گزینه‌های طراحی کند و پرهزینه است.","شبیه‌سازی سریع گزینه‌ها از نظر انرژی، هزینه و آلایندگی."]],
+  gains:["کاهش انحراف زمان و هزینه‌ی پروژه","انتخاب گزینه‌های طراحی کم‌مصرف","ثبت و بازیابی دانش فنی شرکت"]},
+ supply:{n:"پشتیبانی و تأمین کالا",product:"سامانه هوشمند پیش‌بینی مصرف و بهینه‌سازی موجودی قطعات و کالا",
+  intro:"این سامانه با پیش‌بینی مصرف هر قلم، تعیین سطح موجودی ایمن و شناسایی اقلام راکد، همزمان کمبود کالا و سرمایه‌ی راکد را کاهش می‌دهد.",
+  energy:["کاهش خریدهای اضطراری و حمل‌های فوری و سوخت مصرفی حمل‌ونقل","کاهش اتلاف انرژی انبارها با برنامه‌ریزی موجودی","گزارش خودکار شاخص‌های زیست‌محیطی زنجیره‌ی تأمین"],
+  mods:[["پیش‌بینی مصرف اقلام","مصرف قطعات متناوب و پیش‌بینی آن دشوار است.","مدل‌های ویژه‌ی تقاضای متناوب."],["بهینه‌سازی موجودی و نقطه‌ی سفارش","سطح موجودی یکسان برای همه‌ی اقلام ناکارآمد است.","محاسبه‌ی موجودی ایمن بر پایه‌ی بحرانی‌بودن و زمان تأمین."],["شناسایی اقلام راکد و مازاد","اقلام راکد سرمایه را حبس می‌کنند.","پیشنهاد نگهداری، فروش یا تبادل."]],
+  gains:["کاهش کمبود اقلام حیاتی","کاهش سرمایه‌ی راکد","کاهش خرید اضطراری"]},
+ term:{n:"پایانه‌ها و مخازن",product:"سامانه هوشمند موازنه‌ی جرمی، کاهش تلفات و زمان‌بندی بهینه‌ی عملیات مخازن",
+  intro:"این سامانه با موازنه‌ی جرمی لحظه‌ای، شناسایی تلفات و بهینه‌سازی زمان‌بندی پمپاژ و بارگیری، دقت اندازه‌گیری را بالا می‌برد و مصرف انرژی را کم می‌کند.",
+  energy:["بهینه‌سازی انرژی پمپاژ و گرمایش مخازن","کاهش تلفات تبخیری و انتشار ترکیبات آلی فرار","پایش و گزارش خودکار آلایندگی پایانه"],
+  mods:[["موازنه‌ی جرمی و تشخیص تلفات","اختلاف اندازه‌گیری و تلفات دیر شناسایی می‌شود.","تطبیق داده‌ی ورودی، خروجی و موجودی مخازن."],["زمان‌بندی بهینه‌ی پمپاژ و بارگیری","برنامه‌ریزی دستی ناکارآمد است.","بهینه‌ساز زمان‌بندی با هدف کم‌ترین انرژی و انتظار."],["نگهداری پیش‌بینانه‌ی پمپ‌ها","خرابی پمپ عملیات را مختل می‌کند.","پایش وضعیت و هشدار زودهنگام."]],
+  gains:["کاهش تلفات","کاهش مصرف انرژی پمپاژ","دقت بیشتر حساب‌های مقداری"]},
+ gtr:{n:"انتقال گاز",product:"سامانه هوشمند بهینه‌سازی ایستگاه‌های تقویت فشار و تشخیص نشتی خطوط",
+  intro:"این سامانه با پایش ایستگاه‌های تقویت فشار و خطوط لوله، مصرف گاز سوخت توربین‌کمپرسورها را کم می‌کند و نشتی و افت فشار غیرعادی را زود تشخیص می‌دهد.",
+  energy:["بهینه‌سازی نقطه‌ی کار توربین‌کمپرسورها و کاهش گاز سوخت ایستگاه‌ها","تشخیص نشتی و کاهش انتشار متان","پایش انتشار NOx و CO₂ ایستگاه‌ها و گزارش خودکار"],
+  mods:[["بهینه‌سازی ایستگاه‌های تقویت فشار","تقسیم بار واحدها بیشتر بر پایه‌ی تجربه است.","بهینه‌ساز تقسیم بار با کم‌ترین سوخت."],["تشخیص نشتی و ناهنجاری خط لوله","نشتی‌های کوچک دیر دیده می‌شوند.","مدل ناهنجاری روی داده‌ی فشار و دبی."],["نگهداری پیش‌بینانه‌ی توربین‌کمپرسورها","خرابی کمپرسور انتقال را مختل می‌کند.","پایش وضعیت و پیش‌بینی خرابی."]],
+  gains:["کاهش مصرف گاز سوخت ایستگاه‌ها","کاهش نشتی و انتشار متان","افزایش دسترس‌پذیری ایستگاه‌ها"]},
+ gtrade:{n:"بازرگانی و مدیریت تقاضای گاز",product:"سامانه هوشمند پیش‌بینی عرضه و تقاضای گاز و بهینه‌سازی مصرف",
+  intro:"این سامانه تقاضای مشترکان و عرضه‌ی گاز را با مدل‌های پیش‌بینی هوشمند برآورد می‌کند و برنامه‌ی تخصیص و مدیریت مصرف بهینه را پیشنهاد می‌دهد.",
+  energy:["پیش‌بینی اوج مصرف و کاهش ناترازی","شناسایی مصرف غیرعادی و فرصت‌های صرفه‌جویی","مستندسازی صرفه‌جویی برای صدور گواهی صرفه‌جویی گاز"],
+  mods:[["پیش‌بینی تقاضا","تقاضا به دما و رفتار وابسته و پیچیده است.","مدل‌های ترکیبی آب‌وهوا و رفتار مصرف."],["مدیریت ناترازی و تخصیص","تخصیص بر پایه‌ی قواعد ایستاست.","بهینه‌ساز تخصیص."],["پایش و راستی‌آزمایی صرفه‌جویی","اندازه‌گیری صرفه‌جویی مستند نیست.","خط مبنا و گزارش اندازه‌گیری‌شده."]],
+  gains:["کاهش ناترازی","شفافیت صرفه‌جویی","پشتیبانی تصمیم‌گیری"]},
+ gref:{n:"پالایش گاز",product:"سامانه هوشمند بهینه‌سازی انرژی و پایش فرایند پالایشگاه گاز",
+  intro:"این سامانه با دوقلوی دیجیتال و حسگر مجازی واحدهای شیرین‌سازی و بازیافت گوگرد، مصرف سوخت کوره‌ها و دیگ‌ها و گاز مشعل را کاهش می‌دهد.",
+  energy:["بهینه‌سازی احتراق کوره‌ها و دیگ‌ها و کاهش گاز سوخت","کاهش گاز مشعل و انتشار SO₂ و NOx","تراز بخار و برق واحد و گزارش خودکار آلایندگی"],
+  mods:[["بهینه‌سازی واحد شیرین‌سازی و بازیافت گوگرد","مصرف حلال و انرژی بیش از حد لازم است.","حسگر مجازی و توصیه‌ی نقطه‌ی کار."],["کاهش گاز مشعل","فلر بدون شاخص لحظه‌ای است.","پایش و هشدار روند فلر."],["مرکز کنترل انرژی","شدت مصرف انرژی واحدها دیده نمی‌شود.","داشبورد شاخص انرژی هر واحد."]],
+  gains:["کاهش مصرف سوخت و گاز مشعل","کاهش آلایندگی","شفافیت انرژی"]},
+ pow:{n:"تولید برق و نیروگاه",product:"سامانه هوشمند نگهداری پیش‌بینانه، بهینه‌سازی راندمان و پایش آلایندگی نیروگاه",
+  intro:"این سامانه با دوقلوی دیجیتال توربین‌ها و بویلرها، نرخ حرارتی (Heat Rate) نیروگاه را پایش و بهینه می‌کند، نگهداری پیش‌بینانه ارائه می‌دهد و انتشار NOx و CO₂ را کنترل می‌کند.",
+  energy:["کاهش نرخ حرارتی و مصرف گاز سوخت به‌ازای هر مگاوات‌ساعت","تنظیم احتراق و کنترل انتشار NOx و CO₂ و گزارش خودکار","نگهداری پیش‌بینانه‌ی توربین‌ها و کاهش توقف و راه‌اندازی مجدد"],
+  mods:[["بهینه‌سازی راندمان و نرخ حرارتی","افت راندمان تدریجی دیر دیده می‌شود.","مدل راندمان و پیشنهاد نقطه‌ی کار."],["نگهداری پیش‌بینانه","خرابی ناگهانی توربین پرهزینه است.","پایش ارتعاش و دما و پیش‌بینی خرابی."],["پایش و کنترل آلایندگی","گزارش انتشار دستی و دیرهنگام است.","تحلیل داده‌ی CEMS و هشدار."]],
+  gains:["کاهش مصرف سوخت","کاهش انتشار NOx و CO₂","افزایش دسترس‌پذیری"]},
+ epc:{n:"احداث و توسعه نیروگاه/پروژه",product:"پلتفرم هوشمند کنترل پروژه و دوقلوی دیجیتال نیروگاه",
+  intro:"این پلتفرم با پیش‌بینی زمان و هزینه، پایش پیشرفت کارگاه و دوقلوی دیجیتال طرح، مدیریت پروژه‌های احداث را هوشمند می‌کند و طرح‌های کم‌مصرف را در مرحله‌ی طراحی ارزیابی می‌نماید.",
+  energy:["ارزیابی راندمان و سوخت مصرفی گزینه‌های طراحی","پایش مصرف سوخت و انرژی کارگاه‌ها","شبیه‌سازی انتشار آلاینده‌های نیروگاه آینده"],
+  mods:[["پیش‌بینی ریسک زمان و هزینه","انحراف پروژه دیر دیده می‌شود.","مدل پیش‌بینی بر پایه‌ی داده‌ی پروژه‌ها."],["پایش پیشرفت کارگاه","گزارش پیشرفت دستی است.","تحلیل تصویر و داده‌ی کارگاه."],["دوقلوی دیجیتال طرح","ارزیابی گزینه‌ها کند است.","شبیه‌سازی سریع از نظر راندمان و آلایندگی."]],
+  gains:["کاهش انحراف پروژه","طرح‌های کم‌مصرف‌تر","تصمیم‌گیری مبتنی بر داده"]},
+ rail:{n:"حمل‌ونقل ریلی",product:"سامانه هوشمند نگهداری پیش‌بینانه و کاهش مصرف سوخت ناوگان ریلی",
+  intro:"این سامانه با تحلیل داده‌ی لوکوموتیوها و واگن‌ها، خرابی را پیش‌بینی می‌کند و با رانندگی بهینه و برنامه‌ریزی ناوگان، مصرف سوخت و برق را کاهش می‌دهد.",
+  energy:["کاهش مصرف گازوئیل و برق با توصیه‌ی رانندگی بهینه","کاهش توقف ناخواسته و سوخت‌سوزی بی‌بار","پایش آلایندگی ناوگان"],
+  mods:[["نگهداری پیش‌بینانه‌ی ناوگان","خرابی در مسیر هزینه‌ی سنگین دارد.","مدل پیش‌بینی خرابی."],["رانندگی بهینه و مصرف سوخت","سبک رانندگی بر مصرف اثر دارد.","توصیه‌ی سرعت و اندازه‌گیری مصرف."],["برنامه‌ریزی ناوگان","تخصیص ناوگان دستی است.","بهینه‌ساز برنامه‌ریزی."]],
+  gains:["کاهش مصرف سوخت","کاهش خرابی در مسیر","افزایش بهره‌وری ناوگان"]},
+ mfg:{n:"مهندسی و ساخت تجهیزات",product:"سامانه هوشمند کنترل کیفیت، نگهداری پیش‌بینانه و بهینه‌سازی انرژی خط تولید",
+  intro:"این سامانه با بینایی ماشین و تحلیل داده‌ی ماشین‌آلات، عیوب تولید را زود تشخیص می‌دهد، توقف خط را کاهش می‌دهد و مصرف انرژی کارخانه را بهینه می‌کند.",
+  energy:["کاهش مصرف برق و گاز کارگاه‌ها و کوره‌ها با پایش و زمان‌بندی بار","کاهش دورریز و بازکاری و انرژی هدررفته","پایش مصرف انرژی هر ایستگاه تولید و گزارش خودکار"],
+  mods:[["بازرسی کیفیت با بینایی ماشین","بازرسی چشمی کند و وابسته به فرد است.","تشخیص خودکار عیوب."],["نگهداری پیش‌بینانه‌ی ماشین‌آلات","توقف ناگهانی خط هزینه دارد.","پایش وضعیت و پیش‌بینی خرابی."],["مدیریت انرژی کارخانه","شدت انرژی هر خط دیده نمی‌شود.","داشبورد و هشدار انحراف."]],
+  gains:["کاهش دورریز","کاهش توقف خط","کاهش مصرف انرژی"]},
+ ren:{n:"انرژی‌های تجدیدپذیر و ذخیره‌سازی",product:"سامانه هوشمند پیش‌بینی تولید، بهره‌برداری و ذخیره‌سازی انرژی تجدیدپذیر",
+  intro:"این سامانه تولید نیروگاه‌های خورشیدی و بادی را پیش‌بینی می‌کند، عیوب را زود تشخیص می‌دهد و بهره‌برداری از ذخیره‌ساز را بهینه می‌نماید.",
+  energy:["جایگزینی سوخت فسیلی با افزایش بهره‌وری و پیش‌بینی تولید","زمان‌بندی ذخیره‌ساز برای کاهش اوج مصرف","محاسبه‌ی کاهش انتشار و مستندسازی آن"],
+  mods:[["پیش‌بینی تولید","تولید به آب‌وهوا وابسته است.","مدل‌های پیش‌بینی کوتاه‌مدت."],["تشخیص عیب و نگهداری","افت تولید دیر کشف می‌شود.","تحلیل داده‌ی اینورتر و توربین."],["بهینه‌سازی ذخیره‌ساز","شارژ و دشارژ بهینه نیست.","بهینه‌ساز زمان‌بندی."]],
+  gains:["افزایش تولید","کاهش اوج مصرف","مستندسازی کاهش انتشار"]},
+ ops:{n:"بهره‌برداری و پشتیبانی فنی",product:"سامانه هوشمند پایش وضعیت از راه دور و نگهداری پیش‌بینانه",
+  intro:"این سامانه داده‌ی واحدهای تحت بهره‌برداری را یکپارچه می‌کند، خرابی را پیش‌بینی می‌کند و برنامه‌ی نگهداری را بهینه می‌نماید.",
+  energy:["کاهش مصرف سوخت واحدها با نگه‌داشتن در نقطه‌ی بهینه","کاهش توقف و راه‌اندازی مجدد","پایش آلایندگی واحدهای تحت بهره‌برداری"],
+  mods:[["پایش وضعیت از راه دور","داده در سامانه‌های جدا ماند.","یکپارچه‌سازی و داشبورد."],["پیش‌بینی خرابی","خرابی ناگهانی هزینه دارد.","مدل پیش‌بینی."],["بهینه‌سازی برنامه‌ی نگهداری","نگهداری زمان‌محور است.","نگهداری مبتنی بر وضعیت."]],
+  gains:["کاهش توقف","کاهش هزینه‌ی نگهداری","کاهش مصرف سوخت"]},
+ hold:{n:"شرکت مادر و هلدینگ",product:"داشبورد هوشمند مدیریت عملکرد، نگهداری، انرژی و بهره‌وری شرکت‌های تابعه",
+  intro:"این داشبورد شاخص‌های عملکرد، نگهداری، تولید، انرژی و انتشار شرکت‌های تابعه را یکپارچه و قابل مقایسه می‌کند و فرصت‌های بهبود هر شرکت را اولویت‌بندی می‌نماید.",
+  energy:["مقایسه‌ی شدت مصرف انرژی شرکت‌های تابعه و شناسایی بزرگ‌ترین فرصت‌های کاهش سوخت","یکپارچه‌سازی گزارش انتشار و الزامات زیست‌محیطی","مستندسازی صرفه‌جویی برای گواهی صرفه‌جویی انرژی"],
+  mods:[["داشبورد یکپارچه‌ی انرژی","داده‌ی شرکت‌ها قابل مقایسه نیست.","مدل داده‌ی مشترک و داشبورد."],["اولویت‌بندی فرصت‌های صرفه‌جویی","منابع محدودند.","رتبه‌بندی بر پایه‌ی اثر و هزینه."],["گزارش خودکار انتشار","گزارش‌دهی دستی است.","تولید خودکار گزارش."]],
+  gains:["دید یکپارچه","اولویت‌بندی سرمایه‌گذاری","گزارش‌دهی خودکار"]},
+ petro:{n:"پتروشیمی",product:"سامانه هوشمند بهینه‌سازی فرایند، نگهداری پیش‌بینانه، داشبورد مدیریتی و مدیریت انرژی",
+  intro:"این سامانه با دوقلوی دیجیتال و حسگر مجازی فرایند، پایش وضعیت تجهیزات دوار و پیش‌بینی خرابی، داشبورد مدیریتی هر واحد و پایش راندمان کوره‌ها و دیگ‌ها، عملکرد واحد را بهبود می‌دهد و مصرف ویژه‌ی انرژی را هم کاهش می‌دهد.",
+  energy:["پایش راندمان کوره‌ها و بهینه‌سازی هوای اضافی با رعایت حد ایمن CO","تقسیم بار دیگ‌های بخار با کم‌ترین سوخت و تراز بخار و برق","کاهش گاز مشعل و انتشار NOx و CO₂ و گزارش خودکار"],
+  mods:[["بهینه‌سازی احتراق و مصرف سوخت","مصرف سوخت کوره‌ها بیشتر بر پایه‌ی تجربه تنظیم می‌شود.","پایش اکسیژن و دمای دودکش و پیشنهاد نقطه‌ی بهینه."],["دوقلوی دیجیتال فرایند","تغییر شرایط خوراک بهره‌وری را تغییر می‌دهد.","حسگر مجازی و توصیه‌ی نقطه‌ی کار."],["داشبورد مدیریت انرژی","شاخص انرژی هر واحد دیده نمی‌شود.","داشبورد مصرف ویژه‌ی انرژی و هشدار انحراف."]],
+  gains:["کاهش مصرف ویژه‌ی انرژی","کاهش انتشار","شفافیت برای مدیریت"]}
+};
+// [name, type] per company; parent companies first. Names are as written in the user's brief (NIOC, NIGC, Mapna) or public knowledge (refining and petrochemicals).
+const PP_CO = {
+ shasta:{label:"سایر شرکت‌های شستا",parent:null,list:[["شرکت صنایع کاغذ سازی بیستون تامین","mfg","بیستون"]]},
+ tapico:{label:"تاپیکو (زیرمجموعه شستا)",parent:["شرکت سرمایه‌گذاری نفت و گاز و پتروشیمی تأمین (تاپیکو)","hold"],list:[["شرکت پرسی ایران گاز","mfg","پرسی ایران گاز"],["شرکت نفت ایرانول","mfg","ایرانول"],["شرکت نفت پاسارگاد","mfg","پاسارگاد"],["شرکت ایران یاسا و رابر","mfg","ایران یاسا"],["سرمایه‌گذاری و توسعه صنایع لاستیک","hold","توسعه صنایع لاستیک"],["شرکت گروه صنعتی بارز","mfg","بارز"],["شرکت یزد تایر","mfg","یزد تایر"],["شرکت حریر خوزستان","mfg","حریر خوزستان"],["شرکت صنایع چوب خزر کاسپین","mfg","چوب خزر"],["شرکت صنایع چوب و کاغذ ایران (چوکا)","mfg","چوکا"],["شرکت صنایع چوب و کاغذ مازندران","mfg","چوب و کاغذ مازندران"],["شرکت صنایع کاغذسازی کاوه","mfg","کاغذسازی کاوه"],["شرکت محصولات کاغذی لطیف","mfg","کاغذی لطیف"],["هلدینگ سلولزی تامین اجتماعی","hold","تامین گستر نوین"],["بازرسی فنی و کنترل خوردگی تکین کو","ops","تکین"],["شرکت حفاری شمال","drill","حفاری شمال"],["شرکت ماشین‌سازی پارس","mfg","ماشین‌سازی پارس"],["شرکت مهندسی و نصب فیرمکو پارس","eng","فیرمکو"],["شرکت فنی مهندسی نگهداشت کاران","ops","نگهداشت کاران"]]},   // names as listed by the user; the third item is the text used to find that company's letters
+ pic:{label:"شرکت سرمایه‌گذاری صنایع پتروشیمی",parent:["شرکت سرمایه‌گذاری صنایع پتروشیمی","hold"],list:[["شرکت شیمیایی فرآورد قشم","mfg","فرآورد قشم","لوله‌سازی"],["شرکت تولیدی لوله‌های دوجداره قدر","mfg","قدر","لوله‌سازی"],["شرکت تولیدی گازلوله","mfg","گازلوله","لوله‌سازی"],["شرکت سلسله آب حیات کرمان","mfg","سلسله آب","لوله‌سازی"],["شرکت فنی مهندسی نگهداشت کاران","ops","نگهداشت کاران","خدمات فنی مهندسی"],["شرکت مهندسی و نصب فیرمکو پارس","eng","فیرمکو","خدمات فنی مهندسی"],["بازرسی فنی و کنترل خوردگی تکین کو","ops","تکین","خدمات فنی مهندسی"],["شرکت کربن ایران","mfg","کربن ایران","دوده"],["شرکت صنایع لاستیکی سهند","mfg","لاستیکی سهند","دوده"],["شرکت دوده صنعتی پارس","mfg","دوده صنعتی پارس","دوده"],["شرکت سرمایه‌گذاری هامون کیش","hold","هامون","سایر"],["صندوق سرمایه‌گذاری خطرپذیر رادیناس","hold","رادیناس","سایر"],["شرکت پتروشیمی شیمی‌بافت","petro","شیمی‌بافت","سایر"],["شرکت فرآورده‌های شیمیایی تامین باختر","mfg","تامین باختر","سایر"]]},   // fourth item = category (pipes, engineering services, carbon black, other)
+ nioc:{label:"شرکت ملی نفت ایران",parent:["شرکت ملی نفت ایران","hold"],list:[["شرکت نفت مناطق مرکزی ایران","up"],["شرکت ملی مناطق نفت‌خیز جنوب","up"],["شرکت نفت فلات قاره ایران","up"],["شرکت نفت و گاز پارس","up"],["شرکت نفت خزر","up"],["شرکت نفت و گاز اروندان","up"],["شرکت ملی حفاری ایران","drill"],["شرکت مهندسی و توسعه نفت","eng"],["شرکت پشتیبانی ساخت و تهیه کالای نفت","supply"],["شرکت پایانه‌های نفتی ایران","term"]]},
+ nigc:{label:"شرکت ملی گاز ایران",parent:["شرکت ملی گاز ایران","hold"],list:[["شرکت انتقال گاز ایران","gtr"],["شرکت مهندسی و توسعه گاز ایران","eng"],["شرکت بازرگانی گاز ایران","gtrade"],["شرکت پالایش گاز ایلام","gref"],["شرکت پالایش گاز پارسیان","gref"],["شرکت پالایش گاز بیدبلند","gref"],["شرکت پالایش گاز سرخون و قشم","gref"],["شرکت پالایش گاز هاشمی‌نژاد","gref"],["شرکت پالایش گاز فجر جم","gref"],["شرکت پالایش گاز پارس جنوبی","gref"]]},
+ mapna:{label:"مپنا",parent:["گروه مپنا (شرکت مدیریت پروژه‌های نیروگاهی ایران – مپنا)","hold"],list:[
+  ["شرکت توسعه نفت و گاز مپنا","up"],["شرکت احداث و توسعه نیروگاه‌های مپنا","epc"],["شرکت مهندسی و ساخت تجهیزات سپاهان مپنا","mfg"],["شرکت توسعه نیروگاه‌های حرارتی مپنا","epc"],["شرکت احداث و توسعه پروژه‌های ویژه مپنا","epc"],["شرکت مهندسین مشاور مننکو ایران","eng"],["شرکت نصب نیرو","epc"],
+  ["شرکت تولید برق پره‌سر مپنا","pow"],["شرکت تولید نیرو آذرخش","pow"],["شرکت نیروگاه جنوب اصفهان","pow"],["شرکت نیروگاه گازی فارس","pow"],["شرکت تولید برق پرند مپنا","pow"],["شرکت بهره‌برداری و پشتیبانی فنی نیروگاهی مپنا","ops"],["شرکت مهندسی سپهر انرژی غرب نیرو","eng"],
+  ["شرکت تولید آب و برق قشم مپنا","pow"],["شرکت تولید انرژی‌های تجدیدپذیر مپنا","ren"],["شرکت تولید برق توس مپنا","pow"],["شرکت تولید برق سنندج مپنا","pow"],["شرکت تولید برق عسلویه مپنا","pow"],["شرکت تولید برق غرب کارون مپنا","pow"],["شرکت تولید برق گناوه مپنا","pow"],
+  ["شرکت مهندسی و ساخت و لوکوموتیو مپنا","rail"],["شرکت احداث و توسعه ریلی مپنا","rail"],["شرکت تعمیرات و بهره‌برداری ریلی مپنا","rail"],["شرکت فناوری‌های ریلی مپنا","rail"],["شرکت توسعه ناوگان ریلی مپنا","rail"],["شرکت حمل و نقل چندوجهی مپنا","rail"],["شرکت واگن‌پارس مپنا","rail"],
+  ["شرکت مهندسی احیاء صنعت ادوات","mfg"],["شرکت حفاری مپنا","drill"],["شرکت نیرپارس","mfg"],["شرکت بهره‌برداری و پشتیبانی فنی نفت و گاز مپنا (البرز توربین سابق)","ops"],["شرکت مهندسی موادکاران جاهد نوآور","mfg"],
+  ["شرکت مهندسی و ساخت برق و کنترل مپنا (مکو)","mfg"],["شرکت مهندسی و ساخت بویلر و تجهیزات مپنا","mfg"],["شرکت مهندسی و ساخت توربین مپنا (توگا)","mfg"],["شرکت مهندسی و ساخت ژنراتور مپنا (پارس)","mfg"],["شرکت مهندسی و ساخت پره‌توربین مپنا (پرتو)","mfg"],["شرکت توسعه برقی‌سازی و ذخیره‌سازی انرژی مپنا (میدکو)","ren"]]},
+ niordc:{label:"پخش و پالایش",parent:["شرکت ملی پالایش و پخش فرآورده‌های نفتی ایران","hold"],list:[["شرکت ملی پخش فرآورده‌های نفتی ایران","ops"]]},   // the refineries themselves come from REFINERIES (letters.refinery)
+ npc:{label:"شرکت ملی صنایع پتروشیمی",parent:["شرکت ملی صنایع پتروشیمی","hold"],list:[["شرکت پتروشیمی امیرکبیر","petro"],["شرکت پتروشیمی کرمانشاه","petro"],["شرکت پتروشیمی لرستان","petro"],["شرکت پتروشیمی زاگرس","petro"],["شرکت پتروشیمی پردیس","petro"],["شرکت پتروشیمی کاویان","petro"],["شرکت پتروشیمی دماوند","petro"],["شرکت پتروشیمی مروارید","petro"]]}
+};
+const ppCos = gk => { const g=PP_CO[gk]; if(!g) return []; return [...(g.parent?[[g.parent[0],g.parent[1],"",true,""]]:[]),...g.list.map(([n,t,m,cat])=>[n,t,m||"",false,cat||""])].map(([n,t,m,p,cat],i)=>({k:`${gk}_${i}`,n,t,m,parent:p,cat,g:gk})); };
+const ppNorm = s => String(s||"").replace(/[يى]/g,"ی").replace(/ك/g,"ک").replace(/[أإآ]/g,"ا").replace(/[\u200c\s]/g,"");
+const ppCoKey = c => c.m||c.n.replace(/^شرکت\s+/,"").replace(/\s*\(.*\)\s*$/,"");
+const ppCoLetters = c => S.lettersArchive.filter(a=>archIdent(a)==="ir"&&ppNorm(`${a.recipient||""} ${a.subject||""}`).includes(ppNorm(ppCoKey(c))));
+function coLetter(c){
+  const T=CO_T[c.t], L=a=>a.map(x=>"•\t"+x);
+  const body=[
+   `احتراماً، شرکت پتروپالاتوس به عنوان مجموعه فعال در حوزه هوشمندسازی صنایع و توسعه راهکارهای مبتنی بر هوش مصنوعی، مفتخر است آمادگی خود را برای پیاده‌سازی «${T.product}» در ${c.n} اعلام نماید. ${T.intro}`,
+   `محورهای اصلی این طرح:`,
+   ...L(T.mods.map(m=>`${m[0]}: ${m[2]}`)),
+   `•\tکاهش مصرف سوخت (گاز و برق) و کنترل آلایندگی‌های زیست‌محیطی (یکی از محورهای طرح): ${T.energy.slice(0,2).join("؛ ")}`,
+   CERT_PARA,
+   `پیش از هر تعهد عددی، پایلوت محدودی روی داده‌ی واقعی آن مجموعه اجرا می‌شود و میزان صرفه‌جویی با اندازه‌گیری در برابر خط مبنا تعیین می‌گردد.`,
+   ...TAX_BLOCK].join("\n");
+  const annex=["معرفی کلی طرح",T.intro,`1- شرح جامع ${T.product}`,
+   ...T.mods.flatMap((m,i)=>[`1-${i+1} ماژول ${["اول","دوم","سوم","چهارم"][i]}: ${m[0]}`,"بیان مسأله و ضرورت:",m[1],"راهکار پیشنهادی:",m[2]]),
+   "2- دستاوردهای کلان مورد انتظار",...T.gains,"کاهش مصرف سوخت (گاز و برق) و کنترل آلایندگی‌های زیست‌محیطی","امکان مستندسازی صرفه‌جویی برای صدور گواهی صرفه‌جویی انرژی و بهره‌مندی از اعتبار مالیاتی تحقیق و توسعه"].join("\n");
+  return {recipient:`جناب آقای / سرکار خانم ........................ (نام مدیرعامل)\nمدیرعامل محترم ${c.n}`,
+   subject:"اعلام آمادگی جهت پیاده سازی محصول هوشمند به همراه ساز کار تامین بودجه از محل مالیات پرداختی ( اعتبار مالیاتی )",
+   body,annex,attachments:`معرفی ${T.product}`};
+}
+const ppDraft = c => { const L=coLetter(c);
+  S.draft={identity:"ir",sector:"oil",date:today(),numAuto:true,number:nextLetterNo("ir",today()),recipient:L.recipient,subject:L.subject,body:L.body,attachments:L.attachments,cc:"",annex:L.annex,signer:""};
+  S.mod="letters"; S.sub="new"; S.forceFull=true; render(); toast("پیش‌نویس نامه با سربرگ پترو پالا توس آماده شد؛ نام مدیرعامل را تکمیل و ذخیره کنید."); };
+const ppGroupCount = gk => gk==="hpc"?HPC_PLANTS.length:gk==="niordc"?REFINERIES.length+1+PP_CO.niordc.list.length:PP_CO[gk]&&gk!=="shasta"?ppCos(gk).length:S.lettersArchive.filter(a=>archIdent(a)==="ir"&&archGrp(a)===gk).length;
+function ppCoView(gk,quiet){
+  const list=ppCos(gk), g=PP_CO[gk], hasCat=list.some(c=>c.cat), sel=S.ppSub&&list.find(c=>c.k===S.ppSub);
+  const chips=`<div class="toolbar"><span class="meta">شرکت:</span><button class="btn sm ${sel?"ghost":""}" data-act="pp-sub" data-k="">همه (${faNum(list.length)})</button>${list.map(c=>`<button class="btn sm ${sel&&sel.k===c.k?"":"ghost"}" data-act="pp-sub" data-k="${esc(c.k)}">${esc(c.n.replace(/^شرکت\s+/,"")+(c.parent?" (مادر)":""))}</button>`).join("")}</div>`;
+  const row=c=>{ const sent=ppCoLetters(c), T=CO_T[c.t];
+   return `<tr>${td("شرکت",`<b>${esc(c.n)}</b>${c.parent?` <span class="pill p-info">شرکت مادر</span>`:""}`,"t")}${hasCat?td("دسته",esc(c.cat||"—")):""}${td("حوزه",esc(T.n))}${td("محصول پیشنهادی",esc(T.product))}${td("وضعیت",sent.length?`<span class="pill p-ok">${faNum(sent.length)} نامه ثبت شده</span>`:'<span class="pill p-mute">نامه‌ای ارسال نشده</span>')}${td("",`<button class="btn sm sig" data-act="pp-letter" data-id="${esc(c.k)}">ساخت نامه (سربرگ پترو پالا توس)</button><details><summary class="meta">متن نامه</summary><pre style="white-space:pre-wrap;font:inherit;max-width:520px">${esc(coLetter(c).body)}</pre></details>`+asgCell("co_"+hashKey(c.n),"نامه و پیگیری: "+c.n,"letters"))}</tr>`; };
+  const banner=`<div class="banner bad"><b>ملاحظه‌ی تحریم:</b> بسیاری از شرکت‌های این گروه در فهرست‌های تحریمی هستند. همکاری فقط از سوی شرکت ایرانی پترو پالاتوس باشد و پارسا اینت (استانبول) نقشی نداشته باشد؛ پیش از همکاری مشورت حقوقی بگیرید. نام شرکت‌ها از فهرست شما یا منابع عمومی است و باید با سایت رسمی هر شرکت تأیید شود. نام مدیرعامل در نامه خالی است.</div>`;
+  const note=`<p class="note">برای هر شرکت یک نامه‌ی «اعلام آمادگی» متناسب با حوزه‌ی کاری‌اش نوشته شده است: محصول هوشمند مبتنی بر هوش مصنوعی، با محور کاهش مصرف سوخت (برق و گاز) و کنترل آلایندگی، سازوکار گواهی صرفه‌جویی انرژی و اعتبار مالیاتی R&D. «ساخت نامه» پیش‌نویس را در «نامه‌ی جدید» با سربرگ پترو پالا توس باز می‌کند.</p>`;
+  const body = sel
+   ? `<div class="card"><h3 style="margin-top:0">${esc(sel.n)}</h3><p class="meta">${esc(CO_T[sel.t].n)} · محصول پیشنهادی: ${esc(CO_T[sel.t].product)}</p><div class="row"><button class="btn sig" data-act="pp-letter" data-id="${esc(sel.k)}">ساخت نامه (سربرگ پترو پالا توس)</button></div>${asgCell("co_"+hashKey(sel.n),"نامه و پیگیری: "+sel.n,"letters")}<h3>متن نامه‌ی اعلام آمادگی</h3><pre style="white-space:pre-wrap;font:inherit">${esc(coLetter(sel).body)}</pre><h3>نامه‌های ثبت‌شده برای این شرکت</h3>${ppCoLetters(sel).length?ppCoLetters(sel).map(a=>`<p>${esc(a.number||"—")} · ${esc(ARCH_STAGES[a.stage]||"")} · ${esc(a.subject||"")}</p>`).join(""):'<p class="meta">نامه‌ای ثبت نشده است.</p>'}</div>`
+   : table(["شرکت",...(hasCat?["دسته"]:[]),"حوزه","محصول پیشنهادی","وضعیت",""],list.filter(c=>match(c.n,CO_T[c.t].n)).map(row),"شرکتی با این جست‌وجو نیست.");
+  return `${quiet?"":`<h2>${esc(g.label)}</h2>`}${note}${quiet?"":banner}${kpis([["شرکت (با شرکت مادر)",faNum(list.length)],["نامه‌ی ثبت‌شده",faNum(list.filter(c=>ppCoLetters(c).length).length)],["بدون نامه",faNum(list.filter(c=>!ppCoLetters(c).length).length)]])}${chips}${body}`;
+}
+VIEWS["letters.pp"] = () => {
+  const gk=S.ppGrp||"shasta";
+  const bar=`<div class="toolbar" role="tablist">${PP_GROUPS.map(([k,l])=>`<button class="btn ${gk===k?"":"ghost"}" role="tab" aria-selected="${gk===k}" data-act="pp-grp" data-k="${k}">${esc(l)} (${faNum(ppGroupCount(k))})</button>`).join("")}</div>`;
+  const head=`<h2>نامه‌های پترو پالا توس</h2><div class="banner" style="border-color:var(--signal)"><b>شرکت پترو پالا توس</b> — حوزه‌ی نفت، گاز و پتروشیمی با سربرگ پترو پالا توس. زیرگروه‌ها: هلدینگ شستا، هلدینگ خلیج فارس، شرکت ملی نفت، شرکت ملی گاز، مپنا، پخش و پالایش و پتروشیمی.</div>`;
+  let inner="";
+  if(gk==="hpc") inner=VIEWS["letters.hpc"]()+`<h3>نامه‌های ثبت‌شده‌ی این گروه</h3>`+archView(null,"ir","hpc");
+  else if(gk==="niordc"){ const ex=ppCos("niordc"); inner=VIEWS["letters.refinery"]()+`<h3>شرکت مادر و توزیع</h3>`+ppCoView("niordc")+`<h3>نامه‌های ثبت‌شده‌ی این گروه</h3>`+archView(null,"ir","niordc"); }
+  else if(gk==="shasta"){ const sh=S.ppSh||"arch", nA=S.lettersArchive.filter(a=>archIdent(a)==="ir"&&archGrp(a)==="shasta").length;
+    const tabs=[["arch","همه‌ی نامه‌های شستا",nA],["tapico","تاپیکو و شرکت‌های زیرمجموعه",ppCos("tapico").length],["other","سایر شرکت‌های شستا",ppCos("shasta").length]];
+    inner=`<div class="toolbar" role="tablist"><span class="meta">زیرگروه:</span>${tabs.map(([k,l,n])=>`<button class="btn sm ${sh===k?"":"ghost"}" role="tab" aria-selected="${sh===k}" data-act="pp-sh" data-k="${k}">${esc(l)} (${faNum(n)})</button>`).join("")}</div>`+(sh==="tapico"?ppCoView("tapico",true):sh==="other"?ppCoView("shasta",true):archView(null,"ir","shasta")); }
+  else if(PP_CO[gk]) inner=ppCoView(gk)+(gk==="npc"||gk==="pic"||gk==="nioc"||gk==="nigc"||gk==="mapna"?`<h3>نامه‌های ثبت‌شده‌ی این گروه</h3>`+archView(null,"ir",gk):"");
+  else inner=archView(null,"ir",gk);
+  return head+bar+inner;
+};
+
 VIEWS["letters.archive"] = () => archView(null);
-VIEWS["letters.pp"] = () => archView(null,"ir");
 VIEWS["letters.sosh"] = () => archView(null,"soshiant");
 Object.keys(ARCH_SECT).forEach(k=>{ VIEWS["letters.sec_"+k] = () => archView(k); });
 // ---------- Refineries: fuel-use optimisation and energy control, production-line smartening and an industrial dashboard per refinery,
@@ -2780,28 +2999,32 @@ function refineryLetter(r){
   const L=a=>a.map((x,i)=>`${faNum(i+1)}) ${x}`).join("\n");
   return {
    recipient:`مدیرعامل محترم ${co}\n${r.city}`,
-   subject:`پیشنهاد هوشمندسازی خط تولید، بهینه‌سازی مصرف سوخت و کنترل انرژی ${r.name}`,
+   subject:`پیشنهاد هوشمندسازی خط تولید و عملیات ${r.name} (از جمله بهینه‌سازی مصرف سوخت و کنترل انرژی)`,
    body:`با سلام و احترام،
 
-شرکت پترو پالا توس در حوزه‌ی هوش مصنوعی و هوشمندسازی صنعتی برای نفت، گاز و پالایش فعالیت می‌کند. بر پایه‌ی اطلاعات عمومی، ${r.name} (${r.cap}) یک ${T.n} است. واحدهای رایج چنین پالایشگاهی عبارت‌اند از: ${T.units}. فهرست دقیق واحدها، داده‌ی در دسترس و اولویت‌ها را در نخستین جلسه با کارشناسان آن مجموعه تأیید می‌کنیم.${r.note?`\n\nنکته‌ی ویژه: ${r.note}`:""}
+شرکت پترو پالا توس در حوزه‌ی هوش مصنوعی و هوشمندسازی صنعتی برای نفت، گاز و پالایش فعالیت می‌کند. بر پایه‌ی اطلاعات عمومی، ${r.name} (${r.cap}) یک ${T.n} است. واحدهای رایج چنین پالایشگاهی عبارت‌اند از: ${T.units}. فهرست دقیق واحدها، داده‌ی در دسترس و اولویت‌ها را در نخستین جلسه با کارشناسان آن مجموعه تأیید می‌کنیم. این پیشنهاد فقط به مصرف انرژی محدود نیست؛ هوشمندسازی خط تولید، نگهداری مبتنی بر وضعیت و داشبورد مدیریتی در کنار بهینه‌سازی مصرف سوخت و انرژی ارائه می‌شود.${r.note?`\n\nنکته‌ی ویژه: ${r.note}`:""}
 
-۱) بهینه‌سازی مصرف سوخت
-${L(T.fuel)}
-
-۲) کنترل و مدیریت انرژی
-• تعریف خط مبنای مصرف انرژی هر واحد و پایش شاخص‌های مصرف (سوخت، بخار و برق به‌ازای هر بشکه یا تن خوراک)
-• هشدار انحراف مصرف و گزارش دوره‌ای برای مدیریت و دفتر انرژی، همسو با رویکرد نظام مدیریت انرژی (ISO 50001)
-
-۳) هوشمندسازی خط تولید
+۱) هوشمندسازی خط تولید
 • اتصال به داده‌ی موجود (Historian/DCS) بدون دخالت در حلقه‌های کنترل
 • دوقلوی دیجیتال و حسگر مجازی برای واحدهای کلیدی، و توصیه‌ی نقطه‌ی کار به اپراتور (پیشنهادی، نه فرمان خودکار)
 
-۴) داشبورد هوشمند صنعتی متناسب با خط تولید
+۲) نگهداری پیش‌بینانه و پایش وضعیت تجهیزات
+• پایش ارتعاش، دما و فشار تجهیزات دوار (کمپرسورها، پمپ‌ها، توربین‌ها) و کوره‌ها
+• پیش‌بینی خرابی و پیشنهاد برنامه‌ی نگهداری برای کاهش توقف ناخواسته
+
+۳) داشبورد هوشمند صنعتی متناسب با خط تولید
 ${L(T.dash)}
+
+۴) بهینه‌سازی مصرف سوخت و کنترل انرژی (یکی از محورهای طرح)
+${L(T.fuel)}
+• تعریف خط مبنای مصرف انرژی هر واحد و هشدار انحراف مصرف، همسو با رویکرد نظام مدیریت انرژی (ISO 50001)
 
 محصولات پیشنهادی از سبد ما: ${T.prods.map(refProdName).join("، ")}.
 
-۵) روش همکاری
+۵) تأمین هزینه و بهره‌مندی مالی از صرفه‌جویی
+${CERT_PARA}
+
+۶) روش همکاری
 پایلوت محدود روی یک یا دو واحد، در ۸ تا ۱۲ هفته: دریافت داده‌ی تاریخی، تعیین خط مبنا، استقرار داشبورد، و گزارش اندازه‌گیری‌شده‌ی صرفه‌جویی. هدف عددی را پس از دیدن داده‌ی شما تعیین می‌کنیم و پیش از آن عددی را تضمین نمی‌کنیم.
 
 شفافیت درباره‌ی بلوغ فناوری: محصولات ما در سطح نمونه‌ی اولیه تا نمونه‌ی نمایشی (TRL ۴ و ۵) هستند و هنوز سابقه‌ی اجرای کامل در پالایشگاه نداریم؛ به همین دلیل پایلوت با نظارت کارشناسان شما و بدون ریسک برای عملیات پیشنهاد می‌شود.
@@ -2820,16 +3043,20 @@ const HPC_PLANTS = [
  ["hengam","پتروشیمی هنگام",""],["apadana","پتروشیمی خلیج فارس آپادانا","process_twin"],["lordegan","کود اوره لردگان",""],["hormoz","کود اوره هرمز",""]];
 const HPC_OTHERS = [["پتروشیمی آریاساسول","process_twin"],["پتروشیمی جم","process_twin"],["پتروشیمی آبادان","cbm_dash"],["پتروشیمی فن‌آوران","cbm_dash"],["پتروشیمی خراسان","iems"]];
 function hpcLetter(slug,name,existing){
-  const ex=existing?`همچنین محصول «${refProdName(existing)}» را پیش‌تر برای مجموعه‌های مشابه (از جمله ${name}) تعریف و تا سطح نمونه‌ی آزمایشگاهی توسعه داده‌ایم؛ محصول پیشنهادی این نامه مکمل آن است و روی مصرف سوخت و انرژی تمرکز دارد.\n\n`:"";
+  const ex=existing?`همچنین محصول «${refProdName(existing)}» را پیش‌تر برای مجموعه‌های مشابه (از جمله ${name}) تعریف و تا سطح نمونه‌ی آزمایشگاهی توسعه داده‌ایم؛ محصول پیشنهادی این نامه مکمل آن است و حوزه‌های دیگر خط تولید، نگهداری و داشبورد مدیریتی را هم پوشش می‌دهد؛ مصرف سوخت و انرژی یکی از محورهای آن است.\n\n`:"";
   const util=slug==="mobin"||slug==="fajr";
   return {
    recipient:`مدیرعامل محترم ${name}\nهلدینگ خلیج فارس`,
-   subject:`پیشنهاد محصول هوشمند کنترل مصرف سوخت و بهینه‌سازی انرژی ${name}`,
+   subject:`پیشنهاد محصول هوشمند PetroEnergy برای ${name}: هوشمندسازی خط تولید، داشبورد مدیریتی و کنترل مصرف سوخت و انرژی`,
    body:`با سلام و احترام،
 
-شرکت پترو پالا توس برای مجموعه‌های پتروشیمی هلدینگ خلیج فارس محصولی با نام PetroEnergy تعریف کرده است: کنترل و بهینه‌سازی مصرف سوخت و انرژی، هوشمندسازی خط تولید و داشبورد هوشمند مدیریتی. نسخه‌ی اختصاصی ${name} تا سطح TRL 4 (اعتبارسنجی آزمایشگاهی) توسعه یافته و مخزن نرم‌افزار آن ساخته شده است.
+شرکت پترو پالا توس برای مجموعه‌های پتروشیمی هلدینگ خلیج فارس محصولی با نام PetroEnergy تعریف کرده است: هوشمندسازی خط تولید، داشبورد هوشمند مدیریتی و، به‌عنوان یکی از محورهای آن، کنترل و بهینه‌سازی مصرف سوخت و انرژی. نسخه‌ی اختصاصی ${name} تا سطح TRL 4 (اعتبارسنجی آزمایشگاهی) توسعه یافته و مخزن نرم‌افزار آن ساخته شده است.
 
 ${ex}۱) آنچه محصول انجام می‌دهد
+• هوشمندسازی خط تولید: دوقلوی دیجیتال و حسگر مجازی برای واحدهای کلیدی و توصیه‌ی نقطه‌ی کار به اپراتور
+• نگهداری پیش‌بینانه: پایش ارتعاش و دمای تجهیزات دوار (کمپرسور، پمپ، توربین) و هشدار زودهنگام خرابی
+• داشبورد هوشمند مدیریتی با شاخص‌های عملکرد، کیفیت، نگهداری و انرژی هر واحد
+• کنترل و بهینه‌سازی مصرف سوخت و انرژی (یکی از محورهای محصول):
 ${util?"• پایش راندمان دیگ‌ها و تقسیم بار با کمترین سوخت، تراز بخار و برق واحد خدمات جانبی":"• پایش راندمان کوره‌ها از روی اکسیژن و دمای دودکش و پیشنهاد نقطه‌ی بهینه‌ی هوای اضافی (بدون عبور از حد ایمن CO)\n• تقسیم بار دیگ‌های بخار با کمترین سوخت و تراز بخار"}
 • مصرف ویژه‌ی انرژی به‌ازای هر تن محصول، هشدار نشت هوا و روند رسوب‌گیری
 • داشبورد مدیریتی با شاخص‌های انرژی هر واحد برای مدیریت و دفتر انرژی
@@ -2837,7 +3064,10 @@ ${util?"• پایش راندمان دیگ‌ها و تقسیم بار با کم
 ۲) وضعیت فعلی (شفاف)
 نمونه‌ی ما با داده‌ی ساختگی و پارامترهای نمونه ارزیابی شده و داده‌ی واقعی ${name} را ندیده است؛ بنابراین عدد صرفه‌جویی را نمی‌توانیم اعلام کنیم. ارتقا به TRL 5 فقط با داده‌ی واقعی واحد شما و اندازه‌گیری در برابر خط مبنا انجام می‌شود.
 
-۳) پیشنهاد همکاری
+۳) تأمین هزینه و بهره‌مندی مالی از صرفه‌جویی
+${CERT_PARA}
+
+۴) پیشنهاد همکاری
 پایلوت ۸ تا ۱۲ هفته‌ای روی یک یا دو واحد: اتصال فقط‌خواندنی به Historian/DCS، تعیین خط مبنای مصرف، استقرار داشبورد و گزارش اندازه‌گیری‌شده‌ی صرفه‌جویی؛ بدون دخالت در حلقه‌های کنترل (توصیه به اپراتور، نه فرمان خودکار).
 
 در صورت تمایل، جلسه‌ی فنی کوتاهی برای معرفی و بررسی داده‌ی در دسترس هماهنگ شود.
@@ -2865,7 +3095,7 @@ const memberOpts = () => Object.fromEntries([["","—"],...S.members.map(m=>[m.i
 function archForm(a={}){
   openForm({title:a.id?"ویرایش نامه‌ی بایگانی":"ثبت نامه‌ی ارسال‌شده‌ی پیشین",values:{stage:"sent",status:"active",channel:"secretariat",sector:(S.sub||"").startsWith("sec_")?S.sub.slice(4):"",...a,identity:a.id?archIdent(a):(S.sub==="sosh"?"soshiant":"ir")},fields:[
    {k:"number",label:"شماره‌ی نامه‌ی ما",dir:"ltr"},{k:"employer_no",label:"شماره‌ی ثبت در سیستم گیرنده / کارفرما",dir:"ltr"},{k:"date",label:"تاریخ ارسال",type:"date"},
-   {k:"subject",label:"موضوع نامه"},{k:"recipient",label:"گیرنده (نام، سمت، سازمان)"},{k:"channel",label:"روش ارسال",type:"select",options:ARCH_CH},{k:"identity",label:"شرکت فرستنده (سربرگ)",type:"select",options:IDENT_NAME},{k:"sector",label:"گروه نامه",type:"select",options:{"":"—",...ARCH_SECT}},{k:"contact",label:"اطلاعات تماس گیرنده (تلفن، فکس، ایمیل، افراد)",type:"textarea"},
+   {k:"subject",label:"موضوع نامه"},{k:"recipient",label:"گیرنده (نام، سمت، سازمان)"},{k:"channel",label:"روش ارسال",type:"select",options:ARCH_CH},{k:"identity",label:"شرکت فرستنده (سربرگ)",type:"select",options:IDENT_NAME},{k:"sector",label:"گروه نامه",type:"select",options:{"":"—",...ARCH_SECT}},{k:"grp",label:"زیرگروه پترو پالا توس (برای نامه‌های پترو پالا توس)",type:"select",options:{"":"— (خودکار)",...PP_GRP_NAME}},{k:"contact",label:"اطلاعات تماس گیرنده (تلفن، فکس، ایمیل، افراد)",type:"textarea"},
    {k:"summary",label:"خلاصه‌ی درخواست یا محتوای نامه",type:"textarea"},
    {k:"stage",label:"مرحله‌ی فعلی",type:"select",options:ARCH_STAGES},{k:"status",label:"وضعیت پیگیری",type:"select",options:ARCH_ST},
    {k:"owner",label:"مسئول پیگیری",type:"select",options:memberOpts()},{k:"next_action",label:"اقدام بعدی"},{k:"next_date",label:"تاریخ اقدام بعدی",type:"date"},
@@ -3421,6 +3651,54 @@ function dataHubArticles(){
   const list=artAll().filter(a=>a.mine||artStatus(a)!=="todo").filter(a=>match(a.name,a.country,a.city)).sort((a,b)=>String(a.name).localeCompare(String(b.name)));
   return list.map(a=>dataCard("art_"+a.id,a.name,"مقاله",a.url?[{name:"صفحه‌ی فراخوان / ژورنال",url:a.url}]:[],(a.name||"").split(/[–—-]/)[0].trim()+" dataset")).join("");
 }
+// ---------- Content production: one tab, four brands. Calendar items (settings/content_calendar) are taken or handed over like any other item (assign/cc_<id> -> BPMS task);
+// a content task can also be defined directly for anyone. Calendar rows are loaded from the content-calendar sheet.
+const CONTENT_BRANDS = {hamraz:"همراز",ppt:"پترو پالاتوس",ithub:"آیتی هاب",pig:"پارسا اینترنشنال گروپ"};
+const CONTENT_FORMATS = {video:"ویدیو",reel:"ریلز / کوتاه",post:"پست",story:"استوری",article:"مقاله / بلاگ",other:"سایر"};
+const ccItem = t => (S.cc||[]).find(i=>"cc_"+i.id===t.asg_key);
+const isContentTask = t => t.kind==="content"||t.asg_mod==="content";
+const ccBrand = t => t.brand||(ccItem(t)||{}).brand||"";
+const ccPeople = () => { const o={}; (S.roster&&S.roster.length?S.roster:(S.members||[])).forEach(m=>{ o[m.id]=m.id===S.me.id?"خودم":(m.full_name||m.id); }); return o; };
+function contentTaskForm(brand){
+  if(!S.me.id){ toast("برای تعریف تسک وارد شوید."); return; }
+  openForm({title:"تعریف تسک تولید محتوا",values:{brand:CONTENT_BRANDS[brand]?brand:"hamraz",format:"video",assignee:S.me.id,priority:"normal",due:today()},
+   fields:[{k:"brand",label:"برند",type:"select",options:CONTENT_BRANDS},{k:"title",label:"عنوان محتوا"},
+    {k:"desc",label:"شرح (قلاب، نکات کلیدی، CTA، معیار پذیرش)",type:"textarea"},
+    {k:"format",label:"قالب",type:"select",options:CONTENT_FORMATS},
+    {k:"assignee",label:"مسئول (برای خودتان یا دیگری)",type:"select",options:ccPeople()},
+    {k:"priority",label:"اولویت",type:"select",options:PRIORITY},{k:"due",label:"مهلت",type:"date"}],
+   onSave:v=>{ if(!v.title){ toast("عنوان محتوا را بنویسید."); return false; }
+    const m=(S.roster||[]).find(x=>x.id===v.assignee)||(S.members||[]).find(x=>x.id===v.assignee)||{}, now=nowIso();
+    return save(`tasks/${newId()}`,{title:v.title,desc:v.desc,type:"task",kind:"content",brand:v.brand,format:v.format,points:null,sprint:"",priority:v.priority,assignee:v.assignee,team:m.team||"ai",due:v.due||addDays(today(),3),blocked:false,status:"todo",created_by:S.me.id,created:now,updated:now},v.assignee===S.me.id?"تسک محتوا ثبت شد":"تسک محتوا برای مسئول ثبت شد و اعلان آن نمایش داده می‌شود"); }});
+}
+function ccItemForm(brand){
+  if(!isAdmin()){ toast("فقط مدیر می‌تواند آیتم تقویم محتوایی اضافه کند."); return; }
+  openForm({title:"افزودن آیتم به تقویم محتوایی",values:{brand:CONTENT_BRANDS[brand]?brand:"hamraz",format:"video",date:today()},
+   fields:[{k:"brand",label:"برند",type:"select",options:CONTENT_BRANDS},{k:"title",label:"عنوان محتوا"},{k:"desc",label:"شرح (قلاب، نکات کلیدی، CTA)",type:"textarea"},
+    {k:"cat",label:"دسته (اختیاری)"},{k:"format",label:"قالب",type:"select",options:CONTENT_FORMATS},{k:"date",label:"تاریخ انتشار",type:"date"}],
+   onSave:v=>{ if(!v.title){ toast("عنوان محتوا را بنویسید."); return false; }
+    return save("settings/content_calendar",{items:[...((S.ccD||{}).content_calendar||[]),{id:newId(),brand:v.brand,title:v.title,desc:v.desc,format:v.format,date:v.date,cat:v.cat||""}]},"به تقویم محتوایی اضافه شد"); }});
+}
+function contentView(brand){
+  const all=brand==="all", inB=b=>all||b===brand;
+  const inBrand=(S.cc||[]).filter(i=>inB(i.brand)), cats=[...new Set(inBrand.map(i=>i.cat).filter(Boolean))], catNow=cats.includes(S.ccCat)?S.ccCat:"";
+  const items=inBrand.filter(i=>(!catNow||i.cat===catNow)&&match(i.title,i.desc,i.cat,CONTENT_BRANDS[i.brand])).sort((a,b)=>(a.date||"9").localeCompare(b.date||"9")||cats.indexOf(a.cat)-cats.indexOf(b.cat)||(a.day||0)-(b.day||0));
+  const tasks=S.tasks.filter(t=>isContentTask(t)&&inB(ccBrand(t))&&match(t.title,memberName(t.assignee))).sort((a,b)=>(a.due||"9").localeCompare(b.due||"9"));
+  const taken=items.filter(i=>(asgOf("cc_"+i.id)||{}).doer).length, mineOpen=tasks.filter(t=>t.assignee===S.me.id&&!isDone(t)).length;
+  const kp=(l,n)=>`<div class="kpi"><b>${faNum(n)}</b><span>${l}</span></div>`;
+  const catStrip=cats.length>1?`<div class="row" style="gap:6px;flex-wrap:wrap;margin:8px 0" role="group" aria-label="دسته">${[["","همه‌ی دسته‌ها"],...cats.map(c=>[c,c])].map(([k,l])=>`<button class="btn sm ${k===catNow?"":"ghost"}" data-act="cc-cat" data-k="${esc(k)}">${esc(l)}</button>`).join("")}</div>`:"";
+  const rows=items.map(i=>`<tr>${td("تاریخ",i.date?faDate(i.date):"—")}${td("محتوا",`${i.day?`<span class="meta">روز ${faNum(i.day)}</span> `:""}${esc(i.title)}${i.resp?`<br><span class="meta">مسئول پیشنهادی در شیت: ${esc(i.resp)}</span>`:""}${i.rec?`<br><span class="meta">مسئول ضبط: ${esc(i.rec)}</span>`:""}${i.desc?`<details><summary class="meta">شرح</summary><span style="white-space:pre-wrap">${esc(i.desc)}</span></details>`:""}`,"t")}${all?td("برند",esc(CONTENT_BRANDS[i.brand]||"—")):""}${td("دسته",esc(i.cat||"—"))}${td("قالب",esc(CONTENT_FORMATS[i.format]||"—"))}${td("انجام‌دهنده",asgCell("cc_"+i.id,i.title,"content"))}${td("",isAdmin()?`<button class="btn sm ghost" data-act="cc-del" data-id="${esc(i.id)}">حذف</button>`:"")}</tr>`);
+  return `<h2>تولید محتوا${all?"":" · "+esc(CONTENT_BRANDS[brand])}</h2>
+  <p class="note">تقویم محتوایی هر برند اینجا می‌آید. هر آیتم را می‌توانید برای خودتان بردارید یا (مدیر) به دیگری واگذار کنید؛ آیتمِ برداشته‌شده به‌صورت تسک در BPMS برای انجام‌دهنده ثبت می‌شود. تسک جدید هم می‌توانید مستقیم برای خودتان یا دیگری تعریف کنید.</p>
+  <div class="kpis">${kp("آیتم تقویم",items.length)}${kp("برداشته/واگذارشده",taken)}${kp("تسک‌های محتوا",tasks.length)}${kp("باز، مال من",mineOpen)}</div>
+  <div class="toolbar"><button class="btn sig" data-act="cc-task" data-id="${esc(brand)}">+ تعریف تسک محتوا</button>${isAdmin()?`<button class="btn ghost" data-act="cc-add" data-id="${esc(brand)}">+ افزودن آیتم به تقویم</button>`:""}</div>
+  <h3>تقویم محتوایی</h3>${catStrip}
+  ${table(["تاریخ","محتوا",...(all?["برند"]:[]),"دسته","قالب","انجام‌دهنده / واگذاری",""],rows,"تقویم محتوایی این برند هنوز بارگذاری نشده است؛ پس از دریافت شیت تقویم، آیتم‌ها اضافه می‌شوند. تا آن زمان می‌توانید «تعریف تسک محتوا» را بزنید.")}
+  <h3>تسک‌های محتوا</h3>
+  ${taskTable(tasks)}`;
+}
+for(const b of ["hamraz","ppt","ithub","pig","all"]) VIEWS["content."+b]=()=>contentView(b);
+
 VIEWS["basket.data"]=()=>{ const h=dataHubProducts(); return `<p class="note">برای هر محصول، لینک‌های دانلود داده‌ی واقعی (از فهرست TRL) و جستجوی مجموعه‌داده‌ی عمومی و بخش آپلود است. لینک‌هایی که هنوز تأیید نشده‌اند در فهرست TRL با برچسب «تأیید نشده» آمده‌اند. هر فایل با SHA256 ثبت و به تسک «داده‌ی واقعی» همان محصول پیوست می‌شود.</p>`+(h||'<p class="empty">محصولی برای نمایش نیست.</p>'); };
 { const _u=VIEWS["articles.upload"]; VIEWS["articles.upload"]=()=>`<h3>داده‌ی هر مقاله</h3><p class="note">برای هر مقاله‌ی اقدام‌شده یا در دست اقدام، لینک دانلود داده و آپلود داده در دسترس است.</p>`+(dataHubArticles()||'<p class="empty">مقاله‌ای نیست.</p>')+`<h3>تسک‌های دانلود داده</h3>`+_u(); }
 const DB_CHUNK = 150000, DB_MAX = 8*1024*1024;   // a database document may hold 256 KiB of JSON; 150000 bytes become 200000 base64 characters
@@ -3949,6 +4227,10 @@ document.addEventListener("click", async e => {
     case "product-new": productForm(); break;
     case "tn-new": tnForm(); break;
     case "asg": asgForm(id,b.dataset.t,b.dataset.m); break;
+    case "cc-task": contentTaskForm(id); break;
+    case "cc-add": ccItemForm(id); break;
+    case "cc-del": { const dn=Object.keys(S.ccD||{}).find(k=>(S.ccD[k]||[]).some(x=>x.id===id)); if(dn&&isAdmin()&&confirm("این آیتم از تقویم محتوایی حذف شود؟")) await save("settings/"+dn,{items:S.ccD[dn].filter(x=>x.id!==id)},"حذف شد"); break; }
+    case "cc-cat": S.ccCat=b.dataset.k||""; render(); break;
     case "sec-f": (S.secF=S.secF||{})[b.dataset.k]=b.dataset.v; render(); break;
     case "wp-f": (S.wpF=S.wpF||{area:"",kind:""})[b.dataset.k]=b.dataset.v; render(); break;
     case "product-edit": productForm(S.products.find(p=>p.id===id)); break;
@@ -4022,6 +4304,10 @@ document.addEventListener("click", async e => {
       const L=hpcLetter(slug,name,ex);
       S.draft={identity:"ir",sector:"oil",date:today(),numAuto:true,number:nextLetterNo("ir",today()),recipient:L.recipient,subject:L.subject,body:L.body,attachments:"",cc:"",annex:"",signer:""};
       S.mod="letters"; S.sub="new"; S.forceFull=true; render(); toast("پیش‌نویس نامه با سربرگ پترو پالا توس آماده شد؛ بازبینی و ذخیره کنید."); break; }
+    case "pp-grp": S.ppGrp=b.dataset.k; S.ppSub=""; S.ppSh="arch"; renderView(); break;
+    case "pp-sh": S.ppSh=b.dataset.k; S.ppSub=""; renderView(); break;
+    case "pp-sub": S.ppSub=b.dataset.k||""; renderView(); break;
+    case "pp-letter": { const c=Object.keys(PP_CO).flatMap(ppCos).find(x=>x.k===id); if(c) ppDraft(c); break; }
     case "ref-letter": { const r=REFINERIES.find(x=>x.id===id); if(!r) break; const L=refineryLetter(r);
       S.draft={identity:"ir",sector:"oil",date:today(),numAuto:true,number:nextLetterNo("ir",today()),recipient:L.recipient,subject:L.subject,body:L.body,attachments:"",cc:"",annex:"",signer:""};
       S.mod="letters"; S.sub="new"; S.forceFull=true; render(); toast("پیش‌نویس نامه با سربرگ پترو پالا توس آماده شد؛ بازبینی و ذخیره کنید."); break; }
@@ -4056,6 +4342,7 @@ document.addEventListener("click", async e => {
     case "sup-save": await supSave(b.dataset.id,Number(b.dataset.i)); break;
     case "sch-copy": await schCopyPrompt(b.dataset.id); break;
     case "sch-task": await schClaudeTask(b.dataset.id); break;
+    case "sch-fail": { const r=prompt("دلیل بستن پروژه (مثلاً: همه‌ی استادان مناسب پاسخ منفی دادند و استاد دیگری با پروژه همپوشانی ندارد)"); if(r===null) break; await schSave(b.dataset.id,{status:"failed",fail_reason:r,status_at:new Date().toISOString(),status_by:S.me.id}); break; }
     case "sch-set": { const st=b.dataset.st; if(b.type==="checkbox"&&!b.checked) break; await schSave(b.dataset.id,{status:st,status_at:new Date().toISOString(),status_by:S.me.id}); break; }
     case "sch-done": { const cur=schState(b.dataset.id), it={...(cur.items||{})}; it[b.dataset.k]={...(it[b.dataset.k]||{}),done:b.checked}; await schSave(b.dataset.id,{items:it}); break; }
     case "sch-claim": { { const pp=SCH.find(x=>x.id===b.dataset.id); if(pp&&schLockedForMe(pp)){ toast(rosterName(schTaker(pp))+" این بورسیه را برداشته است؛ برای دیگران بسته است."); break; } } const cur=schState(b.dataset.id), it={...(cur.items||{})}; if(!S.me.id){toast("ابتدا وارد شوید.");break;} it[b.dataset.k]={...(it[b.dataset.k]||{}),owner:S.me.id}; await schSave(b.dataset.id,{items:it}); break; }
@@ -4148,6 +4435,7 @@ boot();
 
 
 
+
 <!--claude-mermaid-runtime-begin:3477-->
 <style>.mermaid-diagram{margin-block:4px}.mermaid-diagram svg{display:block;margin:0 auto;max-width:100%;height:auto}</style>
 <script src="/_runtime/mermaid-11.16.1.min.js"></script>
@@ -4224,3 +4512,4 @@ if(mq&&mq.addEventListener)mq.addEventListener('change',render);
 if(typeof MutationObserver!=='undefined')new MutationObserver(render).observe(root,{attributes:true,attributeFilter:['data-theme']});
 })();</script>
 <!--claude-mermaid-runtime-end-->
+
