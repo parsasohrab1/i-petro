@@ -2862,7 +2862,8 @@ const CO_T = {
 };
 // [name, type] per company; parent companies first. Names are as written in the user's brief (NIOC, NIGC, Mapna) or public knowledge (refining and petrochemicals).
 const PP_CO = {
- shasta:{label:"هلدینگ شستا",parent:["شرکت سرمایه‌گذاری نفت و گاز و پتروشیمی تأمین","hold"],list:[["شرکت صنایع کاغذ سازی بیستون تامین","mfg"]]},   // Shasta companies named by the user that have no letter yet (names as on the company sites)
+ shasta:{label:"سایر شرکت‌های شستا",parent:null,list:[["شرکت صنایع کاغذ سازی بیستون تامین","mfg","بیستون"]]},
+ tapico:{label:"تاپیکو (زیرمجموعه شستا)",parent:["شرکت سرمایه‌گذاری نفت و گاز و پتروشیمی تأمین (تاپیکو)","hold"],list:[["شرکت پرسی ایران گاز","mfg","پرسی ایران گاز"],["شرکت نفت ایرانول","mfg","ایرانول"],["شرکت نفت پاسارگاد","mfg","پاسارگاد"],["شرکت ایران یاسا و رابر","mfg","ایران یاسا"],["سرمایه‌گذاری و توسعه صنایع لاستیک","hold","توسعه صنایع لاستیک"],["شرکت گروه صنعتی بارز","mfg","بارز"],["شرکت یزد تایر","mfg","یزد تایر"],["شرکت حریر خوزستان","mfg","حریر خوزستان"],["شرکت صنایع چوب خزر کاسپین","mfg","چوب خزر"],["شرکت صنایع چوب و کاغذ ایران (چوکا)","mfg","چوکا"],["شرکت صنایع چوب و کاغذ مازندران","mfg","چوب و کاغذ مازندران"],["شرکت صنایع کاغذسازی کاوه","mfg","کاغذسازی کاوه"],["شرکت محصولات کاغذی لطیف","mfg","کاغذی لطیف"],["هلدینگ سلولزی تامین اجتماعی","hold","تامین گستر نوین"],["شرکت بازرسی فنی و کنترل خوردگی","ops","بازرسی فنی"],["شرکت حفاری شمال","drill","حفاری شمال"],["شرکت ماشین‌سازی پارس","mfg","ماشین‌سازی پارس"],["شرکت مهندسی و نصب فیرمکو پارس","eng","فیرمکو"],["شرکت نگهداشت کاران","ops","نگهداشت کاران"]]},   // names as listed by the user; the third item is the text used to find that company's letters
  nioc:{label:"شرکت ملی نفت ایران",parent:["شرکت ملی نفت ایران","hold"],list:[["شرکت نفت مناطق مرکزی ایران","up"],["شرکت ملی مناطق نفت‌خیز جنوب","up"],["شرکت نفت فلات قاره ایران","up"],["شرکت نفت و گاز پارس","up"],["شرکت نفت خزر","up"],["شرکت نفت و گاز اروندان","up"],["شرکت ملی حفاری ایران","drill"],["شرکت مهندسی و توسعه نفت","eng"],["شرکت پشتیبانی ساخت و تهیه کالای نفت","supply"],["شرکت پایانه‌های نفتی ایران","term"]]},
  nigc:{label:"شرکت ملی گاز ایران",parent:["شرکت ملی گاز ایران","hold"],list:[["شرکت انتقال گاز ایران","gtr"],["شرکت مهندسی و توسعه گاز ایران","eng"],["شرکت بازرگانی گاز ایران","gtrade"],["شرکت پالایش گاز ایلام","gref"],["شرکت پالایش گاز پارسیان","gref"],["شرکت پالایش گاز بیدبلند","gref"],["شرکت پالایش گاز سرخون و قشم","gref"],["شرکت پالایش گاز هاشمی‌نژاد","gref"],["شرکت پالایش گاز فجر جم","gref"],["شرکت پالایش گاز پارس جنوبی","gref"]]},
  mapna:{label:"مپنا",parent:["گروه مپنا (شرکت مدیریت پروژه‌های نیروگاهی ایران – مپنا)","hold"],list:[
@@ -2875,9 +2876,10 @@ const PP_CO = {
  niordc:{label:"پخش و پالایش",parent:["شرکت ملی پالایش و پخش فرآورده‌های نفتی ایران","hold"],list:[["شرکت ملی پخش فرآورده‌های نفتی ایران","ops"]]},   // the refineries themselves come from REFINERIES (letters.refinery)
  npc:{label:"شرکت ملی صنایع پتروشیمی",parent:["شرکت ملی صنایع پتروشیمی","hold"],list:[["شرکت پتروشیمی امیرکبیر","petro"],["شرکت پتروشیمی کرمانشاه","petro"],["شرکت پتروشیمی لرستان","petro"],["شرکت پتروشیمی زاگرس","petro"],["شرکت پتروشیمی پردیس","petro"],["شرکت پتروشیمی کاویان","petro"],["شرکت پتروشیمی دماوند","petro"],["شرکت پتروشیمی مروارید","petro"]]}
 };
-const ppCos = gk => { const g=PP_CO[gk]; if(!g) return []; return [[g.parent[0],g.parent[1],true],...g.list].map(([n,t,p],i)=>({k:`${gk}_${i}`,n,t,parent:!!p,g:gk})); };
-const ppCoKey = c => c.n.replace(/^شرکت\s+/,"").replace(/\s*\(.*\)\s*$/,"");
-const ppCoLetters = c => S.lettersArchive.filter(a=>archIdent(a)==="ir"&&`${a.recipient||""} ${a.subject||""}`.includes(ppCoKey(c)));
+const ppCos = gk => { const g=PP_CO[gk]; if(!g) return []; return [...(g.parent?[[g.parent[0],g.parent[1],"",true]]:[]),...g.list.map(([n,t,m])=>[n,t,m||"",false])].map(([n,t,m,p],i)=>({k:`${gk}_${i}`,n,t,m,parent:p,g:gk})); };
+const ppNorm = s => String(s||"").replace(/[يى]/g,"ی").replace(/ك/g,"ک").replace(/[أإآ]/g,"ا").replace(/[\u200c\s]/g,"");
+const ppCoKey = c => c.m||c.n.replace(/^شرکت\s+/,"").replace(/\s*\(.*\)\s*$/,"");
+const ppCoLetters = c => S.lettersArchive.filter(a=>archIdent(a)==="ir"&&ppNorm(`${a.recipient||""} ${a.subject||""}`).includes(ppNorm(ppCoKey(c))));
 function coLetter(c){
   const T=CO_T[c.t], L=a=>a.map(x=>"•\t"+x);
   const body=[
@@ -2917,7 +2919,9 @@ VIEWS["letters.pp"] = () => {
   let inner="";
   if(gk==="hpc") inner=VIEWS["letters.hpc"]()+`<h3>نامه‌های ثبت‌شده‌ی این گروه</h3>`+archView(null,"ir","hpc");
   else if(gk==="niordc"){ const ex=ppCos("niordc"); inner=VIEWS["letters.refinery"]()+`<h3>شرکت مادر و توزیع</h3>`+ppCoView("niordc")+`<h3>نامه‌های ثبت‌شده‌ی این گروه</h3>`+archView(null,"ir","niordc"); }
-  else if(gk==="shasta") inner=archView(null,"ir","shasta")+`<h3>شرکت‌های شستا که هنوز نامه ندارند</h3>`+ppCoView("shasta",true);
+  else if(gk==="shasta"){ const sh=S.ppSh||"arch", nA=S.lettersArchive.filter(a=>archIdent(a)==="ir"&&archGrp(a)==="shasta").length;
+    const tabs=[["arch","همه‌ی نامه‌های شستا",nA],["tapico","تاپیکو و شرکت‌های زیرمجموعه",ppCos("tapico").length],["other","سایر شرکت‌های شستا",ppCos("shasta").length]];
+    inner=`<div class="toolbar" role="tablist"><span class="meta">زیرگروه:</span>${tabs.map(([k,l,n])=>`<button class="btn sm ${sh===k?"":"ghost"}" role="tab" aria-selected="${sh===k}" data-act="pp-sh" data-k="${k}">${esc(l)} (${faNum(n)})</button>`).join("")}</div>`+(sh==="tapico"?ppCoView("tapico",true):sh==="other"?ppCoView("shasta",true):archView(null,"ir","shasta")); }
   else if(PP_CO[gk]) inner=ppCoView(gk)+(gk==="npc"||gk==="nioc"||gk==="nigc"||gk==="mapna"?`<h3>نامه‌های ثبت‌شده‌ی این گروه</h3>`+archView(null,"ir",gk):"");
   else inner=archView(null,"ir",gk);
   return head+bar+inner;
@@ -4261,7 +4265,8 @@ document.addEventListener("click", async e => {
       const L=hpcLetter(slug,name,ex);
       S.draft={identity:"ir",sector:"oil",date:today(),numAuto:true,number:nextLetterNo("ir",today()),recipient:L.recipient,subject:L.subject,body:L.body,attachments:"",cc:"",annex:"",signer:""};
       S.mod="letters"; S.sub="new"; S.forceFull=true; render(); toast("پیش‌نویس نامه با سربرگ پترو پالا توس آماده شد؛ بازبینی و ذخیره کنید."); break; }
-    case "pp-grp": S.ppGrp=b.dataset.k; S.ppSub=""; renderView(); break;
+    case "pp-grp": S.ppGrp=b.dataset.k; S.ppSub=""; S.ppSh="arch"; renderView(); break;
+    case "pp-sh": S.ppSh=b.dataset.k; S.ppSub=""; renderView(); break;
     case "pp-sub": S.ppSub=b.dataset.k||""; renderView(); break;
     case "pp-letter": { const c=Object.keys(PP_CO).flatMap(ppCos).find(x=>x.k===id); if(c) ppDraft(c); break; }
     case "ref-letter": { const r=REFINERIES.find(x=>x.id===id); if(!r) break; const L=refineryLetter(r);
