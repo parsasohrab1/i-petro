@@ -1,0 +1,22 @@
+{
+ "SEG2016": {
+  "n_wells": 9,
+  "mean_true_reservoir_fraction": 0.258,
+  "base_mean_abs_error": 0.102,
+  "base_wells_err_above_0.10": 3,
+  "pooled_bound_covers_true_share": 0.963,
+  "pooled_mean_width": 0.686,
+  "local_bound_covers_true_share": 1.0,
+  "local_mean_width": 0.641
+ },
+ "FORCE2020": {
+  "n_wells": 81,
+  "mean_true_reservoir_fraction": 0.195,
+  "base_mean_abs_error": 0.072,
+  "base_wells_err_above_0.10": 17,
+  "pooled_bound_covers_true_share": 0.926,
+  "pooled_mean_width": 0.381,
+  "local_bound_covers_true_share": 0.852,
+  "local_mean_width": 0.438
+ }
+}
