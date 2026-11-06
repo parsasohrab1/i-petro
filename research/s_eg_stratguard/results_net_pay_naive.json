@@ -1,0 +1,16 @@
+{
+ "SEG2016": {
+  "n_wells": 9,
+  "naive_covers_true_share": 0.889,
+  "naive_mean_width": 0.383,
+  "conformal_pooled_covers": 0.963,
+  "conformal_pooled_width": 0.686
+ },
+ "FORCE2020": {
+  "n_wells": 81,
+  "naive_covers_true_share": 0.889,
+  "naive_mean_width": 0.306,
+  "conformal_pooled_covers": 0.926,
+  "conformal_pooled_width": 0.381
+ }
+}

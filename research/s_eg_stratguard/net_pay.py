@@ -70,3 +70,9 @@ if __name__ == "__main__":
     X, y, w = data.load_seg(seg_csv); rows = run(X, y, w, data.SEG_RESERVOIR); out["SEG2016"] = summarise(rows); print("SEG2016", out["SEG2016"])
     X, y, w = data.load_force(force_csv); rows = run(X, y, w, data.FORCE_RESERVOIR, seeds=(0,)); out["FORCE2020"] = summarise(rows); print("FORCE2020", out["FORCE2020"])
     json.dump(out, open("research/s_eg_stratguard/results_net_pay.json", "w"), indent=1)
+
+
+def naive_interval(rows_cal_err, base_f, q=0.9):
+    """Naive baseline: point estimate +/- the empirical q-quantile of |error| measured on other wells."""
+    e = float(np.quantile(rows_cal_err, q))
+    return max(0.0, base_f - e), min(1.0, base_f + e)
