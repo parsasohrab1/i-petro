@@ -3519,21 +3519,23 @@ function artActions(a){
   if(a.mine) b.push(`<button class="btn sm ghost" data-act="art-edit" data-id="${id}">ویرایش</button><button class="btn sm ghost" data-act="art-del" data-id="${id}">حذف</button>`);
   return `<div class="row" style="gap:6px;flex-wrap:wrap">${b.join("")}</div>`;
 }
+// Priority: 1 = remote (no in-person presentation) and no publication fee; 3 = paid (APC) or in-person; 2 = fee not confirmed.
+const artPrio = a => a.fee==="free"&&a.present!=="inperson" ? 1 : (a.fee==="paid"||a.present==="inperson") ? 3 : 2;
 function artView(page){
   const f=S.artF, all=artAll();
   const rows=all.filter(a=>(page==="all"||artStatus(a)===page)&&(f.past||page==="applied"||artOpen(a))&&(!f.field||a.field===f.field)&&(!f.mode||(f.mode==="any"?a.present!=="none":a.present===f.mode))&&(!f.type||a.type===f.type))
     .filter(a=>match(a.name,a.city,a.country,a.details,ART_FIELDS[a.field]))
-    .sort((a,b)=>(a.deadline||"9999").localeCompare(b.deadline||"9999")||a.name.localeCompare(b.name));
+    .sort((a,b)=>artPrio(a)-artPrio(b)||(a.deadline||"9999").localeCompare(b.deadline||"9999")||a.name.localeCompare(b.name));
   const open=all.filter(artOpen), dated=open.filter(a=>a.deadline), soon=dated.filter(a=>dayDiff(a.deadline)<=45).length;
   const sel=(k,opts,all0)=>`<select data-af="${k}"><option value="">${all0}</option>${Object.entries(opts).map(([v,l])=>`<option value="${v}"${f[k]===v?" selected":""}>${esc(l)}</option>`).join("")}</select>`;
   return `<p class="note">ژورنال‌ها، ویژه‌شماره‌ها و کنفرانس‌هایی که برای مقاله در حوزه‌های فعالیت ما مناسب‌اند و ددلاینشان نگذشته است. فهرست از فراخوان‌های عمومی تا ${faDate("2026-10-21")} گردآوری شده و کامل نیست؛ ردیف‌های با نشان «تأیید شود» باید پیش از ارسال در سایت رسمی بررسی شوند. هر عضو می‌تواند ردیف اضافه یا اصلاح کند.</p>`+
-  kpis([["مورد باز",faNum(open.length)],["دارای ددلاین",faNum(dated.length)],["ددلاین ≤ ۴۵ روز",faNum(soon),soon>0],["تأییدشده در منبع رسمی",faNum(open.filter(a=>a.ver).length)]])+
+  kpis([["مورد باز",faNum(open.length)],["دارای ددلاین",faNum(dated.length)],["ددلاین ≤ ۴۵ روز",faNum(soon),soon>0],["تأییدشده در منبع رسمی",faNum(open.filter(a=>a.ver).length)],["اولویت ۱: غیرحضوری و بدون هزینه",faNum(open.filter(a=>artPrio(a)===1).length)]])+
   `<div class="toolbar">${sel("field",ART_FIELDS,"همه‌ی حوزه‌ها")}${sel("type",ART_TYPE,"همه‌ی انواع")}<select data-af="mode"><option value="">ارائه: همه</option><option value="any"${f.mode==="any"?" selected":""}>دارای ارائه</option>${Object.entries(ART_PRES).map(([v,l])=>`<option value="${v}"${f.mode===v?" selected":""}>${esc(l)}</option>`).join("")}</select>
     <label class="chip"><input type="checkbox" data-af="past"${f.past?" checked":""}> نمایش گذشته‌ها</label><button class="btn" data-act="art-new">افزودن ردیف</button>${S.downloads?`<button class="btn sig" data-act="art-abs-all">همه‌ی چکیده‌ها (ZIP)</button>`:""}</div>`+
   table(["حوزه","ژورنال / کنفرانس","ایمپکت فاکتور","ددلاین ارسال","جزئیات","ارائه‌ی دفاعیه","کشور و شهر برگزارکننده",""], rows.map(a=>{
     const days=a.deadline?dayDiff(a.deadline):null;
     return `<tr>${td("حوزه",esc(ART_FIELDS[a.field]||a.field||"—"))}
-     ${td("نام",`${a.url?link(a.url,a.name):esc(a.name)}<br><span class="pill p-mute">${esc(ART_TYPE[a.type]||a.type||"")}</span> ${a.ver?'<span class="pill p-ok">منبع رسمی</span>':'<span class="pill p-warn" title="از aggregator یا استنباطی؛ پیش از ارسال بررسی کنید">تأیید شود</span>'}${a.mine?' <span class="pill p-info">افزوده‌ی تیم</span>':""}${a.call&&callIsNew(a)?' <span class="pill p-info">فراخوان جدید</span>':""}${a.call&&callNoProduct(a)?' <span class="pill p-bad" title="محصول مناسب برای این فراخوان تعریف نشده است">محصول ندارد</span>':""}`,"t")}
+     ${td("نام",`${a.url?link(a.url,a.name):esc(a.name)}<br><span class="pill p-mute">${esc(ART_TYPE[a.type]||a.type||"")}</span> ${a.ver?'<span class="pill p-ok">منبع رسمی</span>':'<span class="pill p-warn" title="از aggregator یا استنباطی؛ پیش از ارسال بررسی کنید">تأیید شود</span>'}${artPrio(a)===1?' <span class="pill p-ok" title="'+esc(a.fee_note||"")+'">اولویت ۱: غیرحضوری و بدون هزینه</span>':a.fee==="paid"?' <span class="pill p-warn" title="'+esc(a.fee_note||"")+'">دارای هزینه‌ی انتشار</span>':""}${a.mine?' <span class="pill p-info">افزوده‌ی تیم</span>':""}${a.call&&callIsNew(a)?' <span class="pill p-info">فراخوان جدید</span>':""}${a.call&&callNoProduct(a)?' <span class="pill p-bad" title="محصول مناسب برای این فراخوان تعریف نشده است">محصول ندارد</span>':""}`,"t")}
      ${td("IF",`<b class="mono">${esc(a.impact||"—")}</b>${a.impact_note?`<br><span class="meta">${esc(a.impact_note)}</span>`:""}`)}
      ${td("ددلاین",a.deadline?`<b>${faDate(a.deadline)}</b> <span class="${days<0?"p-bad":days<=30?"p-bad":"meta"}">(${days<0?"گذشته":faNum(days)+" روز"})</span><br><span class="mono meta">${esc(a.deadline)}</span>`:`<span class="meta">بدون ددلاین</span>`)}${a.dl_note?`<br><span class="meta">${esc(a.dl_note)}</span>`:""}
      ${td("جزئیات",esc(a.details||"—")+artRecBox(a))}
@@ -4608,8 +4610,3 @@ async function boot(){
 boot();
 })();
 </script>
-
-
-
-
-
