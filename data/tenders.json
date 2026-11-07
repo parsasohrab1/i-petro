@@ -25,7 +25,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": -15,
+   "days_left": -16,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -66,7 +66,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": -16,
+   "days_left": -17,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -107,7 +107,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": -15,
+   "days_left": -16,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -148,7 +148,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": -15,
+   "days_left": -16,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -189,7 +189,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": -15,
+   "days_left": -16,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -230,7 +230,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": -14,
+   "days_left": -15,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -271,7 +271,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": -13,
+   "days_left": -14,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -312,7 +312,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": -9,
+   "days_left": -10,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -353,7 +353,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": -9,
+   "days_left": -10,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -394,7 +394,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": -8,
+   "days_left": -9,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -435,7 +435,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": -8,
+   "days_left": -9,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -476,7 +476,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": -6,
+   "days_left": -7,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -517,7 +517,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": -5,
+   "days_left": -6,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -556,7 +556,7 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": -4,
+   "days_left": -5,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -596,7 +596,7 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": -1,
+   "days_left": -2,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -636,7 +636,7 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": 4,
+   "days_left": 3,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -671,7 +671,7 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": 13,
+   "days_left": 12,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -705,7 +705,7 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": 10,
+   "days_left": 9,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -739,7 +739,7 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": 12,
+   "days_left": 11,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -774,7 +774,7 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": 24,
+   "days_left": 23,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -809,7 +809,7 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": 32,
+   "days_left": 31,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -844,7 +844,7 @@
    "domains": [
     "water"
    ],
-   "days_left": -10,
+   "days_left": -11,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -884,7 +884,7 @@
     "ai_cross_cutting",
     "medical"
    ],
-   "days_left": 10,
+   "days_left": 9,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -920,7 +920,7 @@
     "oil_gas",
     "urban"
    ],
-   "days_left": 17,
+   "days_left": 16,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -954,7 +954,7 @@
    "domains": [
     "urban"
    ],
-   "days_left": 14,
+   "days_left": 13,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-20T09:40:22",
@@ -988,7 +988,7 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": 67,
+   "days_left": 66,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-20T09:40:22",
@@ -1090,7 +1090,7 @@
    "domains": [
     "aerospace"
    ],
-   "days_left": -9,
+   "days_left": -10,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-21T09:36:20",
@@ -1129,7 +1129,7 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": -4,
+   "days_left": -5,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-21T09:36:20",
@@ -1169,7 +1169,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": -3,
+   "days_left": -4,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-21T09:36:20",
@@ -1208,7 +1208,7 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": 15,
+   "days_left": 14,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-21T09:36:20",
@@ -1242,7 +1242,7 @@
    "domains": [
     "web"
    ],
-   "days_left": 17,
+   "days_left": 16,
    "line": "web",
    "status": "new",
    "first_seen": "2026-10-21T09:36:20",
@@ -1310,7 +1310,7 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": 3,
+   "days_left": 2,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-22T09:39:52",
@@ -1344,7 +1344,7 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": 14,
+   "days_left": 13,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-22T09:39:52",
@@ -1378,7 +1378,7 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": 14,
+   "days_left": 13,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-22T09:39:52",
@@ -1412,7 +1412,7 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": 24,
+   "days_left": 23,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-22T09:39:52",
@@ -1446,7 +1446,7 @@
    "domains": [
     "aerospace"
    ],
-   "days_left": 19,
+   "days_left": 18,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-23T09:35:00",
@@ -1480,7 +1480,7 @@
    "domains": [
     "medical"
    ],
-   "days_left": 25,
+   "days_left": 24,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-23T09:35:00",
@@ -1514,7 +1514,7 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": 28,
+   "days_left": 27,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-23T09:35:00",
@@ -1650,7 +1650,7 @@
    "domains": [
     "urban"
    ],
-   "days_left": 3,
+   "days_left": 2,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-26T10:29:22",
@@ -1684,7 +1684,7 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": 17,
+   "days_left": 16,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-26T10:29:22",
@@ -1718,7 +1718,7 @@
    "domains": [
     "urban"
    ],
-   "days_left": 17,
+   "days_left": 16,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-26T10:29:22",
@@ -1786,7 +1786,7 @@
    "domains": [
     "urban"
    ],
-   "days_left": 4,
+   "days_left": 3,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-27T10:03:26",
@@ -1820,7 +1820,7 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": 17,
+   "days_left": 16,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-27T10:03:26",
@@ -1854,7 +1854,7 @@
    "domains": [
     "medical"
    ],
-   "days_left": 20,
+   "days_left": 19,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-27T10:03:26",
@@ -1888,7 +1888,7 @@
    "domains": [
     "urban"
    ],
-   "days_left": 21,
+   "days_left": 20,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-27T10:03:26",
@@ -1923,7 +1923,7 @@
    "domains": [
     "web"
    ],
-   "days_left": 3,
+   "days_left": 2,
    "line": "web",
    "status": "new",
    "first_seen": "2026-10-28T10:50:09",
@@ -1957,7 +1957,7 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": 21,
+   "days_left": 20,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-28T10:50:09",
@@ -1991,7 +1991,7 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": 31,
+   "days_left": 30,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-28T10:50:09",
@@ -2093,14 +2093,19 @@
    "domains": [
     "aerospace"
    ],
-   "days_left": 0,
+   "days_left": -1,
    "line": "ai",
-   "status": "new",
+   "status": "expired",
    "first_seen": "2026-10-29T11:07:42",
    "history": [
     {
      "at": "2026-10-29T11:07:42",
      "status": "new"
+    },
+    {
+     "at": "2026-11-07T11:22:11",
+     "status": "expired",
+     "note": ""
     }
    ]
   },
@@ -2127,7 +2132,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": 5,
+   "days_left": 4,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-29T11:07:42",
@@ -2161,7 +2166,7 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": 32,
+   "days_left": 31,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-29T11:07:42",
@@ -2230,7 +2235,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": 9,
+   "days_left": 8,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-30T11:05:47",
@@ -2264,7 +2269,7 @@
    "domains": [
     "aerospace"
    ],
-   "days_left": 24,
+   "days_left": 23,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-30T11:05:47",
@@ -2298,7 +2303,7 @@
    "domains": [
     "web"
    ],
-   "days_left": 41,
+   "days_left": 40,
    "line": "web",
    "status": "new",
    "first_seen": "2026-10-30T11:05:47",
@@ -2367,7 +2372,7 @@
    "domains": [
     "health_ai"
    ],
-   "days_left": 5,
+   "days_left": 4,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-30T22:04:27",
@@ -2414,7 +2419,7 @@
      "status": "new"
     }
    ],
-   "days_left": 103
+   "days_left": 102
   },
   "GRANT-HORIZON-HLTH-2027-03-TOOL-04": {
    "id": "GRANT-HORIZON-HLTH-2027-03-TOOL-04",
@@ -2528,7 +2533,7 @@
      "status": "new"
     }
    ],
-   "days_left": 89
+   "days_left": 88
   },
   "TED-760253-2026": {
    "id": "TED-760253-2026",
@@ -2553,7 +2558,7 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": 3,
+   "days_left": 2,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-02T12:50:26",
@@ -2587,7 +2592,7 @@
    "domains": [
     "aerospace"
    ],
-   "days_left": 10,
+   "days_left": 9,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-02T12:50:26",
@@ -2621,7 +2626,7 @@
    "domains": [
     "mining"
    ],
-   "days_left": 10,
+   "days_left": 9,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-02T12:50:26",
@@ -2655,7 +2660,7 @@
    "domains": [
     "mining"
    ],
-   "days_left": 10,
+   "days_left": 9,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-02T12:50:26",
@@ -2690,7 +2695,7 @@
    "domains": [
     "water"
    ],
-   "days_left": 17,
+   "days_left": 16,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-02T12:50:26",
@@ -2724,7 +2729,7 @@
    "domains": [
     "water"
    ],
-   "days_left": 18,
+   "days_left": 17,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-02T12:50:26",
@@ -2758,7 +2763,7 @@
    "domains": [
     "mining"
    ],
-   "days_left": 20,
+   "days_left": 19,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-02T12:50:26",
@@ -2792,7 +2797,7 @@
    "domains": [
     "urban"
    ],
-   "days_left": 24,
+   "days_left": 23,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-02T12:50:26",
@@ -2826,7 +2831,7 @@
    "domains": [
     "aerospace"
    ],
-   "days_left": 27,
+   "days_left": 26,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-02T12:50:26",
@@ -2861,7 +2866,7 @@
    "domains": [
     "water"
    ],
-   "days_left": 27,
+   "days_left": 26,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-02T12:50:26",
@@ -2895,7 +2900,7 @@
    "domains": [
     "mining"
    ],
-   "days_left": 32,
+   "days_left": 31,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-02T12:50:26",
@@ -2929,7 +2934,7 @@
    "domains": [
     "mining"
    ],
-   "days_left": 11,
+   "days_left": 10,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-03T12:17:26",
@@ -2963,7 +2968,7 @@
    "domains": [
     "aerospace"
    ],
-   "days_left": 27,
+   "days_left": 26,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-03T12:17:26",
@@ -2997,7 +3002,7 @@
    "domains": [
     "health_ai"
    ],
-   "days_left": 27,
+   "days_left": 26,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-03T12:17:26",
@@ -3066,7 +3071,7 @@
     "ai_cross_cutting",
     "medical"
    ],
-   "days_left": 26,
+   "days_left": 25,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-04T12:29:43",
@@ -3100,7 +3105,7 @@
    "domains": [
     "aerospace"
    ],
-   "days_left": 70,
+   "days_left": 69,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-04T12:29:43",
@@ -3134,7 +3139,7 @@
    "domains": [
     "water"
    ],
-   "days_left": 11,
+   "days_left": 10,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-04T12:29:43",
@@ -3168,7 +3173,7 @@
    "domains": [
     "water"
    ],
-   "days_left": 31,
+   "days_left": 30,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-04T12:29:43",
@@ -3202,7 +3207,7 @@
    "domains": [
     "mining"
    ],
-   "days_left": 31,
+   "days_left": 30,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-04T12:29:43",
@@ -3236,7 +3241,7 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": 45,
+   "days_left": 44,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-04T12:29:43",
@@ -3374,7 +3379,7 @@
     "mining",
     "oil_gas"
    ],
-   "days_left": 11,
+   "days_left": 10,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-04T12:29:43",
@@ -3410,7 +3415,7 @@
     "mining",
     "oil_gas"
    ],
-   "days_left": 11,
+   "days_left": 10,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-04T12:29:43",
@@ -3446,7 +3451,7 @@
     "mining",
     "oil_gas"
    ],
-   "days_left": 11,
+   "days_left": 10,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-04T12:29:43",
@@ -3482,7 +3487,7 @@
     "mining",
     "oil_gas"
    ],
-   "days_left": 11,
+   "days_left": 10,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-04T12:29:43",
@@ -3518,7 +3523,7 @@
     "mining",
     "oil_gas"
    ],
-   "days_left": 11,
+   "days_left": 10,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-04T12:29:43",
@@ -3554,7 +3559,7 @@
     "mining",
     "oil_gas"
    ],
-   "days_left": 11,
+   "days_left": 10,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-04T12:29:43",
@@ -3590,7 +3595,7 @@
     "mining",
     "oil_gas"
    ],
-   "days_left": 11,
+   "days_left": 10,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-04T12:29:43",
@@ -3626,7 +3631,7 @@
     "aerospace",
     "urban"
    ],
-   "days_left": 12,
+   "days_left": 11,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-04T12:29:43",
@@ -3661,7 +3666,7 @@
     "ai_cross_cutting",
     "medical"
    ],
-   "days_left": 40,
+   "days_left": 39,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-04T12:29:43",
@@ -3695,7 +3700,7 @@
    "domains": [
     "aerospace"
    ],
-   "days_left": 18,
+   "days_left": 17,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-05T12:45:15",
@@ -3729,7 +3734,7 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": 28,
+   "days_left": 27,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-05T12:45:15",
@@ -3763,7 +3768,7 @@
    "domains": [
     "urban"
    ],
-   "days_left": 28,
+   "days_left": 27,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-05T12:45:15",
@@ -3797,7 +3802,7 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": 39,
+   "days_left": 38,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-05T12:45:15",
@@ -3899,7 +3904,7 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": 31,
+   "days_left": 30,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-06T12:27:19",
@@ -3934,7 +3939,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": 7,
+   "days_left": 6,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-06T12:27:19",
@@ -3968,7 +3973,7 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": 14,
+   "days_left": 13,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-06T12:27:19",
@@ -4002,7 +4007,7 @@
    "domains": [
     "mining"
    ],
-   "days_left": 18,
+   "days_left": 17,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-06T12:27:19",
@@ -4036,7 +4041,7 @@
    "domains": [
     "aerospace"
    ],
-   "days_left": 31,
+   "days_left": 30,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-06T12:27:19",
@@ -4070,7 +4075,7 @@
    "domains": [
     "mining"
    ],
-   "days_left": 31,
+   "days_left": 30,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-06T12:27:19",
@@ -4104,7 +4109,7 @@
    "domains": [
     "mining"
    ],
-   "days_left": 31,
+   "days_left": 30,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-06T12:27:19",
@@ -4138,7 +4143,7 @@
    "domains": [
     "aerospace"
    ],
-   "days_left": 32,
+   "days_left": 31,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-06T12:27:19",
@@ -4172,7 +4177,7 @@
    "domains": [
     "mining"
    ],
-   "days_left": 32,
+   "days_left": 31,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-06T12:27:19",
@@ -4206,7 +4211,7 @@
    "domains": [
     "water"
    ],
-   "days_left": 32,
+   "days_left": 31,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-06T12:27:19",
@@ -4240,7 +4245,7 @@
    "domains": [
     "mining"
    ],
-   "days_left": 38,
+   "days_left": 37,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-06T12:27:19",
@@ -5787,6 +5792,69 @@
     "TED-773219-2026",
     "TED-772090-2026"
    ],
+   "actioned_ids": [],
+   "reminders": []
+  },
+  {
+   "at": "2026-11-07T11:22:12",
+   "collected": 345,
+   "matched": 41,
+   "partner_drafts": [],
+   "events_added": 0,
+   "scholarships_added": 0,
+   "investors_added": 0,
+   "investor_drafts": [
+    "revo",
+    "212",
+    "hub71",
+    "aramco-ventures",
+    "antler-menap",
+    "equinor-ventures",
+    "shell-ventures",
+    "ycombinator",
+    "techstars"
+   ],
+   "leads_added": 0,
+   "papers_lines": [],
+   "events_soon": [
+    {
+     "start": "2026-11-09",
+     "name": "Web Summit 2026",
+     "name_fa": "وب سامیت لیسبون",
+     "city": "لیسبون"
+    },
+    {
+     "start": "2026-11-16",
+     "name": "MEDICA 2026",
+     "name_fa": "نمایشگاه تجهیزات و فناوری پزشکی دوسلدورف",
+     "city": "دوسلدورف"
+    },
+    {
+     "start": "2026-12-06",
+     "name": "NeurIPS 2026",
+     "name_fa": "کنفرانس NeurIPS (سیدنی / آتلانتا / پاریس)",
+     "city": "سیدنی، آتلانتا، پاریس"
+    },
+    {
+     "start": "2026-12-07",
+     "name": "GITEX Global 2026",
+     "name_fa": "جیتکس دبی",
+     "city": "دبی (Expo City)"
+    },
+    {
+     "start": "2026-12-13",
+     "name": "Iran ITEX 1405 (5th) – Sharif University",
+     "name_fa": "پنجمین نمایشگاه ایران ایتکس دانشگاه صنعتی شریف",
+     "city": "تهران (دانشگاه صنعتی شریف)"
+    },
+    {
+     "start": "2026-12-20",
+     "name": "7th Iran Smart City & AI Conference and Exhibition",
+     "name_fa": "هفتمین نمایشگاه و کنفرانس بین‌المللی شهر هوشمند و هوش مصنوعی ایران (ایرانداک)",
+     "city": "تهران"
+    }
+   ],
+   "new_ids": [],
    "actioned_ids": [],
    "reminders": []
   }
