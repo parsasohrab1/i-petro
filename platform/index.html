@@ -224,6 +224,9 @@ const faNum = n => { try{return new Intl.NumberFormat("fa-IR").format(n)}catch(e
 const blobUrl = id => id ? "/_blob/" + id : "";
 const memberName = id => (S.members.find(m=>m.id===id)||{}).full_name || (id&&!isAdmin()?"همکار":"—");
 const isAdmin = () => S.me.isOwner || S.me.canEdit;
+// settings/task_assigners {ids:[...]}: members the owner allows to define tasks for other people (owner/editors always can)
+const canAssignOthers = () => isAdmin() || ((S.taskAsg||{}).ids||[]).includes(S.me.id);
+const syncRoster = () => { S.roster = (canAssignOthers() && S.rosterAll) ? S.rosterAll : S.roster; };
 const seeAllReports = () => !!S.me.isOwner;   // performance reports and their scores: only the person and the owner
 function toast(t){const d=document.createElement("div");d.className="toast";d.textContent=t;document.body.appendChild(d);setTimeout(()=>d.remove(),2600)}
 function kpis(items){return `<div class="kpis">${items.map(([l,v,a])=>`<div class="kpi${a?" alert":""}"><b>${esc(v)}</b><span>${esc(l)}</span></div>`).join("")}</div>`}
@@ -257,7 +260,7 @@ function setPath(key, val){ const [a,b]=key.split("."); if(b) S[a][b]=val; else 
 function subscribe(){
   for(const [path,key] of Object.entries(COLS)){
     S.db.collection(path).onSnapshot(snap => {
-      if(key==="members" && isAdmin()) S.roster = snap.docs.map(d => ({id:d.id, full_name:d.data().full_name||d.id, team:d.data().team||"ai"}));   // names and team only: the picker for taking or handing over items
+      if(key==="members"){ S.rosterAll = snap.docs.map(d => ({id:d.id, full_name:d.data().full_name||d.id, team:d.data().team||"ai"})); syncRoster(); }   // names and team only: the picker for taking or handing over items
       setPath(key, privateRows(key, snap.docs.map(d => ({id:d.id, ...d.data()}))));
       if(key==="tasks"){ S.tasksArch=S.tasks.filter(t=>t.archived); S.tasks=S.tasks.filter(t=>!t.archived); }   // tasks the system verified as done leave every list and wait in the archive tab
       S.loaded = true; S.got.add(key); render(); if(key==="members") maybeWelcome();
@@ -275,6 +278,7 @@ function subscribe(){
   S.db.doc("settings/world_products").onSnapshot(d => { S.wp = d.exists ? d.data() : {items:[],proposals:[]}; render(); }, ()=>{});   // world products, patents and papers compared with ours, plus new-product proposals
   S.db.doc("settings/company_docs").onSnapshot(d => { S.cdocs = d.exists ? d.data() : {}; render(); }, ()=>{});
   S.ccD = {}; for(const dn of ["content_calendar","content_calendar_2","content_calendar_3"]) S.db.doc("settings/"+dn).onSnapshot(d => { S.ccD[dn] = d.exists ? (d.data().items||[]) : []; S.cc = Object.values(S.ccD).flat(); render(); }, ()=>{});   // content calendar items {id,brand,title,desc,format,date}; each can be taken or handed over via assign/cc_<id>
+  S.db.doc("settings/task_assigners").onSnapshot(d => { S.taskAsg = d.exists ? d.data() : {}; syncRoster(); render(); }, ()=>{});
   S.db.doc("settings/claude_tasks").onSnapshot(d => { S.ct = d.exists ? (d.data().list||[]) : []; render(); }, ()=>{});
   S.db.doc("settings/paper_evidence").onSnapshot(d => { S.pev = d.exists ? d.data() : {list:[]}; render(); }, ()=>{});
   S.db.doc("settings/data_links").onSnapshot(d => { S.dlinks = d.exists ? (d.data().map||{}) : {}; render(); }, ()=>{});
@@ -1421,7 +1425,7 @@ function taskForm(t={}){ if(!S.me.id){toast("برای تعریف تسک وارد
    fields:[{k:"title",label:"عنوان تسک"},{k:"desc",label:"شرح و معیار پذیرش (Definition of Done)",type:"textarea",hint:"قالب پیشنهادی: «به‌عنوان … می‌خواهم … تا …» و بعد چند معیار پذیرش که انجام‌شدن کار را قابل بررسی می‌کند."},
     {k:"type",label:"نوع",type:"select",options:TASK_TYPE},{k:"points",label:"امتیاز داستان (Story Point)",type:"select",options:POINTS,hint:"اندازه‌ی نسبی کار، نه ساعت؛ ۱ کوچک‌ترین و ۱۳ بسیار بزرگ (بهتر است کار بزرگ را بشکنید)."},
     {k:"sprint",label:"اسپرینت",type:"select",options:sprints},{k:"priority",label:"اولویت",type:"select",options:PRIORITY},
-    {k:"assignee",label:"مسئول",type:"select",options:Object.fromEntries(S.members.map(m=>[m.id,m.full_name]))},{k:"team",label:"تیم",type:"select",options:TEAMS},{k:"due",label:"مهلت",type:"date"},
+    {k:"assignee",label:canAssignOthers()?"مسئول (برای خودتان یا شخص دیگر)":"مسئول",type:"select",options:canAssignOthers()?ccPeople():Object.fromEntries(S.members.map(m=>[m.id,m.full_name]))},{k:"team",label:"تیم",type:"select",options:TEAMS},{k:"due",label:"مهلت",type:"date"},
     {k:"blocked",label:"مانع دارد؟",type:"select",options:{no:"خیر",yes:"بله"}},{k:"blocker_note",label:"شرح مانع (برای Daily Scrum)",type:"textarea"}],
    onSave:v=>{ if(!v.title){toast("عنوان تسک را بنویسید.");return false}
     const {id:_i,...base}=t; const now=nowIso();
