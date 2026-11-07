@@ -373,7 +373,7 @@
    "hq": "آمریکا",
    "domains": [
     "medical",
-    "energy",
+    "oil_gas",
     "ai_cross_cutting"
    ],
    "stage_fa": "اولیه",
@@ -439,7 +439,7 @@
    "type": "vc",
    "hq": "آمریکا",
    "domains": [
-    "energy",
+    "oil_gas",
     "urban",
     "nuclear"
    ],
@@ -462,7 +462,7 @@
    "type": "vc",
    "hq": "آمریکا",
    "domains": [
-    "energy",
+    "oil_gas",
     "urban"
    ],
    "stage_fa": "بذری تا رشد (Frontier، Flagship، Credit)",
@@ -484,7 +484,7 @@
    "type": "cvc",
    "hq": "عربستان (ظهران)",
    "domains": [
-    "energy",
+    "oil_gas",
     "ai_cross_cutting"
    ],
    "stage_fa": "اولیه تا رشد",
@@ -513,7 +513,7 @@
    "type": "cvc",
    "hq": "نروژ",
    "domains": [
-    "energy"
+    "oil_gas"
    ],
    "stage_fa": "اولیه تا رشد",
    "ticket_fa": "۳ تا ۵۰ میلیون دلار",
@@ -541,7 +541,7 @@
    "type": "cvc",
    "hq": "هلند / بریتانیا",
    "domains": [
-    "energy"
+    "oil_gas"
    ],
    "stage_fa": "اولیه تا رشد",
    "ticket_fa": "—",
@@ -569,7 +569,7 @@
    "type": "cvc",
    "hq": "آمریکا / فرانسه",
    "domains": [
-    "aviation",
+    "aerospace",
     "ai_cross_cutting"
    ],
    "stage_fa": "اولیه",
@@ -593,7 +593,7 @@
    "domains": [
     "ai_cross_cutting",
     "medical",
-    "energy",
+    "oil_gas",
     "urban"
    ],
    "stage_fa": "پیش‌بذری و بذری",
@@ -623,7 +623,7 @@
    "hq": "آمریکا (برنامه‌های جهانی)",
    "domains": [
     "ai_cross_cutting",
-    "energy",
+    "oil_gas",
     "medical",
     "urban"
    ],
@@ -653,9 +653,9 @@
    "type": "accelerator",
    "hq": "آمریکا (بیش از ۶۰ دفتر)",
    "domains": [
-    "energy",
+    "oil_gas",
     "medical",
-    "aviation",
+    "aerospace",
     "urban",
     "ai_cross_cutting"
    ],
@@ -679,7 +679,7 @@
    "hq": "امارات (ابوظبی)",
    "domains": [
     "ai_cross_cutting",
-    "energy",
+    "oil_gas",
     "medical",
     "urban"
    ],
@@ -738,7 +738,7 @@
    "hq": "ترکیه (استانبول)",
    "domains": [
     "medical",
-    "energy",
+    "oil_gas",
     "ai_cross_cutting"
    ],
    "stage_fa": "سری A و B",

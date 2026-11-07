@@ -1,0 +1,201 @@
+{
+ "data": "NASA IMS bearing run-to-failure (feature tables, Hora & Rezapour, MIT; raw: Lee et al. 2007)",
+ "failures": [
+  "T1-B3",
+  "T1-B4",
+  "T2-B1",
+  "T3-B3"
+ ],
+ "alpha": 0.1,
+ "per_failure": [
+  {
+   "held_out": "T1-B3",
+   "life_h": 345.2655555556,
+   "method": "constant_life",
+   "q_hours": null,
+   "unsafe_all": 1.0,
+   "unsafe_final": 1.0,
+   "false_alert": 0.0,
+   "first_alert_true_rul": 0.0
+  },
+  {
+   "held_out": "T1-B3",
+   "life_h": 345.2655555556,
+   "method": "point",
+   "q_hours": null,
+   "unsafe_all": 0.6289424861,
+   "unsafe_final": 1.0,
+   "false_alert": 0.0,
+   "first_alert_true_rul": 4.7763888889
+  },
+  {
+   "held_out": "T1-B3",
+   "life_h": 345.2655555556,
+   "method": "lower_bound",
+   "q_hours": 122.2384773616,
+   "unsafe_all": 0.0769944341,
+   "unsafe_final": 0.0,
+   "false_alert": 0.0,
+   "first_alert_true_rul": 79.4552777778
+  },
+  {
+   "held_out": "T1-B4",
+   "life_h": 345.2655555556,
+   "method": "constant_life",
+   "q_hours": null,
+   "unsafe_all": 1.0,
+   "unsafe_final": 1.0,
+   "false_alert": 0.0,
+   "first_alert_true_rul": 0.0
+  },
+  {
+   "held_out": "T1-B4",
+   "life_h": 345.2655555556,
+   "method": "point",
+   "q_hours": null,
+   "unsafe_all": 0.2880333952,
+   "unsafe_final": 0.560137457,
+   "false_alert": 0.0,
+   "first_alert_true_rul": 101.9794444445
+  },
+  {
+   "held_out": "T1-B4",
+   "life_h": 345.2655555556,
+   "method": "lower_bound",
+   "q_hours": 115.1031304348,
+   "unsafe_all": 0.0751391466,
+   "unsafe_final": 0.0,
+   "false_alert": 0.1131725417,
+   "first_alert_true_rul": 303.8019444445
+  },
+  {
+   "held_out": "T2-B1",
+   "life_h": 163.8333333333,
+   "method": "constant_life",
+   "q_hours": null,
+   "unsafe_all": 1.0,
+   "unsafe_final": 1.0,
+   "false_alert": 0.0,
+   "first_alert_true_rul": 0.0
+  },
+  {
+   "held_out": "T2-B1",
+   "life_h": 163.8333333333,
+   "method": "point",
+   "q_hours": null,
+   "unsafe_all": 0.8231707317,
+   "unsafe_final": 0.5397923875,
+   "false_alert": 0.0,
+   "first_alert_true_rul": 54.8333333333
+  },
+  {
+   "held_out": "T2-B1",
+   "life_h": 163.8333333333,
+   "method": "lower_bound",
+   "q_hours": 144.3680555556,
+   "unsafe_all": 0.5477642276,
+   "unsafe_final": 0.0,
+   "false_alert": 0.0,
+   "first_alert_true_rul": 61.0
+  },
+  {
+   "held_out": "T3-B3",
+   "life_h": 1053.3847222221,
+   "method": "constant_life",
+   "q_hours": null,
+   "unsafe_all": 0.0,
+   "unsafe_final": 0.0,
+   "false_alert": 0.5928209994,
+   "first_alert_true_rul": 816.4680555555
+  },
+  {
+   "held_out": "T3-B3",
+   "life_h": 1053.3847222221,
+   "method": "point",
+   "q_hours": null,
+   "unsafe_all": 0.1767868438,
+   "unsafe_final": 0.5277777778,
+   "false_alert": 0.0,
+   "first_alert_true_rul": 28.1666666667
+  },
+  {
+   "held_out": "T3-B3",
+   "life_h": 1053.3847222221,
+   "method": "lower_bound",
+   "q_hours": 183.9419509534,
+   "unsafe_all": 0.0,
+   "unsafe_final": 0.0,
+   "false_alert": 0.8062934851,
+   "first_alert_true_rul": 1053.3847222221
+  }
+ ],
+ "mean": [
+  {
+   "method": "constant_life",
+   "unsafe_all": 0.75,
+   "unsafe_final": 0.75,
+   "false_alert": 0.148,
+   "first_alert_true_rul": 204.117
+  },
+  {
+   "method": "lower_bound",
+   "unsafe_all": 0.175,
+   "unsafe_final": 0.0,
+   "false_alert": 0.23,
+   "first_alert_true_rul": 374.41
+  },
+  {
+   "method": "point",
+   "unsafe_all": 0.479,
+   "unsafe_final": 0.657,
+   "false_alert": 0.0,
+   "first_alert_true_rul": 47.439
+  }
+ ],
+ "mean_alpha_0.05": [
+  {
+   "method": "constant_life",
+   "unsafe_all": 0.75,
+   "unsafe_final": 0.75,
+   "false_alert": 0.148,
+   "first_alert_true_rul": 204.117
+  },
+  {
+   "method": "lower_bound",
+   "unsafe_all": 0.137,
+   "unsafe_final": 0.0,
+   "false_alert": 0.402,
+   "first_alert_true_rul": 448.601
+  },
+  {
+   "method": "point",
+   "unsafe_all": 0.479,
+   "unsafe_final": 0.657,
+   "false_alert": 0.0,
+   "first_alert_true_rul": 47.439
+  }
+ ],
+ "mean_alpha_0.2": [
+  {
+   "method": "constant_life",
+   "unsafe_all": 0.75,
+   "unsafe_final": 0.75,
+   "false_alert": 0.148,
+   "first_alert_true_rul": 204.117
+  },
+  {
+   "method": "lower_bound",
+   "unsafe_all": 0.386,
+   "unsafe_final": 0.372,
+   "false_alert": 0.0,
+   "first_alert_true_rul": 72.859
+  },
+  {
+   "method": "point",
+   "unsafe_all": 0.479,
+   "unsafe_final": 0.657,
+   "false_alert": 0.0,
+   "first_alert_true_rul": 47.439
+  }
+ ]
+}

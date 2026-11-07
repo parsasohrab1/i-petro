@@ -1,0 +1,56 @@
+{
+ "slug": "apadana",
+ "name_fa": "پتروشیمی خلیج فارس آپادانا",
+ "name_en": "Persian Gulf Apadana Petrochemical",
+ "kind": "process",
+ "production_tph": 70.0,
+ "steam_demand_tph": 190,
+ "furnaces": [
+  {
+   "id": "F-101",
+   "duty_mw": 40.0,
+   "o2_setpoint": 3.4,
+   "t_stack_c": 185
+  },
+  {
+   "id": "F-102",
+   "duty_mw": 36.8,
+   "o2_setpoint": 3.6,
+   "t_stack_c": 191
+  },
+  {
+   "id": "F-103",
+   "duty_mw": 33.6,
+   "o2_setpoint": 3.8,
+   "t_stack_c": 197
+  }
+ ],
+ "boilers": [
+  {
+   "id": "B-1",
+   "min_tph": 25,
+   "max_tph": 110,
+   "eta_max": 0.91
+  },
+  {
+   "id": "B-2",
+   "min_tph": 25,
+   "max_tph": 102,
+   "eta_max": 0.885
+  },
+  {
+   "id": "B-3",
+   "min_tph": 25,
+   "max_tph": 94,
+   "eta_max": 0.86
+  }
+ ],
+ "fuel_price": 1.0,
+ "existing_product": {
+  "id": "process_twin",
+  "trl": 4,
+  "note": "دوقلوی دیجیتال و بهینه‌سازی فرایند (محصول اختصاصی)"
+ },
+ "illustrative": true,
+ "notes": "پارامترهای واحد نمونه و ساختگی‌اند، نه داده‌ی اندازه‌گیری‌شده؛ با داده‌ی واقعی شرکت جایگزین شوند."
+}

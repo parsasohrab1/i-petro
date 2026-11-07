@@ -1,0 +1,102 @@
+[
+ {
+  "id": "s_eg",
+  "name": "Energy Geoscience – ویژه‌شماره‌ی «AI for Energy Systems and Subsurface Engineering»",
+  "deadline": "2026-10-31"
+ },
+ {
+  "id": "s_ps",
+  "name": "Petroleum Science (KeAi)",
+  "deadline": ""
+ },
+ {
+  "id": "s_pet",
+  "name": "Petroleum (KeAi) – شامل ویژه‌شماره‌ی کاربرد AI/ML در صنعت نفت",
+  "deadline": ""
+ },
+ {
+  "id": "s_jpse",
+  "name": "Journal of Pipeline Science and Engineering (KeAi)",
+  "deadline": ""
+ },
+ {
+  "id": "s_iai",
+  "name": "IAI2027 – 9th International Conference on Industrial AI",
+  "deadline": "2026-12-31"
+ },
+ {
+  "id": "s_isie",
+  "name": "IEEE ISIE 2027 – 36th Symposium on Industrial Electronics",
+  "deadline": "2026-12-15"
+ },
+ {
+  "id": "s_mimar",
+  "name": "MIMAR2027 – 14th IMA Conference on Modelling in Industrial Maintenance and Reliability",
+  "deadline": "2027-02-19"
+ },
+ {
+  "id": "s_icmhi",
+  "name": "ICMHI 2027 – International Conference on Medical and Health Informatics",
+  "deadline": "2026-12-10"
+ },
+ {
+  "id": "s_aimh",
+  "name": "AiMH 2027 – 3rd International Conference on AI in Medicine and Healthcare",
+  "deadline": "2027-02-28"
+ },
+ {
+  "id": "s_mie",
+  "name": "MIE 2027 – Medical Informatics Europe",
+  "deadline": ""
+ },
+ {
+  "id": "s_jimg",
+  "name": "Journal of Imaging (MDPI) – ویژه‌شماره‌ی هوش مصنوعی توضیح‌پذیر در تصویربرداری پزشکی",
+  "deadline": "2027-03-31"
+ },
+ {
+  "id": "s_cmi",
+  "name": "Current Medical Imaging – ویژه‌شماره‌ی مدل‌های بنیادی توضیح‌پذیر و دوقلوی دیجیتال",
+  "deadline": "2027-07-16"
+ },
+ {
+  "id": "s_npj",
+  "name": "npj Digital Medicine (Nature Portfolio)",
+  "deadline": ""
+ },
+ {
+  "id": "s_qip",
+  "name": "QIP 2027 – Quantum Information Processing (مسیر پوستر)",
+  "deadline": "2026-12-04"
+ },
+ {
+  "id": "s_iqim",
+  "name": "IQIM 2027 – International Conference on Quantum Information and Mechanics",
+  "deadline": "2026-10-30"
+ },
+ {
+  "id": "s_iqicsa",
+  "name": "IQICSA 2027 – Quantum Information, Computing, Communications, Simulation and Applications",
+  "deadline": "2027-02-10"
+ },
+ {
+  "id": "s_quantics",
+  "name": "QUANTICS 2027 – Quantum Information, Computing, Communications and Simulation",
+  "deadline": "2027-03-25"
+ },
+ {
+  "id": "s_icqe",
+  "name": "ICQE 2027 – International Conference on Quantum Energy (MIT)",
+  "deadline": "2027-04-01"
+ },
+ {
+  "id": "s_front_nuc",
+  "name": "Frontiers – Research Topic: Advances in AI and Machine Learning for Nuclear Applications",
+  "deadline": ""
+ },
+ {
+  "id": "s_hydro",
+  "name": "Hydrology (MDPI) – ویژه‌شماره‌ی AI و ML در هیدرولوژی و مدیریت یکپارچه‌ی منابع آب",
+  "deadline": "2026-12-31"
+ }
+]

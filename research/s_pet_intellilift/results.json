@@ -1,0 +1,290 @@
+{
+ "n_instances": 1119,
+ "n_normal": 594,
+ "n_wells": 40,
+ "by_class": {
+  "0": 594,
+  "1": 4,
+  "2": 22,
+  "3": 32,
+  "4": 343,
+  "5": 11,
+  "6": 6,
+  "7": 36,
+  "8": 14,
+  "9": 57
+ },
+ "alpha_0.1": {
+  "runs": 20,
+  "far_conformal_mean": 0.14709437137862963,
+  "far_conformal_sd": 0.17091021512762516,
+  "far_conformal_frac_runs_above_alpha": 0.5,
+  "far_conformal_q05_q95": [
+   0.009141679384744292,
+   0.5505229185915204
+  ],
+  "far_fixed5": 0.19541415367567833,
+  "far_fixed10": 0.10260609125112956,
+  "far_fixed20": 0.06726865242485112,
+  "fault_conformal": {
+   "1": {
+    "mean_test_instances": 2.4210526315789473,
+    "detect": 0.3508771929824561,
+    "warn_before_onset": 0.3245614035087719,
+    "alarm_from_onset": 0.3508771929824561,
+    "median_delay_min": -17.0
+   },
+   "2": {
+    "mean_test_instances": 11.45,
+    "detect": 0.9607142857142857,
+    "warn_before_onset": 0.6169817927170869,
+    "alarm_from_onset": 0.9607142857142857,
+    "median_delay_min": -14.75
+   },
+   "3": {
+    "mean_test_instances": 18.88235294117647,
+    "detect": 0.46880929791271353,
+    "warn_before_onset": 0.35466081593927895,
+    "alarm_from_onset": 0.46880929791271353,
+    "median_delay_min": -23.5
+   },
+   "4": {
+    "mean_test_instances": 171.45,
+    "detect": 0.09615023255772288,
+    "warn_before_onset": 0.043114080328184694,
+    "alarm_from_onset": 0.0934363408396524,
+    "median_delay_min": 10.5
+   },
+   "5": {
+    "mean_test_instances": 6.368421052631579,
+    "detect": 0.7493848257006152,
+    "warn_before_onset": 0.634028252449305,
+    "alarm_from_onset": 0.735349737981317,
+    "median_delay_min": -98.5
+   },
+   "6": {
+    "mean_test_instances": 4.153846153846154,
+    "detect": 0.20512820512820512,
+    "warn_before_onset": 0.07692307692307693,
+    "alarm_from_onset": 0.20512820512820512,
+    "median_delay_min": -9.0
+   },
+   "7": {
+    "mean_test_instances": 23.35,
+    "detect": 0.4237341340735249,
+    "warn_before_onset": 0.2402298207485667,
+    "alarm_from_onset": 0.41956746740685824,
+    "median_delay_min": 86.75
+   },
+   "8": {
+    "mean_test_instances": 6.65,
+    "detect": 0.8906709956709957,
+    "warn_before_onset": 0.8567388167388168,
+    "alarm_from_onset": 0.8651948051948052,
+    "median_delay_min": -2681.0
+   },
+   "9": {
+    "mean_test_instances": 5.8,
+    "detect": 0.6146031746031746,
+    "warn_before_onset": 0.45809523809523817,
+    "alarm_from_onset": 0.6146031746031746,
+    "median_delay_min": -86.0
+   }
+  },
+  "fault_fixed5": {
+   "1": {
+    "mean_test_instances": 2.4210526315789473,
+    "detect": 0.7587719298245613,
+    "warn_before_onset": 0.7587719298245613,
+    "alarm_from_onset": 0.7587719298245613,
+    "median_delay_min": -157.0
+   },
+   "2": {
+    "mean_test_instances": 11.45,
+    "detect": 1.0,
+    "warn_before_onset": 0.640999649859944,
+    "alarm_from_onset": 1.0,
+    "median_delay_min": -8.0
+   },
+   "3": {
+    "mean_test_instances": 18.88235294117647,
+    "detect": 0.5246679316888045,
+    "warn_before_onset": 0.4309772296015181,
+    "alarm_from_onset": 0.5246679316888045,
+    "median_delay_min": -29.5
+   },
+   "4": {
+    "mean_test_instances": 171.45,
+    "detect": 0.15355459842369099,
+    "warn_before_onset": 0.06506330023022014,
+    "alarm_from_onset": 0.14576467622889894,
+    "median_delay_min": 11.0
+   },
+   "5": {
+    "mean_test_instances": 6.368421052631579,
+    "detect": 1.0,
+    "warn_before_onset": 0.7358282068808384,
+    "alarm_from_onset": 1.0,
+    "median_delay_min": -92.0
+   },
+   "6": {
+    "mean_test_instances": 4.153846153846154,
+    "detect": 0.3333333333333333,
+    "warn_before_onset": 0.11538461538461539,
+    "alarm_from_onset": 0.3333333333333333,
+    "median_delay_min": -7.5
+   },
+   "7": {
+    "mean_test_instances": 23.35,
+    "detect": 0.7669307325265105,
+    "warn_before_onset": 0.47255287330773516,
+    "alarm_from_onset": 0.7379789196466853,
+    "median_delay_min": -97.5
+   },
+   "8": {
+    "mean_test_instances": 6.65,
+    "detect": 0.9305916305916305,
+    "warn_before_onset": 0.8611832611832613,
+    "alarm_from_onset": 0.9305916305916305,
+    "median_delay_min": -2615.0
+   },
+   "9": {
+    "mean_test_instances": 5.8,
+    "detect": 1.0,
+    "warn_before_onset": 0.7337301587301588,
+    "alarm_from_onset": 1.0,
+    "median_delay_min": -101.0
+   }
+  },
+  "fault_fixed10": {
+   "1": {
+    "mean_test_instances": 2.4210526315789473,
+    "detect": 0.7587719298245613,
+    "warn_before_onset": 0.7587719298245613,
+    "alarm_from_onset": 0.7587719298245613,
+    "median_delay_min": -33.0
+   },
+   "2": {
+    "mean_test_instances": 11.45,
+    "detect": 1.0,
+    "warn_before_onset": 0.640999649859944,
+    "alarm_from_onset": 1.0,
+    "median_delay_min": -5.5
+   },
+   "3": {
+    "mean_test_instances": 18.88235294117647,
+    "detect": 0.5059297912713473,
+    "warn_before_onset": 0.3747628083491461,
+    "alarm_from_onset": 0.5059297912713473,
+    "median_delay_min": -20.0
+   },
+   "4": {
+    "mean_test_instances": 171.45,
+    "detect": 0.081764964061848,
+    "warn_before_onset": 0.036638893682250075,
+    "alarm_from_onset": 0.081764964061848,
+    "median_delay_min": 13.5
+   },
+   "5": {
+    "mean_test_instances": 6.368421052631579,
+    "detect": 0.8269765322396901,
+    "warn_before_onset": 0.7358282068808384,
+    "alarm_from_onset": 0.8269765322396901,
+    "median_delay_min": -98.0
+   },
+   "6": {
+    "mean_test_instances": 4.153846153846154,
+    "detect": 0.3333333333333333,
+    "warn_before_onset": 0.11538461538461539,
+    "alarm_from_onset": 0.21794871794871795,
+    "median_delay_min": 14.5
+   },
+   "7": {
+    "mean_test_instances": 23.35,
+    "detect": 0.34883742880329643,
+    "warn_before_onset": 0.1558320624401623,
+    "alarm_from_onset": 0.34883742880329643,
+    "median_delay_min": 77.5
+   },
+   "8": {
+    "mean_test_instances": 6.65,
+    "detect": 0.9305916305916305,
+    "warn_before_onset": 0.8611832611832613,
+    "alarm_from_onset": 0.9305916305916305,
+    "median_delay_min": -2348.5
+   },
+   "9": {
+    "mean_test_instances": 5.8,
+    "detect": 0.6981746031746032,
+    "warn_before_onset": 0.5173809523809524,
+    "alarm_from_onset": 0.6681746031746032,
+    "median_delay_min": -82.0
+   }
+  },
+  "fault_fixed20": {
+   "1": {
+    "mean_test_instances": 2.4210526315789473,
+    "detect": 0.24122807017543857,
+    "warn_before_onset": 0.0,
+    "alarm_from_onset": 0.24122807017543857,
+    "median_delay_min": 4.0
+   },
+   "2": {
+    "mean_test_instances": 11.45,
+    "detect": 1.0,
+    "warn_before_onset": 0.6074433940242764,
+    "alarm_from_onset": 1.0,
+    "median_delay_min": 6.0
+   },
+   "3": {
+    "mean_test_instances": 18.88235294117647,
+    "detect": 0.3747628083491461,
+    "warn_before_onset": 0.2623339658444023,
+    "alarm_from_onset": 0.3747628083491461,
+    "median_delay_min": -16.0
+   },
+   "4": {
+    "mean_test_instances": 171.45,
+    "detect": 0.055800060480583634,
+    "warn_before_onset": 0.03053241140187506,
+    "alarm_from_onset": 0.055800060480583634,
+    "median_delay_min": -9.0
+   },
+   "5": {
+    "mean_test_instances": 6.368421052631579,
+    "detect": 0.6539530644793803,
+    "warn_before_onset": 0.5628047391205285,
+    "alarm_from_onset": 0.6539530644793803,
+    "median_delay_min": -93.0
+   },
+   "6": {
+    "mean_test_instances": 4.153846153846154,
+    "detect": 0.0,
+    "warn_before_onset": 0.0,
+    "alarm_from_onset": 0.0,
+    "median_delay_min": null
+   },
+   "7": {
+    "mean_test_instances": 23.35,
+    "detect": 0.18864662712380903,
+    "warn_before_onset": 0.10565394028815503,
+    "alarm_from_onset": 0.18864662712380903,
+    "median_delay_min": 970.0
+   },
+   "8": {
+    "mean_test_instances": 6.65,
+    "detect": 0.8611832611832613,
+    "warn_before_onset": 0.8611832611832613,
+    "alarm_from_onset": 0.7917748917748917,
+    "median_delay_min": -2731.0
+   },
+   "9": {
+    "mean_test_instances": 5.8,
+    "detect": 0.33718253968253964,
+    "warn_before_onset": 0.23178571428571426,
+    "alarm_from_onset": 0.33718253968253964,
+    "median_delay_min": -1.0
+   }
+  }
+ }
+}

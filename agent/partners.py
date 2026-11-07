@@ -10,12 +10,18 @@ import json
 from datetime import datetime
 from urllib.parse import urlparse
 
-from . import mailbox
+from . import contact_email, mailbox
 from .config import DATA_DIR, env
 
 STATE_FILE = DATA_DIR / "partners.json"
 STATUSES = {"drafted": "پیش‌نویس آماده", "sent": "ارسال شد", "replied": "پاسخ داد", "meeting": "جلسه",
             "mou": "تفاهم‌نامه", "not_interested": "علاقه‌مند نیست"}
+DIVISION_OF_WORK = (
+    "Division of work: your company would present the buyer's requirements to us for this tender, including all "
+    "documents requested in the tender documentation (company registration, references, certificates, guarantees "
+    "and forms) and the project requirements. Parsa International Group would then carry out the software "
+    "development, coding and technical implementation of the project."
+)
 
 SCHEMA = {
     "type": "object",
@@ -78,7 +84,7 @@ def scout(cfg, analyst, state, open_tenders, use_mail, log):
         tenders = [f"- {t['title']} ({t['url']})" for t in open_tenders if country.lower() in (t.get("country") or "").lower()]
         research = analyst._research(
             f"Find {pcfg.get('companies_per_country', 6)} established companies in {country} that work in the same "
-            "fields as Parsa International Group (AI and digital solutions for energy/oil & gas, healthcare, aviation, "
+            "fields as Parsa International Group (AI and digital solutions for oil & gas, aerospace, nuclear, water, mining, healthcare, "
             "nuclear power and smart cities): system integrators, engineering and IT firms, digital-transformation "
             "consultancies and industrial or medical software distributors that could act as local partner, lead "
             "bidder or reseller. Use the companies' own websites and public LinkedIn company pages that appear in "
@@ -104,8 +110,13 @@ def scout(cfg, analyst, state, open_tenders, use_mail, log):
             key = _key(co["website"], co["name"])
             if key in state["companies"]:
                 continue
+            found, src = contact_email.find_email(co.get("website", ""), log)
+            if found:   # the address read from the company's own site wins over whatever the research claimed
+                co["email"], co["email_source"] = found, src
             record = {**co, "country": country, "status": "drafted", "found": datetime.now().date().isoformat()}
-            msg = mailbox.build_message(env("IMAP_USER") or c["email"], co["subject"], co["body"], to=co["email"])
+            body = co["body"].rstrip() + "\n\n" + DIVISION_OF_WORK
+            cc = (cfg.get("mail") or {}).get("partner_cc") or env("PARTNER_CC")
+            msg = mailbox.build_message(env("IMAP_USER") or c["email"], co["subject"], body, to=co["email"], cc=cc)
             if use_mail and mailbox.configured():
                 try:
                     record["draft_saved_to"] = "webmail:" + mailbox.save_draft(msg, cfg)

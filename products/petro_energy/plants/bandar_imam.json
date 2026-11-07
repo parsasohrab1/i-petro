@@ -1,0 +1,64 @@
+{
+ "slug": "bandar_imam",
+ "name_fa": "پتروشیمی بندر امام",
+ "name_en": "Bandar Imam Petrochemical",
+ "kind": "process",
+ "production_tph": 112.0,
+ "steam_demand_tph": 389,
+ "furnaces": [
+  {
+   "id": "F-101",
+   "duty_mw": 64.0,
+   "o2_setpoint": 3.4,
+   "t_stack_c": 185
+  },
+  {
+   "id": "F-102",
+   "duty_mw": 58.9,
+   "o2_setpoint": 3.6,
+   "t_stack_c": 191
+  },
+  {
+   "id": "F-103",
+   "duty_mw": 53.8,
+   "o2_setpoint": 3.8,
+   "t_stack_c": 197
+  },
+  {
+   "id": "F-104",
+   "duty_mw": 48.6,
+   "o2_setpoint": 3.4,
+   "t_stack_c": 203
+  }
+ ],
+ "boilers": [
+  {
+   "id": "B-1",
+   "min_tph": 40,
+   "max_tph": 176,
+   "eta_max": 0.91
+  },
+  {
+   "id": "B-2",
+   "min_tph": 40,
+   "max_tph": 163,
+   "eta_max": 0.885
+  },
+  {
+   "id": "B-3",
+   "min_tph": 40,
+   "max_tph": 150,
+   "eta_max": 0.86
+  },
+  {
+   "id": "B-4",
+   "min_tph": 40,
+   "max_tph": 138,
+   "eta_max": 0.835
+  }
+ ],
+ "fuel_price": 1.0,
+ "existing_product": null,
+ "illustrative": true,
+ "notes": "پارامترهای واحد نمونه و ساختگی‌اند، نه داده‌ی اندازه‌گیری‌شده؛ با داده‌ی واقعی شرکت جایگزین شوند."
+}

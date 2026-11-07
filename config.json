@@ -12,7 +12,7 @@
     "track_record": "No completed contracts or client references yet in AI or industrial smartification. Capability is demonstrated by the company's software prototypes (mostly TRL 4-5, many trained on synthetic data)."
   },
   "domains": {
-    "energy": [
+    "oil_gas": [
       "digital twin",
       "predictive maintenance",
       "process optimization",
@@ -40,7 +40,13 @@
       "renewable energy forecasting",
       "power plant optimization",
       "gas network",
-      "energy storage management"
+      "energy storage management",
+      "gas compression",
+      "flare gas",
+      "natural gas processing",
+      "LNG",
+      "upstream oil and gas",
+      "midstream pipeline"
     ],
     "medical": [
       "clinical decision support",
@@ -62,7 +68,7 @@
       "cell therapy",
       "nanomedicine"
     ],
-    "aviation": [
+    "aerospace": [
       "aviation",
       "airport operations",
       "airport management system",
@@ -73,7 +79,13 @@
       "air traffic management",
       "airline operations",
       "flight data analysis",
-      "baggage handling system"
+      "baggage handling system",
+      "aerospace",
+      "satellite data analytics",
+      "spacecraft",
+      "UAV",
+      "space systems",
+      "aerospace manufacturing"
     ],
     "nuclear": [
       "nuclear power plant",
@@ -81,6 +93,32 @@
       "nuclear predictive maintenance",
       "nuclear safety analysis",
       "radiation monitoring"
+    ],
+    "water": [
+      "water distribution network",
+      "leak detection",
+      "non-revenue water",
+      "water quality monitoring",
+      "wastewater treatment",
+      "desalination",
+      "irrigation optimization",
+      "aquifer monitoring",
+      "dam operations",
+      "hydrological forecasting",
+      "smart water metering"
+    ],
+    "mining": [
+      "mining",
+      "mine planning",
+      "ore grade",
+      "mineral exploration",
+      "mine fleet management",
+      "mineral processing",
+      "mill optimization",
+      "tailings monitoring",
+      "mine ventilation",
+      "mine safety",
+      "drill and blast"
     ],
     "urban": [
       "smart city",
@@ -90,8 +128,6 @@
       "smart building",
       "building energy management",
       "HVAC optimization",
-      "water distribution network",
-      "leak detection",
       "district heating",
       "urban digital twin",
       "emergency management system",
@@ -109,6 +145,28 @@
       "data analytics platform",
       "computer vision",
       "anomaly detection"
+    ],
+    "health_ai": [
+      "digital health",
+      "health information system",
+      "health management information system",
+      "artificial intelligence health",
+      "AI-based diagnostics",
+      "clinical AI",
+      "medical imaging AI",
+      "AI radiology",
+      "digital pathology",
+      "telehealth",
+      "remote patient monitoring",
+      "electronic medical record",
+      "disease surveillance",
+      "public health analytics",
+      "health data platform",
+      "hospital management information system",
+      "DHIS2",
+      "mHealth",
+      "AI-assisted screening",
+      "predictive analytics healthcare"
     ]
   },
   "exclude_keywords": [
@@ -204,18 +262,22 @@
       "INBOX.Drafts",
       "Drafts",
       "INBOX/Drafts"
-    ]
+    ],
+    "partner_cc": "oil.ms.sohrabi@gmail.com"
   },
   "dashboard": {
     "output": "docs/index.html"
   },
   "domain_labels_fa": {
-    "energy": "انرژی",
+    "oil_gas": "نفت و گاز",
     "medical": "پزشکی",
-    "aviation": "هوانوردی",
+    "aerospace": "هوا فضا",
     "nuclear": "هسته‌ای",
+    "water": "آب",
+    "mining": "معدن",
     "urban": "شهری",
-    "ai_cross_cutting": "هوش مصنوعی"
+    "ai_cross_cutting": "هوش مصنوعی",
+    "health_ai": "هوش مصنوعی سلامت"
   },
   "domestic_keywords": {
     "ai_cross_cutting": [
@@ -315,6 +377,9 @@
     "interval_days": 7,
     "max_countries_per_run": 2
   },
+  "scholarships": {
+    "update_every_days": 1
+  },
   "events": {
     "update_every_days": 1,
     "horizon_months": 12
@@ -350,5 +415,31 @@
   },
   "team": [
     "Narges Farahani"
-  ]
+  ],
+  "papers": {
+    "update_every_days": 3,
+    "horizon_months": 9,
+    "used_product_ids": [
+      "ilift",
+      "apexasset",
+      "hqca",
+      "fidps",
+      "gas_turbine",
+      "ipind",
+      "lnp",
+      "terminals",
+      "process_twin",
+      "nuclear",
+      "pgx",
+      "stratguard",
+      "qgrid",
+      "stretchwatch",
+      "qshot-lab",
+      "wearshift",
+      "readmitcal",
+      "hydrogate",
+      "explainguard",
+      "qrng-audit"
+    ]
+  }
 }

@@ -1,0 +1,153 @@
+{
+ "n_patients": 69990,
+ "positive_rate": 0.0898,
+ "seeds": 10,
+ "logreg": {
+  "auroc": {
+   "mean": 0.6458,
+   "ci95": 0.0055
+  },
+  "brier_raw": {
+   "mean": 0.0782,
+   "ci95": 0.0011
+  },
+  "ece_raw": {
+   "mean": 0.0053,
+   "ci95": 0.0009
+  },
+  "ece_platt": {
+   "mean": 0.0058,
+   "ci95": 0.0006
+  },
+  "brier_platt": {
+   "mean": 0.0782,
+   "ci95": 0.0011
+  },
+  "sub_ece_raw_platt": {
+   "mean": 0.0094,
+   "ci95": 0.0012
+  },
+  "sub_ece_global_platt": {
+   "mean": 0.009,
+   "ci95": 0.0012
+  },
+  "sub_ece_subgroup_platt": {
+   "mean": 0.0094,
+   "ci95": 0.0016
+  },
+  "ece_isotonic": {
+   "mean": 0.0066,
+   "ci95": 0.001
+  },
+  "brier_isotonic": {
+   "mean": 0.0783,
+   "ci95": 0.0011
+  },
+  "sub_ece_raw_isotonic": {
+   "mean": 0.0094,
+   "ci95": 0.0012
+  },
+  "sub_ece_global_isotonic": {
+   "mean": 0.0096,
+   "ci95": 0.0013
+  },
+  "sub_ece_subgroup_isotonic": {
+   "mean": 0.01,
+   "ci95": 0.0015
+  },
+  "ece_temperature": {
+   "mean": 0.0063,
+   "ci95": 0.0013
+  },
+  "brier_temperature": {
+   "mean": 0.0782,
+   "ci95": 0.0011
+  },
+  "sub_ece_raw_temperature": {
+   "mean": 0.0094,
+   "ci95": 0.0012
+  },
+  "sub_ece_global_temperature": {
+   "mean": 0.0098,
+   "ci95": 0.0013
+  },
+  "sub_ece_subgroup_temperature": {
+   "mean": 0.0102,
+   "ci95": 0.002
+  }
+ },
+ "hgb": {
+  "auroc": {
+   "mean": 0.6502,
+   "ci95": 0.0042
+  },
+  "brier_raw": {
+   "mean": 0.0779,
+   "ci95": 0.0011
+  },
+  "ece_raw": {
+   "mean": 0.0061,
+   "ci95": 0.0013
+  },
+  "ece_platt": {
+   "mean": 0.0061,
+   "ci95": 0.0009
+  },
+  "brier_platt": {
+   "mean": 0.0778,
+   "ci95": 0.0011
+  },
+  "sub_ece_raw_platt": {
+   "mean": 0.0091,
+   "ci95": 0.0013
+  },
+  "sub_ece_global_platt": {
+   "mean": 0.0093,
+   "ci95": 0.001
+  },
+  "sub_ece_subgroup_platt": {
+   "mean": 0.0101,
+   "ci95": 0.0015
+  },
+  "ece_isotonic": {
+   "mean": 0.0066,
+   "ci95": 0.0007
+  },
+  "brier_isotonic": {
+   "mean": 0.078,
+   "ci95": 0.0011
+  },
+  "sub_ece_raw_isotonic": {
+   "mean": 0.0091,
+   "ci95": 0.0013
+  },
+  "sub_ece_global_isotonic": {
+   "mean": 0.0095,
+   "ci95": 0.0008
+  },
+  "sub_ece_subgroup_isotonic": {
+   "mean": 0.0106,
+   "ci95": 0.0017
+  },
+  "ece_temperature": {
+   "mean": 0.0061,
+   "ci95": 0.0009
+  },
+  "brier_temperature": {
+   "mean": 0.0779,
+   "ci95": 0.0011
+  },
+  "sub_ece_raw_temperature": {
+   "mean": 0.0091,
+   "ci95": 0.0013
+  },
+  "sub_ece_global_temperature": {
+   "mean": 0.0089,
+   "ci95": 0.0009
+  },
+  "sub_ece_subgroup_temperature": {
+   "mean": 0.0093,
+   "ci95": 0.0018
+  }
+ }
+}

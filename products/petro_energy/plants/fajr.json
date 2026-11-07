@@ -1,0 +1,39 @@
+{
+ "slug": "fajr",
+ "name_fa": "فجر انرژی خلیج فارس",
+ "name_en": "Fajr Energy (Persian Gulf)",
+ "kind": "utility",
+ "production_tph": 84.0,
+ "steam_demand_tph": 291,
+ "furnaces": [],
+ "boilers": [
+  {
+   "id": "B-1",
+   "min_tph": 30,
+   "max_tph": 132,
+   "eta_max": 0.91
+  },
+  {
+   "id": "B-2",
+   "min_tph": 30,
+   "max_tph": 122,
+   "eta_max": 0.885
+  },
+  {
+   "id": "B-3",
+   "min_tph": 30,
+   "max_tph": 113,
+   "eta_max": 0.86
+  },
+  {
+   "id": "B-4",
+   "min_tph": 30,
+   "max_tph": 103,
+   "eta_max": 0.835
+  }
+ ],
+ "fuel_price": 1.0,
+ "existing_product": null,
+ "illustrative": true,
+ "notes": "پارامترهای واحد نمونه و ساختگی‌اند، نه داده‌ی اندازه‌گیری‌شده؛ با داده‌ی واقعی شرکت جایگزین شوند."
+}

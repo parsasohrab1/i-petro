@@ -15,7 +15,7 @@ STATE_FILE = DATA_DIR / "events.json"
 STATUSES = {"new": "جدید", "considering": "در حال بررسی", "registered": "ثبت‌نام شد",
             "attending": "حضور قطعی", "attended": "شرکت کردیم", "skipped": "شرکت نمی‌کنیم"}
 
-CATEGORIES = ["energy", "medical", "aviation", "nuclear", "urban", "ai_cross_cutting"]
+CATEGORIES = ["oil_gas", "aerospace", "nuclear", "water", "mining", "medical", "urban", "ai_cross_cutting"]
 
 EVENT_SCHEMA = {
     "type": "object",
@@ -53,6 +53,13 @@ def _slug(name, start):
     return re.sub(r"[^a-z0-9]+", "-", name.lower()).strip("-")[:50] + "-" + year
 
 
+def _canon_all(state):
+    from .taxonomy import canon_record
+    for e in state.get("events", {}).values():
+        canon_record(e, "categories")
+    return state
+
+
 def load():
     seed = json.loads(SEED_FILE.read_text(encoding="utf-8"))["events"]
     state = json.loads(STATE_FILE.read_text(encoding="utf-8")) if STATE_FILE.exists() else {"events": {}, "updated": ""}
@@ -63,7 +70,7 @@ def load():
             events[e["id"]] = {**e, "status": "new", "origin": "seed"}
         elif current.get("origin") == "seed":  # researched seed corrections win; the user's status is kept
             events[e["id"]] = {**current, **e, "status": current.get("status", "new"), "origin": "seed"}
-    return state
+    return _canon_all(state)
 
 
 def save(state):
@@ -91,7 +98,7 @@ def update(cfg, analyst, state, log):
         f"Today is {date.today().isoformat()}. Search the web for upcoming AI-related events in the next {horizon} "
         "months that a young AI company from Istanbul/Iran should consider attending, exhibiting at or pitching at: "
         "AI conferences and summits, technology exhibitions with AI tracks, startup/investor events, and industry "
-        "fairs where AI is applied to energy (oil, gas, power), medicine/health, aviation, nuclear power or smart "
+        "fairs where AI is applied to oil and gas, aerospace, nuclear power, water, mining, medicine/health or smart "
         "cities. Cover Iran (Tehran exhibitions, national AI events, technology-exchange events of public bodies; "
         "for every Iranian event give the Persian/Jalali date range with the year, or the last edition's date and year "
         "if the next one is not announced) "

@@ -15,7 +15,7 @@ STATE_FILE = DATA_DIR / "investors.json"
 TYPES = {"vc": "صندوق خطرپذیر", "cvc": "سرمایه‌گذار شرکتی (CVC)", "accelerator": "شتاب‌دهنده"}
 STATUSES = {"new": "جدید", "researching": "در حال بررسی", "contacted": "تماس گرفته شد", "meeting": "جلسه",
             "due_diligence": "بررسی دقیق (DD)", "term_sheet": "ترم‌شیت", "declined": "منتفی"}
-DOMAINS = ["energy", "medical", "aviation", "nuclear", "urban", "ai_cross_cutting"]
+DOMAINS = ["oil_gas", "aerospace", "nuclear", "water", "mining", "medical", "urban", "ai_cross_cutting"]
 
 SCHEMA = {
     "type": "object",
@@ -50,12 +50,19 @@ def _slug(name):
     return re.sub(r"[^a-z0-9]+", "-", name.lower()).strip("-")[:50]
 
 
+def _canon_all(state):
+    from .taxonomy import canon_record
+    for v in state.get("investors", {}).values():
+        canon_record(v, "domains")
+    return state
+
+
 def load():
     seed = json.loads(SEED_FILE.read_text(encoding="utf-8"))["investors"]
     state = json.loads(STATE_FILE.read_text(encoding="utf-8")) if STATE_FILE.exists() else {"investors": {}, "updated": ""}
     for inv in seed:
         state["investors"].setdefault(inv["id"], {**inv, "status": "new", "origin": "seed"})
-    return state
+    return _canon_all(state)
 
 
 def save(state):
@@ -74,8 +81,8 @@ def update(cfg, analyst, state, log):
     known = ", ".join(sorted(v["name"] for v in state["investors"].values()))
     research = analyst._research(
         f"Today is {date.today().isoformat()}. Search the web for venture capital funds, corporate venture arms "
-        "and accelerators worldwide that actively invest in AI applied to energy (oil & gas, power, grids), "
-        "healthcare and biotech, aviation and aerospace, nuclear energy and smart cities - with priority for "
+        "and accelerators worldwide that actively invest in AI applied to oil & gas, aerospace, nuclear, water, mining, "
+        "healthcare and biotech and smart cities - with priority for "
         "investors open to founders from Türkiye, the Gulf and Europe and for fields that are under-covered in "
         f"this list. Already listed (only report them if fund size or programme terms changed): {known}. For each "
         "investor give fund size or AUM with year, number of investments and notable portfolio companies, stage "

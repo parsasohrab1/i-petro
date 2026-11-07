@@ -7,12 +7,14 @@
   python -m agent dashboard                                  rebuild docs/index.html
   python -m agent star <country> / unstar <country>          countries for weekly partner scouting
   python -m agent event <event-id> <status>                  considering | registered | attending | attended | skipped
+  python -m agent scholarship [--no-llm] [--set ID STATUS]     refresh fully funded scholarships and rebuild the Word files
   python -m agent partner <company-key> <status>             sent | replied | meeting | mou | not_interested
   python -m agent select <investor-id> / unselect <investor-id>  investors that get an introduction draft
   python -m agent lead <lead-id> <status>                    called | interested | proposal | won | not_interested | do_not_call
   python -m agent track <tender-id> [--owner NAME] [--stage STAGE] [--next TEXT] [--date YYYY-MM-DD] [--note TEXT]
       stages: identified | documents | partner_email | partner_meeting | mou | proposal | submitted | result
   python -m agent remind-reports <folder>                    Telegram reminder to members without today's performance report
+  python -m agent save-drafts <zip|folder|file.eml>          put .eml drafts (e.g. the partners-tab ZIP) into the parsaint.group Drafts folder
   python -m agent investor <investor-id> <status>            researching | contacted | meeting | due_diligence | term_sheet | declined
 """
 import json
@@ -21,7 +23,7 @@ import sys
 
 from pathlib import Path
 
-from . import dashboard, events, investors, leads, memory, partners, platform_sync, store
+from . import dashboard, events, investors, leads, memory, partners, platform_sync, platform_sch, scholarship_docs, scholarships, store
 from .config import ROOT, load_config
 
 
@@ -50,6 +52,9 @@ def main(argv=None):
     ev = sub.add_parser("event")
     ev.add_argument("event_id")
     ev.add_argument("status", choices=list(events.STATUSES))
+    sc = sub.add_parser("scholarship")
+    sc.add_argument("--no-llm", action="store_true")
+    sc.add_argument("--set", nargs=2, metavar=("ID", "STATUS"))
     pa = sub.add_parser("partner")
     pa.add_argument("key")
     pa.add_argument("status", choices=list(partners.STATUSES))
@@ -62,17 +67,64 @@ def main(argv=None):
     tk.add_argument("--note", default="")
     rr = sub.add_parser("remind-reports")
     rr.add_argument("folder")
+    sd = sub.add_parser("save-drafts")
+    sd.add_argument("source")
     ld = sub.add_parser("lead")
     ld.add_argument("lead_id")
     ld.add_argument("status", choices=list(leads.STATUSES))
     iv = sub.add_parser("investor")
     iv.add_argument("investor_id")
     iv.add_argument("status", choices=list(investors.STATUSES))
+    dq = sub.add_parser("data-requests")
+    dq.add_argument("--check", nargs="*", default=None, help="folders that hold clones of the product repos; marks received datasets")
+    se = sub.add_parser("search")
+    se.add_argument("terms", nargs="*")
+    se.add_argument("--health", action="store_true", help="use the international health-AI phrase list")
+    se.add_argument("--source", choices=("ted", "worldbank", "all"), default="all")
+    se.add_argument("--days", type=int, default=30, help="TED look-back in days")
+    se.add_argument("--add", action="store_true", help="put hits that pass keyword screening into the pipeline")
     a = p.parse_args(argv)
+    if a.cmd == "data-requests":
+        from . import data_requests
+        if a.check is not None:
+            reg, got = data_requests.refresh(roots=a.check)
+            print("received:", ", ".join(got) or "none yet")
+        writes = data_requests.export()
+        print(f"{len(writes)} task documents exported to {data_requests.EXPORT_DIR}")
+        for line in data_requests.notification_lines():
+            print(line)
+        return
+
+    if a.cmd == "search":
+        from . import search as srch
+        cfg = load_config()
+        phrases = srch.health_phrases(cfg) if a.health else []
+        phrases += a.terms
+        if not phrases:
+            sys.exit("give search terms or --health")
+        hits = srch.search(cfg, phrases, srch.SOURCES if a.source == "all" else (a.source,), a.days)
+        for t in sorted(hits, key=lambda t: t.get("deadline") or "9"):
+            print(srch.format_hit(t))
+        print(f"{len(hits)} notice(s)")
+        if a.add:
+            srch.add_to_pipeline(cfg, hits)
+        return
 
     if a.cmd == "run":
         from .pipeline import run
         run(use_llm=not a.no_llm, use_mail=not a.no_mail, send_notification=not a.no_notify)
+        return
+
+    if a.cmd == "save-drafts":
+        from . import mailbox
+        if not mailbox.configured():
+            sys.exit("Set IMAP_HOST, IMAP_USER and IMAP_PASSWORD in .env first (see .env.example).")
+        cfg, n = load_config(), 0
+        for name, msg in mailbox.drafts_from_eml(a.source):
+            folder = mailbox.save_draft(msg, cfg)
+            n += 1
+            print(f"{name} -> {folder} (To: {msg['To'] or '-'})")
+        print(f"{n} draft(s) saved to the parsaint.group mailbox. Nothing was sent.")
         return
 
     cfg, state = load_config(), store.load()
@@ -103,6 +155,25 @@ def main(argv=None):
         partners.save(ps)
         dashboard.render(cfg, state)
         print(f"{a.key} -> {partners.STATUSES[a.status]}")
+        return
+    if a.cmd == "scholarship":
+        ss = scholarships.load()
+        if a.set:
+            if a.set[0] not in ss["scholarships"]:
+                sys.exit(f"unknown scholarship {a.set[0]}")
+            scholarships.set_status(ss, *a.set)
+        elif not a.no_llm:
+            from .analyst import Analyst, llm_available
+            from .portfolio import build_profile, profile_text
+            if llm_available():
+                analyst = Analyst(cfg, profile_text(cfg, build_profile(cfg)), memory.lessons_text(state))
+                scholarships.update(cfg, analyst, ss, print)
+            else:
+                print("ANTHROPIC_API_KEY not set - rebuilding the Word files from the stored list only.")
+        scholarships.save(ss)
+        for path in scholarship_docs.build_all(ss):
+            print(path)
+        print(f"dashboard page: {platform_sch.sync(ss)} scholarships synced")
         return
     if a.cmd in ("select", "unselect"):
         chosen = cfg.setdefault("selected_investors", [])

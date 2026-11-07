@@ -2,7 +2,7 @@
 import json
 from datetime import date, timedelta
 
-from . import dashboard, documents, events, investors, leads, mailbox, memory, notify, partners, store
+from . import contact_email, dashboard, documents, events, investors, leads, mailbox, memory, notify, papers, partners, scholarship_docs, scholarships, store
 from .analyst import Analyst, llm_available
 from .config import OUTPUT_DIR, env, load_config
 from .portfolio import build_profile, profile_text
@@ -64,9 +64,13 @@ def process_candidate(analyst, cfg, rec, use_mail, budget, log):
         _save_json(rec, "partner_package.json", pkg)
         mou = documents.write_mou(rec, pkg, cfg["company"])
         rec.setdefault("files", {})["mou"] = mou.relative_to(OUTPUT_DIR.parent).as_posix()
+        for p in pkg["partner_candidates"]:   # read the partner's own website for its published business address
+            found, src = contact_email.find_email(p.get("website", ""), log)
+            if found:
+                p["public_contact"], p["contact_source"] = found, src
         rec["partners"] = pkg["partner_candidates"]
         first_contact = next((p["public_contact"] for p in pkg["partner_candidates"] if p["public_contact"]), "")
-        _draft(cfg, rec, pkg["email_subject"], pkg["email_body"], [mou], "", use_mail, log)
+        _draft(cfg, rec, pkg["email_subject"], pkg["email_body"], [mou], first_contact, use_mail, log)
         rec["suggested_to"] = first_contact
         store.set_status(rec, "partner_search", "partner email + MoU drafted")
         store.track(rec, stage="partner_email", next_action="ارسال ایمیل همکاری از Drafts وب‌میل به شریک", note="پیش‌نویس ایمیل و MoU آماده شد")
@@ -125,8 +129,11 @@ def summary_text(cfg, run, state):
         lines.append("\n📅 AI Events – ۴۵ روز آینده:")
         for e in run["events_soon"]:
             lines.append(f"• {e['start']} | {e['name_fa'] or e['name']} – {e['city']}")
+    if run.get("scholarships_added"):
+        lines.append(f"• {run['scholarships_added']} فرصت بورسیه‌ی جدید به فهرست اضافه شد")
     if run.get("events_added"):
         lines.append(f"• {run['events_added']} رویداد جدید به فهرست اضافه شد")
+    lines.extend(run.get("papers_lines") or [])
     if run.get("leads_added"):
         lines.append(f"\n📞 {run['leads_added']} تولیدکننده‌ی بدون سایت برای تماس تلفنی (Web Design & SEO Projects)")
     if run.get("investor_drafts"):
@@ -144,6 +151,9 @@ def run(use_llm=True, use_mail=True, send_notification=True):
     state = store.load()
     log_lines = []
     log = _log_factory(log_lines)
+    seeded = store.seed_grants(state)
+    if seeded:
+        log(f"{seeded} grant calls added from grants_seed.json")
 
     profile = build_profile(cfg)
     tenders = collect_all(cfg, log)
@@ -165,8 +175,10 @@ def run(use_llm=True, use_mail=True, send_notification=True):
         elif rec["status"] in store.ACTIVE - {"new"} and rec["days_left"] in REMIND_AT:
             reminders.append(rec["id"])
 
-    actioned, partner_drafts, events_added = [], [], 0
+    actioned, partner_drafts, events_added, papers_lines = [], [], 0, []
+    pp_state = papers.load()
     ev_state, pt_state, inv_state, investors_added = events.load(), partners.load(), investors.load(), 0
+    sch_state, scholarships_added = scholarships.load(), 0
     analyst = None
     if use_llm and llm_available():
         analyst = Analyst(cfg, profile_text(cfg, profile), memory.lessons_text(state))
@@ -190,6 +202,16 @@ def run(use_llm=True, use_mail=True, send_notification=True):
                 events_added = events.update(cfg, analyst, ev_state, log)
         except Exception as exc:
             log(f"Events update failed: {exc}")
+        try:
+            if scholarships.due(sch_state, cfg):
+                scholarships_added = scholarships.update(cfg, analyst, sch_state, log)
+        except Exception as exc:
+            log(f"Scholarships update failed: {exc}")
+        try:
+            if papers.due(pp_state, cfg):
+                papers_lines = papers.notification_lines(papers.update(cfg, analyst, pp_state, log))
+        except Exception as exc:
+            log(f"Papers update failed: {exc}")
         try:
             if investors.due(inv_state, cfg):
                 investors_added = investors.update(cfg, analyst, inv_state, log)
@@ -219,6 +241,12 @@ def run(use_llm=True, use_mail=True, send_notification=True):
     except Exception as exc:
         log(f"Investor outreach failed: {exc}")
     events.save(ev_state)
+    scholarships.save(sch_state)
+    try:
+        scholarship_docs.build_all(sch_state)
+    except Exception as exc:
+        log(f"Scholarship Word files failed: {exc}")
+    papers.save(pp_state)
     partners.save(pt_state)
     investors.save(inv_state)
     today, soon = date.today().isoformat(), (date.today() + timedelta(days=45)).isoformat()
@@ -226,7 +254,7 @@ def run(use_llm=True, use_mail=True, send_notification=True):
                           if e.get("start") and today <= e["start"] <= soon and e.get("status") != "skipped"),
                          key=lambda e: e["start"])
     run_info = {"at": store.now(), "collected": len(tenders), "matched": len(candidates),
-                "partner_drafts": partner_drafts, "events_added": events_added, "investors_added": investors_added, "investor_drafts": investor_drafts, "leads_added": leads_added,
+                "partner_drafts": partner_drafts, "events_added": events_added, "scholarships_added": scholarships_added, "investors_added": investors_added, "investor_drafts": investor_drafts, "leads_added": leads_added, "papers_lines": papers_lines,
                 "events_soon": [{k: e.get(k, "") for k in ("start", "name", "name_fa", "city")} for e in events_soon],
                 "new_ids": new_ids, "actioned_ids": actioned, "reminders": reminders}
     state["runs"] = (state.get("runs", []) + [run_info])[-60:]
