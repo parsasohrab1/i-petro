@@ -28,7 +28,7 @@ async function buildAbstractDocx(v,a){
   const row=(k,val)=>`<w:tr>${cell(2400,par(run(k,{b:true,sz:20}),{after:40}))}${cell(6638,par(run(val,{sz:20}),{after:40}))}</w:tr>`;
   const type={journal:"Journal",special:"Journal special issue",conf:"Conference"}[v.type]||v.type;
   const repo=ABS_GH+prod.repo+(prod.new?"":"/tree/"+ABS.branch);
-  const todo="Replace every [bracketed] placeholder with the team's own measured values; add author names; confirm the limits in the venue's author guidelines (they are typical values for the venue family, not copied from the call). Patent rule: do not disclose methods covered by the product's filed claims; a patent attorney must review before submission."+(a.draft_note?" "+a.draft_note:"");
+  const todo="Replace every [bracketed] placeholder with the team's own measured values; add author names; confirm the limits in the venue's author guidelines (they are typical values for the venue family, not copied from the call). Patent rule: do not disclose methods covered by the product's filed claims; a patent-attorney review is not required (owner's decision of 2026-11-07)."+(a.draft_note?" "+a.draft_note:"");
   const rows=[["Venue",v.name],["Type",type],["Deadline",(v.deadline||"not stated")+(v.dl_note?" – "+v.dl_note:"")],["Official page",v.url||""],
     ["Abstract rule ("+pr.label+")",`${pr.rule} Typical length ${pr.min}–${pr.max} words; keywords ${pr.kw}.`],["Length of this abstract",`${n} words (limit ${pr.max})`],
     ["Product",prod.name],["Repository",repo],["Repository status",prod.new?"New repository created for this article.":`Existing product; content for the article is on branch "${ABS.branch}".`],["To do before submitting",todo]];
