@@ -46,8 +46,13 @@ const store = {
   s1:{name:"اسپرینت ۲",goal:"دموی توربین و ارتباط OPC-UA",start:"2026-10-15",end:"2026-10-28",status:"active",committed:21},
   s2:{name:"اسپرینت ۳",goal:"",start:"2026-10-29",end:"2026-11-11",status:"planned"}},
  letters:{n1:{number:"PPT-1405-0001",date:"2026-10-20",recipient:"جناب آقای دکتر رضایی\nمدیرعامل شرکت نمونه",subject:"درخواست جلسه‌ی معرفی",body:"با سلام\nبدین‌وسیله درخواست جلسه‌ی معرفی محصولات هوشمند را اعلام می‌داریم.",office_sig:{by:"me1",at:"2026-10-20T08:00:00Z"}}},
- letters_archive:{a1:{number:"PPT-1405-0000",date:"2026-10-10",subject:"پیشنهاد همکاری فناورانه",recipient:"مدیرعامل شرکت نمونه",channel:"automation",stage:"review",status:"active",owner:"me1",next_action:"تماس برای پیگیری",next_date:"2026-10-23",log:[{at:"2026-10-12T09:00:00Z",by:"me1",stage:"review",note:"نامه در دست بررسی است"}],employer_no:"1405/1234"}},
- tracking:{t1:{owner:"me1",stage:"partner_email",value_usd:400000,next_action:"پیگیری ایمیل شریک",next_date:"2026-10-22"},t2:{owner:"u2",stage:"proposal",value_usd:250000},"ev_e1":{owner:"me1"}},
+ letters_archive:{
+  a1:{number:"14050806001",date:"2026-10-28",subject:"اعلام آمادگی جهت پیاده‌سازی محصول هوشمند",recipient:"مدیرعامل محترم شرکت پتروشیمی نمونه‌ی الف",channel:"email",identity:"ir",sector:"shasta",employer_no:"4521",stage:"review",status:"active",next_action:"پیگیری تلفنی با واحد پژوهش",next_date:"2026-11-02",log:[{at:"2026-10-28T09:00:00Z",stage:"sent",note:"ایمیل ارسال شد"},{at:"2026-11-01T09:00:00Z",stage:"review",note:"نامه به واحد پژوهش ارجاع شد"}]},
+  a2:{number:"14050806002",date:"2026-10-28",subject:"اعلام آمادگی جهت پیاده‌سازی محصول هوشمند",recipient:"مدیرعامل محترم شرکت صنایع نمونه‌ی ب",channel:"other",identity:"ir",sector:"shasta",stage:"scheduled",status:"active",meeting_date:"2026-11-12",meeting_time:"10:00",meeting_mode:"online",meeting_status:"planned",next_action:"برگزاری جلسه (آنلاین ساعت 10:00)",next_date:"2026-11-12",log:[{at:"2026-11-03T09:00:00Z",stage:"scheduled",note:"جلسه هماهنگ شد"}]},
+  a3:{number:"14050806003",date:"2026-10-28",subject:"اعلام آمادگی جهت پیاده‌سازی محصول هوشمند",recipient:"مدیرعامل محترم شرکت تولیدی نمونه‌ی ج",channel:"other",identity:"ir",sector:"shasta",stage:"sent",status:"active",next_action:"ارسال مجدد در پیام‌رسان",next_date:"2026-11-04",log:[]},
+  a4:{number:"14050806004",date:"2026-10-28",subject:"اعلام آمادگی جهت پیاده‌سازی محصول هوشمند",recipient:"مدیرعامل محترم شرکت نمونه‌ی د",channel:"other",identity:"ir",sector:"shasta",stage:"meeting",status:"active",meeting_date:"2026-11-02",meeting_status:"held",next_action:"ارسال خلاصه‌ی جلسه",log:[]},
+  a5:{number:"14050809001",date:"2026-10-31",subject:"پیشنهاد همکاری برای پایلوت محصولات هوشمند سلامت",recipient:"ریاست محترم سازمان نمونه‌ی سلامت",channel:"other",identity:"soshiant",sector:"med",stage:"ready",status:"active",log:[]}},
+ shasta_tracker:{a1:{tel:["021-88000000"],email:["info@example.com"],fax:["021-88000001"],people:["آقای نمونه"],reg_no:"4521",contact_raw:"دبیرخانه داخلی ۱۲۰"},a2:{tel:["09120000000"],people:["خانم نمونه"]}}, tracking:{t1:{owner:"me1",stage:"partner_email",value_usd:400000,next_action:"پیگیری ایمیل شریک",next_date:"2026-10-22"},t2:{owner:"u2",stage:"proposal",value_usd:250000},"ev_e1":{owner:"me1"}},
  "settings/company":{name_fa:"پترو پالا توس",name_en:"Petro Pala Toos",logo_asset:"logo",address:"تهران، خیابان نمونه",ceo_member:"me1",last_backup:new Date().toISOString()},
  "reports/me1/items":{"2026-10-21":{date:"2026-10-21",text:"طراحی داشبورد دمو",hours:8,score:78,feedback:"خروجی مشخص بود."},"2026-10-20":{date:"2026-10-20",text:"داشبورد دمو را کامل کردم و تست واحد نوشتم.",hours:7.5,score:72,feedback:"خروجی مشخص بود؛ ساعت کار کمی کمتر از ۸ بود."}},
  "reports/u2/items":{}, "attendance/me1/days":{"2026-10-21":{in:"08:35",break_min:60}}, "attendance/u2/days":{}
@@ -73,6 +78,7 @@ async function open(browser, noMe) {
   await pg.goto("http://t.local/"); await pg.waitForTimeout(1200);
   return pg;
 }
+const sub = async (pg, k) => { const l = pg.locator(`#subs [data-act=sub][data-k=${k}]`).first(); if (!(await l.isVisible())) { const m = pg.locator("[data-act=subs-more]"); if (await m.count()) await m.first().click(); } await l.click(); };
 const shot = async (pg) => "data:image/png;base64," + (await pg.screenshot()).toString("base64");
 
 (async () => {
@@ -80,16 +86,17 @@ const shot = async (pg) => "data:image/png;base64," + (await pg.screenshot()).to
   const pg = await open(browser, false);
   const shots = {};
   for (const st of TOUR) if (st.mod) {
-    const key = st.mod + "." + (st.sub || "");
+    const key = st.mod + "." + (st.sub || "") + (st.click || "");
     await pg.click(`[data-act=mod][data-k=${st.mod}]`);
-    if (st.sub) await pg.click(`[data-act=sub][data-k=${st.sub}]`);
+    if (st.sub) await sub(pg, st.sub);
+    if (st.click) await pg.click(st.click);
     await pg.waitForTimeout(250); shots[key] = await shot(pg);
   }
-  await pg.click("[data-act=mod][data-k=market]"); await pg.click("[data-act=sub][data-k=overseas]"); await pg.waitForTimeout(200);
+  await pg.click("[data-act=mod][data-k=market]"); await sub(pg, "overseas"); await pg.waitForTimeout(200);
   await pg.locator("details summary", { hasText: "دلایل" }).first().click(); const gng = await shot(pg);
-  await pg.click("[data-act=mod][data-k=market]"); await pg.click("[data-act=sub][data-k=tracking]"); await pg.click("[data-act=track]"); await pg.waitForTimeout(200); const trackForm = await shot(pg);
+  await pg.click("[data-act=mod][data-k=market]"); await sub(pg, "tracking"); await pg.click("[data-act=track]"); await pg.waitForTimeout(200); const trackForm = await shot(pg);
   await pg.click("[data-act=close]"); await pg.click("#bell"); await pg.waitForTimeout(200); const inbox = await shot(pg); await pg.click("[data-act=close]");
-  await pg.click("[data-act=mod][data-k=letters]"); await pg.click("[data-act=sub][data-k=new]"); await pg.selectOption("#c_identity", "intl");
+  await pg.click("[data-act=mod][data-k=letters]"); await sub(pg, "new"); await pg.selectOption("#c_identity", "intl");
   await pg.fill("[data-c=recipient]", "Mr. John Smith\nProcurement Manager\nExample Energy Co."); await pg.fill("[data-c=subject]", "Proposal for predictive maintenance services");
   await pg.fill("[data-c=body]", "We would like to introduce our AI-based predictive maintenance platform.\nWe would welcome a short call to discuss your requirements."); await pg.waitForTimeout(200); const intl = await shot(pg);
   await pg.click("[data-act=mod][data-k=articles]"); await pg.waitForTimeout(300); const artShot = await shot(pg);
@@ -105,7 +112,7 @@ const shot = async (pg) => "data:image/png;base64," + (await pg.screenshot()).to
   for (const st of TOUR) {
     if (st.mod && !st.sub) { n++; lastMod = st.mod; toc += `<li>${E(MODS[st.mod])}</li>`;
       body += `<section class="mod"><h2>${E(MODS[st.mod])}</h2><p>${E(st.text)}</p>${st.mod === "articles" ? img(artShot, "تصویر نمونه با داده‌ی فرضی") + img(artRows, "ستون جزئیات: محصول مقاله و لینک ریپو یا شاخه؛ ستون آخر: دکمه‌ی چکیده (Word)") : ""}</section>`; continue; }
-    if (st.mod && st.sub) body += `<section class="tab"><h3>${E(st.title)}</h3><p>${E(st.text)}</p>${img(shots[st.mod + "." + st.sub], "تصویر نمونه با داده‌ی فرضی")}</section>`;
+    if (st.mod && st.sub) body += `<section class="tab"><h3>${E(st.title)}</h3><p>${E(st.text)}</p>${img(shots[st.mod + "." + st.sub + (st.click || "")], "تصویر نمونه با داده‌ی فرضی")}</section>`;
   }
   const firstSteps = TOUR[TOUR.length - 1].text, bell = TOUR.find(s => s.sel === "#bell");
   const doc = `<!doctype html><html lang="fa" dir="rtl"><head><meta charset="utf-8"><link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700;800&display=swap" rel="stylesheet"><style>
@@ -118,7 +125,7 @@ const shot = async (pg) => "data:image/png;base64," + (await pg.screenshot()).to
   figure{margin:6px 0 0}figure img{width:100%;border:1px solid #cfcac7;border-radius:6px}figcaption{font-size:10.5px;color:#615b59;text-align:center}
   .box{background:#f5f4f3;border-right:4px solid #d12a1f;padding:8px 12px;margin:10px 0;border-radius:4px}
   li{margin:2px 0}.pb{page-break-before:always}</style></head><body>
-  <div class="cover">${logoB64 ? `<img src="data:image/png;base64,${logoB64}" alt="logo">` : ""}<h1>iPetro</h1><h2>راهنمای کار با سامانه</h2><p>پترو پالا توس · Petro Pala Toos</p><p>نسخه‌ی ۱ · ${new Intl.DateTimeFormat("fa-IR-u-ca-persian", { year: "numeric", month: "long", day: "numeric" }).format(new Date())}</p></div>
+  <div class="cover">${logoB64 ? `<img src="data:image/png;base64,${logoB64}" alt="logo">` : ""}<h1>iPetro</h1><h2>راهنمای کار با سامانه</h2><p>پترو پالا توس · Petro Pala Toos</p><p>نسخه‌ی ۲ · ${new Intl.DateTimeFormat("fa-IR-u-ca-persian", { year: "numeric", month: "long", day: "numeric" }).format(new Date())}</p></div>
   <h2>iPetro چیست؟</h2><p>${E(TOUR[0].text.replace(/^iPetro /, "iPetro "))}</p>
   <div class="box"><b>هفت بخش اصلی:</b><ol>${toc}</ol></div>
   <h3>ورود و ثبت‌نام</h3><p>بار نخست که با حساب claude.ai وارد می‌شوید، فرم ثبت‌نام باز می‌شود. نام، تیم، نوع نیرو، روزهای حضور، ساعت ورود، ایمیل، شناسه‌ی تلگرام و تصویر امضا را وارد کنید. پس از ثبت، آموزش گام‌به‌گام خودکار شروع می‌شود.</p>${img(reg, "فرم ثبت‌نام هنگام ورود")}
@@ -128,6 +135,8 @@ const shot = async (pg) => "data:image/png;base64," + (await pg.screenshot()).to
   <section class="mod"><h2>چند کار پرکاربرد</h2>
    <div class="tab"><h3>مسئولیت گرفتن و پیگیری پروژه</h3><p>در Market دکمه‌ی «مسئولیت را می‌گیرم» را بزنید؛ مورد از فهرست باز برداشته می‌شود. سپس در Project Tracking با «ویرایش» مرحله، اقدام بعدی، ارزش و احتمال برد را ثبت کنید. هنگام پایان، نتیجه و دلیل را بنویسید تا ایجنت یاد بگیرد.</p>${img(trackForm, "فرم پیگیری پروژه")}</div>
    <div class="tab"><h3>Go / No-Go</h3><p>برای هر مناقصه‌ی تحلیل‌شده امتیازی از ۱۰۰ نمایش داده می‌شود: تطابق با محصولات ۴۰٪، صلاحیت ۲۵٪، زمان ۱۵٪، پذیرش شرکت خارجی ۱۰٪ و انطباق ۱۰٪. زیر «دلایل» می‌بینید امتیاز از کجا آمده است.</p>${img(gng, "ستون Go/No-Go و دلایل امتیاز")}</div>
+   <div class="tab"><h3>ردیابی یک نامه تا برگزاری جلسه</h3><p>نامه‌ها ← پترو پالا توس ← گروه مربوط (مثلاً هلدینگ شستا) ← «ردیابی نامه تا جلسه». کارت نامه را پیدا کنید؛ با «ثبت پیشرفت» مرحله را به‌روز کنید (ارسال شد، ثبت در دبیرخانه، ارجاع، پاسخ) و با «جلسه» تاریخ، ساعت و نوع جلسه را ثبت کنید. جلسه در تقویم و اعلان‌ها می‌آید و پس از برگزاری با همان دکمه «برگزار شد» را بزنید. همین نما برای سوشیانت هم هست.</p></div>
+   <div class="tab"><h3>نامه‌ی اعلام آمادگی برای یک شرکت هدف</h3><p>در گروه شرکت ملی نفت، شرکت ملی گاز، مپنا، پخش و پالایش یا پتروشیمی، شرکت را انتخاب کنید و «ساخت نامه» را بزنید. نامه با سربرگ پترو پالا توس در «نامه‌ی جدید» باز می‌شود؛ نام مدیرعامل را بنویسید، بازبینی و امضا کنید و فایل Word را بگیرید. حوزه‌ی نامه تعیین می‌کند سربرگ پترو پالا توس (نفت و گاز) یا سوشیانت (سایر حوزه‌ها) باشد.</p></div>
    <div class="tab"><h3>نامه‌ی بین‌المللی</h3><p>در «نامه‌ی جدید» هویت فرستنده را «بین‌المللی» بگذارید تا نامه به انگلیسی و با سربرگ Parsa International Group ساخته شود. شماره‌ی نامه با PIG شروع می‌شود.</p>${img(intl, "نامه‌ی بین‌المللی و پیش‌نمایش")}</div>
    <div class="tab"><h3>چکیده‌ی آماده برای ژورنال یا کنفرانس</h3><p>در Articles برای هر ژورنال یا کنفرانس یک محصول مشخص شده است: محصول تازه ریپوی جدید دارد و محصول قدیمی شاخه‌ی «article-submission-content» با متن چکیده. دکمه‌ی «چکیده (Word)» فایلی می‌دهد که صفحه‌ی اول آن عنوان، چکیده و کلیدواژه‌ها طبق قالب همان مرجع (حداکثر واژه، تک‌پاراگراف، تعداد کلیدواژه) و صفحه‌ی دوم برگه‌ی داخلی با ددلاین، لینک رسمی و کارهای پیش از ثبت است. جاهای [داخل کروشه] نتایج واقعی‌اند که باید از آزمایش‌های تیم پر شود؛ هیچ عددی در متن پیش‌نویس نتیجه نیست. پیش از ثبت، محدودیت واژه را در راهنمای نویسندگان همان ژورنال یا کنفرانس بازبینی کنید. «همه‌ی چکیده‌ها (ZIP)» همه‌ی فایل‌ها را یک‌جا می‌دهد.</p></div>
   </section>

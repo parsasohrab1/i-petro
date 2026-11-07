@@ -3030,6 +3030,9 @@ VIEWS["letters.pp"] = () => {
     inner=`<div class="toolbar" role="tablist"><span class="meta">زیرگروه:</span>${tabs.map(([k,l,n])=>`<button class="btn sm ${sh===k?"":"ghost"}" role="tab" aria-selected="${sh===k}" data-act="pp-sh" data-k="${k}">${esc(l)} (${faNum(n)})</button>`).join("")}</div>`+(sh==="tapico"?ppCoView("tapico",true):sh==="other"?ppCoView("shasta",true):sh==="arch"?archView(null,"ir","shasta"):shTrackView()); }
   else if(PP_CO[gk]) inner=ppCoView(gk)+(gk==="npc"||gk==="pic"||gk==="nioc"||gk==="nigc"||gk==="mapna"?`<h3>نامه‌های ثبت‌شده‌ی این گروه</h3>`+archView(null,"ir",gk):"");
   else inner=archView(null,"ir",gk);
+  if(gk!=="shasta"){   // every group has the same letter-to-meeting tracker beside its company list
+    const gl=S.lettersArchive.filter(a=>archIdent(a)==="ir"&&archGrp(a)===gk), tv=(S.ppTv||{})[gk]||(gl.length?"track":"list");
+    inner=`<div class="toolbar" role="tablist"><span class="meta">نما:</span><button class="btn sm ${tv==="track"?"":"ghost"}" role="tab" aria-selected="${tv==="track"}" data-act="pp-tv" data-k="track">ردیابی نامه تا جلسه (${faNum(gl.length)})</button><button class="btn sm ${tv==="list"?"":"ghost"}" role="tab" aria-selected="${tv==="list"}" data-act="pp-tv" data-k="list">شرکت‌ها و فهرست نامه‌ها</button></div>`+(tv==="track"?trackBoard(gl):inner); }
   return head+bar+inner;
 };
 
@@ -3050,8 +3053,11 @@ function archMeeting(a){ if(!a) return;
      const note=({planned:"جلسه هماهنگ شد",held:"جلسه برگزار شد",cancelled:"جلسه لغو شد"})[v.mstatus]+(v.meeting_date?` (${faDate(v.meeting_date)})`:"")+(v.note?": "+v.note:"");
      return save(`letters_archive/${id}`,{...base,stage:st,status:"active",...next,meeting_status:v.mstatus,meeting_date:v.meeting_date||"",meeting_time:v.meeting_time||"",meeting_mode:v.meeting_mode,meeting_with:v.meeting_with||"",meeting_place:v.meeting_place||"",log:[...(a.log||[]),{at:now,by:S.me.id,stage:st,status:"active",note}].slice(-60),updated:now},"جلسه ثبت شد"); }});
 }
-function shTrackView(){
-  const base=S.lettersArchive.filter(a=>archIdent(a)==="ir"&&archGrp(a)==="shasta").filter(a=>match(a.recipient,a.subject,a.number,a.employer_no,a.next_action,trkOf(a).contact_raw,trkOf(a).reg_no));
+const TRK_NOTE = "مسیر هر نامه از «آماده / ارسال» تا «جلسه برگزار شد» در یک نما دیده می‌شود. هر کارت شماره‌ی نامه و شماره‌ی ثبت در سیستم کارفرما، تلفن‌ها، فکس و ایمیل (کلیک‌پذیر)، آخرین اقدام، گام بعدی و تاریخ جلسه را دارد. «ثبت پیشرفت» مرحله را جلو می‌برد و «جلسه» هماهنگی و برگزاری جلسه را ثبت می‌کند.";
+const SHASTA_NOTE = TRK_NOTE+" اطلاعات اولیه از شیت پیگیری هلدینگ شستا (۷ آبان ۱۴۰۵) وارد شده است.";
+const shTrackView = () => trackBoard(S.lettersArchive.filter(a=>archIdent(a)==="ir"&&archGrp(a)==="shasta"),SHASTA_NOTE);
+function trackBoard(list0,intro){
+  const base=list0.filter(a=>match(a.recipient,a.subject,a.number,a.employer_no,a.next_action,trkOf(a).contact_raw,trkOf(a).reg_no));
   const order=Object.keys(ARCH_STAGES), idx=a=>order.indexOf(a.stage);
   const over=base.filter(archOverdue).sort((a,b)=>(a.next_date||"").localeCompare(b.next_date||""));
   const meets=base.filter(a=>a.meeting_date&&a.meeting_status!=="held"&&a.meeting_date>=today()).sort((a,b)=>a.meeting_date.localeCompare(b.meeting_date));
@@ -3064,7 +3070,7 @@ function shTrackView(){
      ${t.track_ref||t.contact_raw||t.done?`<details><summary class="meta">اطلاعات تماس و پیگیری کامل (از شیت)</summary><div class="meta" style="white-space:pre-wrap">${esc([t.contact_raw&&"تماس: "+t.contact_raw,t.track_ref&&"پیگیری/ارجاع: "+t.track_ref,t.done&&"اقدام انجام‌شده: "+t.done,t.next&&"اقدام بعدی (شیت): "+t.next].filter(Boolean).join("\n"))}</div></details>`:""}
      <div class="row" style="margin-top:6px"><button class="btn sm" data-act="arch-progress" data-id="${esc(a.id)}">ثبت پیشرفت</button><button class="btn sm sig" data-act="arch-meeting" data-id="${esc(a.id)}">جلسه</button></div></div>`; };
   const col=([k,l])=>{ const L=base.filter(a=>a.stage===k).sort((a,b)=>(archOverdue(b)?1:0)-(archOverdue(a)?1:0)); return `<div class="kcol"><h4><span>${esc(l)}</span><span class="pill p-mute">${faNum(L.length)}</span></h4>${L.map(card).join("")||'<p class="meta">—</p>'}</div>`; };
-  return `<p class="note">مسیر هر نامه از «آماده / ارسال» تا «جلسه برگزار شد» در یک نما دیده می‌شود. هر کارت شماره‌ی نامه و شماره‌ی ثبت در سیستم کارفرما، تلفن‌ها، فکس و ایمیل (کلیک‌پذیر)، آخرین اقدام، گام بعدی و تاریخ جلسه را دارد. «ثبت پیشرفت» مرحله را جلو می‌برد و «جلسه» هماهنگی و برگزاری جلسه را ثبت می‌کند. اطلاعات اولیه از شیت پیگیری هلدینگ شستا (۷ آبان ۱۴۰۵) وارد شده است.</p>`+
+  return `<p class="note">${intro||TRK_NOTE}</p>`+
    kpis([["نامه‌ی شستا",faNum(base.length)],["ارسال‌شده",faNum(base.filter(a=>idx(a)>=1).length)],["ثبت در دبیرخانه",faNum(base.filter(a=>idx(a)>=2||a.employer_no||trkOf(a).reg_no).length)],["ارجاع یا بررسی",faNum(base.filter(a=>idx(a)>=3).length)],["پاسخ یا درخواست",faNum(base.filter(a=>idx(a)>=4).length)],["جلسه هماهنگ‌شده",faNum(base.filter(a=>idx(a)>=5).length)],["جلسه برگزارشده",faNum(base.filter(a=>idx(a)>=6).length)],["اقدام سررسیده",faNum(over.length),over.length>0]])+
    (meets.length?`<div class="banner"><b>جلسه‌های پیش‌رو:</b> ${meets.map(a=>`${faDate(a.meeting_date)}${a.meeting_time?" "+esc(a.meeting_time):""} – ${esc(trkOrg(a))}`).join(" · ")}</div>`:"")+
    (over.length?`<details><summary><b>اقدام‌های سررسیده (${faNum(over.length)})</b></summary>${table(["شرکت","اقدام بعدی","سررسید",""],over.map(a=>`<tr>${td("شرکت",`<b>${esc(trkOrg(a))}</b>`,"t")}${td("اقدام",esc(a.next_action||"—"))}${td("سررسید",`<span class="p-bad">${faDate(a.next_date)}</span>`)}${td("",`<button class="btn sm" data-act="arch-progress" data-id="${esc(a.id)}">ثبت پیشرفت</button>`)}</tr>`),"")}</details>`:"")+
@@ -3072,7 +3078,11 @@ function shTrackView(){
 }
 
 VIEWS["letters.archive"] = () => archView(null);
-VIEWS["letters.sosh"] = () => archView(null,"soshiant");
+VIEWS["letters.sosh"] = () => {
+  const all=S.lettersArchive.filter(a=>archIdent(a)==="soshiant"), tv=S.soshTv||(all.length?"track":"list");
+  const bar=`<div class="toolbar" role="tablist"><span class="meta">نما:</span><button class="btn sm ${tv==="track"?"":"ghost"}" role="tab" aria-selected="${tv==="track"}" data-act="so-tv" data-k="track">ردیابی نامه تا جلسه (${faNum(all.length)})</button><button class="btn sm ${tv==="list"?"":"ghost"}" role="tab" aria-selected="${tv==="list"}" data-act="so-tv" data-k="list">فهرست و بایگانی</button></div>`;
+  return bar+(tv==="track"?`<h2>نامه‌های سوشیانت</h2>`+trackBoard(all):archView(null,"soshiant"));
+};
 Object.keys(ARCH_SECT).forEach(k=>{ VIEWS["letters.sec_"+k] = () => archView(k); });
 // ---------- Refineries: fuel-use optimisation and energy control, production-line smartening and an industrial dashboard per refinery,
 // written as a letter on the Petro Pala Toos letterhead (identity "ir", sector oil). Capacities are rounded public figures that differ between
@@ -4239,9 +4249,12 @@ const TOUR = [
  {mod:"bpms",sub:"process",title:"فرایندها",text:"نمودار فرایند اصلی کسب‌وکار، فرایند نامه و فرایند روزانه‌ی هر عضو."},
  {mod:"bpms",sub:"calendar",title:"تقویم",text:"مهلت مناقصه‌ها، رویدادها، اقدام‌های بعدی، تسک‌ها، سررسیدهای مالی و پیگیری نامه‌ها در یک فهرست زمانی. با «فقط موارد من» فیلتر کنید و فایل ICS را به تقویم گوشی ببرید."},
  {mod:"bpms",sub:"members",title:"اعضا و ثبت‌نام",text:"مشخصات خودتان را هر زمان ویرایش کنید: روزهای حضور، ایمیل، شناسه‌ی تلگرام برای اعلان موبایل و تصویر امضا. مدیر مشخصات شرکت، لوگو، هویت بین‌المللی و مختصات و شعاع دفتر (برای ثبت ورود و خروج با موقعیت مکانی) را هم از همین‌جا تنظیم می‌کند."},
- {mod:"letters",title:"Letters – نامه‌نگاری",text:"ساخت نامه‌ی رسمی روی سربرگ و پیگیری نامه‌های پیشین."},
- {mod:"letters",sub:"new",title:"نامه‌ی جدید",text:"گیرنده، موضوع و متن را بنویسید؛ سربرگ، شماره و تاریخ خودکار است و فایل Word آماده‌ی ارسال می‌شود. هویت فرستنده را انتخاب کنید: ایران (فارسی) یا بین‌المللی (انگلیسی، Parsa International Group). مسئول دفتر و مدیرعامل از «مشاهده و امضا» امضا می‌کنند."},
- {mod:"letters",sub:"archive",title:"پیگیری و بایگانی نامه‌ها",text:"نامه‌هایی که قبلاً بدون ایجنت فرستاده شده‌اند. برای هر نامه مرحله، آخرین وضعیت و اقدام بعدی ثبت می‌شود؛ نامه‌ای که بیش از ۱۴ روز پیگیری نشده یا اقدامش سررسید شده علامت می‌خورد."},
+ {mod:"letters",title:"Letters – نامه‌نگاری",text:"ساخت نامه‌ی رسمی روی سربرگ، فهرست شرکت‌های هدف و ردیابی هر نامه از ارسال تا برگزاری جلسه. دو بخش دارد: پترو پالا توس (نفت، گاز و پتروشیمی) و سوشیانت (پزشکی، آب و انرژی)."},
+ {mod:"letters",sub:"new",title:"نامه‌ی جدید",text:"گیرنده، موضوع و متن را بنویسید؛ فایل Word روی سربرگ ساخته می‌شود. «حوزه‌ی نامه» سربرگ را تعیین می‌کند: نفت و گاز با سربرگ پترو پالا توس و همه‌ی حوزه‌های دیگر با سربرگ سوشیانت (هویت بین‌المللی هم هست). شماره خودکار است و هر روز حداکثر ۲۰ نامه با تاریخ همان روز ثبت می‌شود؛ نامه‌ی بیست‌ویکم تاریخ روز بعد می‌گیرد. مسئول دفتر و مدیرعامل از «مشاهده و امضا» امضا می‌کنند."},
+ {mod:"letters",sub:"pp",title:"نامه‌های پترو پالا توس",text:"زیرگروه‌ها: هلدینگ شستا (با زیرگروه تاپیکو)، هلدینگ خلیج فارس، سرمایه‌گذاری صنایع پتروشیمی، شرکت ملی نفت، شرکت ملی گاز، مپنا، پخش و پالایش و پتروشیمی. در هر گروه دو نما هست: «ردیابی نامه تا جلسه» و «شرکت‌ها و فهرست نامه‌ها»."},
+ {mod:"letters",sub:"pp",click:"[data-act=pp-grp][data-k=shasta]",title:"ردیابی نامه تا جلسه",text:"هر نامه یک کارت است که از «آماده / ارسال» تا «جلسه برگزار شد» جلو می‌رود. کارت شماره‌ی نامه و شماره‌ی ثبت در سیستم کارفرما، تلفن و ایمیل کلیک‌پذیر، فکس، آخرین اقدام و گام بعدی را دارد. «ثبت پیشرفت» مرحله را جلو می‌برد و «جلسه» تاریخ، ساعت و نوع جلسه (حضوری، آنلاین، تلفنی) را ثبت می‌کند و در تقویم می‌آورد. بالای صفحه قیف مراحل، جلسه‌های پیش‌رو و اقدام‌های سررسیده است. این نما برای همه‌ی گروه‌ها و برای سوشیانت هم هست."},
+ {mod:"letters",sub:"pp",click:"[data-act=pp-grp][data-k=nioc]",title:"شرکت‌ها و پیش‌نویس نامه",text:"برای شرکت ملی نفت، شرکت ملی گاز، مپنا، پخش و پالایش و پتروشیمی هر شرکت یک زیرتب دارد. «ساخت نامه» نامه‌ی اعلام آمادگی آن شرکت را (محصول هوشمند متناسب با حوزه‌ی کاری، کاهش مصرف سوخت و کنترل آلایندگی به‌عنوان یکی از محورها، گواهی صرفه‌جویی انرژی و اعتبار مالیاتی) در «نامه‌ی جدید» باز می‌کند. نام مدیرعامل را خودتان تکمیل کنید."},
+ {mod:"letters",sub:"sosh",title:"نامه‌های سوشیانت",text:"نامه‌های پزشکی، آب، انرژی و سایر حوزه‌ها با سربرگ سوشیانت. «ردیابی نامه تا جلسه» همان کارت‌های مرحله‌دار را دارد و «فهرست و بایگانی» فیلتر گروه (پزشکی، آب، انرژی و …) دارد."},
  {mod:"patent",title:"Patent – پتنت",text:"هدف شرکت ثبت اختراع بیشتر است. اینجا اختراع‌های ثبت‌شده و فرصت‌های تازه را دنبال می‌کنید."},
  {mod:"patent",sub:"home",title:"پتنت‌ها",text:"فهرست اختراع‌های ثبت‌شده، در دست داوری، اظهارنامه‌ها و پیش‌نویس‌ها. اختراع جدید را با «ثبت اختراع / اظهارنامه» وارد کنید. نتایج نظر حقوقی نیستند."},
  {mod:"patent",sub:"ops",title:"فرصت‌های ثبت اختراع",text:"ایجنت هر روز محصولات را با سوابق اختراع مقایسه می‌کند و ادعاهای قابل ثبت را با منبع می‌آورد."},
@@ -4271,7 +4284,7 @@ function tourGo(i){
   if(!S.tour) return;
   S.tour.i=Math.max(0,Math.min(TOUR.length-1,i)); const st=TOUR[S.tour.i];
   if(st.mod){ S.mod=st.mod; S.sub=st.sub||SUBS[st.mod][0][0]; S.q=""; S.forceFull=true; }
-  closeForm(); render(); tourPaint();
+  closeForm(); render(); if(st.click){ const c=document.querySelector(st.click); if(c) c.click(); } tourPaint();
   const el=document.querySelector(".tour-hl"); if(el&&el.scrollIntoView) el.scrollIntoView({block:"nearest",inline:"center"});
 }
 function tourStart(){ S.tour={i:0}; tourGo(0); }
@@ -4445,6 +4458,8 @@ document.addEventListener("click", async e => {
       S.draft={identity:"ir",sector:"oil",date:today(),numAuto:true,number:nextLetterNo("ir",today()),recipient:L.recipient,subject:L.subject,body:L.body,attachments:"",cc:"",annex:"",signer:""};
       S.mod="letters"; S.sub="new"; S.forceFull=true; render(); toast("پیش‌نویس نامه با سربرگ پترو پالا توس آماده شد؛ بازبینی و ذخیره کنید."); break; }
     case "pp-grp": S.ppGrp=b.dataset.k; S.ppSub=""; S.ppSh="track"; renderView(); break;
+    case "pp-tv": S.ppTv={...(S.ppTv||{}),[S.ppGrp||"shasta"]:b.dataset.k}; renderView(); break;
+    case "so-tv": S.soshTv=b.dataset.k; renderView(); break;
     case "pp-sh": S.ppSh=b.dataset.k; S.ppSub=""; renderView(); break;
     case "pp-sub": S.ppSub=b.dataset.k||""; renderView(); break;
     case "pp-letter": { const c=Object.keys(PP_CO).flatMap(ppCos).find(x=>x.k===id); if(c) ppDraft(c); break; }
