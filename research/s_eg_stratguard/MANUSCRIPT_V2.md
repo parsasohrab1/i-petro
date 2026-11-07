@@ -40,5 +40,5 @@ Choose a journal whose scope accepts benchmark/diagnostic studies with public da
 
 ## Before any submission
 1. Done: naive-interval baseline (see Added limits).
-2. Put the code in a public archive (owner and patent-attorney approval first); "on request" is a weakness.
+2. Put the code in a public archive (owner approval first); "on request" is a weakness.
 3. Complete `docs/VENUE_FIT_GATE.md` for the chosen journal and send an enquiry.

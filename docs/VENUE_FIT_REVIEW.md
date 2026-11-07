@@ -1,6 +1,6 @@
 # Retrospective venue-fit review (2026-11-06)
 
-Automatic first pass from the dashboard record only. Checks 3, 4, 8, 9, 10 (novelty, recent papers, title, enquiry, owner/patent) cannot be judged from the record and stay `pending`. Levels: blocked = cannot be submitted as it stands; high = likely desk rejection; medium = needs work.
+Automatic first pass from the dashboard record only. Checks 3, 4, 8, 9, 10 (novelty, recent papers, title, enquiry, owner) cannot be judged from the record and stay `pending`. Levels: blocked = cannot be submitted as it stands; high = likely desk rejection; medium = needs work.
 
 | id | level | data | scope | payoff | note |
 |---|---|---|---|---|---|
