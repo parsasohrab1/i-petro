@@ -1751,5 +1751,6 @@
       "gmail_link": "https://mail.google.com/mail/u/0/#all/1a1409d4964d4506",
       "visible": true
     }
-  ]
+  ],
+  "_us_exclusion_note": "US scholarships remain excluded from this dashboard. Iran remains under full US entry restriction (Presidential Proclamation 10998, 'Suspension of Entry of Immigrants and Nonimmigrants from Certain Countries'). This restriction affects F-1 student visas and J-1 exchange visas for Iranian nationals. Verified as of November 8, 2026 (Tehran time). US-based scholarships/PhD positions are flagged as visible=false when present in the data. Papers and article submissions to US journals and conferences remain completely unaffected by this policy."
 }
