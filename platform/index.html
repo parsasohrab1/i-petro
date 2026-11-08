@@ -300,7 +300,16 @@ function subscribe(){
   S.db.doc("settings/company").onSnapshot(d => { S.settings = d.exists ? d.data() : {}; paintBrand(); render(); }, ()=>{});
   S.db.doc("settings/letterhead").onSnapshot(d => { S.lh = d.exists ? d.data() : null; render(); }, ()=>{});
   S.db.doc("settings/letterhead_soshiant").onSnapshot(d => { S.lhs = d.exists ? d.data() : null; render(); }, ()=>{});
-  S.db.doc("settings/issued_numbers").onSnapshot(d => { S.issuedNumbers = d.exists ? (d.data().numbers||[]) : []; }, ()=>{});
+  S.db.doc("settings/issued_numbers").onSnapshot(d => {
+    S.issuedNumbers = d.exists ? (d.data().numbers||[]) : [];
+    // Build fast lookup map: letterKey:date -> record
+    S.issuedNumbersMap = {};
+    for(const rec of S.issuedNumbers){
+      if(rec.letterKey && rec.date){
+        S.issuedNumbersMap[`${rec.letterKey}:${rec.date}`] = rec;
+      }
+    }
+  }, ()=>{});
   if(S.me.id){
     S.db.collection(`attendance/${S.me.id}/days`).onSnapshot(s=>{S.myAtt=s.docs.map(d=>({id:d.id,...d.data()}));render();autoCheckout(S.myAtt,S.me.id)},()=>{});
     S.db.doc(`mindtest/${S.me.id}/items/result`).onSnapshot(d=>{S.myMind=d.exists?d.data():null;render()},()=>{});
@@ -2627,21 +2636,21 @@ async function downloadLetter(l){
   if(!S.downloads){ toast("دریافت فایل فقط داخل claude.ai فعال است."); return; }
   try{
     toast("در حال ساخت فایل Word…");
-    // Refresh number and date for unsent letters
-    // A letter is "sent/frozen" if: (1) it has both signatures, OR (2) it's in archive with status="closed" or stage="done"
-    const isDraft = !l.ceo_sig || !l.office_sig; // draft letters missing signatures
-    const isArchivedUnsent = l.letter_id && l.status && l.status !== "closed" && l.stage !== "done"; // archived but not sent
-    const isUnsent = isDraft || isArchivedUnsent;
+    // A letter is "sent/frozen" if it has reached stage "sent" or later (sent, received, review, reply, meeting, done)
+    // Signed-but-unsent letters (both signatures but stage < "sent" or no stage) remain unsent
+    const SENT_STAGES = new Set(["sent","received","review","reply","meeting","done"]);
+    const isSent = l.stage && SENT_STAGES.has(l.stage);
     
     let letter = l;
-    if(isUnsent){
+    if(!isSent){
+      // Unsent letter: get or generate stable number/date for today
       const freshDate = today();
-      const freshNumber = nextLetterNo(l.identity||"ir", freshDate);
-      // Record this number as issued
-      await recordIssuedNumber(freshNumber, freshDate, l.id||l.letter_id);
-      // Update letter with fresh date/number for this download only (don't persist)
-      letter = {...l, date: freshDate, number: freshNumber};
-      toast(`شماره‌ی ${faNum(freshNumber.slice(-3))} – ${faDate(freshDate)}`);
+      const letterKey = l.id || l.letter_id || l.number || "draft";
+      const issued = await getOrIssueNumber(letterKey, l.identity||"ir", freshDate);
+      letter = {...l, date: issued.date, number: issued.number};
+      if(issued.newly_issued){
+        toast(`شماره‌ی ${faNum(issued.number.slice(-3))} – ${faDate(issued.date)}`);
+      }
     }
     const bytes = await makeLetterDocx(letter);
     await S.downloads.save({filename:`${String(letter.number||"letter").replace(/[^\w.-]+/g,"_")}.docx`, data:new Blob([bytes],{type:"application/vnd.openxmlformats-officedocument.wordprocessingml.document"})});
@@ -2652,43 +2661,66 @@ async function downloadLetter(l){
 const INTL_DEFAULT = {name:"Parsa International Group",address:"Istanbul, Türkiye",website:"parsaint.group",email:"info@parsaint.group",signatory:"Narges Farahani",title:"AI Sector, Parsa International Group"};
 const intlId = () => { const st=S.settings; return {name:st.intl_name||INTL_DEFAULT.name,address:st.intl_address||INTL_DEFAULT.address,website:st.intl_website||INTL_DEFAULT.website,email:st.intl_email||INTL_DEFAULT.email,signatory:st.intl_signatory||INTL_DEFAULT.signatory,title:st.intl_title||INTL_DEFAULT.title}; };
 const enDate = d => { try{ return new Intl.DateTimeFormat("en-GB",{day:"numeric",month:"long",year:"numeric"}).format(new Date((d||today())+"T12:00:00")); }catch(e){ return d||""; } };
-function nextLetterNo(identity,date){
-  if(identity==="intl"){ const y=new Date().getFullYear(); const n=S.letters.filter(l=>(l.number||"").startsWith(`PIG-${y}-`)).length+1; return `PIG-${y}-${String(n).padStart(4,"0")}`; }
-  // at most LETTER_DAY_CAP letters carry the same day's date; the next one is dated the following day (and the draft's date moves with it)
-  const start=date||today();
-  // Build set of used numbers from letters, lettersArchive, and issued number history
-  const used=new Set([
-    ...S.letters.map(l=>String(l.number||"")),
-    ...(S.lettersArchive||[]).map(l=>String(l.number||"")),
-    ...(S.issuedNumbers||[]).map(n=>String(n.number||""))
-  ]);
-  let day=start;
-  for(let g=0; g<120; g++){
-    const j=jalaliParts(day), prefix=j.y+j.m+j.d, n=S.letters.filter(l=>String(l.number||"").startsWith(prefix)).length;
-    if(n<LETTER_DAY_CAP){
-      let s=n+1, num; do{ num=prefix+String(s).padStart(3,"0"); s++; }while(used.has(num));
-      if(day!==start&&S.draft&&S.draft.numAuto){ S.draft.date=day; toast("سقف "+faNum(LETTER_DAY_CAP)+" نامه در روز تکمیل است؛ تاریخ نامه به روز بعد منتقل شد."); }
-      return num;   // e.g. 14050714001: Jalali year, month, day and a 3-digit serial
-    }
-    day=addDays(day,1);
-  }
-}
-const LETTER_DAY_CAP = 20;
-async function recordIssuedNumber(number, date, letterId){
-  // Record that this number was issued on this date for this letter
-  // This prevents number collision even if letters are deleted or modified
+async function getOrIssueNumber(letterKey, identity, date){
+  // Get stable number for this letter on this calendar day, or issue a new one
+  // Returns {number, date, newly_issued: boolean}
+  // Each unsent letter gets exactly one number per Tehran calendar day, stable across repeated downloads
+  if(!S.issuedNumbersMap) S.issuedNumbersMap = {};
   if(!S.issuedNumbers) S.issuedNumbers = [];
-  const existing = S.issuedNumbers.find(n=>n.number===number);
-  if(!existing){
-    const record = {number, date, letterId, issuedAt: new Date().toISOString()};
-    S.issuedNumbers.push(record);
-    // Persist to settings/issued_numbers (append-only log, keep last 500)
-    try{
-      await S.db.doc("settings/issued_numbers").set({numbers: S.issuedNumbers.slice(-500)});
-    }catch(e){ console.error("recordIssuedNumber save failed", e); }
+  
+  // Check if this letter already has a number issued today
+  const key = `${letterKey}:${date}`;
+  if(S.issuedNumbersMap[key]){
+    return {number: S.issuedNumbersMap[key].number, date: S.issuedNumbersMap[key].date, newly_issued: false};
   }
+  
+  // Check persistent storage
+  const existing = S.issuedNumbers.find(n=>n.letterKey===letterKey && n.date===date);
+  if(existing){
+    S.issuedNumbersMap[key] = existing;
+    return {number: existing.number, date: existing.date, newly_issued: false};
+  }
+  
+  // Issue a new number
+  const number = identity==="intl" ? nextIntlLetterNo() : nextIranLetterNo(date);
+  const record = {letterKey, number, date, identity, issuedAt: new Date().toISOString()};
+  S.issuedNumbers.push(record);
+  S.issuedNumbersMap[key] = record;
+  
+  // Persist full durable history (no truncation)
+  try{
+    await S.db.doc("settings/issued_numbers").set({numbers: S.issuedNumbers});
+  }catch(e){ console.error("getOrIssueNumber save failed", e); }
+  
+  return {number, date, newly_issued: true};
 }
-function getDraft(){ if(!S.draft) S.draft={number:nextLetterNo("ir",today()),date:today(),numAuto:true,sector:"oil",identity:"ir"}; return S.draft; }
+function nextIntlLetterNo(){
+  // International letters: PIG-YYYY-NNNN
+  const y=new Date().getFullYear();
+  const used=new Set([
+    ...S.letters.map(l=>String(l.number||"")).filter(n=>n.startsWith(`PIG-${y}-`)),
+    ...(S.lettersArchive||[]).map(l=>String(l.number||"")).filter(n=>n.startsWith(`PIG-${y}-`)),
+    ...(S.issuedNumbers||[]).map(n=>String(n.number||"")).filter(n=>n.startsWith(`PIG-${y}-`))
+  ]);
+  let s=used.size+1, num;
+  do{ num=`PIG-${y}-${String(s).padStart(4,"0")}`; s++; }while(used.has(num));
+  return num;
+}
+function nextIranLetterNo(date){
+  // Iranian letters: YYYYMMDD-NNN (Jalali date + 3-digit serial)
+  // NEVER roll to next day; fail if >999 letters on same day
+  const j=jalaliParts(date), prefix=j.y+j.m+j.d;
+  const used=new Set([
+    ...S.letters.map(l=>String(l.number||"")).filter(n=>n.startsWith(prefix)),
+    ...(S.lettersArchive||[]).map(l=>String(l.number||"")).filter(n=>n.startsWith(prefix)),
+    ...(S.issuedNumbers||[]).map(n=>String(n.number||"")).filter(n=>n.startsWith(prefix))
+  ]);
+  if(used.size>=999){ toast("خطا: بیش از ۹۹۹ نامه در یک روز قابل صدور نیست."); throw new Error("Daily letter limit exceeded"); }
+  let s=used.size+1, num;
+  do{ num=prefix+String(s).padStart(3,"0"); s++; }while(used.has(num));
+  return num;
+}
+function getDraft(){ if(!S.draft) S.draft={number:nextIranLetterNo(today()),date:today(),numAuto:true,sector:"oil",identity:"ir"}; return S.draft; }
 function draftLetter(){ return {...getDraft()}; }
 
 VIEWS["letters.new"] = () => {
