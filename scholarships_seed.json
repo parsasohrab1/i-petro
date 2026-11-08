@@ -1317,10 +1317,10 @@
       "url": "",
       "source": "Gmail extract",
       "ai_relevant": true,
-      "note": "",
+      "note": "Declined due to research mismatch (Nov 3, 2026)",
       "origin": "gmail_2026",
       "contact_date": "2026-11-03",
-      "status": "inquiry_sent",
+      "status": "declined",
       "professor_email": "matthew.j.howard@kcl.ac.uk",
       "gmail_link": "https://mail.google.com/mail/u/0/#all/1a1a25970d6ff5e9"
     },
