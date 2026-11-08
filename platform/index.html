@@ -166,17 +166,17 @@ document.documentElement.lang="fa"; document.documentElement.dir="rtl"; // the l
 const MODULES = [
   ["market","REQUEST FOR PROPOSALS"],["events","Events"],["erp","ERP"],["bpms","BPMS"],["content","Content"],["letters","Letters"],["patent","Patent"],["scholar","Scholarship"],["articles","Articles"],["basket","Products Basket"],["news","News"]];
 const SUBS = {
-  content:[["hamraz","همراز"],["ppt","پترو پالاتوس"],["ithub","آیتی هاب"],["pig","پارسا اینترنشنال گروپ"],["all","همه‌ی برندها"]],
-  basket:[["list","محصولات سبد"],["data","داده‌ها و آپلود"],["trl","داده‌ی واقعی و ارتقای TRL ۴ به ۵"],["ideas","محصولات پیشنهادی نو"]],
+  content:[["all","همه‌ی محتوا"]],
+  basket:[["list","محصولات سبد"],["data","داده‌ها و آپلود"],["trl","داده‌ی واقعی و ارتقای TRL"],["ideas","محصولات پیشنهادی"]],
   news:[["feed","اخبار هوش مصنوعی"]],
-  market:[["iran","Iran AI Projects"],["docs_ir","مدارک پترو پالاتوس (داخلی)"],["overseas","Overseas AI Projects"],["techneeds","نیازهای فناورانه"],["docs_int","مدارک پارسا اینت (بین‌المللی)"],["partners","شرکای تجاری بین‌المللی"],["web","Web Design & SEO"],["investors","AI Investors & Accelerators"],["tracking","Project Tracking"],["pipeline","Pipeline"],["memory","Team Memory"]],
-  events:[["iran","ایران"],["world","جهان"],["all","همه"],["taken","در دست پیگیری"]],
-  erp:[["ops","برنامه‌ی عملیات و واگذاری"],["domains","حوزه‌های فعالیت"],["products","توسعه‌ی محصول هوشمند"],["people","نیروی انسانی"],["finance","مالی"],["clients","مشتریان و قراردادها"],["backup","پشتیبان‌گیری"]],
-  bpms:[["home","خانه‌ی BPMS"],["contacts","مخاطبین و ارتباط"],["myday","روز من"],["mind","ذهن‌نگار (آزمون خصوصی)"],["board","تخته‌ی اسکرام"],["backlog","بک‌لاگ و برنامه‌ریزی"],["sprints","اسپرینت‌ها"],["tasks","فهرست تسک‌ها"],["reports","گزارش عملکرد"],["rarchive","بایگانی گزارش‌ها"],["teams","تیم‌ها"],["process","فرایندها"],["calendar","تقویم"],["members","اعضا و ثبت‌نام"],["nda","قرارداد محرمانگی"],["training","فرم آموزش"]],
-  letters:[["new","نامه‌ی جدید (ساخت فایل Word)"],["pp","پترو پالا توس"],["sosh","سوشیانت"]],
-  scholar:[["applied","اقدام‌شده و در دست بررسی"],["human","مسئول انسانی"],["doing","در دست اقدام"],["todo","اقدام‌نشده"],["failed","ناموفق (بسته‌شده)"],["target","فهرست هدف: AI · CS · IT · مدیریت"],["profile","مشخصات و رزومه من"],["cv","رزومه محمد پارسا سهرابی"]],
-  articles:[["applied","اقدام‌شده و در دست بررسی"],["doing","در دست اقدام"],["todo","اقدام‌نشده"],["product","محصول ویژه‌ی مقاله"],["claude","تسک برای Claude"],["evidence","شواهد و داده‌ی واقعی"],["submit","ثبت چکیده و ثبت‌نام (مسئول انسانی)"],["list","فهرست کامل"],["pipe","خط لوله تا ویزا"],["mail","مسیر ایمیل: ثبت · تاییدیه · مقاله کامل"],["fees","هزینه ورودی و ارائه آنلاین"],["ready","آمادگی ثبت (۶ معیار)"],["upload","آپلود داده‌ها"],["access","دسترسی افراد"]],
-  patent:[["home","پتنت‌ها"],["human","مسئول انسانی"],["ops","فرصت‌های ثبت اختراع"],["products","محصولات ریپو"]]
+  market:[["iran","پروژه‌های داخلی"],["overseas","پروژه‌های بین‌المللی"],["techneeds","نیازهای فناورانه"],["partners","شرکای بین‌المللی"],["investors","AI Investors & Accelerators"],["tracking","وضعیت درخواست"],["pipeline","Pipeline"],["memory","یادداشت تیم"]],
+  events:[["all","همه‌ی رویدادها"],["taken","در دست پیگیری"]],
+  erp:[["ops","برنامه‌ی عملیات"],["products","محصولات"],["people","نیروی انسانی"],["finance","مالی"],["clients","مشتریان"],["backup","پشتیبان"]],
+  bpms:[["home","خانه"],["myday","روز من"],["tasks","تسک‌ها"],["board","تخته اسکرام"],["backlog","بک‌لاگ"],["sprints","اسپرینت‌ها"],["reports","گزارش عملکرد"],["calendar","تقویم"],["members","اعضا"],["nda","قرارداد"],["training","آموزش"]],
+  letters:[["new","نامه جدید"],["archive","بایگانی"]],
+  scholar:[["list","فهرست بورسیه‌ها"],["human","مسئول انسانی"],["profile","مشخصات من"]],
+  articles:[["list","فهرست"],["submit","ثبت و ثبت‌نام (مسئول)"],["evidence","شواهد"],["mail","وضعیت ایمیل"],["access","دسترسی"]],
+  patent:[["list","پتنت‌ها"],["human","مسئول انسانی"]]
 };
 const TEAMS = {finance:"مالی",admin:"اداری",ai:"هوش مصنوعی"};
 const STAFF_FORM = {ai_trainee:"هوش مصنوعی – کارآموز",ai_junior:"هوش مصنوعی – جونیور",ai_senior:"هوش مصنوعی – سنیور",fin_trainee:"مالی – کارآموز",fin_assistant:"مالی – کمک حسابدار",fin_accountant:"مالی – حسابدار",adm_trainee:"امور اداری – کارآموز",adm_employee:"امور اداری – کارمند",product:"سبد محصولات هوشمند"};
@@ -300,6 +300,16 @@ function subscribe(){
   S.db.doc("settings/company").onSnapshot(d => { S.settings = d.exists ? d.data() : {}; paintBrand(); render(); }, ()=>{});
   S.db.doc("settings/letterhead").onSnapshot(d => { S.lh = d.exists ? d.data() : null; render(); }, ()=>{});
   S.db.doc("settings/letterhead_soshiant").onSnapshot(d => { S.lhs = d.exists ? d.data() : null; render(); }, ()=>{});
+  S.db.doc("settings/issued_numbers").onSnapshot(d => {
+    S.issuedNumbers = d.exists ? (d.data().numbers||[]) : [];
+    // Build fast lookup map: letterKey:date -> record
+    S.issuedNumbersMap = {};
+    for(const rec of S.issuedNumbers){
+      if(rec.letterKey && rec.date){
+        S.issuedNumbersMap[`${rec.letterKey}:${rec.date}`] = rec;
+      }
+    }
+  }, ()=>{});
   if(S.me.id){
     S.db.collection(`attendance/${S.me.id}/days`).onSnapshot(s=>{S.myAtt=s.docs.map(d=>({id:d.id,...d.data()}));render();autoCheckout(S.myAtt,S.me.id)},()=>{});
     S.db.doc(`mindtest/${S.me.id}/items/result`).onSnapshot(d=>{S.myMind=d.exists?d.data():null;render()},()=>{});
@@ -900,6 +910,38 @@ const ownerSelect = (id,tr) => { const cur=tr.owner||"", locked=!isAdmin()&&cur&
 async function trackSetOwner(id,who){ const t=S.tracking[id]||{}; const {lease:_l,...rest}=t;
   return save(`tracking/${id}`,{stage:"identified",...rest,owner:who,log:[...(t.log||[]),{at:nowIso(),by:S.me.id,note:who?`مسئول: ${memberName(who)}`:"مسئول برداشته شد"}].slice(-40),updated:nowIso(),updated_by:S.me.id},who?`مسئول: ${memberName(who)}`:"مسئول برداشته شد"); }
 VIEWS["market.tracking"] = () => {
+  // Show investor requests if available, otherwise fall back to tender tracking
+  const requests = S.m.requests || [];
+  if (requests.length > 0) {
+    const list = requests.filter(r=>match(r.investor,r.product,r.country,r.status,r.request_type));
+    const REQ_STATUS = {"not sent":"ارسال نشده","sent":"ارسال شده","replied":"پاسخ دریافت شده","meeting":"جلسه","declined":"رد شده","unmatched":"بدون تطبیق"};
+    const statusFilter = S.reqStatusFilter || "all";
+    const filteredList = statusFilter==="all" ? list : list.filter(r=>r.status===statusFilter);
+    
+    const statusButtons = `<div class="toolbar" style="margin-bottom:8px">
+      <button class="btn sm ${statusFilter==='all'?'sig':'ghost'}" data-act="req-status-filter" data-st="all">همه (${faNum(list.length)})</button>
+      <button class="btn sm ${statusFilter==='not sent'?'sig':'ghost'}" data-act="req-status-filter" data-st="not sent">ارسال نشده (${faNum(list.filter(r=>r.status==='not sent').length)})</button>
+      <button class="btn sm ${statusFilter==='sent'?'sig':'ghost'}" data-act="req-status-filter" data-st="sent">ارسال شده (${faNum(list.filter(r=>r.status==='sent').length)})</button>
+      <button class="btn sm ${statusFilter==='unmatched'?'sig':'ghost'}" data-act="req-status-filter" data-st="unmatched">بدون تطبیق (${faNum(list.filter(r=>r.status==='unmatched').length)})</button>
+    </div>`;
+    
+    return `<p class="note">وضعیت درخواست‌های سرمایه‌گذاری. قانون: یک محصول منحصربه‌فرد برای هر سرمایه‌گذار. همه‌ی درخواست‌ها در انتظار تأیید شواهد، واجد شرایط بودن و بررسی تحریم‌ها هستند.</p>`+
+    statusButtons+
+    kpis([["کل درخواست‌ها",faNum(list.length)],["تطبیق‌یافته",faNum(list.filter(r=>r.status!=='unmatched').length)],["ارسال نشده",faNum(list.filter(r=>r.status==='not sent').length),true]])+
+    table(["سرمایه‌گذار","کشور","محصول","نوع درخواست","تاریخ ارسال","کانال","وضعیت","اقدام بعدی"], filteredList.map(r=>{
+      const statusPill = r.status==="not sent"?"p-warn":r.status==="unmatched"?"p-mute":"p-ok";
+      const inv = (S.m.investors||[]).find(i=>i.id===r.investor_id)||{};
+      return `<tr>${td("سرمایه‌گذار",`<b>${esc(r.investor)}</b>${inv.website?`<br>${link(inv.website,"وبسایت")}`:""}`,"t")}
+      ${td("کشور",esc(r.country))}
+      ${td("محصول",r.product==='unmatched'?'<span class="meta">بدون تطبیق</span>':r.product_url?link(r.product_url,r.product):`<code>${esc(r.product)}</code>`)}
+      ${td("نوع",esc(r.request_type||"—"))}
+      ${td("تاریخ",r.date_sent?faDate(r.date_sent):"—")}
+      ${td("کانال",r.channel.startsWith('http')?link(r.channel,"لینک"):r.channel.startsWith('mailto:')?`<a href="${esc(r.channel)}">ایمیل</a>`:esc(r.channel))}
+      ${td("وضعیت",`<span class="pill ${statusPill}">${esc(REQ_STATUS[r.status]||r.status)}</span>`)}
+      ${td("اقدام بعدی",`<span class="meta" title="${esc(r.next_step||"")}">${esc((r.next_step||"").substring(0,50))}${r.next_step&&r.next_step.length>50?"...":""}</span>`)}</tr>`}),"درخواستی ثبت نشده است.");
+  }
+  
+  // Fallback to tender tracking
   const list=S.m.tenders.filter(t=>ACTIVE.has(t.status)).filter(t=>match(t.title,t.country,(S.tracking[t.id]||{}).owner));
   const st=Object.keys(STAGES);
   return `<p class="note">مسئول، مرحله و اقدام بعدی هر پروژه را مستقیم از همین‌جا ویرایش کنید؛ تغییرات برای همه‌ی اعضا ذخیره می‌شود.</p>`+
@@ -2042,10 +2084,23 @@ function schList(page){
 const schOnly = fn => () => isOwnerOnly() ? fn() : `<p class="empty">این بخش فقط برای مالک سامانه است.</p>`;
 const schTeam = fn => () => (isOwnerOnly()||schAccess()) ? fn() : `<p class="empty">این بخش فقط برای مالک و مسئولان بورسیه است.</p>`;
 VIEWS["scholar.human"] = schTeam(() => humView("scholar"));
-VIEWS["scholar.applied"]=schTeam(()=>schList("applied"));
-VIEWS["scholar.doing"]=schTeam(()=>schList("doing"));
-VIEWS["scholar.failed"]=schTeam(()=>schList("failed"));
-VIEWS["scholar.todo"]=schTeam(()=>schList("todo"));
+// Consolidated scholarship list with filters
+VIEWS["scholar.list"]=schTeam(()=>{
+  const gm=gmNote();
+  const allScholarships=SCH.filter(p=>p.visible!==false).filter(p=>match(p.uni,p.country,p.city,p.field,p.kind));
+  const byStatus={};
+  Object.keys(SCH_ST).forEach(st=>byStatus[st]=allScholarships.filter(p=>schStatus(p)===st).sort(schOrder));
+  
+  const statusFilter=S.schStatusFilter||"all";
+  const list=statusFilter==="all"?allScholarships.sort(schOrder):byStatus[statusFilter]||[];
+  
+  const filterButtons=`<div class="toolbar">${Object.entries(SCH_ST).map(([k,l])=>
+    `<button class="btn sm ${statusFilter===k?'sig':'ghost'}" data-act="sch-filter" data-st="${k}">${esc(l)} (${faNum(byStatus[k].length)})</button>`
+  ).join("")}<button class="btn sm ${statusFilter==='all'?'sig':'ghost'}" data-act="sch-filter" data-st="all">همه (${faNum(allScholarships.length)})</button></div>`;
+  
+  return gm+filterButtons+kpis(Object.entries(SCH_ST).map(([k,l])=>[l,faNum(byStatus[k].length),false]))+
+    (list.length?list.map(p=>schCard(p,schStatus(p))).join(""):'<p class="empty">موردی در این فیلتر نیست.</p>');
+});
 const SCH_DOCS = ["رزومه‌ی آکادمیک (CV)","انگیزه‌نامه (SOP)","پیشنهاد پژوهشی (برای دکتری)","ریز نمرات و مدرک تحصیلی با ترجمه‌ی رسمی","مدرک زبان (IELTS/TOEFL)","۲ تا ۳ توصیه‌نامه","پاسپورت","مقالات و سوابق پژوهشی (در صورت وجود)","گواهی سابقه‌ی کار (در صورت نیاز)"];
 function schCv(){
   const q=S.sp||{}; const L=(t,v)=>v?`<h4>${t}</h4><p style="white-space:pre-wrap">${esc(v)}</p>`:"";
@@ -2581,8 +2636,24 @@ async function downloadLetter(l){
   if(!S.downloads){ toast("دریافت فایل فقط داخل claude.ai فعال است."); return; }
   try{
     toast("در حال ساخت فایل Word…");
-    const bytes = await makeLetterDocx(l);
-    await S.downloads.save({filename:`${String(l.number||"letter").replace(/[^\w.-]+/g,"_")}.docx`, data:new Blob([bytes],{type:"application/vnd.openxmlformats-officedocument.wordprocessingml.document"})});
+    // A letter is "sent/frozen" if it has reached stage "sent" or later (sent, received, review, reply, meeting, done)
+    // Signed-but-unsent letters (both signatures but stage < "sent" or no stage) remain unsent
+    const SENT_STAGES = new Set(["sent","received","review","reply","meeting","done"]);
+    const isSent = l.stage && SENT_STAGES.has(l.stage);
+    
+    let letter = l;
+    if(!isSent){
+      // Unsent letter: get or generate stable number/date for today
+      const freshDate = today();
+      const letterKey = l.id || l.letter_id || l.number || "draft";
+      const issued = await getOrIssueNumber(letterKey, l.identity||"ir", freshDate);
+      letter = {...l, date: issued.date, number: issued.number};
+      if(issued.newly_issued){
+        toast(`شماره‌ی ${faNum(issued.number.slice(-3))} – ${faDate(issued.date)}`);
+      }
+    }
+    const bytes = await makeLetterDocx(letter);
+    await S.downloads.save({filename:`${String(letter.number||"letter").replace(/[^\w.-]+/g,"_")}.docx`, data:new Blob([bytes],{type:"application/vnd.openxmlformats-officedocument.wordprocessingml.document"})});
   }catch(err){ if(!err||err.code!=="declined"){ toast("ساخت یا دریافت فایل Word انجام نشد."); console.error(err); } }
 }
 
@@ -2590,23 +2661,66 @@ async function downloadLetter(l){
 const INTL_DEFAULT = {name:"Parsa International Group",address:"Istanbul, Türkiye",website:"parsaint.group",email:"info@parsaint.group",signatory:"Narges Farahani",title:"AI Sector, Parsa International Group"};
 const intlId = () => { const st=S.settings; return {name:st.intl_name||INTL_DEFAULT.name,address:st.intl_address||INTL_DEFAULT.address,website:st.intl_website||INTL_DEFAULT.website,email:st.intl_email||INTL_DEFAULT.email,signatory:st.intl_signatory||INTL_DEFAULT.signatory,title:st.intl_title||INTL_DEFAULT.title}; };
 const enDate = d => { try{ return new Intl.DateTimeFormat("en-GB",{day:"numeric",month:"long",year:"numeric"}).format(new Date((d||today())+"T12:00:00")); }catch(e){ return d||""; } };
-function nextLetterNo(identity,date){
-  if(identity==="intl"){ const y=new Date().getFullYear(); const n=S.letters.filter(l=>(l.number||"").startsWith(`PIG-${y}-`)).length+1; return `PIG-${y}-${String(n).padStart(4,"0")}`; }
-  // at most LETTER_DAY_CAP letters carry the same day's date; the next one is dated the following day (and the draft's date moves with it)
-  const start=date||today(), used=new Set(S.letters.map(l=>String(l.number||"")));
-  let day=start;
-  for(let g=0; g<120; g++){
-    const j=jalaliParts(day), prefix=j.y+j.m+j.d, n=S.letters.filter(l=>String(l.number||"").startsWith(prefix)).length;
-    if(n<LETTER_DAY_CAP){
-      let s=n+1, num; do{ num=prefix+String(s).padStart(3,"0"); s++; }while(used.has(num));
-      if(day!==start&&S.draft&&S.draft.numAuto){ S.draft.date=day; toast("سقف "+faNum(LETTER_DAY_CAP)+" نامه در روز تکمیل است؛ تاریخ نامه به روز بعد منتقل شد."); }
-      return num;   // e.g. 14050714001: Jalali year, month, day and a 3-digit serial
-    }
-    day=addDays(day,1);
+async function getOrIssueNumber(letterKey, identity, date){
+  // Get stable number for this letter on this calendar day, or issue a new one
+  // Returns {number, date, newly_issued: boolean}
+  // Each unsent letter gets exactly one number per Tehran calendar day, stable across repeated downloads
+  if(!S.issuedNumbersMap) S.issuedNumbersMap = {};
+  if(!S.issuedNumbers) S.issuedNumbers = [];
+  
+  // Check if this letter already has a number issued today
+  const key = `${letterKey}:${date}`;
+  if(S.issuedNumbersMap[key]){
+    return {number: S.issuedNumbersMap[key].number, date: S.issuedNumbersMap[key].date, newly_issued: false};
   }
+  
+  // Check persistent storage
+  const existing = S.issuedNumbers.find(n=>n.letterKey===letterKey && n.date===date);
+  if(existing){
+    S.issuedNumbersMap[key] = existing;
+    return {number: existing.number, date: existing.date, newly_issued: false};
+  }
+  
+  // Issue a new number
+  const number = identity==="intl" ? nextIntlLetterNo() : nextIranLetterNo(date);
+  const record = {letterKey, number, date, identity, issuedAt: new Date().toISOString()};
+  S.issuedNumbers.push(record);
+  S.issuedNumbersMap[key] = record;
+  
+  // Persist full durable history (no truncation)
+  try{
+    await S.db.doc("settings/issued_numbers").set({numbers: S.issuedNumbers});
+  }catch(e){ console.error("getOrIssueNumber save failed", e); }
+  
+  return {number, date, newly_issued: true};
 }
-const LETTER_DAY_CAP = 20;
-function getDraft(){ if(!S.draft) S.draft={number:nextLetterNo("ir",today()),date:today(),numAuto:true,sector:"oil",identity:"ir"}; return S.draft; }
+function nextIntlLetterNo(){
+  // International letters: PIG-YYYY-NNNN
+  const y=new Date().getFullYear();
+  const used=new Set([
+    ...S.letters.map(l=>String(l.number||"")).filter(n=>n.startsWith(`PIG-${y}-`)),
+    ...(S.lettersArchive||[]).map(l=>String(l.number||"")).filter(n=>n.startsWith(`PIG-${y}-`)),
+    ...(S.issuedNumbers||[]).map(n=>String(n.number||"")).filter(n=>n.startsWith(`PIG-${y}-`))
+  ]);
+  let s=used.size+1, num;
+  do{ num=`PIG-${y}-${String(s).padStart(4,"0")}`; s++; }while(used.has(num));
+  return num;
+}
+function nextIranLetterNo(date){
+  // Iranian letters: YYYYMMDD-NNN (Jalali date + 3-digit serial)
+  // NEVER roll to next day; fail if >999 letters on same day
+  const j=jalaliParts(date), prefix=j.y+j.m+j.d;
+  const used=new Set([
+    ...S.letters.map(l=>String(l.number||"")).filter(n=>n.startsWith(prefix)),
+    ...(S.lettersArchive||[]).map(l=>String(l.number||"")).filter(n=>n.startsWith(prefix)),
+    ...(S.issuedNumbers||[]).map(n=>String(n.number||"")).filter(n=>n.startsWith(prefix))
+  ]);
+  if(used.size>=999){ toast("خطا: بیش از ۹۹۹ نامه در یک روز قابل صدور نیست."); throw new Error("Daily letter limit exceeded"); }
+  let s=used.size+1, num;
+  do{ num=prefix+String(s).padStart(3,"0"); s++; }while(used.has(num));
+  return num;
+}
+function getDraft(){ if(!S.draft) S.draft={number:nextIranLetterNo(today()),date:today(),numAuto:true,sector:"oil",identity:"ir"}; return S.draft; }
 function draftLetter(){ return {...getDraft()}; }
 
 VIEWS["letters.new"] = () => {
@@ -3416,10 +3530,18 @@ function artView(page){
 }
 function artRecBox(a){ const r=(S.artRec||{})[a.id]; if(!r) return "";
   return `<div class="card" style="margin-top:6px;padding:6px 8px"><b>ثبت‌شده در سامانه‌ی مقصد</b>${r.ref?`<br>شناسه: <b class="mono" dir="ltr">${esc(r.ref)}</b>`:""}${r.state?`<br>${esc(r.state)}`:""}${r.next?`<br><span class="meta">گام بعدی: ${esc(r.next)}</span>`:""}${r.note?`<br><span class="meta">${esc(r.note)}</span>`:""}<br><span class="meta">${esc(r.mail||"")}${r.at?` · ${faDate(String(r.at).slice(0,10))}`:""}</span></div>`; }
-VIEWS["articles.list"]=()=>artView("all");
-VIEWS["articles.applied"]=()=>artView("applied");
-VIEWS["articles.doing"]=()=>artView("doing");
-VIEWS["articles.todo"]=()=>artView("todo");
+// Consolidated articles list with status filter in toolbar
+VIEWS["articles.list"]=()=>{
+  const statusFilter=S.artStatusFilter||"all";
+  const view=artView(statusFilter);
+  const statusButtons=`<div class="toolbar" style="margin-bottom:8px">
+    <button class="btn sm ${statusFilter==='all'?'sig':'ghost'}" data-act="art-status-filter" data-st="all">همه</button>
+    <button class="btn sm ${statusFilter==='applied'?'sig':'ghost'}" data-act="art-status-filter" data-st="applied">اقدام‌شده</button>
+    <button class="btn sm ${statusFilter==='doing'?'sig':'ghost'}" data-act="art-status-filter" data-st="doing">در دست اقدام</button>
+    <button class="btn sm ${statusFilter==='todo'?'sig':'ghost'}" data-act="art-status-filter" data-st="todo">اقدام‌نشده</button>
+  </div>`;
+  return statusButtons+view;
+};
 // ---- pipeline to the visa: identify -> abstract -> registration -> confirmation -> template -> manuscript -> acceptance -> visa
 const VISA_KIND = c => /لهستان|فرانسه|استونی|ایتالیا|آلمان|اسپانیا|هلند|سوئد|اتریش|یونان|پرتغال/.test(c||"")?"schengen":/کانادا/.test(c||"")?"canada":/بریتانیا|انگلیس|اسکاتلند/.test(c||"")?"uk":/سنگاپور/.test(c||"")?"sg":/مالزی/.test(c||"")?"my":/ایالات متحده|آمریکا/.test(c||"")?"us":"other";
 const VISA_STEPS = {
@@ -3697,7 +3819,8 @@ function contentView(brand){
   <h3>تسک‌های محتوا</h3>
   ${taskTable(tasks)}`;
 }
-for(const b of ["hamraz","ppt","ithub","pig","all"]) VIEWS["content."+b]=()=>contentView(b);
+// Consolidated content view
+VIEWS["content.all"]=()=>contentView("all");
 
 VIEWS["basket.data"]=()=>{ const h=dataHubProducts(); return `<p class="note">برای هر محصول، لینک‌های دانلود داده‌ی واقعی (از فهرست TRL) و جستجوی مجموعه‌داده‌ی عمومی و بخش آپلود است. لینک‌هایی که هنوز تأیید نشده‌اند در فهرست TRL با برچسب «تأیید نشده» آمده‌اند. هر فایل با SHA256 ثبت و به تسک «داده‌ی واقعی» همان محصول پیوست می‌شود.</p>`+(h||'<p class="empty">محصولی برای نمایش نیست.</p>'); };
 { const _u=VIEWS["articles.upload"]; VIEWS["articles.upload"]=()=>`<h3>داده‌ی هر مقاله</h3><p class="note">برای هر مقاله‌ی اقدام‌شده یا در دست اقدام، لینک دانلود داده و آپلود داده در دسترس است.</p>`+(dataHubArticles()||'<p class="empty">مقاله‌ای نیست.</p>')+`<h3>تسک‌های دانلود داده</h3>`+_u(); }
@@ -4339,6 +4462,9 @@ document.addEventListener("click", async e => {
     case "prop-docx": await downloadProp(b.dataset.id); break;
     case "prop-show": propShow(b.dataset.id); break;
     case "sch-profile": schProfileForm(); break;
+    case "sch-filter": S.schStatusFilter=b.dataset.st; render(); break;
+    case "art-status-filter": S.artStatusFilter=b.dataset.st; render(); break;
+    case "req-status-filter": S.reqStatusFilter=b.dataset.st; render(); break;
     case "sup-save": await supSave(b.dataset.id,Number(b.dataset.i)); break;
     case "sch-copy": await schCopyPrompt(b.dataset.id); break;
     case "sch-task": await schClaudeTask(b.dataset.id); break;
