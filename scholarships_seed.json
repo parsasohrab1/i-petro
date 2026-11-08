@@ -18,7 +18,8 @@
       "source": "platform seed (researched earlier)",
       "ai_relevant": true,
       "note": "",
-      "origin": "seed"
+      "origin": "seed",
+      "visible": false
     },
     {
       "id": "daad_epos",
@@ -37,7 +38,8 @@
       "source": "platform seed (researched earlier)",
       "ai_relevant": true,
       "note": "",
-      "origin": "seed"
+      "origin": "seed",
+      "visible": true
     },
     {
       "id": "daad_phd",
@@ -56,7 +58,8 @@
       "source": "platform seed (researched earlier)",
       "ai_relevant": true,
       "note": "",
-      "origin": "seed"
+      "origin": "seed",
+      "visible": true
     },
     {
       "id": "erasmus",
@@ -75,7 +78,8 @@
       "source": "platform seed (researched earlier)",
       "ai_relevant": true,
       "note": "",
-      "origin": "seed"
+      "origin": "seed",
+      "visible": true
     },
     {
       "id": "si",
@@ -94,7 +98,8 @@
       "source": "platform seed (researched earlier)",
       "ai_relevant": true,
       "note": "",
-      "origin": "seed"
+      "origin": "seed",
+      "visible": true
     },
     {
       "id": "kaust",
@@ -114,7 +119,8 @@
       "source": "platform seed (researched earlier)",
       "ai_relevant": true,
       "note": "",
-      "origin": "seed"
+      "origin": "seed",
+      "visible": false
     },
     {
       "id": "mext",
@@ -134,7 +140,8 @@
       "source": "platform seed (researched earlier)",
       "ai_relevant": true,
       "note": "",
-      "origin": "seed"
+      "origin": "seed",
+      "visible": false
     },
     {
       "id": "gks",
@@ -154,7 +161,8 @@
       "source": "platform seed (researched earlier)",
       "ai_relevant": true,
       "note": "",
-      "origin": "seed"
+      "origin": "seed",
+      "visible": false
     },
     {
       "id": "hungary",
@@ -174,7 +182,8 @@
       "source": "platform seed (researched earlier)",
       "ai_relevant": true,
       "note": "",
-      "origin": "seed"
+      "origin": "seed",
+      "visible": true
     },
     {
       "id": "eth",
@@ -193,7 +202,8 @@
       "source": "platform seed (researched earlier)",
       "ai_relevant": true,
       "note": "",
-      "origin": "seed"
+      "origin": "seed",
+      "visible": true
     },
     {
       "id": "eiffel",
@@ -213,7 +223,8 @@
       "source": "platform seed (researched earlier)",
       "ai_relevant": true,
       "note": "",
-      "origin": "seed"
+      "origin": "seed",
+      "visible": true
     },
     {
       "id": "gates",
@@ -233,7 +244,8 @@
       "source": "platform seed (researched earlier)",
       "ai_relevant": true,
       "note": "",
-      "origin": "seed"
+      "origin": "seed",
+      "visible": true
     },
     {
       "id": "chevening",
@@ -252,7 +264,8 @@
       "source": "platform seed (researched earlier)",
       "ai_relevant": true,
       "note": "",
-      "origin": "seed"
+      "origin": "seed",
+      "visible": true
     },
     {
       "id": "hbku",
@@ -272,7 +285,8 @@
       "source": "platform seed (researched earlier)",
       "ai_relevant": true,
       "note": "",
-      "origin": "seed"
+      "origin": "seed",
+      "visible": false
     },
     {
       "id": "tum",
@@ -292,7 +306,8 @@
       "source": "platform seed (researched earlier)",
       "ai_relevant": true,
       "note": "",
-      "origin": "seed"
+      "origin": "seed",
+      "visible": true
     },
     {
       "id": "austria",
@@ -312,7 +327,8 @@
       "source": "platform seed (researched earlier)",
       "ai_relevant": true,
       "note": "",
-      "origin": "seed"
+      "origin": "seed",
+      "visible": true
     },
     {
       "id": "norway",
@@ -331,7 +347,8 @@
       "source": "platform seed (researched earlier)",
       "ai_relevant": true,
       "note": "",
-      "origin": "seed"
+      "origin": "seed",
+      "visible": true
     },
     {
       "id": "edinburgh",
@@ -351,7 +368,8 @@
       "source": "platform seed (researched earlier)",
       "ai_relevant": true,
       "note": "",
-      "origin": "seed"
+      "origin": "seed",
+      "visible": true
     },
     {
       "id": "netherlands",
@@ -370,7 +388,8 @@
       "source": "platform seed (researched earlier)",
       "ai_relevant": true,
       "note": "",
-      "origin": "seed"
+      "origin": "seed",
+      "visible": true
     },
     {
       "id": "crick",
@@ -389,7 +408,8 @@
       "source": "platform seed (researched earlier)",
       "ai_relevant": true,
       "note": "",
-      "origin": "seed"
+      "origin": "seed",
+      "visible": true
     },
     {
       "id": "commonwealth",
@@ -409,7 +429,8 @@
       "source": "platform seed (researched earlier)",
       "ai_relevant": true,
       "note": "",
-      "origin": "seed"
+      "origin": "seed",
+      "visible": true
     },
     {
       "id": "eskas",
@@ -428,7 +449,8 @@
       "source": "platform seed (researched earlier)",
       "ai_relevant": true,
       "note": "",
-      "origin": "seed"
+      "origin": "seed",
+      "visible": true
     },
     {
       "id": "singa",
@@ -447,7 +469,8 @@
       "source": "platform seed (researched earlier)",
       "ai_relevant": true,
       "note": "",
-      "origin": "seed"
+      "origin": "seed",
+      "visible": false
     },
     {
       "id": "aus_awards",
@@ -467,7 +490,8 @@
       "source": "platform seed (researched earlier)",
       "ai_relevant": true,
       "note": "",
-      "origin": "seed"
+      "origin": "seed",
+      "visible": true
     },
     {
       "id": "monash",
@@ -487,7 +511,8 @@
       "source": "platform seed (researched earlier)",
       "ai_relevant": true,
       "note": "",
-      "origin": "seed"
+      "origin": "seed",
+      "visible": true
     },
     {
       "id": "auckland",
@@ -506,7 +531,8 @@
       "source": "platform seed (researched earlier)",
       "ai_relevant": true,
       "note": "",
-      "origin": "seed"
+      "origin": "seed",
+      "visible": true
     },
     {
       "id": "melbourne",
@@ -526,7 +552,8 @@
       "source": "platform seed (researched earlier)",
       "ai_relevant": true,
       "note": "",
-      "origin": "seed"
+      "origin": "seed",
+      "visible": true
     },
     {
       "id": "decodes",
@@ -546,7 +573,8 @@
       "ai_relevant": true,
       "note": "",
       "origin": "seed",
-      "status0": "applied"
+      "status0": "applied",
+      "visible": true
     },
     {
       "id": "derby_ai_phd",
@@ -565,7 +593,8 @@
       "source": "گزارش کاربر + صفحه‌ی رسمی Derby",
       "ai_relevant": true,
       "note": "جست‌وجوی وب امروز آگهی AI در Derby را تأیید نکرد (تنها آگهی فهرست‌شده: wildlife gardening با مهلت ۲۸ اکتبر ۲۰۲۶، غیر AI). لینک/نام آگهی را بفرستید تا مشخصات ثبت شود.",
-      "origin": "seed"
+      "origin": "seed",
+      "visible": true
     },
     {
       "id": "ucl_dla",
@@ -584,7 +613,8 @@
       "source": "ukscholarships / globalsouthopportunities (2026-10)",
       "ai_relevant": true,
       "note": "باز برای متقاضی بین‌المللی طبق منبع؛ در سایت UCL تأیید شود",
-      "origin": "seed"
+      "origin": "seed",
+      "visible": true
     },
     {
       "id": "imperial_president",
@@ -603,7 +633,8 @@
       "source": "wemakescholars / pforphd (2026-10)",
       "ai_relevant": true,
       "note": "",
-      "origin": "seed"
+      "origin": "seed",
+      "visible": true
     },
     {
       "id": "imperial_ada",
@@ -622,7 +653,8 @@
       "source": "ukscholarships (2026-10)",
       "ai_relevant": true,
       "note": "ویژه‌ی متقاضیان زن",
-      "origin": "seed"
+      "origin": "seed",
+      "visible": true
     },
     {
       "id": "kcl_hri",
@@ -641,7 +673,8 @@
       "source": "ukscholarships (2026-10)",
       "ai_relevant": true,
       "note": "",
-      "origin": "seed"
+      "origin": "seed",
+      "visible": true
     },
     {
       "id": "oxford_clarendon",
@@ -661,7 +694,8 @@
       "source": "truescho / scholarshippath (2026-10)",
       "ai_relevant": true,
       "note": "",
-      "origin": "seed"
+      "origin": "seed",
+      "visible": true
     },
     {
       "id": "oxford_ellison",
@@ -680,7 +714,8 @@
       "source": "ukscholarships (2026-10)",
       "ai_relevant": true,
       "note": "",
-      "origin": "seed"
+      "origin": "seed",
+      "visible": true
     },
     {
       "id": "ukri_dtp",
@@ -699,7 +734,8 @@
       "source": "pforphd (2026-10)",
       "ai_relevant": true,
       "note": "",
-      "origin": "seed"
+      "origin": "seed",
+      "visible": true
     },
     {
       "id": "cranfield_agentic",
@@ -718,7 +754,8 @@
       "source": "Cranfield (جست‌وجو ۲۰۲۶-۱۰-۲۵)",
       "ai_relevant": true,
       "note": "شمول شهریه‌ی بین‌المللی را از آگهی بپرسید",
-      "origin": "seed"
+      "origin": "seed",
+      "visible": true
     },
     {
       "id": "ellis",
@@ -737,7 +774,8 @@
       "source": "ellis.eu",
       "ai_relevant": true,
       "note": "فول‌فاند بودن هر موقعیت جداگانه تأیید شود",
-      "origin": "seed"
+      "origin": "seed",
+      "visible": true
     },
     {
       "id": "elle_msca",
@@ -756,7 +794,8 @@
       "source": "scholarschapter (2026-10)",
       "ai_relevant": true,
       "note": "قانون تحرک MSCA: در ۳۶ ماه گذشته بیش از ۱۲ ماه در کشور میزبان نبوده باشید",
-      "origin": "seed"
+      "origin": "seed",
+      "visible": true
     },
     {
       "id": "mpi_eth_cls",
@@ -817,7 +856,8 @@
           "t": "پس از تأیید مالک، ارسال درافت تمدید مهلت به cls@is.mpg.de و پیگیری پاسخ",
           "by": "me"
         }
-      ]
+      ],
+      "visible": true
     },
     {
       "id": "st_gallen",
@@ -836,7 +876,8 @@
       "source": "academicpositions (2026-10)",
       "ai_relevant": true,
       "note": "",
-      "origin": "seed"
+      "origin": "seed",
+      "visible": true
     },
     {
       "id": "mps_bioai",
@@ -855,7 +896,8 @@
       "source": "academicpositions (2026-10)",
       "ai_relevant": true,
       "note": "",
-      "origin": "seed"
+      "origin": "seed",
+      "visible": true
     },
     {
       "id": "mpi_inf",
@@ -874,7 +916,8 @@
       "source": "academicpositions (2026-10)",
       "ai_relevant": true,
       "note": "",
-      "origin": "seed"
+      "origin": "seed",
+      "visible": true
     },
     {
       "id": "eth_robotics",
@@ -893,7 +936,8 @@
       "source": "academicpositions (2026-10)",
       "ai_relevant": true,
       "note": "",
-      "origin": "seed"
+      "origin": "seed",
+      "visible": true
     },
     {
       "id": "ucph_phd",
@@ -912,7 +956,8 @@
       "country": "دانمارک",
       "levels": [
         "phd"
-      ]
+      ],
+      "visible": true
     },
     {
       "id": "ucph_msca_ai_reg",
@@ -931,7 +976,8 @@
       "country": "دانمارک",
       "levels": [
         "phd"
-      ]
+      ],
+      "visible": true
     },
     {
       "id": "dtu_phd",
@@ -950,7 +996,8 @@
       "country": "دانمارک",
       "levels": [
         "phd"
-      ]
+      ],
+      "visible": true
     },
     {
       "id": "ca_admission",
@@ -969,7 +1016,8 @@
       "country": "کانادا",
       "levels": [
         "phd"
-      ]
+      ],
+      "visible": true
     },
     {
       "id": "mila",
@@ -987,7 +1035,8 @@
       "country": "کانادا",
       "levels": [
         "phd"
-      ]
+      ],
+      "visible": true
     },
     {
       "id": "vector_gsp",
@@ -1005,7 +1054,8 @@
       "country": "کانادا",
       "levels": [
         "phd"
-      ]
+      ],
+      "visible": true
     },
     {
       "id": "nvidia_fellow",
@@ -1024,7 +1074,8 @@
       "country": "کانادا",
       "levels": [
         "phd"
-      ]
+      ],
+      "visible": true
     },
     {
       "id": "weidenfeld",
@@ -1043,7 +1094,8 @@
       "source": "opportunitydesk / leapscholar (2026-10-16)",
       "ai_relevant": false,
       "origin": "seed",
-      "note": "باز است. برای کشورهای در حال توسعه؛ بازگشت به کشور اقامت الزامی؛ منابع اختلاف دارند که DPhil را شامل می‌شود یا نه (یکی می‌گوید خیر). گزینه را در فرم Oxford انتخاب و Statement جدا بارگذاری کنید"
+      "note": "باز است. برای کشورهای در حال توسعه؛ بازگشت به کشور اقامت الزامی؛ منابع اختلاف دارند که DPhil را شامل می‌شود یا نه (یکی می‌گوید خیر). گزینه را در فرم Oxford انتخاب و Statement جدا بارگذاری کنید",
+      "visible": true
     },
     {
       "id": "emjm_imaging",
@@ -1061,7 +1113,8 @@
       "levels": [
         "master"
       ],
-      "country": "چند کشور اروپایی"
+      "country": "چند کشور اروپایی",
+      "visible": true
     },
     {
       "id": "maia",
@@ -1080,7 +1133,8 @@
       "levels": [
         "master"
       ],
-      "country": "چند کشور اروپایی"
+      "country": "چند کشور اروپایی",
+      "visible": true
     },
     {
       "id": "membiomed",
@@ -1098,7 +1152,8 @@
       "levels": [
         "master"
       ],
-      "country": "چند کشور اروپایی"
+      "country": "چند کشور اروپایی",
+      "visible": true
     },
     {
       "id": "emmah",
@@ -1116,7 +1171,8 @@
       "levels": [
         "master"
       ],
-      "country": "چند کشور اروپایی"
+      "country": "چند کشور اروپایی",
+      "visible": true
     },
     {
       "id": "kingston_bs",
@@ -1135,7 +1191,8 @@
       "ai_relevant": false,
       "origin": "seed",
       "region": "uk",
-      "country": "بریتانیا"
+      "country": "بریتانیا",
+      "visible": true
     },
     {
       "id": "kingston_niloufar",
@@ -1154,7 +1211,8 @@
       "ai_relevant": false,
       "origin": "seed",
       "region": "uk",
-      "country": "بریتانیا"
+      "country": "بریتانیا",
+      "visible": true
     },
     {
       "id": "imperial_bs",
@@ -1172,7 +1230,8 @@
       "ai_relevant": false,
       "origin": "seed",
       "region": "uk",
-      "country": "بریتانیا"
+      "country": "بریتانیا",
+      "visible": true
     },
     {
       "id": "liverpool_ms",
@@ -1190,7 +1249,8 @@
       "ai_relevant": false,
       "origin": "seed",
       "region": "uk",
-      "country": "بریتانیا"
+      "country": "بریتانیا",
+      "visible": true
     },
     {
       "id": "bristol_bs",
@@ -1208,7 +1268,8 @@
       "ai_relevant": false,
       "origin": "seed",
       "region": "uk",
-      "country": "بریتانیا"
+      "country": "بریتانیا",
+      "visible": true
     },
     {
       "id": "edinburgh_bs",
@@ -1226,7 +1287,8 @@
       "ai_relevant": false,
       "origin": "seed",
       "region": "uk",
-      "country": "بریتانیا"
+      "country": "بریتانیا",
+      "visible": true
     },
     {
       "id": "ambs",
@@ -1244,7 +1306,8 @@
       "ai_relevant": false,
       "origin": "seed",
       "region": "uk",
-      "country": "بریتانیا"
+      "country": "بریتانیا",
+      "visible": true
     },
     {
       "id": "imprs_is",
@@ -1263,7 +1326,8 @@
       "country": "آلمان",
       "levels": [
         "phd"
-      ]
+      ],
+      "visible": true
     },
     {
       "id": "dkfz_ds_health",
@@ -1281,7 +1345,8 @@
       "country": "آلمان",
       "levels": [
         "phd"
-      ]
+      ],
+      "visible": true
     },
     {
       "id": "erfurt",
@@ -1299,7 +1364,8 @@
       "country": "آلمان",
       "levels": [
         "phd"
-      ]
+      ],
+      "visible": true
     },
     {
       "id": "sch_matthew_howard",
@@ -1322,7 +1388,8 @@
       "contact_date": "2026-11-03",
       "status": "declined",
       "professor_email": "matthew.j.howard@kcl.ac.uk",
-      "gmail_link": "https://mail.google.com/mail/u/0/#all/1a1a25970d6ff5e9"
+      "gmail_link": "https://mail.google.com/mail/u/0/#all/1a1a25970d6ff5e9",
+      "visible": true
     },
     {
       "id": "sch_brent_young",
@@ -1345,7 +1412,8 @@
       "contact_date": "2026-11-03",
       "status": "away",
       "professor_email": "b.young@auckland.ac.nz",
-      "gmail_link": "https://mail.google.com/mail/u/0/#all/1a1a0ed6bb223e20"
+      "gmail_link": "https://mail.google.com/mail/u/0/#all/1a1a0ed6bb223e20",
+      "visible": true
     },
     {
       "id": "sch_buettner_florian",
@@ -1368,7 +1436,8 @@
       "contact_date": "2026-11-03",
       "status": "declined",
       "professor_email": "florian.buettner@dkfz-heidelberg.de",
-      "gmail_link": "https://mail.google.com/mail/u/0/#all/1a1a0c5ee0465152"
+      "gmail_link": "https://mail.google.com/mail/u/0/#all/1a1a0c5ee0465152",
+      "visible": true
     },
     {
       "id": "sch_student_recruitment",
@@ -1391,7 +1460,8 @@
       "contact_date": "2026-11-03",
       "status": "inquiry_sent",
       "professor_email": "student-recruitment@crick.ac.uk",
-      "gmail_link": "https://mail.google.com/mail/u/0/#all/1a1a09c06f7b700a"
+      "gmail_link": "https://mail.google.com/mail/u/0/#all/1a1a09c06f7b700a",
+      "visible": true
     },
     {
       "id": "sch_jes_frellsen",
@@ -1414,7 +1484,8 @@
       "contact_date": "2026-11-02",
       "status": "declined",
       "professor_email": "jefr@dtu.dk",
-      "gmail_link": "https://mail.google.com/mail/u/0/#all/1a19c77a7ddda64f"
+      "gmail_link": "https://mail.google.com/mail/u/0/#all/1a19c77a7ddda64f",
+      "visible": true
     },
     {
       "id": "sch_behzad_elahifar",
@@ -1437,7 +1508,8 @@
       "contact_date": "2026-11-02",
       "status": "waiting",
       "professor_email": "behzad.elahifar@ntnu.no",
-      "gmail_link": "https://mail.google.com/mail/u/0/#all/1a19b4c496b9d215"
+      "gmail_link": "https://mail.google.com/mail/u/0/#all/1a19b4c496b9d215",
+      "visible": true
     },
     {
       "id": "sch_officeminekyushu_uacjp",
@@ -1460,7 +1532,8 @@
       "contact_date": "2026-11-02",
       "status": "inquiry_sent",
       "professor_email": "office@mine.kyushu-u.ac.jp",
-      "gmail_link": "https://mail.google.com/mail/u/0/#all/1a19a2c4b3e40e94"
+      "gmail_link": "https://mail.google.com/mail/u/0/#all/1a19a2c4b3e40e94",
+      "visible": true
     },
     {
       "id": "sch_asad_abdi",
@@ -1483,7 +1556,8 @@
       "contact_date": "2026-11-02",
       "status": "inquiry_sent",
       "professor_email": "A.Abdi@derby.ac.uk",
-      "gmail_link": "https://mail.google.com/mail/u/0/#all/1a198da9e606b685"
+      "gmail_link": "https://mail.google.com/mail/u/0/#all/1a198da9e606b685",
+      "visible": true
     },
     {
       "id": "sch_reza_masoumikia_phd_on_linkedin",
@@ -1506,7 +1580,8 @@
       "contact_date": "2026-10-31",
       "status": "inquiry_sent",
       "professor_email": "messages-noreply@linkedin.com",
-      "gmail_link": "https://mail.google.com/mail/u/0/#all/1a1930304cef3de0"
+      "gmail_link": "https://mail.google.com/mail/u/0/#all/1a1930304cef3de0",
+      "visible": true
     },
     {
       "id": "sch_per_christian_hansen",
@@ -1529,7 +1604,8 @@
       "contact_date": "2026-10-31",
       "status": "declined",
       "professor_email": "pcha@dtu.dk",
-      "gmail_link": "https://mail.google.com/mail/u/0/#all/1a1919824e62a6b1"
+      "gmail_link": "https://mail.google.com/mail/u/0/#all/1a1919824e62a6b1",
+      "visible": true
     },
     {
       "id": "sch_philip_jaeger",
@@ -1552,7 +1628,8 @@
       "contact_date": "2026-10-31",
       "status": "positive_response",
       "professor_email": "philip.jaeger@tu-clausthal.de",
-      "gmail_link": "https://mail.google.com/mail/u/0/#all/1a1915d866f3a639"
+      "gmail_link": "https://mail.google.com/mail/u/0/#all/1a1915d866f3a639",
+      "visible": true
     },
     {
       "id": "sch_stephan_günnemann",
@@ -1575,7 +1652,8 @@
       "contact_date": "2026-10-31",
       "status": "away",
       "professor_email": "s.guennemann@tum.de",
-      "gmail_link": "https://mail.google.com/mail/u/0/#all/1a19131d21afe014"
+      "gmail_link": "https://mail.google.com/mail/u/0/#all/1a19131d21afe014",
+      "visible": true
     },
     {
       "id": "sch_femke_vossepoel",
@@ -1598,7 +1676,8 @@
       "contact_date": "2026-10-31",
       "status": "inquiry_sent",
       "professor_email": "F.C.Vossepoel@tudelft.nl",
-      "gmail_link": "https://mail.google.com/mail/u/0/#all/1a1911a7aeebc43d"
+      "gmail_link": "https://mail.google.com/mail/u/0/#all/1a1911a7aeebc43d",
+      "visible": true
     },
     {
       "id": "sch_iain_murray",
@@ -1621,7 +1700,8 @@
       "contact_date": "2026-10-31",
       "status": "inquiry_sent",
       "professor_email": "I.Murray@ed.ac.uk",
-      "gmail_link": "https://mail.google.com/mail/u/0/#all/1a191165ac1a3ce1"
+      "gmail_link": "https://mail.google.com/mail/u/0/#all/1a191165ac1a3ce1",
+      "visible": true
     },
     {
       "id": "sch_yevgeny_seldin",
@@ -1644,7 +1724,8 @@
       "contact_date": "2026-10-31",
       "status": "inquiry_sent",
       "professor_email": "seldin@di.ku.dk",
-      "gmail_link": "https://mail.google.com/mail/u/0/#all/1a191053dee72e93"
+      "gmail_link": "https://mail.google.com/mail/u/0/#all/1a191053dee72e93",
+      "visible": true
     },
     {
       "id": "sch_linkedin",
@@ -1667,7 +1748,8 @@
       "contact_date": "2026-10-15",
       "status": "inquiry_sent",
       "professor_email": "updates-noreply@linkedin.com",
-      "gmail_link": "https://mail.google.com/mail/u/0/#all/1a1409d4964d4506"
+      "gmail_link": "https://mail.google.com/mail/u/0/#all/1a1409d4964d4506",
+      "visible": true
     }
   ]
 }
