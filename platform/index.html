@@ -900,6 +900,38 @@ const ownerSelect = (id,tr) => { const cur=tr.owner||"", locked=!isAdmin()&&cur&
 async function trackSetOwner(id,who){ const t=S.tracking[id]||{}; const {lease:_l,...rest}=t;
   return save(`tracking/${id}`,{stage:"identified",...rest,owner:who,log:[...(t.log||[]),{at:nowIso(),by:S.me.id,note:who?`مسئول: ${memberName(who)}`:"مسئول برداشته شد"}].slice(-40),updated:nowIso(),updated_by:S.me.id},who?`مسئول: ${memberName(who)}`:"مسئول برداشته شد"); }
 VIEWS["market.tracking"] = () => {
+  // Show investor requests if available, otherwise fall back to tender tracking
+  const requests = S.m.requests || [];
+  if (requests.length > 0) {
+    const list = requests.filter(r=>match(r.investor,r.product,r.country,r.status,r.request_type));
+    const REQ_STATUS = {"not sent":"ارسال نشده","sent":"ارسال شده","replied":"پاسخ دریافت شده","meeting":"جلسه","declined":"رد شده","unmatched":"بدون تطبیق"};
+    const statusFilter = S.reqStatusFilter || "all";
+    const filteredList = statusFilter==="all" ? list : list.filter(r=>r.status===statusFilter);
+    
+    const statusButtons = `<div class="toolbar" style="margin-bottom:8px">
+      <button class="btn sm ${statusFilter==='all'?'sig':'ghost'}" data-act="req-status-filter" data-st="all">همه (${faNum(list.length)})</button>
+      <button class="btn sm ${statusFilter==='not sent'?'sig':'ghost'}" data-act="req-status-filter" data-st="not sent">ارسال نشده (${faNum(list.filter(r=>r.status==='not sent').length)})</button>
+      <button class="btn sm ${statusFilter==='sent'?'sig':'ghost'}" data-act="req-status-filter" data-st="sent">ارسال شده (${faNum(list.filter(r=>r.status==='sent').length)})</button>
+      <button class="btn sm ${statusFilter==='unmatched'?'sig':'ghost'}" data-act="req-status-filter" data-st="unmatched">بدون تطبیق (${faNum(list.filter(r=>r.status==='unmatched').length)})</button>
+    </div>`;
+    
+    return `<p class="note">وضعیت درخواست‌های سرمایه‌گذاری. قانون: یک محصول منحصربه‌فرد برای هر سرمایه‌گذار. همه‌ی درخواست‌ها در انتظار تأیید شواهد، واجد شرایط بودن و بررسی تحریم‌ها هستند.</p>`+
+    statusButtons+
+    kpis([["کل درخواست‌ها",faNum(list.length)],["تطبیق‌یافته",faNum(list.filter(r=>r.status!=='unmatched').length)],["ارسال نشده",faNum(list.filter(r=>r.status==='not sent').length),true]])+
+    table(["سرمایه‌گذار","کشور","محصول","نوع درخواست","تاریخ ارسال","کانال","وضعیت","اقدام بعدی"], filteredList.map(r=>{
+      const statusPill = r.status==="not sent"?"p-warn":r.status==="unmatched"?"p-mute":"p-ok";
+      const inv = (S.m.investors||[]).find(i=>i.id===r.investor_id)||{};
+      return `<tr>${td("سرمایه‌گذار",`<b>${esc(r.investor)}</b>${inv.website?`<br>${link(inv.website,"وبسایت")}`:""}`,"t")}
+      ${td("کشور",esc(r.country))}
+      ${td("محصول",r.product==='unmatched'?'<span class="meta">بدون تطبیق</span>':r.product_url?link(r.product_url,r.product):`<code>${esc(r.product)}</code>`)}
+      ${td("نوع",esc(r.request_type||"—"))}
+      ${td("تاریخ",r.date_sent?faDate(r.date_sent):"—")}
+      ${td("کانال",r.channel.startsWith('http')?link(r.channel,"لینک"):r.channel.startsWith('mailto:')?`<a href="${esc(r.channel)}">ایمیل</a>`:esc(r.channel))}
+      ${td("وضعیت",`<span class="pill ${statusPill}">${esc(REQ_STATUS[r.status]||r.status)}</span>`)}
+      ${td("اقدام بعدی",`<span class="meta" title="${esc(r.next_step||"")}">${esc((r.next_step||"").substring(0,50))}${r.next_step&&r.next_step.length>50?"...":""}</span>`)}</tr>`}),"درخواستی ثبت نشده است.");
+  }
+  
+  // Fallback to tender tracking
   const list=S.m.tenders.filter(t=>ACTIVE.has(t.status)).filter(t=>match(t.title,t.country,(S.tracking[t.id]||{}).owner));
   const st=Object.keys(STAGES);
   return `<p class="note">مسئول، مرحله و اقدام بعدی هر پروژه را مستقیم از همین‌جا ویرایش کنید؛ تغییرات برای همه‌ی اعضا ذخیره می‌شود.</p>`+
@@ -4363,6 +4395,7 @@ document.addEventListener("click", async e => {
     case "sch-profile": schProfileForm(); break;
     case "sch-filter": S.schStatusFilter=b.dataset.st; render(); break;
     case "art-status-filter": S.artStatusFilter=b.dataset.st; render(); break;
+    case "req-status-filter": S.reqStatusFilter=b.dataset.st; render(); break;
     case "sup-save": await supSave(b.dataset.id,Number(b.dataset.i)); break;
     case "sch-copy": await schCopyPrompt(b.dataset.id); break;
     case "sch-task": await schClaudeTask(b.dataset.id); break;
