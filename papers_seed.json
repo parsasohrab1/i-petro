@@ -1,102 +1,205 @@
 [
- {
-  "id": "s_eg",
-  "name": "Energy Geoscience – ویژه‌شماره‌ی «AI for Energy Systems and Subsurface Engineering»",
-  "deadline": "2026-10-31"
- },
- {
-  "id": "s_ps",
-  "name": "Petroleum Science (KeAi)",
-  "deadline": ""
- },
- {
-  "id": "s_pet",
-  "name": "Petroleum (KeAi) – شامل ویژه‌شماره‌ی کاربرد AI/ML در صنعت نفت",
-  "deadline": ""
- },
- {
-  "id": "s_jpse",
-  "name": "Journal of Pipeline Science and Engineering (KeAi)",
-  "deadline": ""
- },
- {
-  "id": "s_iai",
-  "name": "IAI2027 – 9th International Conference on Industrial AI",
-  "deadline": "2026-12-31"
- },
- {
-  "id": "s_isie",
-  "name": "IEEE ISIE 2027 – 36th Symposium on Industrial Electronics",
-  "deadline": "2026-12-15"
- },
- {
-  "id": "s_mimar",
-  "name": "MIMAR2027 – 14th IMA Conference on Modelling in Industrial Maintenance and Reliability",
-  "deadline": "2027-02-19"
- },
- {
-  "id": "s_icmhi",
-  "name": "ICMHI 2027 – International Conference on Medical and Health Informatics",
-  "deadline": "2026-12-10"
- },
- {
-  "id": "s_aimh",
-  "name": "AiMH 2027 – 3rd International Conference on AI in Medicine and Healthcare",
-  "deadline": "2027-02-28"
- },
- {
-  "id": "s_mie",
-  "name": "MIE 2027 – Medical Informatics Europe",
-  "deadline": ""
- },
- {
-  "id": "s_jimg",
-  "name": "Journal of Imaging (MDPI) – ویژه‌شماره‌ی هوش مصنوعی توضیح‌پذیر در تصویربرداری پزشکی",
-  "deadline": "2027-03-31"
- },
- {
-  "id": "s_cmi",
-  "name": "Current Medical Imaging – ویژه‌شماره‌ی مدل‌های بنیادی توضیح‌پذیر و دوقلوی دیجیتال",
-  "deadline": "2027-07-16"
- },
- {
-  "id": "s_npj",
-  "name": "npj Digital Medicine (Nature Portfolio)",
-  "deadline": ""
- },
- {
-  "id": "s_qip",
-  "name": "QIP 2027 – Quantum Information Processing (مسیر پوستر)",
-  "deadline": "2026-12-04"
- },
- {
-  "id": "s_iqim",
-  "name": "IQIM 2027 – International Conference on Quantum Information and Mechanics",
-  "deadline": "2026-10-30"
- },
- {
-  "id": "s_iqicsa",
-  "name": "IQICSA 2027 – Quantum Information, Computing, Communications, Simulation and Applications",
-  "deadline": "2027-02-10"
- },
- {
-  "id": "s_quantics",
-  "name": "QUANTICS 2027 – Quantum Information, Computing, Communications and Simulation",
-  "deadline": "2027-03-25"
- },
- {
-  "id": "s_icqe",
-  "name": "ICQE 2027 – International Conference on Quantum Energy (MIT)",
-  "deadline": "2027-04-01"
- },
- {
-  "id": "s_front_nuc",
-  "name": "Frontiers – Research Topic: Advances in AI and Machine Learning for Nuclear Applications",
-  "deadline": ""
- },
- {
-  "id": "s_hydro",
-  "name": "Hydrology (MDPI) – ویژه‌شماره‌ی AI و ML در هیدرولوژی و مدیریت یکپارچه‌ی منابع آب",
-  "deadline": "2026-12-31"
- }
+  {
+    "id": "s_eg",
+    "name": "Energy Geoscience – ویژه‌شماره‌ی «AI for Energy Systems and Subsurface Engineering»",
+    "deadline": "2026-10-31",
+    "status": "rejected",
+    "last_update": "2026-10-27"
+  },
+  {
+    "id": "s_ps",
+    "name": "Petroleum Science (KeAi)",
+    "deadline": ""
+  },
+  {
+    "id": "s_pet",
+    "name": "Petroleum (KeAi) – شامل ویژه‌شماره‌ی کاربرد AI/ML در صنعت نفت",
+    "deadline": ""
+  },
+  {
+    "id": "s_jpse",
+    "name": "Journal of Pipeline Science and Engineering (KeAi)",
+    "deadline": "2026-11-07",
+    "status": "under_review",
+    "last_update": "2026-10-31"
+  },
+  {
+    "id": "s_iai",
+    "name": "IAI2027 – 9th International Conference on Industrial AI",
+    "deadline": "2026-12-31"
+  },
+  {
+    "id": "s_isie",
+    "name": "IEEE ISIE 2027 – 36th Symposium on Industrial Electronics",
+    "deadline": "2026-12-15"
+  },
+  {
+    "id": "s_mimar",
+    "name": "MIMAR2027 – 14th IMA Conference on Modelling in Industrial Maintenance and Reliability",
+    "deadline": "2027-02-19"
+  },
+  {
+    "id": "s_icmhi",
+    "name": "ICMHI 2027 – International Conference on Medical and Health Informatics",
+    "deadline": "2026-12-10",
+    "status": "under_review",
+    "last_update": "2026-11-03"
+  },
+  {
+    "id": "s_aimh",
+    "name": "AiMH 2027 – 3rd International Conference on AI in Medicine and Healthcare",
+    "deadline": "2027-02-28"
+  },
+  {
+    "id": "s_mie",
+    "name": "MIE 2027 – Medical Informatics Europe",
+    "deadline": "2026-11-03",
+    "status": "under_review",
+    "last_update": "2026-10-26"
+  },
+  {
+    "id": "s_jimg",
+    "name": "Journal of Imaging (MDPI) – ویژه‌شماره‌ی هوش مصنوعی توضیح‌پذیر در تصویربرداری پزشکی",
+    "deadline": "2027-03-31"
+  },
+  {
+    "id": "s_cmi",
+    "name": "Current Medical Imaging – ویژه‌شماره‌ی مدل‌های بنیادی توضیح‌پذیر و دوقلوی دیجیتال",
+    "deadline": "2027-07-16"
+  },
+  {
+    "id": "s_npj",
+    "name": "npj Digital Medicine (Nature Portfolio)",
+    "deadline": ""
+  },
+  {
+    "id": "s_qip",
+    "name": "QIP 2027 – Quantum Information Processing (مسیر پوستر)",
+    "deadline": "2026-12-04",
+    "status": "accepted_poster",
+    "last_update": "2026-11-05",
+    "note": "Submission #153 accepted for poster presentation"
+  },
+  {
+    "id": "s_iqim",
+    "name": "IQIM 2027 – International Conference on Quantum Information and Mechanics",
+    "deadline": "2026-10-30"
+  },
+  {
+    "id": "s_iqicsa",
+    "name": "IQICSA 2027 – Quantum Information, Computing, Communications, Simulation and Applications",
+    "deadline": "2027-02-10"
+  },
+  {
+    "id": "s_quantics",
+    "name": "QUANTICS 2027 – Quantum Information, Computing, Communications and Simulation",
+    "deadline": "2027-03-25"
+  },
+  {
+    "id": "s_icqe",
+    "name": "ICQE 2027 – International Conference on Quantum Energy (MIT)",
+    "deadline": "2027-04-01"
+  },
+  {
+    "id": "s_front_nuc",
+    "name": "Frontiers – Research Topic: Advances in AI and Machine Learning for Nuclear Applications",
+    "deadline": "2026-07-31",
+    "status": "under_review",
+    "last_update": "2026-10-24"
+  },
+  {
+    "id": "s_hydro",
+    "name": "Hydrology (MDPI) – ویژه‌شماره‌ی AI و ML در هیدرولوژی و مدیریت یکپارچه‌ی منابع آب",
+    "deadline": "2026-12-31",
+    "status": "rejected",
+    "last_update": "2026-10-29"
+  },
+  {
+    "id": "paper_annals_of_nuclear",
+    "name": "Annals of Nuclear submission",
+    "deadline": "",
+    "venue": "Annals of Nuclear",
+    "submitted_date": "2026-11-08",
+    "status": "under_review",
+    "gmail_link": "https://mail.google.com/mail/u/0/#all/1a1b9e23fc98ce2f",
+    "source": "Gmail extract",
+    "note": "Dear Mr. Mohammad Parsa Sohrabi, Your submission entitled &quot;How Soon Can an Operator Display Show a Certified Accident Diagnosis, and Do Open-Set Scores Flag an Unseen Accident Type? Simulated PWR"
+  },
+  {
+    "id": "paper_machines",
+    "name": "Machines submission",
+    "deadline": "",
+    "venue": "Machines",
+    "submitted_date": "2026-11-07",
+    "status": "rejected",
+    "gmail_link": "https://mail.google.com/mail/u/0/#all/1a1b3182903fd242",
+    "source": "Gmail extract",
+    "note": "Dear Mr. Sohrabi, Thank you for submitting the following manuscript to Machines: Manuscript ID: machines-4711156 Type of manuscript: Article Title: Certified Diagnosis Sets with an Out-of-Envelope"
+  },
+  {
+    "id": "paper_علمی_دانشگاهی",
+    "name": "علمی / دانشگاهی submission",
+    "deadline": "",
+    "venue": "علمی / دانشگاهی",
+    "submitted_date": "2026-11-02",
+    "status": "under_review",
+    "gmail_link": "https://mail.google.com/mail/u/0/#all/1a1996cd0a683360",
+    "source": "Gmail extract",
+    "note": "Dear Mohammad Parsa, Thank you for considering undertaking a research degree at Monash University. Your application has been submitted to the Monash Graduate Research Admissions Team. The details of"
+  },
+  {
+    "id": "paper_ismrm",
+    "name": "ISMRM submission",
+    "deadline": "",
+    "venue": "ISMRM",
+    "submitted_date": "2026-10-31",
+    "status": "under_review",
+    "gmail_link": "https://mail.google.com/mail/u/0/#all/1a1908484b4c9fb9",
+    "source": "Gmail extract",
+    "note": "بررسی کردم ایمیل Recall (باز اصاح مقاله) تو تاریخ 20 اکتبر برای شما ارسال شده ، مهلت ثبت مجددش تا 28 اکتبر بوده که گشته درحال حاضر تاریخ ثبت این مقاله قبل از واگذاری بخش مقاله ها به بنده بوده و توسط م"
+  },
+  {
+    "id": "paper_isct",
+    "name": "ISCT submission",
+    "deadline": "",
+    "venue": "ISCT",
+    "submitted_date": "2026-10-14",
+    "status": "under_review",
+    "gmail_link": "https://mail.google.com/mail/u/0/#all/1a13aa177ac837d7",
+    "source": "Gmail extract",
+    "note": "Dear Mr. Mohammad Parsa Sohrabi, Your abstract (ID: 4620070) entitled, &quot;An Explainable Platform for Designing and Simulating Personalized CAR-T Cell Therapies,&quot; has been submitted. Please"
+  },
+  {
+    "id": "paper_ccus",
+    "name": "CCUS submission",
+    "deadline": "",
+    "venue": "CCUS",
+    "submitted_date": "2026-10-14",
+    "status": "under_review",
+    "gmail_link": "https://mail.google.com/mail/u/0/#all/1a13a6ba5866d7da",
+    "source": "Gmail extract",
+    "note": "Please DO NOT REPLY to the above email address, this Inbox is not monitored by SPE. If you need assistance, please contact the Conference Programs Staff Liaison listed below. Dear Mohammad Sohrabi, SP"
+  },
+  {
+    "id": "paper_ioch",
+    "name": "IOCH submission",
+    "deadline": "",
+    "venue": "IOCH",
+    "submitted_date": "2026-10-13",
+    "status": "under_review",
+    "gmail_link": "https://mail.google.com/mail/u/0/#all/1a134589752a4252",
+    "source": "Gmail extract",
+    "note": "Dear Mohammad Parsa Sohrabi, Thank you for sending us your submission. It will be evaluated by the Scientific Committee and you will be notified about acceptance by a later date. If revisions are"
+  },
+  {
+    "id": "paper_aimed",
+    "name": "AIMed submission",
+    "deadline": "",
+    "venue": "AIMed",
+    "submitted_date": "2026-10-13",
+    "status": "under_review",
+    "gmail_link": "https://mail.google.com/mail/u/0/#all/1a1340201abbfd93",
+    "source": "Gmail extract",
+    "note": "Successful submission Dear Mohammad Parsa Sohrabi, Thank you for your submission titled INEsCape: An Open-Source AI Platform for Esophageal Cancer Risk Prediction and Clinical Decision Support. Your"
+  }
 ]
