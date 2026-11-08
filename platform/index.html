@@ -2682,8 +2682,10 @@ async function recordIssuedNumber(number, date, letterId){
   if(!existing){
     const record = {number, date, letterId, issuedAt: new Date().toISOString()};
     S.issuedNumbers.push(record);
-    // Persist to settings/issued_numbers (append-only log)
-    await save("settings/issued_numbers", {numbers: S.issuedNumbers.slice(-500)}, null, true); // keep last 500 numbers
+    // Persist to settings/issued_numbers (append-only log, keep last 500)
+    try{
+      await S.db.doc("settings/issued_numbers").set({numbers: S.issuedNumbers.slice(-500)});
+    }catch(e){ console.error("recordIssuedNumber save failed", e); }
   }
 }
 function getDraft(){ if(!S.draft) S.draft={number:nextLetterNo("ir",today()),date:today(),numAuto:true,sector:"oil",identity:"ir"}; return S.draft; }
