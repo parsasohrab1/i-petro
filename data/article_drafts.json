@@ -13,11 +13,20 @@
       "abstract": {
         "title": "Design of Real-Time Energy Forecasting and Carbon Accounting System for Petrochemical Units Using Virtual Sample Generation",
         "text": "Petrochemical plants face regulatory pressure to reduce emissions while limited training data hinders forecasting model development. This paper presents design of intelligent system addressing small data problem through virtual sample generation (Monte Carlo, Particle Swarm Optimization). System architecture integrates real-time data acquisition via OPC-UA, machine learning (ELM, LSTM) for 60-minute energy forecasting, comprehensive Scope 1/2/3 carbon accounting using IPCC factors. Design targets olefin and PTA units. System at TRL 3-4; results pending validation on real plant data. Work documents system architecture and design methodology rather than field-validated performance. Design target for prediction error is MAPE below 5% (requirement specification, not measured result).",
-        "keywords": ["energy forecasting", "carbon footprint", "virtual sample generation", "petrochemical", "TRL 3", "system design"]
+        "keywords": [
+          "energy forecasting",
+          "carbon footprint",
+          "virtual sample generation",
+          "petrochemical",
+          "TRL 3",
+          "system design"
+        ]
       },
       "manuscript_spec": {
         "structure": "Full IMRaD: Abstract (200w), Keywords, 1.Introduction (700w), 2.Related Work (600w), 3.System Design (1000w), 4.Simulated Data (300w), 5.Results:Design Targets Pending Validation (500w), 6.Discussion (400w), 7.Conclusion (300w), References (12 verified sources). Total ~4000 words. All performance numbers marked as design targets from specifications. References: IEA Energy Tech Perspectives, GHG Protocol, IPCC Guidelines, academic papers on ELM/LSTM/SMOTE (all verifiable DOIs/URLs).",
-        "word_count_target": 4000
+        "word_count_target": 4000,
+        "actual_word_count": 1315,
+        "draft_status": "DRAFT (1315 words, needs expansion to 3000+ and real validation results before submission)"
       }
     },
     "intellisys_2027_ml": {
@@ -31,11 +40,20 @@
       "abstract": {
         "title": "Multi-Mode Adaptive Decision System for UAV Missions: Design and Simulation Study",
         "text": "Autonomous UAV missions require real-time mode selection (reconnaissance, surveillance, pursuit, loiter, return, engagement) based on dynamic conditions. This paper presents design of adaptive decision system evaluating six modes using weighted multi-criteria scoring at 10 Hz targeting STM32H7 hardware. Design addresses multi-objective optimization balancing energy, mission success, survival under resource constraints. Design target: decision latency below 5ms, mode accuracy target above 90% per requirements. Environmental factors and mission priority dynamically adjust weights. System at TRL 3; assessment on 400 simulated scenarios with no actual flight data. Work documents decision architecture and methodology for future flight validation.",
-        "keywords": ["UAV", "adaptive decision", "multi-criteria optimization", "embedded systems", "TRL 3", "autonomous systems"]
+        "keywords": [
+          "UAV",
+          "adaptive decision",
+          "multi-criteria optimization",
+          "embedded systems",
+          "TRL 3",
+          "autonomous systems"
+        ]
       },
       "manuscript_spec": {
         "structure": "Full IMRaD: Abstract (150w), Keywords, 1.Introduction (650w), 2.Related Work (500w), 3.System Design (900w including scoring equations and STM32H7 specs), 4.Simulated Scenarios (350w), 5.Results:Design Targets Pending Flight Validation (500w), 6.Discussion (400w), 7.Conclusion (300w), References (verified sources on UAV control, TOPSIS, STM32H7 datasheet). Total ~3750 words.",
-        "word_count_target": 3750
+        "word_count_target": 3750,
+        "actual_word_count": 1298,
+        "draft_status": "DRAFT (1298 words, needs expansion to 3000+ and real validation results before submission)"
       }
     },
     "global_energy_show_2027": {
@@ -49,11 +67,20 @@
       "abstract": {
         "title": "AI-Based Optimization of Gas, Chemical, and Steam Injection for Enhanced Oil Recovery: Reservoir Simulation Design Study",
         "text": "Enhanced oil recovery through gas/chemical/steam injection requires optimization balancing recovery and costs. This paper presents design of AI system combining reservoir behavior prediction (Deep Neural Networks) with injection parameter optimization. Design addresses real-time injection control for maximizing recovery while minimizing operational costs. System targets oil reservoir applications. At TRL 3-4; assessment on simulated reservoir data with no real field data. Work documents system architecture and optimization methodology. Design targets: recovery increase 12-15% over baseline (design target from case studies, not measured), cost reduction 20-30% through optimization (design target). Validation on real reservoir and field pilot data required.",
-        "keywords": ["enhanced oil recovery", "AI optimization", "reservoir simulation", "injection control", "TRL 3", "petroleum engineering"]
+        "keywords": [
+          "enhanced oil recovery",
+          "AI optimization",
+          "reservoir simulation",
+          "injection control",
+          "TRL 3",
+          "petroleum engineering"
+        ]
       },
       "manuscript_spec": {
         "structure": "Full IMRaD: Abstract (150w), Keywords, 1.Introduction (650w on EOR methods and AI opportunity), 2.Related Work (550w on reservoir simulation and ML in petroleum), 3.System Design (950w covering DNN for reservoir prediction and multi-objective optimization), 4.Simulated Reservoir Data (350w), 5.Results:Design Targets Pending Field Validation (500w explicitly stating all targets are aspirational), 6.Discussion (400w on sim-to-real gap and field trial requirements), 7.Conclusion (300w), References (SPE papers, reservoir engineering texts, verified sources). Total ~3850 words.",
-        "word_count_target": 3850
+        "word_count_target": 3850,
+        "actual_word_count": 1136,
+        "draft_status": "DRAFT (1136 words, needs expansion to 3000+ and real validation results before submission)"
       }
     },
     "eign_2027_gas": {
@@ -67,11 +94,20 @@
       "abstract": {
         "title": "Predictive Monitoring of Reformer Tube Creep and Methanol Catalyst Degradation: Generic Methods for Natural Gas to Methanol Plants",
         "text": "Natural gas to methanol plants face reformer tube creep risk (catastrophic rupture) and methanol catalyst sintering (activity loss). Existing methods rely on periodic inspection; real-time prediction rare. This paper presents design of digital twin system predicting remaining creep life and catalyst degradation from continuous DCS data (tube skin temperature, stress, reactor conditions). Methods described generically suitable for any single-train methanol plant. Design targets: creep life prediction accuracy MAPE below 15% (design specification), catalyst trend correlation above 0.90 (design target), early warnings 48-72h before critical thresholds. System at TRL 3; assessment on simulated plant data with no real validation. Work documents predictive monitoring methodology without disclosing client-specific information.",
-        "keywords": ["methanol synthesis", "reformer tube", "creep life", "catalyst degradation", "digital twin", "TRL 3"]
+        "keywords": [
+          "methanol synthesis",
+          "reformer tube",
+          "creep life",
+          "catalyst degradation",
+          "digital twin",
+          "TRL 3"
+        ]
       },
       "manuscript_spec": {
         "structure": "Full IMRaD: Abstract (170w), Keywords, 1.Introduction (700w on methanol process and creep/sintering challenges), 2.Related Work (550w on reformer tube patents US RE50475 and catalyst degradation studies), 3.Generic Methods (950w describing creep prediction and catalyst sintering models without plant-specific parameters), 4.Simulated Single-Train Data (350w), 5.Results:Design Targets Pending Validation (500w stating all targets from requirements), 6.Discussion (400w on single-train criticality and HSE considerations), 7.Conclusion (300w), References (reformer patents, methanol synthesis papers, materials creep studies, all verified). Total ~3920 words. CLIENT DATA EXCLUDED PER USER REQUIREMENT.",
-        "word_count_target": 3920
+        "word_count_target": 3920,
+        "actual_word_count": 1564,
+        "draft_status": "DRAFT (1564 words, needs expansion to 3000+ and real validation results before submission)"
       }
     }
   }

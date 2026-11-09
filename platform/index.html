@@ -3838,7 +3838,20 @@ const msOf = id => {
   
   return null;
 };
-const msBtn = a => msOf(a.id) ? (S.downloads?`<button class="btn sm sig" data-act="art-ms" data-id="${esc(a.id)}" title="متن کامل مقاله (Word)">منو اسکریپت (Word)</button>`:"") : `<span class="meta" style="display:block;margin-top:4px">منو اسکریپت: ${esc(((absOf(a.id)||{}).ms_status)||"هنوز نوشته نشده است")}</span>`;   // a venue without a full text says why, instead of showing nothing
+const msBtn = a => {
+  const ms = msOf(a.id);
+  if (!ms) return `<span class="meta" style="display:block;margin-top:4px">منو اسکریپت: ${esc(((absOf(a.id)||{}).ms_status)||"هنوز نوشته نشده است")}</span>`;
+  
+  // Get draft status from article_drafts
+  const draft = S.artDrafts && S.artDrafts[a.id];
+  const spec = draft && draft.manuscript_spec;
+  const actualWC = spec && spec.actual_word_count;
+  const draftStatus = spec && spec.draft_status;
+  
+  const statusText = actualWC ? `<br><span class="meta" style="color:#666">${actualWC} کلمه (DRAFT، نیاز به توسعه و نتایج واقعی قبل از ارسال)</span>` : "";
+  
+  return S.downloads ? `<button class="btn sm sig" data-act="art-ms" data-id="${esc(a.id)}" title="متن کامل مقاله (Word)">منو اسکریپت (Word)</button>${statusText}` : "";
+};
 async function downloadMs(id){
   if(!S.downloads){ toast("دریافت فایل فقط داخل claude.ai فعال است."); return; }
   const m=msOf(id); if(!m) return;
