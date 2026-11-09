@@ -3769,13 +3769,27 @@ async function artSetStatus(id,st){
 }
 function artActions(a){
   const st=artStatus(a), id=esc(a.id), b=[];
-  if(absOf(a.id)&&S.downloads) b.push(`<button class="btn sm" data-act="art-abs" data-id="${id}" title="چکیده طبق قالب همین ژورنال یا کنفرانس، آماده‌ی ثبت در سامانه (فایل Word)">چکیده (Word)</button>`);
-  if(msOf(a.id)&&S.downloads) b.push(`<button class="btn sm sig" data-act="art-ms" data-id="${id}" title="متن کامل مقاله (Word)">منو اسکریپت (Word)</button>`);
+  // Always show abstract button - either functional or draft notice
+  if(absOf(a.id)&&S.downloads) {
+    b.push(`<button class="btn sm" data-act="art-abs" data-id="${id}" title="چکیده طبق قالب همین ژورنال یا کنفرانس، آماده‌ی ثبت در سامانه (فایل Word)">چکیده (Word)</button>`);
+  } else {
+    b.push(`<span class="pill p-mute" title="چکیده هنوز نوشته نشده است">چکیده: پیش‌نویس نیاز دارد</span>`);
+  }
+  // Always show manuscript button - either functional or draft notice
+  if(msOf(a.id)&&S.downloads) {
+    b.push(`<button class="btn sm sig" data-act="art-ms" data-id="${id}" title="متن کامل مقاله (Word)">منو اسکریپت (Word)</button>`);
+  } else {
+    const msStatus = (absOf(a.id)||{}).ms_status || "پیش‌نویس نیاز دارد";
+    b.push(`<span class="pill p-mute" title="${esc(msStatus)}">منواسکریپت: ${esc(msStatus)}</span>`);
+  }
   { const f=(S.artForms||{})[a.id]; if(f&&f.ms&&S.downloads) b.push(`<button class="btn sm" data-act="art-form" data-k="ms" data-v="${id}" title="مقاله‌ی خام (manuscript) طبق قالب همین مقصد (فایل Word)">مقاله (Word)</button>`);
     if(f&&f.tpl) b.push(`<a class="btn sm ghost" href="${esc(f.tpl)}" target="_blank" rel="noopener" title="قالب رسمی مقصد">قالب رسمی</a>`); }
-  const cl=S.artSt[a.id]||{}, taken=(st==="doing"||st==="applied")&&cl.by&&cl.by!==S.me.id&&!S.me.isOwner;
-  if(st==="doing"&&cl.by) b.push(`<span class="pill p-warn">در دست اقدام: ${esc(memberName(cl.by))}${cl.by===S.me.id?" (شما)":""}</span>`);
-  else if(st==="applied"&&cl.by) b.push(`<span class="pill p-ok">ارسال/اقدام: ${esc(memberName(cl.by))}</span>`);
+  // Use assignment as single source of truth for ownership
+  const asg=asgOf("art_"+a.id)||{}, owner=asg.doer||null;
+  const cl=S.artSt[a.id]||{}, taken=(st==="doing"||st==="applied")&&(owner||cl.by)&&(owner||cl.by)!==S.me.id&&!S.me.isOwner;
+  const displayPerson = owner || cl.by;  // assignment takes precedence
+  if(st==="doing"&&displayPerson) b.push(`<span class="pill p-warn">در دست اقدام: ${esc(memberName(displayPerson))}${displayPerson===S.me.id?" (شما)":""}</span>`);
+  else if(st==="applied"&&displayPerson) b.push(`<span class="pill p-ok">ارسال/اقدام: ${esc(memberName(displayPerson))}</span>`);
   if(isAdmin()&&!taken){
     if(st==="todo") b.push(`<label><input type="checkbox" data-act="art-st" data-id="${id}" data-st="applied"> قبلاً اقدام شده</label>`,`<button class="btn sm sig" data-act="art-st" data-id="${id}" data-st="doing">شروع اقدام</button>`);
     else if(st==="doing") b.push(`<label><input type="checkbox" data-act="art-st" data-id="${id}" data-st="applied"> ارسال شد</label>`,`<button class="btn sm ghost" data-act="art-st" data-id="${id}" data-st="todo">بازگشت</button>`);
