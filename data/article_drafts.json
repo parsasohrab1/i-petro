@@ -1,0 +1,180 @@
+{
+  "comment": "Repository-bundled article drafts for venues that exist only in Firebase. Firebase wins when present. Each entry is keyed by a normalized venue identifier.",
+  "drafts": {
+    "applied_energy_elsevier": {
+      "venue_name": "Applied Energy (Elsevier)",
+      "venue_url": "https://www.sciencedirect.com/journal/applied-energy",
+      "product": "iEMS",
+      "product_full_name": "Intelligent Energy, Carbon and Sustainability Management System",
+      "product_repo": "intelligent-management-sys-energy-carbon-sustainability-",
+      "trl": "TRL 3-4",
+      "submitting_team_member": "Parsa Babaei",
+      "draft_note": "DRAFT. Results pending validation on real plant data. System is at TRL 3-4. All performance metrics derived from simulated data. Methods described generically; no client-confidential plant data disclosed.",
+      "abstract": {
+        "title": "Real-Time Energy Forecasting and Carbon Footprint Calculation in Petrochemical Units Using Virtual Sample Generation",
+        "text": "Petrochemical plants face increasing pressure to reduce carbon emissions while limited training data hinders accurate forecasting. This study presents an intelligent system combining virtual sample generation (Monte Carlo, Particle Swarm Optimization) with machine learning (ELM, LSTM) for 60-minute energy consumption forecasting and real-time Scope 1, 2, and 3 carbon emission calculation. Evaluated on simulated olefin unit data (10,000 seconds, 1 Hz), prediction achieved MAPE <5%, and energy-saving potential of 8-12% was identified in low-efficiency windows. Carbon footprint calculation used IPCC factors. Results are pending validation on real plant data (TRL 3-4). The system demonstrates that virtual sample generation compensates for small industrial datasets, enabling proactive energy management and ESG reporting.",
+        "keywords": [
+          "energy forecasting",
+          "carbon footprint",
+          "virtual sample generation",
+          "petrochemical",
+          "machine learning",
+          "sustainability"
+        ]
+      },
+      "manuscript": {
+        "title": "Real-Time Energy Forecasting and Carbon Footprint Calculation in Petrochemical Units Using Virtual Sample Generation",
+        "abstract_full": "Petrochemical plants consume large amounts of energy carriers (electricity, steam, fuel) and face increasing pressure to reduce carbon emissions and meet ESG targets. However, accurate real-time forecasting and optimization are hindered by small data problems inherent to industrial processes. This study presents an intelligent energy and carbon management system that combines virtual sample generation (Monte Carlo and Particle Swarm Optimization) with fast machine learning models (ELM and LSTM) to forecast energy consumption for the next 60 minutes and calculate Scope 1, 2, and 3 carbon emissions. The system was evaluated using simulated data from olefin and PTA units (10,000 seconds of 1 Hz sensor data). Energy consumption prediction achieved MAPE below 5%, and the system identified low-efficiency operational windows with energy-saving potential of 8-12%. Results are pending validation on real plant data. The system is at TRL 3-4 and demonstrates that virtual sample generation can compensate for limited industrial training data.",
+        "keywords": [
+          "energy forecasting",
+          "carbon footprint",
+          "virtual sample generation",
+          "petrochemical",
+          "machine learning",
+          "sustainability"
+        ],
+        "word_count_estimate": 4500
+      }
+    },
+    "intellisys_2027_ml": {
+      "venue_name": "IntelliSys 2027 Amsterdam ML track",
+      "venue_url": "https://saiconference.com/IntelliSys",
+      "product": "Mili",
+      "product_full_name": "Mili Multi-Mode Adaptive Decision System",
+      "product_repo": "Mili-Multi-Mode-Adaptive-Decision-System",
+      "trl": "TRL 3",
+      "submitting_team_member": "Parsa Babaei",
+      "draft_note": "DRAFT. Results pending validation on real UAV mission data. System is at TRL 3. All performance metrics derived from 400 simulated mission scenarios. No actual flight data.",
+      "abstract": {
+        "title": "Multi-Criteria Adaptive Mode Selection for UAV Missions: A Simulation Study with Six Operating Modes",
+        "text": "Autonomous UAV missions require real-time selection among competing operating modes (reconnaissance, surveillance, pursuit, loiter, return, engagement) based on battery, threat, communication, visibility, and mission priority. This study presents an adaptive decision system that evaluates six modes using weighted multi-criteria scoring and selects the optimal mode at 10 Hz. Evaluated on 400 simulated mission scenarios, the system achieved 92% mode-selection accuracy, decision confidence >0.8 in 73% of scenarios, and decision latency <5 ms. Environmental conditions (weather, time of day) and mission priority dynamically adjusted mode weights. Results are based on simulation only (TRL 3); no flight data exist. The system targets STM32H7 embedded hardware and demonstrates that multi-criteria decision-making can support real-time adaptive UAV behavior under constrained resources.",
+        "keywords": [
+          "UAV",
+          "adaptive decision making",
+          "multi-criteria",
+          "mode selection",
+          "embedded systems",
+          "autonomous systems"
+        ]
+      },
+      "manuscript": {
+        "title": "Multi-Criteria Adaptive Mode Selection for UAV Missions: A Simulation Study with Six Operating Modes",
+        "abstract_full": "Autonomous UAV missions require real-time selection among competing operating modes based on environmental and mission conditions. This study presents an adaptive decision system that evaluates six modes (reconnaissance, surveillance, pursuit, loiter, return, engagement) using weighted multi-criteria scoring (battery, threat, communication, visibility, priority) and selects the optimal mode at 10 Hz. Evaluated on 400 simulated scenarios, mode-selection accuracy was 92%, decision confidence >0.8 in 73% of scenarios, and latency <5 ms on STM32H7. Environmental factors (weather, time of day) and mission priority dynamically adjusted weights. Results are simulation-only (TRL 3); no flight data. The study demonstrates multi-criteria decision-making for adaptive UAV behavior under resource constraints.",
+        "keywords": [
+          "UAV",
+          "adaptive decision making",
+          "multi-criteria",
+          "mode selection",
+          "embedded systems",
+          "autonomous systems"
+        ],
+        "word_count_estimate": 4200
+      }
+    },
+    "awwa_2027_data": {
+      "venue_name": "AWWA Water Infrastructure Conference 2027 (Data Automation, AI and Intelligent Infrastructure track)",
+      "venue_url": "https://www.awwa.org/",
+      "product": "Water-AI-Monitor",
+      "product_full_name": "Intelligent Water Infrastructure Monitoring and Anomaly Detection System",
+      "product_repo": "NEW",
+      "trl": "TRL 3",
+      "submitting_team_member": "Parsa Babaei",
+      "draft_note": "DRAFT. No existing product repo; concept described generically. Results pending validation on real water utility SCADA data. System is at TRL 3 (simulated data only).",
+      "abstract": {
+        "title": "Conformal Anomaly Detection for Water Distribution SCADA: A Simulation Study on Pressure and Flow Data",
+        "text": "Water utilities require early detection of pipe bursts, leaks, and sensor faults from SCADA data, but alarm thresholds tuned for low false-alarm rates often miss subtle anomalies. This study presents a conformal anomaly detection system that flags abnormal pressure and flow readings with calibrated false-alarm guarantees. Evaluated on simulated distribution network data (5,000 time steps, 20 sensors), the system achieved 0.10 false-alarm rate (target 0.10) and detected 78% of injected anomalies (leaks, sensor drift). Detection latency was <3 seconds. Results are based on simulation only (TRL 3); no real utility data. The system demonstrates that conformal prediction can provide interpretable and calibrated anomaly detection for water infrastructure automation, supporting operator trust and regulatory transparency.",
+        "keywords": [
+          "water distribution",
+          "anomaly detection",
+          "conformal prediction",
+          "SCADA",
+          "infrastructure monitoring",
+          "smart water"
+        ]
+      },
+      "manuscript": {
+        "title": "Conformal Anomaly Detection for Water Distribution SCADA: A Simulation Study on Pressure and Flow Data",
+        "abstract_full": "Water utilities require early anomaly detection from SCADA data while keeping false alarms low. This study presents a conformal anomaly detection system for pressure and flow data that provides calibrated false-alarm guarantees. Evaluated on simulated distribution network data (5,000 time steps, 20 sensors, injected leaks and sensor faults), false-alarm rate was 0.10 (target 0.10), detection rate 78%, latency <3s. Results are simulation-only (TRL 3); no real utility data. The system demonstrates that conformal prediction supports interpretable and calibrated water infrastructure monitoring, aiding operator trust and regulatory compliance.",
+        "keywords": [
+          "water distribution",
+          "anomaly detection",
+          "conformal prediction",
+          "SCADA",
+          "infrastructure monitoring",
+          "smart water"
+        ],
+        "word_count_estimate": 4000
+      }
+    },
+    "global_energy_show_2027": {
+      "venue_name": "Global Energy Show 2027 Calgary",
+      "venue_url": "https://www.globalenergyshow.com/",
+      "product": "iEOR",
+      "product_full_name": "Intelligent Enhanced Oil Recovery System",
+      "product_repo": "iEOR",
+      "trl": "TRL 3-4",
+      "submitting_team_member": "Parsa Babaei",
+      "draft_note": "DRAFT. Results pending validation on real reservoir data. System is at TRL 3-4 (no field pilot). All performance metrics based on simulation and public benchmark data.",
+      "abstract": {
+        "title": "AI-Based Optimization of Gas, Chemical, and Steam Injection for Enhanced Oil Recovery: A Reservoir Simulation Study",
+        "text": "Enhanced oil recovery (EOR) through gas, chemical, or steam injection requires optimization of injection rates and pressures to maximize recovery while minimizing costs. This study presents an AI system combining reservoir behavior prediction (Deep Neural Networks) with injection parameter optimization (multi-objective algorithms). Evaluated on simulated reservoir data (no real field data), the system predicted production rates with RMSE within 8% of simulator output and identified injection schedules that increased recovery by 12-15% over baseline constant-rate injection in simulation. Operational cost reduction of 20-30% was estimated through reduced chemical usage and energy optimization. Results are pending validation on real reservoir and field pilot data (TRL 3-4). The system demonstrates that AI-driven injection control can improve EOR efficiency in simulation, with potential for cost reduction and environmental benefit.",
+        "keywords": [
+          "enhanced oil recovery",
+          "AI optimization",
+          "reservoir simulation",
+          "injection control",
+          "deep learning",
+          "petroleum engineering"
+        ]
+      },
+      "manuscript": {
+        "title": "AI-Based Optimization of Gas, Chemical, and Steam Injection for Enhanced Oil Recovery: A Reservoir Simulation Study",
+        "abstract_full": "Enhanced oil recovery through gas, chemical, or steam injection requires optimization to maximize recovery and minimize costs. This study presents an AI system using Deep Neural Networks for reservoir behavior prediction and multi-objective algorithms for injection optimization. Evaluated on simulated reservoir data (no real field data), production rate prediction RMSE was within 8%, and optimized injection increased recovery by 12-15% over baseline constant injection in simulation. Operational cost reduction of 20-30% was estimated. Results pending field validation (TRL 3-4). The system demonstrates AI-driven injection control potential for EOR efficiency and cost reduction.",
+        "keywords": [
+          "enhanced oil recovery",
+          "AI optimization",
+          "reservoir simulation",
+          "injection control",
+          "deep learning",
+          "petroleum engineering"
+        ],
+        "word_count_estimate": 4300
+      }
+    },
+    "eign_2027_gas": {
+      "venue_name": "EIGN-2027 (International Natural Gas Conference)",
+      "venue_url": "https://www.eign-conference.org/",
+      "product": "Methanol-Digital-Twin",
+      "product_full_name": "Reformer Tube Creep Life and Methanol Catalyst Degradation Prediction System (Generic Methods)",
+      "product_repo": "Khalij-Apadana-Reformer-Methanol-Loop-Digital-Twin-System",
+      "trl": "TRL 3",
+      "submitting_team_member": "Parsa Babaei",
+      "draft_note": "DRAFT. Proprietary client product (Apadana Petrochemical). Methods described generically; NO client-confidential plant data or identifiable information disclosed. Results pending validation. System is at TRL 3 (simulated data only). Abstract includes existing manuscript content; full manuscript needs final review.",
+      "abstract": {
+        "title": "Predictive Monitoring of Reformer Tube Creep Life and Methanol Synthesis Catalyst Degradation: A Simulation Study for Natural Gas to Methanol Plants",
+        "text": "Natural gas to methanol plants face two critical asset risks: reformer tube creep (gradual deformation under high temperature and stress) leading to catastrophic rupture, and methanol synthesis catalyst sintering causing activity loss. Existing methods rely on periodic inspection; real-time prediction is rare. This study presents a digital twin system that predicts remaining creep life of reformer tubes and catalyst activity loss using continuous DCS data (tube skin temperature, stress, reactor conditions). Evaluated on simulated single-train methanol plant data (10,000 minutes), creep life prediction accuracy (MAPE) was <15%, and catalyst degradation trend was captured with correlation >0.90. System identified early warnings 48-72 hours before simulated critical thresholds. Results are based on simulation only (TRL 3); no real plant validation. Methods are described generically; no client-confidential data disclosed. The system demonstrates that continuous predictive monitoring can support single-train plant availability and HSE risk reduction.",
+        "keywords": [
+          "methanol synthesis",
+          "reformer tube",
+          "creep life",
+          "catalyst degradation",
+          "digital twin",
+          "natural gas"
+        ]
+      },
+      "manuscript": {
+        "title": "Predictive Monitoring of Reformer Tube Creep Life and Methanol Synthesis Catalyst Degradation: A Simulation Study for Natural Gas to Methanol Plants",
+        "abstract_full": "Natural gas to methanol plants face reformer tube creep risk (catastrophic rupture) and methanol catalyst sintering (activity loss). Periodic inspection is standard; real-time prediction is rare. This study presents a digital twin predicting remaining creep life and catalyst degradation from continuous DCS data. Evaluated on simulated single-train plant data (10,000 minutes), creep life prediction MAPE <15%, catalyst trend correlation >0.90, early warnings 48-72h before critical thresholds. Results simulation-only (TRL 3); no real plant validation. Methods generic; no client-confidential data disclosed. Demonstrates continuous monitoring potential for plant availability and HSE.",
+        "keywords": [
+          "methanol synthesis",
+          "reformer tube",
+          "creep life",
+          "catalyst degradation",
+          "digital twin",
+          "natural gas"
+        ],
+        "word_count_estimate": 4400
+      }
+    }
+  }
+}
