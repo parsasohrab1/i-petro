@@ -173,7 +173,7 @@ const SUBS = {
   events:[["all","همه‌ی رویدادها"],["taken","در دست پیگیری"]],
   erp:[["ops","برنامه‌ی عملیات"],["products","محصولات"],["people","نیروی انسانی"],["finance","مالی"],["clients","مشتریان"],["backup","پشتیبان"]],
   bpms:[["home","خانه"],["myday","روز من"],["tasks","تسک‌ها"],["board","تخته اسکرام"],["backlog","بک‌لاگ"],["sprints","اسپرینت‌ها"],["reports","گزارش عملکرد"],["calendar","تقویم"],["members","اعضا"],["nda","قرارداد"],["training","آموزش"]],
-  letters:[["new","نامه جدید"],["archive","بایگانی"]],
+  letters:[["new","نامه جدید"],["tasks","وظایف نامه‌نگاری"],["archive","بایگانی"]],
   scholar:[["list","فهرست بورسیه‌ها"],["human","مسئول انسانی"],["profile","مشخصات من"]],
   articles:[["list","فهرست"],["submit","ثبت و ثبت‌نام (مسئول)"],["evidence","شواهد"],["mail","وضعیت ایمیل"],["access","دسترسی"]],
   patent:[["list","پتنت‌ها"],["human","مسئول انسانی"]]
@@ -208,10 +208,11 @@ const logoSrc = () => S.settings.logo_asset ? blobUrl(S.settings.logo_asset) : D
 const S = {mod:"market", sub:"iran", q:"", db:null, user:null, assets:null, sample:null, downloads:null,
   me:{id:null,isOwner:false,canEdit:false}, canWrite:null,
   m:{tenders:[],events:[],investors:[],leads:[],partners:[]}, opsList:[],
-  settings:{}, members:[], tasks:[], letters:[], lettersArchive:[], lh:null, draft:null, archF:"all", ra:{member:null,from:"",to:""}, repLoaded:false, allLoaded:false, forceFull:false, products:[], patents:[], finance:[], clients:[], tracking:{}, schol:[], sp:{}, cdocs:{}, ip:{countries:{},drafts:{}}, ipTab:"partners", news:{items:[]}, bi:{list:[]}, arts:[], tn:[], tnF:{src:"",ai:false,dom:"",st:""}, artRec:{}, artProd:{}, artSt:{}, artAcc:{ids:[]}, artDeny:{ids:[]}, artMail:{}, ct:[], artF:{field:"",mode:"",type:"",past:false},
-  myAtt:[], myReports:[], allReports:[], allAtt:[], loaded:false, sprints:[], boardMine:false, tour:null, got:new Set(), welcomed:false, calMine:false, calTypes:null, seenTasks:new Set(), planner:{}, taskWho:"", taskFilter:"", subsAll:false, erpLog:{}, erpDept:""};
+  settings:{}, members:[], tasks:[], letters:[], lettersArchive:[], lh:null, draft:null, archF:"all", letterF:"all", ra:{member:null,from:"",to:""}, repLoaded:false, allLoaded:false, forceFull:false, products:[], patents:[], finance:[], clients:[], tracking:{}, schol:[], sp:{}, cdocs:{}, ip:{countries:{},drafts:{}}, ipTab:"partners", news:{items:[]}, bi:{list:[]}, arts:[], tn:[], tnF:{src:"",ai:false,dom:"",st:""}, artRec:{}, artProd:{}, artSt:{}, artAcc:{ids:[]}, artDeny:{ids:[]}, artMail:{}, ct:[], artF:{field:"",mode:"",type:"",past:false},
+  myAtt:[], myReports:[], allReports:[], allAtt:[], loaded:false, sprints:[], boardMine:false, tour:null, got:new Set(), welcomed:false, calMine:false, calTypes:null, seenTasks:new Set(), planner:{}, taskWho:"", taskFilter:"", subsAll:false, erpLog:{}, erpDept:"", letterPeople:[], currentUser:""};
 try{const v=JSON.parse(localStorage.getItem("ppt-view")||"{}");if(v.mod&&SUBS[v.mod]){S.mod=v.mod;S.sub=SUBS[v.mod].some(x=>x[0]===v.sub)?v.sub:SUBS[v.mod][0][0]}}catch(e){}
 try{S.seenTasks=new Set(JSON.parse(localStorage.getItem("ppt-seen")||"[]"))}catch(e){}
+loadLetterPeople();
 
 // ------------------------------------------------------------------ helpers
 const $ = s => document.querySelector(s);
@@ -2636,9 +2637,9 @@ async function downloadLetter(l){
   if(!S.downloads){ toast("دریافت فایل فقط داخل claude.ai فعال است."); return; }
   try{
     toast("در حال ساخت فایل Word…");
-    // A letter is "sent/frozen" if it has reached stage "sent" or later (sent, received, review, reply, meeting, done)
+    // A letter is "sent/frozen" if it has reached stage "sent" or later (sent, received, review, reply, followup, meeting_scheduled, negotiation, contract, meeting, done)
     // Signed-but-unsent letters (both signatures but stage < "sent" or no stage) remain unsent
-    const SENT_STAGES = new Set(["sent","received","review","reply","meeting","done"]);
+    const SENT_STAGES = new Set(["sent","received","review","reply","followup","meeting_scheduled","negotiation","contract","meeting","done"]);
     const isSent = l.stage && SENT_STAGES.has(l.stage);
     
     let letter = l;
@@ -2853,13 +2854,14 @@ function letterView(id){
 }
 
 // ---------- LETTERS ARCHIVE (letters sent without the agent)
-const ARCH_STAGES = {ready:"آماده‌ی ارسال",sent:"ارسال شد",received:"ثبت در دبیرخانه‌ی گیرنده",review:"در دست بررسی",reply:"پاسخ دریافت شد",meeting:"جلسه / مذاکره",done:"نتیجه‌گیری"};
-const ARCH_ST = {active:"در جریان",stalled:"متوقف / نیازمند پیگیری",closed:"بسته شد"};
+const ARCH_STAGES = {ready:"آماده‌ی ارسال",sent:"ارسال شد",received:"ثبت در دبیرخانه‌ی گیرنده",review:"در دست بررسی",reply:"پاسخ دریافت شد",followup:"پیگیری",meeting_scheduled:"تعیین/برگزاری جلسه",negotiation:"مذاکره",contract:"عقد قرارداد",meeting:"جلسه / مذاکره",done:"نتیجه‌گیری"};
+const ARCH_ST = {active:"در جریان",stalled:"متوقف / نیازمند پیگیری",closed:"بسته شد",rejected:"رد شد"};
 const ARCH_CH = {secretariat:"دبیرخانه / پست",email:"ایمیل",hand:"تحویل حضوری",automation:"اتوماسیون اداری کارفرما",other:"سایر"};
-const ARCH_F = {all:"همه",active:"در جریان",stalled:"متوقف",overdue:"اقدام سررسیده",stale:"بدون پیگیری بیش از ۱۴ روز",closed:"بسته‌شده"};
+const ARCH_F = {all:"همه",todo:"جهت انجام",inprogress:"در دست اقدام",sent:"ارسال‌شده‌ها",followup:"پیگیری",meetings:"جلسه",contracts:"قرارداد",active:"در جریان",stalled:"متوقف",overdue:"اقدام سررسیده",stale:"بدون پیگیری بیش از ۱۴ روز",closed:"بسته‌شده"};
+const LETTER_TASK_STAGES = {todo:"جهت انجام",claimed:"برداشته شده (در دست اقدام)"};
 const daysBetween = (a,b) => Math.floor((new Date(b+"T12:00:00")-new Date(a+"T12:00:00"))/864e5);
 const archLast = a => ((a.log&&a.log.length?a.log[a.log.length-1].at:(a.updated||a.created||""))||"").slice(0,10);
-const archOpen = a => a.status!=="closed" && a.stage!=="done";
+const archOpen = a => a.status!=="closed" && a.status!=="rejected" && a.stage!=="done";
 const archOverdue = a => archOpen(a) && a.next_date && a.next_date<=today();
 const archStale = a => archOpen(a) && archLast(a) && daysBetween(archLast(a),today())>14;
 const ARCH_SECT = {oil:"نفت و گاز",med:"پزشکی",water:"آب",energy:"انرژی",power:"نیروگاه‌ها",shasta:"هلدینگ شستا",hpc:"هلدینگ خلیج فارس"};
@@ -2867,6 +2869,91 @@ const IDENT_NAME = {ir:"پترو پالاتوس",soshiant:"سوشیانت"};
 const IDENT_SECTORS = {ir:["oil"],soshiant:["med","water","energy","power","shasta","hpc"]};
 const sectorIdent = k => k==="oil"?"ir":"soshiant";   // oil & gas letters go out on the Petro Pala letterhead; every other field on Soshiant's
 const archIdent = a => { if(a.identity==="soshiant"||a.identity==="ir") return a.identity; const l=a.letter_id&&S.letters.find(x=>x.id===a.letter_id); if(l&&l.identity) return l.identity==="soshiant"?"soshiant":"ir"; return a.sector?sectorIdent(a.sector):"ir"; };
+
+// ---------- LETTER TASK WORKFLOW
+function loadLetterPeople(){
+  try{
+    const stored = localStorage.getItem("ppt-letter-people");
+    if(stored) S.letterPeople = JSON.parse(stored);
+    const currentUser = localStorage.getItem("ppt-current-user");
+    if(currentUser) S.currentUser = currentUser;
+  }catch(e){ console.error("Failed to load letter people", e); }
+}
+function saveLetterPeople(){
+  try{
+    localStorage.setItem("ppt-letter-people", JSON.stringify(S.letterPeople));
+    if(S.currentUser) localStorage.setItem("ppt-current-user", S.currentUser);
+  }catch(e){ console.error("Failed to save letter people", e); }
+}
+function addPersonToList(name){
+  if(!name || !name.trim()) return;
+  name = name.trim();
+  if(!S.letterPeople.includes(name)){
+    S.letterPeople.push(name);
+    saveLetterPeople();
+  }
+}
+function getCurrentUserName(){
+  if(S.currentUser) return S.currentUser;
+  if(S.letterPeople.length > 0) return S.letterPeople[0];
+  return "";
+}
+function letterTaskStatus(a){
+  // Determine task status: todo, claimed (in-progress), or sent (in pipeline)
+  if(!a.task_stage) return "sent"; // old letters without task_stage are considered sent
+  if(a.task_stage === "claimed") return "inprogress";
+  if(a.task_stage === "todo") return "todo";
+  return "sent"; // sent and pipeline stages
+}
+async function claimLetter(id){
+  const a = S.lettersArchive.find(x=>x.id===id);
+  if(!a) return;
+  
+  // Ask for name if not set
+  let userName = getCurrentUserName();
+  if(!userName){
+    userName = prompt("نام شما (برای پیگیری نامه):");
+    if(!userName || !userName.trim()){ toast("نام را وارد کنید."); return; }
+    userName = userName.trim();
+    S.currentUser = userName;
+    addPersonToList(userName);
+  }
+  
+  const now = new Date().toISOString();
+  const {id:_i,...base} = a;
+  const log = [...(a.log||[]), {at:now,by:userName,action:"claimed",note:`برداشته شد توسط ${userName}`}];
+  
+  if(await save(`letters_archive/${id}`,{...base,task_stage:"claimed",task_assignee:userName,task_claimed_at:now,log,updated:now},"نامه برداشته شد")){
+    S.forceFull = true;
+    render();
+  }
+}
+async function unclaimLetter(id){
+  const a = S.lettersArchive.find(x=>x.id===id);
+  if(!a) return;
+  
+  const now = new Date().toISOString();
+  const {id:_i,...base} = a;
+  const log = [...(a.log||[]), {at:now,by:a.task_assignee||"",action:"unclaimed",note:"برگشت داده شد به فهرست جهت انجام"}];
+  
+  if(await save(`letters_archive/${id}`,{...base,task_stage:"todo",task_assignee:null,task_claimed_at:null,log,updated:now},"نامه برگشت داده شد")){
+    S.forceFull = true;
+    render();
+  }
+}
+async function markLetterSent(id){
+  const a = S.lettersArchive.find(x=>x.id===id);
+  if(!a) return;
+  
+  const now = new Date().toISOString();
+  const {id:_i,...base} = a;
+  const log = [...(a.log||[]), {at:now,by:a.task_assignee||S.currentUser||"",stage:"sent",note:"نامه ارسال شد"}];
+  
+  if(await save(`letters_archive/${id}`,{...base,stage:"sent",task_stage:null,status:"active",log,updated:now},"نامه ارسال شد")){
+    S.forceFull = true;
+    render();
+  }
+}
 const archView = (sector0, ident, grp) => {
   if(ident&&!grp){ if(S._asI!==ident){ S.archSec=""; S._asI=ident; } }
   const sector = ident&&!grp ? (S.archSec||null) : sector0;
@@ -3077,6 +3164,78 @@ VIEWS["letters.pp"] = () => {
 
 VIEWS["letters.archive"] = () => archView(null);
 VIEWS["letters.sosh"] = () => archView(null,"soshiant");
+VIEWS["letters.tasks"] = () => {
+  const all = S.lettersArchive;
+  const todo = all.filter(a=>letterTaskStatus(a)==="todo");
+  const inprogress = all.filter(a=>letterTaskStatus(a)==="inprogress");
+  const sent = all.filter(a=>a.stage==="sent");
+  const followup = all.filter(a=>a.stage==="followup");
+  const meetings = all.filter(a=>a.stage==="meeting_scheduled"||a.stage==="meeting");
+  const contracts = all.filter(a=>a.stage==="contract");
+  
+  const flt = {
+    all:()=>true,
+    todo:a=>letterTaskStatus(a)==="todo",
+    inprogress:a=>letterTaskStatus(a)==="inprogress",
+    sent:a=>a.stage==="sent",
+    followup:a=>a.stage==="followup",
+    meetings:a=>a.stage==="meeting_scheduled"||a.stage==="meeting",
+    contracts:a=>a.stage==="contract"
+  }[S.letterF]||(()=>true);
+  
+  const list = all.filter(flt).filter(a=>match(a.subject,a.recipient,a.number,a.task_title,a.task_assignee));
+  
+  const filterBar = `<div class="toolbar">
+    <button class="btn sm ${S.letterF==="all"?"":"ghost"}" data-act="letter-f" data-k="all">همه (${faNum(all.length)})</button>
+    <button class="btn sm ${S.letterF==="todo"?"":"ghost"}" data-act="letter-f" data-k="todo">جهت انجام (${faNum(todo.length)})</button>
+    <button class="btn sm ${S.letterF==="inprogress"?"":"ghost"}" data-act="letter-f" data-k="inprogress">در دست اقدام (${faNum(inprogress.length)})</button>
+    <button class="btn sm ${S.letterF==="sent"?"":"ghost"}" data-act="letter-f" data-k="sent">ارسال‌شده (${faNum(sent.length)})</button>
+    <button class="btn sm ${S.letterF==="followup"?"":"ghost"}" data-act="letter-f" data-k="followup">پیگیری (${faNum(followup.length)})</button>
+    <button class="btn sm ${S.letterF==="meetings"?"":"ghost"}" data-act="letter-f" data-k="meetings">جلسه (${faNum(meetings.length)})</button>
+    <button class="btn sm ${S.letterF==="contracts"?"":"ghost"}" data-act="letter-f" data-k="contracts">قرارداد (${faNum(contracts.length)})</button>
+  </div>`;
+  
+  const userBar = `<div class="card" style="margin-bottom:12px">
+    <b>کاربر فعلی:</b> ${esc(getCurrentUserName()||"تعیین نشده")}
+    <button class="btn sm ghost" data-act="letter-set-user">تغییر کاربر</button>
+    ${S.letterPeople.length>1?`<span class="meta">کاربران: ${S.letterPeople.map(p=>`<button class="btn sm ghost" data-act="letter-switch-user" data-name="${esc(p)}">${esc(p)}</button>`).join(" ")}</span>`:""}
+  </div>`;
+  
+  const row = a => {
+    const status = letterTaskStatus(a);
+    const canClaim = status === "todo";
+    const canUnclaim = status === "inprogress" && a.task_assignee === getCurrentUserName();
+    const canSend = status === "inprogress" && a.task_assignee === getCurrentUserName();
+    
+    return `<tr>
+      ${td("شماره",`<span class="mono">${esc(a.number||"—")}</span><br><span class="meta">${faDate(a.date||today())}</span>`)}
+      ${td("موضوع",`${esc(a.subject||a.task_title||"—")}${a.task_description?`<br><span class="meta">${esc(a.task_description)}</span>`:""}`,"t")}
+      ${td("گیرنده",esc(a.recipient||"—"))}
+      ${td("وضعیت",status==="todo"?'<span class="pill p-mute">جهت انجام</span>':status==="inprogress"?`<span class="pill p-info">در دست اقدام</span><br><span class="meta">${esc(a.task_assignee||"")}</span>`:`<span class="pill p-ok">${esc(ARCH_STAGES[a.stage]||"ارسال شده")}</span>`)}
+      ${td("سررسید",a.task_due_date?`<span class="${a.task_due_date<today()?"p-bad":a.task_due_date===today()?"p-warn":"meta"}">${faDate(a.task_due_date)}</span>`:"—")}
+      ${td("",`<div class="row" style="gap:4px">
+        ${canClaim?`<button class="btn sm sig" data-act="letter-claim" data-id="${esc(a.id)}">برداشتن</button>`:""}
+        ${canUnclaim?`<button class="btn sm ghost" data-act="letter-unclaim" data-id="${esc(a.id)}">برگرداندن</button>`:""}
+        ${canSend?`<button class="btn sm" data-act="letter-mark-sent" data-id="${esc(a.id)}">ارسال شد</button>`:""}
+        ${a.stage && a.stage!=="sent"?`<button class="btn sm ghost" data-act="arch-progress" data-id="${esc(a.id)}">پیشرفت</button>`:""}
+        <button class="btn sm ghost" data-act="letter-task-edit" data-id="${esc(a.id)}">ویرایش</button>
+      </div>`)}
+    </tr>`;
+  };
+  
+  return `<h2>وظایف نامه‌نگاری</h2>
+    <div class="banner">
+      در این بخش می‌توانید نامه‌ها را به صورت وظایف مدیریت کنید. هر نامه می‌تواند یک عنوان/شرح کار و سررسید داشته باشد. 
+      شخص با کلیک «برداشتن» نامه را می‌برد و در «در دست اقدام» می‌افتد. پس از آماده شدن، «ارسال شد» را بزند تا به مسیر پیگیری برود.
+    </div>
+    ${userBar}
+    ${kpis([["جهت انجام",faNum(todo.length),todo.length>0],["در دست اقدام",faNum(inprogress.length),inprogress.length>0],["ارسال‌شده",faNum(sent.length)],["پیگیری",faNum(followup.length)],["جلسه",faNum(meetings.length)],["قرارداد",faNum(contracts.length)]])}
+    ${filterBar}
+    <div class="toolbar">
+      <button class="btn sig" data-act="letter-task-new">نامه/وظیفه جدید</button>
+    </div>
+    ${table(["شماره","موضوع","گیرنده","وضعیت","سررسید",""],list.map(row),"نامه‌ای در این فیلتر نیست.")}`;
+};
 Object.keys(ARCH_SECT).forEach(k=>{ VIEWS["letters.sec_"+k] = () => archView(k); });
 // ---------- Refineries: fuel-use optimisation and energy control, production-line smartening and an industrial dashboard per refinery,
 // written as a letter on the Petro Pala Toos letterhead (identity "ir", sector oil). Capacities are rounded public figures that differ between
@@ -3207,19 +3366,26 @@ VIEWS["letters.refinery"] = () => {
 
 const memberOpts = () => Object.fromEntries([["","—"],...S.members.map(m=>[m.id,m.full_name])]);
 function archForm(a={}){
-  openForm({title:a.id?"ویرایش نامه‌ی بایگانی":"ثبت نامه‌ی ارسال‌شده‌ی پیشین",values:{stage:"sent",status:"active",channel:"secretariat",sector:(S.sub||"").startsWith("sec_")?S.sub.slice(4):"",...a,identity:a.id?archIdent(a):(S.sub==="sosh"?"soshiant":"ir")},fields:[
+  const isNew = !a.id;
+  const defaultStage = isNew ? "ready" : (a.stage || "sent");
+  openForm({title:a.id?"ویرایش نامه‌ی بایگانی":"ثبت نامه‌ی ارسال‌شده‌ی پیشین",values:{stage:defaultStage,task_stage:isNew?"todo":"",status:"active",channel:"secretariat",sector:(S.sub||"").startsWith("sec_")?S.sub.slice(4):"",...a,identity:a.id?archIdent(a):(S.sub==="sosh"?"soshiant":"ir")},
+   extra:isNew?`<p class="note">نامه جدید می‌تواند به صورت «جهت انجام» (task_stage: todo) یا مستقیم «ارسال شده» ثبت شود. اگر «جهت انجام» باشد، در تب وظایف قابل برداشتن است.</p>`:"",
+   fields:[
    {k:"number",label:"شماره‌ی نامه‌ی ما",dir:"ltr"},{k:"employer_no",label:"شماره‌ی ثبت در سیستم گیرنده / کارفرما",dir:"ltr"},{k:"date",label:"تاریخ ارسال",type:"date"},
    {k:"subject",label:"موضوع نامه"},{k:"recipient",label:"گیرنده (نام، سمت، سازمان)"},{k:"channel",label:"روش ارسال",type:"select",options:ARCH_CH},{k:"identity",label:"شرکت فرستنده (سربرگ)",type:"select",options:IDENT_NAME},{k:"sector",label:"گروه نامه",type:"select",options:{"":"—",...ARCH_SECT}},{k:"grp",label:"زیرگروه پترو پالا توس (برای نامه‌های پترو پالا توس)",type:"select",options:{"":"— (خودکار)",...PP_GRP_NAME}},{k:"contact",label:"اطلاعات تماس گیرنده (تلفن، فکس، ایمیل، افراد)",type:"textarea"},
    {k:"summary",label:"خلاصه‌ی درخواست یا محتوای نامه",type:"textarea"},
+   ...(isNew?[{k:"task_stage",label:"وضعیت اولیه",type:"select",options:{"":"ارسال شده","todo":"جهت انجام (قابل برداشتن)"}}]:[]),
    {k:"stage",label:"مرحله‌ی فعلی",type:"select",options:ARCH_STAGES},{k:"status",label:"وضعیت پیگیری",type:"select",options:ARCH_ST},
    {k:"owner",label:"مسئول پیگیری",type:"select",options:memberOpts()},{k:"next_action",label:"اقدام بعدی"},{k:"next_date",label:"تاریخ اقدام بعدی",type:"date"},
    {k:"scan",label:"فایل یا تصویر نامه (اختیاری)",type:"file",accept:"image/*,application/pdf"}],
    onSave: async v => { if(!v.subject||!v.recipient){toast("موضوع و گیرنده را وارد کنید.");return false}
      const {scan,...rest}=v; let asset=a.scan_asset||null; if(scan){ const id=await uploadImage(scan); if(id) asset=id; }
-     const now=new Date().toISOString(); if(rest.stage==="done") rest.status="closed";
-     const log=a.log&&a.log.length?a.log:[{at:now,by:S.me.id,stage:rest.stage,status:rest.status,note:"ثبت در بایگانی"}];
+     const now=new Date().toISOString(); 
+     if(rest.stage==="done") rest.status="closed";
+     if(rest.stage==="contract"||rest.stage==="negotiation"||rest.stage==="meeting_scheduled"||rest.stage==="followup") rest.status="active";
+     const log=a.log&&a.log.length?a.log:[{at:now,by:S.currentUser||S.me.id,stage:rest.stage,status:rest.status,note:"ثبت در بایگانی"}];
      const {id:_i,...base}=a;
-     return save(`letters_archive/${a.id||newId()}`,{...base,...rest,scan_asset:asset,log,created:a.created||now,updated:now,created_by:a.created_by||S.me.id},"نامه در بایگانی ثبت شد"); }});
+     return save(`letters_archive/${a.id||newId()}`,{...base,...rest,scan_asset:asset,log,created:a.created||now,updated:now,created_by:a.created_by||S.currentUser||S.me.id},"نامه در بایگانی ثبت شد"); }});
 }
 function archProgress(a){
   openForm({title:`پیشرفت پیگیری – ${a.subject}`,values:{stage:a.stage||"sent",status:a.status||"active",next_action:a.next_action,next_date:a.next_date},
@@ -3227,8 +3393,34 @@ function archProgress(a){
    fields:[{k:"stage",label:"مرحله‌ی جدید",type:"select",options:ARCH_STAGES},{k:"status",label:"وضعیت پیگیری",type:"select",options:ARCH_ST},{k:"note",label:"شرح پیشرفت (با چه کسی صحبت شد، پاسخ چه بود؟)",type:"textarea"},{k:"next_action",label:"اقدام بعدی"},{k:"next_date",label:"تاریخ اقدام بعدی",type:"date"}],
    onSave: v => { if(!v.note){toast("شرح پیشرفت را بنویسید.");return false}
      if(v.stage==="done") v.status="closed";
+     if(v.stage==="contract"||v.stage==="negotiation"||v.stage==="meeting_scheduled"||v.stage==="followup") v.status="active";
      const now=new Date().toISOString(); const {id,...base}=a;
-     return save(`letters_archive/${id}`,{...base,stage:v.stage,status:v.status,next_action:v.next_action,next_date:v.next_date,log:[...(a.log||[]),{at:now,by:S.me.id,stage:v.stage,status:v.status,note:v.note}].slice(-60),updated:now},"پیشرفت ثبت شد"); }});
+     return save(`letters_archive/${id}`,{...base,stage:v.stage,status:v.status,next_action:v.next_action,next_date:v.next_date,log:[...(a.log||[]),{at:now,by:S.currentUser||S.me.id,stage:v.stage,status:v.status,note:v.note}].slice(-60),updated:now},"پیشرفت ثبت شد"); }});
+}
+function letterTaskForm(a={}){
+  openForm({title:a.id?"ویرایش نامه/وظیفه":"نامه/وظیفه جدید",
+   values:{task_stage:"todo",number:"",date:today(),sector:"oil",identity:"ir",...a},
+   extra:`<p class="note">نامه/وظیفه جدید با وضعیت «جهت انجام» ثبت می‌شود. سپس شخصی آن را می‌برد و پس از آماده‌سازی «ارسال شد» می‌زند.</p>`,
+   fields:[
+     {k:"task_title",label:"عنوان وظیفه / موضوع نامه"},
+     {k:"task_description",label:"شرح کار",type:"textarea"},
+     {k:"task_due_date",label:"سررسید (اختیاری)",type:"date"},
+     {k:"number",label:"شماره‌ی نامه (در صورت وجود)",dir:"ltr"},
+     {k:"date",label:"تاریخ",type:"date"},
+     {k:"subject",label:"موضوع نامه (اختیاری)"},
+     {k:"recipient",label:"گیرنده (اختیاری)"},
+     {k:"identity",label:"شرکت فرستنده",type:"select",options:IDENT_NAME},
+     {k:"sector",label:"گروه",type:"select",options:{"":"—",...ARCH_SECT}}
+   ],
+   onSave: async v => {
+     if(!v.task_title && !v.subject){toast("عنوان یا موضوع را وارد کنید.");return false}
+     const now = new Date().toISOString();
+     const {id:_i,...base} = a;
+     const log = a.log||[{at:now,by:S.currentUser||S.me.id||"",action:"created",note:"ثبت نامه/وظیفه"}];
+     const rec = {...base,...v,task_stage:a.id?(a.task_stage||"todo"):"todo",subject:v.subject||v.task_title,log,created:a.created||now,updated:now,created_by:a.created_by||S.currentUser||S.me.id||""};
+     return save(`letters_archive/${a.id||newId()}`,rec,"نامه/وظیفه ثبت شد");
+   }
+  });
 }
 
 // ---------- PATENT
@@ -4503,6 +4695,31 @@ document.addEventListener("click", async e => {
     case "arch-progress": archProgress(S.lettersArchive.find(x=>x.id===id)); break;
     case "arch-f": S.archF=b.dataset.k; renderView(); break;
     case "arch-sec": S.archSec=b.dataset.k||""; renderView(); break;
+    case "letter-f": S.letterF=b.dataset.k; renderView(); break;
+    case "letter-claim": await claimLetter(id); break;
+    case "letter-unclaim": await unclaimLetter(id); break;
+    case "letter-mark-sent": await markLetterSent(id); break;
+    case "letter-set-user": {
+      const name = prompt("نام شما:", getCurrentUserName());
+      if(name && name.trim()){
+        S.currentUser = name.trim();
+        addPersonToList(name.trim());
+        saveLetterPeople();
+        renderView();
+      }
+      break;
+    }
+    case "letter-switch-user": {
+      const name = b.dataset.name;
+      if(name){
+        S.currentUser = name;
+        saveLetterPeople();
+        renderView();
+      }
+      break;
+    }
+    case "letter-task-new": letterTaskForm(); break;
+    case "letter-task-edit": letterTaskForm(S.lettersArchive.find(x=>x.id===id)); break;
     case "sign-office": { if(!hasProof(myMember())){ toast("برای امضای نامه، امضا و عکس اثر انگشت هر دو باید ثبت شده باشد."); break; } const l=S.letters.find(x=>x.id===id); if(l&&await save(`letters/${id}`,{...l,office_sig:{by:S.me.id,at:new Date().toISOString()}},"امضای مسئول دفتر ثبت شد")) letterView(id); break; }
     case "sign-ceo": { if(!hasProof(myMember())){ toast("برای امضای نامه، امضا و عکس اثر انگشت هر دو باید ثبت شده باشد."); break; } const l=S.letters.find(x=>x.id===id); if(l&&await save(`letters/${id}`,{...l,ceo_sig:{by:S.me.id,at:new Date().toISOString(),asset:S.settings.ceo_sig_asset||(myMember()||{}).signature_asset||null}},"امضای مدیرعامل ثبت شد")) letterView(id); break; }
     case "letter-dl": { const l=S.letters.find(x=>x.id===id); if(l) await downloadLetter(l); break; }
