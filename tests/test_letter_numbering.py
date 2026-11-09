@@ -32,7 +32,7 @@ def test_letter_number_format():
 
 def test_issued_numbers_uniqueness():
     """Issued numbers file tracks all issued numbers to prevent duplicates."""
-    # Check if platform/index.html contains the recordIssuedNumber function
+    # Check if platform/index.html contains the getOrIssueNumber function
     index_path = Path(__file__).parent.parent / "platform" / "index.html"
     if not index_path.exists():
         print("⚠ platform/index.html not found, skipping")
@@ -40,15 +40,15 @@ def test_issued_numbers_uniqueness():
     
     content = index_path.read_text(encoding="utf-8")
     
-    # Verify the recordIssuedNumber function exists
-    assert "async function recordIssuedNumber" in content, \
-        "recordIssuedNumber function missing from platform/index.html"
+    # Verify the getOrIssueNumber function exists
+    assert "async function getOrIssueNumber" in content, \
+        "getOrIssueNumber function missing from platform/index.html"
     
     # Verify issued_numbers storage is referenced
     assert "settings/issued_numbers" in content, \
         "issued_numbers storage path missing"
     
-    # Verify the nextLetterNo function checks issued numbers
+    # Verify the nextLetterNo functions check issued numbers
     assert "S.issuedNumbers" in content, \
         "nextLetterNo should check S.issuedNumbers"
     
@@ -63,16 +63,17 @@ def test_unsent_letter_refresh_logic():
     
     content = index_path.read_text(encoding="utf-8")
     
-    # Verify downloadLetter checks if letter is unsent
-    assert "isUnsent" in content, "downloadLetter should identify unsent letters"
+    # Verify downloadLetter checks if letter is sent via isSent variable
+    assert "const isSent" in content, "downloadLetter should check isSent status"
+    assert "SENT_STAGES" in content, "SENT_STAGES should be defined"
     
     # Verify fresh date/number generation for unsent
-    assert "today()" in content and "nextLetterNo" in content, \
+    assert "today()" in content and ("nextIranLetterNo" in content or "nextIntlLetterNo" in content), \
         "Should generate fresh date and number"
     
-    # Verify recordIssuedNumber is called
-    assert "await recordIssuedNumber" in content, \
-        "Should record issued number to prevent reuse"
+    # Verify getOrIssueNumber is called
+    assert "await getOrIssueNumber" in content, \
+        "Should get or issue number to prevent reuse"
     
     print("✓ Unsent letter refresh logic implemented")
 
@@ -96,7 +97,7 @@ def test_sent_letter_frozen():
     print("✓ Sent letter freezing logic present")
 
 def test_daily_cap_handling():
-    """System handles LETTER_DAY_CAP (max letters per day)."""
+    """System enforces 999 letters per day maximum."""
     index_path = Path(__file__).parent.parent / "platform" / "index.html"
     if not index_path.exists():
         print("⚠ platform/index.html not found, skipping")
@@ -104,17 +105,15 @@ def test_daily_cap_handling():
     
     content = index_path.read_text(encoding="utf-8")
     
-    # Verify LETTER_DAY_CAP constant exists
-    assert "LETTER_DAY_CAP" in content, "LETTER_DAY_CAP constant missing"
+    # Verify 999 cap is enforced (hardcoded limit)
+    assert ">=999" in content or ">999" in content, \
+        "Should check for 999 letter daily limit"
     
-    # Verify cap is checked in nextLetterNo
-    match = re.search(r'const LETTER_DAY_CAP\s*=\s*(\d+)', content)
-    if match:
-        cap = int(match.group(1))
-        print(f"✓ Daily letter cap: {cap} letters per day")
-        assert cap > 0, "Cap must be positive"
-    else:
-        raise AssertionError("LETTER_DAY_CAP value not found")
+    # Verify error message when cap exceeded
+    assert "999" in content and ("limit" in content or "exceed" in content or "خطا" in content), \
+        "Should have error handling for daily cap"
+    
+    print("✓ Daily letter cap: 999 letters per day (hardcoded)")
 
 def test_intl_letter_numbering():
     """International letters use different numbering scheme (PIG-YYYY-NNNN)."""
