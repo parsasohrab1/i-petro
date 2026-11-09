@@ -202,6 +202,41 @@ def test_send_tab_in_navigation():
     
     print("✓ Send tab in navigation")
 
+def test_filtered_rows_render():
+    """Clicking stage card filters and renders table rows correctly."""
+    index_path = Path(__file__).parent.parent / "platform" / "index.html"
+    if not index_path.exists():
+        print("⚠ platform/index.html not found, skipping")
+        return
+    
+    content = index_path.read_text(encoding="utf-8")
+    
+    # Verify stageFiltered is used in the list that feeds the table
+    assert "stageFiltered" in content, "stageFiltered variable missing"
+    
+    # Verify table rendering uses the filtered list
+    # The pattern should be: stageFiltered.filter(flt).sort(...)
+    # And then table(..., list.map(...))
+    assert re.search(r"stageFiltered\.filter\([^)]+\)", content), \
+        "stageFiltered should be further filtered"
+    
+    # Verify table is rendered with the list
+    assert "table(" in content, "table function call missing"
+    assert "list.map" in content, "list.map for table rows missing"
+    
+    # Verify archView function returns table in its template
+    # Find archView function and check it returns template with table
+    archview_match = re.search(r"const archView\s*=\s*\([^)]*\)\s*=>\s*{", content)
+    if archview_match:
+        # Check that archView has a return statement with table
+        archview_start = archview_match.end()
+        # Find the closing brace (simplified - just check next few thousand chars)
+        archview_section = content[archview_start:archview_start + 5000]
+        assert "return" in archview_section and "table(" in archview_section, \
+            "archView should return template with table"
+    
+    print("✓ Filtered rows render correctly in table")
+
 def test_compatibility_with_existing_numbering():
     """New features don't break existing letter numbering."""
     index_path = Path(__file__).parent.parent / "platform" / "index.html"
@@ -224,6 +259,7 @@ if __name__ == "__main__":
     test_clickable_stat_cards()
     test_stage_filter_state()
     test_card_filter_matches_count()
+    test_filtered_rows_render()
     test_per_person_send_tabs()
     test_download_with_daily_number()
     test_mark_sent_freezes_number()

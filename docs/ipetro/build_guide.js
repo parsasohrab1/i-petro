@@ -49,19 +49,19 @@ const store = {
  letters_archive:{
   // Mix of Shasta and other letters across all stages for realistic KPI cards
   a1:{id:"a1",number:"PPT-1405-0001",date:"2026-10-10",identity:"ir",grp:"shasta",subject:"پیشنهاد همکاری – پتروشیمی شازند",recipient:"مدیرعامل پتروشیمی شازند",channel:"automation",stage:"sent",status:"active",owner:"me1",next_action:"پیگیری",next_date:"2026-10-25"},
-  a2:{id:"a2",number:"PPT-1405-0002",date:"2026-10-12",identity:"ir",grp:"shasta",subject:"معرفی محصولات هوشمند – لاستیک‌سازی",recipient:"مدیرعامل کارخانه لاستیک‌سازی",stage:"sent",status:"active",owner:"me1"},
-  a3:{id:"a3",number:"PPT-1405-0003",date:"2026-10-13",identity:"ir",grp:"shasta",subject:"درخواست جلسه فنی – چوب و کاغذ",recipient:"مدیر فنی کارخانه چوب و کاغذ",stage:"received",status:"active",owner:"me1"},
-  a4:{id:"a4",number:"PPT-1405-0004",date:"2026-10-14",identity:"ir",grp:"shasta",subject:"ارائه طرح – پتروشیمی ایلام",recipient:"پتروشیمی ایلام",stage:"received",status:"active",owner:"me1"},
-  a5:{id:"a5",number:"PPT-1405-0005",date:"2026-10-15",identity:"ir",grp:"shasta",subject:"پیگیری پروپوزال – نفت و گاز",recipient:"شرکت خدمات نفتی",stage:"review",status:"active",owner:"me1"},
-  a6:{id:"a6",number:"PPT-1405-0006",date:"2026-10-16",identity:"ir",grp:"shasta",subject:"دعوت به همکاری – تاسیکو",recipient:"تاسیکو",stage:"review",status:"active",owner:"me1"},
-  a7:{id:"a7",number:"PPT-1405-0007",date:"2026-10-17",identity:"ir",grp:"shasta",subject:"پاسخ به استعلام – حفاری",recipient:"شرکت حفاری",stage:"reply",status:"active",owner:"me1"},
-  a8:{id:"a8",number:"PPT-1405-0008",date:"2026-10-18",identity:"ir",grp:"shasta",subject:"پیگیری مذاکرات",recipient:"شرکت مهندسی",stage:"followup",status:"active",owner:"me1"},
-  a9:{id:"a9",number:"PPT-1405-0009",date:"2026-10-19",identity:"ir",grp:"shasta",subject:"تعیین جلسه",recipient:"پتروشیمی بندر امام",stage:"meeting_scheduled",status:"active",owner:"me1"},
-  a10:{id:"a10",number:"PPT-1405-0010",date:"2026-10-20",identity:"ir",grp:"shasta",subject:"جلسه انجام شد",recipient:"لاستیک بارز",stage:"meeting",status:"active",owner:"me1"},
+  a2:{id:"a2",number:"PPT-1405-0002",date:"2026-10-12",identity:"ir",grp:"shasta",subject:"معرفی محصولات هوشمند – لاستیک‌سازی",recipient:"مدیرعامل کارخانه لاستیک‌سازی",channel:"email",stage:"sent",status:"active",owner:"me1"},
+  a3:{id:"a3",number:"PPT-1405-0003",date:"2026-10-13",identity:"ir",grp:"shasta",subject:"درخواست جلسه فنی – چوب و کاغذ",recipient:"مدیر فنی کارخانه چوب و کاغذ",channel:"email",stage:"received",status:"active",owner:"me1"},
+  a4:{id:"a4",number:"PPT-1405-0004",date:"2026-10-14",identity:"ir",grp:"shasta",subject:"ارائه طرح – پتروشیمی ایلام",recipient:"پتروشیمی ایلام",channel:"secretariat",stage:"received",status:"active",owner:"me1"},
+  a5:{id:"a5",number:"PPT-1405-0005",date:"2026-10-15",identity:"ir",grp:"shasta",subject:"پیگیری پروپوزال – نفت و گاز",recipient:"شرکت خدمات نفتی",channel:"email",stage:"review",status:"active",owner:"me1"},
+  a6:{id:"a6",number:"PPT-1405-0006",date:"2026-10-16",identity:"ir",grp:"shasta",subject:"دعوت به همکاری – تاسیکو",recipient:"تاسیکو",channel:"email",stage:"review",status:"active",owner:"me1"},
+  a7:{id:"a7",number:"PPT-1405-0007",date:"2026-10-17",identity:"ir",grp:"shasta",subject:"پاسخ به استعلام – حفاری",recipient:"شرکت حفاری",channel:"automation",stage:"reply",status:"active",owner:"me1"},
+  a8:{id:"a8",number:"PPT-1405-0008",date:"2026-10-18",identity:"ir",grp:"shasta",subject:"پیگیری مذاکرات",recipient:"شرکت مهندسی",channel:"email",stage:"followup",status:"active",owner:"me1"},
+  a9:{id:"a9",number:"PPT-1405-0009",date:"2026-10-19",identity:"ir",grp:"shasta",subject:"تعیین جلسه",recipient:"پتروشیمی بندر امام",channel:"email",stage:"meeting_scheduled",status:"active",owner:"me1"},
+  a10:{id:"a10",number:"PPT-1405-0010",date:"2026-10-20",identity:"ir",grp:"shasta",subject:"جلسه انجام شد",recipient:"لاستیک بارز",channel:"secretariat",stage:"meeting",status:"active",owner:"me1"},
   // Unsent letters for send tab
-  a11:{id:"a11",identity:"ir",subject:"نامه برای ارسال ۱",recipient:"شرکت نمونه",stage:"ready",status:"active",owner:"me1",task_stage:"claimed",task_assignee:"سارا نمونه"},
-  a12:{id:"a12",identity:"ir",subject:"نامه برای ارسال ۲",recipient:"شرکت نمونه ۲",stage:"ready",status:"active",owner:"me1",task_stage:"todo"},
-  a13:{id:"a13",identity:"ir",grp:"hpc",subject:"نامه گروه دیگر",recipient:"هلدینگ خلیج فارس",stage:"sent",status:"active",owner:"me1"},
+  a11:{id:"a11",identity:"ir",subject:"نامه برای ارسال ۱",recipient:"شرکت نمونه",channel:"email",stage:"ready",status:"active",owner:"me1",task_stage:"claimed",task_assignee:"سارا نمونه"},
+  a12:{id:"a12",identity:"ir",subject:"نامه برای ارسال ۲",recipient:"شرکت نمونه ۲",channel:"email",stage:"ready",status:"active",owner:"me1",task_stage:"todo"},
+  a13:{id:"a13",identity:"ir",grp:"hpc",subject:"نامه گروه دیگر",recipient:"هلدینگ خلیج فارس",channel:"email",stage:"sent",status:"active",owner:"me1"},
  },
  tracking:{t1:{owner:"me1",stage:"partner_email",value_usd:400000,next_action:"پیگیری ایمیل شریک",next_date:"2026-10-22"},t2:{owner:"u2",stage:"proposal",value_usd:250000},"ev_e1":{owner:"me1"}},
  "settings/company":{name_fa:"پترو پالا توس",name_en:"Petro Pala Toos",logo_asset:"logo",address:"تهران، خیابان نمونه",ceo_member:"me1",last_backup:new Date().toISOString()},
@@ -76,9 +76,12 @@ const mock = `(()=>{ const store=${JSON.stringify(store)}; if(window.__noMe) del
  window.claude={use:async n=>n==="db"?db:n==="user"?{me:async()=>({id:"me1",isOwner:true,canEdit:true,name:"سارا نمونه"}),can:async()=>true}:n==="downloads"?{save:async()=>{}}:n==="assets"?{upload:async()=>({id:"x"})}:{}};})();`;
 
 const E = s => String(s).replace(/[&<>]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]));
-async function open(browser, noMe) {
+async function open(browser, noMe, setCurrentUser) {
   const pg = await browser.newPage({ viewport: { width: 1180, height: 700 } });
-  await pg.addInitScript((noMe ? "window.__noMe=1;" : "") + mock);
+  const initScript = (noMe ? "window.__noMe=1;" : "") + 
+    (setCurrentUser ? `localStorage.setItem('ppt-current-user', ${JSON.stringify(setCurrentUser)});` : "") + 
+    mock;
+  await pg.addInitScript(initScript);
   await pg.route("**/*", r => {
     const u = r.request().url();
     if (u.startsWith("http://t.local/_blob/")) return logoB64 ? r.fulfill({ contentType: "image/png", body: Buffer.from(logoB64, "base64") }) : r.abort();
@@ -122,24 +125,32 @@ const shot = async (pg) => "data:image/png;base64," + (await pg.screenshot()).to
   // Letter sending workflow screenshots with proper validation
   let sendTab = "", shastaCards = "", cardFiltered = "";
   
-  // 1. Send tab screenshot - with person picker
+  // 1. Send tab screenshot - with person picker and current user set
   try {
-    await pg.click("[data-act=mod][data-k=letters]");
-    await pg.waitForTimeout(300);
-    await pg.click('[data-act=sub][data-k=send]');
-    await pg.waitForTimeout(1000);
+    // Open a fresh page with currentUser set in localStorage
+    const pgSend = await open(browser, false, "سارا نمونه");
+    
+    // Navigate to Letters module
+    await pgSend.click("[data-act=mod][data-k=letters]");
+    await pgSend.waitForTimeout(300);
+    
+    // Click the "ارسال نامه" button by text
+    await pgSend.locator('button', { hasText: 'ارسال نامه' }).click();
+    await pgSend.waitForTimeout(1000);
     
     // Wait for person picker to render
-    await pg.waitForSelector('button[data-act=letter-send-person]', {timeout: 5000});
+    await pgSend.waitForSelector('button[data-act=letter-send-person]', {timeout: 5000});
     
     // Verify we have the send view content
-    const hasPersonPicker = await pg.locator('button[data-act=letter-send-person]').count();
+    const hasPersonPicker = await pgSend.locator('button[data-act=letter-send-person]').count();
     if(hasPersonPicker > 0) {
-      sendTab = await shot(pg);
+      sendTab = await shot(pgSend);
       console.log(`✓ Send tab captured (${hasPersonPicker} person buttons found)`);
     } else {
       throw new Error("Person picker not found in send tab");
     }
+    
+    await pgSend.close();
   } catch(e) {
     console.log(`✗ Send tab failed: ${e.message}`);
     throw e;
@@ -178,12 +189,12 @@ const shot = async (pg) => "data:image/png;base64," + (await pg.screenshot()).to
     throw e;
   }
   
-  // 3. Filtered list - try clicking the card element directly
+  // 3. Filtered list - click card and scroll to show table rows
   try {
     // Wait longer for JS to fully load
     await pg.waitForTimeout(2000);
     
-    // Click the second clickable card
+    // Click the second clickable card (should be "received" stage)
     const clickResult = await pg.evaluate(() => {
       const cards = Array.from(document.querySelectorAll('.kpi.clickable[data-k]'));
       if(cards.length < 2) return {success: false, error: 'Not enough cards'};
@@ -212,6 +223,16 @@ const shot = async (pg) => "data:image/png;base64," + (await pg.screenshot()).to
     
     await pg.waitForTimeout(1000);
     
+    // Scroll the table into view so we can see the filtered rows
+    await pg.evaluate(() => {
+      const table = document.querySelector('table');
+      if(table) {
+        table.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+    
+    await pg.waitForTimeout(500);
+    
     // Take screenshot
     cardFiltered = await shot(pg);
     
@@ -221,7 +242,8 @@ const shot = async (pg) => "data:image/png;base64," + (await pg.screenshot()).to
     }
     
     const selectedCount = await pg.locator('.kpi.selected, .kpi[aria-selected="true"]').count();
-    console.log(`✓ Filtered view captured (selected: ${selectedCount}, state: ${clickResult.stateAfter})`);
+    const rowCount = await pg.locator('table tbody tr').count();
+    console.log(`✓ Filtered view captured (selected: ${selectedCount}, rows: ${rowCount}, state: ${clickResult.stateAfter})`);
     
   } catch(e) {
     console.log(`✗ Filtered view failed: ${e.message}`);
