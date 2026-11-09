@@ -19,7 +19,8 @@
    "ai_relevant": true,
    "note": "",
    "origin": "seed",
-   "status": "new"
+   "status": "new",
+   "visible": false
   },
   "daad_epos": {
    "id": "daad_epos",
@@ -39,7 +40,8 @@
    "ai_relevant": true,
    "note": "",
    "origin": "seed",
-   "status": "new"
+   "status": "new",
+   "visible": true
   },
   "daad_phd": {
    "id": "daad_phd",
@@ -59,7 +61,8 @@
    "ai_relevant": true,
    "note": "",
    "origin": "seed",
-   "status": "new"
+   "status": "new",
+   "visible": true
   },
   "erasmus": {
    "id": "erasmus",
@@ -79,7 +82,8 @@
    "ai_relevant": true,
    "note": "",
    "origin": "seed",
-   "status": "new"
+   "status": "new",
+   "visible": true
   },
   "si": {
    "id": "si",
@@ -99,7 +103,8 @@
    "ai_relevant": true,
    "note": "",
    "origin": "seed",
-   "status": "new"
+   "status": "new",
+   "visible": true
   },
   "kaust": {
    "id": "kaust",
@@ -120,7 +125,8 @@
    "ai_relevant": true,
    "note": "",
    "origin": "seed",
-   "status": "new"
+   "status": "new",
+   "visible": false
   },
   "mext": {
    "id": "mext",
@@ -141,7 +147,8 @@
    "ai_relevant": true,
    "note": "",
    "origin": "seed",
-   "status": "new"
+   "status": "new",
+   "visible": false
   },
   "gks": {
    "id": "gks",
@@ -162,7 +169,8 @@
    "ai_relevant": true,
    "note": "",
    "origin": "seed",
-   "status": "new"
+   "status": "new",
+   "visible": false
   },
   "hungary": {
    "id": "hungary",
@@ -183,7 +191,8 @@
    "ai_relevant": true,
    "note": "",
    "origin": "seed",
-   "status": "new"
+   "status": "new",
+   "visible": true
   },
   "eth": {
    "id": "eth",
@@ -203,7 +212,8 @@
    "ai_relevant": true,
    "note": "",
    "origin": "seed",
-   "status": "new"
+   "status": "new",
+   "visible": true
   },
   "eiffel": {
    "id": "eiffel",
@@ -224,7 +234,8 @@
    "ai_relevant": true,
    "note": "",
    "origin": "seed",
-   "status": "new"
+   "status": "new",
+   "visible": true
   },
   "gates": {
    "id": "gates",
@@ -245,7 +256,8 @@
    "ai_relevant": true,
    "note": "",
    "origin": "seed",
-   "status": "new"
+   "status": "new",
+   "visible": true
   },
   "chevening": {
    "id": "chevening",
@@ -265,7 +277,8 @@
    "ai_relevant": true,
    "note": "",
    "origin": "seed",
-   "status": "new"
+   "status": "new",
+   "visible": true
   },
   "hbku": {
    "id": "hbku",
@@ -286,7 +299,8 @@
    "ai_relevant": true,
    "note": "",
    "origin": "seed",
-   "status": "new"
+   "status": "new",
+   "visible": false
   },
   "tum": {
    "id": "tum",
@@ -307,7 +321,8 @@
    "ai_relevant": true,
    "note": "",
    "origin": "seed",
-   "status": "new"
+   "status": "new",
+   "visible": true
   },
   "austria": {
    "id": "austria",
@@ -328,7 +343,8 @@
    "ai_relevant": true,
    "note": "",
    "origin": "seed",
-   "status": "new"
+   "status": "new",
+   "visible": true
   },
   "norway": {
    "id": "norway",
@@ -348,7 +364,8 @@
    "ai_relevant": true,
    "note": "",
    "origin": "seed",
-   "status": "new"
+   "status": "new",
+   "visible": true
   },
   "edinburgh": {
    "id": "edinburgh",
@@ -369,7 +386,8 @@
    "ai_relevant": true,
    "note": "",
    "origin": "seed",
-   "status": "new"
+   "status": "new",
+   "visible": true
   },
   "netherlands": {
    "id": "netherlands",
@@ -389,7 +407,8 @@
    "ai_relevant": true,
    "note": "",
    "origin": "seed",
-   "status": "new"
+   "status": "new",
+   "visible": true
   },
   "crick": {
    "id": "crick",
@@ -409,7 +428,8 @@
    "ai_relevant": true,
    "note": "",
    "origin": "seed",
-   "status": "new"
+   "status": "new",
+   "visible": true
   },
   "commonwealth": {
    "id": "commonwealth",
@@ -430,7 +450,8 @@
    "ai_relevant": true,
    "note": "",
    "origin": "seed",
-   "status": "new"
+   "status": "new",
+   "visible": true
   },
   "eskas": {
    "id": "eskas",
@@ -450,7 +471,8 @@
    "ai_relevant": true,
    "note": "",
    "origin": "seed",
-   "status": "new"
+   "status": "new",
+   "visible": true
   },
   "singa": {
    "id": "singa",
@@ -470,7 +492,8 @@
    "ai_relevant": true,
    "note": "",
    "origin": "seed",
-   "status": "new"
+   "status": "new",
+   "visible": false
   },
   "aus_awards": {
    "id": "aus_awards",
@@ -491,7 +514,8 @@
    "ai_relevant": true,
    "note": "",
    "origin": "seed",
-   "status": "new"
+   "status": "new",
+   "visible": true
   },
   "monash": {
    "id": "monash",
@@ -512,7 +536,8 @@
    "ai_relevant": true,
    "note": "",
    "origin": "seed",
-   "status": "new"
+   "status": "new",
+   "visible": true
   },
   "auckland": {
    "id": "auckland",
@@ -532,7 +557,8 @@
    "ai_relevant": true,
    "note": "",
    "origin": "seed",
-   "status": "new"
+   "status": "new",
+   "visible": true
   },
   "melbourne": {
    "id": "melbourne",
@@ -553,7 +579,8 @@
    "ai_relevant": true,
    "note": "",
    "origin": "seed",
-   "status": "new"
+   "status": "new",
+   "visible": true
   },
   "decodes": {
    "id": "decodes",
@@ -574,7 +601,8 @@
    "note": "",
    "origin": "seed",
    "status0": "applied",
-   "status": "applied"
+   "status": "applied",
+   "visible": true
   },
   "derby_ai_phd": {
    "id": "derby_ai_phd",
@@ -594,7 +622,8 @@
    "ai_relevant": true,
    "note": "جست‌وجوی وب امروز آگهی AI در Derby را تأیید نکرد (تنها آگهی فهرست‌شده: wildlife gardening با مهلت ۲۸ اکتبر ۲۰۲۶، غیر AI). لینک/نام آگهی را بفرستید تا مشخصات ثبت شود.",
    "origin": "seed",
-   "status": "new"
+   "status": "new",
+   "visible": true
   },
   "ucl_dla": {
    "id": "ucl_dla",
@@ -614,7 +643,8 @@
    "ai_relevant": true,
    "note": "باز برای متقاضی بین‌المللی طبق منبع؛ در سایت UCL تأیید شود",
    "origin": "seed",
-   "status": "new"
+   "status": "new",
+   "visible": true
   },
   "imperial_president": {
    "id": "imperial_president",
@@ -634,7 +664,8 @@
    "ai_relevant": true,
    "note": "",
    "origin": "seed",
-   "status": "new"
+   "status": "new",
+   "visible": true
   },
   "imperial_ada": {
    "id": "imperial_ada",
@@ -654,7 +685,8 @@
    "ai_relevant": true,
    "note": "ویژه‌ی متقاضیان زن",
    "origin": "seed",
-   "status": "new"
+   "status": "new",
+   "visible": true
   },
   "kcl_hri": {
    "id": "kcl_hri",
@@ -674,7 +706,8 @@
    "ai_relevant": true,
    "note": "",
    "origin": "seed",
-   "status": "new"
+   "status": "new",
+   "visible": true
   },
   "oxford_clarendon": {
    "id": "oxford_clarendon",
@@ -695,7 +728,8 @@
    "ai_relevant": true,
    "note": "",
    "origin": "seed",
-   "status": "new"
+   "status": "new",
+   "visible": true
   },
   "oxford_ellison": {
    "id": "oxford_ellison",
@@ -715,7 +749,8 @@
    "ai_relevant": true,
    "note": "",
    "origin": "seed",
-   "status": "new"
+   "status": "new",
+   "visible": true
   },
   "ukri_dtp": {
    "id": "ukri_dtp",
@@ -735,7 +770,8 @@
    "ai_relevant": true,
    "note": "",
    "origin": "seed",
-   "status": "new"
+   "status": "new",
+   "visible": true
   },
   "cranfield_agentic": {
    "id": "cranfield_agentic",
@@ -755,7 +791,8 @@
    "ai_relevant": true,
    "note": "شمول شهریه‌ی بین‌المللی را از آگهی بپرسید",
    "origin": "seed",
-   "status": "new"
+   "status": "new",
+   "visible": true
   },
   "ellis": {
    "id": "ellis",
@@ -775,7 +812,8 @@
    "ai_relevant": true,
    "note": "فول‌فاند بودن هر موقعیت جداگانه تأیید شود",
    "origin": "seed",
-   "status": "new"
+   "status": "new",
+   "visible": true
   },
   "elle_msca": {
    "id": "elle_msca",
@@ -795,7 +833,8 @@
    "ai_relevant": true,
    "note": "قانون تحرک MSCA: در ۳۶ ماه گذشته بیش از ۱۲ ماه در کشور میزبان نبوده باشید",
    "origin": "seed",
-   "status": "new"
+   "status": "new",
+   "visible": true
   },
   "mpi_eth_cls": {
    "id": "mpi_eth_cls",
@@ -857,7 +896,8 @@
      "t": "پس از تأیید مالک، ارسال درافت تمدید مهلت به cls@is.mpg.de و پیگیری پاسخ",
      "by": "me"
     }
-   ]
+   ],
+   "visible": true
   },
   "st_gallen": {
    "id": "st_gallen",
@@ -877,7 +917,8 @@
    "ai_relevant": true,
    "note": "",
    "origin": "seed",
-   "status": "new"
+   "status": "new",
+   "visible": true
   },
   "mps_bioai": {
    "id": "mps_bioai",
@@ -897,7 +938,8 @@
    "ai_relevant": true,
    "note": "",
    "origin": "seed",
-   "status": "new"
+   "status": "new",
+   "visible": true
   },
   "mpi_inf": {
    "id": "mpi_inf",
@@ -917,7 +959,8 @@
    "ai_relevant": true,
    "note": "",
    "origin": "seed",
-   "status": "new"
+   "status": "new",
+   "visible": true
   },
   "eth_robotics": {
    "id": "eth_robotics",
@@ -937,7 +980,8 @@
    "ai_relevant": true,
    "note": "",
    "origin": "seed",
-   "status": "new"
+   "status": "new",
+   "visible": true
   },
   "ucph_phd": {
    "id": "ucph_phd",
@@ -957,7 +1001,8 @@
    "levels": [
     "phd"
    ],
-   "status": "new"
+   "status": "new",
+   "visible": true
   },
   "ucph_msca_ai_reg": {
    "id": "ucph_msca_ai_reg",
@@ -977,7 +1022,8 @@
    "levels": [
     "phd"
    ],
-   "status": "new"
+   "status": "new",
+   "visible": true
   },
   "dtu_phd": {
    "id": "dtu_phd",
@@ -997,7 +1043,8 @@
    "levels": [
     "phd"
    ],
-   "status": "new"
+   "status": "new",
+   "visible": true
   },
   "ca_admission": {
    "id": "ca_admission",
@@ -1017,7 +1064,8 @@
    "levels": [
     "phd"
    ],
-   "status": "new"
+   "status": "new",
+   "visible": true
   },
   "mila": {
    "id": "mila",
@@ -1036,7 +1084,8 @@
    "levels": [
     "phd"
    ],
-   "status": "new"
+   "status": "new",
+   "visible": true
   },
   "vector_gsp": {
    "id": "vector_gsp",
@@ -1055,7 +1104,8 @@
    "levels": [
     "phd"
    ],
-   "status": "new"
+   "status": "new",
+   "visible": true
   },
   "nvidia_fellow": {
    "id": "nvidia_fellow",
@@ -1075,7 +1125,8 @@
    "levels": [
     "phd"
    ],
-   "status": "new"
+   "status": "new",
+   "visible": true
   },
   "weidenfeld": {
    "id": "weidenfeld",
@@ -1095,7 +1146,8 @@
    "ai_relevant": false,
    "origin": "seed",
    "note": "باز است. برای کشورهای در حال توسعه؛ بازگشت به کشور اقامت الزامی؛ منابع اختلاف دارند که DPhil را شامل می‌شود یا نه (یکی می‌گوید خیر). گزینه را در فرم Oxford انتخاب و Statement جدا بارگذاری کنید",
-   "status": "new"
+   "status": "new",
+   "visible": true
   },
   "emjm_imaging": {
    "id": "emjm_imaging",
@@ -1114,7 +1166,8 @@
     "master"
    ],
    "country": "چند کشور اروپایی",
-   "status": "new"
+   "status": "new",
+   "visible": true
   },
   "maia": {
    "id": "maia",
@@ -1134,7 +1187,8 @@
     "master"
    ],
    "country": "چند کشور اروپایی",
-   "status": "new"
+   "status": "new",
+   "visible": true
   },
   "membiomed": {
    "id": "membiomed",
@@ -1153,7 +1207,8 @@
     "master"
    ],
    "country": "چند کشور اروپایی",
-   "status": "new"
+   "status": "new",
+   "visible": true
   },
   "emmah": {
    "id": "emmah",
@@ -1172,7 +1227,8 @@
     "master"
    ],
    "country": "چند کشور اروپایی",
-   "status": "new"
+   "status": "new",
+   "visible": true
   },
   "kingston_bs": {
    "id": "kingston_bs",
@@ -1192,7 +1248,8 @@
    "origin": "seed",
    "region": "uk",
    "country": "بریتانیا",
-   "status": "new"
+   "status": "new",
+   "visible": true
   },
   "kingston_niloufar": {
    "id": "kingston_niloufar",
@@ -1212,7 +1269,8 @@
    "origin": "seed",
    "region": "uk",
    "country": "بریتانیا",
-   "status": "new"
+   "status": "new",
+   "visible": true
   },
   "imperial_bs": {
    "id": "imperial_bs",
@@ -1231,7 +1289,8 @@
    "origin": "seed",
    "region": "uk",
    "country": "بریتانیا",
-   "status": "new"
+   "status": "new",
+   "visible": true
   },
   "liverpool_ms": {
    "id": "liverpool_ms",
@@ -1250,7 +1309,8 @@
    "origin": "seed",
    "region": "uk",
    "country": "بریتانیا",
-   "status": "new"
+   "status": "new",
+   "visible": true
   },
   "bristol_bs": {
    "id": "bristol_bs",
@@ -1269,7 +1329,8 @@
    "origin": "seed",
    "region": "uk",
    "country": "بریتانیا",
-   "status": "new"
+   "status": "new",
+   "visible": true
   },
   "edinburgh_bs": {
    "id": "edinburgh_bs",
@@ -1288,7 +1349,8 @@
    "origin": "seed",
    "region": "uk",
    "country": "بریتانیا",
-   "status": "new"
+   "status": "new",
+   "visible": true
   },
   "ambs": {
    "id": "ambs",
@@ -1307,7 +1369,8 @@
    "origin": "seed",
    "region": "uk",
    "country": "بریتانیا",
-   "status": "new"
+   "status": "new",
+   "visible": true
   },
   "imprs_is": {
    "id": "imprs_is",
@@ -1327,7 +1390,8 @@
    "levels": [
     "phd"
    ],
-   "status": "new"
+   "status": "new",
+   "visible": true
   },
   "dkfz_ds_health": {
    "id": "dkfz_ds_health",
@@ -1346,7 +1410,8 @@
    "levels": [
     "phd"
    ],
-   "status": "new"
+   "status": "new",
+   "visible": true
   },
   "erfurt": {
    "id": "erfurt",
@@ -1365,7 +1430,392 @@
    "levels": [
     "phd"
    ],
-   "status": "new"
+   "status": "new",
+   "visible": true
+  },
+  "sch_matthew_howard": {
+   "id": "sch_matthew_howard",
+   "name": "PhD inquiry - Matthew Howard",
+   "country": "",
+   "region": "europe",
+   "uni": "KCL",
+   "levels": [
+    "phd"
+   ],
+   "field": "Machine Learning / AI",
+   "support": "To be determined",
+   "deadline": "",
+   "deadline_note": "",
+   "url": "",
+   "source": "Gmail extract",
+   "ai_relevant": true,
+   "note": "Declined due to research mismatch (Nov 3, 2026)",
+   "origin": "gmail_2026",
+   "contact_date": "2026-11-03",
+   "status": "new",
+   "professor_email": "matthew.j.howard@kcl.ac.uk",
+   "gmail_link": "https://mail.google.com/mail/u/0/#all/1a1a25970d6ff5e9",
+   "visible": true
+  },
+  "sch_brent_young": {
+   "id": "sch_brent_young",
+   "name": "PhD inquiry - Brent Young",
+   "country": "",
+   "region": "europe",
+   "uni": "AUCKLAND",
+   "levels": [
+    "phd"
+   ],
+   "field": "Machine Learning / AI",
+   "support": "To be determined",
+   "deadline": "",
+   "deadline_note": "",
+   "url": "",
+   "source": "Gmail extract",
+   "ai_relevant": true,
+   "note": "",
+   "origin": "gmail_2026",
+   "contact_date": "2026-11-03",
+   "status": "new",
+   "professor_email": "b.young@auckland.ac.nz",
+   "gmail_link": "https://mail.google.com/mail/u/0/#all/1a1a0ed6bb223e20",
+   "visible": true
+  },
+  "sch_buettner_florian": {
+   "id": "sch_buettner_florian",
+   "name": "PhD inquiry - \"Buettner, Florian\"",
+   "country": "",
+   "region": "europe",
+   "uni": "DKFZ-HEIDELBERG",
+   "levels": [
+    "phd"
+   ],
+   "field": "Machine Learning / AI",
+   "support": "To be determined",
+   "deadline": "",
+   "deadline_note": "",
+   "url": "",
+   "source": "Gmail extract",
+   "ai_relevant": true,
+   "note": "",
+   "origin": "gmail_2026",
+   "contact_date": "2026-11-03",
+   "status": "new",
+   "professor_email": "florian.buettner@dkfz-heidelberg.de",
+   "gmail_link": "https://mail.google.com/mail/u/0/#all/1a1a0c5ee0465152",
+   "visible": true
+  },
+  "sch_student_recruitment": {
+   "id": "sch_student_recruitment",
+   "name": "PhD inquiry - student-recruitment",
+   "country": "",
+   "region": "europe",
+   "uni": "CRICK",
+   "levels": [
+    "phd"
+   ],
+   "field": "Machine Learning / AI",
+   "support": "To be determined",
+   "deadline": "",
+   "deadline_note": "",
+   "url": "",
+   "source": "Gmail extract",
+   "ai_relevant": true,
+   "note": "",
+   "origin": "gmail_2026",
+   "contact_date": "2026-11-03",
+   "status": "new",
+   "professor_email": "student-recruitment@crick.ac.uk",
+   "gmail_link": "https://mail.google.com/mail/u/0/#all/1a1a09c06f7b700a",
+   "visible": true
+  },
+  "sch_jes_frellsen": {
+   "id": "sch_jes_frellsen",
+   "name": "PhD inquiry - Jes Frellsen",
+   "country": "",
+   "region": "europe",
+   "uni": "DTU",
+   "levels": [
+    "phd"
+   ],
+   "field": "Machine Learning / AI",
+   "support": "To be determined",
+   "deadline": "",
+   "deadline_note": "",
+   "url": "",
+   "source": "Gmail extract",
+   "ai_relevant": true,
+   "note": "",
+   "origin": "gmail_2026",
+   "contact_date": "2026-11-02",
+   "status": "new",
+   "professor_email": "jefr@dtu.dk",
+   "gmail_link": "https://mail.google.com/mail/u/0/#all/1a19c77a7ddda64f",
+   "visible": true
+  },
+  "sch_behzad_elahifar": {
+   "id": "sch_behzad_elahifar",
+   "name": "PhD inquiry - Behzad Elahifar",
+   "country": "",
+   "region": "europe",
+   "uni": "NTNU",
+   "levels": [
+    "phd"
+   ],
+   "field": "Machine Learning / AI",
+   "support": "To be determined",
+   "deadline": "",
+   "deadline_note": "",
+   "url": "",
+   "source": "Gmail extract",
+   "ai_relevant": true,
+   "note": "No opening now, maybe in ~4 months",
+   "origin": "gmail_2026",
+   "contact_date": "2026-11-02",
+   "status": "new",
+   "professor_email": "behzad.elahifar@ntnu.no",
+   "gmail_link": "https://mail.google.com/mail/u/0/#all/1a19b4c496b9d215",
+   "visible": true
+  },
+  "sch_officeminekyushu_uacjp": {
+   "id": "sch_officeminekyushu_uacjp",
+   "name": "PhD inquiry - \"office@mine.kyushu-u.ac.jp\"",
+   "country": "",
+   "region": "europe",
+   "uni": "MINE",
+   "levels": [
+    "phd"
+   ],
+   "field": "Machine Learning / AI",
+   "support": "To be determined",
+   "deadline": "",
+   "deadline_note": "",
+   "url": "",
+   "source": "Gmail extract",
+   "ai_relevant": true,
+   "note": "",
+   "origin": "gmail_2026",
+   "contact_date": "2026-11-02",
+   "status": "new",
+   "professor_email": "office@mine.kyushu-u.ac.jp",
+   "gmail_link": "https://mail.google.com/mail/u/0/#all/1a19a2c4b3e40e94",
+   "visible": true
+  },
+  "sch_asad_abdi": {
+   "id": "sch_asad_abdi",
+   "name": "PhD inquiry - Asad Abdi",
+   "country": "",
+   "region": "europe",
+   "uni": "DERBY",
+   "levels": [
+    "phd"
+   ],
+   "field": "Machine Learning / AI",
+   "support": "To be determined",
+   "deadline": "",
+   "deadline_note": "",
+   "url": "",
+   "source": "Gmail extract",
+   "ai_relevant": true,
+   "note": "",
+   "origin": "gmail_2026",
+   "contact_date": "2026-11-02",
+   "status": "new",
+   "professor_email": "A.Abdi@derby.ac.uk",
+   "gmail_link": "https://mail.google.com/mail/u/0/#all/1a198da9e606b685",
+   "visible": true
+  },
+  "sch_reza_masoumikia_phd_on_linkedin": {
+   "id": "sch_reza_masoumikia_phd_on_linkedin",
+   "name": "PhD inquiry - Reza Masoumikia PhD on LinkedIn",
+   "country": "",
+   "region": "europe",
+   "uni": "LINKEDIN",
+   "levels": [
+    "phd"
+   ],
+   "field": "Machine Learning / AI",
+   "support": "To be determined",
+   "deadline": "",
+   "deadline_note": "",
+   "url": "",
+   "source": "Gmail extract",
+   "ai_relevant": true,
+   "note": "",
+   "origin": "gmail_2026",
+   "contact_date": "2026-10-31",
+   "status": "new",
+   "professor_email": "messages-noreply@linkedin.com",
+   "gmail_link": "https://mail.google.com/mail/u/0/#all/1a1930304cef3de0",
+   "visible": true
+  },
+  "sch_per_christian_hansen": {
+   "id": "sch_per_christian_hansen",
+   "name": "PhD inquiry - Per Christian Hansen",
+   "country": "",
+   "region": "europe",
+   "uni": "DTU",
+   "levels": [
+    "phd"
+   ],
+   "field": "Machine Learning / AI",
+   "support": "To be determined",
+   "deadline": "",
+   "deadline_note": "",
+   "url": "",
+   "source": "Gmail extract",
+   "ai_relevant": true,
+   "note": "",
+   "origin": "gmail_2026",
+   "contact_date": "2026-10-31",
+   "status": "new",
+   "professor_email": "pcha@dtu.dk",
+   "gmail_link": "https://mail.google.com/mail/u/0/#all/1a1919824e62a6b1",
+   "visible": true
+  },
+  "sch_philip_jaeger": {
+   "id": "sch_philip_jaeger",
+   "name": "PhD inquiry - Philip Jaeger",
+   "country": "",
+   "region": "europe",
+   "uni": "TU-CLAUSTHAL",
+   "levels": [
+    "phd"
+   ],
+   "field": "Machine Learning / AI",
+   "support": "To be determined",
+   "deadline": "",
+   "deadline_note": "",
+   "url": "",
+   "source": "Gmail extract",
+   "ai_relevant": true,
+   "note": "Requested ML paper",
+   "origin": "gmail_2026",
+   "contact_date": "2026-10-31",
+   "status": "new",
+   "professor_email": "philip.jaeger@tu-clausthal.de",
+   "gmail_link": "https://mail.google.com/mail/u/0/#all/1a1915d866f3a639",
+   "visible": true
+  },
+  "sch_stephan_günnemann": {
+   "id": "sch_stephan_günnemann",
+   "name": "PhD inquiry - \"Stephan Günnemann\"",
+   "country": "",
+   "region": "europe",
+   "uni": "TUM",
+   "levels": [
+    "phd"
+   ],
+   "field": "Machine Learning / AI",
+   "support": "To be determined",
+   "deadline": "",
+   "deadline_note": "",
+   "url": "",
+   "source": "Gmail extract",
+   "ai_relevant": true,
+   "note": "",
+   "origin": "gmail_2026",
+   "contact_date": "2026-10-31",
+   "status": "new",
+   "professor_email": "s.guennemann@tum.de",
+   "gmail_link": "https://mail.google.com/mail/u/0/#all/1a19131d21afe014",
+   "visible": true
+  },
+  "sch_femke_vossepoel": {
+   "id": "sch_femke_vossepoel",
+   "name": "PhD inquiry - Femke Vossepoel",
+   "country": "",
+   "region": "europe",
+   "uni": "TUDELFT",
+   "levels": [
+    "phd"
+   ],
+   "field": "Machine Learning / AI",
+   "support": "To be determined",
+   "deadline": "",
+   "deadline_note": "",
+   "url": "",
+   "source": "Gmail extract",
+   "ai_relevant": true,
+   "note": "",
+   "origin": "gmail_2026",
+   "contact_date": "2026-10-31",
+   "status": "new",
+   "professor_email": "F.C.Vossepoel@tudelft.nl",
+   "gmail_link": "https://mail.google.com/mail/u/0/#all/1a1911a7aeebc43d",
+   "visible": true
+  },
+  "sch_iain_murray": {
+   "id": "sch_iain_murray",
+   "name": "PhD inquiry - Iain Murray",
+   "country": "",
+   "region": "europe",
+   "uni": "ED",
+   "levels": [
+    "phd"
+   ],
+   "field": "Machine Learning / AI",
+   "support": "To be determined",
+   "deadline": "",
+   "deadline_note": "",
+   "url": "",
+   "source": "Gmail extract",
+   "ai_relevant": true,
+   "note": "",
+   "origin": "gmail_2026",
+   "contact_date": "2026-10-31",
+   "status": "new",
+   "professor_email": "I.Murray@ed.ac.uk",
+   "gmail_link": "https://mail.google.com/mail/u/0/#all/1a191165ac1a3ce1",
+   "visible": true
+  },
+  "sch_yevgeny_seldin": {
+   "id": "sch_yevgeny_seldin",
+   "name": "PhD inquiry - Yevgeny Seldin",
+   "country": "",
+   "region": "europe",
+   "uni": "DI",
+   "levels": [
+    "phd"
+   ],
+   "field": "Machine Learning / AI",
+   "support": "To be determined",
+   "deadline": "",
+   "deadline_note": "",
+   "url": "",
+   "source": "Gmail extract",
+   "ai_relevant": true,
+   "note": "",
+   "origin": "gmail_2026",
+   "contact_date": "2026-10-31",
+   "status": "new",
+   "professor_email": "seldin@di.ku.dk",
+   "gmail_link": "https://mail.google.com/mail/u/0/#all/1a191053dee72e93",
+   "visible": true
+  },
+  "sch_linkedin": {
+   "id": "sch_linkedin",
+   "name": "PhD inquiry - LinkedIn",
+   "country": "",
+   "region": "europe",
+   "uni": "LINKEDIN",
+   "levels": [
+    "phd"
+   ],
+   "field": "Machine Learning / AI",
+   "support": "To be determined",
+   "deadline": "",
+   "deadline_note": "",
+   "url": "",
+   "source": "Gmail extract",
+   "ai_relevant": true,
+   "note": "",
+   "origin": "gmail_2026",
+   "contact_date": "2026-10-15",
+   "status": "new",
+   "professor_email": "updates-noreply@linkedin.com",
+   "gmail_link": "https://mail.google.com/mail/u/0/#all/1a1409d4964d4506",
+   "visible": true
   }
  },
  "updated": ""

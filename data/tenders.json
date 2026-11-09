@@ -25,7 +25,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": -17,
+   "days_left": -18,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -66,7 +66,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": -18,
+   "days_left": -19,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -107,7 +107,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": -17,
+   "days_left": -18,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -148,7 +148,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": -17,
+   "days_left": -18,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -189,7 +189,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": -17,
+   "days_left": -18,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -230,7 +230,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": -16,
+   "days_left": -17,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -271,7 +271,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": -15,
+   "days_left": -16,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -312,7 +312,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": -11,
+   "days_left": -12,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -353,7 +353,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": -11,
+   "days_left": -12,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -394,7 +394,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": -10,
+   "days_left": -11,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -435,7 +435,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": -10,
+   "days_left": -11,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -476,7 +476,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": -8,
+   "days_left": -9,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -517,7 +517,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": -7,
+   "days_left": -8,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -556,7 +556,7 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": -6,
+   "days_left": -7,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -596,7 +596,7 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": -3,
+   "days_left": -4,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -636,7 +636,7 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": 2,
+   "days_left": 1,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -671,7 +671,7 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": 11,
+   "days_left": 10,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -705,7 +705,7 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": 8,
+   "days_left": 7,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -739,7 +739,7 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": 10,
+   "days_left": 9,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -774,7 +774,7 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": 22,
+   "days_left": 21,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -809,7 +809,7 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": 30,
+   "days_left": 29,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -844,7 +844,7 @@
    "domains": [
     "water"
    ],
-   "days_left": -12,
+   "days_left": -13,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -884,7 +884,7 @@
     "ai_cross_cutting",
     "medical"
    ],
-   "days_left": 8,
+   "days_left": 7,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -920,7 +920,7 @@
     "oil_gas",
     "urban"
    ],
-   "days_left": 15,
+   "days_left": 14,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -954,7 +954,7 @@
    "domains": [
     "urban"
    ],
-   "days_left": 12,
+   "days_left": 11,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-20T09:40:22",
@@ -988,7 +988,7 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": 65,
+   "days_left": 64,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-20T09:40:22",
@@ -1090,7 +1090,7 @@
    "domains": [
     "aerospace"
    ],
-   "days_left": -11,
+   "days_left": -12,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-21T09:36:20",
@@ -1129,7 +1129,7 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": -6,
+   "days_left": -7,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-21T09:36:20",
@@ -1169,7 +1169,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": -5,
+   "days_left": -6,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-21T09:36:20",
@@ -1208,7 +1208,7 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": 13,
+   "days_left": 12,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-21T09:36:20",
@@ -1242,7 +1242,7 @@
    "domains": [
     "web"
    ],
-   "days_left": 15,
+   "days_left": 14,
    "line": "web",
    "status": "new",
    "first_seen": "2026-10-21T09:36:20",
@@ -1310,7 +1310,7 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": 1,
+   "days_left": 0,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-22T09:39:52",
@@ -1344,7 +1344,7 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": 12,
+   "days_left": 11,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-22T09:39:52",
@@ -1378,7 +1378,7 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": 12,
+   "days_left": 11,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-22T09:39:52",
@@ -1412,7 +1412,7 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": 22,
+   "days_left": 21,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-22T09:39:52",
@@ -1446,7 +1446,7 @@
    "domains": [
     "aerospace"
    ],
-   "days_left": 17,
+   "days_left": 16,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-23T09:35:00",
@@ -1480,7 +1480,7 @@
    "domains": [
     "medical"
    ],
-   "days_left": 23,
+   "days_left": 22,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-23T09:35:00",
@@ -1514,7 +1514,7 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": 26,
+   "days_left": 25,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-23T09:35:00",
@@ -1650,7 +1650,7 @@
    "domains": [
     "urban"
    ],
-   "days_left": 1,
+   "days_left": 0,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-26T10:29:22",
@@ -1684,7 +1684,7 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": 15,
+   "days_left": 14,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-26T10:29:22",
@@ -1718,7 +1718,7 @@
    "domains": [
     "urban"
    ],
-   "days_left": 15,
+   "days_left": 14,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-26T10:29:22",
@@ -1786,7 +1786,7 @@
    "domains": [
     "urban"
    ],
-   "days_left": 2,
+   "days_left": 1,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-27T10:03:26",
@@ -1820,7 +1820,7 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": 15,
+   "days_left": 14,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-27T10:03:26",
@@ -1854,7 +1854,7 @@
    "domains": [
     "medical"
    ],
-   "days_left": 18,
+   "days_left": 17,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-27T10:03:26",
@@ -1888,7 +1888,7 @@
    "domains": [
     "urban"
    ],
-   "days_left": 19,
+   "days_left": 18,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-27T10:03:26",
@@ -1923,7 +1923,7 @@
    "domains": [
     "web"
    ],
-   "days_left": 1,
+   "days_left": 0,
    "line": "web",
    "status": "new",
    "first_seen": "2026-10-28T10:50:09",
@@ -1957,7 +1957,7 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": 19,
+   "days_left": 18,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-28T10:50:09",
@@ -1991,7 +1991,7 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": 29,
+   "days_left": 28,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-28T10:50:09",
@@ -2093,7 +2093,7 @@
    "domains": [
     "aerospace"
    ],
-   "days_left": -2,
+   "days_left": -3,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-29T11:07:42",
@@ -2132,7 +2132,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": 3,
+   "days_left": 2,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-29T11:07:42",
@@ -2166,7 +2166,7 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": 30,
+   "days_left": 29,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-29T11:07:42",
@@ -2235,7 +2235,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": 7,
+   "days_left": 6,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-30T11:05:47",
@@ -2269,7 +2269,7 @@
    "domains": [
     "aerospace"
    ],
-   "days_left": 22,
+   "days_left": 21,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-30T11:05:47",
@@ -2303,7 +2303,7 @@
    "domains": [
     "web"
    ],
-   "days_left": 39,
+   "days_left": 38,
    "line": "web",
    "status": "new",
    "first_seen": "2026-10-30T11:05:47",
@@ -2372,7 +2372,7 @@
    "domains": [
     "health_ai"
    ],
-   "days_left": 3,
+   "days_left": 2,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-30T22:04:27",
@@ -2419,7 +2419,7 @@
      "status": "new"
     }
    ],
-   "days_left": 101
+   "days_left": 100
   },
   "GRANT-HORIZON-HLTH-2027-03-TOOL-04": {
    "id": "GRANT-HORIZON-HLTH-2027-03-TOOL-04",
@@ -2533,7 +2533,7 @@
      "status": "new"
     }
    ],
-   "days_left": 87
+   "days_left": 86
   },
   "TED-760253-2026": {
    "id": "TED-760253-2026",
@@ -2558,7 +2558,7 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": 1,
+   "days_left": 0,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-02T12:50:26",
@@ -2592,7 +2592,7 @@
    "domains": [
     "aerospace"
    ],
-   "days_left": 8,
+   "days_left": 7,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-02T12:50:26",
@@ -2626,7 +2626,7 @@
    "domains": [
     "mining"
    ],
-   "days_left": 8,
+   "days_left": 7,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-02T12:50:26",
@@ -2660,7 +2660,7 @@
    "domains": [
     "mining"
    ],
-   "days_left": 8,
+   "days_left": 7,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-02T12:50:26",
@@ -2695,7 +2695,7 @@
    "domains": [
     "water"
    ],
-   "days_left": 15,
+   "days_left": 14,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-02T12:50:26",
@@ -2729,7 +2729,7 @@
    "domains": [
     "water"
    ],
-   "days_left": 16,
+   "days_left": 15,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-02T12:50:26",
@@ -2763,7 +2763,7 @@
    "domains": [
     "mining"
    ],
-   "days_left": 18,
+   "days_left": 17,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-02T12:50:26",
@@ -2797,7 +2797,7 @@
    "domains": [
     "urban"
    ],
-   "days_left": 22,
+   "days_left": 21,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-02T12:50:26",
@@ -2831,7 +2831,7 @@
    "domains": [
     "aerospace"
    ],
-   "days_left": 25,
+   "days_left": 24,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-02T12:50:26",
@@ -2866,7 +2866,7 @@
    "domains": [
     "water"
    ],
-   "days_left": 25,
+   "days_left": 24,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-02T12:50:26",
@@ -2900,7 +2900,7 @@
    "domains": [
     "mining"
    ],
-   "days_left": 30,
+   "days_left": 29,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-02T12:50:26",
@@ -2934,7 +2934,7 @@
    "domains": [
     "mining"
    ],
-   "days_left": 9,
+   "days_left": 8,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-03T12:17:26",
@@ -2968,7 +2968,7 @@
    "domains": [
     "aerospace"
    ],
-   "days_left": 25,
+   "days_left": 24,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-03T12:17:26",
@@ -3002,7 +3002,7 @@
    "domains": [
     "health_ai"
    ],
-   "days_left": 25,
+   "days_left": 24,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-03T12:17:26",
@@ -3071,7 +3071,7 @@
     "ai_cross_cutting",
     "medical"
    ],
-   "days_left": 24,
+   "days_left": 23,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-04T12:29:43",
@@ -3105,7 +3105,7 @@
    "domains": [
     "aerospace"
    ],
-   "days_left": 68,
+   "days_left": 67,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-04T12:29:43",
@@ -3139,7 +3139,7 @@
    "domains": [
     "water"
    ],
-   "days_left": 9,
+   "days_left": 8,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-04T12:29:43",
@@ -3173,7 +3173,7 @@
    "domains": [
     "water"
    ],
-   "days_left": 29,
+   "days_left": 28,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-04T12:29:43",
@@ -3207,7 +3207,7 @@
    "domains": [
     "mining"
    ],
-   "days_left": 29,
+   "days_left": 28,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-04T12:29:43",
@@ -3241,7 +3241,7 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": 43,
+   "days_left": 42,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-04T12:29:43",
@@ -3379,7 +3379,7 @@
     "mining",
     "oil_gas"
    ],
-   "days_left": 9,
+   "days_left": 8,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-04T12:29:43",
@@ -3415,7 +3415,7 @@
     "mining",
     "oil_gas"
    ],
-   "days_left": 9,
+   "days_left": 8,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-04T12:29:43",
@@ -3451,7 +3451,7 @@
     "mining",
     "oil_gas"
    ],
-   "days_left": 9,
+   "days_left": 8,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-04T12:29:43",
@@ -3487,7 +3487,7 @@
     "mining",
     "oil_gas"
    ],
-   "days_left": 9,
+   "days_left": 8,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-04T12:29:43",
@@ -3523,7 +3523,7 @@
     "mining",
     "oil_gas"
    ],
-   "days_left": 9,
+   "days_left": 8,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-04T12:29:43",
@@ -3559,7 +3559,7 @@
     "mining",
     "oil_gas"
    ],
-   "days_left": 9,
+   "days_left": 8,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-04T12:29:43",
@@ -3595,7 +3595,7 @@
     "mining",
     "oil_gas"
    ],
-   "days_left": 9,
+   "days_left": 8,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-04T12:29:43",
@@ -3631,7 +3631,7 @@
     "aerospace",
     "urban"
    ],
-   "days_left": 10,
+   "days_left": 9,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-04T12:29:43",
@@ -3666,7 +3666,7 @@
     "ai_cross_cutting",
     "medical"
    ],
-   "days_left": 38,
+   "days_left": 37,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-04T12:29:43",
@@ -3700,7 +3700,7 @@
    "domains": [
     "aerospace"
    ],
-   "days_left": 16,
+   "days_left": 15,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-05T12:45:15",
@@ -3734,7 +3734,7 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": 26,
+   "days_left": 25,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-05T12:45:15",
@@ -3768,7 +3768,7 @@
    "domains": [
     "urban"
    ],
-   "days_left": 26,
+   "days_left": 25,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-05T12:45:15",
@@ -3802,7 +3802,7 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": 37,
+   "days_left": 36,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-05T12:45:15",
@@ -3904,7 +3904,7 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": 29,
+   "days_left": 28,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-06T12:27:19",
@@ -3939,7 +3939,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": 5,
+   "days_left": 4,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-06T12:27:19",
@@ -3973,7 +3973,7 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": 12,
+   "days_left": 11,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-06T12:27:19",
@@ -4007,7 +4007,7 @@
    "domains": [
     "mining"
    ],
-   "days_left": 16,
+   "days_left": 15,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-06T12:27:19",
@@ -4041,7 +4041,7 @@
    "domains": [
     "aerospace"
    ],
-   "days_left": 29,
+   "days_left": 28,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-06T12:27:19",
@@ -4075,7 +4075,7 @@
    "domains": [
     "mining"
    ],
-   "days_left": 29,
+   "days_left": 28,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-06T12:27:19",
@@ -4109,7 +4109,7 @@
    "domains": [
     "mining"
    ],
-   "days_left": 29,
+   "days_left": 28,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-06T12:27:19",
@@ -4143,7 +4143,7 @@
    "domains": [
     "aerospace"
    ],
-   "days_left": 30,
+   "days_left": 29,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-06T12:27:19",
@@ -4177,7 +4177,7 @@
    "domains": [
     "mining"
    ],
-   "days_left": 30,
+   "days_left": 29,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-06T12:27:19",
@@ -4211,7 +4211,7 @@
    "domains": [
     "water"
    ],
-   "days_left": 30,
+   "days_left": 29,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-06T12:27:19",
@@ -4245,13 +4245,285 @@
    "domains": [
     "mining"
    ],
-   "days_left": 36,
+   "days_left": 35,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-06T12:27:19",
    "history": [
     {
      "at": "2026-11-06T12:27:19",
+     "status": "new"
+    }
+   ]
+  },
+  "TED-776268-2026": {
+   "id": "TED-776268-2026",
+   "source": "TED (EU)",
+   "market": "international",
+   "title": "Poland – Wastewater treatment plant construction work – Budowa centrum produkcji zielonej energii z wykorzystaniem gospodarki obiegu zamkniętego",
+   "description": "Przedmiotem zamówienia jest wykonanie dokumentacji projektowej umożliwiającej realizację zadania inwestycyjnego pn. „Budowa centrum produkcji zielonej energii z wykorzystaniem gospodarki obiegu zamkniętego” (wraz przeniesieniem na Zamawiającego autorskich praw majątkowych do tej dokumentacji projektowej, uzyskaniem wszelkich zgód i pozwoleń niezbędnych do realizacji robót budowlanych oraz sprawowaniem nadzoru autorskiego nad realizacją robót) oraz realizacja na jej podstawie zadania inwestycyjnego, a także dostawę materiałów eksploatacyjnych na pierwsze zalanie, rozruch oraz pierwszy pełny rok eksploatacji dostarczanych urządzeń oraz serwis wybranych dostarczanych urządzeń. Opis przedmiotu zamówienia (dalej OPZ) oraz sposób jego wykonania określony jest w załączniku nr 9 do SWZ (Programie Funkcjonalno­-Użytkowym \"PFU\"), który stanowi dokument poufny oraz w istotnych postanowieniach umowy (załącznik nr 8 do SWZ).",
+   "buyer": "Regionalne Centrum Gospodarki Wodno-Ściekowej S.A.",
+   "country": "POL",
+   "deadline": "2026-11-20",
+   "published": "2026-11-09",
+   "url": "https://ted.europa.eu/en/notice/-/detail/776268-2026",
+   "notice_type": "cn-standard",
+   "sector": "دولتی",
+   "facts": {
+    "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "رویه‌ی باز اتحادیه اروپا – شرکت‌های خارج از EU معمولاً مجازند مگر محدودیت صریح در اسناد"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "water"
+   ],
+   "days_left": 11,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-11-09T13:16:08",
+   "history": [
+    {
+     "at": "2026-11-09T13:16:08",
+     "status": "new"
+    }
+   ]
+  },
+  "TED-775489-2026": {
+   "id": "TED-775489-2026",
+   "source": "TED (EU)",
+   "market": "international",
+   "title": "Poland – Parts of machinery for mining, quarrying and construction – Dostawa części zamiennych do kolejek BECKER WARKOP dla Oddziałów Polskiej Grupy Górniczej S.A. - nr grupy 295-22-06.",
+   "description": "Dostawa części zamiennych do kolejek BECKER WARKOP dla Oddziałów Polskiej Grupy Górniczej S.A. - nr grupy 295-22-06 - wg asortymentu określonego w załączniku nr 2 do SWZ. Dostawa części zamiennych do kolejek BECKER WARKOP dla Oddziałów Polskiej Grupy Górniczej S.A. - nr grupy 295-22-06 - wg asortymentu określonego w załączniku nr 2 do SWZ. Dostawa części zamiennych do kolejek BECKER WARKOP dla Oddziałów Polskiej Grupy Górniczej S.A. - nr grupy 295-22-06 - wg asortymentu określonego w załączniku nr 2 do SWZ. Dostawa części zamiennych do kolejek BECKER WARKOP dla Oddziałów Polskiej Grupy Górniczej S.A. - nr grupy 295-22-06 - wg asortymentu określonego w załączniku nr 2 do SWZ. Dostawa części zamiennych do kolejek BECKER WARKOP dla Oddziałów Polskiej Grupy Górniczej S.A. - nr grupy 295-22-06 - wg asortymentu określonego w załączniku nr 2 do SWZ. Dostawa części zamiennych do kolejek BECKER WARKOP dla Oddziałów Polskiej Grupy Górniczej S.A. - nr grupy 295-22-06 - wg asortymentu określonego w załączniku nr 2 do SWZ. Dostawa części zamiennych do kolejek BECKER WARKOP dla Oddziałów Polskiej Grupy Górniczej S.A. - nr grupy 295-22-06 - wg asortymentu określonego w załączniku nr 2 do SWZ. Dostawa części zamiennych do kolejek BECKER WARKOP dla Oddziałów Polskiej Grupy Górniczej S.A. - nr grupy 295-22-06 - wg asortymentu określonego w załączniku nr 2 do SWZ. Dostawa części zamiennych do kolejek BECKER WARKOP dla Oddziałów Polskiej Grupy Górniczej S.A. - nr grupy 295-22-06 - wg asortymentu określonego w załączniku nr 2 do SWZ. Dostawa części zamiennych do kolejek BECKER WARKOP dla Oddziałów Polskiej Grupy Górniczej S.A. - nr grupy 295-22-06 - wg asortymentu określonego w załączniku nr 2 do SWZ. Dostawa części zamiennych do kolejek BECKER WARKOP dla Oddziałów Polskiej Grupy Górniczej S.A. - nr grupy 295-22-06 - wg asortymentu określonego w załączniku nr 2 do SWZ. Dostawa części zamiennych do kolejek BECKER WARKOP dla Oddziałów Polskiej Grupy Górniczej S.A. - nr grupy 295-22-06 - wg asortymentu określonego w załączniku nr 2 do SWZ. Dostawa części zamiennych do kolejek BECKER WARKOP dla Oddziałów Polskiej Grupy Górniczej S.A. - nr grupy 295-22-06 - wg asortymentu określonego w załączniku nr 2 do SWZ. Dostawa części zamiennych do kolejek BECKER WARKOP dla Oddziałów Polskiej Grupy Górniczej S.A. - nr grupy 295-22-06 - wg asortymentu określonego w załączniku nr 2 do SWZ. Dostawa części zamiennych do kolejek BECKER WARKOP dla Oddziałów Polskiej Grupy Górniczej S.A. - nr grupy 295-22-06 - wg asortymentu określonego w załączniku nr 2 do SWZ. Dostawa części zamiennych do kolejek BECKER WARKOP dla Oddziałów Polskiej Grupy Górniczej S.A. - nr grupy 295-22-06 - wg asortymentu określonego w załączniku nr 2 do SWZ. Dostawa części zamiennych do kolejek BECKER WARKOP dla Oddziałów Polskiej Grupy Górniczej S.A. - nr grupy 295-22-06 - wg asortymentu określonego w załączniku nr 2 do SWZ. Dostawa części zamiennych do kolejek BECKER WARKOP dla Oddziałów Polskiej Grupy Górniczej S.A. - nr grupy 295-22-06 - wg asortymentu określonego w załączniku nr 2 do SWZ. Dostawa części zamiennych do kolejek BECKER WARKOP dla Oddziałów Polskiej Grupy Górniczej S.A. - nr grupy 295-22-06 - wg asortymentu określonego w załączniku nr 2 do SWZ. Dostawa części zamiennych do kolejek BECKER WARKOP dla Oddziałów Polskiej Grupy Górniczej S.A. - nr grupy 295-22-06 - wg asortymentu określonego w załączniku nr 2 do SWZ. Dostawa części zamiennych do kolejek BECKER WARKOP dla Oddziałów Polskiej Grupy Górniczej S.A. - nr grupy 295-22-06 - wg asortymentu określonego w załączniku nr 2 do SWZ. Dostawa części zamiennych do kolejek BECKER WARKOP dla Oddziałów Polskiej Grupy Górniczej S.A. - nr grupy 295-22-06 - wg asortymentu określonego w załączniku nr 2 do SWZ. Dostawa części zamiennych do kolejek BECKER WARKOP dla Oddziałów Polskiej Grupy Górniczej S.A. - nr grupy 295-22-06 - wg asortymentu określonego w załączniku nr 2 do SWZ.",
+   "buyer": "Polska Grupa Górnicza S.A.",
+   "country": "POL",
+   "deadline": "2026-11-24",
+   "published": "2026-11-09",
+   "url": "https://ted.europa.eu/en/notice/-/detail/775489-2026",
+   "notice_type": "cn-standard",
+   "sector": "نامشخص",
+   "facts": {
+    "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "رویه‌ی باز اتحادیه اروپا – شرکت‌های خارج از EU معمولاً مجازند مگر محدودیت صریح در اسناد"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "mining"
+   ],
+   "days_left": 15,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-11-09T13:16:08",
+   "history": [
+    {
+     "at": "2026-11-09T13:16:08",
+     "status": "new"
+    }
+   ]
+  },
+  "TED-775149-2026": {
+   "id": "TED-775149-2026",
+   "source": "TED (EU)",
+   "market": "international",
+   "title": "Luxembourg – Computer-related services – Call for Tenders for the selection of Artificial Intelligence Gigafactory Consortia and the establishment of AI Gigafactories",
+   "description": "This lot targets the establishment of 4 awarded consortia capable of deploying a medium-scale AI Gigafactory project each. More in detail, the specific objectives of this Call are as follows: - Selection of AIGF Consortia: Following a rigorous evaluation of the tenders by the EuroHPC JU with the support of independent experts, the Governing Board will make an award decision, establishing a ranked list of successful AIGF Consortia. - Procurement of Compute Access Time: To establish a framework for the joint acquisition of a guaranteed share of AI compute access time from the selected AIGF Consortia, formalised through the signature of a Framework Contract and a number of subsequent Specific Contracts with the successful AIGF Consortia. AIGF refers to state-of-the-art large-scale facility with sufficient capacity to handle the complete lifecycle, from development to large-scale inference, of very large AI models and applications, providing a supercomputing service infrastructure which is composed of AI-optimised computing capacity, a supporting data centre infrastructure including high-capacity storage and networking, dedicated secure cloud user access environments, and specialised secure AI-oriented support services for its advanced operations, all of which are supported by an environmentally sustainable infrastructure, in particular for energy and water supply systems. This lot targets the establishment of 3 awarded consortia capable of deploying a large-scale AI Gigafactory project each. More in detail, the specific objectives of this Call are as follows: - Selection of AIGF Consortia: Following a rigorous evaluation of the tenders by the EuroHPC JU with the support of independent experts, the Governing Board will make an award decision, establishing a ranked list of successful AIGF Consortia. - Procurement of Compute Access Time: To establish a framework for the joint acquisition of a guaranteed share of AI compute access time from the selected AIGF Consortia, formalised through the signature of a Framework Contract and a number of subsequent Specific Contracts with the successful AIGF Consortia. AIGF refers to state-of-the-art large-scale facility with sufficient capacity to handle the complete lifecycle, from development to large-scale inference, of very large AI models and applications, providing a supercomputing service infrastructure which is composed of AI-optimised computing capacity, a supporting data centre infrastructure including high-capacity storage and networking, dedicated secure cloud user access environments, and specialised secure AI-oriented support services for its advanced operations, all of which are supported by an environmentally sustainable infrastructure, in particular for energy and water supply systems.",
+   "buyer": "European High-Performance Computing Joint Undertaking",
+   "country": "LUX",
+   "deadline": "2026-12-03",
+   "published": "2026-11-09",
+   "url": "https://ted.europa.eu/en/notice/-/detail/775149-2026",
+   "notice_type": "cn-standard",
+   "sector": "نهاد اتحادیه اروپا",
+   "facts": {
+    "price": "ارزش برآوردی: 10,000,000,000 EUR (2 بخش)",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "رویه‌ی باز اتحادیه اروپا – شرکت‌های خارج از EU معمولاً مجازند مگر محدودیت صریح در اسناد"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "ai_cross_cutting"
+   ],
+   "days_left": 24,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-11-09T13:16:08",
+   "history": [
+    {
+     "at": "2026-11-09T13:16:08",
+     "status": "new"
+    }
+   ]
+  },
+  "TED-775748-2026": {
+   "id": "TED-775748-2026",
+   "source": "TED (EU)",
+   "market": "international",
+   "title": "Finland – Mechanical shovels, excavators and shovel loaders, and mining machinery – Käytetty kaivinkone opetuskäyttöön, Pohjois-Karjalan koulutuskuntayhtymä Riveria",
+   "description": "Pohjois-Karjalan hankintatoimi pyytää antamaan tarjouksen käytetystä, kaivosalan opetuskäyttöön soveltuvasta tela-alustaisesta kaivinkoneesta. Kaivinkoneen tulee täyttää Euroopan unionin suoraan velvoittavien säädösten, Suomen lakien ja asetusten sekä viranomaisten antamat määräykset mm. rakenteen, varusteiden, työ- ja paloturvallisuuden sekä sähköturvallisuuden osalta. Kohdetta koskevat vaatimukset on esitetty tarkemmin tarjouspyynnössä ja sen liitteissä. Tarjous on sitova ja se tulee laatia suomen kielellä. Hankintaprosessi on kokonaisuudessaan suomenkielinen.",
+   "buyer": "Pohjois-Karjalan hankintatoimi Pohjois-Karjalan koulutuskuntayhtymä, Riveria",
+   "country": "FIN",
+   "deadline": "2026-12-07",
+   "published": "2026-11-09",
+   "url": "https://ted.europa.eu/en/notice/-/detail/775748-2026",
+   "notice_type": "cn-standard",
+   "sector": "شرکت دولتی / عمومی",
+   "facts": {
+    "price": "ارزش برآوردی: 250,000 EUR",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "رویه‌ی باز اتحادیه اروپا – شرکت‌های خارج از EU معمولاً مجازند مگر محدودیت صریح در اسناد"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "mining"
+   ],
+   "days_left": 28,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-11-09T13:16:08",
+   "history": [
+    {
+     "at": "2026-11-09T13:16:08",
+     "status": "new"
+    }
+   ]
+  },
+  "TED-776292-2026": {
+   "id": "TED-776292-2026",
+   "source": "TED (EU)",
+   "market": "international",
+   "title": "Portugal – Wastewater treatment plant construction work – Empreitada de Conceção, Construção e Exploração da Unidade de Produção de Água para Reutilização do Ecoparque BRAVAL",
+   "description": "Conceção e a realização de todos os trabalhos, fornecimentos e serviços necessários à conceção, construção, fornecimento, fabrico, montagem, instalação, comissionamento e arranque da UPAR do Ecoparque BRAVAL, incluindo todos os trabalhos conexos, bem como a prestação dos serviços de assistência técnica, operação e manutenção.",
+   "buyer": "BRAVAL - Valorização e Tratamento de Resíduos Sólidos, SA",
+   "country": "PRT",
+   "deadline": "2026-12-07",
+   "published": "2026-11-09",
+   "url": "https://ted.europa.eu/en/notice/-/detail/776292-2026",
+   "notice_type": "cn-standard",
+   "sector": "دولتی",
+   "facts": {
+    "price": "ارزش برآوردی: 6,392,830 EUR",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "رویه‌ی باز اتحادیه اروپا – شرکت‌های خارج از EU معمولاً مجازند مگر محدودیت صریح در اسناد"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "water"
+   ],
+   "days_left": 28,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-11-09T13:16:08",
+   "history": [
+    {
+     "at": "2026-11-09T13:16:08",
+     "status": "new"
+    }
+   ]
+  },
+  "TED-775684-2026": {
+   "id": "TED-775684-2026",
+   "source": "TED (EU)",
+   "market": "international",
+   "title": "Germany – Medical imaging services – Bereitstellung einer offenen und herstellerneutralen Plattform zur standardisierten Integration, Verwaltung und Ausführung KI-gestützter Analyseverfahren",
+   "description": "s. Leistungsbeschreibung",
+   "buyer": "Universitätsklinikum Aachen AöR",
+   "country": "DEU",
+   "deadline": "2026-12-08",
+   "published": "2026-11-09",
+   "url": "https://ted.europa.eu/en/notice/-/detail/775684-2026",
+   "notice_type": "cn-standard",
+   "sector": "دولتی",
+   "facts": {
+    "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "رویه‌ی باز اتحادیه اروپا – شرکت‌های خارج از EU معمولاً مجازند مگر محدودیت صریح در اسناد"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "medical"
+   ],
+   "days_left": 29,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-11-09T13:16:08",
+   "history": [
+    {
+     "at": "2026-11-09T13:16:08",
+     "status": "new"
+    }
+   ]
+  },
+  "TED-776881-2026": {
+   "id": "TED-776881-2026",
+   "source": "TED (EU)",
+   "market": "international",
+   "title": "France – Computer support services – Assistance à la maîtrise d'ouvrage SIF et SIRH de la direction générale de l'Aviation civile",
+   "description": "Assistance à la maîtrise d’ouvrage des systèmes d’informations financiers (SIF) et ressources humaines (SIRH) de la DGAC et accompagnement à la modernisation des fonctions financières et ressources humaines associées.",
+   "buyer": "Ministère des transports - Direction générale de l'Aviation civile",
+   "country": "FRA",
+   "deadline": "",
+   "published": "2026-11-09",
+   "url": "https://ted.europa.eu/en/notice/-/detail/776881-2026",
+   "notice_type": "cn-standard",
+   "sector": "دولتی",
+   "facts": {
+    "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "aerospace"
+   ],
+   "days_left": null,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-11-09T13:16:08",
+   "history": [
+    {
+     "at": "2026-11-09T13:16:08",
+     "status": "new"
+    }
+   ]
+  },
+  "TED-776438-2026": {
+   "id": "TED-776438-2026",
+   "source": "TED (EU)",
+   "market": "international",
+   "title": "Germany – District heating – Vergabeverfahren der Gemeinde St. Johann zum Betrieb eines kommunalen Wärmenetzes als Contracting",
+   "description": "Die Gemeinde St. Johann schreibt Leistungen zum Betrieb eines vorhandenen kommunalen Wärmenetzes in Form eines Energie-Liefer-Contractings (ELC) inklusive Erneuerung und/oder Erweiterung der vorhandenen Wärmeerzeugung aus; der Anschluss weiterer Gebäude im Einzugsgebiet ist möglich. Der Lieferant übernimmt Planung, Finanzierung, Errichtung und Betrieb der Wärmeversorgungsanla-gen sowie die Wärmelieferung für sieben kommunale Gebäude und drei Gebäude in Privateigentum in St. Johann.",
+   "buyer": "Gemeinde St. Johann",
+   "country": "DEU",
+   "deadline": "",
+   "published": "2026-11-09",
+   "url": "https://ted.europa.eu/en/notice/-/detail/776438-2026",
+   "notice_type": "cn-standard",
+   "sector": "دولتی",
+   "facts": {
+    "price": "ارزش برآوردی: 4,000,000 EUR",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "urban"
+   ],
+   "days_left": null,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-11-09T13:16:08",
+   "history": [
+    {
+     "at": "2026-11-09T13:16:08",
      "status": "new"
     }
    ]
@@ -5918,6 +6190,78 @@
     }
    ],
    "new_ids": [],
+   "actioned_ids": [],
+   "reminders": []
+  },
+  {
+   "at": "2026-11-09T13:16:09",
+   "collected": 334,
+   "matched": 32,
+   "partner_drafts": [],
+   "events_added": 0,
+   "scholarships_added": 0,
+   "investors_added": 0,
+   "investor_drafts": [
+    "revo",
+    "212",
+    "hub71",
+    "aramco-ventures",
+    "antler-menap",
+    "equinor-ventures",
+    "shell-ventures",
+    "ycombinator",
+    "techstars"
+   ],
+   "leads_added": 0,
+   "papers_lines": [],
+   "events_soon": [
+    {
+     "start": "2026-11-09",
+     "name": "Web Summit 2026",
+     "name_fa": "وب سامیت لیسبون",
+     "city": "لیسبون"
+    },
+    {
+     "start": "2026-11-16",
+     "name": "MEDICA 2026",
+     "name_fa": "نمایشگاه تجهیزات و فناوری پزشکی دوسلدورف",
+     "city": "دوسلدورف"
+    },
+    {
+     "start": "2026-12-06",
+     "name": "NeurIPS 2026",
+     "name_fa": "کنفرانس NeurIPS (سیدنی / آتلانتا / پاریس)",
+     "city": "سیدنی، آتلانتا، پاریس"
+    },
+    {
+     "start": "2026-12-07",
+     "name": "GITEX Global 2026",
+     "name_fa": "جیتکس دبی",
+     "city": "دبی (Expo City)"
+    },
+    {
+     "start": "2026-12-13",
+     "name": "Iran ITEX 1405 (5th) – Sharif University",
+     "name_fa": "پنجمین نمایشگاه ایران ایتکس دانشگاه صنعتی شریف",
+     "city": "تهران (دانشگاه صنعتی شریف)"
+    },
+    {
+     "start": "2026-12-20",
+     "name": "7th Iran Smart City & AI Conference and Exhibition",
+     "name_fa": "هفتمین نمایشگاه و کنفرانس بین‌المللی شهر هوشمند و هوش مصنوعی ایران (ایرانداک)",
+     "city": "تهران"
+    }
+   ],
+   "new_ids": [
+    "TED-776268-2026",
+    "TED-775489-2026",
+    "TED-775149-2026",
+    "TED-775748-2026",
+    "TED-776292-2026",
+    "TED-775684-2026",
+    "TED-776881-2026",
+    "TED-776438-2026"
+   ],
    "actioned_ids": [],
    "reminders": []
   }
