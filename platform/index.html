@@ -714,7 +714,7 @@ function companyDocsStrip(k){
 }
 VIEWS["market.docs_ir"]=()=>companyDocsView("ppt");
 VIEWS["market.docs_int"]=()=>companyDocsView("parsa");
-async function cdocFetch(id){ const d=[...cdocList("ppt"),...cdocList("parsa")].find(x=>x.id===id)||{name:"document"}; const r=await fetch(blobUrl(id)); if(!r.ok) throw new Error("fetch "+r.status); return {blob:await r.blob(),name:d.name}; }
+async function cdocFetch(id){ const d=[...cdocList("ppt"),...cdocList("parsa")].find(x=>x.id===id)||{name:"document",kind:""}; const r=await fetch(blobUrl(id)); if(!r.ok) throw new Error("fetch "+r.status); return {blob:await r.blob(),name:d.name,kind:d.kind||""}; }
 async function cdocDownload(id){ try{ const {blob,name}=await cdocFetch(id); const fn=name.replace(/[\/:*?"<>|]+/g,"_")+".pdf"; if(S.downloads) await S.downloads.save({filename:fn,data:blob}); else { const a=document.createElement("a"); a.href=URL.createObjectURL(blob); a.download=fn; a.click(); } }catch(e){ if(!e||e.code!=="declined") toast("دریافت فایل انجام نشد؛ صفحه را داخل claude.ai باز کنید."); } }
 async function cdocView(id){ try{ const {blob}=await cdocFetch(id); const u=URL.createObjectURL(new Blob([blob],{type:"application/pdf"})); const w=window.open(u,"_blank"); if(!w) toast("مرورگر باز شدن را مسدود کرد؛ دکمه‌ی «دانلود» را بزنید."); }catch(e){ toast("باز کردن فایل ممکن نشد؛ دکمه‌ی «دانلود» را بزنید."); } }
 async function cdocAdd(k){
@@ -768,31 +768,130 @@ function ipCompose(t,lang,partner){
 }
 const ipB64 = str => { const u=new TextEncoder().encode(str); let b=""; u.forEach(c=>b+=String.fromCharCode(c)); return btoa(b); };
 const ipHdr = str => /^[ -~]*$/.test(str) ? str : "=?UTF-8?B?"+ipB64(str)+"?=";
+
+// Convert image to PDF: draw on canvas, export as JPEG, wrap in minimal PDF
+async function imageToPDF(blob){
+  try{
+    const img=await createImageBitmap(blob);
+    const canvas=document.createElement("canvas"), ctx=canvas.getContext("2d");
+    const w=img.width, h=img.height;
+    const pageW=595, pageH=842;
+    const scale=Math.min(pageW/Math.max(w,1), pageH/Math.max(h,1), 1);
+    const imgW=Math.round(w*scale), imgH=Math.round(h*scale);
+    canvas.width=imgW; canvas.height=imgH;
+    ctx.drawImage(img,0,0,imgW,imgH);
+    const jpegDataUrl=canvas.toDataURL("image/jpeg",0.90);
+    const jpegB64=jpegDataUrl.split(",")[1];
+    const jpegBytes=atob(jpegB64);
+    const jpegLen=jpegBytes.length;
+    const stream=`q\n${imgW} 0 0 ${imgH} ${Math.round((pageW-imgW)/2)} ${Math.round((pageH-imgH)/2)} cm\n/Im Do\nQ\n`;
+    const obj1=`1 0 obj\n<</Type/Catalog/Pages 2 0 R>>\nendobj\n`;
+    const obj2=`2 0 obj\n<</Type/Pages/Count 1/Kids[3 0 R]>>\nendobj\n`;
+    const obj3=`3 0 obj\n<</Type/Page/Parent 2 0 R/MediaBox[0 0 ${pageW} ${pageH}]/Resources<</XObject<</Im 5 0 R>>>>/Contents 4 0 R>>\nendobj\n`;
+    const obj4=`4 0 obj\n<</Length ${stream.length}>>\nstream\n${stream}endstream\nendobj\n`;
+    const obj5=`5 0 obj\n<</Type/XObject/Subtype/Image/Width ${imgW}/Height ${imgH}/ColorSpace/DeviceRGB/BitsPerComponent 8/Filter/DCTDecode/Length ${jpegLen}>>\nstream\n${jpegBytes}endstream\nendobj\n`;
+    const header="%PDF-1.4\n";
+    const body=header+obj1+obj2+obj3+obj4+obj5;
+    const p1=header.length, p2=p1+obj1.length, p3=p2+obj2.length, p4=p3+obj3.length, p5=p4+obj4.length;
+    const xrefStart=body.length;
+    const xref=`xref\n0 6\n0000000000 65535 f \n${String(p1).padStart(10,"0")} 00000 n \n${String(p2).padStart(10,"0")} 00000 n \n${String(p3).padStart(10,"0")} 00000 n \n${String(p4).padStart(10,"0")} 00000 n \n${String(p5).padStart(10,"0")} 00000 n \ntrailer\n<</Size 6/Root 1 0 R>>\nstartxref\n${xrefStart}\n%%EOF`;
+    return new Blob([body+xref],{type:"application/pdf"});
+  }catch(e){console.error("imageToPDF error:",e);throw e;}
+}
+
+// Encode filename for RFC 2231/5987 (for Persian names in Content-Disposition)
+function encodeRFC2231(str){
+  const enc=encodeURIComponent(str).replace(/[!'()*]/g,c=>`%${c.charCodeAt(0).toString(16).toUpperCase()}`);
+  return `utf-8''${enc}`;
+}
+
+// Build MIME multipart/mixed email with attachments
+async function buildMIME(from,to,cc,subject,bodyText,attachments){
+  const CRLF="\r\n", boundary="----=iPetro_"+Date.now()+"_"+Math.random().toString(36).slice(2);
+  const lines=["X-Unsent: 1",`From: ${from}`,`To: ${to}`,cc?`Cc: ${cc}`:"",`Subject: ${ipHdr(subject)}`,"MIME-Version: 1.0",
+    `Content-Type: multipart/mixed; boundary="${boundary}"`,"",'This is a multi-part message in MIME format.',"",
+    `--${boundary}`,"Content-Type: text/plain; charset=utf-8","Content-Transfer-Encoding: base64","",
+    (ipB64(bodyText).match(/.{1,76}/g)||[]).join(CRLF)].filter(Boolean);
+  
+  for(const att of attachments){
+    const bytes=await att.blob.arrayBuffer();
+    const b64=btoa(String.fromCharCode(...new Uint8Array(bytes))).match(/.{1,76}/g)||[];
+    lines.push("",`--${boundary}`,`Content-Type: application/pdf; name="${ipHdr(att.name)}"`,
+      "Content-Transfer-Encoding: base64",`Content-Disposition: attachment; filename*=${encodeRFC2231(att.name)}`,"",...b64);
+  }
+  lines.push("",`--${boundary}--`,"");
+  return lines.join(CRLF);
+}
+
+// Select documents for a tender: company profile, registration, certificates relevant to domain, exclude contracts/confidential
+function selectDocsForTender(t){
+  const k=ipIsIntl(t)?"parsa":"ppt";
+  const all=cdocList(k);
+  const selected=[];
+  for(const d of all){
+    const kind=String(d.kind||"").toLowerCase();
+    const name=String(d.name||"").toLowerCase();
+    if(kind.includes("قرارداد")||name.includes("قرارداد")||name.includes("contract")) continue;
+    if(name.includes("محرمانه")||name.includes("confidential")||name.includes("internal")) continue;
+    if(kind.includes("رزومه")||kind.includes("ثبتی")||kind.includes("گواهی")||kind.includes("پورتفولیو")) selected.push(d.id);
+  }
+  return selected;
+}
 async function ipDrafts(t){
   const k=ipKey(t), partners=(((S.ip.countries||{})[k]||{}).partners)||[]; if(!partners.length){ toast("شریکی ثبت نشده است."); return; }
-  const CRLF=String.fromCharCode(13,10), files=[]; let noMail=0;
-  partners.forEach((x,i)=>{
+  const files=[]; let noMail=0;
+  const docIds=S.ipSelectedDocs&&S.ipSelectedDocs[t.id]?S.ipSelectedDocs[t.id]:selectDocsForTender(t);
+  const attachments=[];
+  for(const id of docIds){
+    try{
+      const {blob,name}=await cdocFetch(id);
+      const isPDF=blob.type==="application/pdf"||(name||"").toLowerCase().endsWith(".pdf");
+      const pdfBlob=isPDF?blob:await imageToPDF(blob);
+      const fn=(name.replace(/\.(jpe?g|png|gif|webp|pdf)$/i,"")||"document")+".pdf";
+      attachments.push({blob:pdfBlob,name:fn});
+    }catch(e){console.error("Attachment error:",id,e);}
+  }
+  const attList=attachments.length?"\n\nEnclosures:\n"+attachments.map(a=>"• "+a.name).join("\n"):"";
+  const attListFa=attachments.length?"\n\nپیوست‌ها:\n"+attachments.map(a=>"• "+a.name).join("\n"):"";
+  
+  for(const [i,x] of partners.entries()){
     const m=ipCompose(t,"en",x), to=(x.email||"").trim(); if(!to) noMail++;
-    const lines=["X-Unsent: 1","From: "+ipFromHdr(t.id),"To: "+to,"Cc: "+IP_CC,"Subject: "+ipHdr(m.subject),"MIME-Version: 1.0","Content-Type: text/plain; charset=utf-8","Content-Transfer-Encoding: base64","",(ipB64(m.body).match(/.{1,76}/g)||[]).join(CRLF)];
-    files.push({name:String(i+1).padStart(2,"0")+"_"+String(x.name||"partner").replace(/[^A-Za-z0-9]+/g,"_").slice(0,40)+".eml",data:lines.join(CRLF)});
-  });
+    const bodyWithAtt=m.body+attList;
+    const eml=await buildMIME(ipFromHdr(t.id),to,IP_CC,m.subject,bodyWithAtt,attachments);
+    files.push({name:String(i+1).padStart(2,"0")+"_"+String(x.name||"partner").replace(/[^A-Za-z0-9]+/g,"_").slice(0,40)+".eml",data:eml});
+  }
   const bytes=await zipStore(files), blob=new Blob([bytes],{type:"application/zip"}), fn=`partner-drafts-${k||"intl"}.zip`;
-  try{ if(S.downloads) await S.downloads.save({filename:fn,data:blob}); else { const a=document.createElement("a"); a.href=URL.createObjectURL(blob); a.download=fn; a.click(); } toast(`${faNum(files.length)} درفت ساخته شد`+(noMail?` (${faNum(noMail)} شریک ایمیل ثبت‌شده ندارد؛ گیرنده را در وب‌میل پر کنید)`:"")+"."); }
+  try{ if(S.downloads) await S.downloads.save({filename:fn,data:blob}); else { const a=document.createElement("a"); a.href=URL.createObjectURL(blob); a.download=fn; a.click(); } toast(`${faNum(files.length)} درفت با ${faNum(attachments.length)} پیوست ساخته شد`+(noMail?` (${faNum(noMail)} شریک ایمیل ثبت‌شده ندارد)`:"")+"."); }
   catch(err){ if(!err||err.code!=="declined") toast("دریافت فایل انجام نشد."); }
 }
 async function ipCopyText(text){
   try{ await navigator.clipboard.writeText(text); return true; }catch(e){}
   try{ const ta=document.createElement("textarea"); ta.value=text; ta.style.position="fixed"; ta.style.top="-1000px"; document.body.appendChild(ta); ta.select(); const ok=document.execCommand("copy"); ta.remove(); return ok; }catch(e){ return false; }
 }
-function ipEml(t,lang,to){
-  const m=ipCompose(t,lang), CRLF=String.fromCharCode(13,10);
-  const lines=["X-Unsent: 1","From: "+ipFromHdr(t.id),"To: "+to,"Cc: "+IP_CC,"Subject: "+ipHdr(m.subject),"MIME-Version: 1.0","Content-Type: text/plain; charset=utf-8","Content-Transfer-Encoding: base64","",(ipB64(m.body).match(/.{1,76}/g)||[]).join(CRLF)];
-  const blob=new Blob([lines.join(CRLF)],{type:"message/rfc822"}), fn="partner-"+(lang||"en")+".eml";
+async function ipEml(t,lang,to){
+  const m=ipCompose(t,lang);
+  const docIds=S.ipSelectedDocs&&S.ipSelectedDocs[t.id]?S.ipSelectedDocs[t.id]:selectDocsForTender(t);
+  const attachments=[];
+  for(const id of docIds){
+    try{
+      const {blob,name}=await cdocFetch(id);
+      const isPDF=blob.type==="application/pdf"||(name||"").toLowerCase().endsWith(".pdf");
+      const pdfBlob=isPDF?blob:await imageToPDF(blob);
+      const fn=(name.replace(/\.(jpe?g|png|gif|webp|pdf)$/i,"")||"document")+".pdf";
+      attachments.push({blob:pdfBlob,name:fn});
+    }catch(e){console.error("Attachment error:",id,e);}
+  }
+  const attListEn=attachments.length?"\n\nEnclosures:\n"+attachments.map(a=>"• "+a.name).join("\n"):"";
+  const attListFa=attachments.length?"\n\nپیوست‌ها:\n"+attachments.map(a=>"• "+a.name).join("\n"):"";
+  const attList=lang==="en"?attListEn:attListFa;
+  const bodyWithAtt=m.body+attList;
+  const eml=await buildMIME(ipFromHdr(t.id),to,IP_CC,m.subject,bodyWithAtt,attachments);
+  const blob=new Blob([eml],{type:"message/rfc822"}), fn="partner-"+(lang||"en")+".eml";
   if(S.downloads) return S.downloads.save({filename:fn,data:blob}).then(()=>true,(e)=>(e&&e.code==="declined")?false:false);
   const a=document.createElement("a"); a.href=URL.createObjectURL(blob);
   a.download=fn; document.body.appendChild(a); a.click(); a.remove();
   setTimeout(()=>URL.revokeObjectURL(a.href),8000);
-  return Promise.resolve(true);
+  return true;
 }
 function ipWebmailUrl(t,lang,to,cc){
   const m=ipCompose(t,lang), q=encodeURIComponent;
@@ -818,14 +917,22 @@ function ipOpen(tid,tab){
      `<div class="row" style="margin-top:8px;gap:8px;flex-wrap:wrap">${partners.length?`<button class="btn sm sig" data-act="ip-drafts" data-id="${esc(tid)}">درفت ایمیل برای همه‌ی شرکا (ZIP، فرستنده: ${esc(ipSender(tid))})</button>`:""}<button class="btn sm sig" data-act="ip-task" data-id="${esc(tid)}">📥 ثبت در صف: پیدا کردن شریک برای Claude</button></div>`;
   } else {
     const lang=S.ipTab.slice(5), m=ipCompose(t,lang), rtl=IP_RTL.has(lang);
+    const ckey=ipIsIntl(t)?"parsa":"ppt";
+    const allDocs=cdocList(ckey);
+    const defaultSel=selectDocsForTender(t);
+    if(!S.ipSelectedDocs) S.ipSelectedDocs={};
+    if(!S.ipSelectedDocs[tid]) S.ipSelectedDocs[tid]=defaultSel;
+    const selected=S.ipSelectedDocs[tid];
+    const docCheckboxes=allDocs.length?`<div class="card" style="margin-bottom:8px"><h4 style="margin:0 0 6px">پیوست‌های PDF (${faNum(selected.length)} انتخاب شده)</h4><p class="meta" style="margin:0 0 6px">مدارک شرکت که به ایمیل و ZIP پیوست می‌شوند. تصاویر خودکار به PDF تبدیل می‌شوند. پیش‌فرض: رزومه، ثبتی، گواهی و پورتفولیو (بدون قرارداد یا محرمانه). می‌توانید تغییر دهید:</p><div style="display:flex;flex-direction:column;gap:4px">${allDocs.map(d=>`<label style="display:flex;align-items:center;gap:6px;font-size:13px"><input type="checkbox" data-doc-id="${esc(d.id)}" ${selected.includes(d.id)?"checked":""}><span>${esc(d.name)}</span><span class="pill p-mute">${esc(d.kind||"مدرک")}</span></label>`).join("")}</div></div>`:"";
     body=`<p class="note">پیش‌نویس ایمیل به زبان ${esc(IP_L[lang])}${lang!=="en"?" (زبان رسمی کشور) ":" "}برای ارسال از ایمیل شرکت (${IP_FROM}). ایمیل گیرنده را از وب‌سایت رسمی شریک وارد کنید؛ نسخه‌ی کپی (CC) برای ایمیل شخصی شما درج شده است. ${lang!=="en"?"ترجمه‌ی اولیه است؛ پیش از ارسال یک فرد بومی بازبینی کند.":""}</p>
      <p class="banner"><b>پیش از ارسال بررسی کنید:</b> آدرس ایمیل گیرنده و نام شرکت شریک را با وب‌سایت رسمی او تطبیق دهید و مطمئن شوید هیچ مورد اشتباهی نیست؛ نام پروژه، کارفرما و مهلت داخل متن هم درست باشد. ایمیل‌های با برچسب «تأیید شود» هنوز از سایت رسمی تأیید نشده‌اند.</p>
+     ${docCheckboxes}
      <div class="card"><div class="row" style="gap:8px;flex-wrap:wrap;margin-bottom:8px">
        <label style="flex:1;min-width:220px"><div class="meta">از (فرستنده)</div><input id="ipFrom" type="email" value="${esc(IP_FROM)}" readonly dir="ltr" style="width:100%"></label>
        <label style="flex:1;min-width:220px"><div class="meta">به (ایمیل شریک)</div><input id="ipTo" type="email" value="${esc(ipRecipient(t))}" placeholder="partner@company.com" dir="ltr" style="width:100%"></label>
        <label style="flex:1;min-width:220px"><div class="meta">رونوشت (CC)</div><input id="ipCc" type="email" value="${esc(IP_CC)}" dir="ltr" style="width:100%"></label></div><div class="meta">موضوع</div><p dir="${rtl?"rtl":"ltr"}" style="margin:0 0 8px"><b>${esc(m.subject)}</b></p><textarea id="ipBody" readonly dir="${rtl?"rtl":"ltr"}" style="width:100%;min-height:340px;font-size:14px">${esc(m.body)}</textarea></div>
-     <div class="row" style="margin-top:8px;gap:8px;flex-wrap:wrap"><button class="btn sm sig" data-act="ip-copy">کپی متن</button><button class="btn sm sig" data-act="ip-wlink" data-t="${esc(lang)}">کپی لینک وب‌میل</button><button class="btn sm sig" data-act="ip-webmail" data-t="${esc(lang)}">باز کردن در وب‌میل شرکت (parsaint.group)</button><button class="btn sm ghost" data-act="ip-mailto" data-t="${esc(lang)}">برنامه‌ی ایمیل سیستم</button><button class="btn sm ghost" data-act="ip-eml" data-t="${esc(lang)}">دانلود درفت .eml</button></div>`;
-    body+=`<p class="meta">اگر پیش‌نمایش اجازه‌ی باز شدن پنجره یا برنامه‌ی ایمیل را نداد: «کپی لینک وب‌میل» را بزنید و لینک را در یک تب جدید مرورگر بچسبانید، یا «دانلود درفت .eml» را بزنید و فایل را در برنامه‌ی ایمیل باز کنید. «کپی متن» هم متن کامل را می‌دهد تا در پیام وب‌میل بچسبانید.</p>`;
+     <div class="row" style="margin-top:8px;gap:8px;flex-wrap:wrap"><button class="btn sm sig" data-act="ip-copy">کپی متن</button><button class="btn sm sig" data-act="ip-wlink" data-t="${esc(lang)}">کپی لینک وب‌میل</button><button class="btn sm sig" data-act="ip-webmail" data-t="${esc(lang)}">باز کردن در وب‌میل شرکت (parsaint.group)</button><button class="btn sm ghost" data-act="ip-mailto" data-t="${esc(lang)}">برنامه‌ی ایمیل سیستم</button><button class="btn sm ghost" data-act="ip-eml" data-t="${esc(lang)}">دانلود درفت .eml</button>${selected.length?`<button class="btn sm ghost" data-act="ip-dl-pdfs">دانلود PDFهای انتخاب‌شده (${faNum(selected.length)})</button>`:""}</div>`;
+    body+=`<p class="meta">برای mailto و webmail فقط متن ارسال می‌شود (فایل‌ها نمی‌روند). برای پیوست‌ها، .eml یا ZIP را دانلود کنید. اگر پیش‌نمایش اجازه‌ی باز شدن پنجره را نداد: «کپی لینک وب‌میل» را بزنید و در تب جدید بچسبانید.</p>`;
   }
   $("#layer").innerHTML=`<div class="scrim" data-act="close-scrim"><div class="drawer" style="max-width:980px;width:96vw;overflow:auto"><div class="row" style="align-items:center;gap:8px"><h3 style="flex:1;margin:0">شرکای تجاری – ${esc(cinfo?cinfo[0]:t.country)}</h3><button class="btn ghost sm" data-act="close">بستن</button></div>
    <p class="meta">${esc(t.title)}<br>${esc(t.buyer||"")} · مهلت ${esc(t.deadline||"—")} ${drafted?`<span class="pill p-warn" title="این نشانه از تسک قدیمی Gmail مانده است؛ در ایمیل شرکت درفتی ساخته نشده">درفت قدیمی در Gmail (نه ایمیل شرکت)</span>`:""}</p>
@@ -4281,6 +4388,7 @@ async function upDone(taskId){
   await save("tasks/"+taskId,{...cur,status:"done",done_at:new Date().toISOString(),updated:new Date().toISOString(),desc:(cur.desc||"")+"\n\nنتیجه: فایل‌ها بارگذاری شد — "+note},"تسک انجام‌شده ثبت شد");
 }
 document.addEventListener("change", async e => { const el=e.target.closest("[data-up]"); if(!el) return; const fs=[...(el.files||[])]; el.value=""; const d=el.dataset, stub=d.dn?dataStub(d.up,d.dn):null; await upFiles(d.up, fs, stub); });
+document.addEventListener("change", e => { const cb=e.target.closest("[data-doc-id]"); if(!cb||!S.ipTid) return; if(!S.ipSelectedDocs) S.ipSelectedDocs={}; if(!S.ipSelectedDocs[S.ipTid]) S.ipSelectedDocs[S.ipTid]=[]; const id=cb.dataset.docId; if(cb.checked&&!S.ipSelectedDocs[S.ipTid].includes(id)) S.ipSelectedDocs[S.ipTid].push(id); else if(!cb.checked) S.ipSelectedDocs[S.ipTid]=S.ipSelectedDocs[S.ipTid].filter(x=>x!==id); const cnt=S.ipSelectedDocs[S.ipTid].length; const h4=document.querySelector("#layer h4"); if(h4&&h4.textContent.includes("پیوست")) h4.textContent=`پیوست‌های PDF (${faNum(cnt)} انتخاب شده)`; });
 VIEWS["articles.evidence"] = () => {
   const ev=(S.pev&&S.pev.list)||[], real=ev.filter(e=>String(e.real).startsWith("بله")).length;
   const pill=e=>{const r=String(e.real); return `<span class="pill ${r.startsWith("بله")?"p-ok":r.startsWith("جزئی")?"p-warn":r.startsWith("خیر")?"p-bad":"p-mute"}">${esc(r)}</span>`;};
@@ -4809,6 +4917,7 @@ document.addEventListener("click", async e => {
       break; }
     case "ip-owner-task": { const t=S.m.tenders.find(x=>x.id===id); if(!t) break; taskForm({title:"ارسال ایمیل به شرکای تجاری – "+ipShort(t.title), desc:"پروژه: "+t.title+"\nخریدار: "+(t.buyer||"—")+"\nمهلت: "+(t.deadline||"—")+"\nایمیل شرکا را از سایت رسمی هر شرکت پیدا کنید، درفت‌ها را بسازید و از ایمیل شرکت (info@parsaint.group) با CC به ایمیل شخصی ارسال کنید. نام شما به‌عنوان فرستنده در ایمیل‌ها درج می‌شود.", ip_tender:t.id, team:"ai", due:addDays(today(),3)}); break; }
     case "ip-drafts": { const t=S.m.tenders.find(x=>x.id===id); if(!t) break; await ipDrafts(t); break; }
+    case "ip-dl-pdfs": { if(!S.ipTid) break; const t=S.m.tenders.find(x=>x.id===S.ipTid); if(!t) break; const docIds=S.ipSelectedDocs&&S.ipSelectedDocs[S.ipTid]?S.ipSelectedDocs[S.ipTid]:selectDocsForTender(t); if(!docIds.length){ toast("هیچ مدرکی انتخاب نشده است."); break; } const files=[]; for(const did of docIds){ try{ const {blob,name}=await cdocFetch(did); const isPDF=blob.type==="application/pdf"||(name||"").toLowerCase().endsWith(".pdf"); const pdfBlob=isPDF?blob:await imageToPDF(blob); const fn=(name.replace(/\.(jpe?g|png|gif|webp|pdf)$/i,"")||"document")+".pdf"; files.push({name:fn,data:pdfBlob}); }catch(e){console.error("PDF fetch error:",did,e);} } if(!files.length){ toast("دریافت فایل‌ها انجام نشد."); break; } const bytes=await zipStore(files.map(f=>({name:f.name,data:f.data}))), blob=new Blob([bytes],{type:"application/zip"}), fn=`tender-docs-${t.id||"draft"}.zip`; try{ if(S.downloads) await S.downloads.save({filename:fn,data:blob}); else { const a=document.createElement("a"); a.href=URL.createObjectURL(blob); a.download=fn; a.click(); } toast(`${faNum(files.length)} فایل PDF دانلود شد.`); } catch(err){ if(!err||err.code!=="declined") toast("دریافت ZIP انجام نشد."); } break; }
     case "ip-copy": { const el=$("#ipBody"); if(el){ el.focus(); el.select(); let ok=false; try{ ok=document.execCommand("copy"); }catch(e){} if(!ok){ try{ await navigator.clipboard.writeText(el.value); ok=true; }catch(e){} } toast(ok?"متن کپی شد.":"متن انتخاب شد؛ با Ctrl+C کپی کنید."); } break; }
     case "ip-task": { const t=S.m.tenders.find(x=>x.id===id); if(!t||!isAdmin()) break; const k=ipKey(t); await ctAdd(`برای پروژه‌ی بین‌المللی «${t.title}» (خریدار: ${t.buyer}، کشور: ${k?IP_C[k][0]:t.country}، مهلت: ${t.deadline||"—"}) شریک تجاری محلی پیدا کن: ۱) با جست‌وجوی وب ۵ شرکت واقعی در همان کشور یا شهر که با موضوع پروژه هم‌خوان‌اند (یکپارچه‌ساز، شرکت مهندسی یا مشاور با سابقه‌ی مشابه) پیدا کن و در سند settings/intl_partners زیر کشور ثبت کن با نام، شهر، نوع، دلیل و لینک منبع؛ ۲) برای هر شرکت ایمیل دو زبانه (انگلیسی و زبان رسمی) را به‌صورت درفت در صندوق ایمیل شرکت (info@parsaint.group، نه Gmail شخصی) بساز و در آن گیرنده را با ایمیل رسمی همان شرکت پر کن و oil.ms.sohrabi@gmail.com را CC بگذار؛ در متن بنویس که ارائه‌ی نیازمندی‌های کارفرما و مدارک خواسته‌شده با شریک و کدنویسی و اجرای فنی با ماست؛ ۳) هیچ ایمیلی ارسال نکن.`,{kind:"partner_search",venue:id,name:"شریک محلی → "+(t.buyer||t.title)}); break; }
     case "bi-task": { const x=((S.bi&&S.bi.list)||[])[Number(b.dataset.i)]; if(!x||!isAdmin()) break; await ctAdd(`برای ایده‌ی محصول نو «${x.name}» (حوزه: ${x.area}) تسک: ۱) تعریف محصول (مسئله، نوآوری، داده، TRL هدف) بر پایه‌ی نیاز جهانی: ${x.need}؛ ۲) آنچه در سبد داریم: ${x.existing||"چیزی نیست"}؛ باقی‌مانده: ${x.remaining||""}؛ ۳) ساخت ریپوی جدید محلی با git و اسکافلد و توسعه‌ی اولیه با تست؛ ۴) فهرست «نباید فاش شود» برای مسیر ثبت اختراع و چکیده‌ی مقاله‌ی احتمالی. اولین گام: ${x.first||""}. قاعده: همه‌ی محصولات در مسیر ثبت اختراع‌اند؛ روش ادعاشده فاش نشود. قاعده‌ی کیفیت: هر محصول جدید باید یا به پرونده‌ی ثبت اختراع یا به مقاله‌ی ژورنال تبدیل شود. پیش از شروع: ۱) جست‌وجوی پیشینه و نوآوری واقعی؛ ۲) داده‌ی واقعی و عمومی؛ ۳) نتیجه‌ی قابل اندازه‌گیری و تکرارپذیر (نتیجه‌ی منفی صادقانه گزارش شود و مقدار اندازه‌گیری‌نشده [to be measured] بماند)؛ ۴) مقصد مشخص: پتنت یا ژورنال با قالبش؛ ۵) روش ادعاشده پیش از ثبت فاش نشود.`,{kind:"new_product",name:"ایده‌ی نو → "+x.name}); break; }
