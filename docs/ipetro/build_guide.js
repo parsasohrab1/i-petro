@@ -47,11 +47,21 @@ const store = {
   s2:{name:"اسپرینت ۳",goal:"",start:"2026-10-29",end:"2026-11-11",status:"planned"}},
  letters:{n1:{number:"PPT-1405-0001",date:"2026-10-20",recipient:"جناب آقای دکتر رضایی\nمدیرعامل شرکت نمونه",subject:"درخواست جلسه‌ی معرفی",body:"با سلام\nبدین‌وسیله درخواست جلسه‌ی معرفی محصولات هوشمند را اعلام می‌داریم.",office_sig:{by:"me1",at:"2026-10-20T08:00:00Z"}}},
  letters_archive:{
-  a1:{number:"PPT-1405-0000",date:"2026-10-10",subject:"پیشنهاد همکاری فناورانه",recipient:"مدیرعامل شرکت نمونه",channel:"automation",stage:"review",status:"active",owner:"me1",next_action:"تماس برای پیگیری",next_date:"2026-10-23",log:[{at:"2026-10-12T09:00:00Z",by:"me1",stage:"review",note:"نامه در دست بررسی است"}],employer_no:"1405/1234"},
-  a2:{id:"a2",number:"PPT-1405-0002",date:"2026-10-21",subject:"معرفی محصولات هوشمند",recipient:"مدیرعامل شرکت نمونه ۲",stage:"ready",status:"active",owner:"me1",task_stage:"claimed",task_assignee:"سارا نمونه",task_title:"ارسال نامه معرفی"},
-  a3:{id:"a3",subject:"درخواست جلسه فنی",recipient:"مدیر فنی شرکت نمونه ۳",stage:"ready",status:"active",owner:"me1",task_stage:"todo"},
-  a4:{number:"PPT-1405-0003",date:"2026-10-15",subject:"پیگیری پروپوزال",recipient:"شرکت نمونه ۴",stage:"sent",status:"active",owner:"me1"},
-  a5:{number:"PPT-1405-0004",date:"2026-10-16",subject:"دعوت به همکاری",recipient:"شرکت نمونه ۵",stage:"received",status:"active",owner:"me1"},
+  // Mix of Shasta and other letters across all stages for realistic KPI cards
+  a1:{id:"a1",number:"PPT-1405-0001",date:"2026-10-10",identity:"ir",grp:"shasta",subject:"پیشنهاد همکاری – پتروشیمی شازند",recipient:"مدیرعامل پتروشیمی شازند",channel:"automation",stage:"sent",status:"active",owner:"me1",next_action:"پیگیری",next_date:"2026-10-25"},
+  a2:{id:"a2",number:"PPT-1405-0002",date:"2026-10-12",identity:"ir",grp:"shasta",subject:"معرفی محصولات هوشمند – لاستیک‌سازی",recipient:"مدیرعامل کارخانه لاستیک‌سازی",stage:"sent",status:"active",owner:"me1"},
+  a3:{id:"a3",number:"PPT-1405-0003",date:"2026-10-13",identity:"ir",grp:"shasta",subject:"درخواست جلسه فنی – چوب و کاغذ",recipient:"مدیر فنی کارخانه چوب و کاغذ",stage:"received",status:"active",owner:"me1"},
+  a4:{id:"a4",number:"PPT-1405-0004",date:"2026-10-14",identity:"ir",grp:"shasta",subject:"ارائه طرح – پتروشیمی ایلام",recipient:"پتروشیمی ایلام",stage:"received",status:"active",owner:"me1"},
+  a5:{id:"a5",number:"PPT-1405-0005",date:"2026-10-15",identity:"ir",grp:"shasta",subject:"پیگیری پروپوزال – نفت و گاز",recipient:"شرکت خدمات نفتی",stage:"review",status:"active",owner:"me1"},
+  a6:{id:"a6",number:"PPT-1405-0006",date:"2026-10-16",identity:"ir",grp:"shasta",subject:"دعوت به همکاری – تاسیکو",recipient:"تاسیکو",stage:"review",status:"active",owner:"me1"},
+  a7:{id:"a7",number:"PPT-1405-0007",date:"2026-10-17",identity:"ir",grp:"shasta",subject:"پاسخ به استعلام – حفاری",recipient:"شرکت حفاری",stage:"reply",status:"active",owner:"me1"},
+  a8:{id:"a8",number:"PPT-1405-0008",date:"2026-10-18",identity:"ir",grp:"shasta",subject:"پیگیری مذاکرات",recipient:"شرکت مهندسی",stage:"followup",status:"active",owner:"me1"},
+  a9:{id:"a9",number:"PPT-1405-0009",date:"2026-10-19",identity:"ir",grp:"shasta",subject:"تعیین جلسه",recipient:"پتروشیمی بندر امام",stage:"meeting_scheduled",status:"active",owner:"me1"},
+  a10:{id:"a10",number:"PPT-1405-0010",date:"2026-10-20",identity:"ir",grp:"shasta",subject:"جلسه انجام شد",recipient:"لاستیک بارز",stage:"meeting",status:"active",owner:"me1"},
+  // Unsent letters for send tab
+  a11:{id:"a11",identity:"ir",subject:"نامه برای ارسال ۱",recipient:"شرکت نمونه",stage:"ready",status:"active",owner:"me1",task_stage:"claimed",task_assignee:"سارا نمونه"},
+  a12:{id:"a12",identity:"ir",subject:"نامه برای ارسال ۲",recipient:"شرکت نمونه ۲",stage:"ready",status:"active",owner:"me1",task_stage:"todo"},
+  a13:{id:"a13",identity:"ir",grp:"hpc",subject:"نامه گروه دیگر",recipient:"هلدینگ خلیج فارس",stage:"sent",status:"active",owner:"me1"},
  },
  tracking:{t1:{owner:"me1",stage:"partner_email",value_usd:400000,next_action:"پیگیری ایمیل شریک",next_date:"2026-10-22"},t2:{owner:"u2",stage:"proposal",value_usd:250000},"ev_e1":{owner:"me1"}},
  "settings/company":{name_fa:"پترو پالا توس",name_en:"Petro Pala Toos",logo_asset:"logo",address:"تهران، خیابان نمونه",ceo_member:"me1",last_backup:new Date().toISOString()},
@@ -109,47 +119,113 @@ const shot = async (pg) => "data:image/png;base64," + (await pg.screenshot()).to
   await pg.click("[data-act=mod][data-k=articles]"); await pg.waitForTimeout(300); const artShot = await shot(pg);
   await pg.locator("table").first().scrollIntoViewIfNeeded(); await pg.mouse.wheel(0, 150); await pg.waitForTimeout(250); const artRows = await shot(pg);
   
-  // Letter sending workflow screenshots
+  // Letter sending workflow screenshots with proper validation
   let sendTab = "", shastaCards = "", cardFiltered = "";
   
-  // Send tab screenshot
+  // 1. Send tab screenshot - with person picker
   try {
-    await pg.click("[data-act=mod][data-k=letters]"); 
-    await pg.waitForTimeout(500);
+    await pg.click("[data-act=mod][data-k=letters]");
+    await pg.waitForTimeout(300);
+    await pg.click('[data-act=sub][data-k=send]');
+    await pg.waitForTimeout(1000);
     
-    // Check if send tab exists
-    const hasSendTab = await pg.locator('[data-act=sub][data-k=send]').count();
-    if(hasSendTab > 0) {
-      await pg.click("[data-act=sub][data-k=send]");
-      await pg.waitForTimeout(800);  // Wait for data to load
+    // Wait for person picker to render
+    await pg.waitForSelector('button[data-act=letter-send-person]', {timeout: 5000});
+    
+    // Verify we have the send view content
+    const hasPersonPicker = await pg.locator('button[data-act=letter-send-person]').count();
+    if(hasPersonPicker > 0) {
       sendTab = await shot(pg);
-      console.log("✓ Captured send tab screenshot");
+      console.log(`✓ Send tab captured (${hasPersonPicker} person buttons found)`);
     } else {
-      console.log("⚠ Send tab not found");
+      throw new Error("Person picker not found in send tab");
     }
   } catch(e) {
-    console.log("✗ Send tab screenshot failed:", e.message);
+    console.log(`✗ Send tab failed: ${e.message}`);
+    throw e;
   }
   
-  // Shasta stat cards screenshots - simplified approach
-  // Just take a screenshot of the archive view which should have clickable cards
+  // 2. Shasta stat cards - navigate properly to show KPI cards
   try {
     // Navigate to letters module
     await pg.click("[data-act=mod][data-k=letters]");
-    await pg.waitForTimeout(1000);
+    await pg.waitForTimeout(300);
     
-    // The archive should already have our clickable cards from the merged code
-    // Just take a screenshot of current state
+    // Go to archive subtab
+    await pg.click('[data-act=sub][data-k=archive]');
+    await pg.waitForTimeout(500);
+    
+    // Wait for clickable KPI cards to render
+    await pg.waitForSelector('.kpi.clickable', {timeout: 5000});
+    
+    // Verify we have the right content
+    const cardCount = await pg.locator('.kpi.clickable').count();
+    const cardTexts = await pg.evaluate(() => {
+      return Array.from(document.querySelectorAll('.kpi span')).map(el => el.textContent).slice(0, 3);
+    });
+    
+    console.log(`  Found ${cardCount} clickable cards: ${cardTexts.join(', ')}`);
+    
+    if(cardCount < 2) {
+      throw new Error(`Expected clickable cards, found ${cardCount}`);
+    }
+    
     shastaCards = await shot(pg);
-    console.log("✓ Captured letters view (for stat cards)");
-    
-    // Create a simple filtered view by taking another screenshot
-    // (Even if it's the same view, better than placeholder)
-    cardFiltered = await shot(pg);
-    console.log("✓ Captured filtered view (for comparison)");
+    console.log(`✓ Shasta cards captured`);
     
   } catch(e) {
-    console.log("✗ Letters cards screenshot failed:", e.message);
+    console.log(`✗ Shasta cards failed: ${e.message}`);
+    throw e;
+  }
+  
+  // 3. Filtered list - try clicking the card element directly
+  try {
+    // Wait longer for JS to fully load
+    await pg.waitForTimeout(2000);
+    
+    // Click the second clickable card
+    const clickResult = await pg.evaluate(() => {
+      const cards = Array.from(document.querySelectorAll('.kpi.clickable[data-k]'));
+      if(cards.length < 2) return {success: false, error: 'Not enough cards'};
+      
+      const card = cards[1];
+      const key = card.dataset.k;
+      
+      // Trigger click event
+      card.click();
+      
+      // Wait a bit and check state
+      return new Promise(resolve => {
+        setTimeout(() => {
+          resolve({
+            success: true,
+            key,
+            stateAfter: window.S?.archStageF || '',
+            hasS: !!window.S,
+            hasRender: typeof window.renderView === 'function'
+          });
+        }, 800);
+      });
+    });
+    
+    console.log(`  Click result:`, JSON.stringify(clickResult));
+    
+    await pg.waitForTimeout(1000);
+    
+    // Take screenshot
+    cardFiltered = await shot(pg);
+    
+    // Verify different
+    if(shastaCards === cardFiltered) {
+      throw new Error("FAIL: Screenshots are identical");
+    }
+    
+    const selectedCount = await pg.locator('.kpi.selected, .kpi[aria-selected="true"]').count();
+    console.log(`✓ Filtered view captured (selected: ${selectedCount}, state: ${clickResult.stateAfter})`);
+    
+  } catch(e) {
+    console.log(`✗ Filtered view failed: ${e.message}`);
+    throw e;
   }
   
   const pg2 = await open(browser, true);
