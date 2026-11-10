@@ -175,7 +175,7 @@ const SUBS = {
   content:[["hamraz","همراز"],["ppt","پترو پالاتوس"],["ithub","آیتی هاب"],["pig","پارسا اینترنشنال گروپ"],["all","همه‌ی برندها"]],
   basket:[["list","محصولات سبد"],["data","داده‌ها و آپلود"],["trl","داده‌ی واقعی و ارتقای TRL ۴ به ۵"],["ideas","محصولات پیشنهادی نو"],["access","دسترسی افراد"]],
   news:[["feed","اخبار هوش مصنوعی"],["access","دسترسی افراد"]],
-  market:[["iran","Iran AI Projects"],["docs_ir","مدارک پترو پالاتوس (داخلی)"],["overseas","Overseas AI Projects"],["techneeds","نیازهای فناورانه"],["docs_int","مدارک پارسا اینت (بین‌المللی)"],["partners","شرکای تجاری بین‌المللی"],["web","Web Design & SEO"],["investors","AI Investors & Accelerators"],["tracking","Project Tracking"],["pipeline","Pipeline"],["memory","Team Memory"]],
+  market:[["iran","Iran AI Projects"],["docs_ir","مدارک پترو پالاتوس (داخلی)"],["overseas","Overseas AI Projects"],["techneeds","نیازهای فناورانه"],["docs_int","مدارک پارسا اینت (بین‌المللی)"],["partners","شرکای تجاری بین‌المللی"],["web","Web Design & SEO"],["investors","AI Investors & Accelerators"],["taskpool","انتخاب تسک / واگذاری"],["followup","پیگیری روند پیشرفت"],["tracking","Project Tracking"],["pipeline","Pipeline"],["memory","Team Memory"]],
   events:[["iran","ایران"],["world","جهان"],["all","همه"],["taken","در دست پیگیری"]],
   erp:[["ops","برنامه‌ی عملیات و واگذاری"],["domains","حوزه‌های فعالیت"],["products","توسعه‌ی محصول هوشمند"],["people","نیروی انسانی"],["finance","مالی"],["clients","مشتریان و قراردادها"],["backup","پشتیبان‌گیری"]],
   bpms:[["home","خانه‌ی BPMS"],["contacts","مخاطبین و ارتباط"],["myday","روز من"],["mind","ذهن‌نگار (آزمون خصوصی)"],["board","تخته‌ی اسکرام"],["backlog","بک‌لاگ و برنامه‌ریزی"],["sprints","اسپرینت‌ها"],["tasks","فهرست تسک‌ها"],["reports","گزارش عملکرد"],["rarchive","بایگانی گزارش‌ها"],["teams","تیم‌ها"],["process","فرایندها"],["calendar","تقویم"],["members","اعضا و ثبت‌نام"],["nda","قرارداد محرمانگی"],["training","فرم آموزش"]],
@@ -213,9 +213,9 @@ const logoSrc = () => S.settings.logo_asset ? blobUrl(S.settings.logo_asset) : D
 // ------------------------------------------------------------------ state
 const S = {mod:"market", sub:"iran", q:"", db:null, user:null, assets:null, sample:null, downloads:null,
   me:{id:null,isOwner:false,canEdit:false}, canWrite:null,
-  m:{tenders:[],events:[],investors:[],leads:[],partners:[]}, opsList:[],
-  settings:{}, members:[], tasks:[], letters:[], lettersArchive:[], shTrk:[], lh:null, draft:null, archF:"all", ra:{member:null,from:"",to:""}, repLoaded:false, allLoaded:false, forceFull:false, products:[], patents:[], finance:[], clients:[], tracking:{}, schol:[], sp:{}, cdocs:{}, ip:{countries:{},drafts:{}}, ipTab:"partners", news:{items:[]}, bi:{list:[]}, arts:[], tn:[], tnF:{src:"",ai:false,dom:"",st:""}, artRec:{}, artProd:{}, artSt:{}, artAcc:{ids:[]}, artDeny:{ids:[]}, artMail:{}, ct:[], artF:{field:"",mode:"",type:"",past:false},
-  myAtt:[], myReports:[], allReports:[], allAtt:[], loaded:false, sprints:[], boardMine:false, tour:null, got:new Set(), welcomed:false, calMine:false, calTypes:null, seenTasks:new Set(), planner:{}, taskWho:"", taskFilter:"", subsAll:false, erpLog:{}, erpDept:""};
+  m:{tenders:[],events:[],investors:[],leads:[],partners:[],requests:[],pool:[]}, opsList:[], outlook:{}, poolDone:{ids:[]}, invMail:{},
+  settings:{}, members:[], tasks:[], letters:[], lettersArchive:[], shTrk:[], lh:null, draft:null, archF:"all", archStageF:"", letterF:"all", ra:{member:null,from:"",to:""}, repLoaded:false, allLoaded:false, forceFull:false, products:[], patents:[], finance:[], clients:[], tracking:{}, schol:[], sp:{}, cdocs:{}, ip:{countries:{},drafts:{}}, ipTab:"partners", news:{items:[]}, bi:{list:[]}, arts:[], tn:[], tnF:{src:"",ai:false,dom:"",st:""}, artRec:{}, artProd:{}, artSt:{}, artAcc:{ids:[]}, artDeny:{ids:[]}, artMail:{}, ct:[], artF:{field:"",mode:"",type:"",past:false},
+  myAtt:[], myReports:[], allReports:[], allAtt:[], loaded:false, sprints:[], boardMine:false, tour:null, got:new Set(), welcomed:false, calMine:false, calTypes:null, seenTasks:new Set(), planner:{}, taskWho:"", taskFilter:"", subsAll:false, erpLog:{}, erpDept:"", letterPeople:[], currentUser:""};
 try{const v=JSON.parse(localStorage.getItem("ppt-view")||"{}");if(v.mod&&SUBS[v.mod]){S.mod=v.mod;S.sub=SUBS[v.mod].some(x=>x[0]===v.sub)?v.sub:SUBS[v.mod][0][0]}}catch(e){}
 try{S.seenTasks=new Set(JSON.parse(localStorage.getItem("ppt-seen")||"[]"))}catch(e){}
 loadLetterPeople();
@@ -256,7 +256,7 @@ function match(...xs){ if(!S.q) return true; return xs.join(" ").toLowerCase().i
 // ------------------------------------------------------------------ db plumbing
 const COLS = {
   "market/data/tenders":"m.tenders","market/data/events":"m.events","market/data/investors":"m.investors",
-  "market/data/leads":"m.leads","market/data/partners":"m.partners","patentops/data/items":"opsList",
+  "market/data/leads":"m.leads","market/data/partners":"m.partners","market/data/requests":"m.requests","market/data/pool":"m.pool","patentops/data/items":"opsList",
   members:"members", tasks:"tasks", letters:"letters", letters_archive:"lettersArchive", shasta_tracker:"shTrk", products:"products", patents:"patents",
   finance:"finance", clients:"clients", sprints:"sprints", scholarships:"schol", articles:"arts", techneeds:"tn"
 };
@@ -293,6 +293,8 @@ function subscribe(){
   S.ccD = {}; for(const dn of ["content_calendar","content_calendar_2","content_calendar_3"]) S.db.doc("settings/"+dn).onSnapshot(d => { S.ccD[dn] = d.exists ? (d.data().items||[]) : []; S.cc = Object.values(S.ccD).flat(); render(); }, ()=>{});   // content calendar items {id,brand,title,desc,format,date}; each can be taken or handed over via assign/cc_<id>
   S.db.doc("settings/task_assigners").onSnapshot(d => { S.taskAsg = d.exists ? d.data() : {}; syncRoster(); render(); }, ()=>{});
   S.db.doc("settings/claude_tasks").onSnapshot(d => { S.ct = d.exists ? (d.data().list||[]) : []; render(); }, ()=>{});
+  S.db.doc("settings/outlook").onSnapshot(d => { S.outlook = d.exists ? d.data() : {}; render(); }, ()=>{});   // Outlook / webmail connection status: {connected, imap_host, user, last_check, note_fa}
+  S.db.doc("settings/investor_mail").onSnapshot(d => { S.invMail = d.exists ? (d.data().map||{}) : {}; render(); }, ()=>{});   // per-investor email drafts for info@parsaint.group: {inv_id:{to,subject,body,attachment,deck_note}}
   S.db.doc("settings/paper_evidence").onSnapshot(d => { S.pev = d.exists ? d.data() : {list:[]}; render(); }, ()=>{});
   S.db.doc("settings/data_links").onSnapshot(d => { S.dlinks = d.exists ? (d.data().map||{}) : {}; render(); }, ()=>{});
   S.db.doc("settings/article_mode").onSnapshot(d => { S.artMode = d.exists ? (d.data().map||{}) : {}; render(); }, ()=>{});
@@ -1038,6 +1040,134 @@ VIEWS["market.investors"] = () => {
   const list=S.m.investors.filter(v=>match(v.name,v.hq,v.focus_fa));
   return kpis([["کل",faNum(list.length)],["صندوق خطرپذیر",faNum(list.filter(v=>v.type==="vc").length)],["سرمایه‌گذار شرکتی",faNum(list.filter(v=>v.type==="cvc").length)],["شتاب‌دهنده",faNum(list.filter(v=>v.type==="accelerator").length)]])+
   table(["سرمایه‌گذار","مقر","مرحله و مبلغ","اندازه‌ی صندوق","سرمایه‌گذاری‌ها","علاقه‌مندی","ارتباط","ملاحظات","واگذاری"], list.map(v=>`<tr>${td("نام",esc(v.name),"t")}${td("مقر",esc(v.hq))}${td("مرحله",`${esc(v.stage_fa)}<br><span class="meta">${esc(v.ticket_fa)}</span>`)}${td("صندوق",esc(v.fund_fa))}${td("سرمایه‌گذاری‌ها",esc(v.investments_fa))}${td("علاقه‌مندی",esc(v.focus_fa))}${td("ارتباط",`${link(v.website,"وب‌سایت")}${v.apply&&v.apply!==v.website?" · "+link(v.apply,"ارائه‌ی طرح"):""}${v.email?`<br><span class="mono">${esc(v.email)}</span>`:""}`)}${td("ملاحظات",esc(v.compliance_fa||"—"))}${td("واگذاری",asgCell("inv_"+(v.id||hashKey(v.name)),"تماس با سرمایه‌گذار: "+v.name,"market"))}</tr>`));
+};
+
+// ---------- Outreach task pool (انتخاب تسک / تعریف برای شخص دیگر) + 4-step follow-up (پیگیری روند پیشرفت)
+// Pool sources: (a) investor requests with status "not sent" (one matched product per investor),
+// (b) hand-added docs in market/data/pool. Taking or handing over a task removes it from the pool list
+// (the request doc moves to status "taken", a pool doc is deleted) and a real BPMS task is created for the doer.
+const poolItems = () => {
+  const reqTasks = (S.m.requests||[]).filter(r=>(r.status||"not sent")==="not sent"&&r.product&&r.product!=="unmatched").map(r=>({
+    id:r.id, src:"request", title:`تماس با سرمایه‌گذار: ${r.investor} — معرفی محصول ${r.product}`,
+    investor:r.investor, investor_id:r.investor_id||"", product:r.product, country:r.country||"",
+    note:r.notes||r.note||"", channel:r.channel||"", due:"", priority:r.priority||"normal"}));
+  const custom = (S.m.pool||[]).map(p=>({id:p.id, src:"pool", title:p.title, investor:p.investor||"", investor_id:p.investor_id||"", product:p.product||"", country:p.country||"", note:p.desc||p.note||"", channel:p.channel||"", due:p.due||"", priority:p.priority||"normal"}));
+  return [...reqTasks, ...custom].filter(x=>match(x.title,x.investor,x.product,x.country,x.note));
+};
+const poolTaken = () => (S.m.requests||[]).filter(r=>r.status==="taken");
+async function poolCreateTask(item,doer){
+  const now=nowIso(), m=(S.members||[]).find(x=>x.id===doer)||{}, tid="outreach_"+(item.id||newId());
+  const deck=(S.invMail||{})[item.investor_id]||{}, attach=deck.attachment?`\n\nپیچ دک ضمیمه‌ی ایمیل: ${deck.attachment}`:"";
+  const ok=await save(`tasks/${tid}`,{id:tid,title:item.title,desc:(item.note?item.note+"\n\n":"")+(item.channel?`کانال تماس: ${item.channel}\n`:"")+(deck.subject?`موضوع درفت ایمیل (info@parsaint.group): ${deck.subject}`:"")+attach+
+    `\n\nگام‌های پیگیری: ۱ ارسال ایمیل ← ۲ ارسال پیچ دک ← ۳ ارائه/جلسه آنلاین ← ۴ اقدام بعدی (بخش «پیگیری روند پیشرفت» بازار).`,
+    assignee:doer,assignee_name:m.full_name||memberName(doer),created_by:S.me.id,team:m.team||"ai",priority:item.priority||"normal",due:item.due||addDays(today(),3),status:"todo",type:"task",blocked:false,points:null,sprint:"",pool_ref:item.id,created:now,updated:now},"تسک برای انجام ثبت شد و از فهرست حذف شد");
+  return ok;
+}
+async function poolTake(id){
+  const item=poolItems().find(x=>x.id===id); if(!item) return;
+  if(!S.me.id){toast("برای برداشتن تسک وارد شوید.");return}
+  const ok=await poolCreateTask(item,S.me.id); if(!ok) return;
+  if(item.src==="request"){ const r=(S.m.requests||[]).find(x=>x.id===id)||{};
+    await save(`market/data/requests/${id}`,{...r,status:"taken",taken_by:S.me.id,taken_by_name:memberName(S.me.id),taken_at:nowIso(),updated:nowIso()},"تسک برداشته شد و از فهرست حذف شد"); }
+  else await remove(`market/data/pool/${id}`);
+}
+function poolAssignForm(id){
+  const item=poolItems().find(x=>x.id===id); if(!item) return;
+  if(!S.me.id){toast("برای واگذاری وارد شوید.");return}
+  openForm({title:"تعریف تسک برای شخص دیگر: "+item.title, fields:[
+    {k:"doer",label:"انجام‌دهنده",type:"select",options:Object.fromEntries(S.members.map(m=>[m.id,m.full_name||m.id]))},
+    {k:"due",label:"مهلت",type:"date",value:addDays(today(),3)},
+    {k:"note",label:"شرح تسک برای انجام‌دهنده",type:"textarea",value:item.note||""}],
+   values:{note:item.note||""}, onSave:async o=>{
+    if(!o.doer){toast("شخص انجام‌دهنده را انتخاب کنید.");return false}
+    const it={...item,note:o.note||item.note,due:o.due||""};
+    const ok=await poolCreateTask(it,o.doer); if(!ok) return false;
+    if(item.src==="request"){ const r=(S.m.requests||[]).find(x=>x.id===id)||{};
+      await save(`market/data/requests/${id}`,{...r,status:"taken",taken_by:o.doer,taken_by_name:memberName(o.doer),assigned_by:S.me.id,taken_at:nowIso(),updated:nowIso()},"تسک واگذار شد و از فهرست حذف شد"); }
+    else await remove(`market/data/pool/${id}`);
+    return true; }});
+}
+function poolAddForm(){
+  openForm({title:"افزودن تسک جدید به فهرست انتخاب", fields:[
+    {k:"title",label:"عنوان تسک"},{k:"investor",label:"سرمایه‌گذار (اختیاری)"},{k:"product",label:"محصول مرتبط (اختیاری)"},
+    {k:"priority",label:"اولویت",type:"select",options:PRIORITY},{k:"due",label:"مهلت پیشنهادی",type:"date",value:addDays(today(),7)},
+    {k:"desc",label:"شرح",type:"textarea"}], onSave:async o=>{
+    if(!o.title){toast("عنوان تسک را بنویسید.");return false}
+    return save(`market/data/pool/${newId()}`,{id:newId(),title:o.title,investor:o.investor||"",investor_id:"",product:o.product||"",country:"",channel:"",desc:o.desc||"",priority:o.priority||"normal",due:o.due||"",created_by:S.me.id,created:nowIso()},"تسک به فهرست انتخاب اضافه شد"); }});
+}
+VIEWS["market.taskpool"] = () => {
+  const items=poolItems(), taken=poolTaken();
+  const customTasks=S.tasks.filter(t=>t.pool_ref&&t.assignee).sort((a,b)=>String(b.updated||"").localeCompare(String(a.updated||"")));
+  const row=x=>`<tr>${td("تسک",`<b>${esc(x.title)}</b>${x.note?`<br><span class="meta" style="white-space:pre-wrap">${esc(x.note).substring(0,160)}${x.note.length>160?"…":""}</span>`:""}`,"t")}
+    ${td("سرمایه‌گذار",esc(x.investor||"—"))}${td("محصول",x.product?`<code>${esc(x.product)}</code>`:"—")}${td("اولویت",esc(PRIORITY[x.priority]||x.priority||"معمولی"))}
+    ${td("",`<button class="btn sm sig" data-act="pool-take" data-id="${esc(x.id)}">برای انجام برمی‌دارم</button> <button class="btn sm ghost" data-act="pool-assign" data-id="${esc(x.id)}">تعریف برای شخص دیگر</button>`)}</tr>`;
+  return `<div class="banner"><b>قاعده‌ی این بخش:</b> تسک‌ها از درخواست‌های سرمایه‌گذار (یک محصول منحصربه‌فرد برای هر سرمایه‌گذار) و تسک‌های دستی می‌آیند. هر تسک به‌محض انتخاب («برای انجام برمی‌دارم») یا واگذاری به شخص دیگر، <b>از همین فهرست حذف می‌شود</b> و به‌صورت تسک واقعی در BPMS برای انجام‌دهنده ثبت می‌گردد.</div>`+
+  kpis([["در فهرست انتخاب",faNum(items.length)],["برداشته‌شده / واگذارشده",faNum(taken.length)],["تسک‌های فعال حاصل",faNum(customTasks.length)]])+
+  `<div class="toolbar"><button class="btn sig" data-act="pool-add">افزودن تسک به فهرست</button><span class="meta">فهرست از درخواست‌های سرمایه‌گذار (${faNum((S.m.requests||[]).length)} درخواست) به‌علاوه‌ی تسک‌های دستی ساخته می‌شود.</span></div>`+
+  table(["تسک","سرمایه‌گذار","محصول","اولویت",""],items.map(row),"فهرست خالی است؛ همه‌ی تسک‌ها برداشته یا واگذار شده‌اند.")+
+  (taken.length?`<h3>برداشته‌شده یا واگذارشده (از فهرست بالا حذف شده)</h3>`+table(["تسک","انجام‌دهنده","چه کسی واگذار کرد","تاریخ"],taken.map(r=>`<tr>${td("تسک",esc(r.investor+(r.product?` — ${r.product}`:"")),"t")}${td("انجام‌دهنده",esc(r.taken_by_name||memberName(r.taken_by)||"—"))}${td("واگذارکننده",esc(r.assigned_by?memberName(r.assigned_by):"—"))}${td("تاریخ",r.taken_at?faDate(String(r.taken_at).slice(0,10)):"—")}</tr>`)):"")+
+  (customTasks.length?`<h3>تسک‌های واقعی ساخته‌شده از این فهرست (در BPMS)</h3>`+table(["تسک","مسئول","مهلت","وضعیت"],customTasks.slice(0,12).map(t=>`<tr>${td("تسک",esc(t.title),"t")}${td("مسئول",esc(t.assignee_name||memberName(t.assignee)))}${td("مهلت",t.due?faDate(t.due):"—")}${td("وضعیت",`<span class="pill ${t.status==="done"||t.status==="approved"?"p-ok":t.status==="doing"?"p-info":"p-warn"}">${esc(TASK_ST[t.status]||t.status)}</span>`)}</tr>`)):"");
+};
+// ---------- follow-up pipeline: 4 fixed steps per investor request
+const FU_STEPS=[["email","۱. ارسال ایمیل برای سرمایه‌گذار"],["deck","۲. ارسال پیچ دک برای سرمایه‌گذار"],["meeting","۳. ارائه آنلاین یا جلسه آنلاین"],["next","۴. اقدام بعدی"]];
+const fuOf = r => r.fu||{};
+const fuPill = (r,step) => { const fu=fuOf(r), st=fu[step]||{}, done=step==="next"?!!(st.text||st.date):!!st.done;
+  const cls=done?"p-ok":"p-warn", at=st.at?faDate(String(st.at).slice(0,10)):"";
+  const label=step==="next"?(st.date?`${faDate(st.date)} ${esc((st.text||"").substring(0,30))}`:(st.text?esc((st.text||"").substring(0,40)):"تعیین نشده")):`${at||(st.when?faDate(st.when):"")}`;
+  const btn=step==="next"
+    ?`<button class="btn sm ghost" data-act="fu-next" data-id="${esc(r.id)}">${done?"ویرایش":"تعیین اقدام"}</button>`
+    :(done?`<button class="btn sm ghost" data-act="fu-undo" data-id="${esc(r.id)}" data-stage="${step}">بازکردن</button>`:`<button class="btn sm ghost" data-act="fu-stage" data-id="${esc(r.id)}" data-stage="${step}">ثبت انجام</button>`);
+  return `<span class="pill ${cls}">${FU_STEPS.find(s=>s[0]===step)[1]}${label?` · ${label}`:""}</span> ${btn}`; };
+async function fuMark(id,stage,extra={}){
+  const r=(S.m.requests||[]).find(x=>x.id===id); if(!r) return;
+  const cur=((r.fu||{})[stage])||{};
+  const val=stage==="next"?{text:extra.text??"",date:extra.date||cur.date||"",by:S.me.id,at:nowIso()}:{done:true,by:S.me.id,by_name:memberName(S.me.id),at:nowIso(),...(extra||{})};
+  const req={...r,fu:{...(r.fu||{}),[stage]:val},updated:nowIso()};
+  if(stage==="email"&&!r.date_sent) req.date_sent=String(nowIso()).slice(0,10);
+  if(stage==="email"&&r.status==="not sent") req.status="sent";
+  return save(`market/data/requests/${id}`,req,"گام پیگیری ثبت شد");
+}
+function fuNextForm(id){
+  const r=(S.m.requests||[]).find(x=>x.id===id); if(!r) return;
+  const cur=(r.fu||{}).next||{};
+  openForm({title:"اقدام بعدی: "+r.investor, fields:[
+    {k:"text",label:"اقدام بعدی",type:"textarea",value:cur.text||""},
+    {k:"date",label:"تاریخ اقدام بعدی",type:"date",value:cur.date||today()}],
+   onSave:o=>{ if(!o.text&&!o.date){toast("اقدام بعدی را بنویسید.");return false}
+     return fuMark(id,"next",{text:o.text||"",date:o.date||""}); }});
+}
+function fuMailView(id){
+  const r=(S.m.requests||[]).find(x=>x.id===id); if(!r) return;
+  const d=(S.invMail||{})[r.investor_id]||(S.invMail||{})[r.investor]||{}, hand=(S.invMail||{})._handwritten||{};
+  const dd=d&&d.subject?d:(hand[r.investor_id]||{});
+  const to=dd.to||(S.outlook.user||"info@parsaint.group"), att=dd.attachment?"پیچ دک ضمیمه: <b>"+esc(dd.attachment)+"</b>":"پیچ دک این محصول هنوز در outputs/pitch_decks/ تولید نشده است.";
+  const mailto=`mailto:${esc(to)}?subject=${encodeURIComponent(dd.subject||"Introduction – Parsa International Group")}&body=${encodeURIComponent((dd.body||"").substring(0,1800))}`;
+  openForm({title:"درفت ایمیل از info@parsaint.group — "+r.investor, extra:
+    (dd.subject?`<div class="card" style="max-height:420px;overflow:auto"><p class="meta">از: <b>info@parsaint.group</b>${dd.to?` · به: <b>${esc(dd.to)}</b>`:" (گیرنده از کانال رسمی سرمایه‌گذار)"}<br>موضوع: <b>${esc(dd.subject)}</b><br>${att}</div><div style="white-space:pre-wrap;font-size:12.5px;background:var(--bg2, #f7f7f7);padding:10px;border-radius:8px;max-height:300px;overflow:auto">${esc(dd.body||"درفت این سرمایه‌گذار هنوز نوشته نشده است.")}</div>`:"<p class='meta'>درفت این سرمایه‌گذار هنوز ساخته نشده است؛ با اجرای «درفت ایمیل سرمایه‌گذاران» ساخته می‌شود.</p>")+
+    `<div class="row" style="gap:6px;margin-top:8px;flex-wrap:wrap"><a class="btn sig" href="${mailto}">بازکردن در Outlook (mailto)</a><button class="btn" data-act="fu-mail-copy">کپی متن ایمیل</button><span class="meta">ارسال نهایی فقط با خود شماست؛ سامانه ایمیل را ارسال نمی‌کند.</span></div>`,
+   fields:[], onSave:async()=>true});
+  window._fuMailBody=dd.body||"";
+}
+function outlookCard(){
+  const o=S.outlook||{}, on=o.connected;
+  return `<div class="card"><h3>اتصال Outlook / وب‌میل parsaint.group</h3>
+   <p class="meta">حالت کنونی: <span class="pill ${on?"p-ok":"p-warn"}">${on?"متصل — درفت‌ها در Drafts وب‌میل ذخیره می‌شوند":"متصل نیست — درفت‌ها فقط در فایل‌های outputs/investors/ ذخیره می‌شوند"}</span>
+   ${o.imap_host?` · سرور: <span class="mono">${esc(o.imap_host)}</span> · کاربر: <span class="mono">${esc(o.user||"")}</span>${o.last_check?` · آخرین بررسی: ${faDate(String(o.last_check).slice(0,10))}`:""}`:""}</p>
+   <p class="meta">اتصال با IMAP انجام می‌شود: <span class="mono">mail.parsaint.group:993</span> با کاربر <span class="mono">info@parsaint.group</span>. رمز در فایل <span class="mono">.env</span> (متغیر <span class="mono">IMAP_PASSWORD</span>) قرار می‌گیرد و هرگز در سامانه ذخیره نمی‌شود. سپس با دستور <span class="mono">python -m agent investor-outreach</span> همه‌ی درفت‌ها با پیوست پیچ دک در پوشه‌ی Drafts همان صندوق نوشته می‌شوند؛ ارسال نهایی فقط با خود شماست.</p>
+   <div class="row" style="gap:6px;flex-wrap:wrap"><button class="btn ${on?"ghost":"sig"}" data-act="outlook-save">${on?"ویرایش وضعیت اتصال":"اتصال را ثبت کن"}</button><button class="btn ghost" data-act="outlook-test">تست اتصال IMAP (روی سرور)</button></div></div>`;
+}
+VIEWS["market.followup"] = () => {
+  const reqs=(S.m.requests||[]).filter(r=>r.product&&r.product!=="unmatched").filter(r=>match(r.investor,r.product,r.country));
+  const sent=reqs.filter(r=>r.status==="sent"||((r.fu||{}).email||{}).done), deck=reqs.filter(r=>((r.fu||{}).deck||{}).done), meet=reqs.filter(r=>((r.fu||{}).meeting||{}).done);
+  const row=r=>`<tr>${td("سرمایه‌گذار",`<b>${esc(r.investor)}</b><br><span class="meta">${esc(r.country||"")}</span>`,"t")}
+    ${td("محصول",`<code>${esc(r.product)}</code>`)}
+    ${td("گام‌های پیگیری",[...FU_STEPS.map(s=>s[0])].map(st=>fuPill(r,st)).join("<br>"))}
+    ${td("درفت ایمیل",`<button class="btn sm ghost" data-act="fu-mail" data-id="${esc(r.id)}">نمایش درفت</button>`)}
+    ${td("مسئول",esc(r.taken_by_name||memberName(r.taken_by)||"—"))}</tr>`;
+  return `<div class="banner"><b>پیگیری روند پیشرفت هر سرمایه‌گذار در چهار گام:</b> ۱ ارسال ایمیل برای سرمایه‌گذار ← ۲ ارسال پیچ دک برای سرمایه‌گذار ← ۳ ارائه آنلاین یا جلسه آنلاین با سرمایه‌گذار ← ۴ اقدام بعدی. هر گام با تاریخ و نام ثبت‌کننده روی همین ردیف ثبت می‌شود.</div>`+
+  outlookCard()+
+  kpis([["کل درخواست‌ها",faNum(reqs.length)],["ایمیل ارسال‌شده",faNum(sent.length)],["پیچ دک ارسال‌شده",faNum(deck.length)],["جلسه برگزار شده",faNum(meet.length)]])+
+  table(["سرمایه‌گذار","محصول","گام‌های پیگیری","درفت ایمیل","مسئول"],reqs.map(row),"درخواستی برای پیگیری نیست.");
 };
 // inline owner picker for Project Tracking: admins pick anyone; a member may take an unowned project or release their own
 const ownerSelect = (id,tr) => { const cur=tr.owner||"", locked=!isAdmin()&&cur&&cur!==S.me.id;
@@ -4919,6 +5049,8 @@ const TOUR = [
  {mod:"market",sub:"overseas",title:"Overseas AI Projects",text:"همان فهرست برای مناقصه‌های بین‌المللی. پیشنهاد به نام Parsa International Group (استانبول) ارسال می‌شود. زیر «دلایل» ستون Go/No-Go می‌بینید چرا ایجنت پیشنهاد «برو» یا «نرو» داده است."},
  {mod:"market",sub:"web",title:"Web Design & SEO",text:"درخواست‌های طراحی سایت و سئو، و تولیدکنندگانی که سایت ندارند و می‌توان با آن‌ها تماس گرفت. آنچه کسی برداشته در پایین صفحه، بخش «در دست پیگیری» است."},
  {mod:"market",sub:"investors",title:"AI Investors & Accelerators",text:"فهرست صندوق‌های سرمایه‌گذاری و شتاب‌دهنده‌های هوش مصنوعی همراه با مرحله، مبلغ، حوزه‌ی علاقه، راه ارتباط و ملاحظات انطباق."},
+ {mod:"market",sub:"taskpool",title:"انتخاب تسک / واگذاری",text:"فهرست تسک‌های تماس با سرمایه‌گذار. هر تسک را می‌توانید برای خودتان بردارید یا برای شخص دیگری تعریف کنید؛ به‌محض انتخاب یا واگذاری، تسک از این فهرست حذف و در BPMS برای انجام‌دهنده ثبت می‌شود."},
+ {mod:"market",sub:"followup",title:"پیگیری روند پیشرفت",text:"چهار گام پیگیری هر سرمایه‌گذار: ارسال ایمیل، ارسال پیچ دک، ارائه یا جلسه‌ی آنلاین، و اقدام بعدی. وضعیت اتصال Outlook / وب‌میل parsaint.group و پیش‌نمایش درفت ایمیل هر سرمایه‌گذار با پیوست پیچ دک همین‌جاست."},
  {mod:"market",sub:"tracking",title:"Project Tracking",text:"پیگیری همه‌ی پروژه‌ها. برای هر پروژه مسئول، مرحله، اقدام بعدی و تاریخ آن را از «ویرایش» وارد کنید تا برای همه ذخیره شود. اقدام‌های سررسیده قرمز می‌شوند و در زنگ اعلان شما می‌آیند."},
  {mod:"market",sub:"pipeline",title:"Pipeline – قیف فروش",text:"همه‌ی فرصت‌ها روی یک تخته به تفکیک مرحله. ارزش تخمینی (دلار) و احتمال برد را در «ویرایش» وارد کنید؛ بالای صفحه ارزش کل و پیش‌بینی وزنی را می‌بینید. با دکمه‌های کارت، مرحله را جابه‌جا کنید."},
  {mod:"market",sub:"memory",title:"Team Memory – حافظه‌ی یادگیری",text:"وقتی فرصتی تمام شد (برنده، نبردیم، انصراف) نتیجه و دلیلش را در «Project Tracking ← ویرایش» می‌نویسید. این دلیل‌ها اینجا جمع می‌شود و ایجنت در تحلیل‌های بعدی از آن‌ها یاد می‌گیرد."},
@@ -5200,6 +5332,22 @@ document.addEventListener("click", async e => {
     case "sch-filter": S.schStatusFilter=b.dataset.st; render(); break;
     case "art-status-filter": S.artStatusFilter=b.dataset.st; render(); break;
     case "req-status-filter": S.reqStatusFilter=b.dataset.st; render(); break;
+    case "pool-take": await poolTake(id); break;
+    case "pool-assign": poolAssignForm(id); break;
+    case "pool-add": poolAddForm(); break;
+    case "fu-stage": await fuMark(id,b.dataset.stage); break;
+    case "fu-undo": { const r=(S.m.requests||[]).find(x=>x.id===id); if(!r) break; const fu={...(r.fu||{})}; delete fu[b.dataset.stage]; await save(`market/data/requests/${id}`,{...r,fu,updated:nowIso()},"گام باز شد"); break; }
+    case "fu-next": fuNextForm(id); break;
+    case "fu-mail": fuMailView(id); break;
+    case "fu-mail-copy": { try{ await navigator.clipboard.writeText("Subject: "+((S.invMail||{})[ (S.m.requests||[]).find(x=>x.id===id)?.investor_id ]||{}).subject+"\n\n"+(window._fuMailBody||"")); toast("متن ایمیل کپی شد"); }catch(e){ toast("کپی نشد"); } break; }
+    case "outlook-save": openForm({title:"وضعیت اتصال Outlook / وب‌میل parsaint.group", fields:[
+        {k:"connected",label:"اتصال برقرار است؟ (رمز فقط در .env سرور ذخیره می‌شود)",type:"select",options:{"yes":"بله — متصل","no":"خیر — متصل نیست"},value:S.outlook.connected?"yes":"no"},
+        {k:"imap_host",label:"سرور IMAP",value:S.outlook.imap_host||"mail.parsaint.group"},
+        {k:"user",label:"کاربر (آدرس فرستنده‌ی درفت‌ها)",value:S.outlook.user||"info@parsaint.group"},
+        {k:"note_fa",label:"یادداشت",type:"textarea",value:S.outlook.note_fa||""}],
+       onSave:async o=>{ const now=nowIso();
+         return save("settings/outlook",{connected:o.connected==="yes",imap_host:o.imap_host,user:o.user,note_fa:o.note_fa||"",last_check:now,updated_by:S.me.id},"وضعیت اتصال Outlook ثبت شد"); }}); break;
+    case "outlook-test": { toast("تست اتصال: روی سرور اجرا کنید: python -m agent investor-outreach --check"); break; }
     case "sup-save": await supSave(b.dataset.id,Number(b.dataset.i)); break;
     case "sch-copy": await schCopyPrompt(b.dataset.id); break;
     case "sch-task": await schClaudeTask(b.dataset.id); break;

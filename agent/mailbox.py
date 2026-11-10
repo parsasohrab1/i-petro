@@ -5,12 +5,21 @@ import re
 import time
 from email.message import EmailMessage
 from email.utils import formatdate, make_msgid
+from pathlib import Path
 
 from .config import env
 
 
 def configured():
     return all(env(k) for k in ("IMAP_HOST", "IMAP_USER", "IMAP_PASSWORD"))
+
+
+MIME_BY_EXT = {
+    ".docx": "vnd.openxmlformats-officedocument.wordprocessingml.document",
+    ".pptx": "vnd.openxmlformats-officedocument.presentationml.presentation",
+    ".pdf": "pdf",
+    ".xlsx": "vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+}
 
 
 def build_message(sender, subject, body, to="", cc="", attachments=()):
@@ -25,8 +34,9 @@ def build_message(sender, subject, body, to="", cc="", attachments=()):
     msg["Message-ID"] = make_msgid(domain=sender.split("@")[-1])
     msg.set_content(body)
     for path in attachments:
+        path = Path(path)
         msg.add_attachment(path.read_bytes(), maintype="application",
-                           subtype="vnd.openxmlformats-officedocument.wordprocessingml.document", filename=path.name)
+                           subtype=MIME_BY_EXT.get(path.suffix.lower(), "octet-stream"), filename=path.name)
     return msg
 
 
@@ -55,6 +65,19 @@ def save_draft(msg, cfg):
         if status != "OK":
             raise RuntimeError(f"IMAP APPEND to {folder} failed: {status}")
         return folder
+
+
+def check():
+    """Verify the parsaint.group IMAP login (Outlook / webmail connection test). Returns the Drafts folder name."""
+    if not configured():
+        raise RuntimeError("Set IMAP_HOST, IMAP_USER and IMAP_PASSWORD in .env first (see .env.example).")
+    host, port = env("IMAP_HOST"), int(env("IMAP_PORT", "993"))
+    with imaplib.IMAP4_SSL(host, port) as imap:
+        imap.login(env("IMAP_USER"), env("IMAP_PASSWORD"))
+        status, _ = imap.select("INBOX", readonly=True)
+        if status != "OK":
+            raise RuntimeError("IMAP INBOX select failed")
+        return env("IMAP_USER")
 
 
 def drafts_from_eml(source):

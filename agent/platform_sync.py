@@ -53,6 +53,19 @@ def export(include_seed=False):
         _write("market/data/investors", v["id"], {k: v.get(k) for k in v if k != "draft"}, docs)
     for r in requests.load().get("requests", []):
         _write("market/data/requests", r["id"], r, docs)
+    # per-investor email drafts (info@parsaint.group) + pitch deck attachment for the dashboard follow-up tab
+    drafts_file = ROOT / "data" / "platform_export" / "settings_investor_mail.json"
+    if not drafts_file.exists():
+        _regenerate_mail_map = ROOT / "scripts" / "generate_investor_drafts.py"
+        if _regenerate_mail_map.exists():
+            import subprocess, sys as _sys
+            subprocess.run([_sys.executable, str(_regenerate_mail_map)], check=False, capture_output=True)
+    if drafts_file.exists():
+        try:
+            payload = json.loads(drafts_file.read_text(encoding="utf-8"))
+            _write("settings", "investor_mail", payload.get("doc", {"map": {}}), docs)
+        except Exception:
+            pass
     for lead in leads.load()["leads"].values():
         if lead.get("status") != "do_not_call":
             _write("market/data/leads", lead["id"], lead, docs)
