@@ -246,9 +246,11 @@ function match(...xs){ if(!S.q) return true; return xs.join(" ").toLowerCase().i
 const COLS = {
   "market/data/tenders":"m.tenders","market/data/events":"m.events","market/data/investors":"m.investors",
   "market/data/leads":"m.leads","market/data/partners":"m.partners","patentops/data/items":"opsList",
-  members:"members", tasks:"tasks", letters:"letters", letters_archive:"lettersArchive", shasta_tracker:"shTrk", products:"products", patents:"patents",
+  members:"members", tasks:"tasks", products:"products", patents:"patents",
   finance:"finance", clients:"clients", sprints:"sprints", scholarships:"schol", articles:"arts", techneeds:"tn"
 };
+// heavy data is loaded on demand (a member who cannot see letters or articles used to download ~2 MB of them at every start-up)
+const LAZY_COLS = {letters:"letters", letters_archive:"lettersArchive", shasta_tracker:"shTrk"};
 // privacy: only admins see other members and their tasks; everyone else gets just their own rows
 const PRIVATE_SUBS = {bpms:["contacts","teams"], erp:["people"]};
 function privateRows(key, rows){
@@ -260,14 +262,18 @@ function privateRows(key, rows){
 const visibleSubs = mod => (SUBS[mod]||[]).filter(([k])=>!(k==="access"&&!S.me.isOwner)&&(isAdmin()||!(PRIVATE_SUBS[mod]||[]).includes(k))&&!(mod==="scholar"&&!S.me.isOwner&&["profile","cv"].includes(k))&&!(mod==="basket"&&!S.me.isOwner&&basAcc()&&!["list","data"].includes(k)));   // people with basket access see only the product list and data hub (medical products), never the TRL / ideas tabs
 function setPath(key, val){ const [a,b]=key.split("."); if(b) S[a][b]=val; else S[a]=val; }
 function subscribe(){
-  for(const [path,key] of Object.entries(COLS)){
+  for(const [path,key] of Object.entries(COLS)) subColl(path,key);
+  subscribe2();
+}
+function subColl(path,key){
     S.db.collection(path).onSnapshot(snap => {
       if(key==="members"){ S.rosterAll = snap.docs.map(d => ({id:d.id, full_name:d.data().full_name||d.id, team:d.data().team||"ai"})); syncRoster(); }   // names and team only: the picker for taking or handing over items
       setPath(key, privateRows(key, snap.docs.map(d => ({id:d.id, ...d.data()}))));
       if(key==="tasks"){ S.tasksArch=S.tasks.filter(t=>t.archived); S.tasks=S.tasks.filter(t=>!t.archived); }   // tasks the system verified as done leave every list and wait in the archive tab
       S.loaded = true; S.got.add(key); render(); if(key==="members") maybeWelcome();
     }, () => {});
-  }
+}
+function subscribe2(){
   S.db.collection("tracking").onSnapshot(snap => { const t={}; snap.docs.forEach(d=>t[d.id]=d.data()); S.tracking=t; render(); }, ()=>{});
   S.db.collection("erp_log").onSnapshot(snap => { const t={}; snap.docs.forEach(d=>t[d.id]=d.data()); S.erpLog=t; render(); }, ()=>{});   // erp_log/<duty id>: {last_done, by, at, count}
   S.db.collection("assign").onSnapshot(snap => { const t={}; snap.docs.forEach(d=>t[d.id]=d.data()); S.asg=t; render(); }, ()=>{});   // assign/<item key>: {mod,title,doer,selector,task,log}
@@ -302,11 +308,7 @@ function subscribe(){
   S.db.doc("settings/article_status").onSnapshot(d => { S.artSt = d.exists ? (d.data().map||{}) : {}; render(); }, ()=>{});
   S.db.doc("settings/article_records").onSnapshot(d => { S.artRec = d.exists ? (d.data().map||{}) : {}; render(); }, ()=>{});   // {venueId:{ref,state,next,note,mail,at}} filled from the journals' e-mail replies
   S.db.doc("settings/article_forms").onSnapshot(d => { S.artForms = d.exists ? (d.data().map||{}) : {}; render(); }, ()=>{});   // {venueId:{name,deadline,url}}; the Word files sit in settings/artform_<venueId> as base64
-  S.db.doc("settings/article_manuscripts").onSnapshot(d => { S.msDb1 = d.exists ? (d.data().map||{}) : {}; S.msDb = {...S.msDb1,...(S.msDb2||{})}; render(); }, ()=>{});   // {venueId: {title, blocks[]}}; one database document is limited to 256 KB, so later manuscripts live in article_manuscripts2
-  S.db.doc("settings/article_manuscripts2").onSnapshot(d => { S.msDb2 = d.exists ? (d.data().map||{}) : {}; S.msDb = {...(S.msDb1||{}),...S.msDb2}; render(); }, ()=>{});
-  S.db.doc("settings/article_abstracts").onSnapshot(d => { S.absDb = d.exists ? (d.data().map||{}) : {}; render(); }, ()=>{});   // {venueId: {title, abstract, keywords[], profile, product:{name,repo,new}, draft_note}}
   S.db.doc("settings/product_pool").onSnapshot(d => { S.pool = d.exists ? d.data() : {list:[]}; render(); }, ()=>{});   // products without a journal, rejected or lacking novelty; ready for new free journals
-  S.db.doc("settings/article_calls").onSnapshot(d => { S.calls = d.exists ? (d.data().map||{}) : {}; render(); paintBell(); }, ()=>{});   // {venueId: {…venue fields, found, product_hint, ack}} written by the weekly CFP job
   S.db.doc("settings/article_product").onSnapshot(d => { S.artProd = d.exists ? d.data() : {}; render(); }, ()=>{});
   if(isOwnerOnly()) S.db.doc("settings/scholar").onSnapshot(d => { S.sp = d.exists ? d.data() : SP_DEFAULT; render(); }, ()=>{});
   S.db.doc("settings/company").onSnapshot(d => { S.settings = d.exists ? d.data() : {}; paintBrand(); render(); }, ()=>{});
@@ -316,6 +318,19 @@ function subscribe(){
     S.db.collection(`attendance/${S.me.id}/days`).onSnapshot(s=>{S.myAtt=s.docs.map(d=>({id:d.id,...d.data()}));render();autoCheckout(S.myAtt,S.me.id)},()=>{});
     S.db.doc(`mindtest/${S.me.id}/items/result`).onSnapshot(d=>{S.myMind=d.exists?d.data():null;render()},()=>{});
     S.db.collection(`reports/${S.me.id}/items`).onSnapshot(s=>{S.myReports=s.docs.map(d=>({id:d.id,...d.data()}));S.repLoaded=true;render()},()=>{});
+  }
+}
+
+// on-demand subscriptions: re-checked on every render, each one is opened once the person is known to need it
+function ensureLazy(){
+  if(!S.db||!S.me||!S.got||!S.got.has("members")) return;
+  S.lz=S.lz||{};
+  if(!S.lz.let && S.letAcc!==undefined && (isAdmin()||canSeeLetters())){ S.lz.let=1; for(const [path,key] of Object.entries(LAZY_COLS)) subColl(path,key); }
+  if(!S.lz.art && S.artAcc!==undefined && S.artDeny!==undefined && (isAdmin()||areaAccess("articles")!=="none")){ S.lz.art=1;
+  S.db.doc("settings/article_manuscripts").onSnapshot(d => { S.msDb1 = d.exists ? (d.data().map||{}) : {}; S.msDb = {...S.msDb1,...(S.msDb2||{})}; render(); }, ()=>{});   // {venueId: {title, blocks[]}}; one database document is limited to 256 KB, so later manuscripts live in article_manuscripts2
+  S.db.doc("settings/article_manuscripts2").onSnapshot(d => { S.msDb2 = d.exists ? (d.data().map||{}) : {}; S.msDb = {...(S.msDb1||{}),...S.msDb2}; render(); }, ()=>{});
+  S.db.doc("settings/article_abstracts").onSnapshot(d => { S.absDb = d.exists ? (d.data().map||{}) : {}; render(); }, ()=>{});   // {venueId: {title, abstract, keywords[], profile, product:{name,repo,new}, draft_note}}
+  S.db.doc("settings/article_calls").onSnapshot(d => { S.calls = d.exists ? (d.data().map||{}) : {}; render(); paintBell(); }, ()=>{});   // {venueId: {…venue fields, found, product_hint, ack}} written by the weekly CFP job
   }
 }
 async function loadAllReports(){ // admins read every member's reports and attendance (rules open it to admin)
@@ -396,7 +411,8 @@ async function uploadImage(file){
 // ------------------------------------------------------------------ navigation
 const isOwnerOnly = () => !!S.me.isOwner;   // Scholarship holds the owner's personal applications
 // Letters are visible only to administrative staff and the owner (UI-level; the database cannot restrict by team)
-const canSeeLetters = () => { if(S.me.isOwner) return true; if(S.me.id&&((S.letAcc||{}).ids||[]).includes(S.me.id)) return true; const m=(S.members||[]).find(x=>x.id===S.me.id)||{}; return /اداری|دفتر|دبیرخانه/.test(m.role_title||"")||m.team==="admin"||["adm_trainee","adm_employee","admin"].includes(m.staff_type)||m.role==="office_manager"||m.letters_access===true||asgMine("letters").length>0; };
+const canSeeLetters = () => { if(S.me.isOwner||S.me.id) return true;   // Letters is open to every signed-in member (decision of 2026-11-11)
+   if(S.me.id&&((S.letAcc||{}).ids||[]).includes(S.me.id)) return true; const m=(S.members||[]).find(x=>x.id===S.me.id)||{}; return /اداری|دفتر|دبیرخانه/.test(m.role_title||"")||m.team==="admin"||["adm_trainee","adm_employee","admin"].includes(m.staff_type)||m.role==="office_manager"||m.letters_access===true||asgMine("letters").length>0; };
 // Patent, Scholarship and Articles: only the owner, plus a person who has a task assigned in that area (who then sees just their own tasks)
 const VIEWS = {};   // declared before the first view is registered (patent/scholar/articles 'mine' views come early)
 const AREA_KINDS = {patent:["human_patent"], scholar:["human_scholar"], articles:["submit"]};
@@ -430,7 +446,7 @@ function paintNav(){
   try{localStorage.setItem("ppt-view",JSON.stringify({mod:S.mod,sub:S.sub}))}catch(e){}
   if(S.tour) tourHighlight();
 }
-function render(){ paintNav(); renderBanners(); renderView(); paintBell(); }
+function render(){ try{ ensureLazy(); }catch(e){ console.error("lazy",e); } paintNav(); renderBanners(); renderView(); paintBell(); }
 function renderView(){
   if(S.mod==="letters"&&S.sub==="new"&&$("#composer")&&!S.forceFull){ // live data arrived: refresh only the ledger, never the form being typed in
     const d=S.draft; if(d&&d.numAuto){ d.number=nextLetterNo(d.identity,d.date); const el=$("[data-c=number]"); if(el&&document.activeElement!==el) el.value=d.number; const p=$("#cprev"); if(p) p.innerHTML=letterSheet(draftLetter()); }
@@ -1685,38 +1701,43 @@ async function regradeRecent(days){
 // ---------- REPORT ARCHIVE: one row per day for each person; missed office days are visible and flagged
 function raDays(){
   const admin=seeAllReports(), ids=admin?S.members.map(m=>m.id):[S.me.id], ra=S.ra;
-  if(!ra.member||!ids.includes(ra.member)) ra.member=ids.includes(S.me.id)?S.me.id:ids[0];
+  // the owner opens the archive on "all members" (the owner's own account usually has no reports, which made the archive look empty)
+  if(admin && ra.member==null) ra.member="*";
+  if(!(admin&&ra.member==="*") && (!ra.member||!ids.includes(ra.member))) ra.member=ids.includes(S.me.id)?S.me.id:ids[0];
   if(!ra.to) ra.to=today(); if(!ra.from) ra.from=addDays(today(),-29);
-  const m=S.members.find(x=>x.id===ra.member);
-  const reps=admin?S.allReports.filter(r=>r.member===ra.member):S.myReports.map(r=>({...r,member:S.me.id}));
-  const byDate={}; reps.forEach(r=>byDate[r.date||r.id]=r);
-  const hr=new Date().getHours(), rows=[];
-  for(let d=ra.to, n=0; d>=ra.from && n<400; d=addDays(d,-1), n++){
-    const r=byDate[d], office=isOfficeDay(m,d), cutoff=(m&&m.joined)||REPORT_START;
-    if(!r && (!office || d>today() || d<cutoff)) continue;
-    const state = r ? "ok" : (d===today()&&hr<16 ? "wait" : "missing");
-    rows.push({date:d,state,r,office});
-  }
-  return {ids,m,rows};
+  const all=admin&&ra.member==="*", hr=new Date().getHours(), rows=[];
+  const who=all?S.members.filter(x=>S.allReports.some(r=>r.member===x.id)||(x.office_days||[]).length):[S.members.find(x=>x.id===ra.member)||{id:S.me.id}];
+  who.forEach(m=>{
+    const reps=admin?S.allReports.filter(r=>r.member===m.id):S.myReports.map(r=>({...r,member:S.me.id}));
+    const byDate={}; reps.forEach(r=>byDate[r.date||r.id]=r);
+    for(let d=ra.to, n=0; d>=ra.from && n<400; d=addDays(d,-1), n++){
+      const r=byDate[d], office=isOfficeDay(m,d), cutoff=m.joined||REPORT_START;
+      if(!r && (!office || d>today() || d<cutoff)) continue;
+      const state = r ? "ok" : (d===today()&&hr<16 ? "wait" : "missing");
+      rows.push({date:d,state,r,office,member:m.id});
+    }
+  });
+  if(all) rows.sort((a,b)=>b.date.localeCompare(a.date)||memberName(a.member).localeCompare(memberName(b.member)));
+  return {ids,m:S.members.find(x=>x.id===ra.member),rows,all};
 }
 VIEWS["bpms.rarchive"] = () => {
   if(!S.me.id) return `<p class="empty">برای استفاده از این بخش باید با حساب claude.ai وارد شده باشید.</p>`;
-  const {ids,m,rows}=raDays(), admin=seeAllReports(), ra=S.ra;
+  const {ids,m,rows,all}=raDays(), admin=seeAllReports(), ra=S.ra;
   const done=rows.filter(x=>x.state==="ok"), missing=rows.filter(x=>x.state==="missing"), scored=done.filter(x=>x.r.score!=null);
   const avg=scored.length?Math.round(scored.reduce((s,x)=>s+x.r.score,0)/scored.length):null;
   const todayBox = admin && S.allLoaded ? (()=>{
     const due=S.members.filter(x=>isOfficeDay(x,today())), noRep=due.filter(x=>!S.allReports.some(r=>r.member===x.id&&(r.date||r.id)===today()));
     return `<div class="card" style="margin-bottom:12px"><h3 style="margin-top:0">وضعیت گزارش امروز – ${faDate(today())}</h3>${due.length?`<p>${due.map(x=>`<span class="pill ${noRep.includes(x)?"p-bad":"p-ok"}">${esc(x.full_name)}${noRep.includes(x)?" – ثبت نشده":" – ثبت شد"}</span>`).join(" ")}</p>${new Date().getHours()>=16&&noRep.length?`<p class="p-bad">اعلان یادآوری برای ${faNum(noRep.length)} نفر فعال است.</p>`:""}`:`<p class="meta">امروز عضوی روز حضور ندارد.</p>`}</div>`;})() : "";
   return `<p class="note">بایگانی روزانه‌ی گزارش عملکرد هر عضو. روزهای حضور بدون گزارش با وضعیت «ثبت نشد» نشان داده می‌شود و عضو تا ثبت گزارش اعلان می‌گیرد؛ روزهای غیرحضور بدون گزارش نمایش داده نمی‌شوند.</p>${todayBox}
-   <div class="toolbar">${admin?`<select data-ra="member" aria-label="عضو">${ids.map(id=>`<option value="${esc(id)}"${id===ra.member?" selected":""}>${esc(memberName(id))}</option>`).join("")}</select>`:`<b>${esc(memberName(S.me.id))}</b>`}
+   <div class="toolbar">${admin?`<select data-ra="member" aria-label="عضو"><option value="*"${all?" selected":""}>همه‌ی اعضا</option>${ids.map(id=>`<option value="${esc(id)}"${id===ra.member?" selected":""}>${esc(memberName(id))}</option>`).join("")}</select>`:`<b>${esc(memberName(S.me.id))}</b>`}
     <label class="meta">از <input type="date" data-ra="from" value="${esc(ra.from)}"></label><label class="meta">تا <input type="date" data-ra="to" value="${esc(ra.to)}"></label>
     ${admin?`<button class="btn ghost" data-act="reload-reports">به‌روزرسانی از پایگاه</button>`:""}<button class="btn ghost" data-act="ra-csv"${S.downloads&&rows.length?"":" disabled"}>دریافت CSV</button></div>`+
   kpis([["روزهای حضور بررسی‌شده",faNum(done.length+missing.length)],["گزارش ثبت‌شده",faNum(done.length)],["ثبت‌نشده",faNum(missing.length),missing.length>0],["میانگین نمره",avg==null?"—":faNum(avg)]])+
-  table(["تاریخ","روز","وضعیت","ساعت کار","نمره","خلاصه‌ی گزارش",""], rows.map(({date,state,r})=>`<tr>${td("تاریخ",faDate(date))}${td("روز",esc((WEEKDAYS.find(w=>w[0]===wdOf(date))||[])[1]||""))}
+  table(["تاریخ",...(all?["عضو"]:[]),"روز","وضعیت","ساعت کار","نمره","خلاصه‌ی گزارش",""], rows.map(({date,state,r,member})=>`<tr>${td("تاریخ",faDate(date))}${all?td("عضو",esc(memberName(member))):""}${td("روز",esc((WEEKDAYS.find(w=>w[0]===wdOf(date))||[])[1]||""))}
     ${td("وضعیت",state==="ok"?`<span class="pill p-ok">ثبت شد</span>${r.late?' <span class="pill p-warn">با تأخیر</span>':""}`:state==="wait"?'<span class="pill p-mute">هنوز مهلت دارد</span>':'<span class="pill p-bad">ثبت نشد</span>')}
     ${td("ساعت",`<span class="mono">${esc(r?r.hours??"—":"—")}</span>`)}${td("نمره",r?light(r.score):"—")}${td("خلاصه",r?esc((r.text||"").slice(0,140)):"—","t")}
-    ${td("",r?`<button class="btn sm ghost" data-act="report-view" data-m="${esc(ra.member)}" data-d="${esc(date)}">مشاهده</button>`:(state==="missing"&&ra.member===S.me.id?`<button class="btn sm sig" data-act="report-new" data-date="${esc(date)}">ثبت گزارش این روز</button>`:""))}</tr>`),
-   "در این بازه روز حضور یا گزارشی برای این عضو ثبت نشده است.");
+    ${td("",r?`<button class="btn sm ghost" data-act="report-view" data-m="${esc(member)}" data-d="${esc(date)}">مشاهده</button>`:(state==="missing"&&member===S.me.id?`<button class="btn sm sig" data-act="report-new" data-date="${esc(date)}">ثبت گزارش این روز</button>`:""))}</tr>`),
+   S.allLoaded||!admin?"در این بازه روز حضور یا گزارشی ثبت نشده است.":"در حال خواندن گزارش‌ها از پایگاه…");
 };
 function reportDetail(member,date){
   const r=(seeAllReports()?S.allReports.filter(x=>x.member===member):S.myReports).find(x=>(x.date||x.id)===date); if(!r) return;
@@ -1728,8 +1749,8 @@ function reportDetail(member,date){
 }
 async function reportsCsv(){
   const {rows}=raDays(), q=v=>`"${String(v??"").replace(/"/g,'""')}"`;
-  const lines=[["تاریخ (میلادی)","تاریخ","روز","وضعیت","ساعت کار","نمره","گزارش","موانع","بازخورد"].map(q).join(",")];
-  rows.forEach(({date,state,r})=>lines.push([date,faDate(date),(WEEKDAYS.find(w=>w[0]===wdOf(date))||[])[1],state==="ok"?(r.late?"ثبت شد (با تأخیر)":"ثبت شد"):state==="wait"?"هنوز مهلت دارد":"ثبت نشد",r&&r.hours,r&&r.score,r&&r.text,r&&r.blockers,r&&r.feedback].map(q).join(",")));
+  const lines=[["عضو","تاریخ (میلادی)","تاریخ","روز","وضعیت","ساعت کار","نمره","گزارش","موانع","بازخورد"].map(q).join(",")];
+  rows.forEach(({date,state,r,member})=>lines.push([memberName(member),date,faDate(date),(WEEKDAYS.find(w=>w[0]===wdOf(date))||[])[1],state==="ok"?(r.late?"ثبت شد (با تأخیر)":"ثبت شد"):state==="wait"?"هنوز مهلت دارد":"ثبت نشد",r&&r.hours,r&&r.score,r&&r.text,r&&r.blockers,r&&r.feedback].map(q).join(",")));
   try{ await S.downloads.save({filename:`reports-${S.ra.from}_${S.ra.to}.csv`,data:new Blob(["﻿"+lines.join("\r\n")],{type:"text/csv"})}); }catch(err){ if(!err||err.code!=="declined") toast("دریافت فایل انجام نشد."); }
 }
 VIEWS["bpms.teams"] = () => `<div class="grid2">${Object.entries(TEAMS).map(([k,l])=>{const mem=S.members.filter(m=>m.team===k);const open=S.tasks.filter(t=>t.team===k&&!["done","approved"].includes(t.status)).length;
@@ -2158,15 +2179,55 @@ function cvPlanned(){
     return {title:a.title, venue:cvVenueName(v.name), type:v.type, product:pr.name, status, deadline:v.deadline||""}; })
    .sort((x,y)=>(x.status===y.status?0:x.status==="submitted"?-1:1)||x.venue.localeCompare(y.venue));
 }
-function cvModel(){
-  const q=S.sp||{}, lines=t=>String(t||"").split("\n").map(x=>x.trim()).filter(Boolean), sec=[];
-  const add=(h,t)=>{ const l=lines(t); if(l.length) sec.push({h,lines:l}); };
-  add("Research Interests",q.interests); add("Education",q.education); add("Developed Products and Patent Applications (filed)",q.products); add("Research & Publications",q.pubs_text);
-  const pl=cvPlanned().filter(x=>x.status!=="submitted");
-  if(pl.length) sec.push({h:"Manuscripts in Preparation (targeted venues, "+today().slice(0,4)+"–2027)",note:"Titles are working titles. None of these has been submitted, accepted or published; the status of each follows the Articles tab of this dashboard. Seven further papers already submitted are listed under Research & Publications.",
-    lines:pl.map(x=>`${x.title}. Target: ${x.venue} (${x.type==="journal"?"journal":x.type==="special"?"journal special issue":"conference"}); product: ${x.product}; ${x.status}.`).map(t=>"- "+t)});
-  add("Professional Experience",q.experience); add("Skills",q.skills); add("Languages",q.languages);
-  return {name:q.name_en||"Mohammad Parsa Sohrabi", aff:q.affiliation||"", contact:[q.email,q.phone,q.nationality].filter(Boolean).join(" · "), sec};
+const CVT = {"proj":[["OGIM – NISOC | Oil and Gas Intelligent Monitoring","AI-oriented industrial monitoring and operational intelligence for oil and gas environments.",["industrial","monitor","oilgas"]],["IntelliLift AI – Artificial Lift Management Dashboard","AI-enabled monitoring and decision support for artificial-lift operations, focused on operational performance and data-driven analysis.",["decision","drilling","industrial","oilgas"]],["ApexAsset AI","Industrial asset intelligence and predictive monitoring: asset performance, maintenance-related analysis and operational decision support.",["decision","industrial","maintenance","ops"]],["Hybrid Digital Twin for Gas Turbine Performance","Hybrid digital-twin approach for modelling and monitoring gas-turbine performance, relevant to operational assessment and maintenance planning.",["control","industrial","maintenance","physics","twin"]],["FIDPS – Fault Identification and Diagnostic Prediction System","Industrial fault identification and predictive diagnostic development for operational monitoring.",["fault","industrial","maintenance","uq"]],["iFDC / FCDD – Industrial Fault Detection and Classification","Machine-learning approaches for industrial fault detection, classification and diagnostic support.",["fault","industrial","ml"]],["Smart Refinery & Industrial Process Intelligence","Computational approaches for industrial process monitoring, data analysis and operational intelligence.",["control","industrial","monitor","process"]],["Oil & Gas Infrastructure Monitoring","AI-based infrastructure monitoring, anomaly detection and operational assessment.",["fault","monitor","oilgas"]],["Khalij iEMS – Intelligent Energy, Carbon and Sustainability Management System","Data-driven analysis of energy and carbon-related performance in an intelligent energy-management system.",["energy","ops","optim"]],["SGT600 PFD/P&ID and Industrial Engineering Analysis","Engineering documentation and computational analysis of gas-turbine systems and process infrastructure.",["industrial","physics","twin"]]],"supply":["API magnetic-drive pump — Pasargad Oil Company.","Submersible and VS6 pump packages — Persian Gulf Star Refinery.","450 kVA diesel generator packages — Farasahel Company, South Pars Phases 15 and 16.","API 610 centrifugal pump packages (OH2, BB2) — Langrod Gas Production Company.","Centrifugal gas compressor pre-bidding package — Chegalash Company.","Reciprocating gas compressor package — Saro Project.","Reciprocating air compressor package — Spanir Company.","Heavy-duty vertical inline pump package — Roda Company.","Boiler water pump package — Arak Machinery Company.","Metering pump package — Third Millennium Company.","Blower package — Advanced Fiber Expansion Plant.","Gas booster pump package — Oil Research Institute, North America."],"interests":[["Operations and Supply Chain Management.",["ops"]],["AI-enabled Operations and Supply Chain Decision-Making.",["decision","ops"]],["Decision-Making under Predictive Uncertainty.",["decision","uq"]],["Uncertainty Quantification and Model Calibration.",["uq"]],["Predictive Maintenance and Asset Management.",["industrial","maintenance"]],["Industrial AI and Digital Twins.",["industrial","twin"]],["Operational Risk and Reliability Assessment.",["control","industrial","uq"]],["Data-Driven Resource Allocation.",["decision","optim"]],["Supply-Chain Performance Measurement.",["ops"]],["Human-AI Interaction in Industrial Decision-Making.",["decision","human"]],["Technology Adoption and Organisational Trust in AI.",["human","ops"]]],"skills":[["Artificial Intelligence and Data Science",["Machine Learning and Deep Learning.","Predictive Modelling and Forecasting.","Anomaly Detection and Fault Classification.","LSTM and Transformer-Based Models.","Explainable AI (XAI).","Reinforcement Learning.","Multi-objective Optimisation.","Data Analysis and Model Evaluation."]],["Industrial AI and Operations",["Digital Twin Development.","Predictive Maintenance and Remaining Useful Life (RUL) Modelling.","Industrial Monitoring and Decision-Support Systems.","Energy and Carbon Management.","Industrial Data Validation and Reconciliation.","Operational Performance Analysis."]],["Engineering and Business",["Petroleum Engineering and Drilling.","Industrial Equipment Specification and Evaluation.","Technical and Commercial Proposal Preparation.","Equipment Procurement and Supply Coordination.","Techno-economic Evaluation.","Project Development and Business Planning."]],["Software and Tools",["Python and AI/ML Development Frameworks.","Microsoft Excel.","Microsoft Project.","COMFAR.","Microsoft Office and ICDL.","Photoshop and CorelDRAW."]]],"dev":["Blockchain applications in financial systems — National Bank (2016).","GTL refinery proposal with 100,000 SCFD feed — Ministry of Oil (2015).","Gas-to-Liquid needs assessment — Assalouyeh and Dorood (2016).","GTL refinery construction explanatory plan.","Solutions for addressing production obstacles (2017).","Business-training effectiveness proposal — Cultural Heritage Research Institute (2017).","Scorpion breeding feasibility study.","Local food festival development plan."],"ev":"A preliminary, unpublished experiment on the public FORCE 2020 well dataset (81 wells) explored split conformal prediction for well-level uncertainty: average empirical coverage was 0.889 against a nominal 0.90, while the lowest well-level coverage was 0.599. These are preliminary prototype observations, not validated research findings.","tagre":[["uq","uncertain|bayes|conformal|calibrat|pac-bayes|probabilistic|gaussian"],["decision","decision|planning|robust|bandit"],["optim","optimi|stochastic|programming"],["industrial","industr|manufactur|process|automation|cyber|control"],["maintenance","maintenance|fault|prognostic|change-point"],["twin","digital twin|twin|simulation"],["oilgas","drilling|reservoir|well|subsurface|geo|seismic|petrol|co2|fracture"],["ops","operations|supply|business|logistic|analytics|management"],["monitor","monitor|anomaly|detection|time-series"],["fault","fault|anomal|detect"],["ml","machine learning|neural|deep"],["human","trust|human|adoption|how organisations"],["physics","physic|inverse|mechanic|numerics|waveform"],["control","control|reinforcement|autonomous"],["energy","energy|carbon|sustainab"],["drilling","drilling|well"]]};
+
+const cvTagsOf = t => { const s=((t.focus||"")+" "+String(t.pitch||"").slice(0,300)).toLowerCase(), T=new Set(); for(const [k,re] of CVT.tagre) if(new RegExp(re).test(s)) T.add(k); return T; };
+const cvPitchOf = t => { const p=String(t.pitch||"").replace(/\s+/g," "), i=p.indexOf("Preliminary, unpublished"); return (i>0?p.slice(0,i):p).trim(); };
+const cvBulletsOf = (t,biz) => (t.bullets||[]).filter(x=>!/patent/i.test(x)&&(biz||!/doctorate|business-model|mentor|accelerator/i.test(x)));
+const CV_CONTACT = "Tehran, Iran | Email: oil.ms.sohrabi@gmail.com | GitHub: github.com/parsasohrab1 | LinkedIn: linkedin.com/in/mohammad-parsa-sohrabi-171b2337";
+function cvSubtitleOf(t,biz){
+  let f=String(t.focus||"").replace(/\s+/g," ").trim(); if(!f) return "Industrial AI & Operations Researcher | Supply Chain Management | Decision-Making under Uncertainty";
+  f=f[0].toUpperCase()+f.slice(1); if(f.length>70){ f=f.slice(0,70); const k=Math.max(f.lastIndexOf(","),f.lastIndexOf(" and ")); f=k>25?f.slice(0,k):f.slice(0,f.lastIndexOf(" ")); }
+  return (biz?"Industrial AI & Operations Researcher":"Industrial AI Researcher")+" | Calibrated Uncertainty | "+f;
+}
+// CV built on the owner's template (new-version CV); tailored sections follow the professor's focus. The business doctorate and business record appear only for business schools.
+function cvBuild(prof){
+  const t=prof.t||{}, biz=!!prof.biz, T=cvTagsOf(t), nm=prof.name||"", gen=!nm, sec=[];
+  const bl=l=>l.map(x=>"- "+x);
+  sec.push({h:"Research Profile",lines:["Interdisciplinary researcher and technology developer with a background in petroleum engineering, industrial operations, equipment supply, and AI-enabled decision-support systems. Experienced in industrial project development, technical and commercial evaluation, and the application of machine learning, predictive modelling, digital twins, and predictive maintenance to complex operational environments.","My research interest focuses on how organisations can make more reliable operational decisions when AI models produce uncertain predictions. In particular, I aim to investigate how calibrated uncertainty information can improve maintenance planning, operational risk assessment, resource allocation"+((gen||biz||T.has("ops"))?", and supply-chain performance.":", and the reliability of data-driven decisions for specific wells, machines and operating regimes."),"My professional experience combines industrial supply-side activities—including the preparation and supply of API-standard equipment packages—with the development of AI-based systems for industrial monitoring, forecasting, and decision support."]});
+  if(!gen){ sec.push({h:"Fit with "+nm+"'s Research",note:"Prepared for "+nm+(prof.progs?" · "+prof.progs:"")+".",lines:[cvPitchOf(t)+" The preliminary results summarised below motivate the work.",...bl(cvBulletsOf(t,biz))]}); }
+  sec.push({h:"Education",lines:[...(biz?["Professional Doctorate in Business Management — University of Tehran, Iran"]:[]),"M.Sc. in Petroleum Engineering – Drilling — Islamic Azad University, Science and Research Branch, Tehran, Iran, 2010–2014 | GPA: 15.74/20. Thesis: AI-Based Mathematical Modelling of Lost Circulation in an Oil Field. Supervisor: Dr. Kourosh Tahmasbi.","B.Sc. in Petroleum Engineering – Exploitation of Oil Resources — Islamic Azad University, Omidiyeh Branch, Iran, 2005–2009 | GPA: 15.07/20."]});
+  sec.push({h:"Professional Experience",lines:["Petro Pala Toos — Chief Executive Officer, 2012–Present",...bl(["Lead industrial and engineering-related business activities, including technical evaluation, project development, and coordination of equipment supply.","Contribute to the preparation and evaluation of technical and commercial proposals for oil, gas, and industrial projects.","Coordinate technical requirements across suppliers, engineering teams, and project stakeholders.","Apply data-driven approaches to operational assessment, project planning, and business development.","Evaluate equipment specifications, project requirements, and technical-commercial considerations in industrial procurement."]),"Parsa International Group — AI & Biomedical Researcher | Technology Development, Türkiye, 2022–Present",...bl(["Contribute to AI research and technology-development activities across industrial and biomedical domains.","Develop computational prototypes and data-driven analytical systems using machine learning and advanced modelling approaches.","Work on predictive modelling, data analysis, intelligent decision-support tools, and computational research.","Contribute to interdisciplinary technology-development projects and research documentation."]),"English Time — English Language Instructor, Istanbul, Türkiye, 2022–2023",...bl(["Delivered English-language instruction and supported learners in developing communication skills."])]});
+  const order=CVT.proj.map((p,i)=>i).sort((a,b)=>(CVT.proj[b][2].filter(x=>T.has(x)).length-CVT.proj[a][2].filter(x=>T.has(x)).length)||(a-b));
+  sec.push({h:"Selected Industrial AI & Operations Projects",note:gen?"":"Ordered by relevance to "+nm+"'s research.",lines:order.map(i=>CVT.proj[i][0]+" — "+CVT.proj[i][1])});
+  sec.push({h:"Preliminary Research on AI Uncertainty",lines:["Working research direction: Calibrated, decision-aware uncertainty for industrial operations.",CVT.ev,"These observations motivate further investigation into how aggregate model performance can conceal substantial variation across individual operational units, and how uncertainty information should be communicated to decision-makers."]});
+  if(gen||biz||T.has("ops")) sec.push({h:"Supply-Chain and Industrial Project Delivery Experience",lines:["Practical experience in the technical and commercial preparation, sourcing, and supply of industrial equipment packages for oil, gas, and energy projects. Selected packages:",...bl(CVT.supply),"Related activities: technical specification review, equipment selection, supplier coordination, preparation of bidding documentation, and technical-commercial evaluation."]});
+  else sec.push({h:"Industrial Project Delivery",lines:["Technical and commercial preparation, sourcing and supply of API-standard industrial equipment packages for oil, gas and energy projects (pumps, compressors, generator packages and blowers for refinery and gas projects, including Persian Gulf Star Refinery and South Pars Phases 15–16)."]});
+  const io=CVT.interests.map((x,i)=>i).sort((a,b)=>(CVT.interests[b][1].filter(x=>T.has(x)).length-CVT.interests[a][1].filter(x=>T.has(x)).length)||(a-b));
+  sec.push({h:"Research Interests",lines:bl(io.slice(0,(gen||biz)?11:8).map(i=>CVT.interests[i][0]))});
+  sec.push({h:"Technical Skills",lines:CVT.skills.map(([g,l])=>g+": "+l.join(" "))});
+  sec.push({h:"Planned Doctoral Research Methods",lines:["The proposed research will investigate how calibrated uncertainty reporting affects reliable data-driven decisions in industrial and subsurface environments. Potential methods:",...bl(["Quantitative modelling and evaluation of predictive uncertainty using public or appropriately anonymised industrial datasets.","Simulation of operational decisions under point predictions and uncertainty-aware predictions.",...((gen||biz||T.has("human")||T.has("ops"))?["Behavioural decision experiments and semi-structured interviews with industrial and supply-chain professionals."]:[]),"Comparative and statistical analysis of decision quality, operational outcomes, and economic implications.","Industrial case studies, subject to access and relevant ethical approval."])]});
+  if(biz) sec.push({h:"Entrepreneurship, Business Development & Professional Activities",lines:bl(["Experience in industrial business development, technical-commercial evaluation, and project coordination.","Experience in preparing feasibility studies, business proposals, and technology-development plans.","Training and mentoring in business models, value propositions, and Business Model Canvas concepts.","Consulting experience related to patent processes, knowledge-based company requirements, and market development.","Accelerator-related professional experience and business-development activities."])});
+  sec.push({h:"Research and Project Development",lines:["Selected research, feasibility and project-development activities: "+CVT.dev.join(" ")]});
+  sec.push({h:"Professional Development & Memberships",lines:bl(["Member, Society of Petroleum Engineers (SPE).",biz?"Accelerator Licence (2021).":"Familiarity with ISO 9001, ISO 14001, ISO 45001 and ISO 29001 management-system standards.","HSEMS familiarity."])});
+  sec.push({h:"Languages",lines:["Persian: Native. English: Advanced Professional. Turkish: Professional Working Knowledge. French: Additional Language Skills."]});
+  return {name:"MOHAMMAD PARSA SOHRABI",aff:cvSubtitleOf(t,biz),contact:CV_CONTACT,sec};
+}
+function cvModel(){ return cvBuild({name:"",t:{},biz:false}); }
+const cvProfOf = (pid,j) => { const pr=(schState(pid)||{}).prop, s=supList(pr)[j], t=s&&((S.cvT||{})[pid]||{})[s.name]; if(!t) return null; const p=SCH.find(x=>x.id===pid); return {name:s.name,t,biz:SCH_BIZ.has(pid),progs:p?p.uni:""}; };
+function cvModelFor(pid,j){ const pf=cvProfOf(pid,j); return pf?cvBuild(pf):null; }
+function profPropModel(pid,j){
+  const pf=cvProfOf(pid,j); if(!pf) return null; const t=pf.t, biz=pf.biz, T=cvTagsOf(t), f=String(t.focus||"decision-making under uncertainty").replace(/\s+/g," ");
+  const title=f.length<90?"Calibrated, decision-aware uncertainty for "+f+": per-case reliability under distribution shift":"Calibrated, decision-aware uncertainty for industrial and subsurface machine learning under distribution shift";
+  const sec=[{h:"Title",lines:[title]},
+   {h:"1. Background and fit with your research",lines:[cvPitchOf(t),"Machine-learning models increasingly support high-stakes engineering decisions: interpreting well logs while drilling, detecting abnormal operating states and scheduling maintenance of gas compressors and turbines. The standard evaluation (random splits and average accuracy) hides the failure that matters: a model that is well calibrated on average can be badly miscalibrated on a particular well, machine or operating regime. "+CVT.ev]},
+   {h:"2. Aim and research questions",lines:["Aim: to develop and evaluate uncertainty-quantification methods whose guarantees hold per case under distribution shift and connect to decisions, building on the interests of "+pf.name+"'s group.","- RQ1. How reliable are calibrated uncertainty estimates for "+f+" for a specific well, machine, patient or region, rather than on average, and how do they fail under distribution shift?","- RQ2. How can the structure of the problem (physical or domain models, hierarchical or grammar-based constraints) be combined with calibrated learning without losing coverage?","- RQ3. How should uncertainty be reported and used so that operational or clinical decisions are better than with point predictions alone, measured by decision cost and not only accuracy?"]},
+   {h:"3. What I bring",lines:cvBulletsOf(t,biz).map(x=>"- "+x)},
+   {h:"4. Method and data",lines:["Leave-one-well-out and leave-one-asset-out evaluation; worst-group coverage and decision cost reported next to averages; group-conditional and adaptive conformal prediction and Bayesian ensembles; "+((biz||T.has("human"))?"simulation of operational decisions and behavioural experiments with managers and engineers; ":"physics- or structure-informed constraints where a forward model exists; ")+"public data only (FORCE 2020 and SEG 2016 well logs, Petrobras 3W, NASA IMS bearings, others after licence checks); open-source, tested, reproducible code (github.com/parsasohrab1/oil-gas-uncertainty-studies)."]},
+   {h:"5. Work plan (three to four years)",lines:["Year 1: literature review, reproducible baselines, evaluation protocol, first paper on per-case coverage failure. Year 2: methods combining structure or decision costs with calibrated learning; second paper. Year 3: extension to operational settings and decision value; third paper. Final period: thesis writing and open-source release."]},
+   {h:"6. Expected outcomes",lines:["Three peer-reviewed papers, an open benchmark protocol and software toolkit, and guidance for deploying trustworthy ML in safety-critical settings. Negative results will be reported openly."]},
+   {h:"7. Ethics, data and about me",lines:["Only public data will be used unless a confidentiality agreement is in place. MSc in Petroleum Engineering (Drilling) and BSc in Petroleum Engineering; CEO of Petro Pala Toos since 2012; AI & biomedical researcher and technology developer at Parsa International Group (Türkiye) since 2022; developer of industrial AI systems for monitoring, digital twins and predictive maintenance; English: advanced professional."+(biz?" Professional Doctorate in Business Management, University of Tehran; training in business models and value propositions.":"")]}];
+  return {name:"Research Proposal (draft) — "+pf.name,aff:"Prepared for: "+pf.name+" · "+pf.progs,contact:CV_CONTACT,sec};
 }
 function cvHtml(m){
   const body=l=>{ const b=l.filter(x=>x.startsWith("- ")), n=l.filter(x=>!x.startsWith("- ")); return n.map(x=>`<p style="margin:2px 0">${esc(x)}</p>`).join("")+(b.length?`<ul style="margin:2px 0">${b.map(x=>`<li>${esc(x.slice(2))}</li>`).join("")}</ul>`:""); };
@@ -2189,23 +2250,10 @@ const supList = pr => [...((pr||{}).supervisors||[]),...((pr||{}).alt_supervisor
 const SCH_BIZ = new Set(["rsm_phd","aalto_bef","liverpool_ms","bristol_bs","ambs","imperial_bs","edinburgh_bs","kingston_bs","kingston_niloufar"]);   // business programmes: the business doctorate and business record count as a plus; never used elsewhere
 const BIZ_EDU = "Professional doctorate in business management – University of Tehran";
 const BIZ_EXP = ["- Founder of two brands: Petro Pala Toos (Iran) and Parsa International Group (Türkiye).","- Start-up mentor; instructor in business-model-canvas design and in value-proposition design.","- Consultant on patent filing, knowledge-based company status and market development."];
-function cvModelFor(pid,j){
-  const pr=(schState(pid)||{}).prop, s=supList(pr)[j], t=s&&((S.cvT||{})[pid]||{})[s.name]; if(!t) return null;
-  const base=cvModel(), prof=t.headline.replace(/^Tailored for [^:]+:\s*/,"");
-  const sec=[{h:"Profile",lines:[prof.charAt(0).toUpperCase()+prof.slice(1)]},{h:"Strengths Relevant to "+t.focus.charAt(0).toUpperCase()+t.focus.slice(1),lines:(t.bullets||[]).map(b=>"- "+b)}];
-  let rest=base.sec.filter(x=>x.h!=="Research Interests");
-  if(SCH_BIZ.has(pid)) rest=rest.map(x=>x.h==="Education"?{...x,lines:[...x.lines,BIZ_EDU]}:x.h==="Professional Experience"?{...x,lines:[...BIZ_EXP,...x.lines]}:x);
-  return {...base,sec:sec.concat(rest)};
-}
 function profPropText(pid,j){
   const pr=(schState(pid)||{}).prop||{}, s=supList(pr)[j], t=s&&((S.cvT||{})[pid]||{})[s.name]; if(!t||!pr.proposal) return "";
   const bl=pr.proposal.split("\n\n"), prep=((bl[0].match(/^Prepared for: (.*)/)||[])[1])||"this programme", rest=bl.slice(1).filter(b=>!/^Fit/.test(b));
   return `Prepared for: ${s.name} (${s.role||""}), ${prep}\n\nResearch alignment with ${s.name}\n${t.pitch}\n\nWhat I bring to your group\n${(t.bullets||[]).map(b=>"- "+b).join("\n")}\n\nRequest\nI would be grateful to know whether you might be open to supervising a doctoral project of this kind within ${prep}, and whether you would support my application. I would adapt the methods and case studies to the interests of your group.\n\n`+rest.join("\n\n")+(SCH_BIZ.has(pid)?"\n\nBusiness background\nProfessional doctorate in business management; start-up mentor; instructor in business-model-canvas and value-proposition design; consultant on patents, knowledge-based status and market development; founder of two brands (Petro Pala Toos, Iran; Parsa International Group, Türkiye).":"");
-}
-function profPropModel(pid,j){
-  const txt=profPropText(pid,j); if(!txt) return null; const base=cvModel(), bl=txt.split("\n\n"), sec=[];
-  bl.slice(1).forEach(b=>{ const ls=b.split("\n"); if(/^(\d+\.\s|Title$|Research alignment|What I bring|Request|Business background)/.test(ls[0])||!sec.length) sec.push({h:ls[0],lines:ls.slice(1)}); else sec[sec.length-1].lines.push(...ls); });
-  return {name:"Research Proposal (draft)",aff:bl[0].replace(/^Prepared for: /,"Prepared for: "),contact:base.name+" · "+base.contact,sec};
 }
 async function downloadSupProp(pid,j){
   if(!S.downloads){ toast("دریافت فایل فقط داخل claude.ai فعال است."); return; }
@@ -3778,7 +3826,7 @@ VIEWS["articles.fees"]=()=>{
 const MOD_ACC = {letters:["letAcc","letters_access","Letters (نامه‌ها)"],patent:["patAcc","patent_access","Patent (پتنت)"],scholar:["schAcc","scholar_access","Scholarship (بورسیه)"],articles:["artAcc","article_access","Articles (مقاله)"],basket:["basAcc","basket_access","Products Basket (سبد محصولات)"],news:["newsAcc","news_access","News (اخبار)"]};
 const accessView = mod => () => { if(!S.me.isOwner) return `<p class="empty">فقط مالک سامانه می‌تواند دسترسی افراد را تعریف کند.</p>`;
   const ma=MOD_ACC[mod], ids=new Set(((S[ma[0]]||{}).ids)||[]);
-  return `<p class="note"><b>دسترسی افراد به تب ${esc(ma[2])}.</b> هر نفری که تیک بخورد این تب را در منوی بالا می‌بیند؛ برداشتن تیک بلافاصله دسترسی را می‌گیرد. پنج تب اول (RFP، Events، ERP، BPMS، Content) برای همه‌ی اعضا آزاد است. مالک همیشه به همه‌چیز دسترسی دارد.${mod==="basket"?" در سبد محصولات، فرد دارای دسترسی فقط محصولات پزشکی و داده‌هاشان را می‌بیند.":""}${mod==="letters"?" کارکنان اداری و دبیرخانه به‌خاطر نقش‌شان نامه‌ها را می‌بینند، حتی اگر اینجا تیک نخورده باشند.":""}${mod==="news"?" اخبار فقط با تیک دیده می‌شود.":" کسی که فقط تسک یا واگذاری در همین بخش دارد، مثل قبل فقط موارد خودش را می‌بیند."}</p>`+
+  return `<p class="note"><b>دسترسی افراد به تب ${esc(ma[2])}.</b> هر نفری که تیک بخورد این تب را در منوی بالا می‌بیند؛ برداشتن تیک بلافاصله دسترسی را می‌گیرد. پنج تب اول (RFP، Events، ERP، BPMS، Content) برای همه‌ی اعضا آزاد است. مالک همیشه به همه‌چیز دسترسی دارد.${mod==="basket"?" در سبد محصولات، فرد دارای دسترسی فقط محصولات پزشکی و داده‌هاشان را می‌بیند.":""}${mod==="letters"?" تب نامه‌ها برای همه‌ی اعضای واردشده باز است؛ تیک این جدول دیگر لازم نیست.":""}${mod==="news"?" اخبار فقط با تیک دیده می‌شود.":" کسی که فقط تسک یا واگذاری در همین بخش دارد، مثل قبل فقط موارد خودش را می‌بیند."}</p>`+
    table(["نفر","نقش","دسترسی"],S.members.map(m=>`<tr>${td("نفر",esc(m.full_name||"—"),"t")}${td("نقش",esc(ROLES[m.role]||m.role_title||""))}${td("دسترسی",`<label><input type="checkbox" data-act="mod-acc" data-k="${mod}" data-id="${esc(m.id)}"${ids.has(m.id)?" checked":""}> دارد</label>`)}</tr>`),"هنوز عضوی ثبت‌نام نکرده است."); };
 for(const k of Object.keys(MOD_ACC)) if(k!=="articles") VIEWS[k+".access"]=accessView(k);   // Articles keeps its own access view (with the GitHub note)
 VIEWS["articles.access"]=()=>{ if(!S.me.isOwner) return `<p class="empty">فقط مالک سامانه می‌تواند دسترسی افراد به تب مقالات را مدیریت کند.</p>`;
