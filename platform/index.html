@@ -83,6 +83,8 @@ code{background:var(--sunken);padding:1px 5px;border-radius:4px}
 .steps{display:flex;gap:3px}
 .steps span{width:14px;height:6px;border-radius:2px;background:var(--line)}
 .steps span.on{background:var(--brand)}
+.pgs{display:inline-flex;gap:3px;vertical-align:middle}.pgs span{width:20px;height:8px;border-radius:2px;background:var(--line)}.pgs span.on{background:var(--ok)}.pgs span.cur{background:var(--warn)}
+.pgbar{height:10px;border-radius:3px;background:var(--line);overflow:hidden}.pgbar i{display:block;height:10px;background:var(--ok)}
 details summary{cursor:pointer;color:var(--brand)}
 a{color:var(--brand)}
 /* drawer form */
@@ -173,9 +175,9 @@ const SUBS = {
   events:[["iran","ایران"],["world","جهان"],["all","همه"],["taken","در دست پیگیری"]],
   erp:[["ops","برنامه‌ی عملیات و واگذاری"],["domains","حوزه‌های فعالیت"],["products","توسعه‌ی محصول هوشمند"],["people","نیروی انسانی"],["finance","مالی"],["clients","مشتریان و قراردادها"],["backup","پشتیبان‌گیری"]],
   bpms:[["home","خانه‌ی BPMS"],["contacts","مخاطبین و ارتباط"],["myday","روز من"],["mind","ذهن‌نگار (آزمون خصوصی)"],["board","تخته‌ی اسکرام"],["backlog","بک‌لاگ و برنامه‌ریزی"],["sprints","اسپرینت‌ها"],["tasks","فهرست تسک‌ها"],["reports","گزارش عملکرد"],["rarchive","بایگانی گزارش‌ها"],["teams","تیم‌ها"],["process","فرایندها"],["calendar","تقویم"],["members","اعضا و ثبت‌نام"],["nda","قرارداد محرمانگی"],["training","فرم آموزش"]],
-  letters:[["new","نامه‌ی جدید (ساخت فایل Word)"],["pp","پترو پالا توس"],["sosh","سوشیانت"],["access","دسترسی افراد"]],
+  letters:[["new","نامه‌ی جدید (ساخت فایل Word)"],["pp","پترو پالا توس"],["sosh","سوشیانت"],["progress","پیشرفت نامه‌نگاری"],["access","دسترسی افراد"]],
   scholar:[["applied","اقدام‌شده و در دست بررسی"],["human","مسئول انسانی"],["doing","در دست اقدام"],["todo","اقدام‌نشده"],["failed","ناموفق (بسته‌شده)"],["postdocs","ارتباط: پست‌داک‌ها"],["target","فهرست هدف: AI · CS · IT · مدیریت"],["profile","مشخصات و رزومه من"],["cv","رزومه محمد پارسا سهرابی"],["access","دسترسی افراد"]],
-  articles:[["applied","اقدام‌شده و در دست بررسی"],["doing","در دست اقدام"],["todo","اقدام‌نشده"],["product","محصول ویژه‌ی مقاله"],["claude","تسک برای Claude"],["evidence","شواهد و داده‌ی واقعی"],["submit","ثبت چکیده و ثبت‌نام (مسئول انسانی)"],["list","فهرست کامل"],["pipe","خط لوله تا ویزا"],["mail","مسیر ایمیل: ثبت · تاییدیه · مقاله کامل"],["fees","هزینه ورودی و ارائه آنلاین"],["ready","آمادگی ثبت (۶ معیار)"],["fitgate","دروازه‌ی تناسب ژورنال"],["upload","آپلود داده‌ها"],["access","دسترسی افراد"]],
+  articles:[["applied","اقدام‌شده و در دست بررسی"],["doing","در دست اقدام"],["todo","اقدام‌نشده"],["product","محصول ویژه‌ی مقاله"],["claude","تسک برای Claude"],["evidence","شواهد و داده‌ی واقعی"],["submit","ثبت چکیده و ثبت‌نام (مسئول انسانی)"],["list","فهرست کامل"],["pipe","خط لوله تا ویزا"],["mail","مسیر ایمیل: ثبت · تاییدیه · مقاله کامل"],["fees","هزینه ورودی و ارائه آنلاین"],["ready","آمادگی ثبت (۶ معیار)"],["fitgate","دروازه‌ی تناسب ژورنال"],["pool","استخر محصولات برای ژورنال‌های جدید"],["upload","آپلود داده‌ها"],["access","دسترسی افراد"]],
   patent:[["home","پتنت‌ها"],["human","مسئول انسانی"],["ops","فرصت‌های ثبت اختراع"],["products","محصولات ریپو"],["access","دسترسی افراد"]]
 };
 const TEAMS = {finance:"مالی",admin:"اداری",ai:"هوش مصنوعی"};
@@ -303,6 +305,7 @@ function subscribe(){
   S.db.doc("settings/article_manuscripts").onSnapshot(d => { S.msDb1 = d.exists ? (d.data().map||{}) : {}; S.msDb = {...S.msDb1,...(S.msDb2||{})}; render(); }, ()=>{});   // {venueId: {title, blocks[]}}; one database document is limited to 256 KB, so later manuscripts live in article_manuscripts2
   S.db.doc("settings/article_manuscripts2").onSnapshot(d => { S.msDb2 = d.exists ? (d.data().map||{}) : {}; S.msDb = {...(S.msDb1||{}),...S.msDb2}; render(); }, ()=>{});
   S.db.doc("settings/article_abstracts").onSnapshot(d => { S.absDb = d.exists ? (d.data().map||{}) : {}; render(); }, ()=>{});   // {venueId: {title, abstract, keywords[], profile, product:{name,repo,new}, draft_note}}
+  S.db.doc("settings/product_pool").onSnapshot(d => { S.pool = d.exists ? d.data() : {list:[]}; render(); }, ()=>{});   // products without a journal, rejected or lacking novelty; ready for new free journals
   S.db.doc("settings/article_calls").onSnapshot(d => { S.calls = d.exists ? (d.data().map||{}) : {}; render(); paintBell(); }, ()=>{});   // {venueId: {…venue fields, found, product_hint, ack}} written by the weekly CFP job
   S.db.doc("settings/article_product").onSnapshot(d => { S.artProd = d.exists ? d.data() : {}; render(); }, ()=>{});
   if(isOwnerOnly()) S.db.doc("settings/scholar").onSnapshot(d => { S.sp = d.exists ? d.data() : SP_DEFAULT; render(); }, ()=>{});
@@ -364,7 +367,7 @@ function openForm({title, fields, values={}, onSave, extra="", required=false}){
     else if(fd.type==="days") ctl = `<div class="days" id="${id}">${WEEKDAYS.map(([k,l])=>`<label><input type="checkbox" value="${k}"${(v||[]).includes(k)?" checked":""}>${l}</label>`).join("")}</div>`;
     else if(fd.type==="file") ctl = `<input id="${id}" type="file" accept="${fd.accept||"image/*"}">${v?`<span class="meta">فایل فعلی ثبت شده است.</span>`:""}`;
     else ctl = `<input id="${id}" type="${fd.type||"text"}" value="${esc(v)}" ${fd.dir?`dir="${fd.dir}"`:""}>`;
-    return `<div class="field"><label for="${id}">${esc(fd.label)}</label>${ctl}${fd.hint?`<span class="meta">${esc(fd.hint)}</span>`:""}</div>`;
+    return `${fd.head?`<h3 style="margin:16px 0 6px;border-top:1px solid var(--line);padding-top:10px">${esc(fd.head)}</h3>`:""}<div class="field"><label for="${id}">${esc(fd.label)}</label>${ctl}${fd.hint?`<span class="meta">${esc(fd.hint)}</span>`:""}</div>`;
   }).join("");
   $("#layer").innerHTML = `<div class="scrim"${required?"":' data-act="close-scrim"'}><form class="drawer" id="drawer"><h3>${esc(title)}</h3>${extra}${f}
     <div class="row"><button class="btn" type="submit">${required?"ثبت‌نام و ورود به سامانه":"ذخیره"}</button>${required?"":'<button class="btn ghost" type="button" data-act="close">انصراف</button>'}</div></form></div>`;
@@ -2081,7 +2084,8 @@ function schCard(p,page){
   <tr><td style="color:var(--muted)">شرایط حمایت</td><td><b>${esc(p.kind)}</b> · ${esc(p.support)}</td></tr>
   <tr><td style="color:var(--muted)">مهلت ثبت‌نام</td><td>${schDeadline(p)}</td></tr>
   <tr><td style="color:var(--muted)">سایت رسمی</td><td>${link(p.url)}</td></tr></tbody></table>${p.warn?`<div class="banner bad" style="margin:6px 0">${esc(p.warn)}</div>`:""}
-  <div class="row" style="margin:8px 0;gap:10px;flex-wrap:wrap">${page!=="applied"?`<label><input type="checkbox" data-act="sch-set" data-id="${esc(p.id)}" data-st="applied"> قبلاً اقدام شده است</label>`:`<span class="pill p-ok">اقدام شده – در دست بررسی</span>`}${move}${failBtn}<button class="btn sm sig" data-act="sch-task" data-id="${esc(p.id)}">ثبت تسک برای Claude</button><button class="btn sm ghost" data-act="sch-copy" data-id="${esc(p.id)}">کپی دستور</button>${st.claude_task?`<span class="pill ${st.claude_task.status==="open"?"p-warn":"p-ok"}">${st.claude_task.status==="open"?"تسک Claude در انتظار انجام":"تسک Claude انجام شد"}</span>`:""}</div>
+  ${page==="doing"&&pct>=100?`<div class="banner" style="margin:8px 0"><b>همه‌ی مراحل انجام شد.</b> برای بستن این بورسیه و آزادشدن شما برای بورسیه‌ی بعدی، «ثبت نهایی» را بزنید. <button class="btn sm sig" data-act="sch-final" data-id="${esc(p.id)}">ثبت نهایی – اقدام انجام شد</button></div>`:""}
+  <div class="row" style="margin:8px 0;gap:10px;flex-wrap:wrap">${page==="doing"?`<button class="btn sm ${pct>=100?"sig":"ghost"}" data-act="sch-final" data-id="${esc(p.id)}" title="پس از انجام همه‌ی مراحل، بورسیه را ببندید تا بورسیه‌ی بعدی را بردارید">ثبت نهایی (اقدام انجام شد)</button>`:page!=="applied"?`<label><input type="checkbox" data-act="sch-set" data-id="${esc(p.id)}" data-st="applied"> قبلاً اقدام شده است</label>`:`<span class="pill p-ok">اقدام شده – در دست بررسی</span>${st.final?`<span class="meta">ثبت نهایی: ${esc(memberName(st.final.by))} · ${faDate(String(st.final.at).slice(0,10))}${st.final.ref?" · پیگیری: "+esc(st.final.ref):""}</span>`:""}`}${move}${failBtn}<button class="btn sm sig" data-act="sch-task" data-id="${esc(p.id)}">ثبت تسک برای Claude</button><button class="btn sm ghost" data-act="sch-copy" data-id="${esc(p.id)}">کپی دستور</button>${st.claude_task?`<span class="pill ${st.claude_task.status==="open"?"p-warn":"p-ok"}">${st.claude_task.status==="open"?"تسک Claude در انتظار انجام":"تسک Claude انجام شد"}</span>`:""}</div>
   ${page==="doing"?schProgBox(p,st,items):""}${page==="failed"?`<div class="banner bad" style="margin:6px 0"><b>پروژه بسته شد (ناموفق):</b> ${esc(st.fail_reason||"دلیل ثبت نشده")}</div>`:""}
   <details open><summary><b>مدارک و کارها</b> – ${faNum(done)} از ${faNum(items.length)} (${faNum(pct)}٪)</summary>
    ${propBox(p)}
@@ -2102,8 +2106,8 @@ const schOrder = (a,b) => { const t=new Date().toISOString().slice(0,10), ka=!a.
   return ka-kb || (a.deadline||"").localeCompare(b.deadline||"") || String(a.uni).localeCompare(String(b.uni)); };
 function schDoingTable(list){
   const rows=list.map(p=>{ const st=schState(p.id), items=schItems(p), it=st.items||{}, dn=items.filter(i=>(it[i.k]||{}).done).length, pct=Math.round(dn/items.length*100), rest=items.filter(i=>!(it[i.k]||{}).done).slice(0,2).map(i=>i.t.slice(0,48)), tk=schTaker(p);
-    return `<tr><td>${schDayChip(p)}<div class="meta">${p.deadline?faDate(p.deadline):""}</div></td><td class="t">${esc(p.uni)}</td><td><div style="height:6px;width:90px;background:var(--line);border-radius:3px"><i style="display:block;height:6px;width:${pct}%;background:var(--ok);border-radius:3px"></i></div><span class="meta">${faNum(dn)}/${faNum(items.length)}</span></td><td class="meta">${rest.map(esc).join("؛ ")||"—"}</td><td>${tk?esc(rosterName(tk)):"—"}</td></tr>`; }).join("");
-  return `<h3>خلاصه‌ی در دست اقدام، به ترتیب ددلاین</h3><div class="tablewrap rows"><table><thead><tr><th>ددلاین</th><th>برنامه</th><th>پیشرفت</th><th>مرحله‌ی بعد</th><th>مسئول</th></tr></thead><tbody>${rows}</tbody></table></div>`;
+    return `<tr><td>${schDayChip(p)}<div class="meta">${p.deadline?faDate(p.deadline):""}</div></td><td class="t">${esc(p.uni)}</td><td><div style="height:6px;width:90px;background:var(--line);border-radius:3px"><i style="display:block;height:6px;width:${pct}%;background:var(--ok);border-radius:3px"></i></div><span class="meta">${faNum(dn)}/${faNum(items.length)}</span></td><td class="meta">${rest.map(esc).join("؛ ")||"—"}</td><td>${tk?esc(rosterName(tk)):"—"}</td><td>${(!tk||tk===S.me.id||isOwnerOnly())?`<button class="btn sm ${pct>=100?"sig":"ghost"}" data-act="sch-final" data-id="${esc(p.id)}">ثبت نهایی</button>`:"—"}</td></tr>`; }).join("");
+  return `<h3>خلاصه‌ی در دست اقدام، به ترتیب ددلاین</h3><div class="tablewrap rows"><table><thead><tr><th>ددلاین</th><th>برنامه</th><th>پیشرفت</th><th>مرحله‌ی بعد</th><th>مسئول</th><th>ثبت نهایی</th></tr></thead><tbody>${rows}</tbody></table></div>`;
 }
 function schList(page){
   const gm=gmNote();
@@ -2247,6 +2251,28 @@ function schProfileForm(){
 }
 async function schSave(id,patch){
   const {id:_,...cur}=schState(id); return save(`scholarships/${id}`,{...cur,...patch},"ذخیره شد");
+}
+// Final registration: the doer closes a scholarship after finishing the work; it moves to "applied" and the person is free to take the next one.
+async function schFinal(id){
+  // prompt()/confirm() are blocked inside the artifact frame, so the final registration uses the page's own drawer form
+  const p=SCH.find(x=>x.id===id); if(!p) return;
+  if(schLockedForMe(p)){ toast("این بورسیه را "+rosterName(schTaker(p))+" برداشته است؛ ثبت نهایی فقط با خود او یا مالک است."); return; }
+  const st0=schState(id), items=schItems(p), it0=st0.items||{}, left0=items.filter(i=>!(it0[i.k]||{}).done);
+  const extra=left0.length?`<div class="banner bad" style="margin:6px 0"><b>${faNum(left0.length)} مرحله هنوز انجام نشده است:</b><ul style="margin:4px 0">${left0.slice(0,6).map(i=>`<li>${esc(i.t)}</li>`).join("")}</ul>اگر با این حال ذخیره کنید، بورسیه «اقدام‌شده» می‌شود.</div>`:`<div class="banner" style="margin:6px 0"><b>همه‌ی مراحل انجام شده است.</b> با ذخیره، بورسیه به «اقدام‌شده» می‌رود و شما می‌توانید بورسیه‌ی بعدی را بردارید.</div>`;
+  openForm({title:"ثبت نهایی: "+p.uni,extra,fields:[{k:"ref",label:"شماره‌ی پیگیری یا رسید ثبت‌نام (اختیاری)",dir:"ltr"},{k:"note",label:"یادداشت (اختیاری)",type:"textarea"}],values:{},onSave:async o=>{
+    const now=new Date().toISOString(), st=schState(id), it=st.items||{}, left=items.filter(i=>!(it[i.k]||{}).done);
+    const {id:_,...cur}=st;
+    const ok=await save(`scholarships/${id}`,{...cur,status:"applied",status_at:now,status_by:S.me.id,final:{at:now,by:S.me.id,ref:o.ref||"",note:o.note||"",done:items.length-left.length,total:items.length}},"ثبت نهایی شد");
+    if(!ok) return false;
+    const key="sch_"+id, a=asgOf(key);
+    try{
+      if(a) await S.db.doc(`assign/${key}`).set({mod:a.mod||"scholar",title:a.title||p.uni,doer:a.doer||"",selector:a.selector||"",task:a.task||"",log:[...(a.log||[]),{at:now,by:S.me.id,note:"ثبت نهایی – اقدام انجام شد"+(o.ref?" ("+o.ref+")":"")}].slice(-30),updated:now,updated_by:S.me.id});
+      const tid=("asg_"+key).replace(/[^A-Za-z0-9_\-]/g,"_").slice(0,150), t=(S.tasks||[]).find(x=>x.id===tid);
+      if(t){ const {id:_t,...r}=t; await S.db.doc("tasks/"+tid).set({...r,status:"done",done_at:now,updated:now}); }
+    }catch(e){ console.error("sch final",e); }
+    toast("ثبت نهایی شد؛ بورسیه به «اقدام‌شده» رفت و بورسیه‌ی بعدی قابل دریافت است");
+    return true;
+  }});
 }
 const SCH_CONTACT = "موبایل ایران 09123344295 و تلفن ایران 02188918530";   // the only numbers to give institutions (verification codes and WhatsApp may come from them)
 function schPromptText(id){
@@ -2821,7 +2847,7 @@ function letterView(id){
 // ---------- LETTERS ARCHIVE (letters sent without the agent)
 const ARCH_STAGES = {ready:"آماده‌ی ارسال",sent:"ارسال شد",received:"ثبت در دبیرخانه‌ی گیرنده",review:"ارجاع شد / در دست بررسی",reply:"پاسخ یا درخواست گیرنده",scheduled:"جلسه هماهنگ شد",meeting:"جلسه برگزار شد / مذاکره",done:"نتیجه‌گیری"};
 const ARCH_ST = {active:"در جریان",stalled:"متوقف / نیازمند پیگیری",closed:"بسته شد"};
-const ARCH_CH = {secretariat:"دبیرخانه / پست",email:"ایمیل",hand:"تحویل حضوری",automation:"اتوماسیون اداری کارفرما",other:"سایر"};
+const ARCH_CH = {secretariat:"دبیرخانه / پست",email:"ایمیل",fax:"فکس",rubika:"روبیکا",eitaa:"ایتا",bale:"بله",hand:"تحویل حضوری",automation:"اتوماسیون اداری کارفرما",other:"سایر"};
 const ARCH_F = {all:"همه",active:"در جریان",stalled:"متوقف",overdue:"اقدام سررسیده",stale:"بدون پیگیری بیش از ۱۴ روز",closed:"بسته‌شده"};
 const daysBetween = (a,b) => Math.floor((new Date(b+"T12:00:00")-new Date(a+"T12:00:00"))/864e5);
 const archLast = a => ((a.log&&a.log.length?a.log[a.log.length-1].at:(a.updated||a.created||""))||"").slice(0,10);
@@ -3070,13 +3096,13 @@ function trackBoard(list0,intro){
   const over=base.filter(archOverdue).sort((a,b)=>(a.next_date||"").localeCompare(b.next_date||""));
   const meets=base.filter(a=>a.meeting_date&&a.meeting_status!=="held"&&a.meeting_date>=today()).sort((a,b)=>a.meeting_date.localeCompare(b.meeting_date));
   const card=a=>{ const t=trkOf(a), last=(a.log||[])[(a.log||[]).length-1], since=archLast(a)?daysBetween(archLast(a),today()):null;
-    return `<div class="kcard"><b>${esc(trkOrg(a))}</b><div class="meta mono">${esc(a.number||"بدون شماره")} · ${faDate(a.date)}${(a.employer_no||t.reg_no)?` · ثبت: ${esc(a.employer_no||t.reg_no)}`:""}</div>
+    return `<div class="kcard"><b>${esc(trkOrg(a))}</b><div class="meta mono">${esc(a.number||"بدون شماره")} · ${faDate(a.date)}${(a.employer_no||t.reg_no)?` · ثبت: ${esc(a.employer_no||t.reg_no)}`:""}</div><div>${pgStepper(a)}</div>
      ${trkLinks(t)?`<div style="margin:4px 0">${trkLinks(t)}</div>`:""}${(t.people||[]).length?`<div class="meta">${esc(t.people.join("، "))}</div>`:""}
      ${a.meeting_date?`<div><span class="pill p-info">جلسه ${faDate(a.meeting_date)}${a.meeting_time?" ساعت "+esc(a.meeting_time):""}${a.meeting_mode?" · "+esc(MEET_MODE[a.meeting_mode]||""):""}</span></div>`:""}
      <div class="meta" style="margin-top:4px">${last&&last.note?esc(String(last.note).slice(0,110)):"—"}${since!=null&&archOpen(a)?` <span class="${archStale(a)?"p-bad":""}">(${faNum(since)} روز پیش)</span>`:""}</div>
      <div style="margin-top:4px"><b>گام بعدی:</b> ${esc(a.next_action||t.next||"—")}${a.next_date?` <span class="${archOverdue(a)?"p-bad":"meta"}">${faDate(a.next_date)}</span>`:""}</div>
      ${t.track_ref||t.contact_raw||t.done?`<details><summary class="meta">اطلاعات تماس و پیگیری کامل (از شیت)</summary><div class="meta" style="white-space:pre-wrap">${esc([t.contact_raw&&"تماس: "+t.contact_raw,t.track_ref&&"پیگیری/ارجاع: "+t.track_ref,t.done&&"اقدام انجام‌شده: "+t.done,t.next&&"اقدام بعدی (شیت): "+t.next].filter(Boolean).join("\n"))}</div></details>`:""}
-     <div class="row" style="margin-top:6px"><button class="btn sm" data-act="arch-progress" data-id="${esc(a.id)}">ثبت پیشرفت</button><button class="btn sm sig" data-act="arch-meeting" data-id="${esc(a.id)}">جلسه</button></div></div>`; };
+     ${progLines(a).length?`<details><summary class="meta">شرح پیشرفت</summary><div class="meta">${progLines(a).map(x=>"• "+esc(x)).join("<br>")}</div></details>`:""}${pgAlerts(a).slice(0,2).map(z=>`<div class="${z[0]>1?"p-bad":"p-warn"}" style="font-size:12px">⚠ ${esc(z[1])}</div>`).join("")}<div class="row" style="margin-top:6px"><button class="btn sm" data-act="arch-progress" data-id="${esc(a.id)}">ثبت پیشرفت</button><button class="btn sm ghost" data-act="pg-copy" data-id="${esc(a.id)}">کپی گزارش</button><button class="btn sm sig" data-act="arch-meeting" data-id="${esc(a.id)}">جلسه</button></div></div>`; };
   const col=([k,l])=>{ const L=base.filter(a=>a.stage===k).sort((a,b)=>(archOverdue(b)?1:0)-(archOverdue(a)?1:0)); return `<div class="kcol"><h4><span>${esc(l)}</span><span class="pill p-mute">${faNum(L.length)}</span></h4>${L.map(card).join("")||'<p class="meta">—</p>'}</div>`; };
   return `<p class="note">${intro||TRK_NOTE}</p>`+
    kpis([["نامه‌ی شستا",faNum(base.length)],["ارسال‌شده",faNum(base.filter(a=>idx(a)>=1).length)],["ثبت در دبیرخانه",faNum(base.filter(a=>idx(a)>=2||a.employer_no||trkOf(a).reg_no).length)],["ارجاع یا بررسی",faNum(base.filter(a=>idx(a)>=3).length)],["پاسخ یا درخواست",faNum(base.filter(a=>idx(a)>=4).length)],["جلسه هماهنگ‌شده",faNum(base.filter(a=>idx(a)>=5).length)],["جلسه برگزارشده",faNum(base.filter(a=>idx(a)>=6).length)],["اقدام سررسیده",faNum(over.length),over.length>0]])+
@@ -3235,15 +3261,130 @@ function archForm(a={}){
      const {id:_i,...base}=a;
      return save(`letters_archive/${a.id||newId()}`,{...base,...rest,scan_asset:asset,log,created:a.created||now,updated:now,created_by:a.created_by||S.me.id},"نامه در بایگانی ثبت شد"); }});
 }
-function archProgress(a){
-  openForm({title:`پیشرفت پیگیری – ${a.subject}`,values:{stage:a.stage||"sent",status:a.status||"active",next_action:a.next_action,next_date:a.next_date},
-   extra:`<p class="note">مرحله‌ی فعلی: <b>${esc(ARCH_STAGES[a.stage]||"—")}</b>. هر به‌روزرسانی در تاریخچه ثبت می‌شود.</p>`,
-   fields:[{k:"stage",label:"مرحله‌ی جدید",type:"select",options:ARCH_STAGES},{k:"status",label:"وضعیت پیگیری",type:"select",options:ARCH_ST},{k:"note",label:"شرح پیشرفت (با چه کسی صحبت شد، پاسخ چه بود؟)",type:"textarea"},{k:"next_action",label:"اقدام بعدی"},{k:"next_date",label:"تاریخ اقدام بعدی",type:"date"}],
-   onSave: v => { if(!v.note){toast("شرح پیشرفت را بنویسید.");return false}
-     if(v.stage==="done") v.status="closed";
-     const now=new Date().toISOString(); const {id,...base}=a;
-     return save(`letters_archive/${id}`,{...base,stage:v.stage,status:v.status,next_action:v.next_action,next_date:v.next_date,log:[...(a.log||[]),{at:now,by:S.me.id,stage:v.stage,status:v.status,note:v.note}].slice(-60),updated:now},"پیشرفت ثبت شد"); }});
+// ---------- Correspondence progress: seven milestones per letter (sent → contact → registered → referred → meeting requested → meeting arranged → meeting held)
+const FA_WD = ["یکشنبه","دوشنبه","سه‌شنبه","چهارشنبه","پنجشنبه","جمعه","شنبه"];
+const pgWd = iso => /^\d{4}-\d\d-\d\d$/.test(iso||"") ? FA_WD[new Date(iso+"T12:00:00").getDay()] : "";
+const MEET_ST = {"":"— (هنوز جلسه‌ای نیست)",planned:"هماهنگ شد (برگزار نشده)",held:"برگزار شد",cancelled:"لغو شد / نیاز به هماهنگی مجدد"};
+const REF_UNITS = ["واحد تحقیق و توسعه","مدیریت فناوری اطلاعات","مدیریت بهره‌برداری","دفتر مدیرعامل","معاونت فنی","سایر"];
+const pgSent = a => ["sent","received","review","reply","scheduled","meeting","done"].includes(a.stage) || !!a.send_date;
+const pgTel = a => a.contact_tel || (trkOf(a).tel||[])[0] || "";
+const pgName = a => a.contact_name || (trkOf(a).people||[])[0] || "";
+const PG = [
+  {k:"send",l:"ارسال",ok:a=>pgSent(a)},
+  {k:"contact",l:"رابط",ok:a=>!!(a.contact_name||a.contact_tel||(trkOf(a).tel||[]).length)},
+  {k:"reg",l:"ثبت در سیستم کارفرما",ok:a=>!!(a.employer_no||a.reg_date||trkOf(a).reg_no)},
+  {k:"refer",l:"ارجاع",ok:a=>!!(a.ref_name||a.ref_unit||a.ref_date||a.stage==="review")},
+  {k:"mreq",l:"درخواست جلسه",ok:a=>!!(a.mreq_date||a.meeting_date)},
+  {k:"sched",l:"جلسه هماهنگ شد",ok:a=>a.meeting_status==="planned"||a.meeting_status==="held"},
+  {k:"held",l:"جلسه برگزار شد",ok:a=>a.meeting_status==="held"}
+];
+const pgDone = a => PG.map(m=>m.ok(a));
+const pgPct = a => Math.round(pgDone(a).filter(Boolean).length/PG.length*100);
+const pgStepper = a => { const d=pgDone(a), first=d.indexOf(false); return `<span class="pgs" title="${faNum(pgPct(a))}٪">${PG.map((m,i)=>`<span class="${d[i]?"on":i===first?"cur":""}" title="${esc(m.l)}${d[i]?" ✓":""}"></span>`).join("")}</span> <span class="meta">${faNum(pgPct(a))}٪</span>`; };
+// narrative sentences, in the order of the milestones
+function progLines(a){
+  const t=trkOf(a), L=[], ch=ARCH_CH[a.send_channel||a.channel]||"";
+  if(pgSent(a)) L.push(`نامه${ch?` از طریق ${ch}`:""}${a.send_to?` (${a.send_to})`:""}${(a.send_date||a.date)?` در تاریخ ${faDate(a.send_date||a.date)}`:""} ارسال شده است.`);
+  const tel=pgTel(a), nm=pgName(a);
+  if(tel||nm||a.contact_role) L.push(`شماره تماس کارفرما: ${tel||"—"}${nm?` · نام رابط: ${nm}`:""}${a.contact_role?` · سمت رابط: ${a.contact_role}`:""}`);
+  const rn=a.employer_no||t.reg_no;
+  if(rn||a.reg_date) L.push(`نامه در سیستم کارفرما ثبت شده است${rn?` به شماره‌ی ثبت ${rn}`:""}${a.reg_date?` (${faDate(a.reg_date)})`:""}.`);
+  if(a.ref_name||a.ref_unit||a.ref_date||a.stage==="review") L.push(`نامه به ${a.ref_unit||"واحد مربوط"} ارجاع شده است${a.ref_name?` — ${a.ref_name}`:""}${a.ref_role?` (${a.ref_role})`:""}${a.ref_tel?` — شماره تماس ${a.ref_tel}`:""}${a.ref_date?` · ${faDate(a.ref_date)}`:""}.`);
+  if(a.mreq_date) L.push(`درخواست جلسه برای ${pgWd(a.mreq_date)} ${faDate(a.mreq_date)}${a.mreq_time?` ساعت ${a.mreq_time}`:""} ثبت (فیکس) شده است.`);
+  if(a.meeting_status==="planned"||a.meeting_status==="held"){
+    const when=`${pgWd(a.meeting_date)} ${faDate(a.meeting_date)}${a.meeting_time?` ساعت ${a.meeting_time}`:""}`.trim(), why=a.meeting_purpose||"ارائه‌ی محصول تکاملی";
+    if(a.meeting_mode==="online") L.push(`جلسه آنلاین است — ${when}${a.meeting_place?` (${a.meeting_place})`:""}${a.meeting_with?` · با ${a.meeting_with}`:""}.`);
+    else if(a.meeting_mode==="phone") L.push(`جلسه تلفنی است — ${when}${a.meeting_with?` · با ${a.meeting_with}`:""}.`);
+    else L.push(`جلسه حضوری${a.meeting_place?` به نشانی ${a.meeting_place}`:""} در ${when} جهت ${why} تنظیم شد${a.meeting_with?` (با ${a.meeting_with})`:""}.`);
+    if(a.meeting_status==="held") L.push("جلسه برگزار شد.");
+  } else if(a.meeting_status==="cancelled") L.push("جلسه لغو شد و به هماهنگی مجدد نیاز دارد.");
+  return L;
 }
+const progReport = a => `${trkOrg(a)} — نامه‌ی ${a.number||"بدون شماره"}\nپیشرفت: ${faNum(pgPct(a))}٪\n`+(progLines(a).map(x=>"• "+x).join("\n")||"• هنوز پیشرفتی ثبت نشده است.")+(a.next_action?`\nگام بعدی: ${a.next_action}${a.next_date?` (${faDate(a.next_date)})`:""}`:"");
+// what to do next, derived from the first missing milestone
+function pgNextStep(a){
+  const d=pgDone(a);
+  if(!d[0]) return "ارسال نامه";
+  if(!d[2]) return "پیگیری ثبت نامه در دبیرخانه‌ی کارفرما و گرفتن شماره‌ی ثبت";
+  if(!d[3]) return "پیگیری ارجاع نامه به واحد تحقیق و توسعه و گرفتن نام و تلفن مسئول";
+  if(!d[4]) return "درخواست زمان جلسه از مسئول ارجاع‌شده";
+  if(!d[5]) return "پیگیری تأیید زمان و نوع جلسه (حضوری یا آنلاین)";
+  if(!d[6]) return `برگزاری جلسه${a.meeting_date?` (${faDate(a.meeting_date)})`:""}`;
+  return "ارسال خلاصه‌ی جلسه و پیشنهاد گام بعدی (پایلوت یا تفاهم‌نامه)";
+}
+// smart alerts: each has a severity (2 = act now, 1 = soon) and a plain sentence
+function pgAlerts(a){
+  if(!archOpen(a)) return [];
+  const out=[], d=pgDone(a), tdy=today(), since=iso=>iso?daysBetween(iso,tdy):null, sd=a.send_date||a.date;
+  if(d[0]&&!d[1]) out.push([1,"رابط و شماره تماس کارفرما ثبت نشده است"]);
+  if(d[0]&&!d[2]&&since(sd)!=null&&since(sd)>=3) out.push([2,`${faNum(since(sd))} روز از ارسال گذشته و شماره‌ی ثبت در سیستم کارفرما ندارد؛ تماس بگیرید`]);
+  if(d[2]&&!d[3]&&since(a.reg_date||archLast(a))>=5) out.push([1,"ثبت شده ولی هنوز ارجاع نشده است؛ پیگیری ارجاع"]);
+  if(d[3]&&!d[4]&&since(a.ref_date||archLast(a))>=7) out.push([1,"ارجاع شده ولی درخواست جلسه‌ای ثبت نشده است"]);
+  if(a.meeting_status==="planned"&&a.meeting_date){
+    const left=-since(a.meeting_date);
+    if(left<0) out.push([2,"تاریخ جلسه گذشته است؛ برگزاری و نتیجه‌ی جلسه را ثبت کنید"]);
+    else if(left<=2) out.push([2,left===0?"جلسه امروز است":`${faNum(left)} روز تا جلسه مانده است؛ هماهنگی نهایی و یادآوری`]);
+    if(a.meeting_mode==="in_person"&&!a.meeting_place) out.push([1,"نشانی جلسه‌ی حضوری ثبت نشده است"]);
+    if(a.meeting_mode==="online"&&!a.meeting_place) out.push([1,"لینک یا پلتفرم جلسه‌ی آنلاین ثبت نشده است"]);
+  }
+  if(archOverdue(a)) out.push([2,`اقدام بعدی سررسیده است: ${a.next_action||"—"}`]);
+  return out;
+}
+function archProgress(a){ if(!a) return;
+  const t=trkOf(a), v0={send_channel:a.send_channel||a.channel||"fax",send_date:a.send_date||a.date||"",send_to:a.send_to||"",contact_tel:pgTel(a),contact_name:pgName(a),contact_role:a.contact_role||"",
+    employer_no:a.employer_no||t.reg_no||"",reg_date:a.reg_date||"",ref_unit:a.ref_unit||"",ref_name:a.ref_name||"",ref_role:a.ref_role||"",ref_tel:a.ref_tel||"",ref_date:a.ref_date||"",
+    mreq_date:a.mreq_date||"",mreq_time:a.mreq_time||"",meeting_status:a.meeting_status||"",meeting_mode:a.meeting_mode||"in_person",meeting_date:a.meeting_date||"",meeting_time:a.meeting_time||"",meeting_place:a.meeting_place||"",meeting_with:a.meeting_with||"",meeting_purpose:a.meeting_purpose||"ارائه‌ی محصول تکاملی",
+    note:"",next_action:a.next_action||"",next_date:a.next_date||""};
+  openForm({title:`پیشرفت نامه – ${trkOrg(a)}`,values:v0,
+   extra:`<p class="note">فقط بخش‌هایی را که خبر دارید پر کنید؛ بقیه خالی بماند. مرحله‌ی نامه، گام بعدی و تاریخچه خودکار به‌روز می‌شود. پیشرفت فعلی: <b>${faNum(pgPct(a))}٪</b> ${pgStepper(a)}</p>`,
+   fields:[
+    {head:"① ارسال",k:"send_channel",label:"نامه از طریق چه راهی ارسال شده است؟",type:"select",options:ARCH_CH},{k:"send_date",label:"تاریخ ارسال",type:"date"},{k:"send_to",label:"شماره‌ی فکس / ایمیل / شناسه‌ی روبیکا یا ایتا که ارسال شد",dir:"ltr"},
+    {head:"② رابط در شرکت کارفرما",k:"contact_tel",label:"شماره تماس کارفرما",dir:"ltr"},{k:"contact_name",label:"نام رابط"},{k:"contact_role",label:"سمت رابط"},
+    {head:"③ ثبت در سیستم کارفرما",k:"employer_no",label:"شماره‌ی ثبت نامه در سیستم کارفرما",dir:"ltr"},{k:"reg_date",label:"تاریخ ثبت",type:"date"},
+    {head:"④ ارجاع",k:"ref_unit",label:"نامه به کدام واحد ارجاع شده است؟",type:"select",options:{"":"— (هنوز ارجاع نشده)",...Object.fromEntries(REF_UNITS.map(u=>[u,u]))}},{k:"ref_name",label:"نام آقا یا خانم مسئول"},{k:"ref_role",label:"سمت"},{k:"ref_tel",label:"شماره تماس مسئول",dir:"ltr"},{k:"ref_date",label:"تاریخ ارجاع",type:"date"},
+    {head:"⑤ درخواست جلسه",k:"mreq_date",label:"تاریخ درخواستی جلسه (روز هفته خودکار نوشته می‌شود)",type:"date"},{k:"mreq_time",label:"ساعت درخواستی"},
+    {head:"⑥ جلسه",k:"meeting_status",label:"وضعیت جلسه",type:"select",options:MEET_ST},{k:"meeting_mode",label:"نوع جلسه",type:"select",options:MEET_MODE},{k:"meeting_date",label:"تاریخ جلسه",type:"date"},{k:"meeting_time",label:"ساعت جلسه"},
+    {k:"meeting_place",label:"نشانی جلسه‌ی حضوری یا لینک / پلتفرم جلسه‌ی آنلاین"},{k:"meeting_with",label:"با چه کسی (نام و سمت)"},{k:"meeting_purpose",label:"هدف جلسه",hint:"مثلاً: ارائه‌ی محصول تکاملی، دموی نرم‌افزار، بررسی تفاهم‌نامه"},
+    {head:"⑦ شرح و گام بعدی",k:"note",label:"یادداشت (با چه کسی صحبت شد، پاسخ چه بود؟)",type:"textarea"},{k:"next_action",label:"اقدام بعدی (خالی بگذارید تا خودکار پیشنهاد شود)"},{k:"next_date",label:"تاریخ اقدام بعدی",type:"date"}],
+   onSave: v => {
+     if(v.meeting_status==="planned"&&!v.meeting_date){ toast("برای جلسه‌ی هماهنگ‌شده، تاریخ جلسه را وارد کنید."); return false }
+     const now=new Date().toISOString(), {id,...base}=a, b2={...base,...v}; delete b2.note;
+     if(v.meeting_status!=="planned"&&v.meeting_status!=="held"&&!v.meeting_status) { b2.meeting_status=""; }
+     if(v.meeting_status==="planned"||v.meeting_status==="held") b2.mreq_date=b2.mreq_date||v.meeting_date;   // an arranged meeting also means a request was made
+     b2.channel=v.send_channel||a.channel; b2.date=a.date||v.send_date||"";
+     // stage = the furthest milestone reached (never moves backwards, except when the meeting is cancelled)
+     const order=Object.keys(ARCH_STAGES), at=k=>order.indexOf(k), d=pgDone(b2);
+     let cand=a.stage||"ready"; const up=k=>{ if(at(k)>at(cand)) cand=k; };
+     if(d[0]) up("sent"); if(d[2]) up("received"); if(d[3]) up("review"); if(d[4]) up("reply"); if(b2.meeting_status==="planned") up("scheduled"); if(b2.meeting_status==="held") up("meeting");
+     if(b2.meeting_status==="cancelled"&&at(cand)>at("reply")) cand="reply";
+     b2.stage=a.stage==="done"?"done":cand; b2.status=b2.stage==="done"?"closed":(a.status==="closed"?"active":(a.status||"active"));
+     if(!b2.next_action){ b2.next_action=pgNextStep(b2); if(!b2.next_date) b2.next_date=addDays(today(),3); }
+     const lab={send_channel:"روش ارسال",send_date:"تاریخ ارسال",contact_tel:"تلفن رابط",contact_name:"نام رابط",contact_role:"سمت رابط",employer_no:"شماره‌ی ثبت",reg_date:"تاریخ ثبت",ref_unit:"واحد ارجاع",ref_name:"مسئول ارجاع",ref_role:"سمت مسئول",ref_tel:"تلفن مسئول",ref_date:"تاریخ ارجاع",mreq_date:"تاریخ درخواست جلسه",mreq_time:"ساعت درخواستی",meeting_status:"وضعیت جلسه",meeting_mode:"نوع جلسه",meeting_date:"تاریخ جلسه",meeting_time:"ساعت جلسه",meeting_place:"نشانی/لینک جلسه",meeting_with:"طرف جلسه",meeting_purpose:"هدف جلسه"};
+     const prev={send_channel:a.send_channel||a.channel||"fax",send_date:a.send_date||a.date||"",contact_tel:pgTel(a),contact_name:pgName(a),employer_no:a.employer_no||t.reg_no||"",meeting_mode:a.meeting_mode||"in_person",meeting_purpose:a.meeting_purpose||"ارائه‌ی محصول تکاملی"};
+     const ch=Object.keys(lab).filter(k=>String(v[k]||"")!==String((k in prev?prev[k]:a[k])||"")).map(k=>lab[k]);
+     const note=(v.note?v.note+(ch.length?" — ":""):"")+(ch.length?"به‌روزرسانی: "+ch.join("، "):"");
+     if(!note&&!ch.length){ toast("چیزی تغییر نکرده است."); return false }
+     return save(`letters_archive/${id}`,{...b2,log:[...(a.log||[]),{at:now,by:S.me.id,stage:b2.stage,status:b2.status,note:note||"ثبت پیشرفت"}].slice(-60),updated:now},"پیشرفت ثبت شد"); }});
+}
+// ---------- Letters ← «پیشرفت نامه‌نگاری»: funnel, priorities and a per-letter progress table
+VIEWS["letters.progress"] = () => {
+  const sc=S.pgScope||"all", id0=a=>archIdent(a);
+  const all=S.lettersArchive.filter(a=>sc==="all"||id0(a)===(sc==="pp"?"ir":"soshiant")).filter(a=>match(a.recipient,a.subject,a.number,a.employer_no,pgName(a),a.ref_name));
+  const sent=all.filter(pgSent), dn=sent.map(pgDone);
+  const cnt=PG.map((m,i)=>sent.filter((_,j)=>dn[j][i]).length), top=Math.max(sent.length,1);
+  const al=all.map(a=>({a,al:pgAlerts(a)})).filter(x=>x.al.length).sort((x,y)=>Math.max(...y.al.map(z=>z[0]))-Math.max(...x.al.map(z=>z[0]))||(x.a.next_date||"9").localeCompare(y.a.next_date||"9"));
+  const chip=(k,l)=>`<button class="btn sm ${sc===k?"":"ghost"}" data-act="pg-scope" data-k="${k}">${l}</button>`;
+  const funnel=PG.map((m,i)=>`<div style="display:grid;grid-template-columns:150px 1fr 70px;gap:8px;align-items:center;margin:4px 0"><span>${esc(m.l)}</span><div class="pgbar"><i style="width:${Math.round(cnt[i]/top*100)}%"></i></div><span class="mono">${faNum(cnt[i])} <span class="meta">(${faNum(Math.round(cnt[i]/top*100))}٪)</span></span></div>`).join("");
+  const rows=sent.sort((a,b)=>pgPct(b)-pgPct(a)||(a.next_date||"9").localeCompare(b.next_date||"9")).map(a=>{ const L=progLines(a), last=L[L.length-1], A=pgAlerts(a);
+    return `<tr>${td("نامه",`<b>${esc(trkOrg(a))}</b><div class="meta mono">${esc(a.number||"—")}${(a.employer_no||trkOf(a).reg_no)?` · ثبت ${esc(a.employer_no||trkOf(a).reg_no)}`:""}</div>`,"t")}${td("پیشرفت",pgStepper(a)+`<div class="meta">${esc(ARCH_STAGES[a.stage]||"")}</div>`)}${td("رابط",`${pgName(a)?esc(pgName(a))+(a.contact_role?" · "+esc(a.contact_role):""):'<span class="meta">—</span>'}${pgTel(a)?`<div><a class="mono" href="tel:${esc(String(pgTel(a)).replace(/[^\d+]/g,""))}">${esc(pgTel(a))}</a></div>`:""}`)}${td("آخرین وضعیت",last?esc(last):"—")}${td("هشدار",A.length?A.map(z=>`<div class="${z[0]>1?"p-bad":"p-warn"}">${esc(z[1])}</div>`).join(""):'<span class="meta">—</span>')}${td("اقدام",`<button class="btn sm" data-act="arch-progress" data-id="${esc(a.id)}">ثبت پیشرفت</button> <button class="btn sm ghost" data-act="pg-copy" data-id="${esc(a.id)}">کپی گزارش</button>`)}</tr>`; });
+  return `<p class="note">برای هر نامه‌ی ارسال‌شده هفت مرحله دنبال می‌شود: ارسال، رابط، ثبت در سیستم کارفرما، ارجاع (مثلاً به تحقیق و توسعه)، درخواست جلسه، هماهنگی جلسه (حضوری یا آنلاین) و برگزاری آن. با «ثبت پیشرفت» هر بخش را که خبرش را دارید پر کنید؛ مرحله‌ی نامه، گام بعدی و تاریخچه خودکار نوشته می‌شود و هشدار پیگیری هوشمند تازه می‌شود.</p>`+
+   `<div class="toolbar">${chip("all","همه")}${chip("pp","پترو پالا توس")}${chip("sosh","سوشیانت")}<button class="btn sm sig" data-act="pg-copy-all">کپی گزارش مدیریتی</button></div>`+
+   kpis([["نامه‌ی ارسال‌شده",faNum(sent.length)],["دارای رابط",faNum(cnt[1])],["ثبت در سیستم کارفرما",faNum(cnt[2])],["ارجاع‌شده",faNum(cnt[3])],["جلسه هماهنگ‌شده",faNum(cnt[5])],["جلسه برگزارشده",faNum(cnt[6])],["نیازمند اقدام",faNum(al.length),al.length>0]])+
+   `<div class="card" style="margin-bottom:12px"><h3 style="margin-top:0">قیف پیشرفت نامه‌ها</h3>${funnel}</div>`+
+   (al.length?`<div class="card" style="margin-bottom:12px"><h3 style="margin-top:0">اولویت‌های پیگیری (${faNum(al.length)})</h3>${al.slice(0,12).map(x=>`<div class="cal-item"><b>${esc(trkOrg(x.a))}</b> ${x.al.map(z=>`<span class="${z[0]>1?"p-bad":"p-warn"}">${esc(z[1])}</span>`).join(" · ")} <button class="btn sm" data-act="arch-progress" data-id="${esc(x.a.id)}">ثبت پیشرفت</button></div>`).join("")}${al.length>12?`<p class="meta">و ${faNum(al.length-12)} مورد دیگر در جدول پایین با ستون «هشدار».</p>`:""}</div>`:"")+
+   table(["نامه","پیشرفت","رابط","آخرین وضعیت","هشدار",""],rows,"نامه‌ی ارسال‌شده‌ای با این فیلتر نیست.");
+};
+async function pgCopy(text){ if(await ipCopyText(text)) toast("گزارش کپی شد."); else schShowText(text); }
 
 // ---------- PATENT
 const patSec = p => { const pr=S.products.find(x=>x.id===p.product); return pr?prSec(pr):secOf([p.title,p.note].join(" ")); };
@@ -3682,7 +3823,7 @@ VIEWS["articles.submit"] = () => {
      return `<tr>${td("مقصد",esc(a.name),"t")}${td("ددلاین",a.deadline?faDate(a.deadline):"—")}${td("مسئول",t?esc(memberName(t.assignee)):'<span class="meta">تعریف نشده</span>')}${td("وضعیت",t?`<span class="pill ${t.status==="done"||t.status==="approved"?"p-ok":t.status==="doing"?"p-info":"p-warn"}">${esc(TASK_ST[t.status]||t.status)}</span>`:'<span class="pill p-mute">—</span>')}${td("",absBtn(a)+(isAdmin()?`<button class="btn sm ghost" data-act="stk-one" data-id="${esc(a.id)}">${t?"واگذاری به مسئول انتخاب‌شده":"تعریف تسک برای مسئول انتخاب‌شده"}</button>`:""))}</tr>`; }; const H=["مقصد","ددلاین","مسئول","وضعیت",""], act=vs.filter(v=>!subDone(v)), dn=vs.filter(subDone);
      return table(H,act.map(rowf),vs.length?"همه‌ی مقصدها انجام شده‌اند.":"هنوز مقصدی در صف Claude نیست.")+(dn.length?`<details class="card"><summary>انجام‌شده (${faNum(dn.length)})</summary>${table(H,dn.map(rowf),"")}</details>`:""); })();
 };
-for(const k of ["letters.new","letters.archive","letters.pp","letters.sosh","letters.refinery","letters.hpc"]){ const f=VIEWS[k]; VIEWS[k]=()=>canSeeLetters()?f():`<p class="empty">بخش نامه‌ها فقط برای کارکنان اداری و مالک سامانه قابل مشاهده است.</p>`; }
+for(const k of ["letters.new","letters.archive","letters.pp","letters.sosh","letters.refinery","letters.hpc","letters.progress"]){ const f=VIEWS[k]; VIEWS[k]=()=>canSeeLetters()?f():`<p class="empty">بخش نامه‌ها فقط برای کارکنان اداری و مالک سامانه قابل مشاهده است.</p>`; }
 // ---- human owner (مسئول انسانی) for Patent and Scholarship: one pick can be assigned to every item; tasks land in the BPMS board
 const HUM = {
   patent:{label:"اختراع‌های در جریان",kind:"human_patent",items:()=>S.patents.filter(p=>p.status!=="granted").map(p=>({id:p.id,name:p.title||"—",sub:`${PAT_ST[p.status]||""}${p.number?" · "+p.number:""}`,due:p.next_date||"",
@@ -3745,6 +3886,22 @@ const FG_PILL={ok:["p-ok","✓"],fail:["p-bad","✗"],weak:["p-warn","ضعیف"]
 const FG_NEXT={pending:"ok",ok:"weak",weak:"fail",fail:"pending"};
 const FG_LVL={blocked:["p-bad","مسدود"],high:["p-risk","خطر بالا"],medium:["p-warn","نیازمند کار"],clear:["p-ok","عبور"]};
 const fgPassed = c => !!(c&&c.fit_gate) && FG_BLOCK.every(k=>((c.fit_gate.checks)||{})[k]==="ok");
+
+// ---------- Product pool: products that are in no journal, were rejected, or lack novelty; they wait here for a free journal slot (data: settings/product_pool, edited by Claude or the owner).
+const POOL_ST={rejected:["p-bad","ردشده"],unplaced:["p-warn","بدون ژورنال"],paid_or_inperson:["p-risk","ژورنال هزینه‌دار یا کنفرانس حضوری"],closed_venue:["p-mute","فراخوان بسته"],low_novelty:["p-bad","نوآوری کم"]};
+VIEWS["articles.pool"] = () => {
+  const P=(S.pool&&S.pool.list)||[], f=S.poolF||"";
+  const rows=P.filter(x=>!f||x.state===f);
+  const free=artAll().filter(a=>a.fee==="free"&&a.type!=="conf"&&!absOf(a.id));
+  const cnt=k=>P.filter(x=>x.state===k).length;
+  const chip=(v,l)=>`<button class="btn sm ${f===v?"":"ghost"}" data-act="pool-f" data-v="${v}">${l}</button>`;
+  return `<p class="note">${esc((S.pool&&S.pool.note)||"")}</p>`+
+   kpis([["محصول در استخر",faNum(P.length),false],["بدون ژورنال",faNum(cnt("unplaced")),false],["ردشده",faNum(cnt("rejected")),cnt("rejected")>0],["نوآوری کم",faNum(cnt("low_novelty")),false],["ژورنال رایگان با فضای خالی",faNum(free.length),false]])+
+   `<div class="card" style="margin-bottom:10px"><b>فضای خالی در ژورنال‌های رایگان (بدون چکیده):</b> ${free.length?free.map(a=>`<span class="pill p-ok" title="${esc(a.fee_note||"")}">${esc(a.name.replace(/\s*\(.*$/,""))}</span>`).join(" "):'<span class="meta">همه‌ی ژورنال‌های رایگان فهرست محصول گرفته‌اند</span>'}</div>`+
+   `<div class="toolbar">${chip("","همه")}${Object.entries(POOL_ST).map(([k,v])=>chip(k,v[1])).join("")}</div>`+
+   `<div class="tablewrap rows"><table><thead><tr><th>محصول</th><th>وضعیت</th><th>شواهد (واقعی)</th><th>نوآوری یا کار لازم</th><th>ژورنال رایگان پیشنهادی (تأییدنشده)</th><th>تسک توسعه</th></tr></thead><tbody>${rows.map(x=>{const st=POOL_ST[x.state]||["p-mute",x.state]; return `<tr>${td("محصول",`<b>${esc(x.name)}</b><div class="meta">${link(x.url,x.repo)}</div>`,"t")}${td("وضعیت",`<span class="pill ${st[0]}">${esc(st[1])}</span>`)}${td("شواهد",`<span class="meta">${esc(x.evidence)}</span>`)}${td("کار لازم",`<span class="meta">${esc(x.gap)}</span>`)}${td("ژورنال",`<span class="meta">${(x.journals||[]).map(esc).join("<br>")}</span>`)}${td("تسک",x.dev_task?`<span class="mono">${esc(x.dev_task)}</span>`:"—")}</tr>`}).join("")||'<tr><td colspan="6" class="empty">موردی با این فیلتر نیست.</td></tr>'}</tbody></table></div>`+
+   `<p class="meta">هر محصول پس از افزودن نوآوری، اجرای واقعی یا ظرفیت خالی ژورنال، با چکیده و منو اسکریپت به ژورنال رایگان منتقل می‌شود و از استخر خارج می‌شود؛ تسک ثبت نهایی برای Parsa Babaei تعریف می‌شود.</p>`;
+};
 VIEWS["articles.fitgate"] = () => {
   const cs=callsList().filter(c=>c.fit_gate), ord={blocked:0,high:1,medium:2,clear:3};
   cs.sort((a,b)=>(ord[a.fit_gate.level]??9)-(ord[b.fit_gate.level]??9)||String(a.name).localeCompare(String(b.name)));
@@ -4272,6 +4429,7 @@ const TOUR = [
  {mod:"letters",sub:"pp",click:"[data-act=pp-grp][data-k=shasta]",title:"ردیابی نامه تا جلسه",text:"هر نامه یک کارت است که از «آماده / ارسال» تا «جلسه برگزار شد» جلو می‌رود. کارت شماره‌ی نامه و شماره‌ی ثبت در سیستم کارفرما، تلفن و ایمیل کلیک‌پذیر، فکس، آخرین اقدام و گام بعدی را دارد. «ثبت پیشرفت» مرحله را جلو می‌برد و «جلسه» تاریخ، ساعت و نوع جلسه (حضوری، آنلاین، تلفنی) را ثبت می‌کند و در تقویم می‌آورد. بالای صفحه قیف مراحل، جلسه‌های پیش‌رو و اقدام‌های سررسیده است. این نما برای همه‌ی گروه‌ها و برای سوشیانت هم هست."},
  {mod:"letters",sub:"pp",click:"[data-act=pp-grp][data-k=nioc]",title:"شرکت‌ها و پیش‌نویس نامه",text:"برای شرکت ملی نفت، شرکت ملی گاز، مپنا، پخش و پالایش و پتروشیمی هر شرکت یک زیرتب دارد. «ساخت نامه» نامه‌ی اعلام آمادگی آن شرکت را (محصول هوشمند متناسب با حوزه‌ی کاری، کاهش مصرف سوخت و کنترل آلایندگی به‌عنوان یکی از محورها، گواهی صرفه‌جویی انرژی و اعتبار مالیاتی) در «نامه‌ی جدید» باز می‌کند. نام مدیرعامل را خودتان تکمیل کنید."},
  {mod:"letters",sub:"sosh",title:"نامه‌های سوشیانت",text:"نامه‌های پزشکی، آب، انرژی و سایر حوزه‌ها با سربرگ سوشیانت. «ردیابی نامه تا جلسه» همان کارت‌های مرحله‌دار را دارد و «فهرست و بایگانی» فیلتر گروه (پزشکی، آب، انرژی و …) دارد."},
+ {mod:"letters",sub:"progress",title:"پیشرفت نامه‌نگاری",text:"برای هر نامه‌ی ارسال‌شده هفت مرحله دنبال می‌شود: ارسال (فکس، ایمیل، روبیکا، ایتا…)، رابط (تلفن، نام و سمت)، ثبت در سیستم کارفرما، ارجاع (مثلاً به تحقیق و توسعه با نام و تلفن مسئول)، درخواست جلسه (روز، تاریخ، ساعت)، هماهنگی جلسه (آنلاین یا حضوری با نشانی و هدف) و برگزاری. با «ثبت پیشرفت» هر بخش را که خبر دارید پر کنید؛ مرحله، گام بعدی و تاریخچه خودکار نوشته می‌شود. بالای صفحه قیف پیشرفت و «اولویت‌های پیگیری» هشدار می‌دهد کدام نامه گیر کرده است و «کپی گزارش» متن آماده برای مدیر می‌دهد."},
  {mod:"patent",title:"Patent – پتنت",text:"هدف شرکت ثبت اختراع بیشتر است. اینجا اختراع‌های ثبت‌شده و فرصت‌های تازه را دنبال می‌کنید."},
  {mod:"patent",sub:"home",title:"پتنت‌ها",text:"فهرست اختراع‌های ثبت‌شده، در دست داوری، اظهارنامه‌ها و پیش‌نویس‌ها. اختراع جدید را با «ثبت اختراع / اظهارنامه» وارد کنید. نتایج نظر حقوقی نیستند."},
  {mod:"patent",sub:"ops",title:"فرصت‌های ثبت اختراع",text:"ایجنت هر روز محصولات را با سوابق اختراع مقایسه می‌کند و ادعاهای قابل ثبت را با منبع می‌آورد."},
@@ -4503,6 +4661,7 @@ document.addEventListener("click", async e => {
     case "sup-cv": await downloadSupCv(b.dataset.id,Number(b.dataset.j)); break;
     case "sup-prop": await downloadSupProp(b.dataset.id,Number(b.dataset.j)); break;
     case "fg-set": await fgSet(b.dataset.id,b.dataset.k); break;
+    case "pool-f": S.poolF=b.dataset.v; render(); break;
     case "up-done": await upDone(b.dataset.id); break;
     case "lead-sort": S.leadSort=b.dataset.k; render(); break;
     case "regrade": await regradeRecent(3); break;
@@ -4516,7 +4675,8 @@ document.addEventListener("click", async e => {
     case "sup-save": await supSave(b.dataset.id,Number(b.dataset.i)); break;
     case "sch-copy": await schCopyPrompt(b.dataset.id); break;
     case "sch-task": await schClaudeTask(b.dataset.id); break;
-    case "sch-fail": { const r=prompt("دلیل بستن پروژه (مثلاً: همه‌ی استادان مناسب پاسخ منفی دادند و استاد دیگری با پروژه همپوشانی ندارد)"); if(r===null) break; await schSave(b.dataset.id,{status:"failed",fail_reason:r,status_at:new Date().toISOString(),status_by:S.me.id}); break; }
+    case "sch-fail": { const fid=b.dataset.id; openForm({title:"بستن پروژه (ناموفق)",fields:[{k:"reason",label:"دلیل (مثلاً: همه‌ی استادان مناسب پاسخ منفی دادند و استاد دیگری با پروژه همپوشانی ندارد)",type:"textarea"}],values:{},onSave:async o=>schSave(fid,{status:"failed",fail_reason:o.reason||"",status_at:new Date().toISOString(),status_by:S.me.id})}); break; }
+    case "sch-final": await schFinal(b.dataset.id); break;
     case "sch-set": { const st=b.dataset.st; if(b.type==="checkbox"&&!b.checked) break; await schSave(b.dataset.id,{status:st,status_at:new Date().toISOString(),status_by:S.me.id}); break; }
     case "sch-done": { const cur=schState(b.dataset.id), it={...(cur.items||{})}; it[b.dataset.k]={...(it[b.dataset.k]||{}),done:b.checked}; await schSave(b.dataset.id,{items:it}); break; }
     case "sch-claim": { { const pp=SCH.find(x=>x.id===b.dataset.id); if(pp&&schLockedForMe(pp)){ toast(rosterName(schTaker(pp))+" این بورسیه را برداشته است؛ برای دیگران بسته است."); break; } } const cur=schState(b.dataset.id), it={...(cur.items||{})}; if(!S.me.id){toast("ابتدا وارد شوید.");break;} it[b.dataset.k]={...(it[b.dataset.k]||{}),owner:S.me.id}; await schSave(b.dataset.id,{items:it}); break; }
@@ -4550,6 +4710,9 @@ document.addEventListener("click", async e => {
     case "arch-edit": archForm(S.lettersArchive.find(x=>x.id===id)); break;
     case "arch-progress": archProgress(S.lettersArchive.find(x=>x.id===id)); break;
     case "arch-meeting": archMeeting(S.lettersArchive.find(x=>x.id===id)); break;
+    case "pg-scope": S.pgScope=b.dataset.k; renderView(); break;
+    case "pg-copy": { const a=S.lettersArchive.find(x=>x.id===id); if(a) await pgCopy(progReport(a)); break; }
+    case "pg-copy-all": { const sc=S.pgScope||"all", L=S.lettersArchive.filter(a=>pgSent(a)&&(sc==="all"||archIdent(a)===(sc==="pp"?"ir":"soshiant"))).sort((x,y)=>pgPct(y)-pgPct(x)); await pgCopy(`گزارش پیشرفت نامه‌نگاری — ${faDate(today())}\nنامه‌ی ارسال‌شده: ${faNum(L.length)} · جلسه هماهنگ‌شده: ${faNum(L.filter(a=>pgDone(a)[5]).length)} · جلسه برگزارشده: ${faNum(L.filter(a=>pgDone(a)[6]).length)}\n\n`+L.map(progReport).join("\n\n")); break; }
     case "arch-f": S.archF=b.dataset.k; renderView(); break;
     case "arch-sec": S.archSec=b.dataset.k||""; renderView(); break;
     case "sign-office": { if(!hasProof(myMember())){ toast("برای امضای نامه، امضا و عکس اثر انگشت هر دو باید ثبت شده باشد."); break; } const l=S.letters.find(x=>x.id===id); if(l&&await save(`letters/${id}`,{...l,office_sig:{by:S.me.id,at:new Date().toISOString()}},"امضای مسئول دفتر ثبت شد")) letterView(id); break; }
