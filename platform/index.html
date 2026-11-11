@@ -2698,19 +2698,21 @@ const intlId = () => { const st=S.settings; return {name:st.intl_name||INTL_DEFA
 const enDate = d => { try{ return new Intl.DateTimeFormat("en-GB",{day:"numeric",month:"long",year:"numeric"}).format(new Date((d||today())+"T12:00:00")); }catch(e){ return d||""; } };
 function nextLetterNo(identity,date){
   if(identity==="intl"){ const y=new Date().getFullYear(); const n=S.letters.filter(l=>(l.number||"").startsWith(`PIG-${y}-`)).length+1; return `PIG-${y}-${String(n).padStart(4,"0")}`; }
-  // at most LETTER_DAY_CAP letters carry the same day's date; the next one is dated the following day (and the draft's date moves with it)
-  const start=date||today(), used=new Set(S.letters.map(l=>String(l.number||"")));
+  // One shared series for everyone: Jalali YYYYMMDD + a 3-digit serial = (highest serial already used that day) + 1, counted over every registered letter and every archive entry,
+  // whoever registered it. At most LETTER_DAY_CAP letters carry the same day's date; the next one is dated the following day (and the draft's date moves with it).
+  const start=date||today(), nums=[...letterNums()];
   let day=start;
   for(let g=0; g<120; g++){
-    const j=jalaliParts(day), prefix=j.y+j.m+j.d, n=S.letters.filter(l=>String(l.number||"").startsWith(prefix)).length;
-    if(n<LETTER_DAY_CAP){
-      let s=n+1, num; do{ num=prefix+String(s).padStart(3,"0"); s++; }while(used.has(num));
+    const j=jalaliParts(day), prefix=j.y+j.m+j.d, used=nums.filter(x=>x.startsWith(prefix)&&x.length===prefix.length+3);
+    if(used.length<LETTER_DAY_CAP){
+      const mx=used.reduce((m,x)=>Math.max(m,parseInt(x.slice(prefix.length),10)||0),0), num=prefix+String(mx+1).padStart(3,"0");
       if(day!==start&&S.draft&&S.draft.numAuto){ S.draft.date=day; toast("سقف "+faNum(LETTER_DAY_CAP)+" نامه در روز تکمیل است؛ تاریخ نامه به روز بعد منتقل شد."); }
-      return num;   // e.g. 14050714001: Jalali year, month, day and a 3-digit serial
+      return num;   // e.g. 14050820001, then 14050820002 …
     }
     day=addDays(day,1);
   }
 }
+const letterNums = () => { const out=new Set(); for(const l of S.letters) if(l.number) out.add(String(l.number)); for(const a of (S.lettersArchive||[])) if(a.number) out.add(String(a.number)); for(const n of (S.numFresh||[])) out.add(String(n)); return out; };
 const LETTER_DAY_CAP = 20;
 function getDraft(){ if(!S.draft) S.draft={number:nextLetterNo("ir",today()),date:today(),numAuto:true,sector:"oil",identity:"ir"}; return S.draft; }
 function draftLetter(){ return {...getDraft()}; }
@@ -2763,9 +2765,9 @@ function letterMeta(id){
 async function composeSubmit(){
   const d=getDraft(); const v=k=>String(d[k]||"").trim();
   if(!v("subject")||!v("recipient")||!v("body")){ toast("گیرنده، موضوع و متن نامه را وارد کنید."); return; }
-  if(d.numAuto) d.number=nextLetterNo(d.identity,d.date);
+  if(d.numAuto){ try{ const [x,y]=await Promise.all([S.db.collection("letters").get(),S.db.collection("letters_archive").get()]); S.numFresh=[...x.docs,...y.docs].map(q=>(q.data()||{}).number).filter(Boolean); }catch(e){ S.numFresh=null; } d.number=nextLetterNo(d.identity,d.date); }   // read the database afresh so a letter another member registered a moment ago is counted
   if(!v("number")){ toast("شماره‌ی نامه را وارد کنید."); return; }
-  if(S.letters.some(l=>l.number===d.number&&l.id!==d.id)){ toast("این شماره قبلاً برای نامه‌ی دیگری ثبت شده است."); return; }
+  if(S.letters.some(l=>l.number===d.number&&l.id!==d.id)||(!d.id&&(S.lettersArchive.some(x=>x.number===d.number)||(S.numFresh||[]).includes(d.number)))){ S.numFresh=null; toast("این شماره قبلاً برای نامه‌ی دیگری ثبت شده است."); return; }
   const old=d.id?S.letters.find(x=>x.id===d.id):null;
   const id=d.id||newId();
   const rec={...(old||{}),identity:d.identity==="intl"?"intl":d.identity==="soshiant"?"soshiant":"ir",number:v("number"),date:d.date||today(),sector:d.identity==="intl"?"":(d.identity==="soshiant"?(d.sector&&d.sector!=="oil"?d.sector:"med"):"oil"),recipient:v("recipient"),subject:v("subject"),body:v("body"),attachments:v("attachments"),cc:v("cc"),annex:v("annex"),signer:v("signer"),updated:new Date().toISOString(),created_by:(old&&old.created_by)||S.me.id};
@@ -2773,8 +2775,8 @@ async function composeSubmit(){
   delete rec.id;
   const P=prepLetter(rec); rec.subject=P.subject; rec.body=P.bodyText; rec.annex=P.annexText; rec.signer=P.signer||"";
   if(P.split) toast("امضا و متن بعد از «با تجدید احترام» از متن نامه جدا شد؛ متن پس از آن به صفحه‌ی پیوست رفت.");
-  if(!await save(`letters/${id}`,rec,"نامه ثبت شد")) return;
-  S.draft=null; S.forceFull=true; render();
+  if(!await save(`letters/${id}`,rec,"نامه ثبت شد")){ S.numFresh=null; return; }
+  S.numFresh=null; S.draft=null; S.forceFull=true; render();
   await downloadLetter({...rec,id});
 }
 function letterSheetIntl(l){
