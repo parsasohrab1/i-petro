@@ -274,6 +274,18 @@ function subColl(path,key,n=0){
       S.loaded = true; S.got.add(key); render(); if(key==="members") maybeWelcome();
     }, err => { (S.subErr=S.subErr||{})[path]=String((err&&(err.message||err.code))||"unknown"); render(); if(n<6) setTimeout(()=>subColl(path,key,n+1),4000*(n+1)); });   // a failed read used to leave the list silently empty: show it and retry
 }
+// Subscription budget: the page may hold only a limited number of live listeners ("Too many active subscriptions"). Settings documents that only one module uses
+// are registered here and listened to only while that module is open (the listener is closed again when the person leaves it).
+const LZ_MODS = {ast:["articles","patent","basket","erp","bpms"],art:["articles","patent"],ms:["articles","patent"],sch:["scholar"],cal:["content","bpms"]};
+function LZD(grp,id,fn){ (S.lzReg=S.lzReg||[]).push({grp,id,fn,unsub:null}); }
+function lzSync(){
+  if(!S.db||!S.lzReg) return;
+  for(const r of S.lzReg){
+    const want=(LZ_MODS[r.grp]||[]).includes(S.mod);
+    if(want&&!r.unsub){ r.unsub=()=>{}; const u=S.db.doc("settings/"+r.id).onSnapshot(r.fn,()=>{ r.unsub=null; }); if(typeof u==="function") r.unsub=u; }   // placeholder first: the first snapshot can arrive synchronously and call render() again
+    else if(!want&&r.unsub){ try{ r.unsub(); }catch(e){} r.unsub=null; }
+  }
+}
 function subscribe2(){
   S.db.collection("tracking").onSnapshot(snap => { const t={}; snap.docs.forEach(d=>t[d.id]=d.data()); S.tracking=t; render(); }, ()=>{});
   S.db.collection("erp_log").onSnapshot(snap => { const t={}; snap.docs.forEach(d=>t[d.id]=d.data()); S.erpLog=t; render(); }, ()=>{});   // erp_log/<duty id>: {last_done, by, at, count}
@@ -281,37 +293,37 @@ function subscribe2(){
   S.db.doc("settings/intl_partners").onSnapshot(d => { S.ip = d.exists ? d.data() : {countries:{},drafts:{}}; render(); }, ()=>{});
   S.db.doc("settings/news").onSnapshot(d => { S.news = d.exists ? d.data() : {items:[]}; render(); }, ()=>{});
   S.db.doc("settings/news_extra").onSnapshot(d => { S.newsExtra = d.exists ? d.data() : {items:[]}; render(); }, ()=>{});   // items added by hand; the daily job rewrites settings/news only
-  S.db.doc("settings/article_fees").onSnapshot(d => { S.fees = d.exists ? d.data() : {list:[]}; render(); }, ()=>{});   // {list:[{id,type,name,model,amount,online,pay_when,risk,decision,src,checked,note,declined}]}
+  LZD("art","article_fees",d => { S.fees = d.exists ? d.data() : {list:[]}; render(); });   // {list:[{id,type,name,model,amount,online,pay_when,risk,decision,src,checked,note,declined}]}
   S.db.doc("settings/basket_access").onSnapshot(d => { S.basAcc = d.exists ? d.data() : {ids:[]}; render(); }, ()=>{});   // {ids:[memberId]}: people who see the medical products of the basket without a per-product assignment
   S.db.doc("settings/basket_ideas").onSnapshot(d => { S.bi = d.exists ? d.data() : {list:[]}; render(); }, ()=>{});
   S.db.doc("settings/world_products").onSnapshot(d => { S.wp = d.exists ? d.data() : {items:[],proposals:[]}; render(); }, ()=>{});   // world products, patents and papers compared with ours, plus new-product proposals
   S.db.doc("settings/company_docs").onSnapshot(d => { S.cdocs = d.exists ? d.data() : {}; render(); }, ()=>{});
-  S.ccD = {}; for(const dn of ["content_calendar","content_calendar_2","content_calendar_3"]) S.db.doc("settings/"+dn).onSnapshot(d => { S.ccD[dn] = d.exists ? (d.data().items||[]) : []; S.cc = Object.values(S.ccD).flat(); render(); }, ()=>{});   // content calendar items {id,brand,title,desc,format,date}; each can be taken or handed over via assign/cc_<id>
+  S.ccD = {}; for(const dn of ["content_calendar","content_calendar_2","content_calendar_3"]) LZD("cal",dn,d => { S.ccD[dn] = d.exists ? (d.data().items||[]) : []; S.cc = Object.values(S.ccD).flat(); render(); });   // content calendar items {id,brand,title,desc,format,date}; each can be taken or handed over via assign/cc_<id>
   S.db.doc("settings/task_assigners").onSnapshot(d => { S.taskAsg = d.exists ? d.data() : {}; syncRoster(); render(); }, ()=>{});
   S.db.doc("settings/claude_tasks").onSnapshot(d => { S.ct = d.exists ? (d.data().list||[]) : []; render(); }, ()=>{});
-  S.db.doc("settings/paper_evidence").onSnapshot(d => { S.pev = d.exists ? d.data() : {list:[]}; render(); }, ()=>{});
+  LZD("art","paper_evidence",d => { S.pev = d.exists ? d.data() : {list:[]}; render(); });
   S.db.doc("settings/data_links").onSnapshot(d => { S.dlinks = d.exists ? (d.data().map||{}) : {}; render(); }, ()=>{});
-  S.db.doc("settings/article_mode").onSnapshot(d => { S.artMode = d.exists ? (d.data().map||{}) : {}; render(); }, ()=>{});
-  S.db.doc("settings/article_mail").onSnapshot(d => { S.artMail = d.exists ? (d.data().map||{}) : {}; S.artMailAt = d.exists ? d.data().updated||"" : ""; render(); }, ()=>{});
+  LZD("art","article_mode",d => { S.artMode = d.exists ? (d.data().map||{}) : {}; render(); });
+  LZD("art","article_mail",d => { S.artMail = d.exists ? (d.data().map||{}) : {}; S.artMailAt = d.exists ? d.data().updated||"" : ""; render(); });
   S.db.doc("settings/planner").onSnapshot(d => { S.planner = d.exists ? d.data() : {}; render(); }, ()=>{});   // {level, auto, last_run}: owner expectation level for the daily planner
   S.db.doc("settings/trl_data").onSnapshot(d => { S.trl = d.exists ? d.data() : {products:{}}; render(); }, ()=>{});   // real-data sources and measured results per TRL-4 product
   S.db.doc("settings/article_deny").onSnapshot(d => { S.artDeny = d.exists ? d.data() : {ids:[]}; render(); }, ()=>{});
   S.db.doc("settings/scholar_access").onSnapshot(d => { S.schAcc = d.exists ? d.data() : {ids:[]}; render(); }, ()=>{});
-  S.db.doc("settings/cv_tailor").onSnapshot(d => { S.cvT1 = d.exists ? (d.data().map||{}) : {}; S.cvT = {...S.cvT1,...(S.cvT2||{})}; render(); }, ()=>{});
-  S.db.doc("settings/postdoc_contacts").onSnapshot(d => { S.pdc = d.exists ? (d.data().list||[]) : []; render(); }, ()=>{});   // postdocs of target groups (public lab pages)
-  S.db.doc("settings/cv_tailor_biz").onSnapshot(d => { S.cvT2 = d.exists ? (d.data().map||{}) : {}; S.cvT = {...(S.cvT1||{}),...S.cvT2}; render(); }, ()=>{});   // business-school supervisors   // per-professor tailored CV content
-  S.db.doc("settings/sample_reply").onSnapshot(d => { S.sampleReply = d.exists ? d.data() : null; render(); }, ()=>{});   // lesson from a real professor reply
+  LZD("sch","cv_tailor",d => { S.cvT1 = d.exists ? (d.data().map||{}) : {}; S.cvT = {...S.cvT1,...(S.cvT2||{})}; render(); });
+  LZD("sch","postdoc_contacts",d => { S.pdc = d.exists ? (d.data().list||[]) : []; render(); });   // postdocs of target groups (public lab pages)
+  LZD("sch","cv_tailor_biz",d => { S.cvT2 = d.exists ? (d.data().map||{}) : {}; S.cvT = {...(S.cvT1||{}),...S.cvT2}; render(); });   // business-school supervisors   // per-professor tailored CV content
+  LZD("sch","sample_reply",d => { S.sampleReply = d.exists ? d.data() : null; render(); });   // lesson from a real professor reply
   S.db.doc("settings/letters_access").onSnapshot(d => { S.letAcc = d.exists ? d.data() : {ids:[]}; render(); }, ()=>{});
   S.db.doc("settings/news_access").onSnapshot(d => { S.newsAcc = d.exists ? d.data() : {ids:[]}; render(); }, ()=>{});   // News: owner always, others only when ticked in BPMS ← دسترسی تب‌ها
   S.db.doc("settings/patent_access").onSnapshot(d => { S.patAcc = d.exists ? d.data() : {ids:[]}; render(); }, ()=>{});
   S.db.doc("settings/article_access").onSnapshot(d => { S.artAcc = d.exists ? d.data() : {ids:[]}; render(); }, ()=>{});   // {ids:[memberId]}: people the owner lets see the Articles tab
   if(isAdmin()) S.db.collection("finance/_portal/items").onSnapshot(q => { S.portal={}; q.docs.forEach(d=>S.portal[d.id]=d.data()); render(); }, ()=>{});   // submission-portal logins per venue (admin-only rule of "finance"; not part of backups)
-  S.db.doc("settings/article_status").onSnapshot(d => { S.artSt = d.exists ? (d.data().map||{}) : {}; render(); }, ()=>{});
-  S.db.doc("settings/article_records").onSnapshot(d => { S.artRec = d.exists ? (d.data().map||{}) : {}; render(); }, ()=>{});   // {venueId:{ref,state,next,note,mail,at}} filled from the journals' e-mail replies
-  S.db.doc("settings/article_forms").onSnapshot(d => { S.artForms = d.exists ? (d.data().map||{}) : {}; render(); }, ()=>{});   // {venueId:{name,deadline,url}}; the Word files sit in settings/artform_<venueId> as base64
-  S.db.doc("settings/product_pool").onSnapshot(d => { S.pool = d.exists ? d.data() : {list:[]}; render(); }, ()=>{});   // products without a journal, rejected or lacking novelty; ready for new free journals
-  S.db.doc("settings/article_product").onSnapshot(d => { S.artProd = d.exists ? d.data() : {}; render(); }, ()=>{});
-  if(isOwnerOnly()) S.db.doc("settings/scholar").onSnapshot(d => { S.sp = d.exists ? d.data() : SP_DEFAULT; render(); }, ()=>{});
+  LZD("ast","article_status",d => { S.artSt = d.exists ? (d.data().map||{}) : {}; render(); });
+  LZD("art","article_records",d => { S.artRec = d.exists ? (d.data().map||{}) : {}; render(); });   // {venueId:{ref,state,next,note,mail,at}} filled from the journals' e-mail replies
+  LZD("art","article_forms",d => { S.artForms = d.exists ? (d.data().map||{}) : {}; render(); });   // {venueId:{name,deadline,url}}; the Word files sit in settings/artform_<venueId> as base64
+  LZD("art","product_pool",d => { S.pool = d.exists ? d.data() : {list:[]}; render(); });   // products without a journal, rejected or lacking novelty; ready for new free journals
+  LZD("art","article_product",d => { S.artProd = d.exists ? d.data() : {}; render(); });
+  if(isOwnerOnly()) LZD("sch","scholar",d => { S.sp = d.exists ? d.data() : SP_DEFAULT; render(); });
   S.db.doc("settings/company").onSnapshot(d => { S.settings = d.exists ? d.data() : {}; paintBrand(); render(); }, ()=>{});
   S.db.doc("settings/letterhead").onSnapshot(d => { S.lh = d.exists ? d.data() : null; render(); }, ()=>{});
   S.db.doc("settings/letterhead_soshiant").onSnapshot(d => { S.lhs = d.exists ? d.data() : null; render(); }, ()=>{});
@@ -328,9 +340,9 @@ function ensureLazy(){
   S.lz=S.lz||{};
   if(!S.lz.let && S.letAcc!==undefined && (isAdmin()||canSeeLetters())){ S.lz.let=1; for(const [path,key] of Object.entries(LAZY_COLS)) subColl(path,key); }
   if(!S.lz.art && S.artAcc!==undefined && S.artDeny!==undefined && (isAdmin()||areaAccess("articles")!=="none")){ S.lz.art=1;
-  S.db.doc("settings/article_manuscripts").onSnapshot(d => { S.msDb1 = d.exists ? (d.data().map||{}) : {}; S.msDb = {...S.msDb1,...(S.msDb2||{})}; render(); }, ()=>{});   // {venueId: {title, blocks[]}}; one database document is limited to 256 KB, so later manuscripts live in article_manuscripts2
-  S.db.doc("settings/article_manuscripts2").onSnapshot(d => { S.msDb2 = d.exists ? (d.data().map||{}) : {}; S.msDb = {...(S.msDb1||{}),...S.msDb2}; render(); }, ()=>{});
-  S.db.doc("settings/article_abstracts").onSnapshot(d => { S.absDb = d.exists ? (d.data().map||{}) : {}; render(); }, ()=>{});   // {venueId: {title, abstract, keywords[], profile, product:{name,repo,new}, draft_note}}
+  LZD("ms","article_manuscripts",d => { S.msDb1 = d.exists ? (d.data().map||{}) : {}; S.msDb = {...S.msDb1,...(S.msDb2||{})}; render(); });   // {venueId: {title, blocks[]}}; one database document is limited to 256 KB, so later manuscripts live in article_manuscripts2
+  LZD("ms","article_manuscripts2",d => { S.msDb2 = d.exists ? (d.data().map||{}) : {}; S.msDb = {...(S.msDb1||{}),...S.msDb2}; render(); });
+  LZD("ms","article_abstracts",d => { S.absDb = d.exists ? (d.data().map||{}) : {}; render(); });   // {venueId: {title, abstract, keywords[], profile, product:{name,repo,new}, draft_note}}
   S.db.doc("settings/article_calls").onSnapshot(d => { S.calls = d.exists ? (d.data().map||{}) : {}; render(); paintBell(); }, ()=>{});   // {venueId: {…venue fields, found, product_hint, ack}} written by the weekly CFP job
   }
 }
@@ -447,7 +459,7 @@ function paintNav(){
   try{localStorage.setItem("ppt-view",JSON.stringify({mod:S.mod,sub:S.sub}))}catch(e){}
   if(S.tour) tourHighlight();
 }
-function render(){ try{ ensureLazy(); }catch(e){ console.error("lazy",e); } paintNav(); renderBanners(); renderView(); paintBell(); }
+function render(){ try{ ensureLazy(); lzSync(); }catch(e){ console.error("lazy",e); } paintNav(); renderBanners(); renderView(); paintBell(); }
 function renderView(){
   if(S.mod==="letters"&&S.sub==="new"&&$("#composer")&&!S.forceFull){ // live data arrived: refresh only the ledger, never the form being typed in
     const d=S.draft; if(d&&d.numAuto){ d.number=nextLetterNo(d.identity,d.date); const el=$("[data-c=number]"); if(el&&document.activeElement!==el) el.value=d.number; const p=$("#cprev"); if(p) p.innerHTML=letterSheet(draftLetter()); }
