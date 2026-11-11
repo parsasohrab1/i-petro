@@ -265,13 +265,14 @@ function subscribe(){
   for(const [path,key] of Object.entries(COLS)) subColl(path,key);
   subscribe2();
 }
-function subColl(path,key){
+function subColl(path,key,n=0){
     S.db.collection(path).onSnapshot(snap => {
+      if(S.subErr&&S.subErr[path]){ delete S.subErr[path]; }
       if(key==="members"){ S.rosterAll = snap.docs.map(d => ({id:d.id, full_name:d.data().full_name||d.id, team:d.data().team||"ai"})); syncRoster(); }   // names and team only: the picker for taking or handing over items
       setPath(key, privateRows(key, snap.docs.map(d => ({id:d.id, ...d.data()}))));
       if(key==="tasks"){ S.tasksArch=S.tasks.filter(t=>t.archived); S.tasks=S.tasks.filter(t=>!t.archived); }   // tasks the system verified as done leave every list and wait in the archive tab
       S.loaded = true; S.got.add(key); render(); if(key==="members") maybeWelcome();
-    }, () => {});
+    }, err => { (S.subErr=S.subErr||{})[path]=String((err&&(err.message||err.code))||"unknown"); render(); if(n<6) setTimeout(()=>subColl(path,key,n+1),4000*(n+1)); });   // a failed read used to leave the list silently empty: show it and retry
 }
 function subscribe2(){
   S.db.collection("tracking").onSnapshot(snap => { const t={}; snap.docs.forEach(d=>t[d.id]=d.data()); S.tracking=t; render(); }, ()=>{});
@@ -536,6 +537,7 @@ function myInbox(){
 function paintBell(){ const n=myInbox().filter(i=>i.sticky||!S.seenTasks.has(i.id)).length; const b=$("#bellN"); b.hidden=!n; b.textContent=faNum(n); }
 function renderBanners(){
   const out=[]; const me=S.members.find(m=>m.id===S.me.id);
+  for(const [pa,msg] of Object.entries(S.subErr||{})) out.push(`<div class="banner bad"><b>خواندن «${esc(pa)}» از پایگاه داده ناموفق بود؛ فهرست‌ها ممکن است خالی دیده شوند.</b> در حال تلاش مجدد… اگر ادامه یافت، صفحه را تازه کنید یا این متن را برای پشتیبانی بفرستید: <span class="mono">${esc(msg.slice(0,160))}</span></div>`);
   if(S.me.id && !me) out.push(`<div class="banner">هنوز در سامانه ثبت‌نام نکرده‌اید. از <b>BPMS ← اعضا و ثبت‌نام</b> مشخصات، روزهای حضور و تصویر امضای خود را ثبت کنید.</div>`);
   if(me){
     const wd = WEEKDAYS[(new Date().getDay()+1)%7][0];
