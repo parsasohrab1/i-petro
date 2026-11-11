@@ -1,0 +1,11 @@
+{
+  "name": "i-petro",
+  "version": "1.0.0",
+  "scripts": {
+    "test:email": "node test/email_attachments_test.js"
+  },
+  "dependencies": {
+    "playwright": "^1.65.0",
+    "mailparser": "^3.7.1"
+  }
+}

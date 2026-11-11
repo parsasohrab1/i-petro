@@ -6,3 +6,4 @@ data/platform_export/
 .pytest_cache/
 deploy/.env
 deploy/certs/
+node_modules/

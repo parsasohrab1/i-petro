@@ -448,6 +448,56 @@
    "source": "https://www.khabarfoori.com/بخش-اقتصادی-145/3251411",
    "status": "new",
    "origin": "seed"
+  },
+  "iocat2027": {
+   "id": "iocat2027",
+   "name": "IOCAT2027 - 2nd International Online Conference on Atoms",
+   "name_fa": "دومین کنفرانس آنلاین بین‌المللی اتم‌ها",
+   "region": "online",
+   "country": "آنلاین",
+   "city": "آنلاین",
+   "start": "2027-01-27",
+   "end": "2027-01-29",
+   "date_status": "confirmed",
+   "abstract_deadline": "2026-11-30",
+   "categories": [
+    "quantum_computing",
+    "ai_cross_cutting"
+   ],
+   "type": "کنفرانس آنلاین رایگان",
+   "why_fa": "ثبت‌نام رایگان؛ فیزیک اتمی محاسباتی/AI و سشن‌های کنترل کوانتومی؛ فرصت ارائه بدون هزینه",
+   "participation_fa": "ارائه چکیده (رایگان)، حضور آنلاین",
+   "url": "https://sciforum.net/event/IOCAT2027",
+   "source": "MDPI/Atoms Sciforum",
+   "notes": "Free registration confirmed by official page. Optional full journal articles may carry APCs; free conference registration does not make the associated MDPI journal free.",
+   "origin": "seed",
+   "fee_status": "verified_free",
+   "status": "new"
+  },
+  "iocmbs2027": {
+   "id": "iocmbs2027",
+   "name": "IOCMBS2027 - 1st International Online Conference on Membranes",
+   "name_fa": "اولین کنفرانس آنلاین بین‌المللی غشاها",
+   "region": "online",
+   "country": "آنلاین",
+   "city": "آنلاین",
+   "start": "2027-06-22",
+   "end": "2027-06-23",
+   "date_status": "confirmed",
+   "abstract_deadline": "2027-02-22",
+   "categories": [
+    "petrochemical",
+    "water"
+   ],
+   "type": "کنفرانس آنلاین رایگان",
+   "why_fa": "بدون هزینه ثبت‌نام (تأیید صریح رئیس)؛ سشن‌های جداسازی گاز/انرژی/غشای آب؛ فرصت ارائه رایگان",
+   "participation_fa": "ارائه چکیده (رایگان)، حضور آنلاین",
+   "url": "https://sciforum.net/event/IOCMBS2027",
+   "source": "MDPI/Membranes Sciforum",
+   "notes": "Chair explicitly states no registration fee. Optional full journal articles may carry APCs; free conference registration does not make the associated MDPI journal free.",
+   "origin": "seed",
+   "fee_status": "verified_free",
+   "status": "new"
   }
  },
  "updated": ""

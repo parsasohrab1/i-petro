@@ -16,7 +16,7 @@ def _entry(s):
     return {"id": s["id"], "field": s["field"], "uni": s["uni"], "country": s["country"], "city": "—", "levels": s["levels"],
             "kind": s["name"], "support": s["support"], "deadline": s.get("deadline", ""),
             "dl_note": " ".join(x for x in (s.get("deadline_note", ""), s.get("note", "")) if x),
-            "url": s.get("url", ""), "diff": 4, "ielts": 6.5, "extra": s.get("extra", []), **({"status0": s["status0"]} if s.get("status0") else {})}
+            "url": s.get("url", ""), "diff": 4, "ielts": 6.5, "extra": s.get("extra", []), "visible": s.get("visible", True), **({"status0": s["status0"]} if s.get("status0") else {})}
 
 
 def sync(state):

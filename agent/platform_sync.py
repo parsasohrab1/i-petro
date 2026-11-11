@@ -10,7 +10,7 @@ import json
 import re
 import shutil
 
-from . import events, investors, leads, notify, papers, partners, store
+from . import events, investors, leads, notify, papers, partners, requests, store
 from .config import DATA_DIR, ROOT
 
 EXPORT_DIR = DATA_DIR / "platform_export"
@@ -51,6 +51,8 @@ def export(include_seed=False):
         _write("settings", "article_calls", papers.export_doc(papers.load()), docs)
     for v in investors.load()["investors"].values():
         _write("market/data/investors", v["id"], {k: v.get(k) for k in v if k != "draft"}, docs)
+    for r in requests.load().get("requests", []):
+        _write("market/data/requests", r["id"], r, docs)
     for lead in leads.load()["leads"].values():
         if lead.get("status") != "do_not_call":
             _write("market/data/leads", lead["id"], lead, docs)
