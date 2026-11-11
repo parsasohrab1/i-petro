@@ -396,7 +396,7 @@ async function uploadImage(file){
 // ------------------------------------------------------------------ navigation
 const isOwnerOnly = () => !!S.me.isOwner;   // Scholarship holds the owner's personal applications
 // Letters are visible only to administrative staff and the owner (UI-level; the database cannot restrict by team)
-const canSeeLetters = () => { if(S.me.isOwner) return true; if(S.me.id&&((S.letAcc||{}).ids||[]).includes(S.me.id)) return true; const m=(S.members||[]).find(x=>x.id===S.me.id)||{}; return /اداری|دفتر|دبیرخانه/.test(m.role_title||"")||m.team==="admin"||["adm_trainee","adm_employee","admin"].includes(m.staff_type)||m.role==="office_manager"||m.letters_access===true; };
+const canSeeLetters = () => { if(S.me.isOwner) return true; if(S.me.id&&((S.letAcc||{}).ids||[]).includes(S.me.id)) return true; const m=(S.members||[]).find(x=>x.id===S.me.id)||{}; return /اداری|دفتر|دبیرخانه/.test(m.role_title||"")||m.team==="admin"||["adm_trainee","adm_employee","admin"].includes(m.staff_type)||m.role==="office_manager"||m.letters_access===true||asgMine("letters").length>0; };
 // Patent, Scholarship and Articles: only the owner, plus a person who has a task assigned in that area (who then sees just their own tasks)
 const VIEWS = {};   // declared before the first view is registered (patent/scholar/articles 'mine' views come early)
 const AREA_KINDS = {patent:["human_patent"], scholar:["human_scholar"], articles:["submit"]};
@@ -585,7 +585,7 @@ const asgOf = key => (S.asg||{})[key];
 const asgMine = mod => Object.entries(S.asg||{}).filter(([k,a])=>a.mod===mod&&a.doer&&a.doer===S.me.id).map(([k,a])=>({key:k,...a}));
 const rosterName = id => ((S.roster||[]).find(r=>r.id===id)||{}).full_name || memberName(id);
 const asgWho = (id,a) => id===S.me.id?"شما":(isAdmin()||(a&&a.mod==="scholar")||!a||a.doer===S.me.id||a.selector===S.me.id)?rosterName(id):"همکار";   // outsiders to an assignment see no names
-const asgAdmin = mod => mod==="basket" ? !!S.me.isOwner : isAdmin();   // admins hand items to anyone; every member can take an item for themselves; basket products stay owner-only
+const asgAdmin = mod => mod==="basket" ? !!S.me.isOwner : canAssignOthers();   // admins hand items to anyone; every member can take an item for themselves; basket products stay owner-only
 const asgLocked = a => !!(a && a.doer);   // assigned: closed to everyone but the doer and the one who assigned it
 const asgCan = (a,mod) => asgLocked(a) ? (a.doer===S.me.id || a.selector===S.me.id) : (asgAdmin(mod) || mod!=="basket");
 // message for the doer; Telegram and e-mail open prefilled in the assigner's own app (the page holds no bot token or mail access)
@@ -601,7 +601,9 @@ function asgNotifyBtns(a){
 function asgCell(key,title,mod){
   const a=asgOf(key)||{}, can=asgCan(a,mod);
   const body=a.doer?`<div class="meta">انجام‌دهنده: <b>${esc(asgWho(a.doer,a))}</b>${a.selector&&a.selector!==a.doer?` · واگذارکننده: ${esc(asgWho(a.selector,a))}`:" · انتخاب شخصی"}</div>${a.task?`<details><summary class="meta">شرح تسک</summary><span style="white-space:pre-wrap">${esc(a.task)}</span></details>`:`<span class="meta">شرح تسک ثبت نشده</span>`}`:"";
-  const btn=can?`<button class="btn sm ghost" data-act="asg" data-id="${esc(key)}" data-m="${esc(mod)}" data-t="${esc(title)}">${a.doer?(a.selector===S.me.id&&a.doer!==S.me.id?"ویرایش / لغو واگذاری":"ویرایش / لغو"):(asgAdmin(mod)?"برای خودم بردار یا واگذار کن":"خودم انجام می‌دهم")}</button>`:"";
+  const dd=`data-id="${esc(key)}" data-m="${esc(mod)}" data-t="${esc(title)}"`;
+  const btn=!can?"":a.doer?`<button class="btn sm ghost" data-act="asg" ${dd}>${a.selector===S.me.id&&a.doer!==S.me.id?"ویرایش / لغو واگذاری":"ویرایش / لغو"}</button>`
+    :`<button class="btn sm sig" data-act="asg-me" ${dd}>انجام می‌دهم</button>${asgAdmin(mod)?` <button class="btn sm ghost" data-act="asg" data-other="1" ${dd}>تعریف برای عضو دیگر</button>`:""}`;
   return `<div class="asg" style="margin-top:4px">${body}${btn}${asgNotifyBtns(a)}</div>`;
 }
 // A taken or handed-over item also becomes a real task in BPMS (Today / Scrum board) for the doer; handing it over again moves the task, releasing it removes the task.
@@ -617,14 +619,16 @@ async function asgSyncTask(key,title,mod,doer,selector,text){
 }
 // One scholarship at a time: a person who holds a scholarship cannot take another until it is marked as applied (registration finished).
 const schActiveFor = (who,exceptKey) => Object.entries(S.asg||{}).filter(([k,a])=>a.mod==="scholar"&&a.doer===who&&k!==exceptKey).map(([k])=>SCH.find(p=>"sch_"+p.id===k)).filter(p=>p&&!["applied","failed"].includes(schStatus(p)));
-function asgForm(key,title,mod){
+function asgForm(key,title,mod,other){
   const a=asgOf(key)||{}; if(!asgCan(a,mod)){ toast("این مورد واگذار شده است؛ فقط انجام‌دهنده یا واگذارکننده می‌تواند آن را تغییر یا لغو کند"); return; }
   const admin=asgAdmin(mod) && (!a.doer || a.selector===S.me.id);
   const opts={"":"— بدون انجام‌دهنده —"}; (S.roster&&S.roster.length?S.roster:(S.members||[])).forEach(m=>{opts[m.id]=m.id===S.me.id?"خودم":(m.full_name||m.id)});
   const fields=admin?[{k:"doer",label:"انجام‌دهنده",type:"select",options:opts,value:a.doer||""}]
     :[{k:"doer",label:"انجام‌دهنده",type:"select",options:{"":"— رها کردن —",[S.me.id]:"خودم انجام می‌دهم"},value:a.doer||""}];
   fields.push({k:"task",label:"شرح تسک (انجام‌دهنده و مدیر می‌توانند بنویسند)",type:"textarea",value:a.task||""});
-  openForm({title:"انتخاب / واگذاری: "+title,fields,values:{},onSave:async o=>{
+  openForm({title:"انتخاب / واگذاری: "+title,fields,values:{doer:other&&!a.doer?"":(a.doer||"")},onSave:o=>{ if(other&&!a.doer&&!o.doer){ toast("عضو انجام‌دهنده را انتخاب کنید."); return false } return asgApply(key,title,mod,a,o); }});
+}
+async function asgApply(key,title,mod,a,o){ {
     if(!o.doer){ if(a.doer){ await remove(`assign/${key}`); await asgSyncTask(key,title,mod,"",S.me.id,""); } return true; }
     if(mod==="scholar"&&o.doer&&o.doer!==a.doer){ const act=schActiveFor(o.doer,key);
       if(act.length&&!(S.me.isOwner&&confirm(rosterName(o.doer)+" هنوز بورسیه‌ی «"+act[0].uni+"» را تمام نکرده است. با این حال واگذار شود؟"))){ toast((o.doer===S.me.id?"شما":rosterName(o.doer))+" بورسیه‌ی «"+act[0].uni+"» را در دست دارد؛ تا ثبت‌نام نهایی آن (اقدام‌شده) انجام نشود، بورسیه‌ی دیگری قابل دریافت نیست."); return false; } }
@@ -633,7 +637,7 @@ function asgForm(key,title,mod){
       log:[...(a.log||[]),{at:now,by:S.me.id,note:same?"شرح تسک ویرایش شد":(o.doer===S.me.id?"انتخاب شخصی":"واگذار شد")}].slice(-30),updated:now,updated_by:S.me.id},(o.doer!==S.me.id?"ثبت شد؛ در سامانه برای انجام‌دهنده اعلان رفت. برای تلگرام یا ایمیل از دکمه‌های کنار ردیف استفاده کنید.":"ثبت شد"));
     if(ok) await asgSyncTask(key,title,mod,o.doer,(same&&a.selector)||S.me.id,o.task||"");
     return ok;
-  }});
+  }
 }
 const asgMineBox = mod => { const l=asgMine(mod); return l.length?`<h3>مواردی که به شما واگذار شده یا خودتان انتخاب کرده‌اید</h3>`+table(["مورد","شرح تسک","واگذارکننده",""],l.map(a=>`<tr>${td("مورد",esc(a.title),"t")}${td("شرح",`<span style="white-space:pre-wrap">${esc(a.task||"—")}</span>`)}${td("واگذارکننده",esc(a.selector===S.me.id?"خودم":memberName(a.selector)))}${td("",`<button class="btn sm ghost" data-act="asg" data-id="${esc(a.key)}" data-m="${esc(mod)}" data-t="${esc(a.title)}">ویرایش شرح</button>`)}</tr>`)):""; };
 // ---------- Sector taxonomy: oil & gas, aerospace, nuclear, water, mining (the old "energy" group is split into these), plus medical and the rest
@@ -3104,7 +3108,7 @@ function trackBoard(list0,intro){
      <div class="meta" style="margin-top:4px">${last&&last.note?esc(String(last.note).slice(0,110)):"—"}${since!=null&&archOpen(a)?` <span class="${archStale(a)?"p-bad":""}">(${faNum(since)} روز پیش)</span>`:""}</div>
      <div style="margin-top:4px"><b>گام بعدی:</b> ${esc(a.next_action||t.next||"—")}${a.next_date?` <span class="${archOverdue(a)?"p-bad":"meta"}">${faDate(a.next_date)}</span>`:""}</div>
      ${t.track_ref||t.contact_raw||t.done?`<details><summary class="meta">اطلاعات تماس و پیگیری کامل (از شیت)</summary><div class="meta" style="white-space:pre-wrap">${esc([t.contact_raw&&"تماس: "+t.contact_raw,t.track_ref&&"پیگیری/ارجاع: "+t.track_ref,t.done&&"اقدام انجام‌شده: "+t.done,t.next&&"اقدام بعدی (شیت): "+t.next].filter(Boolean).join("\n"))}</div></details>`:""}
-     ${progLines(a).length?`<details><summary class="meta">شرح پیشرفت</summary><div class="meta">${progLines(a).map(x=>"• "+esc(x)).join("<br>")}</div></details>`:""}${pgAlerts(a).slice(0,2).map(z=>`<div class="${z[0]>1?"p-bad":"p-warn"}" style="font-size:12px">⚠ ${esc(z[1])}</div>`).join("")}<div class="row" style="margin-top:6px"><button class="btn sm" data-act="arch-progress" data-id="${esc(a.id)}">ثبت پیشرفت</button><button class="btn sm ghost" data-act="pg-copy" data-id="${esc(a.id)}">کپی گزارش</button><button class="btn sm sig" data-act="arch-meeting" data-id="${esc(a.id)}">جلسه</button></div></div>`; };
+     ${progLines(a).length?`<details><summary class="meta">شرح پیشرفت</summary><div class="meta">${progLines(a).map(x=>"• "+esc(x)).join("<br>")}</div></details>`:""}${pgAlerts(a).slice(0,2).map(z=>`<div class="${z[0]>1?"p-bad":"p-warn"}" style="font-size:12px">⚠ ${esc(z[1])}</div>`).join("")}${asgCell("let_"+a.id,"نامه: "+trkOrg(a)+(a.subject?" – "+a.subject:""),"letters")}<div class="row" style="margin-top:6px"><button class="btn sm" data-act="arch-progress" data-id="${esc(a.id)}">ثبت پیشرفت</button><button class="btn sm ghost" data-act="pg-copy" data-id="${esc(a.id)}">کپی گزارش</button><button class="btn sm sig" data-act="arch-meeting" data-id="${esc(a.id)}">جلسه</button></div></div>`; };
   const col=([k,l])=>{ const L=base.filter(a=>a.stage===k).sort((a,b)=>(archOverdue(b)?1:0)-(archOverdue(a)?1:0)); return `<div class="kcol"><h4><span>${esc(l)}</span><span class="pill p-mute">${faNum(L.length)}</span></h4>${L.map(card).join("")||'<p class="meta">—</p>'}</div>`; };
   return `<p class="note">${intro||TRK_NOTE}</p>`+
    kpis([["نامه‌ی شستا",faNum(base.length)],["ارسال‌شده",faNum(base.filter(a=>idx(a)>=1).length)],["ثبت در دبیرخانه",faNum(base.filter(a=>idx(a)>=2||a.employer_no||trkOf(a).reg_no).length)],["ارجاع یا بررسی",faNum(base.filter(a=>idx(a)>=3).length)],["پاسخ یا درخواست",faNum(base.filter(a=>idx(a)>=4).length)],["جلسه هماهنگ‌شده",faNum(base.filter(a=>idx(a)>=5).length)],["جلسه برگزارشده",faNum(base.filter(a=>idx(a)>=6).length)],["اقدام سررسیده",faNum(over.length),over.length>0]])+
@@ -3378,7 +3382,7 @@ VIEWS["letters.progress"] = () => {
   const chip=(k,l)=>`<button class="btn sm ${sc===k?"":"ghost"}" data-act="pg-scope" data-k="${k}">${l}</button>`;
   const funnel=PG.map((m,i)=>`<div style="display:grid;grid-template-columns:150px 1fr 70px;gap:8px;align-items:center;margin:4px 0"><span>${esc(m.l)}</span><div class="pgbar"><i style="width:${Math.round(cnt[i]/top*100)}%"></i></div><span class="mono">${faNum(cnt[i])} <span class="meta">(${faNum(Math.round(cnt[i]/top*100))}٪)</span></span></div>`).join("");
   const rows=sent.sort((a,b)=>pgPct(b)-pgPct(a)||(a.next_date||"9").localeCompare(b.next_date||"9")).map(a=>{ const L=progLines(a), last=L[L.length-1], A=pgAlerts(a);
-    return `<tr>${td("نامه",`<b>${esc(trkOrg(a))}</b><div class="meta mono">${esc(a.number||"—")}${(a.employer_no||trkOf(a).reg_no)?` · ثبت ${esc(a.employer_no||trkOf(a).reg_no)}`:""}</div>`,"t")}${td("پیشرفت",pgStepper(a)+`<div class="meta">${esc(ARCH_STAGES[a.stage]||"")}</div>`)}${td("رابط",`${pgName(a)?esc(pgName(a))+(a.contact_role?" · "+esc(a.contact_role):""):'<span class="meta">—</span>'}${pgTel(a)?`<div><a class="mono" href="tel:${esc(String(pgTel(a)).replace(/[^\d+]/g,""))}">${esc(pgTel(a))}</a></div>`:""}`)}${td("آخرین وضعیت",last?esc(last):"—")}${td("هشدار",A.length?A.map(z=>`<div class="${z[0]>1?"p-bad":"p-warn"}">${esc(z[1])}</div>`).join(""):'<span class="meta">—</span>')}${td("اقدام",`<button class="btn sm" data-act="arch-progress" data-id="${esc(a.id)}">ثبت پیشرفت</button> <button class="btn sm ghost" data-act="pg-copy" data-id="${esc(a.id)}">کپی گزارش</button>`)}</tr>`; });
+    return `<tr>${td("نامه",`<b>${esc(trkOrg(a))}</b><div class="meta mono">${esc(a.number||"—")}${(a.employer_no||trkOf(a).reg_no)?` · ثبت ${esc(a.employer_no||trkOf(a).reg_no)}`:""}</div>`,"t")}${td("پیشرفت",pgStepper(a)+`<div class="meta">${esc(ARCH_STAGES[a.stage]||"")}</div>`)}${td("رابط",`${pgName(a)?esc(pgName(a))+(a.contact_role?" · "+esc(a.contact_role):""):'<span class="meta">—</span>'}${pgTel(a)?`<div><a class="mono" href="tel:${esc(String(pgTel(a)).replace(/[^\d+]/g,""))}">${esc(pgTel(a))}</a></div>`:""}`)}${td("آخرین وضعیت",last?esc(last):"—")}${td("هشدار",A.length?A.map(z=>`<div class="${z[0]>1?"p-bad":"p-warn"}">${esc(z[1])}</div>`).join(""):'<span class="meta">—</span>')}${td("اقدام",`<button class="btn sm" data-act="arch-progress" data-id="${esc(a.id)}">ثبت پیشرفت</button> <button class="btn sm ghost" data-act="pg-copy" data-id="${esc(a.id)}">کپی گزارش</button>`+asgCell("let_"+a.id,"نامه: "+trkOrg(a)+(a.subject?" – "+a.subject:""),"letters"))}</tr>`; });
   return `<p class="note">برای هر نامه‌ی ارسال‌شده هفت مرحله دنبال می‌شود: ارسال، رابط، ثبت در سیستم کارفرما، ارجاع (مثلاً به تحقیق و توسعه)، درخواست جلسه، هماهنگی جلسه (حضوری یا آنلاین) و برگزاری آن. با «ثبت پیشرفت» هر بخش را که خبرش را دارید پر کنید؛ مرحله‌ی نامه، گام بعدی و تاریخچه خودکار نوشته می‌شود و هشدار پیگیری هوشمند تازه می‌شود.</p>`+
    `<div class="toolbar">${chip("all","همه")}${chip("pp","پترو پالا توس")}${chip("sosh","سوشیانت")}<button class="btn sm sig" data-act="pg-copy-all">کپی گزارش مدیریتی</button></div>`+
    kpis([["نامه‌ی ارسال‌شده",faNum(sent.length)],["دارای رابط",faNum(cnt[1])],["ثبت در سیستم کارفرما",faNum(cnt[2])],["ارجاع‌شده",faNum(cnt[3])],["جلسه هماهنگ‌شده",faNum(cnt[5])],["جلسه برگزارشده",faNum(cnt[6])],["نیازمند اقدام",faNum(al.length),al.length>0]])+
@@ -4555,7 +4559,8 @@ document.addEventListener("click", async e => {
       await save(`products/${id}`,{...pr,edit_requests:rq,editors:eds,access_by:S.me.id,access_at:new Date().toISOString()},a==="product-approve"?"اجازه‌ی کار داده شد":a==="product-reject"?"درخواست رد شد":"دسترسی لغو شد"); break; }
     case "product-new": productForm(); break;
     case "tn-new": tnForm(); break;
-    case "asg": asgForm(id,b.dataset.t,b.dataset.m); break;
+    case "asg": asgForm(id,b.dataset.t,b.dataset.m,b.dataset.other==="1"); break;
+    case "asg-me": { const a=asgOf(id)||{}; if(!asgCan(a,b.dataset.m)){ toast("این مورد واگذار شده است."); break; } await asgApply(id,b.dataset.t,b.dataset.m,a,{doer:S.me.id,task:a.task||""}); break; }
     case "cc-task": contentTaskForm(id); break;
     case "cc-add": ccItemForm(id); break;
     case "cc-del": { const dn=Object.keys(S.ccD||{}).find(k=>(S.ccD[k]||[]).some(x=>x.id===id)); if(dn&&isAdmin()&&confirm("این آیتم از تقویم محتوایی حذف شود؟")) await save("settings/"+dn,{items:S.ccD[dn].filter(x=>x.id!==id)},"حذف شد"); break; }
