@@ -30,7 +30,7 @@ def _write(collection, doc_id, data, docs):
     path = EXPORT_DIR / collection / f"{_id(doc_id)}.json"
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(data, ensure_ascii=False), encoding="utf-8")
-    docs.append({"collection": collection, "doc_id": _id(doc_id), "file_path": str(path)})
+    docs.append({"collection": collection, "doc_id": _id(doc_id), "file_path": str(path.relative_to(ROOT))})
 
 
 def export(include_seed=False):

@@ -270,11 +270,41 @@ function privateRows(key, rows){
 }
 const visibleSubs = mod => (SUBS[mod]||[]).filter(([k])=>!(k==="access"&&!S.me.isOwner)&&(isAdmin()||!(PRIVATE_SUBS[mod]||[]).includes(k))&&!(mod==="scholar"&&!S.me.isOwner&&["profile","cv"].includes(k))&&!(mod==="basket"&&!S.me.isOwner&&basAcc()&&!["list","data"].includes(k)));   // people with basket access see only the product list and data hub (medical products), never the TRL / ideas tabs
 function setPath(key, val){ const [a,b]=key.split("."); if(b) S[a][b]=val; else S[a]=val; }
+// Repo fallback for the tender lists: data/tenders.json is refreshed by the daily scan and by
+// scripts/refresh_tenders.py, but the artifact DB copy can lag behind until the platform_sync
+// export is applied with the ArtifactData tool. The repo file is the BASE layer: it fills in
+// records the DB lacks and refreshes listing fields, while the DB keeps the team's pipeline
+// fields (status, history, LLM analysis) on top.
+let tendersRepo = null;
+const TENDER_LIST_FIELDS = ["source","market","title","description","buyer","country","deadline","deadline_fa","published","url","notice_type","sector","facts","domains","keyword_score","line","days_left","setad_number"];
+async function loadTendersRepo(){
+  if(!window.claude) return;   // read-only copy outside claude.ai has no db to merge into
+  try{ const r = await fetch("/data/tenders.json"); if(!r.ok) throw 0;
+    const d = await r.json(); tendersRepo = d.tenders||{};
+    if(S.m.tenders.length) mergeTendersRepo();
+    render();
+  }catch(e){}
+}
+function mergeTendersRepo(){
+  if(!tendersRepo) return;
+  const dbRows = S.m.tenders.slice(), out = {};
+  for(const [tid,rec] of Object.entries(tendersRepo)){
+    const db = dbRows.find(t=>t.id===tid);
+    if(!db){ out[tid] = {...rec, id:tid}; continue; }
+    const m = {...db};
+    for(const f of TENDER_LIST_FIELDS) if(rec[f]!=null&&rec[f]!=="") m[f]=rec[f];
+    m.status = rec.status==="expired" ? "expired" : (db.status||rec.status||"new");   // repo expiry wins, DB team states win otherwise
+    out[tid] = m;
+  }
+  for(const t of dbRows) if(!out[t.id]) out[t.id] = t;   // DB-only records (added by the team) stay untouched
+  S.m.tenders = Object.values(out);
+}
 function subscribe(){
   for(const [path,key] of Object.entries(COLS)){
     S.db.collection(path).onSnapshot(snap => {
       if(key==="members"){ S.rosterAll = snap.docs.map(d => ({id:d.id, full_name:d.data().full_name||d.id, team:d.data().team||"ai"})); syncRoster(); }   // names and team only: the picker for taking or handing over items
       setPath(key, privateRows(key, snap.docs.map(d => ({id:d.id, ...d.data()}))));
+      if(key==="m.tenders") mergeTendersRepo();
       if(key==="tasks"){ S.tasksArch=S.tasks.filter(t=>t.archived); S.tasks=S.tasks.filter(t=>!t.archived); }   // tasks the system verified as done leave every list and wait in the archive tab
       S.loaded = true; S.got.add(key); render(); if(key==="members") maybeWelcome();
     }, () => {});
@@ -5516,6 +5546,7 @@ async function boot(){
   render();
   if(!db){ $("#view").innerHTML=`<p class="empty">پایگاه داده برای این نما در دسترس نیست. با حساب claude.ai وارد شوید.</p>`; return; }
   subscribe();
+  loadTendersRepo();   // repo tenders as the base layer under the artifact DB (see mergeTendersRepo)
   setTimeout(()=>{ const mm=myMember(); if(needsNda(mm)&&!ndaSigned(mm)&&!S.ndaShown&&!$("#layer").innerHTML){ S.ndaShown=true; ndaView(mm.id); } else if(needsTraining(mm)&&!trainingDone(mm)&&!S.ndaShown&&!$("#layer").innerHTML){ S.ndaShown=true; trainingView(mm.id); } }, 6000);
   setTimeout(maybeWelcome, 4000); // fallback if the members snapshot is slow
   setTimeout(()=>{ if(isAdmin()) loadAllReports(); }, 2500);
