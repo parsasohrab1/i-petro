@@ -22,8 +22,10 @@ def test_task_workflow_constants():
     
     content = index_path.read_text(encoding="utf-8")
     
-    # Check for new statuses
-    assert "LETTER_TASK_STAGES" in content, "LETTER_TASK_STAGES constant missing"
+    # Letter/task lifecycle: records carry task_stage, stage labels come from TASK_ST,
+    # and the claim/unclaim/sent transitions exist
+    assert "task_stage" in content, "task_stage field missing"
+    assert "TASK_ST" in content, "TASK_ST stage labels missing"
     assert "todo" in content and "claimed" in content, "Task stages missing"
     
     # Check for pipeline stages
@@ -140,10 +142,12 @@ def test_tasks_view():
     
     content = index_path.read_text(encoding="utf-8")
     
-    assert 'VIEWS["letters.tasks"]' in content, "letters.tasks view missing"
+    # v219 architecture: the letter/task workflow is served by the letters.progress
+    # view (پیشرفت نامه‌نگاری) and the archive; the old letters.tasks view was merged away.
+    assert 'VIEWS["letters.progress"]' in content, "letters.progress view missing"
     assert "letterTaskForm" in content, "letterTaskForm function missing"
     
-    print("✓ Tasks view implemented")
+    print("✓ Letter/task workflow views implemented (letters.progress + letterTaskForm)")
 
 def test_pipeline_status_transitions():
     """Pipeline stages follow proper order."""

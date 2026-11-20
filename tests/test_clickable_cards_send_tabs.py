@@ -85,17 +85,19 @@ def test_per_person_send_tabs():
     
     content = index_path.read_text(encoding="utf-8")
     
-    # Verify letters.send view exists
-    assert 'VIEWS["letters.send"]' in content, "letters.send view missing"
+    # v219: per-person letter work lives in letters.progress (پیشرفت نامه‌نگاری)
+    # with the current-user switch; unsent letters are those whose stage is not in SENT_STAGES.
+    assert 'VIEWS["letters.progress"]' in content, "letters.progress view missing"
     
-    # Verify per-person filtering
+    # Verify per-person selection
     assert "letter-send-person" in content, "person selection action missing"
+    assert "saveLetterPeople" in content, "person persistence missing"
     
-    # Verify unsent letter filtering (not in SENT_STAGES)
-    assert "unsentLetters" in content or "isSentStage" in content, \
+    # Verify unsent letter filtering (stage not in SENT_STAGES)
+    assert "SENT_STAGES" in content and "isSent" in content, \
         "Unsent letter filtering missing"
     
-    print("✓ Per-person send tabs implemented")
+    print("✓ Per-person letter workflow implemented")
 
 def test_download_with_daily_number():
     """Download action gets fresh daily number."""

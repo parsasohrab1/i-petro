@@ -12,8 +12,10 @@ from docx.shared import Pt
 from docx.enum.text import WD_ALIGN_PARAGRAPH
 
 UPLOADS_DIR = Path("/home/ubuntu/.cursor/projects/agent-repos-i-petro/uploads")
-ARTIFACTS_DIR = Path("/opt/cursor/artifacts")
-ARTIFACTS_DIR.mkdir(exist_ok=True)
+ROOT = Path(__file__).resolve().parent.parent
+# artifacts live inside the repository (override with the IPETRO_ARTIFACTS env var)
+ARTIFACTS_DIR = Path(os.environ.get("IPETRO_ARTIFACTS", str(ROOT / "outputs" / "manuscripts" / "artifacts")))
+ARTIFACTS_DIR.mkdir(parents=True, exist_ok=True)
 
 def read_readme(product_key):
     """Read README content for a product"""

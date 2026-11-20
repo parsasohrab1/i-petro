@@ -5,6 +5,7 @@ Each contains ONLY content about its own product.
 Report honest word count - no padding if insufficient material.
 """
 import json
+import os
 from pathlib import Path
 from docx import Document
 from docx.shared import Pt
@@ -12,8 +13,10 @@ from docx.enum.text import WD_ALIGN_PARAGRAPH
 from collections import Counter
 
 UPLOADS_DIR = Path("/home/ubuntu/.cursor/projects/agent-repos-i-petro/uploads")
-ARTIFACTS_DIR = Path("/opt/cursor/artifacts")
-ARTIFACTS_DIR.mkdir(exist_ok=True)
+ROOT = Path(__file__).resolve().parent.parent
+# artifacts live inside the repository (override with the IPETRO_ARTIFACTS env var)
+ARTIFACTS_DIR = Path(os.environ.get("IPETRO_ARTIFACTS", str(ROOT / "outputs" / "manuscripts" / "artifacts")))
+ARTIFACTS_DIR.mkdir(parents=True, exist_ok=True)
 
 def read_readme(filename):
     path = UPLOADS_DIR / filename
@@ -339,6 +342,12 @@ manuscripts["eign_2027_gas"] = {
 print(f"   {word_count} words (honest, no padding)")
 
 # Save word counts
+# record paths relative to the repository root so word-counts.json stays machine-independent
+for _info in manuscripts.values():
+    try:
+        _info["filename"] = str(Path(_info["filename"]).relative_to(ROOT))
+    except ValueError:
+        pass
 with open(ARTIFACTS_DIR / "word-counts.json", "w") as f:
     json.dump(manuscripts, f, indent=2)
 

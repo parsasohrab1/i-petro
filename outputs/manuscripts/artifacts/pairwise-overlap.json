@@ -1,0 +1,38 @@
+{
+  "applied_energy_elsevier_vs_intellisys_2027_ml": {
+    "shared_count": 0,
+    "percent_of_first": 0.0,
+    "percent_of_second": 0.0,
+    "max_percent": 0.0
+  },
+  "applied_energy_elsevier_vs_global_energy_show_2027": {
+    "shared_count": 0,
+    "percent_of_first": 0.0,
+    "percent_of_second": 0.0,
+    "max_percent": 0.0
+  },
+  "applied_energy_elsevier_vs_eign_2027_gas": {
+    "shared_count": 0,
+    "percent_of_first": 0.0,
+    "percent_of_second": 0.0,
+    "max_percent": 0.0
+  },
+  "intellisys_2027_ml_vs_global_energy_show_2027": {
+    "shared_count": 0,
+    "percent_of_first": 0.0,
+    "percent_of_second": 0.0,
+    "max_percent": 0.0
+  },
+  "intellisys_2027_ml_vs_eign_2027_gas": {
+    "shared_count": 0,
+    "percent_of_first": 0.0,
+    "percent_of_second": 0.0,
+    "max_percent": 0.0
+  },
+  "global_energy_show_2027_vs_eign_2027_gas": {
+    "shared_count": 0,
+    "percent_of_first": 0.0,
+    "percent_of_second": 0.0,
+    "max_percent": 0.0
+  }
+}

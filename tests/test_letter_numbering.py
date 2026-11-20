@@ -67,8 +67,8 @@ def test_unsent_letter_refresh_logic():
     assert "const isSent" in content, "downloadLetter should check isSent status"
     assert "SENT_STAGES" in content, "SENT_STAGES should be defined"
     
-    # Verify fresh date/number generation for unsent
-    assert "today()" in content and ("nextIranLetterNo" in content or "nextIntlLetterNo" in content), \
+    # Verify fresh date/number generation for unsent (unified nextLetterNo)
+    assert "today()" in content and "nextLetterNo(" in content, \
         "Should generate fresh date and number"
     
     # Verify getOrIssueNumber is called
@@ -105,15 +105,17 @@ def test_daily_cap_handling():
     
     content = index_path.read_text(encoding="utf-8")
     
-    # Verify 999 cap is enforced (hardcoded limit)
-    assert ">=999" in content or ">999" in content, \
-        "Should check for 999 letter daily limit"
+    # Verify the daily-cap mechanism exists (LETTER_DAY_CAP + rollover to the next day).
+    # Policy: LETTER_DAY_CAP = Infinity — the serial keeps counting (001, 002, …), so
+    # under normal use the date never rolls over; the mechanism is the guardrail.
+    assert "LETTER_DAY_CAP" in content, "LETTER_DAY_CAP mechanism missing"
+    assert "addDays(day,1)" in content, "Cap rollover to the next day missing"
+    assert "LETTER_DAY_CAP = Infinity" in content, \
+        "Daily cap policy should be Infinity (no practical limit)"
+    assert "نامه در روز تکمیل است" in content, \
+        "Should notify the user when the daily cap is reached"
     
-    # Verify error message when cap exceeded
-    assert "999" in content and ("limit" in content or "exceed" in content or "خطا" in content), \
-        "Should have error handling for daily cap"
-    
-    print("✓ Daily letter cap: 999 letters per day (hardcoded)")
+    print("✓ Daily cap mechanism present (LETTER_DAY_CAP = Infinity: serial keeps counting)")
 
 def test_intl_letter_numbering():
     """International letters use different numbering scheme (PIG-YYYY-NNNN)."""

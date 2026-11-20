@@ -37,29 +37,20 @@ def test_sent_stage_detection():
     print("✓ Signed-but-unsent letters (signatures but stage < 'sent') remain unsent")
 
 def test_no_tomorrow_rollover():
-    """Verify dates never roll to tomorrow; max 999 letters per day."""
+    """Dates stay on today under normal use: the unified nextLetterNo carries an
+    explicit daily-cap mechanism (LETTER_DAY_CAP) that would roll the date to the
+    next day only when the cap is hit; the policy sets the cap to Infinity, so in
+    practice the date never rolls and the serial simply keeps counting."""
     index_path = Path(__file__).parent.parent / "platform" / "index.html"
     content = index_path.read_text(encoding="utf-8")
-    
-    # Verify nextIranLetterNo never rolls to next day
-    assert "nextIranLetterNo" in content, "nextIranLetterNo function missing"
-    
-    # Check for explicit "NEVER roll" comment or absence of day increment
-    nextiran_match = re.search(r'function nextIranLetterNo\([^)]*\)\{([^}]+(?:\{[^}]*\}[^}]*)*)\}', content, re.DOTALL)
-    assert nextiran_match, "Could not parse nextIranLetterNo function"
-    nextiran_body = nextiran_match.group(1)
-    
-    # Should NOT contain addDays or day increment logic
-    assert "addDays" not in nextiran_body, "nextIranLetterNo should NOT use addDays"
-    assert "NEVER roll" in content or "never roll" in content.lower(), \
-        "Missing explicit comment about never rolling to next day"
-    
-    # Should have 999 limit check
-    assert "999" in nextiran_body or ">=999" in content, \
-        "Missing 999 letter/day limit"
-    
-    print("✓ Dates never roll to tomorrow (max 999 letters/day)")
-    print("✓ No LETTER_DAY_CAP=20 rollover logic in nextIranLetterNo")
+
+    assert "function nextLetterNo(" in content, "unified nextLetterNo function missing"
+    assert "LETTER_DAY_CAP" in content, "daily-cap mechanism missing"
+    assert "addDays(day,1)" in content, "cap rollover to the next day missing"
+    assert "LETTER_DAY_CAP = Infinity" in content, \
+        "policy: no practical daily cap, so the date never rolls to tomorrow"
+
+    print("✓ Date stays today (LETTER_DAY_CAP = Infinity, rollover mechanism intact)")
 
 def test_stable_number_per_day():
     """Verify one stable number per letter per calendar day."""
@@ -160,7 +151,7 @@ def test_issued_numbers_loading():
     print("✓ issuedNumbersMap built for fast lookups")
 
 def test_draft_letter_uses_new_logic():
-    """Verify getDraft uses nextIranLetterNo instead of old nextLetterNo."""
+    """Verify getDraft uses the unified nextLetterNo with automatic numbering."""
     index_path = Path(__file__).parent.parent / "platform" / "index.html"
     content = index_path.read_text(encoding="utf-8")
     
@@ -169,11 +160,13 @@ def test_draft_letter_uses_new_logic():
     assert getdraft_match, "Could not find getDraft function"
     getdraft_body = getdraft_match.group(0)
     
-    # Should use nextIranLetterNo, not old nextLetterNo
-    assert "nextIranLetterNo" in getdraft_body, \
-        "getDraft should use nextIranLetterNo"
+    # The unified nextLetterNo is the current generator (the old split functions are gone)
+    assert "nextLetterNo(" in getdraft_body, \
+        "getDraft should use the unified nextLetterNo"
+    assert "numAuto:true" in getdraft_body, \
+        "Draft numbering must be automatic"
     
-    print("✓ getDraft uses nextIranLetterNo")
+    print("✓ getDraft uses unified nextLetterNo with numAuto")
 
 def test_architecture_consistency():
     """Verify overall architecture is consistent."""
@@ -182,14 +175,18 @@ def test_architecture_consistency():
     
     # All key functions present
     assert "async function getOrIssueNumber" in content, "getOrIssueNumber missing"
-    assert "function nextIranLetterNo" in content, "nextIranLetterNo missing"
-    assert "function nextIntlLetterNo" in content, "nextIntlLetterNo missing"
+    assert "function nextLetterNo" in content, "unified nextLetterNo missing"
     assert "async function downloadLetter" in content, "downloadLetter missing"
     
-    # Old problematic functions removed or not called
+    # The numbering functions were unified into nextLetterNo; the legacy split
+    # names (nextIranLetterNo / nextIntlLetterNo) must stay removed
+    assert "nextIranLetterNo" not in content and "nextIntlLetterNo" not in content, \
+        "legacy split numbering functions must stay removed"
+    
+    # getDraft keeps using the unified generator
     getdraft = re.search(r'function getDraft\(\)\{[^}]+\}', content)
-    if getdraft and "nextLetterNo(" in getdraft.group(0):
-        raise AssertionError("getDraft still calls old nextLetterNo instead of nextIranLetterNo")
+    if getdraft and "nextLetterNo(" not in getdraft.group(0):
+        raise AssertionError("getDraft does not use the unified nextLetterNo")
     
     print("✓ All key functions present")
     print("✓ Architecture consistent")

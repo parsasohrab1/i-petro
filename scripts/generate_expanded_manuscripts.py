@@ -6,14 +6,17 @@ Zero shared boilerplate between manuscripts.
 Use all available README/SRS content: requirements, architectures, validation, etc.
 """
 import json
+import os
 from pathlib import Path
 from docx import Document
 from docx.shared import Pt
 from docx.enum.text import WD_ALIGN_PARAGRAPH
 
 UPLOADS = Path("/home/ubuntu/.cursor/projects/agent-repos-i-petro/uploads")
-ARTIFACTS = Path("/opt/cursor/artifacts")
-ARTIFACTS.mkdir(exist_ok=True)
+ROOT = Path(__file__).resolve().parent.parent
+# artifacts live inside the repository (override with the IPETRO_ARTIFACTS env var)
+ARTIFACTS = Path(os.environ.get("IPETRO_ARTIFACTS", str(ROOT / "outputs" / "manuscripts" / "artifacts")))
+ARTIFACTS.mkdir(parents=True, exist_ok=True)
 
 # Read all READMEs
 readmes = {
