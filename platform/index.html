@@ -215,7 +215,7 @@ const logoSrc = () => S.settings.logo_asset ? blobUrl(S.settings.logo_asset) : D
 
 // ------------------------------------------------------------------ state
 const S = {mod:"market", sub:"iran", q:"", db:null, user:null, assets:null, sample:null, downloads:null,
-  me:{id:null,isOwner:false,canEdit:false}, canWrite:null,
+  me:{id:null,isOwner:false,canEdit:false}, canWrite:null, repoView:false,
   m:{tenders:[],events:[],investors:[],leads:[],partners:[],requests:[],pool:[]}, opsList:[], outlook:{}, poolDone:{ids:[]}, invMail:{},
   settings:{}, members:[], tasks:[], letters:[], lettersArchive:[], shTrk:[], lh:null, draft:null, archF:"all", archStageF:"", letterF:"all", ra:{member:null,from:"",to:""}, repLoaded:false, allLoaded:false, forceFull:false, products:[], patents:[], finance:[], clients:[], tracking:{}, schol:[], sp:{}, cdocs:{}, ip:{countries:{},drafts:{}}, ipTab:"partners", news:{items:[]}, bi:{list:[]}, arts:[], tn:[], tnF:{src:"",ai:false,dom:"",st:""}, artRec:{}, artProd:{}, artSt:{}, artAcc:{ids:[]}, artDeny:{ids:[]}, artMail:{}, ct:[], artF:{field:"",mode:"",type:"",past:false},
   myAtt:[], myReports:[], allReports:[], allAtt:[], loaded:false, sprints:[], boardMine:false, tour:null, got:new Set(), welcomed:false, calMine:false, calTypes:null, seenTasks:new Set(), planner:{}, taskWho:"", taskFilter:"", subsAll:false, erpLog:{}, erpDept:"", letterPeople:[], currentUser:""};
@@ -505,7 +505,7 @@ const areaTasks = mod => (S.tasks||[]).filter(t=>t.assignee===S.me.id&&(AREA_KIN
 const schAccess = () => !!(S.me.id&&(((S.schAcc||{}).ids||[]).includes(S.me.id)||asgMine("scholar").length));
 const areaAccess = mod => S.me.isOwner?"full":(mod==="scholar"&&schAccess())?"full":(mod==="patent"&&S.me.id&&((S.patAcc||{}).ids||[]).includes(S.me.id))?"full":(mod==="articles"&&S.me.id&&((S.artDeny||{}).ids||[]).includes(S.me.id))?"none":(mod==="articles"&&S.me.id&&((S.artAcc||{}).ids||[]).includes(S.me.id))?"full":(areaTasks(mod).length||asgMine(mod).length)?"mine":"none";   // settings/article_deny {ids}: people with article tasks who must not see the Articles tab
 const newsOpen = () => !!(S.me.isOwner||(S.me.id&&((S.newsAcc||{}).ids||[]).includes(S.me.id)));
-const visibleModules = () => MODULES.filter(([k])=>(!AREA_KINDS[k]||areaAccess(k)!=="none")&&(k!=="news"||newsOpen())&&(k!=="letters"||canSeeLetters())&&(k!=="basket"||!!S.me.isOwner||basAcc()||asgMine("basket").length>0));
+const visibleModules = () => MODULES.filter(([k])=>S.repoView||((!AREA_KINDS[k]||areaAccess(k)!=="none")&&(k!=="news"||newsOpen())&&(k!=="letters"||canSeeLetters())&&(k!=="basket"||!!S.me.isOwner||basAcc()||asgMine("basket").length>0)));   // repoView (read-only, no artifact DB): every module opens; write actions stay gated by role and save() refuses without a DB
 const basAcc = () => !!(S.me.id&&((S.basAcc||{}).ids||[]).includes(S.me.id));
 const basMed = p => basAcc()&&!!p&&PROD_SEC[p.id]==="medical";   // explicit map only: the keyword guess in prSec also tags energy products as medical ("diagnosis", "surveillance")
 const areaMineView = mod => { const all=areaTasks(mod).sort((a,b)=>(a.due||"9999").localeCompare(b.due||"9999")), ts=S.mineDone?all:all.filter(t=>!(t.status==="done"||t.status==="approved"));
@@ -515,7 +515,7 @@ const areaMineView = mod => { const all=areaTasks(mod).sort((a,b)=>(a.due||"9999
    table(["تسک","مهلت","وضعیت","شرح",""],ts.map(t=>`<tr>${td("تسک",esc(t.title),"t")}${td("مهلت",t.due?faDate(t.due):"—")}${td("وضعیت",`<span class="pill ${t.status==="done"||t.status==="approved"?"p-ok":t.status==="doing"?"p-info":"p-warn"}">${esc(TASK_ST[t.status]||t.status)}</span>`)}${td("شرح",`<span style="white-space:pre-wrap">${esc(t.desc||"")}</span>`)}${td("",mod==="articles"&&t.venue&&absOf(t.venue)&&S.downloads?`<button class="btn sm" data-act="art-abs" data-id="${esc(t.venue)}" title="چکیده طبق قالب همین ژورنال یا کنفرانس (فایل Word)">چکیده (Word)</button>`:"")}</tr>`),"تسکی برای شما تعریف نشده است.")+(mod==="scholar"?[...new Set([...ts.filter(t=>t.ref).map(t=>t.ref),...asgMine("scholar").map(a=>String(a.key).replace(/^sch_/,""))])].map(id=>{ const p=SCH.find(x=>x.id===id); return p?schPublicCard(p):""; }).join(""):""); };
 VIEWS["patent.mine"]=()=>areaMineView("patent"); VIEWS["scholar.mine"]=()=>areaMineView("scholar"); VIEWS["articles.mine"]=()=>areaMineView("articles");
 function paintNav(){
-  if((AREA_KINDS[S.mod]&&areaAccess(S.mod)==="none")||(S.mod==="news"&&!newsOpen())||(S.mod==="letters"&&!canSeeLetters())||(S.mod==="basket"&&!S.me.isOwner&&!basAcc()&&!asgMine("basket").length)){ S.mod="market"; S.sub=SUBS.market[0][0]; }
+  if(!S.repoView&&((AREA_KINDS[S.mod]&&areaAccess(S.mod)==="none")||(S.mod==="news"&&!newsOpen())||(S.mod==="letters"&&!canSeeLetters())||(S.mod==="basket"&&!S.me.isOwner&&!basAcc()&&!asgMine("basket").length))){ S.mod="market"; S.sub=SUBS.market[0][0]; }
   else if(AREA_KINDS[S.mod]&&areaAccess(S.mod)==="mine") S.sub="mine";
   { const vs=visibleSubs(S.mod); if(vs.length&&!vs.some(x=>x[0]===S.sub)&&!(AREA_KINDS[S.mod]&&areaAccess(S.mod)==="mine")) S.sub=vs[0][0]; }
   $("#mods").innerHTML = visibleModules().map(([k,l])=>`<button role="tab" aria-selected="${k===S.mod}" data-act="mod" data-k="${k}">${l}</button>`).join("");
@@ -5592,14 +5592,14 @@ document.addEventListener("change", async e => { const el=e.target.closest("[dat
 async function boot(){
   paintBrand(); render();
   const c = window.claude;
-  if(!c || !c.use){ $("#meChip").textContent="نمای فقط‌خواندنی (داده‌ی ریپو)"; loadRepoData(); return; }   // repo commits drive the dashboard without the artifact DB too
+  if(!c || !c.use){ S.repoView=true; $("#meChip").textContent="نمای فقط‌خواندنی (داده‌ی ریپو — همه‌ی ماژول‌ها)"; loadRepoData(); return; }   // repo commits drive the dashboard without the artifact DB too; every module opens read-only
   const [db,user,assets,sample,downloads] = await Promise.all(["db","user","assets","sample","downloads"].map(n=>c.use(n).catch(()=>null)));
   S.db=db; S.user=user; S.assets=assets; S.sample=sample; S.downloads=downloads;
   if(user){ const me=await user.me(); S.me={id:me.id,isOwner:me.isOwner,canEdit:me.canEdit}; S.canWrite=await user.can("data.write");
     S.userName=me.name||""; $("#meChip").textContent = me.name || (me.isOwner?"مالک سامانه":"کاربر"); }
   else $("#meChip").textContent="مهمان";
   render();
-  if(!db){ $("#view").innerHTML=`<p class="empty">پایگاه داده برای این نما در دسترس نیست. با حساب claude.ai وارد شوید.</p>`; return; }
+  if(!db){ S.repoView=true; $("#meChip").textContent="نمای فقط‌خواندنی (داده‌ی ریپو — همه‌ی ماژول‌ها)"; loadRepoData(); return; }   // artifact DB unavailable: fall back to the full repo view instead of a dead end
   subscribe();
   loadRepoData();   // repo tenders + article registry as the base layers under the artifact DB
   setTimeout(()=>{ const mm=myMember(); if(needsNda(mm)&&!ndaSigned(mm)&&!S.ndaShown&&!$("#layer").innerHTML){ S.ndaShown=true; ndaView(mm.id); } else if(needsTraining(mm)&&!trainingDone(mm)&&!S.ndaShown&&!$("#layer").innerHTML){ S.ndaShown=true; trainingView(mm.id); } }, 6000);
