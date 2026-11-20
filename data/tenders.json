@@ -25,7 +25,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": -18,
+   "days_left": -29,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -66,7 +66,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": -19,
+   "days_left": -30,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -107,7 +107,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": -18,
+   "days_left": -29,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -148,7 +148,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": -18,
+   "days_left": -29,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -189,7 +189,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": -18,
+   "days_left": -29,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -230,7 +230,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": -17,
+   "days_left": -28,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -271,7 +271,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": -16,
+   "days_left": -27,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -312,7 +312,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": -12,
+   "days_left": -23,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -353,7 +353,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": -12,
+   "days_left": -23,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -394,7 +394,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": -11,
+   "days_left": -22,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -435,7 +435,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": -11,
+   "days_left": -22,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -476,7 +476,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": -9,
+   "days_left": -20,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -517,7 +517,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": -8,
+   "days_left": -19,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -556,7 +556,7 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": -7,
+   "days_left": -18,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -596,7 +596,7 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": -4,
+   "days_left": -15,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -636,14 +636,19 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": 1,
+   "days_left": -10,
    "line": "ai",
-   "status": "new",
+   "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
    "history": [
     {
      "at": "2026-10-19T13:28:54",
      "status": "new"
+    },
+    {
+     "at": "2026-11-20T09:04:14",
+     "status": "expired",
+     "note": ""
     }
    ]
   },
@@ -655,7 +660,7 @@
    "description": "Improving Power System Resilience for European Power Grid Integration Project. SPECIFIC PROCUREMENT NOTICE Request for Bids Plant Design, Supply, and Installation (Without Prequalification) (Two-Envelope Bidding Process with rated criteria) Country : Ukraine Project : Ukraine – Improving Power System Resilience for European Power Grid Integration (Installation of Hybrid Systems for Electricity Production in Ukrhydroenergo) Contract Title : Design, Supply and Installation of Battery Energy Storage Systems (BESS) with Energy Management Systems (EMS) and Ancillary Equipment at Kyiv HPP / PSP, Kaniv, Kremenchuk and Seredniodniprovska Hydropower Plants, including related services (training of UHE staff) (hereinafter referred to ‘the Contract’) comprising the following lots: Lot 1: Design, Supply and Installation of Battery Energy Storage Systems (BESS) with Energy Management Systems (EMS) and Ancillary Equipment at Kyiv HPP / PSP, including related services (training of UHE staff) (46 MW BESS capacity). Lot 2: Design, Supply and Installation of Battery Energy Storage Systems (BESS) with Energy Management Systems (EMS) and Ancillary Equipment at Kaniv HPP, including related services (training of UHE staff) (66 MW BESS capacity). Lot 3: Design, Supply and Installation of Battery Energy Storage Systems (BESS) with Energy Management Systems (EMS) and Ancillary Equipment at Kremenchuk HPP, including related services (training of UHE staff) (60 MW BESS capacity). Lot 4: Design, Supply and Installation of Battery Energy Storage Systems (BESS) with Energy Management Systems (EMS) and Ancillary Equipment at Seredniodniprovska HPP, including related services (training of UHE staff) (25 MW BESS capacity). Source of financing: IBRD Loan No.: 9284-UA; CTF Loan No.: TF0B5994; CTF Loan No.: TF0C5903-UA; and CTF Grant No.: TF-0B5724. Project ID : P176114 RFB reference No .: UHE-IPSR-DSI-1 1. Private Joint Stock Company “Ukrhydroenergo” (PJSC “Ukrhydroenergo” or UHE) has received financing from the World Bank (hereinafter referred to as the “Bank”) toward the cost of the Project “Ukraine – Improving Power System Resilience for European Power Grid Integration (Installation of Hybrid Systems for Electricity Production in Ukrhydroenergo)” and intends to apply part of the proceeds toward payments under the Contract. Under this Contract, UHE intends to make payments using the Direct Payment disbursement method, as defined in the World Bank Disbursement Guidelines for Investment Project Financing. 2. PJSC “Ukrhydroenergo” now invites eligible Bidders to submit Bids for the Contract. Bidders can bid for any one lot, more than one lot or all the four lots . The Time for Completion shall be between 420 and 510 calendar days from the Effective Date of the Contract. No credit will be given for early completion, and Bids offering a Time for Completion exceeding 510 days shall be rejected. 3. Prospective Bidders shall meet the following minimum qualification requirements: (a) General Experience: Experience in activities related to the design, supply and installation of equipment for energy infrastructure facilities, including generating facilities, battery energy storage systems (BESS), and MV and HV grids, under contracts in the role of contractor, subcontractor, or management contractor since at least January 2020. Design and construction experience may be from different contracts. (b) Financial Capabilities : The Bidder shall submit audited balance sheets or, if not required by the law of the Bidder’s country, other financial statements acceptable to UHE for the last five (5) fiscal years to demonstrate the current soundness of the Bidder’s financial position and its prospective long-term profitability. (c) Average Annual Turnover: The Bidder shall demonstrate a minimum average annual turnover for the last three (3) fiscal years as follows: Lot 1 – USD 36 million; Lot 2 – USD 51 million; Lot 3 – USD 46 million; Lot 4 – USD 20 million. Bidders submitting Bids",
    "buyer": "PRIVATE JOINT STOCK COMPANY “UKRHYDROENERGO”",
    "country": "Ukraine",
-   "deadline": "2026-11-19",
+   "deadline": "2026-12-03",
    "published": "2026-09-16",
    "url": "https://projects.worldbank.org/en/projects-operations/procurement-detail/OP00468997",
    "notice_type": "Invitation for Bids",
@@ -671,7 +676,7 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": 10,
+   "days_left": 13,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -705,14 +710,19 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": 7,
+   "days_left": -4,
    "line": "ai",
-   "status": "new",
+   "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
    "history": [
     {
      "at": "2026-10-19T13:28:54",
      "status": "new"
+    },
+    {
+     "at": "2026-11-20T09:04:14",
+     "status": "expired",
+     "note": ""
     }
    ]
   },
@@ -739,14 +749,19 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": 9,
+   "days_left": -2,
    "line": "ai",
-   "status": "new",
+   "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
    "history": [
     {
      "at": "2026-10-19T13:28:54",
      "status": "new"
+    },
+    {
+     "at": "2026-11-20T09:04:14",
+     "status": "expired",
+     "note": ""
     }
    ]
   },
@@ -774,7 +789,7 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": 21,
+   "days_left": 10,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -809,7 +824,7 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": 29,
+   "days_left": 18,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -844,7 +859,7 @@
    "domains": [
     "water"
    ],
-   "days_left": -13,
+   "days_left": -24,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
@@ -884,14 +899,19 @@
     "ai_cross_cutting",
     "medical"
    ],
-   "days_left": 7,
+   "days_left": -4,
    "line": "ai",
-   "status": "new",
+   "status": "expired",
    "first_seen": "2026-10-19T13:28:54",
    "history": [
     {
      "at": "2026-10-19T13:28:54",
      "status": "new"
+    },
+    {
+     "at": "2026-11-20T09:04:14",
+     "status": "expired",
+     "note": ""
     }
    ]
   },
@@ -920,7 +940,7 @@
     "oil_gas",
     "urban"
    ],
-   "days_left": 14,
+   "days_left": 3,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-19T13:28:54",
@@ -954,7 +974,7 @@
    "domains": [
     "urban"
    ],
-   "days_left": 11,
+   "days_left": 0,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-20T09:40:22",
@@ -988,7 +1008,7 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": 64,
+   "days_left": 53,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-20T09:40:22",
@@ -1090,7 +1110,7 @@
    "domains": [
     "aerospace"
    ],
-   "days_left": -12,
+   "days_left": -23,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-21T09:36:20",
@@ -1129,7 +1149,7 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": -7,
+   "days_left": -18,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-21T09:36:20",
@@ -1169,7 +1189,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": -6,
+   "days_left": -17,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-21T09:36:20",
@@ -1208,7 +1228,7 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": 12,
+   "days_left": 1,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-21T09:36:20",
@@ -1242,7 +1262,7 @@
    "domains": [
     "web"
    ],
-   "days_left": 14,
+   "days_left": 3,
    "line": "web",
    "status": "new",
    "first_seen": "2026-10-21T09:36:20",
@@ -1310,14 +1330,19 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": 0,
+   "days_left": -11,
    "line": "ai",
-   "status": "new",
+   "status": "expired",
    "first_seen": "2026-10-22T09:39:52",
    "history": [
     {
      "at": "2026-10-22T09:39:52",
      "status": "new"
+    },
+    {
+     "at": "2026-11-20T09:04:14",
+     "status": "expired",
+     "note": ""
     }
    ]
   },
@@ -1344,7 +1369,7 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": 11,
+   "days_left": 0,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-22T09:39:52",
@@ -1378,7 +1403,7 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": 11,
+   "days_left": 0,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-22T09:39:52",
@@ -1412,7 +1437,7 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": 21,
+   "days_left": 10,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-22T09:39:52",
@@ -1446,7 +1471,7 @@
    "domains": [
     "aerospace"
    ],
-   "days_left": 16,
+   "days_left": 5,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-23T09:35:00",
@@ -1480,7 +1505,7 @@
    "domains": [
     "medical"
    ],
-   "days_left": 22,
+   "days_left": 11,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-23T09:35:00",
@@ -1514,7 +1539,7 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": 25,
+   "days_left": 14,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-23T09:35:00",
@@ -1650,14 +1675,19 @@
    "domains": [
     "urban"
    ],
-   "days_left": 0,
+   "days_left": -11,
    "line": "ai",
-   "status": "new",
+   "status": "expired",
    "first_seen": "2026-10-26T10:29:22",
    "history": [
     {
      "at": "2026-10-26T10:29:22",
      "status": "new"
+    },
+    {
+     "at": "2026-11-20T09:04:14",
+     "status": "expired",
+     "note": ""
     }
    ]
   },
@@ -1684,7 +1714,7 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": 14,
+   "days_left": 3,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-26T10:29:22",
@@ -1718,7 +1748,7 @@
    "domains": [
     "urban"
    ],
-   "days_left": 14,
+   "days_left": 3,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-26T10:29:22",
@@ -1786,14 +1816,19 @@
    "domains": [
     "urban"
    ],
-   "days_left": 1,
+   "days_left": -10,
    "line": "ai",
-   "status": "new",
+   "status": "expired",
    "first_seen": "2026-10-27T10:03:26",
    "history": [
     {
      "at": "2026-10-27T10:03:26",
      "status": "new"
+    },
+    {
+     "at": "2026-11-20T09:04:14",
+     "status": "expired",
+     "note": ""
     }
    ]
   },
@@ -1820,7 +1855,7 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": 14,
+   "days_left": 3,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-27T10:03:26",
@@ -1854,7 +1889,7 @@
    "domains": [
     "medical"
    ],
-   "days_left": 17,
+   "days_left": 6,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-27T10:03:26",
@@ -1888,7 +1923,7 @@
    "domains": [
     "urban"
    ],
-   "days_left": 18,
+   "days_left": 7,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-27T10:03:26",
@@ -1923,14 +1958,19 @@
    "domains": [
     "web"
    ],
-   "days_left": 0,
+   "days_left": -11,
    "line": "web",
-   "status": "new",
+   "status": "expired",
    "first_seen": "2026-10-28T10:50:09",
    "history": [
     {
      "at": "2026-10-28T10:50:09",
      "status": "new"
+    },
+    {
+     "at": "2026-11-20T09:04:14",
+     "status": "expired",
+     "note": ""
     }
    ]
   },
@@ -1957,7 +1997,7 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": 18,
+   "days_left": 7,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-28T10:50:09",
@@ -1991,7 +2031,7 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": 28,
+   "days_left": 17,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-28T10:50:09",
@@ -2093,7 +2133,7 @@
    "domains": [
     "aerospace"
    ],
-   "days_left": -3,
+   "days_left": -14,
    "line": "ai",
    "status": "expired",
    "first_seen": "2026-10-29T11:07:42",
@@ -2132,14 +2172,19 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": 2,
+   "days_left": -9,
    "line": "ai",
-   "status": "new",
+   "status": "expired",
    "first_seen": "2026-10-29T11:07:42",
    "history": [
     {
      "at": "2026-10-29T11:07:42",
      "status": "new"
+    },
+    {
+     "at": "2026-11-20T09:04:14",
+     "status": "expired",
+     "note": ""
     }
    ]
   },
@@ -2166,7 +2211,7 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": 29,
+   "days_left": 18,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-29T11:07:42",
@@ -2235,14 +2280,19 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": 6,
+   "days_left": -5,
    "line": "ai",
-   "status": "new",
+   "status": "expired",
    "first_seen": "2026-10-30T11:05:47",
    "history": [
     {
      "at": "2026-10-30T11:05:47",
      "status": "new"
+    },
+    {
+     "at": "2026-11-20T09:04:14",
+     "status": "expired",
+     "note": ""
     }
    ]
   },
@@ -2269,7 +2319,7 @@
    "domains": [
     "aerospace"
    ],
-   "days_left": 21,
+   "days_left": 10,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-10-30T11:05:47",
@@ -2303,7 +2353,7 @@
    "domains": [
     "web"
    ],
-   "days_left": 38,
+   "days_left": 27,
    "line": "web",
    "status": "new",
    "first_seen": "2026-10-30T11:05:47",
@@ -2372,14 +2422,19 @@
    "domains": [
     "health_ai"
    ],
-   "days_left": 2,
+   "days_left": -9,
    "line": "ai",
-   "status": "new",
+   "status": "expired",
    "first_seen": "2026-10-30T22:04:27",
    "history": [
     {
      "at": "2026-10-30T22:04:27",
      "status": "new"
+    },
+    {
+     "at": "2026-11-20T09:04:14",
+     "status": "expired",
+     "note": ""
     }
    ]
   },
@@ -2419,7 +2474,7 @@
      "status": "new"
     }
    ],
-   "days_left": 100
+   "days_left": 89
   },
   "GRANT-HORIZON-HLTH-2027-03-TOOL-04": {
    "id": "GRANT-HORIZON-HLTH-2027-03-TOOL-04",
@@ -2533,7 +2588,7 @@
      "status": "new"
     }
    ],
-   "days_left": 86
+   "days_left": 75
   },
   "TED-760253-2026": {
    "id": "TED-760253-2026",
@@ -2558,14 +2613,19 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": 0,
+   "days_left": -11,
    "line": "ai",
-   "status": "new",
+   "status": "expired",
    "first_seen": "2026-11-02T12:50:26",
    "history": [
     {
      "at": "2026-11-02T12:50:26",
      "status": "new"
+    },
+    {
+     "at": "2026-11-20T09:04:14",
+     "status": "expired",
+     "note": ""
     }
    ]
   },
@@ -2592,14 +2652,19 @@
    "domains": [
     "aerospace"
    ],
-   "days_left": 7,
+   "days_left": -4,
    "line": "ai",
-   "status": "new",
+   "status": "expired",
    "first_seen": "2026-11-02T12:50:26",
    "history": [
     {
      "at": "2026-11-02T12:50:26",
      "status": "new"
+    },
+    {
+     "at": "2026-11-20T09:04:14",
+     "status": "expired",
+     "note": ""
     }
    ]
   },
@@ -2626,14 +2691,19 @@
    "domains": [
     "mining"
    ],
-   "days_left": 7,
+   "days_left": -4,
    "line": "ai",
-   "status": "new",
+   "status": "expired",
    "first_seen": "2026-11-02T12:50:26",
    "history": [
     {
      "at": "2026-11-02T12:50:26",
      "status": "new"
+    },
+    {
+     "at": "2026-11-20T09:04:14",
+     "status": "expired",
+     "note": ""
     }
    ]
   },
@@ -2660,14 +2730,19 @@
    "domains": [
     "mining"
    ],
-   "days_left": 7,
+   "days_left": -4,
    "line": "ai",
-   "status": "new",
+   "status": "expired",
    "first_seen": "2026-11-02T12:50:26",
    "history": [
     {
      "at": "2026-11-02T12:50:26",
      "status": "new"
+    },
+    {
+     "at": "2026-11-20T09:04:14",
+     "status": "expired",
+     "note": ""
     }
    ]
   },
@@ -2695,7 +2770,7 @@
    "domains": [
     "water"
    ],
-   "days_left": 14,
+   "days_left": 3,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-02T12:50:26",
@@ -2729,7 +2804,7 @@
    "domains": [
     "water"
    ],
-   "days_left": 15,
+   "days_left": 4,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-02T12:50:26",
@@ -2763,7 +2838,7 @@
    "domains": [
     "mining"
    ],
-   "days_left": 17,
+   "days_left": 6,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-02T12:50:26",
@@ -2797,7 +2872,7 @@
    "domains": [
     "urban"
    ],
-   "days_left": 21,
+   "days_left": 10,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-02T12:50:26",
@@ -2831,7 +2906,7 @@
    "domains": [
     "aerospace"
    ],
-   "days_left": 24,
+   "days_left": 13,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-02T12:50:26",
@@ -2866,7 +2941,7 @@
    "domains": [
     "water"
    ],
-   "days_left": 24,
+   "days_left": 13,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-02T12:50:26",
@@ -2900,7 +2975,7 @@
    "domains": [
     "mining"
    ],
-   "days_left": 29,
+   "days_left": 18,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-02T12:50:26",
@@ -2934,14 +3009,19 @@
    "domains": [
     "mining"
    ],
-   "days_left": 8,
+   "days_left": -3,
    "line": "ai",
-   "status": "new",
+   "status": "expired",
    "first_seen": "2026-11-03T12:17:26",
    "history": [
     {
      "at": "2026-11-03T12:17:26",
      "status": "new"
+    },
+    {
+     "at": "2026-11-20T09:04:14",
+     "status": "expired",
+     "note": ""
     }
    ]
   },
@@ -2968,7 +3048,7 @@
    "domains": [
     "aerospace"
    ],
-   "days_left": 24,
+   "days_left": 13,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-03T12:17:26",
@@ -3002,7 +3082,7 @@
    "domains": [
     "health_ai"
    ],
-   "days_left": 24,
+   "days_left": 13,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-03T12:17:26",
@@ -3071,7 +3151,7 @@
     "ai_cross_cutting",
     "medical"
    ],
-   "days_left": 23,
+   "days_left": 12,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-04T12:29:43",
@@ -3105,7 +3185,7 @@
    "domains": [
     "aerospace"
    ],
-   "days_left": 67,
+   "days_left": 56,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-04T12:29:43",
@@ -3139,14 +3219,19 @@
    "domains": [
     "water"
    ],
-   "days_left": 8,
+   "days_left": -3,
    "line": "ai",
-   "status": "new",
+   "status": "expired",
    "first_seen": "2026-11-04T12:29:43",
    "history": [
     {
      "at": "2026-11-04T12:29:43",
      "status": "new"
+    },
+    {
+     "at": "2026-11-20T09:04:14",
+     "status": "expired",
+     "note": ""
     }
    ]
   },
@@ -3173,7 +3258,7 @@
    "domains": [
     "water"
    ],
-   "days_left": 28,
+   "days_left": 17,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-04T12:29:43",
@@ -3207,7 +3292,7 @@
    "domains": [
     "mining"
    ],
-   "days_left": 28,
+   "days_left": 17,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-04T12:29:43",
@@ -3241,7 +3326,7 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": 42,
+   "days_left": 31,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-04T12:29:43",
@@ -3379,14 +3464,19 @@
     "mining",
     "oil_gas"
    ],
-   "days_left": 8,
+   "days_left": -3,
    "line": "ai",
-   "status": "new",
+   "status": "expired",
    "first_seen": "2026-11-04T12:29:43",
    "history": [
     {
      "at": "2026-11-04T12:29:43",
      "status": "new"
+    },
+    {
+     "at": "2026-11-20T09:04:14",
+     "status": "expired",
+     "note": ""
     }
    ]
   },
@@ -3415,14 +3505,19 @@
     "mining",
     "oil_gas"
    ],
-   "days_left": 8,
+   "days_left": -3,
    "line": "ai",
-   "status": "new",
+   "status": "expired",
    "first_seen": "2026-11-04T12:29:43",
    "history": [
     {
      "at": "2026-11-04T12:29:43",
      "status": "new"
+    },
+    {
+     "at": "2026-11-20T09:04:14",
+     "status": "expired",
+     "note": ""
     }
    ]
   },
@@ -3451,14 +3546,19 @@
     "mining",
     "oil_gas"
    ],
-   "days_left": 8,
+   "days_left": -3,
    "line": "ai",
-   "status": "new",
+   "status": "expired",
    "first_seen": "2026-11-04T12:29:43",
    "history": [
     {
      "at": "2026-11-04T12:29:43",
      "status": "new"
+    },
+    {
+     "at": "2026-11-20T09:04:14",
+     "status": "expired",
+     "note": ""
     }
    ]
   },
@@ -3487,14 +3587,19 @@
     "mining",
     "oil_gas"
    ],
-   "days_left": 8,
+   "days_left": -3,
    "line": "ai",
-   "status": "new",
+   "status": "expired",
    "first_seen": "2026-11-04T12:29:43",
    "history": [
     {
      "at": "2026-11-04T12:29:43",
      "status": "new"
+    },
+    {
+     "at": "2026-11-20T09:04:14",
+     "status": "expired",
+     "note": ""
     }
    ]
   },
@@ -3523,14 +3628,19 @@
     "mining",
     "oil_gas"
    ],
-   "days_left": 8,
+   "days_left": -3,
    "line": "ai",
-   "status": "new",
+   "status": "expired",
    "first_seen": "2026-11-04T12:29:43",
    "history": [
     {
      "at": "2026-11-04T12:29:43",
      "status": "new"
+    },
+    {
+     "at": "2026-11-20T09:04:14",
+     "status": "expired",
+     "note": ""
     }
    ]
   },
@@ -3559,14 +3669,19 @@
     "mining",
     "oil_gas"
    ],
-   "days_left": 8,
+   "days_left": -3,
    "line": "ai",
-   "status": "new",
+   "status": "expired",
    "first_seen": "2026-11-04T12:29:43",
    "history": [
     {
      "at": "2026-11-04T12:29:43",
      "status": "new"
+    },
+    {
+     "at": "2026-11-20T09:04:14",
+     "status": "expired",
+     "note": ""
     }
    ]
   },
@@ -3595,14 +3710,19 @@
     "mining",
     "oil_gas"
    ],
-   "days_left": 8,
+   "days_left": -3,
    "line": "ai",
-   "status": "new",
+   "status": "expired",
    "first_seen": "2026-11-04T12:29:43",
    "history": [
     {
      "at": "2026-11-04T12:29:43",
      "status": "new"
+    },
+    {
+     "at": "2026-11-20T09:04:14",
+     "status": "expired",
+     "note": ""
     }
    ]
   },
@@ -3631,14 +3751,19 @@
     "aerospace",
     "urban"
    ],
-   "days_left": 9,
+   "days_left": -2,
    "line": "ai",
-   "status": "new",
+   "status": "expired",
    "first_seen": "2026-11-04T12:29:43",
    "history": [
     {
      "at": "2026-11-04T12:29:43",
      "status": "new"
+    },
+    {
+     "at": "2026-11-20T09:04:14",
+     "status": "expired",
+     "note": ""
     }
    ]
   },
@@ -3666,7 +3791,7 @@
     "ai_cross_cutting",
     "medical"
    ],
-   "days_left": 37,
+   "days_left": 26,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-04T12:29:43",
@@ -3700,7 +3825,7 @@
    "domains": [
     "aerospace"
    ],
-   "days_left": 15,
+   "days_left": 4,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-05T12:45:15",
@@ -3734,7 +3859,7 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": 25,
+   "days_left": 14,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-05T12:45:15",
@@ -3768,7 +3893,7 @@
    "domains": [
     "urban"
    ],
-   "days_left": 25,
+   "days_left": 14,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-05T12:45:15",
@@ -3802,7 +3927,7 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": 36,
+   "days_left": 25,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-05T12:45:15",
@@ -3904,7 +4029,7 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": 28,
+   "days_left": 17,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-06T12:27:19",
@@ -3939,14 +4064,19 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": 4,
+   "days_left": -7,
    "line": "ai",
-   "status": "new",
+   "status": "expired",
    "first_seen": "2026-11-06T12:27:19",
    "history": [
     {
      "at": "2026-11-06T12:27:19",
      "status": "new"
+    },
+    {
+     "at": "2026-11-20T09:04:14",
+     "status": "expired",
+     "note": ""
     }
    ]
   },
@@ -3973,7 +4103,7 @@
    "domains": [
     "oil_gas"
    ],
-   "days_left": 11,
+   "days_left": 0,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-06T12:27:19",
@@ -4007,7 +4137,7 @@
    "domains": [
     "mining"
    ],
-   "days_left": 15,
+   "days_left": 4,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-06T12:27:19",
@@ -4041,7 +4171,7 @@
    "domains": [
     "aerospace"
    ],
-   "days_left": 28,
+   "days_left": 17,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-06T12:27:19",
@@ -4075,7 +4205,7 @@
    "domains": [
     "mining"
    ],
-   "days_left": 28,
+   "days_left": 17,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-06T12:27:19",
@@ -4109,7 +4239,7 @@
    "domains": [
     "mining"
    ],
-   "days_left": 28,
+   "days_left": 17,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-06T12:27:19",
@@ -4143,7 +4273,7 @@
    "domains": [
     "aerospace"
    ],
-   "days_left": 29,
+   "days_left": 18,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-06T12:27:19",
@@ -4177,7 +4307,7 @@
    "domains": [
     "mining"
    ],
-   "days_left": 29,
+   "days_left": 18,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-06T12:27:19",
@@ -4211,7 +4341,7 @@
    "domains": [
     "water"
    ],
-   "days_left": 29,
+   "days_left": 18,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-06T12:27:19",
@@ -4245,7 +4375,7 @@
    "domains": [
     "mining"
    ],
-   "days_left": 35,
+   "days_left": 24,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-06T12:27:19",
@@ -4279,7 +4409,7 @@
    "domains": [
     "water"
    ],
-   "days_left": 11,
+   "days_left": 0,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-09T13:16:08",
@@ -4313,7 +4443,7 @@
    "domains": [
     "mining"
    ],
-   "days_left": 15,
+   "days_left": 4,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-09T13:16:08",
@@ -4347,7 +4477,7 @@
    "domains": [
     "ai_cross_cutting"
    ],
-   "days_left": 24,
+   "days_left": 13,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-09T13:16:08",
@@ -4381,7 +4511,7 @@
    "domains": [
     "mining"
    ],
-   "days_left": 28,
+   "days_left": 17,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-09T13:16:08",
@@ -4415,7 +4545,7 @@
    "domains": [
     "water"
    ],
-   "days_left": 28,
+   "days_left": 17,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-09T13:16:08",
@@ -4449,7 +4579,7 @@
    "domains": [
     "medical"
    ],
-   "days_left": 29,
+   "days_left": 18,
    "line": "ai",
    "status": "new",
    "first_seen": "2026-11-09T13:16:08",
@@ -4524,6 +4654,1137 @@
    "history": [
     {
      "at": "2026-11-09T13:16:08",
+     "status": "new"
+    }
+   ]
+  },
+  "TED-806939-2026": {
+   "id": "TED-806939-2026",
+   "source": "TED (EU)",
+   "market": "international",
+   "title": "Croatia – Tanks, reservoirs, containers and pressure vessels – Nabava skladišne opreme za potrebe Agrotehnološkog centra za skladištenje i doradu povrtlarskih i voćarskih kultura u Cerni",
+   "description": "Predmet nabave je nabava skladišne opreme za potrebe Agrotehnološkog centra za skladištenje i doradu povrtlarskih i voćarskih kultura u Cerni. Oprema koja se nudi mora biti sukladno tehničkim specifikacijama navedenim u troškovniku.",
+   "buyer": "VUKOVARSKO-SRIJEMSKA ŽUPANIJA",
+   "country": "HRV",
+   "deadline": "2026-11-30",
+   "published": "2026-11-19",
+   "url": "https://ted.europa.eu/en/notice/-/detail/806939-2026",
+   "notice_type": "cn-standard",
+   "sector": "دولتی",
+   "facts": {
+    "price": "ارزش برآوردی: 384,800 EUR",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "رویه‌ی باز اتحادیه اروپا – شرکت‌های خارج از EU معمولاً مجازند مگر محدودیت صریح در اسناد"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "oil_gas"
+   ],
+   "days_left": 10,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-11-20T09:04:14",
+   "history": [
+    {
+     "at": "2026-11-20T09:04:14",
+     "status": "new"
+    }
+   ]
+  },
+  "WB-OP00480772": {
+   "id": "WB-OP00480772",
+   "source": "World Bank",
+   "market": "international",
+   "title": "Work Supervision of energy efficiency improvement in 3 selected water supply systems in Mucuali, Quixaxe and Namige, Nampula Province",
+   "description": "Rural and Small Towns Water Security Project. REPÚBLICA DE MOÇAMBIQUE CONSELHO EXECUTIVO DA PROVÍNCIA DE NAMPULA DIRECÇÃO PROVINCIAL DAS OBRAS PÚBLICAS DE NAMPULA DEPARTAMENTO DAS AQUISIÇÕES PROJECTO ÁGUA SEGURA PARA AS ZONAS RURAIS E VILAS - P173518 CONVITE PARA MANIFESTAÇÃO DE INTERESSE (SERVIÇOS DE CONSULTORIA – SELEÇÃO DE EMPRESAS) GRANT. N.º D941-MZ Ref. N.º MZ-DPOPN-RSTWSP-CONSULT-P0115-2026 Serviços de Consultoria para fiscaliza ção de obras de melhoria da eficiência energética dos Sistemas de Abastecimento de Água de Namige e Quixaxe, e conclusão das obras de construção do Sistemas de Abastecimento de Água de Mucuali, na Província de Nampula. O Governo de Moçambique recebeu do Banco Mundial um financiamento através de um donativo para investimentos no abastecimento de água e saneamento nas províncias de Nampula e Zambézia, com o objectivo de aumentar o acesso a serviços seguros de abastecimento de água e saneamento, e apoiar o desenvolvimento institucional do sector através do Projecto Água Segura para Vilas e Zonas Rurais . Nesse contexto, a Direcção Provincial de Obras Públicas de Nampula (DPOPN), pretende contratar serviços de consultoria para fiscalização de Obras de melhoria da eficiência energética dos Sistemas de Abastecimento de Água de Namige e Quixaxe, bem como da conclusão das obras de construção do Sistemas de Abastecimento de Água de Mucuali, na Província de Nampula. As tarefas do Consultor são descritas nos Termos de Referência que podem ser obtidos através do seguinte endereço de e-mail: procurement.pas.dpopn@gmail.com. Os interessados deverão apresentar as suas manifestações de interesse fechadas e seladas, devendo para o efeito indicar claramente o número do concurso. Os consultores interessados devem fornecer informação demonstrando que reúnem as qualificações requeridas e experiência relevante descritas nos termos de referência. A previsão para o início da consultoria é início de 2027 e com uma duração estimada de 18 meses (6 meses de fiscalização de obras + 12 meses do período de garantia). Chama-se a atenção dos Consultores interessados para a Secção III, parágrafos 3.14, 3.16 e 3.17 das “Normas de Aquisições para Mutuários do IPF” do Banco Mundial de Setembro de 2025, estabelecendo a Política do Banco Mundial sobre conflito de interesses. Os consultores podem se associar a outras firmas para aprimorar suas qualificações, mas devem indicar claramente se a associação é na forma de joint venture e/ou subconsultoria. No caso de uma joint venture , todos os sócios da joint venture serão solidariamente responsáveis pela totalidade do contrato, se seleccionados. O Consultor será seleccionado com base no método SQC - Selecção Baseada nas Qualificações do Consultor estabelecido nas Normas de Aquisições para Mutuários do Banco Mundial. Mais informação pode ser obtida no endereço abaixo, no horário normal de expediente (7h30 às 15h30): Direcção Provincial de Obras Públicas de Nampula-(UTP do Projecto Agua Segura) Rua da Vigilância nº 1002, Telefax: (+258) 26213579 Email: procurement.pas.dpopn@gmail.com Cidade de Nampula As Manifestações de Interesse devem ser apresentadas na língua portuguesa e claramente marcadas: Serviços de Consultoria para fiscalização de obras de melhoria da eficiência energética em 3 Sistemas de Abastecimento de água na Província de Nampula e submetidas na VERSÃO FÍSICA E POR EMAIL até às 15:00 horas do dia 30 de Novembro de 2026, no endereço indicado no n.º 10 acima. Nampula, Novembro de 2026 Unidade Técnica do Projecto-UTP",
+   "buyer": "Provincial Directorate of Public Works of Nampula",
+   "country": "Mozambique",
+   "deadline": "2026-11-30",
+   "published": "2026-11-11",
+   "url": "https://projects.worldbank.org/en/projects-operations/procurement-detail/OP00480772",
+   "notice_type": "Request for Expression of Interest",
+   "procurement_method": "Consultant Qualification  Selection",
+   "sector": "دولتی (پروژه با تأمین مالی بانک جهانی)",
+   "facts": {
+    "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "قواعد خرید بانک جهانی: باز برای شرکت‌های همه‌ی کشورهای واجد شرایط (Eligibility rules)"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "oil_gas"
+   ],
+   "days_left": 10,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-11-20T09:04:14",
+   "history": [
+    {
+     "at": "2026-11-20T09:04:14",
+     "status": "new"
+    }
+   ]
+  },
+  "TED-808523-2026": {
+   "id": "TED-808523-2026",
+   "source": "TED (EU)",
+   "market": "international",
+   "title": "Netherlands – Guidance and counselling services – Support services for CA Energy Efficiency Directive 4",
+   "description": "This tender procedure is started to select a contractor that will support RVO with the activities commonly termed as Communications Activities encompassing meeting logistics, the maintenance and development of the CA EED4 website and communication activities. The estimated value of the Contract is € 1,150,000, excluding VAT.",
+   "buyer": "Ministerie van Economische Zaken",
+   "country": "NLD",
+   "deadline": "2026-12-01",
+   "published": "2026-11-20",
+   "url": "https://ted.europa.eu/en/notice/-/detail/808523-2026",
+   "notice_type": "cn-standard",
+   "sector": "دولتی",
+   "facts": {
+    "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "رویه‌ی باز اتحادیه اروپا – شرکت‌های خارج از EU معمولاً مجازند مگر محدودیت صریح در اسناد"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "oil_gas"
+   ],
+   "days_left": 11,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-11-20T09:04:14",
+   "history": [
+    {
+     "at": "2026-11-20T09:04:14",
+     "status": "new"
+    }
+   ]
+  },
+  "TED-805150-2026": {
+   "id": "TED-805150-2026",
+   "source": "TED (EU)",
+   "market": "international",
+   "title": "Poland – Gaseous fuels – SVA/4620-717/2026 ZEC Giżycko - Kompleksowa dostawa i sprzedaż gazu ziemnego wysokometanowego (grupy E), w postaci LNG na potrzeby kotłowni gazowych zlokalizowanych na terenie kompleksu wojskowego w m. Lipiny 17-200 Hajnówka.",
+   "description": "Kompleksowa dostawa i sprzedaż gazu ziemnego wysokometanowego (grupy E), w postaci LNG na potrzeby kotłowni gazowych zlokalizowanych na terenie kompleksu wojskowego w m. Lipiny 17-200 Hajnówka",
+   "buyer": "AMW SINEVIA Sp. z o.o.",
+   "country": "POL",
+   "deadline": "2026-12-02",
+   "published": "2026-11-19",
+   "url": "https://ted.europa.eu/en/notice/-/detail/805150-2026",
+   "notice_type": "cn-standard",
+   "sector": "دولتی",
+   "facts": {
+    "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "رویه‌ی باز اتحادیه اروپا – شرکت‌های خارج از EU معمولاً مجازند مگر محدودیت صریح در اسناد"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "oil_gas"
+   ],
+   "days_left": 12,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-11-20T09:04:14",
+   "history": [
+    {
+     "at": "2026-11-20T09:04:14",
+     "status": "new"
+    }
+   ]
+  },
+  "WB-OP00480767": {
+   "id": "WB-OP00480767",
+   "source": "World Bank",
+   "market": "international",
+   "title": "Works to improve the energy efficiency of 2 selected water supply systems Quixaxe and Namige, Nampula Province",
+   "description": "Rural and Small Towns Water Security Project. REPÚBLICA DE MOÇAMBIQUE PROVÍNCIA DE NAMPULA DIRECÇÃO PROVINCIAL DE OBRAS PÚBLICAS DEPARTAMENTO DE AQUISIÇÕES SOLICITAÇÃO DE PROPOSTAS GRANT. N.º IDA-D9410 CONCURSO N.º MZ-DPOPN-RSTWSP-OBRAS-P0112-2026 País: Moçambique Nome do Projecto: Projecto Água Segura para Vilas e Zonas Rurais -P173518 Título do Concurso: Obras de melhoria da eficiência energética nos sistemas de abastecimento de água de Namige e Quixaxe . 1. O Governo de Moçambique recebeu do Banco Mundial um financiamento para investimentos no abastecimento de água e saneamento nas províncias de Nampula e Zambézia, com o objectivo de aumentar o acesso a serviços seguros de abastecimento de água e saneamento e apoiar o desenvolvimento institucional do sector através do Projecto Água Segura para Vilas e Zonas Rurais. 2. A Direcção Provincial de Obras Públicas de Nampula (DPOPN) pretende aplicar parte dos fundos para pagamentos elegíveis ao abrigo do contrato a ser celebrado para obras de melhoria da eficiência energética nos sistemas de abastecimento de água de Namige e Quixaxe, no Distrito de Mogincual. 3. Assim, a Direcção Provincial de Obras Públicas de Nampula convida empresas elegíveis a apresentarem propostas seladas, acompanhadas dos requisitos de qualificação constantes no documento de concurso, e conforme a tabela abaixo: Or. Objecto do Concurso Concorrentes Elegíveis Reunião de Pré-concurso (Recomendado) Data e Hora de Entrega de Propostas Data e Hora de Abertura de Propostas Validade das propostas Garantia Provisória (Garantia Bancária) 1 Obras de melhoria da eficiência energética nos Sistemas de Abastecimento de Água de Quixaxe e Namige, Distrito de Mogincual Alvará de 6ª Classe, Categorias I, III, IV, V e VI 25/11/2026 - 10.00 horas 09/12/2026 até às 10.00 horas 09/12/2026 às 10.00 horas 90 dias 250,000.00 MT 4. O concurso será regido pelo “Regulamento de Aquisições para Mutuários do IPF - Aquisição em Financiamento de Projectos de Investimento” do Banco Mundial de Setembro de 2025 (“Regulamento de Aquisições”) conjugado com o Regulamento de Contratação de Empreitada de Obras Públicas, Fornecimento de Bens e Prestação de Serviços ao Estado, aprovado pelo Decreto n.º 46/2026, de 5 de Agosto. 5. A visita ao local das obras é de carácter recomendado, mas não obrigatório, e poderá ser feita nas horas e datas constantes na tabela seguinte: Designação do Lote Distrito Local de Concentração Data e Hora da Visita Lote Único Mogincual Serviço Distrital de Planeamento e Infra-estruturas de Mogincual 24/11/2026 - 10.00 horas 6. Os Concorrentes elegíveis interessados poderão obter mais informações, examinar e adquirir o documento de concurso na Direcção Provincial de Obras Públicas de Nampula, Departamento de Aquisições , sita na Rua da Vigilância Nº 1002, Cidade de Nampula, correio electrónico: procurement.pas.dpopn@gmail.com / dpobraspnpl@gmail.com , durante as horas normais de expediente (08:00 às 15:00 horas), a partir do dia 09 de Novembro de 2026 , pela importância não reembolsável de 1,000.00 MT (Mil Meticais) , mediante a apresentação do recibo do depósito do valor indicado acima. Banco Millennium BIM, conta n.º 486840382 – D.P.O.P Nampula – Conta Concursos. 7. Todas as Propostas devem ser acompanhadas de uma Declaração de Combate à Exploração e Abuso Sexual (EAS) e/ou Assédio Sexual (AS). 8. As propostas devem ser entregues, em 3 (três) exemplares, no endereço acima, nas datas e horas constantes no número 3. A apresentação de Propostas Electrónicas não será permitida. Propostas tardias serão rejeitadas. As Propostas serão abertas publicamente na presença dos representantes designados pelos concorrentes e de qualquer outra pessoa que decida participar. 9. Não serão aceites propostas de concorrentes que tenham registo de mau desempenho, em contratos anteriores com o Estado Moçambicano e/ou Empresas que se encontrem inibidas de contratar com o Banco Mundial ( projects.worldbank.org/en/projects-operations/procurement/de",
+   "buyer": "Provincial Directorate of Public Works of Nampula",
+   "country": "Mozambique",
+   "deadline": "2026-12-09",
+   "published": "2026-11-11",
+   "url": "https://projects.worldbank.org/en/projects-operations/procurement-detail/OP00480767",
+   "notice_type": "Invitation for Bids",
+   "procurement_method": "Request for Bids",
+   "sector": "دولتی (پروژه با تأمین مالی بانک جهانی)",
+   "facts": {
+    "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "قواعد خرید بانک جهانی: باز برای شرکت‌های همه‌ی کشورهای واجد شرایط (Eligibility rules)"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "oil_gas"
+   ],
+   "days_left": 19,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-11-20T09:04:14",
+   "history": [
+    {
+     "at": "2026-11-20T09:04:14",
+     "status": "new"
+    }
+   ]
+  },
+  "TED-810136-2026": {
+   "id": "TED-810136-2026",
+   "source": "TED (EU)",
+   "market": "international",
+   "title": "Greece – Desalination apparatus – ΠΡΟΜΗΘΕΙΑ ΕΓΚΑΤΑΣΤΑΣΗ ΚΑΙ ΛΕΙΤΟΥΡΓΙΑ ΜΟΝΑΔΑΣ ΑΦΑΛΑΤΩΣΗΣ ΥΦΑΛΜΥΡΟΥ ΝΕΡΟΥ ΔΥΝΑΜΙΚΟΤΗΤΑΣ 1000m3/ημέρα ΓΙΑ ΤΗΝ ΥΔΡΟΔΟΤΗΣΗ ΤΗΣ ΠΕΡΙΟΧΗΣ ΠΟΡΤΟ ΧΕΛΙ ΤΗΣ Δ.Ε.Υ.Α ΕΡΜΙΟΝΙΔΑΣ",
+   "description": "ΠΡΟΜΗΘΕΙΑ ΕΓΚΑΤΑΣΤΑΣΗ ΚΑΙ ΛΕΙΤΟΥΡΓΙΑ ΜΟΝΑΔΑΣ ΑΦΑΛΑΤΩΣΗΣ ΥΦΑΛΜΥΡΟΥ ΝΕΡΟΥ ΔΥΝΑΜΙΚΟΤΗΤΑΣ 1000m3/ημέρα ΓΙΑ ΤΗΝ ΥΔΡΟΔΟΤΗΣΗ ΤΗΣ ΠΕΡΙΟΧΗΣ ΠΟΡΤΟ ΧΕΛΙ ΤΗΣ Δ.Ε.Υ.Α ΕΡΜΙΟΝΙΔΑΣ",
+   "buyer": "ΠΕΡΙΦΕΡΕΙΑ ΠΕΛΟΠΟΝΝΗΣΟΥ-ΠΕΡΙΦΕΡΕΙΑΚΗ ΕΝΟΤΗΤΑ ΑΡΓΟΛΙΔΑΣ-Δ/ΝΣΗ ΔΙΟΙΚΗΤΙΚΟΥ-ΟΙΚΟΝΟΜΙΚΟΥ-ΤΜΗΜΑ ΠΡΟΜΗΘΕΙΩΝ",
+   "country": "GRC",
+   "deadline": "2026-12-11",
+   "published": "2026-11-20",
+   "url": "https://ted.europa.eu/en/notice/-/detail/810136-2026",
+   "notice_type": "cn-standard",
+   "sector": "دولتی",
+   "facts": {
+    "price": "ارزش برآوردی: 650,000 EUR",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "رویه‌ی باز اتحادیه اروپا – شرکت‌های خارج از EU معمولاً مجازند مگر محدودیت صریح در اسناد"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "water"
+   ],
+   "days_left": 21,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-11-20T09:04:14",
+   "history": [
+    {
+     "at": "2026-11-20T09:04:14",
+     "status": "new"
+    }
+   ]
+  },
+  "TED-798135-2026": {
+   "id": "TED-798135-2026",
+   "source": "TED (EU)",
+   "market": "international",
+   "title": "Poland – Mechanical shovels, excavators and shovel loaders, and mining machinery – Dostawa koparko – ładowarki samobieżnej na podwoziu kołowym",
+   "description": "Zamówienie dotyczy dostawy koparko – ładowarki samobieżnej na podwoziu kołowym, napędzana silnikiem wysokoprężnym turbodoładowanym wraz z wyposażeniem dodatkowym montowanym na ramieniu ładowarkowym (przednim) oraz ramieniu koparkowym tylnym, zgodnie z opisem przedmiotu zamówienia. Szczegółowy opis przedmiotu zamówienia wskazany w dokumentach zamówienia, w tym w załączniku nr 3 do SWZ.",
+   "buyer": "GMINA MOSINA",
+   "country": "POL",
+   "deadline": "2026-12-15",
+   "published": "2026-11-17",
+   "url": "https://ted.europa.eu/en/notice/-/detail/798135-2026",
+   "notice_type": "cn-standard",
+   "sector": "دولتی",
+   "facts": {
+    "price": "ارزش برآوردی: 0 PLN",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "رویه‌ی باز اتحادیه اروپا – شرکت‌های خارج از EU معمولاً مجازند مگر محدودیت صریح در اسناد"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "mining"
+   ],
+   "days_left": 25,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-11-20T09:04:14",
+   "history": [
+    {
+     "at": "2026-11-20T09:04:14",
+     "status": "new"
+    }
+   ]
+  },
+  "TED-802384-2026": {
+   "id": "TED-802384-2026",
+   "source": "TED (EU)",
+   "market": "international",
+   "title": "Spain – Medical imaging services – Pruebas diagnósticas para la imagen (RM y TC con informe)_27SER0027",
+   "description": "Lote IN1078 (lote 1- PRUEVA + INFORME TC) Lote IN1079 (lote 2- PRUEBA + INFORME RM)",
+   "buyer": "Consorci Corporació Sanitària Parc Taulí de Sabadell",
+   "country": "ESP",
+   "deadline": "2026-12-16",
+   "published": "2026-11-18",
+   "url": "https://ted.europa.eu/en/notice/-/detail/802384-2026",
+   "notice_type": "cn-standard",
+   "sector": "دولتی",
+   "facts": {
+    "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "رویه‌ی باز اتحادیه اروپا – شرکت‌های خارج از EU معمولاً مجازند مگر محدودیت صریح در اسناد"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "medical"
+   ],
+   "days_left": 26,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-11-20T09:04:14",
+   "history": [
+    {
+     "at": "2026-11-20T09:04:14",
+     "status": "new"
+    }
+   ]
+  },
+  "TED-797360-2026": {
+   "id": "TED-797360-2026",
+   "source": "TED (EU)",
+   "market": "international",
+   "title": "Germany – Mining, basic metals and related products – Lieferung von Solesalz 2027-2029",
+   "description": "Lieferung von Solesalz 2027-2029",
+   "buyer": "Die Autobahn GmbH des Bundes - NL Südwest",
+   "country": "DEU",
+   "deadline": "2026-12-17",
+   "published": "2026-11-17",
+   "url": "https://ted.europa.eu/en/notice/-/detail/797360-2026",
+   "notice_type": "cn-standard",
+   "sector": "شرکت دولتی / عمومی",
+   "facts": {
+    "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "رویه‌ی باز اتحادیه اروپا – شرکت‌های خارج از EU معمولاً مجازند مگر محدودیت صریح در اسناد"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "mining"
+   ],
+   "days_left": 27,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-11-20T09:04:14",
+   "history": [
+    {
+     "at": "2026-11-20T09:04:14",
+     "status": "new"
+    }
+   ]
+  },
+  "TED-803968-2026": {
+   "id": "TED-803968-2026",
+   "source": "TED (EU)",
+   "market": "international",
+   "title": "Ireland – World wide web (www) site design services – OPW Tender for Heritage Ireland Website Development and Maintenance",
+   "description": "Provision of support and maintenance of Heritage Ireland website inclusive of existing integrations. This includes services provided, incident management, request management, change management, upgrades where required, bug fixes, infrastructure and hosting management, technical maintenance and updates and any other technical supports necessary.",
+   "buyer": "Office of Public Works (OPW)",
+   "country": "IRL",
+   "deadline": "2026-12-17",
+   "published": "2026-11-19",
+   "url": "https://ted.europa.eu/en/notice/-/detail/803968-2026",
+   "notice_type": "cn-standard",
+   "sector": "دولتی",
+   "facts": {
+    "price": "ارزش برآوردی: 292,500 EUR",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "رویه‌ی باز اتحادیه اروپا – شرکت‌های خارج از EU معمولاً مجازند مگر محدودیت صریح در اسناد"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "web"
+   ],
+   "days_left": 27,
+   "line": "web",
+   "status": "new",
+   "first_seen": "2026-11-20T09:04:14",
+   "history": [
+    {
+     "at": "2026-11-20T09:04:14",
+     "status": "new"
+    }
+   ]
+  },
+  "TED-798046-2026": {
+   "id": "TED-798046-2026",
+   "source": "TED (EU)",
+   "market": "international",
+   "title": "Cyprus – Crisis management services – The provision of Strategic Communications and Media Relations Services Focusing on the European and International Media",
+   "description": "The provision of Strategic Communications and Media Relations Services Focusing on the European and International Media",
+   "buyer": "Cyprus Securities and Exchange Commission",
+   "country": "CYP",
+   "deadline": "2026-12-18",
+   "published": "2026-11-17",
+   "url": "https://ted.europa.eu/en/notice/-/detail/798046-2026",
+   "notice_type": "cn-standard",
+   "sector": "دولتی",
+   "facts": {
+    "price": "ارزش برآوردی: 480,000 EUR",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "رویه‌ی باز اتحادیه اروپا – شرکت‌های خارج از EU معمولاً مجازند مگر محدودیت صریح در اسناد"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "urban"
+   ],
+   "days_left": 28,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-11-20T09:04:14",
+   "history": [
+    {
+     "at": "2026-11-20T09:04:14",
+     "status": "new"
+    }
+   ]
+  },
+  "TED-806063-2026": {
+   "id": "TED-806063-2026",
+   "source": "TED (EU)",
+   "market": "international",
+   "title": "Denmark – Mechanical shovels, excavators and shovel loaders, and mining machinery – Levering af gravemaskine til AFLD",
+   "description": "Entreprisen omfatter levering af en fabriksny 32-44 ton gravemaskine på larvefødder til AFLD Fasterholt.",
+   "buyer": "AFLD I/S - AFLD I/S",
+   "country": "DNK",
+   "deadline": "2026-12-18",
+   "published": "2026-11-19",
+   "url": "https://ted.europa.eu/en/notice/-/detail/806063-2026",
+   "notice_type": "cn-standard",
+   "sector": "شرکت دولتی / عمومی",
+   "facts": {
+    "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "رویه‌ی باز اتحادیه اروپا – شرکت‌های خارج از EU معمولاً مجازند مگر محدودیت صریح در اسناد"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "mining"
+   ],
+   "days_left": 28,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-11-20T09:04:14",
+   "history": [
+    {
+     "at": "2026-11-20T09:04:14",
+     "status": "new"
+    }
+   ]
+  },
+  "TED-806011-2026": {
+   "id": "TED-806011-2026",
+   "source": "TED (EU)",
+   "market": "international",
+   "title": "Italy – Natural gas – AFFIDAMENTO DELLA FORNITURA DI GAS NATURALE LIQUEFATTO (LNG) PER AUTOTRAZIONE DA CONSEGNARE PRESSO IL DEPOSITO DI START ROMAGNA SPA SITO IN VIA PANDOLFA, 50 47122 - FORLI (FC) MEDIANTE PROCEDURA APERTA CON PUBBLICAZIONE DI BANDO DI GARA IN UN UNICO LOTTO",
+   "description": "AFFIDAMENTO DELLA FORNITURA DI GAS NATURALE LIQUEFATTO (LNG) PER AUTOTRAZIONE DA CONSEGNARE PRESSO IL DEPOSITO DI START ROMAGNA SPA SITO IN VIA PANDOLFA, 50 47122 - FORLI (FC) MEDIANTE PROCEDURA APERTA CON PUBBLICAZIONE DI BANDO DI GARA IN UN UNICO LOTTO",
+   "buyer": "Start Romagna S.p.A.",
+   "country": "ITA",
+   "deadline": "2026-12-21",
+   "published": "2026-11-19",
+   "url": "https://ted.europa.eu/en/notice/-/detail/806011-2026",
+   "notice_type": "cn-standard",
+   "sector": "نامشخص",
+   "facts": {
+    "price": "ارزش برآوردی: 5,060,000 EUR",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "رویه‌ی باز اتحادیه اروپا – شرکت‌های خارج از EU معمولاً مجازند مگر محدودیت صریح در اسناد"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "oil_gas"
+   ],
+   "days_left": 31,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-11-20T09:04:14",
+   "history": [
+    {
+     "at": "2026-11-20T09:04:14",
+     "status": "new"
+    }
+   ]
+  },
+  "TED-800894-2026": {
+   "id": "TED-800894-2026",
+   "source": "TED (EU)",
+   "market": "international",
+   "title": "Estonia – Aviation kerosene – Lennukipetrooleumi JET A-1 ostmine Tallinna lennuväljal",
+   "description": "Riigihanke eesmärgiks on Tallinna lennuväljal JET A-1 tüüpi lennukipetrooleumi ostmine koos tankimisteenusega. / Kõrvaldamise alused ja kvalifitseerimistingimused: Vaata hanke alusdokumentidest",
+   "buyer": "Politsei- ja Piirivalveamet",
+   "country": "EST",
+   "deadline": "2026-12-21",
+   "published": "2026-11-18",
+   "url": "https://ted.europa.eu/en/notice/-/detail/800894-2026",
+   "notice_type": "cn-standard",
+   "sector": "دولتی",
+   "facts": {
+    "price": "ارزش برآوردی: 2,600,000 EUR",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "رویه‌ی باز اتحادیه اروپا – شرکت‌های خارج از EU معمولاً مجازند مگر محدودیت صریح در اسناد"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "aerospace"
+   ],
+   "days_left": 31,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-11-20T09:04:14",
+   "history": [
+    {
+     "at": "2026-11-20T09:04:14",
+     "status": "new"
+    }
+   ]
+  },
+  "TED-804845-2026": {
+   "id": "TED-804845-2026",
+   "source": "TED (EU)",
+   "market": "international",
+   "title": "North Macedonia – Petroleum and distillates – Aviation Fuel Jet Propellant 8 (JP-8)",
+   "description": "More information on the following link: https://www.e-nabavki.gov.mk/PublicAccess/home.aspx#/dossie/a508ec0d-848f-4d40-96e3-2dfa8a0f6fc2/1",
+   "buyer": "Ministry of Defence",
+   "country": "MKD",
+   "deadline": "2026-12-21",
+   "published": "2026-11-19",
+   "url": "https://ted.europa.eu/en/notice/-/detail/804845-2026",
+   "notice_type": "cn-standard",
+   "sector": "دولتی",
+   "facts": {
+    "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "رویه‌ی باز اتحادیه اروپا – شرکت‌های خارج از EU معمولاً مجازند مگر محدودیت صریح در اسناد"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "aerospace"
+   ],
+   "days_left": 31,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-11-20T09:04:14",
+   "history": [
+    {
+     "at": "2026-11-20T09:04:14",
+     "status": "new"
+    }
+   ]
+  },
+  "TED-799813-2026": {
+   "id": "TED-799813-2026",
+   "source": "TED (EU)",
+   "market": "international",
+   "title": "Slovenia – Wastewater treatment plant construction work – Nadgradnja centralne čistilne naprave Radovljica",
+   "description": "Namen posega je nadgradnja Centralne čistilne naprave Radovljica na kapaciteto 25.323 PE, kar bo izboljšalo zanesljivost in kvalitetno delovanje CČN Radovljica, s tem pa tudi kvalitetno izvajanje storitve gospodarske javne službe čiščenja odpadnih voda.",
+   "buyer": "OBČINA RADOVLJICA",
+   "country": "SVN",
+   "deadline": "2026-12-21",
+   "published": "2026-11-17",
+   "url": "https://ted.europa.eu/en/notice/-/detail/799813-2026",
+   "notice_type": "cn-standard",
+   "sector": "دولتی",
+   "facts": {
+    "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "رویه‌ی باز اتحادیه اروپا – شرکت‌های خارج از EU معمولاً مجازند مگر محدودیت صریح در اسناد"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "water"
+   ],
+   "days_left": 31,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-11-20T09:04:14",
+   "history": [
+    {
+     "at": "2026-11-20T09:04:14",
+     "status": "new"
+    }
+   ]
+  },
+  "TED-803501-2026": {
+   "id": "TED-803501-2026",
+   "source": "TED (EU)",
+   "market": "international",
+   "title": "Malta – Non-hazardous refuse and waste treatment and disposal services – WSC/T/075/2026 - SERVICES - FRAMEWORK AGREEMENT (PERIOD CONTRACT) FOR THE COLLECTION, TRANSFER AND DISPOSAL OF NON-HAZARDOUS WASTE IN AN ENVIRONMENTALLY FRIENDLY MANNER FROM THE WASTEWATER TREATMENT PLANTS OF THE WATER SERVICES CORPORATION",
+   "description": "The subject of this tender is a framework agreement (period contract) for the collection, transfer and disposal of non-hazardous waste generated on the wastewater treatment plants of the Water Services Corporation, in an environmentally friendly manner. The sludge of all the WWTPs and the grit and screenings of Ta’ Barkat WWTP, is stored inside purposed fabricated waste containers belonging to the Water Services Corporation while the screenings and grit of the Cumnija and Gozo WWTP’s is stored into bins-on-wheels supplied by the same Contractor entrusted with the waste handling operations. All the waste is disposed at the Malta Government and competent authorities at Wasteserv Malta’s landfill. The subject of this tender is a framework agreement (period contract) for the collection, transfer and disposal of non-hazardous waste generated on the wastewater treatment plants of the Water Services Corporation, in an environmentally friendly manner. The sludge of all the WWTPs and the grit and screenings of Ta’ Barkat WWTP, is stored inside purposed fabricated waste containers belonging to the Water Services Corporation while the screenings and grit of the Cumnija and Gozo WWTP’s is stored into bins-on-wheels supplied by the same Contractor entrusted with the waste handling operations. All the waste is disposed at the Malta Government and competent authorities at Wasteserv Malta’s landfill. The subject of this tender is a framework agreement (period contract) for the collection, transfer and disposal of non-hazardous waste generated on the wastewater treatment plants of the Water Services Corporation, in an environmentally friendly manner. The sludge of all the WWTPs and the grit and screenings of Ta’ Barkat WWTP, is stored inside purposed fabricated waste containers belonging to the Water Services Corporation while the screenings and grit of the Cumnija and Gozo WWTP’s is stored into bins-on-wheels supplied by the same Contractor entrusted with the waste handling operations. All the waste is disposed at the Malta Government and competent authorities at Wasteserv Malta’s landfill. The subject of this tender is a framework agreement (period contract) for the collection, transfer and disposal of non-hazardous waste generated on the wastewater treatment plants of the Water Services Corporation, in an environmentally friendly manner. The sludge of all the WWTPs and the grit and screenings of Ta’ Barkat WWTP, is stored inside purposed fabricated waste containers belonging to the Water Services Corporation while the screenings and grit of the Cumnija and Gozo WWTP’s is stored into bins-on-wheels supplied by the same Contractor entrusted with the waste handling operations. All the waste is disposed at the Malta Government and competent authorities at Wasteserv Malta’s landfill. The subject of this tender is a framework agreement (period contract) for the collection, transfer and disposal of non-hazardous waste generated on the wastewater treatment plants of the Water Services Corporation, in an environmentally friendly manner. The sludge of all the WWTPs and the grit and screenings of Ta’ Barkat WWTP, is stored inside purposed fabricated waste containers belonging to the Water Services Corporation while the screenings and grit of the Cumnija and Gozo WWTP’s is stored into bins-on-wheels supplied by the same Contractor entrusted with the waste handling operations. All the waste is disposed at the Malta Government and competent authorities at Wasteserv Malta’s landfill.",
+   "buyer": "Water Services Corporation",
+   "country": "MLT",
+   "deadline": "2026-12-21",
+   "published": "2026-11-18",
+   "url": "https://ted.europa.eu/en/notice/-/detail/803501-2026",
+   "notice_type": "cn-standard",
+   "sector": "نامشخص",
+   "facts": {
+    "price": "ارزش برآوردی: 10,960,000 EUR (5 بخش)",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "رویه‌ی باز اتحادیه اروپا – شرکت‌های خارج از EU معمولاً مجازند مگر محدودیت صریح در اسناد"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "water"
+   ],
+   "days_left": 31,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-11-20T09:04:14",
+   "history": [
+    {
+     "at": "2026-11-20T09:04:14",
+     "status": "new"
+    }
+   ]
+  },
+  "TED-809112-2026": {
+   "id": "TED-809112-2026",
+   "source": "TED (EU)",
+   "market": "international",
+   "title": "Belgium – Crisis management services – RO - crisisbeheersysteem",
+   "description": "RO - crisisbeheersysteem",
+   "buyer": "Woonhaven Antwerpen",
+   "country": "BEL",
+   "deadline": "2026-12-28",
+   "published": "2026-11-20",
+   "url": "https://ted.europa.eu/en/notice/-/detail/809112-2026",
+   "notice_type": "cn-social",
+   "sector": "شرکت دولتی / عمومی",
+   "facts": {
+    "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "رویه‌ی باز اتحادیه اروپا – شرکت‌های خارج از EU معمولاً مجازند مگر محدودیت صریح در اسناد"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "urban"
+   ],
+   "days_left": 38,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-11-20T09:04:14",
+   "history": [
+    {
+     "at": "2026-11-20T09:04:14",
+     "status": "new"
+    }
+   ]
+  },
+  "TED-809777-2026": {
+   "id": "TED-809777-2026",
+   "source": "TED (EU)",
+   "market": "international",
+   "title": "France – Crisis management services – Accord-cadre à bons de commandes de campagnes d’appels de crise destinées aux personnes vulnérables",
+   "description": "Le présent marché a pour objet : accord-cadre à bons de commandes de campagnes d’appels de crise destinées aux personnes vulnérables.",
+   "buyer": "VILLE de PARIS - DFA - SDA",
+   "country": "FRA",
+   "deadline": "2027-01-05",
+   "published": "2026-11-20",
+   "url": "https://ted.europa.eu/en/notice/-/detail/809777-2026",
+   "notice_type": "cn-standard",
+   "sector": "دولتی",
+   "facts": {
+    "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "رویه‌ی باز اتحادیه اروپا – شرکت‌های خارج از EU معمولاً مجازند مگر محدودیت صریح در اسناد"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "urban"
+   ],
+   "days_left": 46,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-11-20T09:04:14",
+   "history": [
+    {
+     "at": "2026-11-20T09:04:14",
+     "status": "new"
+    }
+   ]
+  },
+  "TED-804480-2026": {
+   "id": "TED-804480-2026",
+   "source": "TED (EU)",
+   "market": "international",
+   "title": "Malta – Workshops construction work – CT2382/2026 - DESIGN AND BUILD OF A WORKSHOP OVER AN EXISTING UNDERGROUND WATER RESERVOIR",
+   "description": "CT2382/2026 - DESIGN AND BUILD OF A WORKSHOP OVER AN EXISTING UNDERGROUND WATER RESERVOIR",
+   "buyer": "Department of Contracts",
+   "country": "MLT",
+   "deadline": "2027-01-07",
+   "published": "2026-11-19",
+   "url": "https://ted.europa.eu/en/notice/-/detail/804480-2026",
+   "notice_type": "cn-standard",
+   "sector": "دولتی",
+   "facts": {
+    "price": "ارزش برآوردی: 1,060,000 EUR",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "رویه‌ی باز اتحادیه اروپا – شرکت‌های خارج از EU معمولاً مجازند مگر محدودیت صریح در اسناد"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "oil_gas"
+   ],
+   "days_left": 48,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-11-20T09:04:14",
+   "history": [
+    {
+     "at": "2026-11-20T09:04:14",
+     "status": "new"
+    }
+   ]
+  },
+  "TED-798891-2026": {
+   "id": "TED-798891-2026",
+   "source": "TED (EU)",
+   "market": "international",
+   "title": "Poland – Wastewater treatment plant construction work – Zadanie 1 - Oczyszczalnie ścieków cz. 1 - \"Rozbudowa oczyszczalni ścieków w Niepołomicach ul. Mariana Lutosławskiego 4\" realizowane w ramach projektu pn. „Rozbudowa gospodarki wodno-ściekowej na terenie gminy Niepołomice – etap II”",
+   "description": "1. Opis przedmiotu zamówienia: Przedmiotem zamówienia jest zaprojektowanie i wykonanie robót budowlanych dla Zadanie 1 - Oczyszczalnie ścieków cz. 1 - \"Rozbudowa oczyszczalni ścieków w Niepołomicach ul. Mariana Lutosławskiego 4\" na dz. nr 1515 i 1516/2 w miejscowości Niepołomice wraz z budową rurociągu odprowadzającego ścieki oczyszczone do Wisły na dz. nr 998, 966/5, 1516/2, 1515, 1506, 997/11, 997/10, 997/13, 266/7, 997/9, 1508/1, 1523/2, 289/2, 989/1, 997/7, 997/12, 965/7, 1520/2 w miejscowości Niepołomice oraz remont/renowacja istniejącego odcinka rurociągu odprowadzającego ścieki oczyszczone na dz. nr 255/14, 266/11, 1, 265 w Niepołomicach. W ramach zamówienia Inwestor planuje rozbudowę Oczyszczalni Ścieków w Niepołomicach o następujących parametrach: Parametry istniejące przed rozbudową (wg. dokumentacji projektowej): 1. średnia dobowa ilość ścieków Qdśr = 4500 m3/d 2. maksymalna dobowa ilość ścieków Qdmax = 5850 m3/d 3. średnia godzinowa ilość ścieków Qhśr = 187,5 m3/d 4. maksymalna godzinowa ilość ścieków Qhmax = 450 m3/d 5. ładunek BZT5 w ściekach surowych = 2308,5 kg/d 6. RLM = 38 475 Parametry oczyszczalni po rozbudowie: 1. średnia dobowa ilość ścieków Qdśr = 5566 m3/d 2. maksymalna dobowa ilość ścieków Qdmax = 7792 m3/d 3. średnia godzinowa ilość ścieków Qhśr = 232 m3/d 4. maksymalna godzinowa ilość ścieków Qhmax = 500 m3/d 5. ładunek BZT5 w ściekach surowych = 3879 kg/d RLM = 64634 Długość rurociągu odprowadzającego ścieki oczyszczone o średnicy min. Dn500: 1,50 km Długość rurociągu/kanału otwartego odprowadzającego ścieki oczyszczone zaplanowanego do remontu/renowacji: 400m Szczegółowy opis przedmiotu zamówienia oraz wymagań dotyczących dokumentacji powykonawczej jak również realizacji zawiera Program Funkcjonalno Użytkowy, SWZ, wzór umowy oraz harmonogram rzeczowo-finansowy będący integralną częścią umowy. 2. Wizja w terenie Zamawiający zgodnie z 134 ust. 2 pkt 9 ustawy Pzp wymaga, odbycia przez oferenta obligatoryjnej wizji lokalnej na terenie oczyszczalni ścieków w Niepołomicach oraz planowanej budowy rurociągu tłocznego oraz jego remontu/renowacji. Wizja lokalna obejmie obszar na którym będą prowadzone roboty budowlane. Zamawiający umożliwi odbycie wizji lokalnej po uprzednim ustaleniu terminu. Chęć odbycia wizji należy zgłaszać telefonicznie 888 040 290 lub adresem e-mail a.bej@infrastruktura.eu. Po otrzymaniu zgłoszenia Zamawiający wyznaczy termin zgłoszenia nie później niż 7 dni roboczych od daty zgłoszenia chęci odbycia wizji lokalnej. 3. Nasadzenia drzew i budki lęgowe Na zadaniu należy dokonać nasadzeń drzew i krzewów nie wynikających z rozstrzygnięć administracyjnych 4. Informacje dodatkowe: 1) Oczyszczania na czas rozbudowy nie zostanie wyłączona z eksploatacji, Wykonawca będzie prowadził prace na pracującym obiekcie, dlatego harmonogram realizacji prac należy zaplanować w taki sposób, aby nie kolidował z pracą Oczyszczalni oraz nie wpływał na parametry ścieków oczyszczonych. 2) W sąsiedztwie działki 1516/2 w Niepołomicach trwają prace projektowe dotyczące budowy infrastruktury kolejowej. Projektowany przebieg linii kolejowej znajduje się na oficjalnej stronie internetowej PKP PLK S.A. link: https://www.plk-inwestycje.pl/projekty/program-kolej-plus/budowa-polaczenia-kolejowego-krakow-niepolomice/. Wszystkie elementy planowane do zlokalizowania w obszarze kolejowym na etapie prac projektowych będą wymagały uzgodnienia z odpowiednią jednostką w PKP PLK S.A, w tym rurociąg odprowadzający ścieki oczyszczone, który częściowo znajduje się w projektowanym obszarze kolejowym. 5. Miejsce wykonywania zamówienia: Dz. nr 998, 966/5, 1516/2, 1515, 1506, 997/11, 997/10, 997/13, 266/7, 997/9, 1508/1, 1523/2, 289/2, 989/1, 997/7, 997/12, 965/7, 1520/2 255/14, 266/11, 1, 265 w Niepołomicach. 6. Wymóg zatrudnienia na podstawie stosunku pracy: Zamawiający zgodnie z art. 95 ust. 1 ustawy z dnia 11 września 2019 r. Prawo zamówień publicznych (Dz.U.2021.1129 t.j. z dnia 2021.06.24) wymaga zatrudnienia przez Wykonawcę lub p",
+   "buyer": "Infrastruktura Niepołomice Spółka z o.o.",
+   "country": "POL",
+   "deadline": "2027-01-08",
+   "published": "2026-11-17",
+   "url": "https://ted.europa.eu/en/notice/-/detail/798891-2026",
+   "notice_type": "cn-standard",
+   "sector": "شرکت دولتی / عمومی",
+   "facts": {
+    "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "رویه‌ی باز اتحادیه اروپا – شرکت‌های خارج از EU معمولاً مجازند مگر محدودیت صریح در اسناد"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "water"
+   ],
+   "days_left": 49,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-11-20T09:04:14",
+   "history": [
+    {
+     "at": "2026-11-20T09:04:14",
+     "status": "new"
+    }
+   ]
+  },
+  "TED-801335-2026": {
+   "id": "TED-801335-2026",
+   "source": "TED (EU)",
+   "market": "international",
+   "title": "Italy – Medical imaging services – Servizio di screening mammografico con unità mobile",
+   "description": "Lotto n. 1 - Area Nord Ovest Lotto n. 2 - Area Centro Lotto n. 3 - Area Sud Est",
+   "buyer": "ESTAR - Ente di Supporto Tecnico Amministrativo Regionale",
+   "country": "ITA",
+   "deadline": "2027-01-13",
+   "published": "2026-11-18",
+   "url": "https://ted.europa.eu/en/notice/-/detail/801335-2026",
+   "notice_type": "cn-standard",
+   "sector": "دولتی",
+   "facts": {
+    "price": "ارزش برآوردی: 14,975,000 EUR (3 بخش)",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "رویه‌ی باز اتحادیه اروپا – شرکت‌های خارج از EU معمولاً مجازند مگر محدودیت صریح در اسناد"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "medical"
+   ],
+   "days_left": 54,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-11-20T09:04:14",
+   "history": [
+    {
+     "at": "2026-11-20T09:04:14",
+     "status": "new"
+    }
+   ]
+  },
+  "TED-810851-2026": {
+   "id": "TED-810851-2026",
+   "source": "TED (EU)",
+   "market": "international",
+   "title": "Ireland – Energy and related services – Consultancy Services for a District Heating Feasibility Study",
+   "description": "Establishment of a Single-Party Framework Agreement for the Provision of Consultancy Services for a District Heating Feasibility Study for Tipperary County Council Initial Contract: Develop a feasibility study on the potential for District Heating in Nenagh Town and Clonmel Town.",
+   "buyer": "Tipperary County Council",
+   "country": "IRL",
+   "deadline": "2027-01-15",
+   "published": "2026-11-20",
+   "url": "https://ted.europa.eu/en/notice/-/detail/810851-2026",
+   "notice_type": "cn-standard",
+   "sector": "دولتی",
+   "facts": {
+    "price": "ارزش برآوردی: 216,000 EUR",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "رویه‌ی باز اتحادیه اروپا – شرکت‌های خارج از EU معمولاً مجازند مگر محدودیت صریح در اسناد"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "urban"
+   ],
+   "days_left": 56,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-11-20T09:04:14",
+   "history": [
+    {
+     "at": "2026-11-20T09:04:14",
+     "status": "new"
+    }
+   ]
+  },
+  "TED-801033-2026": {
+   "id": "TED-801033-2026",
+   "source": "TED (EU)",
+   "market": "international",
+   "title": "Italy – IT services: consulting, software development, Internet and support – Sanita Digitale - Enterprise Imaging e Digital Pathology - ID 2989",
+   "description": "Servizi Applicativi - Enterprise Imaging e Digital Pathology - NORD Servizi Applicativi - Enterprise Imaging e Digital Pathology - CENTRO Servizi Applicativi - Enterprise Imaging e Digital Pathology - SUD Servizi di Supporto - Enterprise Imaging e Digital Pathology - NORD Servizi di Supporto - Enterprise Imaging e Digital Pathology - CENTRO Servizi di Supporto - Enterprise Imaging e Digital Pathology - SUD",
+   "buyer": "CONSIP SPA",
+   "country": "ITA",
+   "deadline": "2027-01-22",
+   "published": "2026-11-18",
+   "url": "https://ted.europa.eu/en/notice/-/detail/801033-2026",
+   "notice_type": "cn-standard",
+   "sector": "دولتی",
+   "facts": {
+    "price": "ارزش برآوردی: 529,200,000 EUR (6 بخش)",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "رویه‌ی باز اتحادیه اروپا – شرکت‌های خارج از EU معمولاً مجازند مگر محدودیت صریح در اسناد"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "health_ai"
+   ],
+   "days_left": 63,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-11-20T09:04:14",
+   "history": [
+    {
+     "at": "2026-11-20T09:04:14",
+     "status": "new"
+    }
+   ]
+  },
+  "TED-807054-2026": {
+   "id": "TED-807054-2026",
+   "source": "TED (EU)",
+   "market": "international",
+   "title": "Belgium – Electronic information services – Opdracht voor het opzetten van een digital twin voor het organiseren en opvolgen van de afvalinzameling",
+   "description": "Opdracht voor het opzetten van een digital twin voor het organiseren en opvolgen van de afvalinzameling De opdracht is om Limburg.net te voorzien van een state-of-the-art digitaal systeem waar chauffeurs/ophalers, planners/dispatchers, werkvoorbereiders en managers realtime informatie kunnen ingeven en extraheren om zo op een efficiënte manier hun werk te kunnen blijven uitvoeren. De hoofddoelstelling van deze oproep is om het proces van afvalinzameling aan huis te stroomlijnen en te vereenvoudigen.",
+   "buyer": "Limburg.net",
+   "country": "BEL",
+   "deadline": "",
+   "published": "2026-11-19",
+   "url": "https://ted.europa.eu/en/notice/-/detail/807054-2026",
+   "notice_type": "cn-standard",
+   "sector": "دولتی",
+   "facts": {
+    "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "oil_gas"
+   ],
+   "days_left": null,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-11-20T09:04:14",
+   "history": [
+    {
+     "at": "2026-11-20T09:04:14",
+     "status": "new"
+    }
+   ]
+  },
+  "TED-806681-2026": {
+   "id": "TED-806681-2026",
+   "source": "TED (EU)",
+   "market": "international",
+   "title": "Austria – District heating – Fernwärme JA Hirtenberg",
+   "description": "Ziel dieses Rahmenvertrages ist die ganzjährige Lieferung von Wärme, wobei die Wärmeerzeugung zu einem Anteil von mindestens 80% mittels Biomasse erfolgen muss, für die Justizanstalt Hirtenberg.",
+   "buyer": "Auftraggeber ist die Republik Österreich (Bund), vertreten durch die Bundesministerin für Justiz, diese vertreten durch die Justizanstalt in A-2552 Hirtenberg, im Vergabeverfahren alle vertreten durch die Bundesbeschaffung GmbH. Bundesbeschaffung GmbH",
+   "country": "AUT",
+   "deadline": "",
+   "published": "2026-11-19",
+   "url": "https://ted.europa.eu/en/notice/-/detail/806681-2026",
+   "notice_type": "cn-standard",
+   "sector": "دولتی",
+   "facts": {
+    "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "urban"
+   ],
+   "days_left": null,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-11-20T09:04:14",
+   "history": [
+    {
+     "at": "2026-11-20T09:04:14",
+     "status": "new"
+    }
+   ]
+  },
+  "TED-797238-2026": {
+   "id": "TED-797238-2026",
+   "source": "TED (EU)",
+   "market": "international",
+   "title": "Austria – IT services: consulting, software development, Internet and support – Lieferung, Integration, Betrieb und Weiterentwicklung einer Home Energy Management System (HEMS)-Plattform",
+   "description": "Gegenstand der Ausschreibung ist die Bereitstellung, Integration, der Betrieb und die Weiterentwicklung einer skalierbaren Home Energy Management System (HEMS)-Plattform zur intelligenten Steuerung und Verwaltung von Energieanwendungen im Haushalt einschließlich der Anbindung an bestehende EVN-Systeme.",
+   "buyer": "EVN Energieservices GmbH",
+   "country": "AUT",
+   "deadline": "",
+   "published": "2026-11-17",
+   "url": "https://ted.europa.eu/en/notice/-/detail/797238-2026",
+   "notice_type": "cn-standard",
+   "sector": "نامشخص",
+   "facts": {
+    "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "oil_gas"
+   ],
+   "days_left": null,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-11-20T09:04:14",
+   "history": [
+    {
+     "at": "2026-11-20T09:04:14",
+     "status": "new"
+    }
+   ]
+  },
+  "TED-800441-2026": {
+   "id": "TED-800441-2026",
+   "source": "TED (EU)",
+   "market": "international",
+   "title": "France – Pipelaying construction work – ALIMENTATION EN EAU POTABLE - CREATION D'UNE SECONDE CUVE DE 1 900 M3 AUX ENTREMONTS, D'UNE STATION DE REPRISE, DES CANALISATIONS ASSOCIEES ET D'UN RESERVOIR SUR TOUR DE 1 600M 3 SUR LES COMMUNES DE DAGNEUX ET PIZAY",
+   "description": "- Création d'une voirie d'accès aux ouvrages ; - Terrassements généraux pour la station de pompage et le nouveau réservoir (cuve + chambre de vannes) ; - Soutènement provisoire des terres (par paroi clouée par exemple) et définitive (gabions) ; - Fondation des ouvrages, gros oeuvre et second oeuvre, pour le réservoir et la station de pompage y compris étanchéité intérieure et extérieure de la nouvelle cuve de 1900m3 L'ensemble des prestations est réalisé dans la station de pompage et réservoir : - Pose de l'ensemble des tuyauteries en inox 316L - Pose des équipements de robinetterie en PN16 ; - Pose des équipements de serrurerie, huisserie, métallerie (portes, trappes, cheminées d'aération, garde-corps, échelles…) ; - Pose des équipements électromécaniques dans la station de pompage (pompe, ballon anti-bélier…) - Equipements électriques et contrôle de commande - Pose de 3,2km de conduite fonte ductile DN250mm de refoulement/distribution vers le nouveau réservoir sur tour - Pose de1,3km de conduite fonte ductile DN250mm de distribution vers la commune de Pizay, - Pose de 150ml de conduite fonte ductile DN400mm de raccordement aux conduites existantes et 70ml de béton 135A Ø400mm ; - Pose des fourreaux TPC pour alimenter la station de pompage et la cuve ; - Essais et réfection des voiries - Terrassement et fondation du réservoir sur tour - Gros oeuvre et second oeuvre, y compris étanchéité sur la coupole extérieure et dans chacune des deux cuves ; - Pose de l'ensemble des tuyauteries en inox 316L ; - Pose des équipements de serrurerie, métallerie, huisserie (porte, trappe, garde-corps, échelles…) - Armoire et contrôle de commande",
+   "buyer": "Communauté de Communes de la Côtière à Montluel",
+   "country": "FRA",
+   "deadline": "",
+   "published": "2026-11-18",
+   "url": "https://ted.europa.eu/en/notice/-/detail/800441-2026",
+   "notice_type": "cn-standard",
+   "sector": "نامشخص",
+   "facts": {
+    "price": "ارزش برآوردی: 6,909,000 EUR (4 بخش)",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه"
+   },
+   "keyword_score": 3,
+   "domains": [
+    "oil_gas"
+   ],
+   "days_left": null,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-11-20T09:04:14",
+   "history": [
+    {
+     "at": "2026-11-20T09:04:14",
+     "status": "new"
+    }
+   ]
+  },
+  "WB-OP00482066": {
+   "id": "WB-OP00482066",
+   "source": "World Bank",
+   "market": "international",
+   "title": "AI and Technology Ecosystem Advisory Services for the CEO of IT PARK UZBEKISTAN",
+   "description": "Uzbekistan Digital Inclusion Project. REQUEST FOR EXPRESSIONS OF INTEREST (CONSULTING SERVICES – SELECTION OF INDIVIDUAL CONSULTANTS) Republic of Uzbekistan Uzbekistan Digital Inclusion Project Credit No.: 7425-UZ Assignment Title: AI and Technology Ecosystem Adviser – International Individual Consultant Reference No.: UZ-DIP-582910-CS-INDV The Republic of Uzbekistan has received financing from the International Development Association toward the cost of the Uzbekistan Digital Inclusion Project. “Administration of Technology Park of Software and IT” LLC (IT Park), as the Implementing Agency, intends to apply part of the proceeds to engage an individual consultant as AI and Technology Ecosystem Adviser to the CEO of IT Park Uzbekistan, under Subcomponent 1.1 of the Project. Under Subcomponent 1.1, the Project supports IT Park Uzbekistan’s AI and technology ecosystem agenda, including the implementation of AI strategy, priority AI initiatives, international technology partnerships and the commercialization of innovations, in line with Uzbekistan’s Strategy for the Development of Artificial Intelligence Technologies until 2030. The Adviser will support the CEO of IT Park in prioritising, designing and delivering AI ecosystem initiatives, partnerships and programmes, and in strengthening IT Park’s internal capacity to manage its AI agenda. Results are expected to contribute to the Project Development Objective through the creation of digital jobs, growth of AI-enabled IT services exports and inclusion of women, youth, persons with disabilities and the regions. The consulting services (“the Services”) include, but are not limited to: assessment of existing AI initiatives, capabilities and AI-readiness, and recommendation of priorities for a 12-month AI ecosystem work plan; advice on strategic AI-related decisions, including decision papers on proposed AI programmes, centres, partnerships and investment initiatives; identification and engagement of international technology partners, and support for cooperation proposals and authorised negotiations; support for applied AI initiatives and the commercialisation of innovations developed by local startups and IT Park residents; advice on mechanisms to attract AI talent and strengthen IT Park’s institutional capacity, including working sessions for IT Park staff; support to the CEO across IT Park’s strategic directions (startups and venture investment; export and international positioning; Uzbekistan as a regional technology hub; support to IT Park residents and their AI adaptation; and R&D, data and robotics). The assignment is proposed for a period of 12 months. The Adviser will work in a hybrid format, under a time-based contract. To obtain the Terms of Reference for the assignment, please send your request to the following e-mail address: udip@it-park.uz. “Administration of Technology Park of Software and IT” LLC now invites eligible individuals (“Consultants”) to indicate their interest in providing the Services. Interested Consultants should provide information demonstrating that they have the required qualifications and relevant experience to perform the Services: a curriculum vitae in the English language, and contact details of references. The evaluation criteria are: 1) General Qualifications University degree in technology, engineering, economics, management or a related field; Fluent professional English; Availability to work in person in Tashkent, Uzbekistan for at least 5 working days per month throughout the assignment. 2) Professional Experience At least 8 years of experience in technology businesses, innovation, digital transformation or technology ecosystem development, including at least 5 years in leadership or strategic roles; At least 3 years of substantive experience in managing AI projects or programmes, and at least one completed AI initiative with verifiable results and a clearly identified personal contribution; Demonstrated experience in advising senior decisio",
+   "buyer": "PIU for Uzbekistan Digital Inclusion Project",
+   "country": "Uzbekistan",
+   "deadline": "2026-12-01",
+   "published": "2026-11-17",
+   "url": "https://projects.worldbank.org/en/projects-operations/procurement-detail/OP00482066",
+   "notice_type": "Request for Expression of Interest",
+   "procurement_method": "Individual Consultant Selection",
+   "sector": "دولتی (پروژه با تأمین مالی بانک جهانی)",
+   "facts": {
+    "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "طبق آگهی: experience to perform the services: a curriculum vitae in the english language, and contact details of references",
+    "international": "قواعد خرید بانک جهانی: باز برای شرکت‌های همه‌ی کشورهای واجد شرایط (Eligibility rules)"
+   },
+   "keyword_score": 2,
+   "domains": [
+    "ai_cross_cutting"
+   ],
+   "days_left": 11,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-11-20T09:04:14",
+   "history": [
+    {
+     "at": "2026-11-20T09:04:14",
+     "status": "new"
+    }
+   ]
+  },
+  "TED-799754-2026": {
+   "id": "TED-799754-2026",
+   "source": "TED (EU)",
+   "market": "international",
+   "title": "Poland – Baggage-handling system – Zakup, montaż i uruchomienie zespołu taśmociągów oraz karuzeli bagażowej w Terminalu C",
+   "description": "1. Przedmiotem zamówienia jest: − zaprojektowanie na podstawie Koncepcji taśmociągów, stanowiącej załącznik nr 2a) do SWZ oraz Opisu Przedmiotu Zamówienia, stanowiącego załącznik nr 2 do SWZ, − wykonanie niezbędnych robót instalacyjno-montażowych, − dostawa, − montaż, − integracja, − testy, − uruchomienie w formule „pod klucz” (turn-key), − przeszkolenie pracowników, − przekazanie aktualnych haseł do systemu, nowego, kompletnego układu systemu BHS (Baggage Handling System) na kierunku przylotowym. 2. W skład systemu wchodzi karuzela odbiorcza z płytą płaską, modułowy układ przenośników taśmowych podających bagaż z części bagażowni na karuzelę, zintegrowana roleta oraz dedykowany system sterowania i nadzoru (PLC/SCADA). 3. Materiały i urządzenia muszą być fabrycznie nowe. 4. Szczegółowy zakres zamówienia, o którym mowa w niniejszym rozdziale, określa Załącznik nr 2 do SWZ- Opis Przedmiotu Zamówienia oraz Załącznik nr 2a) do SWZ - Koncepcja taśmociągów oraz Załącznik nr 10 do SWZ- Wzór Umowy.",
+   "buyer": "Górnośląskie Towarzystwo Lotnicze S.A.",
+   "country": "POL",
+   "deadline": "2026-12-23",
+   "published": "2026-11-17",
+   "url": "https://ted.europa.eu/en/notice/-/detail/799754-2026",
+   "notice_type": "cn-standard",
+   "sector": "نامشخص",
+   "facts": {
+    "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "رویه‌ی باز اتحادیه اروپا – شرکت‌های خارج از EU معمولاً مجازند مگر محدودیت صریح در اسناد"
+   },
+   "keyword_score": 2,
+   "domains": [
+    "aerospace",
+    "oil_gas"
+   ],
+   "days_left": 33,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-11-20T09:04:14",
+   "history": [
+    {
+     "at": "2026-11-20T09:04:14",
+     "status": "new"
+    }
+   ]
+  },
+  "WB-OP00472980": {
+   "id": "WB-OP00472980",
+   "source": "World Bank",
+   "market": "international",
+   "title": "TÜRKİYE FLOOD AND DROUGHT MANAGEMENT PROJECT - FLOOD FORECASTING AND EARLY WARNING SYSTEM IN 6 RIVER BASINS (Marmara, Yeşilırmak, Sakarya, Batı Akdeniz, Akarçay, Burdur)",
+   "description": "Türkiye Flood and Drought Management Project. REQUEST FOR EXPRESSIONS OF INTEREST (REOI) (CONSULTING SERVICES – FIRMS SELECTION) Country: Republic of Türkiye Project: Türkiye Flood and Drought Management Project (P179313) Loan No./Credit No./Grant No.: 9707-TR Assignment Title: Flood Forecasting and Early Warning System in 6 River Basins (Marmara, Yeilrmak, Sakarya, Bat Akdeniz, Akarçay and Burdur) Reference No. (as per Procurement Plan): TR-DGWM-573893-CS-QCBS Market Approach: Open International Competition Contract Type: Lump Sum Contract Duration: 600 calendar days from the commencement date 1. The Government of the Republic of Türkiye has received financing from the World Bank toward the cost of the Türkiye Flood and Drought Management Project (P179313), and intends to apply part of the proceeds for consulting services. 2. The consulting services (“the Services”) include the expansion, enhancement, integration and operationalization of the National Flood Forecasting and Early Warning System (TATUS) in six river basins (Marmara, Yeilrmak, Sakarya, Bat Akdeniz, Akarçay and Burdur). The Services comprise, among others: integration of the six targeted river basins into the existing TATUS platform and integration with five previously established basins to establish a unified national-scale forecasting network; development, calibration, validation and operationalization of hydrological forecasting models, including modelling of regulated/reservoir-controlled basins; integration and consolidation of meteorological, hydrological, satellite and third-party data, including real-time data acquisition and API interfaces; enhancement of alarm, warning and notification mechanisms; enhancement of the web-based user interface, visualization, reporting, role-based access and interoperability with relevant external systems; system architecture, database and software integration, cybersecurity, data protection, testing and quality assurance; and training, user documentation and support. The assignment also includes a six-month system operation phase during which the Consultant will operate the integrated system and resolve operational issues. The assignment is expected to be implemented mainly from Ankara, with activities in the six river basins identified above. The total contract duration is 600 calendar days from the commencement date. 3. The detailed Terms of Reference (TOR) for the assignment can be found at the following website: https://www.tarimorman.gov.tr/SYGM/Sayfalar/Detay.aspx?SayfaId=186 . 4. The Directorate General of Water Management (DGWM) of the Ministry of Agriculture and Forestry now invites eligible consulting firms (“Consultants”) to indicate their interest in providing the Services. Interested Consultants should provide information demonstrating that they have the required qualifications and relevant experience to perform the Services. 5. A consulting firm is allowed to submit the expression of interest alone if it considers itself to be fully qualified on its own for the assignment, as it is not mandatory for consultants to associate with any other firm(s), whether foreign or local. Alternatively, if consultants themselves choose to associate to enhance their qualifications and capability for the assignment, then such associations may either be as a Joint Venture (i.e. all members of the joint venture shall be jointly and severally responsible) and/or Sub-consultants (i.e. the Consultant will be responsible, including for the services of the sub-consultant). In case of an association, the Consultants must explain in the EOI submission (a) the rationale for forming the association and (b) the anticipated role and relevant qualifications of each member of the Joint Venture and/or of each sub-consultant for carrying out the assignment, to justify the proposed inclusion of the JV members and/or sub-consultants in the association. Failure to provide the above explanation in the Expression of Interest may risk the associati",
+   "buyer": "Directorate General of Water Management",
+   "country": "Turkiye",
+   "deadline": "2026-12-25",
+   "published": "2026-11-17",
+   "url": "https://projects.worldbank.org/en/projects-operations/procurement-detail/OP00472980",
+   "notice_type": "Request for Expression of Interest",
+   "procurement_method": "Quality And Cost-Based Selection",
+   "sector": "دولتی (پروژه با تأمین مالی بانک جهانی)",
+   "facts": {
+    "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "guarantee": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "experience": "طبق آگهی: experience to perform the services",
+    "international": "قواعد خرید بانک جهانی: باز برای شرکت‌های همه‌ی کشورهای واجد شرایط (Eligibility rules)"
+   },
+   "keyword_score": 2,
+   "domains": [
+    "oil_gas",
+    "water"
+   ],
+   "days_left": 35,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-11-20T09:04:14",
+   "history": [
+    {
+     "at": "2026-11-20T09:04:14",
+     "status": "new"
+    }
+   ]
+  },
+  "WB-OP00480669": {
+   "id": "WB-OP00480669",
+   "source": "World Bank",
+   "market": "international",
+   "title": "Two Drainage Pumping Stations upgrade and modernization",
+   "description": "Climate Resilience and Agriculture Development Project. Specific Procurement Notice Template Request for Bids Works (Two-envelope Bidding Process, Without Prequalification) Employer: Ministry of Agriculture and Rural Development Project: Climate Resilience and Agriculture Development Project (CRAD) Contract title: Two Drainage Pumping Stations upgrade and modernization Country: Albania Loan No.: 94890 RFB No: AL-MARD-473301-CW-RFB Issued on: November 10, 2026 Government of Albania has received financing from the World Bank toward the cost of the Climate Resilience and Agriculture Development Project (CRAD) and intends to apply part of the proceeds toward payments under the contract for Two Drainage Pumping Stations upgrade and modernization The Ministry of Agriculture and Rural Development now invites sealed Bids from eligible Bidders for Two Drainage Pumping Stations upgrade and modernization . The Works comprise the rehabilitation, upgrading and modernization of two existing drainage pumping stations, Drainage Pumping Station No. 2 in Seman and Drainage Pumping Station No. 3 in Darëzezë, Fier Municipality, which together serve a drainage area of approximately 9,600 ha. The investment includes civil and structural rehabilitation works and the replacement and upgrading of the main electromechanical equipment, including the installation and commissioning of nine (9) high-capacity submersible pumping units, each with a pumping capacity of approximately 6.6 m³/s, together with associated electrical power supply and distribution systems, transformers, switchgear, control and automation equipment. The Works also include the installation and integration of SCADA systems for monitoring and control of the pumping stations, as well as associated mechanical, electrical and auxiliary installations. The modernization is intended to improve drainage performance and operational reliability, increase energy efficiency and reduce operation and maintenance costs, thereby enhancing the climate resilience and productivity of the agricultural area served by the two pumping stations. A margin of Preference is Not Applicable Bidding will be conducted through international competitive procurement using Request for Bids (RFB) as specified in the World Bank’s “Procurement Regulations for IPF Borrowers-” [insert date of applicable Procurement Regulations edition as per legal agreement] (“Procurement Regulations”) and is open to all eligible Bidders. Bids will be evaluated in accordance with the evaluation process set out in the bidding documents. The following weightings shall apply for Rated Criteria (including technical and non-price factors): 30 %. and for the Bid cost: 70 %. Interested eligible Bidders may obtain further information from Ministry of Agriculture and Rural Development and inspect the Bidding document during office hours 8:30 to 16:00 (Monday to Thursday) and 08:30 to 13:00 on Friday at the address given below . The Bidding document in English may be purchased by interested eligible Bidders upon the submission of a written application to the address below and upon payment of a nonrefundable fee of 5 ,000 ALL or of 50 Euro . The method of payment will be direct deposit to Raiffeisen Bank, account no. IBAN AL74202110060000000001979003 , name of account: Qëndrueshmëria ndaj Klimës dhe Zhvillimit të Bujqësisë , currency of account Albanian Lek (ALL) or to Raiffeisen Bank, account no. IBAN AL59202110060000000011979003 , name of account: Qëndrueshmëria ndaj Klimës dhe Zhvillimit të Bujqësisë, currency of account Euro. The document will be sent by email or airmail for overseas delivery, and by surface mail or courier for local delivery. Bids must be delivered to the address below on or before December 28, 2026, at 11:00 local time. Electronic bidding will not be permitted. Late Bids will be rejected. The outer Bid envelopes marked “ORIGINAL BID,” and the inner envelopes marked “TECHNICAL PART” will be publicly opened in the presence of the B",
+   "buyer": "Ministry of Agriculture and Rural Development",
+   "country": "Albania",
+   "deadline": "2026-12-28",
+   "published": "2026-11-10",
+   "url": "https://projects.worldbank.org/en/projects-operations/procurement-detail/OP00480669",
+   "notice_type": "Invitation for Bids",
+   "procurement_method": "Request for Bids",
+   "sector": "دولتی (پروژه با تأمین مالی بانک جهانی)",
+   "facts": {
+    "price": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "guarantee": "طبق آگهی: bid-securing declaration; (ii) sexual exploitation and abuse (sea) and/or sexual harassment (sh) declaration; and (iii) local labour method statement",
+    "experience": "در خلاصه‌ی آگهی نیامده – در اسناد مناقصه",
+    "international": "رقابت ملی – احتمالاً محدود به شرکت‌های داخلی کشور خریدار"
+   },
+   "keyword_score": 2,
+   "domains": [
+    "oil_gas"
+   ],
+   "days_left": 38,
+   "line": "ai",
+   "status": "new",
+   "first_seen": "2026-11-20T09:04:14",
+   "history": [
+    {
+     "at": "2026-11-20T09:04:14",
+     "status": "new"
+    }
+   ]
+  },
+  "HEZ-11443772": {
+   "id": "HEZ-11443772",
+   "source": "آگهی مناقصه (آینه‌ی هزاره hezarehinfo.net — نسبت به درگاه ستاد تأیید نشده)",
+   "market": "domestic",
+   "title": "مناقصه عمومی یک مرحله‌ای سامانه هوشمند کنترل نظارت بر پمپ‌ها",
+   "description": "سامانه هوشمند کنترل و نظارت بر پمپ‌ها. دسته‌بندی آگهی در آینه‌ی هزاره: ابزار دقیق، اتوماسیون صنعتی، الکتروموتور و پمپ‌های شناور، تابلو برق و مراکز کنترل برق/مخابرات/نفت. با محصولات پایش هوشمند تجهیزات دوار سامانه (ApexAsset AI، IntelliLift) قابل پیشنهاد است. نام خریدار، مبلغ و تضمین در آگهی اصلی پشت احراز حساب آینه‌ی هزاره قفل است و نسبت این آگهی به درگاه ستاد (setadiran.ir) تأیید نشده — پیش از اقدام، کد آگهی 11443772 در ستاد استعلام شود.",
+   "buyer": "نامشخص (کد آگهی: 11443772)",
+   "country": "ایران – استان فارس",
+   "deadline": "2026-11-25",
+   "deadline_fa": "1405/09/04",
+   "published": "2026-11-19",
+   "url": "https://www.hezarehinfo.net/tenders/nid11443772",
+   "notice_type": "مناقصه عمومی یک‌مرحله‌ای",
+   "sector": "نامشخص",
+   "facts": {
+    "price": "در اسناد آگهی (پشت احراز حساب آینه‌ی هزاره)",
+    "guarantee": "در اسناد آگهی",
+    "experience": "—",
+    "international": "داخلی"
+   },
+   "domains": [
+    "oil_gas"
+   ],
+   "keyword_score": 3,
+   "days_left": 5,
+   "prefiltered": true,
+   "status": "new",
+   "line": "ai",
+   "first_seen": "2026-11-20T09:16:13",
+   "history": [
+    {
+     "at": "2026-11-20T09:16:13",
      "status": "new"
     }
    ]
@@ -6264,6 +7525,25 @@
    ],
    "actioned_ids": [],
    "reminders": []
+  },
+  {
+   "at": "2026-11-20T09:16:14",
+   "collected": 349,
+   "matched": 37,
+   "partner_drafts": [],
+   "events_added": 0,
+   "scholarships_added": 0,
+   "investors_added": 0,
+   "investor_drafts": [],
+   "leads_added": 0,
+   "papers_lines": [],
+   "events_soon": [],
+   "new_ids": [
+    "HEZ-11443772"
+   ],
+   "actioned_ids": [],
+   "reminders": [],
+   "note": "sandbox refresh: TED + World Bank live; setadiran/sate not reachable from the sandbox, domestic added by hand after web research (see data/tenders_hand/)"
   }
  ]
 }
