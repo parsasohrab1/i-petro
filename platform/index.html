@@ -277,13 +277,16 @@ function setPath(key, val){ const [a,b]=key.split("."); if(b) S[a][b]=val; else 
 // fields (status, history, LLM analysis) on top.
 let tendersRepo = null;
 const TENDER_LIST_FIELDS = ["source","market","title","description","buyer","country","deadline","deadline_fa","published","url","notice_type","sector","facts","domains","keyword_score","line","days_left","setad_number"];
-async function loadTendersRepo(){
-  if(!window.claude) return;   // read-only copy outside claude.ai has no db to merge into
-  try{ const r = await fetch("/data/tenders.json"); if(!r.ok) throw 0;
-    const d = await r.json(); tendersRepo = d.tenders||{};
+// Second update path: repo commits drive the dashboard even when the artifact DB is offline,
+// stale or missing — loadRepoData() fetches the repo files directly and renders them; the DB
+// (method one) still wins for team-side fields via mergeTendersRepo on every snapshot.
+async function loadRepoData(){
+  try{ const r=await fetch("/data/tenders.json"); if(!r.ok) throw 0;
+    const d=await r.json(); tendersRepo=d.tenders||{};
     if(S.m.tenders.length) mergeTendersRepo();
     render();
   }catch(e){}
+  fetch("/data/articles_export/article_registry.json").then(r=>r.ok?r.json():Promise.reject()).then(d=>{S.artReg=d||{list:[]};render();}).catch(()=>{});
 }
 function mergeTendersRepo(){
   if(!tendersRepo) return;
@@ -4420,10 +4423,19 @@ VIEWS["articles.reg"] = () => {
       prod:{name:d.product_full_name||d.product||"—",repo:d.product||"",new:false},
       repo:d.product?ABS_GH+d.product:"", st:"ms"};
   });
-  const rows = main.concat(extra);
+  const rows0 = main.concat(extra);
+  // article registry from the repo (data/articles_export/article_registry.json, updated by commits)
+  // is authoritative: it overrides the derived repo/product/title/status and appends rows the
+  // derived sources do not know yet, so prompt-driven repo updates show up without any DB write
+  const regById = Object.fromEntries(((S.artReg&&S.artReg.list)||[]).map(g=>[g.id,g]));
+  const regSt = k => k==="ms"?"ms":k==="abs"?"abs":"none";
+  const rows1 = rows0.map(r=>{ const g=regById[r.a.id]; if(!g) return r;
+    return {...r, title:g.title||r.title, prod:{name:g.product_name||r.prod.name,repo:g.product_key||r.prod.repo,new:false}, repo:g.repo_url||r.repo, st:g.status_key?regSt(g.status_key):r.st}; });
+  const regExtra = ((S.artReg&&S.artReg.list)||[]).filter(g=>!rows1.some(r=>r.a.id===g.id)).map(g=>({a:{id:g.id,name:g.venue||g.id}, title:g.title||"", prod:{name:g.product_name||"—",repo:g.product_key||"",new:false}, repo:g.repo_url||"", st:regSt(g.status_key)}));
+  const rows = rows1.concat(regExtra);
   const L = {ms:["ثبت منواسکریپت","p-ok"],abs:["ثبت خلاصه","p-info"],none:["بی‌اقدام","p-mute"]};
   const cnt = k => rows.filter(r=>r.st===k).length;
-  return `<p class="note">چهار مقدار ثبت‌شده برای هر مقاله: <b>آدرس ریپو</b>، <b>نام محصول</b>، <b>نام مقاله</b> و <b>وضعیت مقاله</b> (ثبت خلاصه، ثبت منواسکریپت، بی‌اقدام). منبع: چکیده‌های آماده‌ی سامانه، منواسکریپت‌های ریپو (outputs/manuscripts و data/article_drafts.json) و وضعیت ثبت مقصدها. فایل ورد جداگانه‌ی هر مقاله در <span class="mono">outputs/article_word_files</span> ریپو ساخته می‌شود (scripts/build_article_word_files.py). همه‌ی ریپوها خصوصی‌اند (🔒).</p>`+
+  return `<p class="note">چهار مقدار ثبت‌شده برای هر مقاله: <b>آدرس ریپو</b>، <b>نام محصول</b>، <b>نام مقاله</b> و <b>وضعیت مقاله</b> (ثبت خلاصه، ثبت منواسکریپت، بی‌اقدام). منبع: چکیده‌های آماده‌ی سامانه، منواسکریپت‌های ریپو (outputs/manuscripts و data/article_drafts.json)، رجیستری ریپو (data/articles_export/article_registry.json — به‌روزرسانی با کامیت) و وضعیت ثبت مقصدها. فایل ورد جداگانه‌ی هر مقاله در <span class="mono">outputs/article_word_files</span> ریپو ساخته می‌شود (scripts/build_article_word_files.py). همه‌ی ریپوها خصوصی‌اند (🔒).</p>`+
    kpis([["ثبت منواسکریپت",faNum(cnt("ms"))],["ثبت خلاصه",faNum(cnt("abs"))],["بی‌اقدام",faNum(cnt("none"))],["جمع مقالات",faNum(rows.length)]])+
    table(["مقصد","نام مقاله","نام محصول","آدرس ریپو","وضعیت مقاله"],rows.map(r=>`<tr>${td("مقصد",esc(r.a.name),"t")}${td("نام مقاله",r.title?`<span dir="ltr">${esc(r.title)}</span>`:'<span class="meta">—</span>',"t")}${td("نام محصول",esc(r.prod.name))}${td("آدرس ریپو",r.repo?`${link(r.repo,"🔒 ریپو")}<br><span class="meta mono">${esc(r.repo.replace(ABS_GH,""))}</span>`:'<span class="meta">—</span>',"t")}${td("وضعیت",`<span class="pill ${L[r.st][1]}">${L[r.st][0]}</span>`)}</tr>`),"مقاله‌ای ثبت نشده است.");
 };
@@ -5537,7 +5549,7 @@ document.addEventListener("change", async e => { const el=e.target.closest("[dat
 async function boot(){
   paintBrand(); render();
   const c = window.claude;
-  if(!c || !c.use){ $("#meChip").textContent="نمای فقط‌خواندنی"; $("#view").innerHTML=`<p class="empty">این صفحه باید داخل claude.ai باز شود تا به پایگاه داده‌ی مشترک وصل شود.</p>`; return; }
+  if(!c || !c.use){ $("#meChip").textContent="نمای فقط‌خواندنی (داده‌ی ریپو)"; loadRepoData(); return; }   // repo commits drive the dashboard without the artifact DB too
   const [db,user,assets,sample,downloads] = await Promise.all(["db","user","assets","sample","downloads"].map(n=>c.use(n).catch(()=>null)));
   S.db=db; S.user=user; S.assets=assets; S.sample=sample; S.downloads=downloads;
   if(user){ const me=await user.me(); S.me={id:me.id,isOwner:me.isOwner,canEdit:me.canEdit}; S.canWrite=await user.can("data.write");
@@ -5546,7 +5558,7 @@ async function boot(){
   render();
   if(!db){ $("#view").innerHTML=`<p class="empty">پایگاه داده برای این نما در دسترس نیست. با حساب claude.ai وارد شوید.</p>`; return; }
   subscribe();
-  loadTendersRepo();   // repo tenders as the base layer under the artifact DB (see mergeTendersRepo)
+  loadRepoData();   // repo tenders + article registry as the base layers under the artifact DB
   setTimeout(()=>{ const mm=myMember(); if(needsNda(mm)&&!ndaSigned(mm)&&!S.ndaShown&&!$("#layer").innerHTML){ S.ndaShown=true; ndaView(mm.id); } else if(needsTraining(mm)&&!trainingDone(mm)&&!S.ndaShown&&!$("#layer").innerHTML){ S.ndaShown=true; trainingView(mm.id); } }, 6000);
   setTimeout(maybeWelcome, 4000); // fallback if the members snapshot is slow
   setTimeout(()=>{ if(isAdmin()) loadAllReports(); }, 2500);
