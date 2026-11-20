@@ -28,6 +28,7 @@ changes from the repo files.
 usage: python scripts/dashboard_update.py instruction.json
 """
 import json
+import subprocess
 import sys
 from datetime import date
 from pathlib import Path
@@ -158,6 +159,13 @@ def main(path):
 
     n_docs, n_batches = platform_sync.export()
     log.append(f"platform export refreshed: {n_docs} docs in {n_batches} batches (method one stays in sync)")
+    r = subprocess.run([sys.executable, str(ROOT / "scripts" / "embed_dashboard_data.py")],
+                       capture_output=True, text=True)
+    if r.returncode == 0:
+        log.append("inline REPO_SNAPSHOT rebuilt in platform/index.html — commit index.html too; "
+                   "updating the artifact HTML alone then refreshes every section")
+    else:
+        log.append(f"WARNING: embed rebuild failed: {(r.stderr or '').strip()}")
     for line in log:
         print(f"[dashboard-update] {line}")
     print("[dashboard-update] now commit and push — the dashboard picks the changes up from the repo files")

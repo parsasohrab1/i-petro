@@ -103,7 +103,9 @@ The dashboard has TWO update paths; this directory serves method one:
    data/papers.json, requests_seed.json, platform/products_seed.json and
    data/articles_export/article_registry.json. Update them with scripts/dashboard_update.py
    or scripts/refresh_tenders.py and just commit+push. This works even when the artifact DB
-   is offline or stale.
+   is offline or stale. platform/index.html also carries an inline snapshot of all sections
+   (window.REPO_SNAPSHOT, rebuilt by scripts/embed_dashboard_data.py), so updating the artifact
+   HTML alone refreshes every section even when the artifact cannot fetch the data files.
 
 - `manifest.json` — batches (max 50 writes each). Each entry: `{collection, doc_id, file_path}`;
   `file_path` is relative to the repository root.
