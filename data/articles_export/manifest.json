@@ -1,0 +1,11 @@
+{
+  "batches": [
+    [
+      {
+        "collection": "settings",
+        "doc_id": "article_registry",
+        "file_path": "data/articles_export/article_registry.json"
+      }
+    ]
+  ]
+}
