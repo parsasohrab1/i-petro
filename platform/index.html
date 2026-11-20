@@ -270,44 +270,80 @@ function privateRows(key, rows){
 }
 const visibleSubs = mod => (SUBS[mod]||[]).filter(([k])=>!(k==="access"&&!S.me.isOwner)&&(isAdmin()||!(PRIVATE_SUBS[mod]||[]).includes(k))&&!(mod==="scholar"&&!S.me.isOwner&&["profile","cv"].includes(k))&&!(mod==="basket"&&!S.me.isOwner&&basAcc()&&!["list","data"].includes(k)));   // people with basket access see only the product list and data hub (medical products), never the TRL / ideas tabs
 function setPath(key, val){ const [a,b]=key.split("."); if(b) S[a][b]=val; else S[a]=val; }
-// Repo fallback for the tender lists: data/tenders.json is refreshed by the daily scan and by
-// scripts/refresh_tenders.py, but the artifact DB copy can lag behind until the platform_sync
-// export is applied with the ArtifactData tool. The repo file is the BASE layer: it fills in
-// records the DB lacks and refreshes listing fields, while the DB keeps the team's pipeline
-// fields (status, history, LLM analysis) on top.
-let tendersRepo = null;
+// Repo base layers (update method two): files committed to the repo drive every repo-backed
+// section of the dashboard — with or without the artifact DB. For each section the DB (method
+// one) still wins for team-owned fields (protect); tenders additionally keep status/history/
+// analysis DB-side (only repo expiry overrides), while events/investors/leads/partners/
+// requests/scholarships/ops/products/patents treat the repo file as the source of truth.
+// data/articles_export/article_registry.json (articles.reg) and data/article_drafts.json are
+// consumed separately.
 const TENDER_LIST_FIELDS = ["source","market","title","description","buyer","country","deadline","deadline_fa","published","url","notice_type","sector","facts","domains","keyword_score","line","days_left","setad_number"];
-// Second update path: repo commits drive the dashboard even when the artifact DB is offline,
-// stale or missing — loadRepoData() fetches the repo files directly and renders them; the DB
-// (method one) still wins for team-side fields via mergeTendersRepo on every snapshot.
+const REPO_BASE = {
+  "m.tenders":  {url:"/data/tenders.json", list:"tenders", tender:true},
+  "m.events":   {url:"/data/events.json", list:"events"},
+  "m.investors":{url:"/data/investors.json", list:"investors"},
+  "m.leads":    {url:"/data/leads.json", list:"leads"},
+  "m.partners": {url:"/data/partners.json", list:"companies"},
+  "m.requests": {url:"/requests_seed.json", list:"requests"},
+  "schol":      {url:"/data/scholarships.json", list:"scholarships"},
+  "opsList":    {url:"/data/patent_ops.json", list:"items"},
+  "calls":      {url:"/data/papers.json", list:"calls", protect:["ack"]},
+  "products":   {url:"/platform/products_seed.json", list:"products", protect:["patentability"]},
+  "patents":    {url:"/platform/products_seed.json", list:"patents_from_repos"}
+};
+const REPO_DATA = {};
+const getPath = key => { const [a,b]=key.split("."); return b ? S[a] && S[a][b] : S[key]; };
 async function loadRepoData(){
-  try{ const r=await fetch("/data/tenders.json"); if(!r.ok) throw 0;
-    const d=await r.json(); tendersRepo=d.tenders||{};
-    if(S.m.tenders.length) mergeTendersRepo();
-    render();
-  }catch(e){}
+  await Promise.all(Object.values(REPO_BASE).map(cfg => fetch(cfg.url).then(r=>r.ok?r.json():Promise.reject()).then(d=>{REPO_DATA[cfg.url]=d;}).catch(()=>{})));
+  for(const key of Object.keys(REPO_BASE)) mergeRepo(key);
+  render();
   fetch("/data/articles_export/article_registry.json").then(r=>r.ok?r.json():Promise.reject()).then(d=>{S.artReg=d||{list:[]};render();}).catch(()=>{});
 }
-function mergeTendersRepo(){
-  if(!tendersRepo) return;
-  const dbRows = S.m.tenders.slice(), out = {};
-  for(const [tid,rec] of Object.entries(tendersRepo)){
-    const db = dbRows.find(t=>t.id===tid);
-    if(!db){ out[tid] = {...rec, id:tid}; continue; }
-    const m = {...db};
-    for(const f of TENDER_LIST_FIELDS) if(rec[f]!=null&&rec[f]!=="") m[f]=rec[f];
-    m.status = rec.status==="expired" ? "expired" : (db.status||rec.status||"new");   // repo expiry wins, DB team states win otherwise
-    out[tid] = m;
+function mergeRepo(key){
+  const cfg = REPO_BASE[key], data = REPO_DATA[cfg.url];
+  if(!data) return;
+  const raw = data[cfg.list];
+  if(!raw) return;
+  const rows = Array.isArray(raw) ? raw.map(r=>[String(r.id), r]) : Object.entries(raw);
+  const cur = getPath(key);
+  if(Array.isArray(cur) || cur === undefined || cur === null){
+    const arr = Array.isArray(cur) ? cur : [];
+    const byId = {}; arr.forEach(r=>{ byId[r.id]=r; });
+    const out = [];
+    for(const [rid,rec] of rows){
+      const db = byId[rid];
+      if(!db){ out.push({...rec, id: rec.id||rid}); continue; }
+      const m = {...db};
+      for(const f of Object.keys(rec)){
+        if(cfg.protect && cfg.protect.includes(f)) continue;
+        if(cfg.tender){
+          if(f==="status"){ m.status = rec.status==="expired" ? "expired" : (db.status||rec.status||"new"); continue; }   // repo expiry wins, DB team states win otherwise
+          if(f==="history"||f==="first_seen") continue;
+          if(TENDER_LIST_FIELDS.includes(f) && rec[f]!=null && rec[f]!=="") m[f]=rec[f];
+          continue;
+        }
+        m[f]=rec[f];
+      }
+      out.push(m);
+    }
+    arr.forEach(r=>{ if(!out.some(x=>x.id===r.id)) out.push(r); });   // DB-only records (added by the team) stay untouched
+    setPath(key, out);
+  } else {   // map-shaped state (calls: {venueId: record}) — repo fills missing venue ids
+    const map = typeof cur==="object" ? {...cur} : {};
+    for(const [rid,rec] of rows){
+      const m = {...(map[rid]||{})};
+      for(const f of Object.keys(rec)){ if(!(cfg.protect && cfg.protect.includes(f))) m[f]=rec[f]; }
+      map[rid] = m;
+    }
+    setPath(key, map);
   }
-  for(const t of dbRows) if(!out[t.id]) out[t.id] = t;   // DB-only records (added by the team) stay untouched
-  S.m.tenders = Object.values(out);
 }
 function subscribe(){
   for(const [path,key] of Object.entries(COLS)){
     S.db.collection(path).onSnapshot(snap => {
       if(key==="members"){ S.rosterAll = snap.docs.map(d => ({id:d.id, full_name:d.data().full_name||d.id, team:d.data().team||"ai"})); syncRoster(); }   // names and team only: the picker for taking or handing over items
       setPath(key, privateRows(key, snap.docs.map(d => ({id:d.id, ...d.data()}))));
-      if(key==="m.tenders") mergeTendersRepo();
+      if(REPO_BASE[key]) mergeRepo(key);
       if(key==="tasks"){ S.tasksArch=S.tasks.filter(t=>t.archived); S.tasks=S.tasks.filter(t=>!t.archived); }   // tasks the system verified as done leave every list and wait in the archive tab
       S.loaded = true; S.got.add(key); render(); if(key==="members") maybeWelcome();
     }, () => {});
@@ -352,7 +388,7 @@ function subscribe(){
   S.db.doc("settings/article_manuscripts2").onSnapshot(d => { S.msDb2 = d.exists ? (d.data().map||{}) : {}; S.msDb = {...(S.msDb1||{}),...S.msDb2}; render(); }, ()=>{});
   S.db.doc("settings/article_abstracts").onSnapshot(d => { S.absDb = d.exists ? (d.data().map||{}) : {}; render(); }, ()=>{});   // {venueId: {title, abstract, keywords[], profile, product:{name,repo,new}, draft_note}}
   S.db.doc("settings/product_pool").onSnapshot(d => { S.pool = d.exists ? d.data() : {list:[]}; render(); }, ()=>{});   // products without a journal, rejected or lacking novelty; ready for new free journals
-  S.db.doc("settings/article_calls").onSnapshot(d => { S.calls = d.exists ? (d.data().map||{}) : {}; render(); paintBell(); }, ()=>{});   // {venueId: {…venue fields, found, product_hint, ack}} written by the weekly CFP job
+  S.db.doc("settings/article_calls").onSnapshot(d => { S.calls = d.exists ? (d.data().map||{}) : {}; mergeRepo("calls"); render(); paintBell(); }, ()=>{});   // {venueId: {…venue fields, found, product_hint, ack}} written by the weekly CFP job; repo papers.json is the base layer
   // Load repo-bundled article drafts as fallback for Firebase-only venues
   fetch("/data/article_drafts.json").then(r=>r.ok?r.json():Promise.reject()).then(d=>{S.artDrafts=d.drafts||{};render();}).catch(()=>{S.artDrafts={};});
   S.db.doc("settings/article_product").onSnapshot(d => { S.artProd = d.exists ? d.data() : {}; render(); }, ()=>{});
