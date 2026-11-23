@@ -232,7 +232,7 @@ const logoSrc = () => S.settings.logo_asset ? blobUrl(S.settings.logo_asset) : D
 const S = {mod:"market", sub:"iran", q:"", db:null, user:null, assets:null, sample:null, downloads:null,
   me:{id:null,isOwner:false,canEdit:false}, canWrite:null,
   m:{tenders:[],events:[],investors:[],leads:[],partners:[]}, opsList:[],
-  settings:{}, members:[], tasks:[], letters:[], lettersArchive:[], shTrk:[], lh:null, draft:null, archF:"all", ra:{member:null,from:"",to:""}, repLoaded:false, allLoaded:false, forceFull:false, products:[], patents:[], finance:[], clients:[], tracking:{}, schol:[], sp:{}, cdocs:{}, ip:{countries:{},drafts:{}}, mailreq:{}, ipTab:"partners", news:{items:[]}, bi:{list:[]}, arts:[], tn:[], tnF:{src:"",ai:false,dom:"",st:""}, artRec:{}, artProd:{}, artSt:{}, artAcc:{ids:[]}, artDeny:{ids:[]}, artMail:{}, ct:[], artF:{field:"",mode:"",type:"",past:false},
+  settings:{}, members:[], tasks:[], letters:[], lettersArchive:[], shTrk:[], lh:null, draft:null, archF:"all", ra:{member:null,from:"",to:""}, repLoaded:false, allLoaded:false, forceFull:false, products:[], patents:[], finance:[], clients:[], tracking:{}, schol:[], sp:{}, cdocs:{}, ip:{countries:{},drafts:{}}, mailreq:{}, tclaims:{}, ipTab:"partners", news:{items:[]}, bi:{list:[]}, arts:[], tn:[], tnF:{src:"",ai:false,dom:"",st:""}, artRec:{}, artProd:{}, artSt:{}, artAcc:{ids:[]}, artDeny:{ids:[]}, artMail:{}, ct:[], artF:{field:"",mode:"",type:"",past:false},
   myAtt:[], myReports:[], allReports:[], allAtt:[], loaded:false, sprints:[], boardMine:false, tour:null, got:new Set(), welcomed:false, calMine:false, calTypes:null, seenTasks:new Set(), planner:{}, taskWho:"", taskFilter:"", subsAll:false, erpLog:{}, erpDept:""};
 try{const v=JSON.parse(localStorage.getItem("ppt-view")||"{}");if(v.mod&&SUBS[v.mod]){S.mod=v.mod;S.sub=SUBS[v.mod].some(x=>x[0]===v.sub)?v.sub:SUBS[v.mod][0][0]}}catch(e){}
 try{S.seenTasks=new Set(JSON.parse(localStorage.getItem("ppt-seen")||"[]"))}catch(e){}
@@ -338,6 +338,7 @@ function lzSync(){
   }
 }
 function subscribe2(){
+  S.db.collection("taskclaims").onSnapshot(snap => { const t={}; snap.docs.forEach(d=>t[d.id]=d.data()); S.tclaims=t; render(); }, ()=>{});
   S.db.collection("mailreq").onSnapshot(snap => { const t={}; snap.docs.forEach(d=>t[d.id]=d.data()); S.mailreq=t; render(); }, ()=>{});
   S.db.collection("tracking").onSnapshot(snap => { const t={}; snap.docs.forEach(d=>t[d.id]=d.data()); S.tracking=t; render(); }, ()=>{});
   S.db.collection("erp_log").onSnapshot(snap => { const t={}; snap.docs.forEach(d=>t[d.id]=d.data()); S.erpLog=t; render(); }, ()=>{});   // erp_log/<duty id>: {last_done, by, at, count}
@@ -1735,16 +1736,15 @@ function reportForm(date){
   const h0=hoursOf(first);
   const rno=rptNo(S.myReports.length+1);
   openForm({title:"گزارش عملکرد", values:{date:first,...RPT_DEF}, extra:`<div class="card" style="margin-bottom:8px"><b>نام کامل:</b> ${esc(me.full_name)} · <b>تیم:</b> ${esc(TEAMS[me.team]||"—")} · <b>تاریخ عضویت در تیم:</b> ${me.joined?faDate(me.joined):"—"} · <b>شماره:</b> ${rno}</div><p class="note">ساعت کار ثبت‌شده‌ی روز انتخابی: ${h0==null?"ورود/خروج کامل نیست":h0.toFixed(1)} · تسک‌های باز: ${faNum(myTasks.filter(t=>!["done","approved"].includes(t.status)).length)}. گزارش روزهای گذشته با برچسب «با تأخیر» در بایگانی ثبت می‌شود.</p>`,
-   fields:[{k:"date",label:"تاریخ گزارش",type:"select",options:opts},{k:"study",label:"مطالعاتی",type:"textarea"},{k:"product",label:"توسعه محصول",type:"textarea"},{k:"project",label:"پروژه",type:"textarea"},{k:"unlisted",label:"کارهایی که امروز انجام دادم اما در سامانه تعریف نشده بود (هر خط یک کار)",type:"textarea",hint:"هر خط به‌صورت یک تسک انجام‌شده برای خودتان ثبت می‌شود و در نمره‌ی بهره‌وری امروز به حساب می‌آید."},{k:"tomorrow",label:"لیست اولویت‌های فردا",type:"textarea"},{k:"blockers",label:"موانع (اختیاری)",type:"textarea"}],
+   fields:[{k:"date",label:"تاریخ گزارش",type:"select",options:opts},{k:"study",label:"مطالعاتی",type:"textarea"},{k:"product",label:"توسعه محصول",type:"textarea"},{k:"project",label:"پروژه",type:"textarea"},{k:"unlisted",label:"کارهایی که امروز انجام دادم اما در سامانه تعریف نشده بود (هر خط یک کار)",type:"textarea",hint:"هر خط به‌صورت پیشنهاد تعریف تسک برای مالک سامانه ارسال می‌شود و فقط پس از تأیید مالک در نمره‌ی بهره‌وری به حساب می‌آید."},{k:"tomorrow",label:"لیست اولویت‌های فردا",type:"textarea"},{k:"blockers",label:"موانع (اختیاری)",type:"textarea"}],
    onSave: async v => {
      const sec={study:rptFilled(v.study,"study")?v.study:"",product:rptFilled(v.product,"product")?v.product:"",project:rptFilled(v.project,"project")?v.project:""};
      if(!sec.study&&!sec.product&&!sec.project){toast("حداقل یکی از بخش‌های مطالعاتی، توسعه محصول یا پروژه را با کار واقعی پر کنید.");return false}
      const hours=hoursOf(v.date), un=String(v.unlisted||"").split("\n").map(x=>x.trim()).filter(x=>x.length>=3).slice(0,12);
      const rec={date:v.date,hours:hours==null?null:Number(hours.toFixed(1)),...sec,text:rptCompose(sec),no:rno,name:me.full_name,team:me.team,joined:me.joined||"",blockers:v.blockers,unlisted:un,tomorrow:rptFilled(v.tomorrow,"tomorrow")?v.tomorrow:"",score:null,feedback:"",late:v.date<today(),created:new Date().toISOString()};
      const ok=await save(`reports/${S.me.id}/items/${v.date}`,rec,"گزارش ثبت شد؛ در حال نمره‌دهی…"); if(!ok) return false;
-     const mineNew=[]; for(const title of un){ const tid=newId(), at=v.date+"T"+new Date().toISOString().slice(11), t={title,desc:"کار خودتعریف‌شده (ثبت‌شده در گزارش عملکرد "+v.date+")",assignee:S.me.id,created_by:S.me.id,team:me.team||"ai",priority:"normal",type:"task",status:"done",self_declared:true,created:at,updated:at,done_at:at,due:v.date};
-       try{ await S.db.doc(`tasks/${tid}`).set(t); mineNew.push({id:tid,...t}); }catch(er){ console.error("unlisted task",er); } }
-     gradeReport(rec, me, [...myTasks,...mineNew]); return true;
+     for(const title of un){ try{ await S.db.doc(`taskclaims/${newId()}`).set({title,desc:"ثبت‌شده در گزارش عملکرد "+v.date,by:S.me.id,team:me.team||"ai",date:v.date,status:"pending",created:new Date().toISOString()}); }catch(er){ console.error("task claim",er); } }
+     gradeReport(rec, me, myTasks, un); return true;
    }});
 }
 // ---- Task audit: a report is judged against what the person was asked to deliver, never on its own wording.
@@ -1764,10 +1764,10 @@ function auditTasks(memberId, date, tasks, reportText){
     if(!expected||(fin&&finDay<date&&t.repeat!=="daily")) continue;
     let ratio, evidence;
     if(q&&q.unit==="article"){ ratio=Math.min(1,artDone/q.n); evidence=`${artDone} از ${q.n} مقاله در سامانه (Articles) امروز توسط این فرد ثبت شده است`; }
-    else if(doneToday){ ratio=1; evidence=(t.self_declared?"کار خودتعریف‌شده‌ی خارج از فهرست؛ ":"")+"تسک امروز انجام‌شده ثبت شده"+((t.uploads||[]).length?`، ${(t.uploads||[]).length} فایل پیوست`:"")+(q&&q.n>1?`؛ تعداد ${q.n} ${q.unit} را سامانه نمی‌تواند خودکار بشمارد`:""); }
+    else if(doneToday){ ratio=1; evidence=(t.self_declared?"کار خارج از فهرست با تأیید مالک؛ ":"")+"تسک امروز انجام‌شده ثبت شده"+((t.uploads||[]).length?`، ${(t.uploads||[]).length} فایل پیوست`:"")+(q&&q.n>1?`؛ تعداد ${q.n} ${q.unit} را سامانه نمی‌تواند خودکار بشمارد`:""); }
     else if(t.status==="doing"&&touched){ ratio=.3; evidence="در حال انجام؛ امروز به‌روز شده اما تمام نشده"; }
-    else if(reportText&&taskMentioned(t,reportText)){ ratio=.6; evidence="در گزارش به این کار اشاره شده اما وضعیتش در سامانه به‌روز نشده است؛ وضعیت تسک را به‌روز کنید"; }
-    else { ratio=t.status==="doing"?.15:0; evidence=t.status==="doing"?"در حال انجام؛ امروز پیشرفتی در سامانه ثبت نشده و در گزارش هم به آن اشاره نشده":"انجام نشده"; }
+    else if(reportText&&taskMentioned(t,reportText)){ ratio=.25; evidence="در گزارش به این کار اشاره شده اما در سامانه مدرکی از انجام آن ثبت نشده است"; }
+    else { ratio=t.status==="doing"?.1:0; evidence=t.status==="doing"?"در حال انجام؛ امروز پیشرفتی در سامانه ثبت نشده و در گزارش هم به آن اشاره نشده":"انجام نشده"; }
     rows.push({title:t.title||"",priority:t.priority||"normal",need:q?`${q.n} ${q.unit==="article"?"مقاله":q.unit}`:"",status:t.status,ratio:Math.round(ratio*100)/100,evidence});
   }
   const w=r=>r.priority==="high"?2:1, tw=rows.reduce((a,r)=>a+w(r),0);
@@ -1777,23 +1777,24 @@ function auditTasks(memberId, date, tasks, reportText){
 function claimedArticles(text){ const t=faToLat(text||""), nums=[...t.matchAll(/(\d+)\s*(?:عدد\s*)?(?:مقاله|آردیکل|آرتیکل|article)/gi)].map(m=>Number(m[1])).filter(n=>n>0&&n<200);
   const listed=(t.match(/^\s*\d+\s*[-–.)]?\s*(?:ثبت|ارسال)[^\n]*(?:مقاله|conference|conf|journal|2027|2026)/gim)||[]).length;
   return Math.max(0,...nums,listed); }
-async function gradeReport(rec, me, tasks){
+async function gradeReport(rec, me, tasks, pending=[]){
   if(!S.sample){ toast("نمره‌دهی خودکار در این نما در دسترس نیست؛ مدیر بعداً نمره می‌دهد."); return; }
   const au=auditTasks(me.id||S.me.id, rec.date, tasks, rec.text), claimed=claimedArticles(rec.text), over=claimed>au.artDone?claimed-au.artDone:0;
-  const prompt = `You are a fair but evidence-based performance reviewer at an early-stage Iranian AI company (Petro Pala Toos). Step 1 is already done by the system: it audited the person's assigned tasks against what is actually recorded in the work system (below). Step 2 is yours: judge the QUALITY OF THE REPORT and detect BLUFFING.
-Bluffing means: claims that the audit or the attendance record contradicts (e.g. the report lists 3 registered articles but the system shows fewer), claimed work that cannot fit in the recorded net hours, inflated volume (padding, repeated or filler lines, long vague lists, the same item counted twice, generic text that could describe any day), invented deliverables with no link, reference or number, or work unrelated to the assigned tasks presented as progress. Honest short reports, and reports that openly admit an unmet quota, are NOT bluffing. Staff work through their assigned tasks all day and usually update the work system only at the end of the day, so a task that the report describes concretely is NOT inactivity even if its status was not updated, and a missing system update alone is never a bluff (only a contradiction is). Work the person defined for themselves because it was not in the system (marked as self-declared in the audit) is real delivered work. Reward specific, honest reports, and in the feedback remind the person to define for themselves any work that is not defined in the system so it counts. Be fair: do not call something a bluff unless you can name the specific evidence.
+  const prompt = `You are an exacting, evidence-only performance reviewer at an early-stage Iranian AI company (Petro Pala Toos). Step 1 is already done by the system: it compared, task by task, what the person was assigned to do with what is actually recorded as done in the work system (below). Step 2 is yours: judge the QUALITY OF THE REPORT, compare what the report says was done with what the audit shows, and detect BLUFFING.
+Bluffing means: claims that the audit or the attendance record contradicts (e.g. the report lists 3 registered articles but the system shows fewer), claimed work that cannot fit in the recorded net hours, inflated volume (padding, repeated or filler lines, long vague lists, the same item counted twice, generic text that could describe any day), invented deliverables with no link, reference or number, or work unrelated to the assigned tasks presented as progress. Honest short reports, and reports that openly admit an unmet quota, are NOT bluffing. Only what the system records counts. A task that the report merely describes, with no matching system record (the audit marks these as mentioned but not recorded), earns little credit, and presenting such a task as finished is an unverified claim: treat it as at least mild exaggeration. Work outside the assigned tasks counts only after the system owner approved it (the audit marks approved ones); work the person lists as not yet approved earns nothing. In the feedback, state that work which is not defined as a task is not scored and that it can be proposed to the owner for approval. Exaggeration must be named with the specific evidence; never invent it.
 Rules: the person must work 8 net hours on each office day.
 Team: ${TEAMS[me.team]||me.team}. Staff type: ${STAFF[me.staff_type]||me.staff_type}.
 Net hours recorded: ${rec.hours==null?"not recorded":rec.hours}.
 TASK AUDIT (system evidence, ratio 0..1; task score ${au.taskScore==null?"n/a":au.taskScore}/100): ${JSON.stringify(au.rows)}
 Articles the system shows this person registered that day: ${au.artDone}. Articles the report claims: ${claimed}.
+Work the person says they did outside the assigned tasks, NOT yet approved by the owner (earns no credit): ${JSON.stringify(pending)}.
 Report: ${rec.text}
 Blockers: ${rec.blockers||"-"}
-Return JSON only: {"quality": <integer 0-100 report quality>, "bluff_level": <0 none | 1 mild exaggeration | 2 clear exaggeration or padding | 3 fabricated or seriously inflated>, "bluff_fa": "<Persian: the specific evidence for the bluff, empty if bluff_level is 0>", "mismatch_fa": "<Persian: each task where the report claims or omits something that contradicts the audit; empty string if none>", "feedback_fa": "<2-3 short Persian sentences: which required tasks were not met (with the numbers), and exactly what to do tomorrow. Do not use the word سخت‌گیر.>"}`;
+Return JSON only: {"quality": <integer 0-100 report quality>, "bluff_level": <0 none | 1 mild exaggeration | 2 clear exaggeration or padding | 3 fabricated or seriously inflated>, "bluff_fa": "<Persian: the specific evidence for the bluff, empty if bluff_level is 0>", "mismatch_fa": "<Persian: each task where the report claims or omits something that contradicts the audit; empty string if none>", "feedback_fa": "<2-3 short Persian sentences: which required tasks were not met (with the numbers), and exactly what to do tomorrow. Never mention strictness, harshness or the grading method; state only facts and numbers.>"}`;
   try{
     const r = await S.sample.json(prompt, {modelTier:"default"});
     const quality=Math.max(0,Math.min(100,Math.round(Number(r.quality)||0)));
-    const base = au.taskScore==null ? quality : Math.round(.7*au.taskScore+.3*quality);   // task delivery 70 %, report quality 30 %
+    const base = au.taskScore==null ? Math.round(quality*.5) : Math.round(.8*au.taskScore+.2*quality);   // task delivery 80 %, report quality 20 %; with no assigned task the report alone counts half
     const level = Math.max(Math.max(0,Math.min(3,Math.round(Number(r.bluff_level)||0))), over>0?(over>=3?3:2):0);   // an article claim above the system record is at least a clear exaggeration
     const penalty = [0,20,50,100][level];   // bluffing is punished: the score can go below zero
     const score = Math.max(-100,Math.min(100,base-penalty));
@@ -1810,7 +1811,7 @@ const auditHtml = r => ((r.audit&&r.audit.length)||r.bluff_level)?`<details${r.b
 async function regradeRecent(days){
   if(!S.me.isOwner||!S.allReports){ toast("ابتدا «به‌روزرسانی گزارش همه‌ی اعضا» را بزنید."); return; }
   const from=addDays(today(),-days), list=S.allReports.filter(r=>(r.date||"")>=from); let n=0;
-  for(const r of list){ const m=S.members.find(x=>x.id===r.member); if(!m) continue; toast(`نمره‌دهی دوباره: ${m.full_name||m.id} · ${r.date}`); await gradeReport({...r},{...m,id:m.id},(S.tasks||[]).filter(t=>t.assignee===m.id)); n++; }
+  for(const r of list){ const m=S.members.find(x=>x.id===r.member); if(!m) continue; toast(`نمره‌دهی دوباره: ${m.full_name||m.id} · ${r.date}`); await gradeReport({...r},{...m,id:m.id},(S.tasks||[]).filter(t=>t.assignee===m.id),pendingClaims(m.id,r.date)); n++; }
   toast(`${faNum(n)} گزارش دوباره نمره‌دهی شد`);
 }
 // ---------- REPORT ARCHIVE: one row per day for each person; missed office days are visible and flagged
@@ -4764,16 +4765,25 @@ function newLetterForm(){
       return save(`letters_archive/${newId()}`,{...rest,recipient:parts.join(" — "),scan_asset:asset,log:[{at:now,by:S.me.id,stage:rest.stage,status:rest.status,note:"ثبت نامه‌ی جدید در هلدینگ"}],created:now,updated:now,created_by:S.me.id,new_letter:true},"نامه ثبت شد"); }});
 }
 // ================================================================== BPMS: work that is not defined in the system (so the productivity score is not lost)
+const pendingClaims=(mid,date)=>Object.values(S.tclaims||{}).filter(c=>c.by===mid&&c.date===date&&c.status==="pending").map(c=>c.title);
+// work done outside the task list: members propose, only the owner approves
+function tclaimsCard(){
+  const all=Object.entries(S.tclaims||{}).map(([id,c])=>({id,...c})), own=!!S.me.isOwner, since=addDays(today(),-14);
+  const list=(own?all.filter(c=>c.status==="pending"):all.filter(c=>c.by===S.me.id&&(c.status==="pending"||c.status==="rejected")&&String(c.created||"").slice(0,10)>=since)).sort((x,y)=>String(y.created||"").localeCompare(String(x.created||"")));
+  if(!list.length) return "";
+  const row=c=>`<tr>${td("کار",`<b>${esc(c.title)}</b>${c.desc?`<br><span class="meta">${esc(c.desc)}</span>`:""}`,"t")}${td("توسط",esc(memberName(c.by)))}${td("تاریخ",esc(faDate(c.date)))}${td("وضعیت",own?`<button class="btn sm sig" data-act="tc-ok" data-id="${esc(c.id)}">تأیید و تعریف تسک</button> <button class="btn sm ghost" data-act="tc-no" data-id="${esc(c.id)}">رد</button>`:`<span class="pill ${c.status==="rejected"?"p-bad":"p-warn"}">${c.status==="rejected"?"رد شد":"در انتظار تأیید مالک"}</span>`)}</tr>`;
+  return `<div class="card" style="margin-bottom:12px"><h3 style="margin:0 0 6px">${own?`کارهای خارج از فهرست در انتظار تأیید شما (${faNum(list.length)})`:"کارهای پیشنهادی شما"}</h3><p class="meta">${own?"با تأیید، کار به‌صورت تسک انجام‌شده برای همان فرد ثبت و گزارش آن روز دوباره نمره‌دهی می‌شود.":"تا پیش از تأیید مالک در نمره حساب نمی‌شود."}</p>`+table(["کار","توسط","تاریخ","وضعیت"],list.map(row),"")+`</div>`;
+}
 function unlistedForm(){
   const me=myMember(); if(!me){ toast("ابتدا ثبت‌نام کنید."); return; }
   openForm({title:"کاری که انجام دادم و در سامانه تعریف نشده بود",values:{date:today(),team:me.team||"ai"},
-    extra:`<p class="note">در طول روز ممکن است کاری انجام دهید که تسکش در سامانه نیست. همین‌جا برای خودتان تعریفش کنید تا در بررسی بهره‌وری به حساب بیاید و نمره از دست نرود. فقط کار واقعی و انجام‌شده را بنویسید؛ در بررسی، با شرح گزارش و ساعت حضورتان سنجیده می‌شود.</p>`,
+    extra:`<p class="note">در طول روز ممکن است کاری انجام دهید که تسکش در سامانه نیست. همین‌جا پیشنهاد تعریف تسک بدهید. فقط مالک سامانه می‌تواند آن را تأیید کند و تا پیش از تأیید در نمره حساب نمی‌شود. فقط کار واقعی و انجام‌شده را بنویسید؛ با شرح گزارش و ساعت حضورتان سنجیده می‌شود.</p>`,
     fields:[{k:"title",label:"عنوان کار"},{k:"desc",label:"شرح کوتاه و نتیجه (فایل، لینک، شماره …)",type:"textarea"},{k:"date",label:"تاریخ انجام",type:"date"},{k:"team",label:"تیم",type:"select",options:TEAMS}],
     onSave:v=>{ if(!v.title||v.title.length<3){ toast("عنوان کار را بنویسید."); return false; }
-      const now=(v.date||today())+"T"+new Date().toISOString().slice(11), id=newId();
-      return save(`tasks/${id}`,{title:v.title,desc:(v.desc||"")+(v.desc?"\n\n":"")+"کار خودتعریف‌شده (خارج از فهرست تسک‌ها)",assignee:S.me.id,created_by:S.me.id,team:v.team,priority:"normal",type:"task",status:"done",self_declared:true,created:now,updated:now,done_at:now,due:v.date||today()},"کار ثبت شد و در بهره‌وری امروز به حساب می‌آید"); }});
+      return save(`taskclaims/${newId()}`,{title:v.title,desc:v.desc||"",by:S.me.id,team:v.team,date:v.date||today(),status:"pending",created:new Date().toISOString()},"پیشنهاد برای تأیید مالک ارسال شد"); }});
 }
 { const _md=VIEWS["bpms.myday"]; if(_md) VIEWS["bpms.myday"]=()=>`<div class="toolbar"><button class="btn sig" data-act="task-unlisted" title="کاری که انجام داده‌اید ولی در سامانه تسک ندارد؛ برای اینکه نمره‌ی بهره‌وری از دست نرود">+ کاری انجام دادم که در سامانه تعریف نشده</button></div>`+_md(); }
+{ for(const k of ["bpms.myday","bpms.tasks"]){ const _v=VIEWS[k]; if(_v) VIEWS[k]=()=>tclaimsCard()+_v(); } }
 
 // ================================================================== «آموزش»: one training section per tab (intro, full workflow, then every section of the tab one by one)
 // TUT[mod] = {intro, flow:[steps], subs:{subKey:text}, tips:[...]}. A section without its own text falls back to the matching step of the guided tour (TOUR).
@@ -5086,6 +5096,16 @@ document.addEventListener("click", async e => {
       if(!(await askConfirm(`تسک «${t.title}» حذف شود؟ یک نسخه‌ی پشتیبان از آن در بخش حذف‌شده‌ها می‌ماند.`,"حذف"))) break;
       const {id:_ti,...trest}=t; if(!(await save(`tasksdeleted/${id}`,{...trest,deleted_by:S.me.id,deleted_at:new Date().toISOString()},"نسخه‌ی پشتیبان ثبت شد"))) break;
       await remove(`tasks/${id}`); S.tasks=S.tasks.filter(x=>x.id!==id); S.tasksArch=(S.tasksArch||[]).filter(x=>x.id!==id); render(); break; }
+    case "tc-ok": case "tc-no": {
+      if(!S.me.isOwner){ toast("فقط مالک سامانه می‌تواند تأیید کند."); break; }
+      const c=(S.tclaims||{})[id]; if(!c||c.status!=="pending") break;
+      if(a==="tc-no"){ await save(`taskclaims/${id}`,{...c,status:"rejected",decided_by:S.me.id,decided:new Date().toISOString()},"رد شد"); break; }
+      const at=(c.date||today())+"T"+new Date().toISOString().slice(11), tid=newId();
+      const t={title:c.title,desc:(c.desc||"")+(c.desc?"\n\n":"")+"کار خارج از فهرست؛ با تأیید مالک تعریف شد",assignee:c.by,created_by:c.by,team:c.team||"ai",priority:"normal",type:"task",status:"done",self_declared:true,approved_by:S.me.id,created:at,updated:at,done_at:at,due:c.date||today()};
+      if(!(await save(`tasks/${tid}`,t,"تسک تعریف و ثبت شد"))) break;
+      await save(`taskclaims/${id}`,{...c,status:"approved",task_id:tid,decided_by:S.me.id,decided:new Date().toISOString()},"تأیید شد؛ گزارش آن روز دوباره نمره‌دهی می‌شود");
+      try{ const snap=await S.db.doc(`reports/${c.by}/items/${c.date}`).get(), m=S.members.find(x=>x.id===c.by); if(snap.exists&&m) await gradeReport({...snap.data(),date:c.date},{...m,id:m.id},[...(S.tasks||[]).filter(x=>x.assignee===c.by&&x.id!==tid),{id:tid,...t}],pendingClaims(c.by,c.date)); }catch(e){ console.error("regrade",e); }
+      break; }
     case "task-unlisted": unlistedForm(); break;
     case "art-out": await artOutcome(id,b.dataset.st); break;
     case "art-base": artBaseForm(id); break;
