@@ -68,6 +68,6 @@ def can_write(u, path: str, old=None, new=None) -> bool:
         return _admin(u) or (len(s) > 1 and s[1] == uid)
     if top == "tasks":
         return _admin(u) or _mine(old, uid) or _mine(new, uid)
-    if top == "settings":
+    if top in ("settings", "market", "patentops"):                     # same as the claude.ai rules: members read, admins write
         return _admin(u)
     return True

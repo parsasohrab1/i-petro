@@ -48,6 +48,9 @@
       return {
         id: id, path: path, get: get,
         set: function (data) { return api("PUT", "/api/doc?path=" + q(path), data); },
+        update: function (data) {   // merge fields into the stored document (the page uses it for score and status edits)
+          return get().then(function (s) { if (!s.exists) throw new Error("not-found"); return api("PUT", "/api/doc?path=" + q(path), Object.assign({}, s.data(), data)); });
+        },
         delete: function () { return api("DELETE", "/api/doc?path=" + q(path)); },
         onSnapshot: function (cb, err) { return watch(path, get, cb, err); }
       };
@@ -55,7 +58,14 @@
     collection: function (path) {
       path = path.replace(/^\/+|\/+$/g, "");
       var get = function () { return api("GET", "/api/col?path=" + q(path)).then(colSnap); };
-      return { path: path, get: get, onSnapshot: function (cb, err) { return watch(path, get, cb, err); } };
+      var col = { path: path, get: get, onSnapshot: function (cb, err) { return watch(path, get, cb, err); } };
+      col.where = function (field, op, val) {   // only "==" is used by the page; filtering happens in the browser
+        if (op !== "==") throw new Error("where: only == is supported");
+        var sub = { get: function () { return get().then(function (snap) { return colSnap({ docs: snap.docs.filter(function (d) { return d.data()[field] === val; }).map(function (d) { return { id: d.id, data: d.data() }; }) }); }); } };
+        sub.onSnapshot = function (cb, err) { return watch(path, sub.get, cb, err); };
+        return sub;
+      };
+      return col;
     }
   };
 
