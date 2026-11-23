@@ -4,7 +4,7 @@ WORKDIR /app
 COPY server/requirements.txt server/requirements.txt
 RUN pip install -r server/requirements.txt
 COPY server server
-COPY platform/index.html platform/index.html
+COPY platform/index.html platform/ipetro-live.html platform/
 ENV PLATFORM_HTML=/app/platform/index.html
 RUN useradd -r -u 10001 app && chown -R app /app
 USER app

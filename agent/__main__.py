@@ -16,6 +16,7 @@
   python -m agent remind-reports <folder>                    Telegram reminder to members without today's performance report
   python -m agent save-drafts <zip|folder|file.eml>          put .eml drafts (e.g. the partners-tab ZIP) into the parsaint.group Drafts folder
   python -m agent investor <investor-id> <status>            researching | contacted | meeting | due_diligence | term_sheet | declined
+  python -m agent investor-outreach [--check] [--no-decks]   rebuild pitch decks + per-investor drafts with deck attached, then push them to the info@parsaint.group Drafts folder (IMAP). --check only tests the IMAP login.
 """
 import json
 import argparse
@@ -69,6 +70,9 @@ def main(argv=None):
     rr.add_argument("folder")
     sd = sub.add_parser("save-drafts")
     sd.add_argument("source")
+    io_ = sub.add_parser("investor-outreach")
+    io_.add_argument("--check", action="store_true", help="only test the IMAP login and exit")
+    io_.add_argument("--no-decks", action="store_true", help="skip pitch deck regeneration")
     ld = sub.add_parser("lead")
     ld.add_argument("lead_id")
     ld.add_argument("status", choices=list(leads.STATUSES))
@@ -113,6 +117,37 @@ def main(argv=None):
     if a.cmd == "run":
         from .pipeline import run
         run(use_llm=not a.no_llm, use_mail=not a.no_mail, send_notification=not a.no_notify)
+        return
+
+    if a.cmd == "investor-outreach":
+        from . import mailbox
+        if a.check:
+            try:
+                user = mailbox.check()
+                print(f"IMAP OK: {user} -> Drafts folder reachable")
+            except Exception as exc:
+                sys.exit(f"IMAP connection failed: {exc}")
+            return
+        import subprocess
+        root = Path(__file__).resolve().parent.parent
+        if not a.no_decks:
+            r1 = subprocess.run([sys.executable, str(root / "scripts" / "generate_pitch_decks.py")])
+            if r1.returncode:
+                sys.exit("pitch deck generation failed")
+        r2 = subprocess.run([sys.executable, str(root / "scripts" / "generate_investor_drafts.py")])
+        if r2.returncode:
+            sys.exit("investor draft generation failed")
+        if not mailbox.configured():
+            print("Drafts written to outputs/investors/ (.eml with deck attached).")
+            print("To push them into the info@parsaint.group Drafts folder, set IMAP_HOST/IMAP_USER/IMAP_PASSWORD in .env and run:")
+            print("  python -m agent investor-outreach")
+            return
+        cfg, n = load_config(), 0
+        for name, msg in mailbox.drafts_from_eml(root / "outputs" / "investors"):
+            folder = mailbox.save_draft(msg, cfg)
+            n += 1
+            print(f"{name} -> {folder} (To: {msg['To'] or '-'})")
+        print(f"{n} drafts saved to the webmail Drafts folder of {mailbox.env('IMAP_USER')}. Nothing was sent.")
         return
 
     if a.cmd == "save-drafts":

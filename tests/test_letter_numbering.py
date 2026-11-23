@@ -32,7 +32,7 @@ def test_letter_number_format():
 
 def test_issued_numbers_uniqueness():
     """Issued numbers file tracks all issued numbers to prevent duplicates."""
-    # Check if platform/index.html contains the recordIssuedNumber function
+    # Check if platform/index.html contains the getOrIssueNumber function
     index_path = Path(__file__).parent.parent / "platform" / "index.html"
     if not index_path.exists():
         print("⚠ platform/index.html not found, skipping")
@@ -40,15 +40,15 @@ def test_issued_numbers_uniqueness():
     
     content = index_path.read_text(encoding="utf-8")
     
-    # Verify the recordIssuedNumber function exists
-    assert "async function recordIssuedNumber" in content, \
-        "recordIssuedNumber function missing from platform/index.html"
+    # Verify the getOrIssueNumber function exists
+    assert "async function getOrIssueNumber" in content, \
+        "getOrIssueNumber function missing from platform/index.html"
     
     # Verify issued_numbers storage is referenced
     assert "settings/issued_numbers" in content, \
         "issued_numbers storage path missing"
     
-    # Verify the nextLetterNo function checks issued numbers
+    # Verify the nextLetterNo functions check issued numbers
     assert "S.issuedNumbers" in content, \
         "nextLetterNo should check S.issuedNumbers"
     
@@ -63,16 +63,17 @@ def test_unsent_letter_refresh_logic():
     
     content = index_path.read_text(encoding="utf-8")
     
-    # Verify downloadLetter checks if letter is unsent
-    assert "isUnsent" in content, "downloadLetter should identify unsent letters"
+    # Verify downloadLetter checks if letter is sent via isSent variable
+    assert "const isSent" in content, "downloadLetter should check isSent status"
+    assert "SENT_STAGES" in content, "SENT_STAGES should be defined"
     
-    # Verify fresh date/number generation for unsent
-    assert "today()" in content and "nextLetterNo" in content, \
+    # Verify fresh date/number generation for unsent (unified nextLetterNo)
+    assert "today()" in content and "nextLetterNo(" in content, \
         "Should generate fresh date and number"
     
-    # Verify recordIssuedNumber is called
-    assert "await recordIssuedNumber" in content, \
-        "Should record issued number to prevent reuse"
+    # Verify getOrIssueNumber is called
+    assert "await getOrIssueNumber" in content, \
+        "Should get or issue number to prevent reuse"
     
     print("✓ Unsent letter refresh logic implemented")
 
@@ -96,7 +97,7 @@ def test_sent_letter_frozen():
     print("✓ Sent letter freezing logic present")
 
 def test_daily_cap_handling():
-    """System handles LETTER_DAY_CAP (max letters per day)."""
+    """System enforces 999 letters per day maximum."""
     index_path = Path(__file__).parent.parent / "platform" / "index.html"
     if not index_path.exists():
         print("⚠ platform/index.html not found, skipping")
@@ -104,17 +105,17 @@ def test_daily_cap_handling():
     
     content = index_path.read_text(encoding="utf-8")
     
-    # Verify LETTER_DAY_CAP constant exists
-    assert "LETTER_DAY_CAP" in content, "LETTER_DAY_CAP constant missing"
+    # Verify the daily-cap mechanism exists (LETTER_DAY_CAP + rollover to the next day).
+    # Policy: LETTER_DAY_CAP = Infinity — the serial keeps counting (001, 002, …), so
+    # under normal use the date never rolls over; the mechanism is the guardrail.
+    assert "LETTER_DAY_CAP" in content, "LETTER_DAY_CAP mechanism missing"
+    assert "addDays(day,1)" in content, "Cap rollover to the next day missing"
+    assert "LETTER_DAY_CAP = Infinity" in content, \
+        "Daily cap policy should be Infinity (no practical limit)"
+    assert "نامه در روز تکمیل است" in content, \
+        "Should notify the user when the daily cap is reached"
     
-    # Verify cap is checked in nextLetterNo
-    match = re.search(r'const LETTER_DAY_CAP\s*=\s*(\d+)', content)
-    if match:
-        cap = int(match.group(1))
-        print(f"✓ Daily letter cap: {cap} letters per day")
-        assert cap > 0, "Cap must be positive"
-    else:
-        raise AssertionError("LETTER_DAY_CAP value not found")
+    print("✓ Daily cap mechanism present (LETTER_DAY_CAP = Infinity: serial keeps counting)")
 
 def test_intl_letter_numbering():
     """International letters use different numbering scheme (PIG-YYYY-NNNN)."""

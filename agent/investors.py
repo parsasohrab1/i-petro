@@ -125,13 +125,15 @@ DRAFT_SCHEMA = {
 
 def _write_draft(cfg, rec, draft, use_mail, log):
     from . import mailbox
-    from .config import OUTPUT_DIR, env
+    from .config import OUTPUT_DIR, env, ROOT
     sender = env("IMAP_USER") or cfg["company"]["email"]
-    msg = mailbox.build_message(sender, draft["subject"], draft["body"], to=draft.get("to", ""))
+    deck = ROOT / "outputs" / "pitch_decks" / str(draft.get("attachment") or "")
+    attachments = (deck,) if draft.get("attachment") and deck.exists() else ()
+    msg = mailbox.build_message(sender, draft["subject"], draft["body"], to=draft.get("to", ""), attachments=attachments)
     folder = OUTPUT_DIR / "investors"
     folder.mkdir(parents=True, exist_ok=True)
     (folder / f"{rec['id']}.eml").write_bytes(msg.as_bytes())
-    rec["draft"] = {k: draft.get(k, "") for k in ("to", "subject", "body", "channel_fa")}
+    rec["draft"] = {k: draft.get(k, "") for k in ("to", "subject", "body", "channel_fa", "attachment")}
     if use_mail and mailbox.configured():
         try:
             rec["draft_saved_to"] = "webmail:" + mailbox.save_draft(msg, cfg)

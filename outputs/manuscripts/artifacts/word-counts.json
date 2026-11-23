@@ -1,0 +1,26 @@
+{
+  "applied_energy_elsevier": {
+    "venue_name": "Applied Energy (Elsevier)",
+    "product": "intelligent-management-sys-energy-carbon-sustainability-",
+    "filename": "outputs/manuscripts/artifacts/applied_energy_elsevier-manuscript.docx",
+    "word_count": 1315
+  },
+  "intellisys_2027_ml": {
+    "venue_name": "IntelliSys 2027 Amsterdam ML track",
+    "product": "Mili-Multi-Mode-Adaptive-Decision-System",
+    "filename": "outputs/manuscripts/artifacts/intellisys_2027_ml-manuscript.docx",
+    "word_count": 1298
+  },
+  "global_energy_show_2027": {
+    "venue_name": "Global Energy Show 2027 Calgary",
+    "product": "iEOR",
+    "filename": "outputs/manuscripts/artifacts/global_energy_show_2027-manuscript.docx",
+    "word_count": 1136
+  },
+  "eign_2027_gas": {
+    "venue_name": "EIGN-2027 (International Natural Gas Conference)",
+    "product": "-Khalij-Apadana-Reformer-Methanol-Loop-Digital-Twin-System-",
+    "filename": "outputs/manuscripts/artifacts/eign_2027_gas-manuscript.docx",
+    "word_count": 1564
+  }
+}

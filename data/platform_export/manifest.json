@@ -1,0 +1,1311 @@
+{
+ "batches": [
+  [
+   {
+    "collection": "market/data/tenders",
+    "doc_id": "WB-OP00468997",
+    "file_path": "data/platform_export/market/data/tenders/WB-OP00468997.json"
+   },
+   {
+    "collection": "market/data/tenders",
+    "doc_id": "WB-OP00473664",
+    "file_path": "data/platform_export/market/data/tenders/WB-OP00473664.json"
+   },
+   {
+    "collection": "market/data/tenders",
+    "doc_id": "WB-OP00473693",
+    "file_path": "data/platform_export/market/data/tenders/WB-OP00473693.json"
+   },
+   {
+    "collection": "market/data/tenders",
+    "doc_id": "WB-OP00472448",
+    "file_path": "data/platform_export/market/data/tenders/WB-OP00472448.json"
+   },
+   {
+    "collection": "market/data/tenders",
+    "doc_id": "TED-723563-2026",
+    "file_path": "data/platform_export/market/data/tenders/TED-723563-2026.json"
+   },
+   {
+    "collection": "market/data/tenders",
+    "doc_id": "TED-723054-2026",
+    "file_path": "data/platform_export/market/data/tenders/TED-723054-2026.json"
+   },
+   {
+    "collection": "market/data/tenders",
+    "doc_id": "TED-723592-2026",
+    "file_path": "data/platform_export/market/data/tenders/TED-723592-2026.json"
+   },
+   {
+    "collection": "market/data/tenders",
+    "doc_id": "TED-725345-2026",
+    "file_path": "data/platform_export/market/data/tenders/TED-725345-2026.json"
+   },
+   {
+    "collection": "market/data/tenders",
+    "doc_id": "TED-728006-2026",
+    "file_path": "data/platform_export/market/data/tenders/TED-728006-2026.json"
+   },
+   {
+    "collection": "market/data/tenders",
+    "doc_id": "TED-728925-2026",
+    "file_path": "data/platform_export/market/data/tenders/TED-728925-2026.json"
+   },
+   {
+    "collection": "market/data/tenders",
+    "doc_id": "TED-729362-2026",
+    "file_path": "data/platform_export/market/data/tenders/TED-729362-2026.json"
+   },
+   {
+    "collection": "market/data/tenders",
+    "doc_id": "TED-730727-2026",
+    "file_path": "data/platform_export/market/data/tenders/TED-730727-2026.json"
+   },
+   {
+    "collection": "market/data/tenders",
+    "doc_id": "TED-731812-2026",
+    "file_path": "data/platform_export/market/data/tenders/TED-731812-2026.json"
+   },
+   {
+    "collection": "market/data/tenders",
+    "doc_id": "TED-732964-2026",
+    "file_path": "data/platform_export/market/data/tenders/TED-732964-2026.json"
+   },
+   {
+    "collection": "market/data/tenders",
+    "doc_id": "TED-735144-2026",
+    "file_path": "data/platform_export/market/data/tenders/TED-735144-2026.json"
+   },
+   {
+    "collection": "market/data/tenders",
+    "doc_id": "TED-736144-2026",
+    "file_path": "data/platform_export/market/data/tenders/TED-736144-2026.json"
+   },
+   {
+    "collection": "market/data/tenders",
+    "doc_id": "TED-734074-2026",
+    "file_path": "data/platform_export/market/data/tenders/TED-734074-2026.json"
+   },
+   {
+    "collection": "market/data/tenders",
+    "doc_id": "TED-735933-2026",
+    "file_path": "data/platform_export/market/data/tenders/TED-735933-2026.json"
+   },
+   {
+    "collection": "market/data/tenders",
+    "doc_id": "TED-733779-2026",
+    "file_path": "data/platform_export/market/data/tenders/TED-733779-2026.json"
+   },
+   {
+    "collection": "market/data/tenders",
+    "doc_id": "TED-739696-2026",
+    "file_path": "data/platform_export/market/data/tenders/TED-739696-2026.json"
+   },
+   {
+    "collection": "market/data/tenders",
+    "doc_id": "TED-737185-2026",
+    "file_path": "data/platform_export/market/data/tenders/TED-737185-2026.json"
+   },
+   {
+    "collection": "market/data/tenders",
+    "doc_id": "TED-739448-2026",
+    "file_path": "data/platform_export/market/data/tenders/TED-739448-2026.json"
+   },
+   {
+    "collection": "market/data/tenders",
+    "doc_id": "TED-740752-2026",
+    "file_path": "data/platform_export/market/data/tenders/TED-740752-2026.json"
+   },
+   {
+    "collection": "market/data/tenders",
+    "doc_id": "TED-744643-2026",
+    "file_path": "data/platform_export/market/data/tenders/TED-744643-2026.json"
+   },
+   {
+    "collection": "market/data/tenders",
+    "doc_id": "TED-743680-2026",
+    "file_path": "data/platform_export/market/data/tenders/TED-743680-2026.json"
+   },
+   {
+    "collection": "market/data/tenders",
+    "doc_id": "TED-741848-2026",
+    "file_path": "data/platform_export/market/data/tenders/TED-741848-2026.json"
+   },
+   {
+    "collection": "market/data/tenders",
+    "doc_id": "TED-748820-2026",
+    "file_path": "data/platform_export/market/data/tenders/TED-748820-2026.json"
+   },
+   {
+    "collection": "market/data/tenders",
+    "doc_id": "TED-748747-2026",
+    "file_path": "data/platform_export/market/data/tenders/TED-748747-2026.json"
+   },
+   {
+    "collection": "market/data/tenders",
+    "doc_id": "TED-745428-2026",
+    "file_path": "data/platform_export/market/data/tenders/TED-745428-2026.json"
+   },
+   {
+    "collection": "market/data/tenders",
+    "doc_id": "TED-748671-2026",
+    "file_path": "data/platform_export/market/data/tenders/TED-748671-2026.json"
+   },
+   {
+    "collection": "market/data/tenders",
+    "doc_id": "TED-751639-2026",
+    "file_path": "data/platform_export/market/data/tenders/TED-751639-2026.json"
+   },
+   {
+    "collection": "market/data/tenders",
+    "doc_id": "TED-751747-2026",
+    "file_path": "data/platform_export/market/data/tenders/TED-751747-2026.json"
+   },
+   {
+    "collection": "market/data/tenders",
+    "doc_id": "TED-753280-2026",
+    "file_path": "data/platform_export/market/data/tenders/TED-753280-2026.json"
+   },
+   {
+    "collection": "market/data/tenders",
+    "doc_id": "TED-755937-2026",
+    "file_path": "data/platform_export/market/data/tenders/TED-755937-2026.json"
+   },
+   {
+    "collection": "market/data/tenders",
+    "doc_id": "TED-753939-2026",
+    "file_path": "data/platform_export/market/data/tenders/TED-753939-2026.json"
+   },
+   {
+    "collection": "market/data/tenders",
+    "doc_id": "GRANT-HORIZON-HLTH-2027-02-TOOL-01",
+    "file_path": "data/platform_export/market/data/tenders/GRANT-HORIZON-HLTH-2027-02-TOOL-01.json"
+   },
+   {
+    "collection": "market/data/tenders",
+    "doc_id": "GRANT-HORIZON-HLTH-2027-03-TOOL-04",
+    "file_path": "data/platform_export/market/data/tenders/GRANT-HORIZON-HLTH-2027-03-TOOL-04.json"
+   },
+   {
+    "collection": "market/data/tenders",
+    "doc_id": "GRANT-HORIZON-HLTH-2027-03-TOOL-08",
+    "file_path": "data/platform_export/market/data/tenders/GRANT-HORIZON-HLTH-2027-03-TOOL-08.json"
+   },
+   {
+    "collection": "market/data/tenders",
+    "doc_id": "GRANT-EIC-ACCELERATOR-2027",
+    "file_path": "data/platform_export/market/data/tenders/GRANT-EIC-ACCELERATOR-2027.json"
+   },
+   {
+    "collection": "market/data/tenders",
+    "doc_id": "WB-OP00477790",
+    "file_path": "data/platform_export/market/data/tenders/WB-OP00477790.json"
+   },
+   {
+    "collection": "market/data/tenders",
+    "doc_id": "TED-757336-2026",
+    "file_path": "data/platform_export/market/data/tenders/TED-757336-2026.json"
+   },
+   {
+    "collection": "market/data/tenders",
+    "doc_id": "TED-755520-2026",
+    "file_path": "data/platform_export/market/data/tenders/TED-755520-2026.json"
+   },
+   {
+    "collection": "market/data/tenders",
+    "doc_id": "TED-757053-2026",
+    "file_path": "data/platform_export/market/data/tenders/TED-757053-2026.json"
+   },
+   {
+    "collection": "market/data/tenders",
+    "doc_id": "TED-759325-2026",
+    "file_path": "data/platform_export/market/data/tenders/TED-759325-2026.json"
+   },
+   {
+    "collection": "market/data/tenders",
+    "doc_id": "WB-OP00474800",
+    "file_path": "data/platform_export/market/data/tenders/WB-OP00474800.json"
+   },
+   {
+    "collection": "market/data/tenders",
+    "doc_id": "TED-753484-2026",
+    "file_path": "data/platform_export/market/data/tenders/TED-753484-2026.json"
+   },
+   {
+    "collection": "market/data/tenders",
+    "doc_id": "TED-760865-2026",
+    "file_path": "data/platform_export/market/data/tenders/TED-760865-2026.json"
+   },
+   {
+    "collection": "market/data/tenders",
+    "doc_id": "TED-763257-2026",
+    "file_path": "data/platform_export/market/data/tenders/TED-763257-2026.json"
+   },
+   {
+    "collection": "market/data/tenders",
+    "doc_id": "TED-761145-2026",
+    "file_path": "data/platform_export/market/data/tenders/TED-761145-2026.json"
+   },
+   {
+    "collection": "market/data/tenders",
+    "doc_id": "TED-765795-2026",
+    "file_path": "data/platform_export/market/data/tenders/TED-765795-2026.json"
+   }
+  ],
+  [
+   {
+    "collection": "market/data/tenders",
+    "doc_id": "TED-763892-2026",
+    "file_path": "data/platform_export/market/data/tenders/TED-763892-2026.json"
+   },
+   {
+    "collection": "market/data/tenders",
+    "doc_id": "TED-767009-2026",
+    "file_path": "data/platform_export/market/data/tenders/TED-767009-2026.json"
+   },
+   {
+    "collection": "market/data/tenders",
+    "doc_id": "TED-763974-2026",
+    "file_path": "data/platform_export/market/data/tenders/TED-763974-2026.json"
+   },
+   {
+    "collection": "market/data/tenders",
+    "doc_id": "TED-766353-2026",
+    "file_path": "data/platform_export/market/data/tenders/TED-766353-2026.json"
+   },
+   {
+    "collection": "market/data/tenders",
+    "doc_id": "TED-765598-2026",
+    "file_path": "data/platform_export/market/data/tenders/TED-765598-2026.json"
+   },
+   {
+    "collection": "market/data/tenders",
+    "doc_id": "TED-767044-2026",
+    "file_path": "data/platform_export/market/data/tenders/TED-767044-2026.json"
+   },
+   {
+    "collection": "market/data/tenders",
+    "doc_id": "TED-765016-2026",
+    "file_path": "data/platform_export/market/data/tenders/TED-765016-2026.json"
+   },
+   {
+    "collection": "market/data/tenders",
+    "doc_id": "TED-767422-2026",
+    "file_path": "data/platform_export/market/data/tenders/TED-767422-2026.json"
+   },
+   {
+    "collection": "market/data/tenders",
+    "doc_id": "TED-767769-2026",
+    "file_path": "data/platform_export/market/data/tenders/TED-767769-2026.json"
+   },
+   {
+    "collection": "market/data/tenders",
+    "doc_id": "TED-769129-2026",
+    "file_path": "data/platform_export/market/data/tenders/TED-769129-2026.json"
+   },
+   {
+    "collection": "market/data/tenders",
+    "doc_id": "TED-768434-2026",
+    "file_path": "data/platform_export/market/data/tenders/TED-768434-2026.json"
+   },
+   {
+    "collection": "market/data/tenders",
+    "doc_id": "TED-770871-2026",
+    "file_path": "data/platform_export/market/data/tenders/TED-770871-2026.json"
+   },
+   {
+    "collection": "market/data/tenders",
+    "doc_id": "TED-767993-2026",
+    "file_path": "data/platform_export/market/data/tenders/TED-767993-2026.json"
+   },
+   {
+    "collection": "market/data/tenders",
+    "doc_id": "TED-770257-2026",
+    "file_path": "data/platform_export/market/data/tenders/TED-770257-2026.json"
+   },
+   {
+    "collection": "market/data/tenders",
+    "doc_id": "TED-775065-2026",
+    "file_path": "data/platform_export/market/data/tenders/TED-775065-2026.json"
+   },
+   {
+    "collection": "market/data/tenders",
+    "doc_id": "TED-775052-2026",
+    "file_path": "data/platform_export/market/data/tenders/TED-775052-2026.json"
+   },
+   {
+    "collection": "market/data/tenders",
+    "doc_id": "TED-774477-2026",
+    "file_path": "data/platform_export/market/data/tenders/TED-774477-2026.json"
+   },
+   {
+    "collection": "market/data/tenders",
+    "doc_id": "TED-772214-2026",
+    "file_path": "data/platform_export/market/data/tenders/TED-772214-2026.json"
+   },
+   {
+    "collection": "market/data/tenders",
+    "doc_id": "TED-771793-2026",
+    "file_path": "data/platform_export/market/data/tenders/TED-771793-2026.json"
+   },
+   {
+    "collection": "market/data/tenders",
+    "doc_id": "TED-774269-2026",
+    "file_path": "data/platform_export/market/data/tenders/TED-774269-2026.json"
+   },
+   {
+    "collection": "market/data/tenders",
+    "doc_id": "TED-773644-2026",
+    "file_path": "data/platform_export/market/data/tenders/TED-773644-2026.json"
+   },
+   {
+    "collection": "market/data/tenders",
+    "doc_id": "TED-774328-2026",
+    "file_path": "data/platform_export/market/data/tenders/TED-774328-2026.json"
+   },
+   {
+    "collection": "market/data/tenders",
+    "doc_id": "TED-773219-2026",
+    "file_path": "data/platform_export/market/data/tenders/TED-773219-2026.json"
+   },
+   {
+    "collection": "market/data/tenders",
+    "doc_id": "TED-772090-2026",
+    "file_path": "data/platform_export/market/data/tenders/TED-772090-2026.json"
+   },
+   {
+    "collection": "market/data/tenders",
+    "doc_id": "TED-776268-2026",
+    "file_path": "data/platform_export/market/data/tenders/TED-776268-2026.json"
+   },
+   {
+    "collection": "market/data/tenders",
+    "doc_id": "TED-775489-2026",
+    "file_path": "data/platform_export/market/data/tenders/TED-775489-2026.json"
+   },
+   {
+    "collection": "market/data/tenders",
+    "doc_id": "TED-775149-2026",
+    "file_path": "data/platform_export/market/data/tenders/TED-775149-2026.json"
+   },
+   {
+    "collection": "market/data/tenders",
+    "doc_id": "TED-775748-2026",
+    "file_path": "data/platform_export/market/data/tenders/TED-775748-2026.json"
+   },
+   {
+    "collection": "market/data/tenders",
+    "doc_id": "TED-776292-2026",
+    "file_path": "data/platform_export/market/data/tenders/TED-776292-2026.json"
+   },
+   {
+    "collection": "market/data/tenders",
+    "doc_id": "TED-775684-2026",
+    "file_path": "data/platform_export/market/data/tenders/TED-775684-2026.json"
+   },
+   {
+    "collection": "market/data/tenders",
+    "doc_id": "TED-776881-2026",
+    "file_path": "data/platform_export/market/data/tenders/TED-776881-2026.json"
+   },
+   {
+    "collection": "market/data/tenders",
+    "doc_id": "TED-776438-2026",
+    "file_path": "data/platform_export/market/data/tenders/TED-776438-2026.json"
+   },
+   {
+    "collection": "market/data/tenders",
+    "doc_id": "TED-806939-2026",
+    "file_path": "data/platform_export/market/data/tenders/TED-806939-2026.json"
+   },
+   {
+    "collection": "market/data/tenders",
+    "doc_id": "WB-OP00480772",
+    "file_path": "data/platform_export/market/data/tenders/WB-OP00480772.json"
+   },
+   {
+    "collection": "market/data/tenders",
+    "doc_id": "TED-808523-2026",
+    "file_path": "data/platform_export/market/data/tenders/TED-808523-2026.json"
+   },
+   {
+    "collection": "market/data/tenders",
+    "doc_id": "TED-805150-2026",
+    "file_path": "data/platform_export/market/data/tenders/TED-805150-2026.json"
+   },
+   {
+    "collection": "market/data/tenders",
+    "doc_id": "WB-OP00480767",
+    "file_path": "data/platform_export/market/data/tenders/WB-OP00480767.json"
+   },
+   {
+    "collection": "market/data/tenders",
+    "doc_id": "TED-810136-2026",
+    "file_path": "data/platform_export/market/data/tenders/TED-810136-2026.json"
+   },
+   {
+    "collection": "market/data/tenders",
+    "doc_id": "TED-798135-2026",
+    "file_path": "data/platform_export/market/data/tenders/TED-798135-2026.json"
+   },
+   {
+    "collection": "market/data/tenders",
+    "doc_id": "TED-802384-2026",
+    "file_path": "data/platform_export/market/data/tenders/TED-802384-2026.json"
+   },
+   {
+    "collection": "market/data/tenders",
+    "doc_id": "TED-797360-2026",
+    "file_path": "data/platform_export/market/data/tenders/TED-797360-2026.json"
+   },
+   {
+    "collection": "market/data/tenders",
+    "doc_id": "TED-803968-2026",
+    "file_path": "data/platform_export/market/data/tenders/TED-803968-2026.json"
+   },
+   {
+    "collection": "market/data/tenders",
+    "doc_id": "TED-798046-2026",
+    "file_path": "data/platform_export/market/data/tenders/TED-798046-2026.json"
+   },
+   {
+    "collection": "market/data/tenders",
+    "doc_id": "TED-806063-2026",
+    "file_path": "data/platform_export/market/data/tenders/TED-806063-2026.json"
+   },
+   {
+    "collection": "market/data/tenders",
+    "doc_id": "TED-806011-2026",
+    "file_path": "data/platform_export/market/data/tenders/TED-806011-2026.json"
+   },
+   {
+    "collection": "market/data/tenders",
+    "doc_id": "TED-800894-2026",
+    "file_path": "data/platform_export/market/data/tenders/TED-800894-2026.json"
+   },
+   {
+    "collection": "market/data/tenders",
+    "doc_id": "TED-804845-2026",
+    "file_path": "data/platform_export/market/data/tenders/TED-804845-2026.json"
+   },
+   {
+    "collection": "market/data/tenders",
+    "doc_id": "TED-799813-2026",
+    "file_path": "data/platform_export/market/data/tenders/TED-799813-2026.json"
+   },
+   {
+    "collection": "market/data/tenders",
+    "doc_id": "TED-803501-2026",
+    "file_path": "data/platform_export/market/data/tenders/TED-803501-2026.json"
+   },
+   {
+    "collection": "market/data/tenders",
+    "doc_id": "TED-809112-2026",
+    "file_path": "data/platform_export/market/data/tenders/TED-809112-2026.json"
+   }
+  ],
+  [
+   {
+    "collection": "market/data/tenders",
+    "doc_id": "TED-809777-2026",
+    "file_path": "data/platform_export/market/data/tenders/TED-809777-2026.json"
+   },
+   {
+    "collection": "market/data/tenders",
+    "doc_id": "TED-804480-2026",
+    "file_path": "data/platform_export/market/data/tenders/TED-804480-2026.json"
+   },
+   {
+    "collection": "market/data/tenders",
+    "doc_id": "TED-798891-2026",
+    "file_path": "data/platform_export/market/data/tenders/TED-798891-2026.json"
+   },
+   {
+    "collection": "market/data/tenders",
+    "doc_id": "TED-801335-2026",
+    "file_path": "data/platform_export/market/data/tenders/TED-801335-2026.json"
+   },
+   {
+    "collection": "market/data/tenders",
+    "doc_id": "TED-810851-2026",
+    "file_path": "data/platform_export/market/data/tenders/TED-810851-2026.json"
+   },
+   {
+    "collection": "market/data/tenders",
+    "doc_id": "TED-801033-2026",
+    "file_path": "data/platform_export/market/data/tenders/TED-801033-2026.json"
+   },
+   {
+    "collection": "market/data/tenders",
+    "doc_id": "TED-807054-2026",
+    "file_path": "data/platform_export/market/data/tenders/TED-807054-2026.json"
+   },
+   {
+    "collection": "market/data/tenders",
+    "doc_id": "TED-806681-2026",
+    "file_path": "data/platform_export/market/data/tenders/TED-806681-2026.json"
+   },
+   {
+    "collection": "market/data/tenders",
+    "doc_id": "TED-797238-2026",
+    "file_path": "data/platform_export/market/data/tenders/TED-797238-2026.json"
+   },
+   {
+    "collection": "market/data/tenders",
+    "doc_id": "TED-800441-2026",
+    "file_path": "data/platform_export/market/data/tenders/TED-800441-2026.json"
+   },
+   {
+    "collection": "market/data/tenders",
+    "doc_id": "WB-OP00482066",
+    "file_path": "data/platform_export/market/data/tenders/WB-OP00482066.json"
+   },
+   {
+    "collection": "market/data/tenders",
+    "doc_id": "TED-799754-2026",
+    "file_path": "data/platform_export/market/data/tenders/TED-799754-2026.json"
+   },
+   {
+    "collection": "market/data/tenders",
+    "doc_id": "WB-OP00472980",
+    "file_path": "data/platform_export/market/data/tenders/WB-OP00472980.json"
+   },
+   {
+    "collection": "market/data/tenders",
+    "doc_id": "WB-OP00480669",
+    "file_path": "data/platform_export/market/data/tenders/WB-OP00480669.json"
+   },
+   {
+    "collection": "market/data/tenders",
+    "doc_id": "HEZ-11443772",
+    "file_path": "data/platform_export/market/data/tenders/HEZ-11443772.json"
+   },
+   {
+    "collection": "market/data/events",
+    "doc_id": "gitex-2026",
+    "file_path": "data/platform_export/market/data/events/gitex-2026.json"
+   },
+   {
+    "collection": "market/data/events",
+    "doc_id": "neurips-2026",
+    "file_path": "data/platform_export/market/data/events/neurips-2026.json"
+   },
+   {
+    "collection": "market/data/events",
+    "doc_id": "icci-2027",
+    "file_path": "data/platform_export/market/data/events/icci-2027.json"
+   },
+   {
+    "collection": "market/data/events",
+    "doc_id": "whx-2027",
+    "file_path": "data/platform_export/market/data/events/whx-2027.json"
+   },
+   {
+    "collection": "market/data/events",
+    "doc_id": "mro-me-2027",
+    "file_path": "data/platform_export/market/data/events/mro-me-2027.json"
+   },
+   {
+    "collection": "market/data/events",
+    "doc_id": "hannover-2027",
+    "file_path": "data/platform_export/market/data/events/hannover-2027.json"
+   },
+   {
+    "collection": "market/data/events",
+    "doc_id": "leap-2027",
+    "file_path": "data/platform_export/market/data/events/leap-2027.json"
+   },
+   {
+    "collection": "market/data/events",
+    "doc_id": "expomed-2027",
+    "file_path": "data/platform_export/market/data/events/expomed-2027.json"
+   },
+   {
+    "collection": "market/data/events",
+    "doc_id": "wne-2027",
+    "file_path": "data/platform_export/market/data/events/wne-2027.json"
+   },
+   {
+    "collection": "market/data/events",
+    "doc_id": "iran-oilshow-1406",
+    "file_path": "data/platform_export/market/data/events/iran-oilshow-1406.json"
+   },
+   {
+    "collection": "market/data/events",
+    "doc_id": "iran-aix-expo",
+    "file_path": "data/platform_export/market/data/events/iran-aix-expo.json"
+   },
+   {
+    "collection": "market/data/events",
+    "doc_id": "iran-smartcity-irandoc",
+    "file_path": "data/platform_export/market/data/events/iran-smartcity-irandoc.json"
+   },
+   {
+    "collection": "market/data/events",
+    "doc_id": "iran-health-1406",
+    "file_path": "data/platform_export/market/data/events/iran-health-1406.json"
+   },
+   {
+    "collection": "market/data/events",
+    "doc_id": "elecomp-1405",
+    "file_path": "data/platform_export/market/data/events/elecomp-1405.json"
+   },
+   {
+    "collection": "market/data/events",
+    "doc_id": "iran-itex-1405",
+    "file_path": "data/platform_export/market/data/events/iran-itex-1405.json"
+   },
+   {
+    "collection": "market/data/events",
+    "doc_id": "iocat2027",
+    "file_path": "data/platform_export/market/data/events/iocat2027.json"
+   },
+   {
+    "collection": "market/data/events",
+    "doc_id": "iocmbs2027",
+    "file_path": "data/platform_export/market/data/events/iocmbs2027.json"
+   },
+   {
+    "collection": "market/data/investors",
+    "doc_id": "novo-holdings",
+    "file_path": "data/platform_export/market/data/investors/novo-holdings.json"
+   },
+   {
+    "collection": "market/data/investors",
+    "doc_id": "lilly",
+    "file_path": "data/platform_export/market/data/investors/lilly.json"
+   },
+   {
+    "collection": "market/data/investors",
+    "doc_id": "jjdc",
+    "file_path": "data/platform_export/market/data/investors/jjdc.json"
+   },
+   {
+    "collection": "market/data/investors",
+    "doc_id": "leaps-bayer",
+    "file_path": "data/platform_export/market/data/investors/leaps-bayer.json"
+   },
+   {
+    "collection": "market/data/investors",
+    "doc_id": "m-ventures",
+    "file_path": "data/platform_export/market/data/investors/m-ventures.json"
+   },
+   {
+    "collection": "market/data/investors",
+    "doc_id": "takeda-ventures",
+    "file_path": "data/platform_export/market/data/investors/takeda-ventures.json"
+   },
+   {
+    "collection": "market/data/investors",
+    "doc_id": "orbimed",
+    "file_path": "data/platform_export/market/data/investors/orbimed.json"
+   },
+   {
+    "collection": "market/data/investors",
+    "doc_id": "arch",
+    "file_path": "data/platform_export/market/data/investors/arch.json"
+   },
+   {
+    "collection": "market/data/investors",
+    "doc_id": "flagship",
+    "file_path": "data/platform_export/market/data/investors/flagship.json"
+   },
+   {
+    "collection": "market/data/investors",
+    "doc_id": "ra-capital",
+    "file_path": "data/platform_export/market/data/investors/ra-capital.json"
+   },
+   {
+    "collection": "market/data/investors",
+    "doc_id": "third-rock",
+    "file_path": "data/platform_export/market/data/investors/third-rock.json"
+   },
+   {
+    "collection": "market/data/investors",
+    "doc_id": "5am",
+    "file_path": "data/platform_export/market/data/investors/5am.json"
+   },
+   {
+    "collection": "market/data/investors",
+    "doc_id": "deerfield",
+    "file_path": "data/platform_export/market/data/investors/deerfield.json"
+   },
+   {
+    "collection": "market/data/investors",
+    "doc_id": "canaan",
+    "file_path": "data/platform_export/market/data/investors/canaan.json"
+   },
+   {
+    "collection": "market/data/investors",
+    "doc_id": "amoon",
+    "file_path": "data/platform_export/market/data/investors/amoon.json"
+   },
+   {
+    "collection": "market/data/investors",
+    "doc_id": "general-catalyst",
+    "file_path": "data/platform_export/market/data/investors/general-catalyst.json"
+   },
+   {
+    "collection": "market/data/investors",
+    "doc_id": "lux",
+    "file_path": "data/platform_export/market/data/investors/lux.json"
+   },
+   {
+    "collection": "market/data/investors",
+    "doc_id": "khosla",
+    "file_path": "data/platform_export/market/data/investors/khosla.json"
+   }
+  ],
+  [
+   {
+    "collection": "market/data/investors",
+    "doc_id": "bessemer",
+    "file_path": "data/platform_export/market/data/investors/bessemer.json"
+   },
+   {
+    "collection": "market/data/investors",
+    "doc_id": "oak-hcft",
+    "file_path": "data/platform_export/market/data/investors/oak-hcft.json"
+   },
+   {
+    "collection": "market/data/investors",
+    "doc_id": "bev",
+    "file_path": "data/platform_export/market/data/investors/bev.json"
+   },
+   {
+    "collection": "market/data/investors",
+    "doc_id": "eip",
+    "file_path": "data/platform_export/market/data/investors/eip.json"
+   },
+   {
+    "collection": "market/data/investors",
+    "doc_id": "aramco-ventures",
+    "file_path": "data/platform_export/market/data/investors/aramco-ventures.json"
+   },
+   {
+    "collection": "market/data/investors",
+    "doc_id": "equinor-ventures",
+    "file_path": "data/platform_export/market/data/investors/equinor-ventures.json"
+   },
+   {
+    "collection": "market/data/investors",
+    "doc_id": "shell-ventures",
+    "file_path": "data/platform_export/market/data/investors/shell-ventures.json"
+   },
+   {
+    "collection": "market/data/investors",
+    "doc_id": "airbus-ventures",
+    "file_path": "data/platform_export/market/data/investors/airbus-ventures.json"
+   },
+   {
+    "collection": "market/data/investors",
+    "doc_id": "ycombinator",
+    "file_path": "data/platform_export/market/data/investors/ycombinator.json"
+   },
+   {
+    "collection": "market/data/investors",
+    "doc_id": "techstars",
+    "file_path": "data/platform_export/market/data/investors/techstars.json"
+   },
+   {
+    "collection": "market/data/investors",
+    "doc_id": "plug-and-play",
+    "file_path": "data/platform_export/market/data/investors/plug-and-play.json"
+   },
+   {
+    "collection": "market/data/investors",
+    "doc_id": "hub71",
+    "file_path": "data/platform_export/market/data/investors/hub71.json"
+   },
+   {
+    "collection": "market/data/investors",
+    "doc_id": "antler-menap",
+    "file_path": "data/platform_export/market/data/investors/antler-menap.json"
+   },
+   {
+    "collection": "market/data/investors",
+    "doc_id": "revo",
+    "file_path": "data/platform_export/market/data/investors/revo.json"
+   },
+   {
+    "collection": "market/data/investors",
+    "doc_id": "212",
+    "file_path": "data/platform_export/market/data/investors/212.json"
+   },
+   {
+    "collection": "market/data/investors",
+    "doc_id": "qatar-development-bank",
+    "file_path": "data/platform_export/market/data/investors/qatar-development-bank.json"
+   },
+   {
+    "collection": "market/data/investors",
+    "doc_id": "qatar-science-and-technology-park",
+    "file_path": "data/platform_export/market/data/investors/qatar-science-and-technology-park.json"
+   },
+   {
+    "collection": "market/data/investors",
+    "doc_id": "qatar-research-development-and-innovation-council",
+    "file_path": "data/platform_export/market/data/investors/qatar-research-development-and-innovation-council.json"
+   },
+   {
+    "collection": "market/data/investors",
+    "doc_id": "wamda-capital",
+    "file_path": "data/platform_export/market/data/investors/wamda-capital.json"
+   },
+   {
+    "collection": "market/data/investors",
+    "doc_id": "tupras-ventures",
+    "file_path": "data/platform_export/market/data/investors/tupras-ventures.json"
+   },
+   {
+    "collection": "market/data/investors",
+    "doc_id": "tt-ventures",
+    "file_path": "data/platform_export/market/data/investors/tt-ventures.json"
+   },
+   {
+    "collection": "market/data/investors",
+    "doc_id": "petronas-ventures",
+    "file_path": "data/platform_export/market/data/investors/petronas-ventures.json"
+   },
+   {
+    "collection": "market/data/investors",
+    "doc_id": "mranti",
+    "file_path": "data/platform_export/market/data/investors/mranti.json"
+   },
+   {
+    "collection": "market/data/investors",
+    "doc_id": "sginnovate",
+    "file_path": "data/platform_export/market/data/investors/sginnovate.json"
+   },
+   {
+    "collection": "market/data/investors",
+    "doc_id": "sg-growth-capital",
+    "file_path": "data/platform_export/market/data/investors/sg-growth-capital.json"
+   },
+   {
+    "collection": "market/data/investors",
+    "doc_id": "wavemaker-partners",
+    "file_path": "data/platform_export/market/data/investors/wavemaker-partners.json"
+   },
+   {
+    "collection": "market/data/investors",
+    "doc_id": "vertex-ventures-southeast-asia-and-india",
+    "file_path": "data/platform_export/market/data/investors/vertex-ventures-southeast-asia-and-india.json"
+   },
+   {
+    "collection": "market/data/investors",
+    "doc_id": "basf-venture-capital",
+    "file_path": "data/platform_export/market/data/investors/basf-venture-capital.json"
+   },
+   {
+    "collection": "market/data/investors",
+    "doc_id": "htgf",
+    "file_path": "data/platform_export/market/data/investors/htgf.json"
+   },
+   {
+    "collection": "market/data/investors",
+    "doc_id": "eic-accelerator",
+    "file_path": "data/platform_export/market/data/investors/eic-accelerator.json"
+   },
+   {
+    "collection": "market/data/investors",
+    "doc_id": "supernova-invest",
+    "file_path": "data/platform_export/market/data/investors/supernova-invest.json"
+   },
+   {
+    "collection": "market/data/investors",
+    "doc_id": "edf-pulse-ventures",
+    "file_path": "data/platform_export/market/data/investors/edf-pulse-ventures.json"
+   },
+   {
+    "collection": "market/data/investors",
+    "doc_id": "nysno-climate-investments",
+    "file_path": "data/platform_export/market/data/investors/nysno-climate-investments.json"
+   },
+   {
+    "collection": "market/data/investors",
+    "doc_id": "voima-ventures",
+    "file_path": "data/platform_export/market/data/investors/voima-ventures.json"
+   },
+   {
+    "collection": "market/data/investors",
+    "doc_id": "industrifonden",
+    "file_path": "data/platform_export/market/data/investors/industrifonden.json"
+   },
+   {
+    "collection": "market/data/investors",
+    "doc_id": "norrsken-vc",
+    "file_path": "data/platform_export/market/data/investors/norrsken-vc.json"
+   },
+   {
+    "collection": "market/data/investors",
+    "doc_id": "bdc-capital",
+    "file_path": "data/platform_export/market/data/investors/bdc-capital.json"
+   },
+   {
+    "collection": "market/data/investors",
+    "doc_id": "evok-innovations",
+    "file_path": "data/platform_export/market/data/investors/evok-innovations.json"
+   },
+   {
+    "collection": "market/data/investors",
+    "doc_id": "chrysalix-venture-capital",
+    "file_path": "data/platform_export/market/data/investors/chrysalix-venture-capital.json"
+   },
+   {
+    "collection": "market/data/investors",
+    "doc_id": "main-sequence",
+    "file_path": "data/platform_export/market/data/investors/main-sequence.json"
+   },
+   {
+    "collection": "market/data/investors",
+    "doc_id": "arena",
+    "file_path": "data/platform_export/market/data/investors/arena.json"
+   },
+   {
+    "collection": "market/data/investors",
+    "doc_id": "innovation-victoria",
+    "file_path": "data/platform_export/market/data/investors/innovation-victoria.json"
+   },
+   {
+    "collection": "market/data/investors",
+    "doc_id": "utec",
+    "file_path": "data/platform_export/market/data/investors/utec.json"
+   },
+   {
+    "collection": "market/data/investors",
+    "doc_id": "hyundai-cradle",
+    "file_path": "data/platform_export/market/data/investors/hyundai-cradle.json"
+   },
+   {
+    "collection": "market/data/investors",
+    "doc_id": "lg-technology-ventures",
+    "file_path": "data/platform_export/market/data/investors/lg-technology-ventures.json"
+   },
+   {
+    "collection": "market/data/investors",
+    "doc_id": "qiming-venture-partners",
+    "file_path": "data/platform_export/market/data/investors/qiming-venture-partners.json"
+   },
+   {
+    "collection": "market/data/investors",
+    "doc_id": "speciale-invest",
+    "file_path": "data/platform_export/market/data/investors/speciale-invest.json"
+   },
+   {
+    "collection": "market/data/investors",
+    "doc_id": "pi-ventures",
+    "file_path": "data/platform_export/market/data/investors/pi-ventures.json"
+   },
+   {
+    "collection": "market/data/investors",
+    "doc_id": "abb-ventures",
+    "file_path": "data/platform_export/market/data/investors/abb-ventures.json"
+   },
+   {
+    "collection": "market/data/investors",
+    "doc_id": "set-ventures",
+    "file_path": "data/platform_export/market/data/investors/set-ventures.json"
+   }
+  ],
+  [
+   {
+    "collection": "market/data/investors",
+    "doc_id": "emerald-technology-ventures",
+    "file_path": "data/platform_export/market/data/investors/emerald-technology-ventures.json"
+   },
+   {
+    "collection": "market/data/investors",
+    "doc_id": "hitachi-ventures",
+    "file_path": "data/platform_export/market/data/investors/hitachi-ventures.json"
+   },
+   {
+    "collection": "market/data/investors",
+    "doc_id": "ngp-capital",
+    "file_path": "data/platform_export/market/data/investors/ngp-capital.json"
+   },
+   {
+    "collection": "market/data/investors",
+    "doc_id": "abb-synerleap",
+    "file_path": "data/platform_export/market/data/investors/abb-synerleap.json"
+   },
+   {
+    "collection": "market/data/investors",
+    "doc_id": "sinopec-capital",
+    "file_path": "data/platform_export/market/data/investors/sinopec-capital.json"
+   },
+   {
+    "collection": "market/data/investors",
+    "doc_id": "sinovation-ventures",
+    "file_path": "data/platform_export/market/data/investors/sinovation-ventures.json"
+   },
+   {
+    "collection": "market/data/requests",
+    "doc_id": "req-aramco-ventures-i-drill",
+    "file_path": "data/platform_export/market/data/requests/req-aramco-ventures-i-drill.json"
+   },
+   {
+    "collection": "market/data/requests",
+    "doc_id": "req-qatar-development-bank-inno-medical-telecare",
+    "file_path": "data/platform_export/market/data/requests/req-qatar-development-bank-inno-medical-telecare.json"
+   },
+   {
+    "collection": "market/data/requests",
+    "doc_id": "req-qatar-science-and-technology-park-inno-medical-epi-watch",
+    "file_path": "data/platform_export/market/data/requests/req-qatar-science-and-technology-park-inno-medical-epi-watch.json"
+   },
+   {
+    "collection": "market/data/requests",
+    "doc_id": "req-qatar-research-development-and-innovation-council-inno-terminals-tanks",
+    "file_path": "data/platform_export/market/data/requests/req-qatar-research-development-and-innovation-council-inno-terminals-tanks.json"
+   },
+   {
+    "collection": "market/data/requests",
+    "doc_id": "req-hub71-inno-medical-triage",
+    "file_path": "data/platform_export/market/data/requests/req-hub71-inno-medical-triage.json"
+   },
+   {
+    "collection": "market/data/requests",
+    "doc_id": "req-wamda-capital-inno-medical-claims-guard",
+    "file_path": "data/platform_export/market/data/requests/req-wamda-capital-inno-medical-claims-guard.json"
+   },
+   {
+    "collection": "market/data/requests",
+    "doc_id": "req-tupras-ventures-inno---inteligent---ref---park-naft",
+    "file_path": "data/platform_export/market/data/requests/req-tupras-ventures-inno---inteligent---ref---park-naft.json"
+   },
+   {
+    "collection": "market/data/requests",
+    "doc_id": "req-tt-ventures-unmatched",
+    "file_path": "data/platform_export/market/data/requests/req-tt-ventures-unmatched.json"
+   },
+   {
+    "collection": "market/data/requests",
+    "doc_id": "req-212-inno-medical-records-nlp",
+    "file_path": "data/platform_export/market/data/requests/req-212-inno-medical-records-nlp.json"
+   },
+   {
+    "collection": "market/data/requests",
+    "doc_id": "req-petronas-ventures-Khalij-AryaSasol-MultiGrade-PE-Transition-Optimization-System",
+    "file_path": "data/platform_export/market/data/requests/req-petronas-ventures-Khalij-AryaSasol-MultiGrade-PE-Transition-Optimization-System.json"
+   },
+   {
+    "collection": "market/data/requests",
+    "doc_id": "req-mranti-inno-medical-imaging-qc",
+    "file_path": "data/platform_export/market/data/requests/req-mranti-inno-medical-imaging-qc.json"
+   },
+   {
+    "collection": "market/data/requests",
+    "doc_id": "req-sginnovate-NPA---Neuro-Predict-Ai",
+    "file_path": "data/platform_export/market/data/requests/req-sginnovate-NPA---Neuro-Predict-Ai.json"
+   },
+   {
+    "collection": "market/data/requests",
+    "doc_id": "req-sg-growth-capital-barekat-Diagnostic-Kits",
+    "file_path": "data/platform_export/market/data/requests/req-sg-growth-capital-barekat-Diagnostic-Kits.json"
+   },
+   {
+    "collection": "market/data/requests",
+    "doc_id": "req-wavemaker-partners-DOF-Digital-Oil-Field",
+    "file_path": "data/platform_export/market/data/requests/req-wavemaker-partners-DOF-Digital-Oil-Field.json"
+   },
+   {
+    "collection": "market/data/requests",
+    "doc_id": "req-vertex-ventures-southeast-asia-and-india-inno-medical-bedflow",
+    "file_path": "data/platform_export/market/data/requests/req-vertex-ventures-southeast-asia-and-india-inno-medical-bedflow.json"
+   },
+   {
+    "collection": "market/data/requests",
+    "doc_id": "req-basf-venture-capital-inno-Khalij-Apadana-Reformer-Methanol-Digital-Twin-System",
+    "file_path": "data/platform_export/market/data/requests/req-basf-venture-capital-inno-Khalij-Apadana-Reformer-Methanol-Digital-Twin-System.json"
+   },
+   {
+    "collection": "market/data/requests",
+    "doc_id": "req-htgf-barekat-Advanced-Cell-Therapy-Products",
+    "file_path": "data/platform_export/market/data/requests/req-htgf-barekat-Advanced-Cell-Therapy-Products.json"
+   },
+   {
+    "collection": "market/data/requests",
+    "doc_id": "req-eic-accelerator-FIDPS---Intelligent-Formation-Integrity-damage-prevention-system-",
+    "file_path": "data/platform_export/market/data/requests/req-eic-accelerator-FIDPS---Intelligent-Formation-Integrity-damage-prevention-system-.json"
+   },
+   {
+    "collection": "market/data/requests",
+    "doc_id": "req-supernova-invest-Digital-twin---nuc---reac",
+    "file_path": "data/platform_export/market/data/requests/req-supernova-invest-Digital-twin---nuc---reac.json"
+   },
+   {
+    "collection": "market/data/requests",
+    "doc_id": "req-edf-pulse-ventures-inno-tech-inspection-corrosion-control-60ta",
+    "file_path": "data/platform_export/market/data/requests/req-edf-pulse-ventures-inno-tech-inspection-corrosion-control-60ta.json"
+   },
+   {
+    "collection": "market/data/requests",
+    "doc_id": "req-equinor-ventures-khalij-Intelligent-Energy-Carbon-and-Sustainability-Management-System",
+    "file_path": "data/platform_export/market/data/requests/req-equinor-ventures-khalij-Intelligent-Energy-Carbon-and-Sustainability-Management-System.json"
+   },
+   {
+    "collection": "market/data/requests",
+    "doc_id": "req-nysno-climate-investments-inno-khorasan-petrochemical-SEM",
+    "file_path": "data/platform_export/market/data/requests/req-nysno-climate-investments-inno-khorasan-petrochemical-SEM.json"
+   },
+   {
+    "collection": "market/data/requests",
+    "doc_id": "req-voima-ventures-barekat-Genomics",
+    "file_path": "data/platform_export/market/data/requests/req-voima-ventures-barekat-Genomics.json"
+   },
+   {
+    "collection": "market/data/requests",
+    "doc_id": "req-industrifonden-Intelligent-software-for-diagnosing-and-treating-esophageal-cancer",
+    "file_path": "data/platform_export/market/data/requests/req-industrifonden-Intelligent-software-for-diagnosing-and-treating-esophageal-cancer.json"
+   },
+   {
+    "collection": "market/data/requests",
+    "doc_id": "req-norrsken-vc-inno-medical-waste",
+    "file_path": "data/platform_export/market/data/requests/req-norrsken-vc-inno-medical-waste.json"
+   },
+   {
+    "collection": "market/data/requests",
+    "doc_id": "req-bdc-capital-inno-medical-drug-trace",
+    "file_path": "data/platform_export/market/data/requests/req-bdc-capital-inno-medical-drug-trace.json"
+   },
+   {
+    "collection": "market/data/requests",
+    "doc_id": "req-evok-innovations-i-lift---AI-Powered-Artificial-Lift-Management-Dashboard",
+    "file_path": "data/platform_export/market/data/requests/req-evok-innovations-i-lift---AI-Powered-Artificial-Lift-Management-Dashboard.json"
+   },
+   {
+    "collection": "market/data/requests",
+    "doc_id": "req-chrysalix-venture-capital-OGIM---NISOC",
+    "file_path": "data/platform_export/market/data/requests/req-chrysalix-venture-capital-OGIM---NISOC.json"
+   },
+   {
+    "collection": "market/data/requests",
+    "doc_id": "req-main-sequence-inno-fanavaran-ioa",
+    "file_path": "data/platform_export/market/data/requests/req-main-sequence-inno-fanavaran-ioa.json"
+   },
+   {
+    "collection": "market/data/requests",
+    "doc_id": "req-arena-Gas-supply-and-demand-optimization-software-system",
+    "file_path": "data/platform_export/market/data/requests/req-arena-Gas-supply-and-demand-optimization-software-system.json"
+   },
+   {
+    "collection": "market/data/requests",
+    "doc_id": "req-innovation-victoria-inno-medical-edu-sim",
+    "file_path": "data/platform_export/market/data/requests/req-innovation-victoria-inno-medical-edu-sim.json"
+   },
+   {
+    "collection": "market/data/requests",
+    "doc_id": "req-utec-N---Barekat---IPIND---Intelligent-Platform-for-Integrated-Nanocarrier-Design",
+    "file_path": "data/platform_export/market/data/requests/req-utec-N---Barekat---IPIND---Intelligent-Platform-for-Integrated-Nanocarrier-Design.json"
+   },
+   {
+    "collection": "market/data/requests",
+    "doc_id": "req-hyundai-cradle--ApexAsset-AI",
+    "file_path": "data/platform_export/market/data/requests/req-hyundai-cradle--ApexAsset-AI.json"
+   },
+   {
+    "collection": "market/data/requests",
+    "doc_id": "req-lg-technology-ventures-inno-Jam-Petrochemical-polymerization-digitwin",
+    "file_path": "data/platform_export/market/data/requests/req-lg-technology-ventures-inno-Jam-Petrochemical-polymerization-digitwin.json"
+   },
+   {
+    "collection": "market/data/requests",
+    "doc_id": "req-qiming-venture-partners-MS-microcontroller",
+    "file_path": "data/platform_export/market/data/requests/req-qiming-venture-partners-MS-microcontroller.json"
+   },
+   {
+    "collection": "market/data/requests",
+    "doc_id": "req-speciale-invest-nuc---pdm---reactor",
+    "file_path": "data/platform_export/market/data/requests/req-speciale-invest-nuc---pdm---reactor.json"
+   },
+   {
+    "collection": "market/data/requests",
+    "doc_id": "req-pi-ventures-HQCA-Hybrid-Quantum-Classical-Drug-Discovery",
+    "file_path": "data/platform_export/market/data/requests/req-pi-ventures-HQCA-Hybrid-Quantum-Classical-Drug-Discovery.json"
+   },
+   {
+    "collection": "market/data/requests",
+    "doc_id": "req-abb-ventures-pfd---pid-design-for-gas-turbine",
+    "file_path": "data/platform_export/market/data/requests/req-abb-ventures-pfd---pid-design-for-gas-turbine.json"
+   },
+   {
+    "collection": "market/data/requests",
+    "doc_id": "req-set-ventures-inno-HVAC-efficiency-10-",
+    "file_path": "data/platform_export/market/data/requests/req-set-ventures-inno-HVAC-efficiency-10-.json"
+   },
+   {
+    "collection": "market/data/requests",
+    "doc_id": "req-emerald-technology-ventures-inno-Khalij-Arvand-ChlorAlkali-PVC-Digital-Twin-System-",
+    "file_path": "data/platform_export/market/data/requests/req-emerald-technology-ventures-inno-Khalij-Arvand-ChlorAlkali-PVC-Digital-Twin-System-.json"
+   },
+   {
+    "collection": "market/data/requests",
+    "doc_id": "req-hitachi-ventures-inno-medical-eqm",
+    "file_path": "data/platform_export/market/data/requests/req-hitachi-ventures-inno-medical-eqm.json"
+   },
+   {
+    "collection": "market/data/requests",
+    "doc_id": "req-ngp-capital-techinco-RBI",
+    "file_path": "data/platform_export/market/data/requests/req-ngp-capital-techinco-RBI.json"
+   },
+   {
+    "collection": "market/data/requests",
+    "doc_id": "req-eip-inno-khark-dss",
+    "file_path": "data/platform_export/market/data/requests/req-eip-inno-khark-dss.json"
+   },
+   {
+    "collection": "market/data/requests",
+    "doc_id": "req-abb-synerleap-Khalij-Production-Process-Prediction-and-Optimization-System",
+    "file_path": "data/platform_export/market/data/requests/req-abb-synerleap-Khalij-Production-Process-Prediction-and-Optimization-System.json"
+   }
+  ],
+  [
+   {
+    "collection": "market/data/requests",
+    "doc_id": "req-sinopec-capital-inno-Abadan-Petrochemical-Smart-Dash",
+    "file_path": "data/platform_export/market/data/requests/req-sinopec-capital-inno-Abadan-Petrochemical-Smart-Dash.json"
+   },
+   {
+    "collection": "market/data/requests",
+    "doc_id": "req-sinovation-ventures-khalij-Digital-Transformation-and-Value-Chain-Integration-System",
+    "file_path": "data/platform_export/market/data/requests/req-sinovation-ventures-khalij-Digital-Transformation-and-Value-Chain-Integration-System.json"
+   },
+   {
+    "collection": "settings",
+    "doc_id": "investor_mail",
+    "file_path": "data/platform_export/settings/investor_mail.json"
+   },
+   {
+    "collection": "market/data/leads",
+    "doc_id": "sellfree-209408",
+    "file_path": "data/platform_export/market/data/leads/sellfree-209408.json"
+   },
+   {
+    "collection": "market/data/leads",
+    "doc_id": "abcagahi-25157",
+    "file_path": "data/platform_export/market/data/leads/abcagahi-25157.json"
+   },
+   {
+    "collection": "market/data/leads",
+    "doc_id": "abcagahi-25139",
+    "file_path": "data/platform_export/market/data/leads/abcagahi-25139.json"
+   },
+   {
+    "collection": "market/data/leads",
+    "doc_id": "abcagahi-25131",
+    "file_path": "data/platform_export/market/data/leads/abcagahi-25131.json"
+   },
+   {
+    "collection": "market/data/leads",
+    "doc_id": "abcagahi-25127",
+    "file_path": "data/platform_export/market/data/leads/abcagahi-25127.json"
+   },
+   {
+    "collection": "market/data/leads",
+    "doc_id": "abcagahi-25125",
+    "file_path": "data/platform_export/market/data/leads/abcagahi-25125.json"
+   }
+  ]
+ ]
+}

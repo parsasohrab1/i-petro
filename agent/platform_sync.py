@@ -30,7 +30,7 @@ def _write(collection, doc_id, data, docs):
     path = EXPORT_DIR / collection / f"{_id(doc_id)}.json"
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(data, ensure_ascii=False), encoding="utf-8")
-    docs.append({"collection": collection, "doc_id": _id(doc_id), "file_path": str(path)})
+    docs.append({"collection": collection, "doc_id": _id(doc_id), "file_path": str(path.relative_to(ROOT))})
 
 
 def export(include_seed=False):
@@ -53,6 +53,19 @@ def export(include_seed=False):
         _write("market/data/investors", v["id"], {k: v.get(k) for k in v if k != "draft"}, docs)
     for r in requests.load().get("requests", []):
         _write("market/data/requests", r["id"], r, docs)
+    # per-investor email drafts (info@parsaint.group) + pitch deck attachment for the dashboard follow-up tab
+    drafts_file = ROOT / "data" / "platform_export" / "settings_investor_mail.json"
+    if not drafts_file.exists():
+        _regenerate_mail_map = ROOT / "scripts" / "generate_investor_drafts.py"
+        if _regenerate_mail_map.exists():
+            import subprocess, sys as _sys
+            subprocess.run([_sys.executable, str(_regenerate_mail_map)], check=False, capture_output=True)
+    if drafts_file.exists():
+        try:
+            payload = json.loads(drafts_file.read_text(encoding="utf-8"))
+            _write("settings", "investor_mail", payload.get("doc", {"map": {}}), docs)
+        except Exception:
+            pass
     for lead in leads.load()["leads"].values():
         if lead.get("status") != "do_not_call":
             _write("market/data/leads", lead["id"], lead, docs)
@@ -74,7 +87,53 @@ def export(include_seed=False):
             _write("patents", pat["id"], {k: v for k, v in pat.items() if k != "id"}, docs)
     batches = [docs[i:i + 50] for i in range(0, len(docs), 50)]
     (EXPORT_DIR / "manifest.json").write_text(json.dumps({"batches": batches}, ensure_ascii=False, indent=1), encoding="utf-8")
+    (EXPORT_DIR / "README.md").write_text(README_TEXT, encoding="utf-8")
     return len(docs), len(batches)
+
+
+README_TEXT = """# platform_export — payload for the artifact database
+
+The dashboard has TWO update paths; this directory serves method one:
+
+1. **Artifact database (claude.ai)** — apply these documents with the ArtifactData tool
+   (see "How to apply" below).
+2. **Repo commits** — every repo-backed section is loaded by the dashboard itself (REPO_BASE in
+   platform/index.html): data/tenders.json, data/events.json, data/investors.json,
+   data/leads.json, data/partners.json, data/scholarships.json, data/patent_ops.json,
+   data/papers.json, requests_seed.json, platform/products_seed.json and
+   data/articles_export/article_registry.json. Update them with scripts/dashboard_update.py
+   or scripts/refresh_tenders.py and just commit+push. This works even when the artifact DB
+   is offline or stale. platform/index.html also carries an inline snapshot of all sections
+   (window.REPO_SNAPSHOT, rebuilt by scripts/embed_dashboard_data.py), so updating the artifact
+   HTML alone refreshes every section even when the artifact cannot fetch the data files.
+
+- `manifest.json` — batches (max 50 writes each). Each entry: `{collection, doc_id, file_path}`;
+  `file_path` is relative to the repository root.
+- `market/data/tenders/<doc_id>.json` — one file per tender document (collection `market/data/tenders`).
+- `settings/…` — settings documents (`settings/investor_mail` etc.).
+
+## How to apply (method one)
+
+1. Open the dashboard artifact session on claude.ai (the session that has the ArtifactData tool).
+2. Read `manifest.json` and, batch by batch, write each file's JSON content into the artifact
+   database at `collection` / `doc_id` (a batch = one ArtifactData write group of up to 50 docs).
+3. Re-run after every collection refresh to pick up the latest snapshot.
+
+## Regenerate locally
+
+```bash
+python3 -c "from agent import platform_sync; print(platform_sync.export())"
+# or with a live collection run:
+python3 scripts/refresh_tenders.py [hand_collected.json]
+# or with a small prompt-driven instruction file (tenders, articles, events, investors, leads,
+# scholarships, requests, patent_ops — see scripts/dashboard_update.py):
+python3 scripts/dashboard_update.py instruction.json
+```
+
+Team-side edits (status, history, analysis) made in the dashboard survive the apply: the exported
+tender docs carry only listing fields (TENDER_KEEP) and the analysis fields are preserved by
+import_tracking / the dashboard merge (mergeRepo in platform/index.html).
+"""
 
 
 def import_tracking(folder):

@@ -1,5 +1,6 @@
-/* window.claude replacement for self-hosted iPetro: db (REST + server-sent events), user, assets, downloads.
-   There is deliberately no "sample": the dashboard then switches off Claude scoring by itself. */
+/* window.claude replacement for self-hosted iPetro: db (REST + server-sent events), user, assets, downloads, sample.
+   "sample" exists only when the server has ANTHROPIC_API_KEY; otherwise use("sample") rejects and the dashboard switches
+   off Claude scoring by itself. */
 (function () {
   "use strict";
   var H = { "X-Requested-With": "ppt" };
@@ -83,6 +84,26 @@
           return api("POST", "/api/assets", undefined, fd);
         }
       };
+    },
+    sample: function () {
+      return api("GET", "/api/sample/status").then(function (st) {
+        if (!st.enabled) throw new Error("service not available: sample");
+        function parseJson(t) {
+          t = String(t).trim().replace(/^```(?:json)?\s*/i, "").replace(/\s*```$/, "");
+          try { return JSON.parse(t); } catch (e) {
+            var a = t.search(/[\[{]/), b = Math.max(t.lastIndexOf("}"), t.lastIndexOf("]"));
+            if (a >= 0 && b > a) return JSON.parse(t.slice(a, b + 1));
+            throw e;
+          }
+        }
+        var call = function (input, opts) { return api("POST", "/api/sample", { input: input, tier: (opts && opts.modelTier) || "default" }); };
+        var fn = function (input, opts) { return call(input, opts); };
+        fn.json = function (input, opts) {
+          var inp = typeof input === "string" ? input + "\n\nReply with valid JSON only, no other text." : input;
+          return call(inp, opts).then(function (r) { return parseJson(r.text); });
+        };
+        return fn;
+      });
     },
     downloads: function () {
       return {
