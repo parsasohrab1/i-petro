@@ -32,6 +32,11 @@ services:
       COOKIE_SECURE: ${COOKIE_SECURE:-1}
       SESSION_DAYS: ${SESSION_DAYS:-14}
       MAX_UPLOAD_MB: ${MAX_UPLOAD_MB:-20}
+      # page to serve: /app/platform/index.html (repo page) or /app/platform/ipetro-live.html (claude.ai v234 line)
+      PLATFORM_HTML: ${PLATFORM_HTML:-/app/platform/index.html}
+      # optional Claude scoring of tasks and reports; empty keeps it off
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+      ANTHROPIC_BASE_URL: ${ANTHROPIC_BASE_URL:-https://api.anthropic.com}
     networks: [internal]
     deploy:
       resources:

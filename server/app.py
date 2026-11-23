@@ -1,8 +1,8 @@
 """iPetro server: PostgreSQL + REST API + session login + live updates, serving the unchanged dashboard.
 
 The dashboard (platform/index.html) talks to `window.claude` (db, user, assets, downloads) that claude.ai provides.
-shim.js implements the same interface against this API, so the page needs no change; sample (Claude scoring) is
-intentionally absent here because api.anthropic.com is not reachable from Iranian servers.
+shim.js implements the same interface against this API, so the page needs no change. sample (Claude scoring) is on only when
+ANTHROPIC_API_KEY is set (see server/sample.py: api.anthropic.com may need a relay from Iranian servers).
 """
 import asyncio
 import json
@@ -18,7 +18,7 @@ from fastapi import Depends, FastAPI, File, HTTPException, Request, Response, Up
 from fastapi.responses import HTMLResponse, JSONResponse, StreamingResponse
 from psycopg.types.json import Jsonb
 
-from . import db, rules, security
+from . import db, rules, sample, security
 
 ROOT = Path(__file__).resolve().parent
 PAGE = Path(os.environ.get("PLATFORM_HTML", ROOT.parent / "platform" / "index.html"))
@@ -214,6 +214,35 @@ async def events(request: Request, user=Depends(current_user)):
 
     return StreamingResponse(stream(), media_type="text/event-stream",
                              headers={"Cache-Control": "no-cache", "X-Accel-Buffering": "no"})
+
+
+# ------------------------------------------------------------------ Claude scoring (optional)
+_sample_hits: dict = {}
+
+
+@app.get("/api/sample/status")
+def sample_status(user=Depends(current_user)):
+    return {"enabled": sample.enabled()}
+
+
+@app.post("/api/sample")
+async def sample_call(request: Request, user=Depends(current_user)):
+    csrf(request)
+    if not sample.enabled():
+        raise HTTPException(404, "sample is not configured")
+    now = time.time()
+    hits = [t for t in _sample_hits.get(user["id"], []) if now - t < 60]
+    if len(hits) >= 20:
+        raise HTTPException(429, "too many requests")
+    _sample_hits[user["id"]] = hits + [now]
+    body = await request.json()
+    tier = body.get("tier") if body.get("tier") in ("quick", "default", "complex") else "default"
+    try:
+        return await asyncio.to_thread(sample.complete, body.get("input"), tier)
+    except ValueError as e:
+        raise HTTPException(422, str(e))
+    except Exception:
+        raise HTTPException(502, "upstream error")
 
 
 # ------------------------------------------------------------------ files

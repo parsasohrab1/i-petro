@@ -1,5 +1,6 @@
-/* window.claude replacement for self-hosted iPetro: db (REST + server-sent events), user, assets, downloads.
-   There is deliberately no "sample": the dashboard then switches off Claude scoring by itself. */
+/* window.claude replacement for self-hosted iPetro: db (REST + server-sent events), user, assets, downloads, sample.
+   "sample" exists only when the server has ANTHROPIC_API_KEY; otherwise use("sample") rejects and the dashboard switches
+   off Claude scoring by itself. */
 (function () {
   "use strict";
   var H = { "X-Requested-With": "ppt" };
@@ -48,6 +49,9 @@
       return {
         id: id, path: path, get: get,
         set: function (data) { return api("PUT", "/api/doc?path=" + q(path), data); },
+        update: function (data) {   // merge fields into the stored document (the page uses it for score and status edits)
+          return get().then(function (s) { if (!s.exists) throw new Error("not-found"); return api("PUT", "/api/doc?path=" + q(path), Object.assign({}, s.data(), data)); });
+        },
         delete: function () { return api("DELETE", "/api/doc?path=" + q(path)); },
         onSnapshot: function (cb, err) { return watch(path, get, cb, err); }
       };
@@ -55,7 +59,14 @@
     collection: function (path) {
       path = path.replace(/^\/+|\/+$/g, "");
       var get = function () { return api("GET", "/api/col?path=" + q(path)).then(colSnap); };
-      return { path: path, get: get, onSnapshot: function (cb, err) { return watch(path, get, cb, err); } };
+      var col = { path: path, get: get, onSnapshot: function (cb, err) { return watch(path, get, cb, err); } };
+      col.where = function (field, op, val) {   // only "==" is used by the page; filtering happens in the browser
+        if (op !== "==") throw new Error("where: only == is supported");
+        var sub = { get: function () { return get().then(function (snap) { return colSnap({ docs: snap.docs.filter(function (d) { return d.data()[field] === val; }).map(function (d) { return { id: d.id, data: d.data() }; }) }); }); } };
+        sub.onSnapshot = function (cb, err) { return watch(path, sub.get, cb, err); };
+        return sub;
+      };
+      return col;
     }
   };
 
@@ -73,6 +84,26 @@
           return api("POST", "/api/assets", undefined, fd);
         }
       };
+    },
+    sample: function () {
+      return api("GET", "/api/sample/status").then(function (st) {
+        if (!st.enabled) throw new Error("service not available: sample");
+        function parseJson(t) {
+          t = String(t).trim().replace(/^```(?:json)?\s*/i, "").replace(/\s*```$/, "");
+          try { return JSON.parse(t); } catch (e) {
+            var a = t.search(/[\[{]/), b = Math.max(t.lastIndexOf("}"), t.lastIndexOf("]"));
+            if (a >= 0 && b > a) return JSON.parse(t.slice(a, b + 1));
+            throw e;
+          }
+        }
+        var call = function (input, opts) { return api("POST", "/api/sample", { input: input, tier: (opts && opts.modelTier) || "default" }); };
+        var fn = function (input, opts) { return call(input, opts); };
+        fn.json = function (input, opts) {
+          var inp = typeof input === "string" ? input + "\n\nReply with valid JSON only, no other text." : input;
+          return call(inp, opts).then(function (r) { return parseJson(r.text); });
+        };
+        return fn;
+      });
     },
     downloads: function () {
       return {

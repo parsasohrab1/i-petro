@@ -88,3 +88,21 @@ sudo crontab -e
 - فونت Vazirmatn از Google Fonts و نقشه‌ی دفتر (Leaflet/OpenStreetMap) از CDN بیرونی می‌آیند؛ اگر فیلتر باشند، صفحه با فونت جایگزین باز می‌شود و نقشه‌ی انتخاب دفتر کار نمی‌کند (مختصات را دستی وارد کنید). برای رفع کامل، فایل‌ها را روی خود سرور میزبانی کنید.
 - API با **یک worker** اجرا می‌شود (به‌روزرسانی زنده درون‌پردازشی است). برای چند سرور باید LISTEN/NOTIFY اضافه شود.
 - ورود فقط با ایمیل و رمز است؛ احراز دومرحله‌ای ندارد.
+
+## به‌روزرسانی سامانه (بدون claude.ai)
+صفحه‌ی داشبورد در `platform/index.html` (صفحه‌ی مخزن) و `platform/ipetro-live.html` (خط claude.ai، نسخه‌ی ۲۳۴) است؛ با `PLATFORM_HTML` در `.env` یکی را انتخاب کنید و با هر `git push` به GitHub تغییر می‌کند. روی سرور:
+```bash
+bash /opt/ipetro/deploy/update.sh          # git pull + docker compose up -d --build + بررسی سلامت
+```
+اگر سرور به GitHub دسترسی ندارد: از رایانه‌ی دارای دسترسی `rsync -a --exclude .git ./ user@SERVER:/opt/ipetro/` بزنید و فقط دو خط آخر `update.sh` را اجرا کنید.
+دیتابیس (volume `pgdata`) با به‌روزرسانی دست نمی‌خورد؛ قبل از کار بزرگ `deploy/backup.sh` را اجرا کنید.
+
+### وقتی نسخه‌ی جدید داشبورد در claude.ai ساخته می‌شود
+```powershell
+python tools/sync_platform.py مسیر\فایل-دانلودشده-از-artifact.html   # بسته‌ی claude.ai را حذف و platform/index.html را می‌سازد
+git add platform/ipetro-live.html; git commit -m "dashboard: sync vNNN"; git push
+```
+سپس روی سرور `update.sh`. CI همین فایل را از نظر خطای نحوی بررسی می‌کند.
+
+### نمره‌دهی خودکار Claude (اختیاری)
+در `.env` مقدار `ANTHROPIC_API_KEY` را بگذارید و `update.sh` را اجرا کنید؛ بررسی تسک و نمره‌ی گزارش‌ها روشن می‌شود. هر کاربر در دقیقه حداکثر ۲۰ درخواست دارد. اگر `api.anthropic.com` از سرور باز نمی‌شود، `ANTHROPIC_BASE_URL` را روی یک رله‌ی خودتان بگذارید (هزینه‌ی API جدا از اشتراک claude.ai حساب می‌شود). بدون کلید، ویژگی خاموش می‌ماند.
