@@ -46,6 +46,8 @@ def can_read(u, path: str, data=None) -> bool:
         return len(s) < 2 or s[1] == uid or u["role"] == "owner"
     if top == "attendance":
         return len(s) < 2 or s[1] == uid or _admin(u)
+    if top == "activity":                                              # activity/<member>/days/<date>: the person and the owner only
+        return len(s) < 2 or s[1] == uid or u["role"] == "owner"
     if top == "members":
         return _admin(u) or (len(s) > 1 and s[1] == uid)
     if top == "tasks":
@@ -64,6 +66,8 @@ def can_write(u, path: str, old=None, new=None) -> bool:
         return len(s) > 1 and s[1] == uid                              # nobody edits another person's report or test
     if top == "attendance":
         return len(s) > 1 and (s[1] == uid or _admin(u))
+    if top == "activity":
+        return len(s) > 1 and s[1] == uid                              # a member writes only their own day log
     if top == "members":
         return _admin(u) or (len(s) > 1 and s[1] == uid)
     if top == "tasks":

@@ -195,10 +195,10 @@ const SUBS = {
   market:[["iran","Iran AI Projects"],["docs_ir","مدارک پترو پالاتوس (داخلی)"],["overseas","Overseas AI Projects"],["techneeds","نیازهای فناورانه"],["docs_int","مدارک پارسا اینت (بین‌المللی)"],["partners","شرکای تجاری بین‌المللی"],["web","Web Design & SEO"],["investors","AI Investors & Accelerators"],["tracking","Project Tracking"],["pipeline","Pipeline"],["memory","Team Memory"]],
   events:[["iran","ایران"],["world","جهان"],["all","همه"],["taken","در دست پیگیری"]],
   erp:[["ops","برنامه‌ی عملیات و واگذاری"],["domains","حوزه‌های فعالیت"],["products","توسعه‌ی محصول هوشمند"],["people","نیروی انسانی"],["finance","مالی"],["clients","مشتریان و قراردادها"],["backup","پشتیبان‌گیری"],["phonebook","دفترچه‌ی شماره‌ی کارفرمایان"],["notices","اعلان‌های مدیریتی و دسترسی"]],
-  bpms:[["home","خانه‌ی BPMS"],["contacts","مخاطبین و ارتباط"],["myday","روز من"],["mind","ذهن‌نگار (آزمون خصوصی)"],["board","تخته‌ی اسکرام"],["backlog","بک‌لاگ و برنامه‌ریزی"],["sprints","اسپرینت‌ها"],["tasks","فهرست تسک‌ها"],["reports","گزارش عملکرد"],["rarchive","بایگانی گزارش‌ها"],["teams","تیم‌ها"],["process","فرایندها"],["calendar","تقویم"],["members","اعضا و ثبت‌نام"],["nda","قرارداد محرمانگی"],["training","فرم آموزش"]],
+  bpms:[["home","خانه‌ی BPMS"],["contacts","مخاطبین و ارتباط"],["myday","روز من"],["mind","ذهن‌نگار (آزمون خصوصی)"],["board","تخته‌ی اسکرام"],["backlog","بک‌لاگ و برنامه‌ریزی"],["sprints","اسپرینت‌ها"],["tasks","فهرست تسک‌ها"],["reports","گزارش عملکرد"],["rarchive","بایگانی گزارش‌ها"],["teams","تیم‌ها"],["process","فرایندها"],["calendar","تقویم"],["members","اعضا و ثبت‌نام"],["activity","نمایش فعالیت اعضای سامانه"],["nda","قرارداد محرمانگی"],["training","فرم آموزش"]],
   letters:[["new","نامه‌ی جدید (ساخت فایل Word)"],["pp","پترو پالا توس"],["sosh","سوشیانت"],["progress","پیشرفت نامه‌نگاری"],["access","دسترسی افراد"]],
   scholar:[["applied","اقدام‌شده و در دست بررسی"],["human","مسئول انسانی"],["doing","در دست اقدام"],["todo","اقدام‌نشده"],["failed","ناموفق (بسته‌شده)"],["postdocs","ارتباط: پست‌داک‌ها"],["target","فهرست هدف: AI · CS · IT · مدیریت"],["profile","مشخصات و رزومه من"],["cv","رزومه محمد پارسا سهرابی"],["access","دسترسی افراد"]],
-  articles:[["list","فهرست مقاله‌ها و وضعیت"],["track","پیگیری مقالات: ژورنال · IF · محصول · وضعیت"],["report","گزارش مقالات: موفق / ناموفق"],["pipe","خط لوله تا ویزا و مسیر ایمیل"],["fees","هزینه ورودی و ارائه آنلاین"],["product","محصول ویژه‌ی مقاله"],["pool","استخر محصولات برای ژورنال‌های جدید"],["ready","آمادگی ثبت (۶ معیار)"],["fitgate","دروازه‌ی تناسب ژورنال"],["evidence","شواهد و داده‌ی واقعی"],["submit","ثبت چکیده و ثبت‌نام (مسئول انسانی)"],["claude","تسک برای Claude"],["upload","آپلود داده‌ها"],["access","دسترسی افراد"]],
+  articles:[["list","فهرست مقاله‌ها و وضعیت"],["track","پیگیری مقالات: ژورنال · IF · محصول · وضعیت"],["report","گزارش مقالات: موفق / ناموفق"],["pipe","خط لوله تا ویزا و مسیر ایمیل"],["fees","هزینه ورودی و ارائه آنلاین"],["product","معرفی محصول برای ژورنال‌های اقدام‌نشده"],["pool","استخر محصولات برای ژورنال‌های جدید"],["ready","آمادگی ثبت (۶ معیار)"],["fitgate","دروازه‌ی تناسب ژورنال"],["evidence","شواهد و داده‌ی واقعی"],["submit","ثبت چکیده و ثبت‌نام (مسئول انسانی)"],["claude","تسک برای Claude"],["upload","آپلود داده‌ها"],["access","دسترسی افراد"]],
   patent:[["home","پتنت‌ها"],["human","مسئول انسانی"],["ops","فرصت‌های ثبت اختراع"],["products","محصولات ریپو"],["access","دسترسی افراد"]]
 };
 for(const [mk] of MODULES){ (SUBS[mk]=SUBS[mk]||[]).push(["help","آموزش"]); }   // every tab ends with its own training section
@@ -310,7 +310,7 @@ function privateRows(key, rows){
   if(key==="tasks") return rows.filter(r=>r.assignee===S.me.id||r.created_by===S.me.id);
   return rows;
 }
-const visibleSubs = mod => (SUBS[mod]||[]).filter(([k])=>!(k==="access"&&!S.me.isOwner)&&(isAdmin()||!(PRIVATE_SUBS[mod]||[]).includes(k))&&!(mod==="scholar"&&!S.me.isOwner&&["profile","cv"].includes(k))&&!(mod==="basket"&&!S.me.isOwner&&basAcc()&&!["list","data","help"].includes(k))&&!(mod==="erp"&&k==="notices"&&!S.me.isOwner)&&!(mod==="erp"&&k==="phonebook"&&!canPhone()));   // people with basket access see only the product list and data hub (medical products), never the TRL / ideas tabs
+const visibleSubs = mod => (SUBS[mod]||[]).filter(([k])=>!((k==="access"||k==="activity")&&!S.me.isOwner)&&(isAdmin()||!(PRIVATE_SUBS[mod]||[]).includes(k))&&!(mod==="scholar"&&!S.me.isOwner&&["profile","cv"].includes(k))&&!(mod==="basket"&&!S.me.isOwner&&basAcc()&&!["list","data","help"].includes(k))&&!(mod==="erp"&&k==="notices"&&!S.me.isOwner)&&!(mod==="erp"&&k==="phonebook"&&!canPhone()));   // people with basket access see only the product list and data hub (medical products), never the TRL / ideas tabs
 function setPath(key, val){ const [a,b]=key.split("."); if(b) S[a][b]=val; else S[a]=val; }
 function subscribe(){
   for(const [path,key] of Object.entries(COLS)) subColl(path,key);
@@ -431,7 +431,7 @@ async function artFormDownload(vid,kind){ try{
 }catch(e){ if(!e||e.code!=="declined") toast("دریافت فرم انجام نشد."); } }
 async function save(path, data, okMsg="ذخیره شد"){
   if(!S.db){ toast("اتصال به پایگاه داده برقرار نیست."); return false; }
-  try{ await S.db.doc(path).set(data); toast(okMsg); return true; }
+  try{ await S.db.doc(path).set(data); toast(okMsg); if(!/^activity\//.test(path)) actPush("act",okMsg+" ("+path.split("/")[0]+")"); return true; }
   catch(e){ console.error("save", path, e); toast(e.code==="invalid_argument" ? (S.canWrite===false ?"دسترسی شما به این سامانه «Contributor» نیست؛ از مالک سامانه بخواهید در منوی Share سطح دسترسی شما را Contributor کند." : "این بخش برای سطح دسترسی شما مجاز نیست یا داده نامعتبر است: " + (e.message||"")) : e.code==="quota_exceeded" ? "ظرفیت پایگاه داده پر است؛ موارد قدیمی را حذف کنید." : "ذخیره نشد؛ دوباره تلاش کنید."); return false; }
 }
 async function remove(path){ try{ await S.db.doc(path).delete(); toast("حذف شد"); }catch(e){ toast("حذف نشد"); } }
@@ -512,7 +512,7 @@ const basAcc = () => !!(S.me.id&&((S.basAcc||{}).ids||[]).includes(S.me.id));
 const basMed = p => basAcc()&&!!p&&PROD_SEC[p.id]==="medical";   // explicit map only: the keyword guess in prSec also tags energy products as medical ("diagnosis", "surveillance")
 const areaMineView = mod => { const all=areaTasks(mod).sort((a,b)=>(a.due||"9999").localeCompare(b.due||"9999")), ts=S.mineDone?all:all.filter(t=>!(t.status==="done"||t.status==="approved"));
   return asgMineBox(mod)+`<p class="note">فقط تسک‌هایی که برای شما تعریف شده در این بخش دیده می‌شود. وضعیت تسک را از «BPMS ← روز من» یا «تخته‌ی اسکرام» تغییر دهید.</p>`+
-   (mod==="articles"&&S.downloads&&ts.some(t=>t.venue&&absOf(t.venue))?`<div class="toolbar"><button class="btn sig" data-act="art-abs-mine">چکیده‌های تسک‌های من (ZIP)</button><span class="meta">چکیده‌ی هر مقصد طبق قالب همان ژورنال یا کنفرانس؛ [داخل کروشه] هنوز اندازه‌گیری نشده است.</span></div>`:"")+
+   (mod==="articles"&&S.downloads&&ts.some(t=>t.venue&&absOf(t.venue))?`<div class="toolbar"><button class="btn sig" data-act="art-abs-mine">منواسکریپت‌های تسک‌های من (ZIP)</button><span class="meta">منواسکریپت هر مقصد (خلاصه در ابتدای همان فایل)؛ [داخل کروشه] هنوز اندازه‌گیری نشده است.</span></div>`:"")+
    `<div class="toolbar"><label class="chip"><input type="checkbox" data-act="mine-done"${S.mineDone?" checked":""}> نمایش تسک‌های انجام‌شده (${faNum(all.length-all.filter(t=>!(t.status==="done"||t.status==="approved")).length)})</label></div>`+
    table(["تسک","مهلت","وضعیت","شرح",""],ts.map(t=>`<tr>${td("تسک",esc(t.title),"t")}${td("مهلت",t.due?faDate(t.due):"—")}${td("وضعیت",`<span class="pill ${t.status==="done"||t.status==="approved"?"p-ok":t.status==="doing"?"p-info":"p-warn"}">${esc(TASK_ST[t.status]||t.status)}</span>`)}${td("شرح",`<span style="white-space:pre-wrap">${esc(t.desc||"")}</span>`)}${td("",mod==="articles"&&t.venue&&absOf(t.venue)&&S.downloads?`<button class="btn sm" data-act="art-abs" data-id="${esc(t.venue)}" title="چکیده طبق قالب همین ژورنال یا کنفرانس (فایل Word)">چکیده (Word)</button>`:"")}</tr>`),"تسکی برای شما تعریف نشده است.")+(mod==="scholar"?[...new Set([...ts.filter(t=>t.ref).map(t=>t.ref),...asgMine("scholar").map(a=>String(a.key).replace(/^sch_/,""))])].map(id=>{ const p=SCH.find(x=>x.id===id); return p?schPublicCard(p):""; }).join(""):""); };
 VIEWS["patent.mine"]=()=>areaMineView("patent"); VIEWS["scholar.mine"]=()=>areaMineView("scholar"); VIEWS["articles.mine"]=()=>areaMineView("articles");
@@ -533,7 +533,7 @@ function paintNav(){
   try{localStorage.setItem("ppt-view",JSON.stringify({mod:S.mod,sub:S.sub}))}catch(e){}
   if(S.tour) tourHighlight();
 }
-function render(){ try{ ensureLazy(); lzSync(); }catch(e){ console.error("lazy",e); } paintNav(); renderBanners(); renderView(); paintBell(); }
+function render(){ try{ ensureLazy(); lzSync(); }catch(e){ console.error("lazy",e); } try{ actView(); }catch(e){ console.error("act",e); } paintNav(); renderBanners(); renderView(); paintBell(); }
 function renderView(){
   if(S.mod==="letters"&&S.sub==="new"&&$("#composer")&&!S.forceFull){ // live data arrived: refresh only the ledger, never the form being typed in
     const d=S.draft; if(d&&d.numAuto){ d.number=nextLetterNo(d.identity,d.date); const el=$("[data-c=number]"); if(el&&document.activeElement!==el) el.value=d.number; const p=$("#cprev"); if(p) p.innerHTML=letterSheet(draftLetter()); }
@@ -702,12 +702,12 @@ function asgNotifyBtns(a){
   if(em) b.push(`<a class="btn sm ghost" href="mailto:${esc(em)}?subject=${encodeURIComponent("واگذاری: "+a.title)}&body=${txt}">اطلاع با ایمیل</a>`);
   return b.length?` ${b.join(" ")}`:`<span class="meta"> (تلگرام یا ایمیل انجام‌دهنده ثبت نشده)</span>`;
 }
-function asgCell(key,title,mod){
+function asgCell(key,title,mod,o={}){
   const a=asgOf(key)||{}, can=asgCan(a,mod);
   const body=a.doer?`<div class="meta">انجام‌دهنده: <b>${esc(asgWho(a.doer,a))}</b>${a.selector&&a.selector!==a.doer?` · واگذارکننده: ${esc(asgWho(a.selector,a))}`:" · انتخاب شخصی"}</div>${a.task?`<details><summary class="meta">شرح تسک</summary><span style="white-space:pre-wrap">${esc(a.task)}</span></details>`:`<span class="meta">شرح تسک ثبت نشده</span>`}`:"";
-  const dd=`data-id="${esc(key)}" data-m="${esc(mod)}" data-t="${esc(title)}"`;
+  const dd=`data-id="${esc(key)}" data-m="${esc(mod)}" data-t="${esc(title)}"${o.task?` data-task="${esc(o.task)}"`:""}`;
   const btn=!can?"":a.doer?`<button class="btn sm ghost" data-act="asg" ${dd}>${a.selector===S.me.id&&a.doer!==S.me.id?"ویرایش / لغو واگذاری":"ویرایش / لغو"}</button>`
-    :`<button class="btn sm sig" data-act="asg-me" ${dd}>انجام می‌دهم</button>${asgAdmin(mod)?` <button class="btn sm ghost" data-act="asg" data-other="1" ${dd}>تعریف برای عضو دیگر</button>`:""}`;
+    :`<button class="btn sm sig" data-act="asg-me" ${dd}>${esc(o.me||"انجام می‌دهم")}</button>${asgAdmin(mod)?` <button class="btn sm ghost" data-act="asg" data-other="1" ${dd}>${esc(o.other||"تعریف برای عضو دیگر")}</button>`:""}`;
   return `<div class="asg" style="margin-top:4px">${body}${btn}${asgNotifyBtns(a)}</div>`;
 }
 // A taken or handed-over item also becomes a real task in BPMS (Today / Scrum board) for the doer; handing it over again moves the task, releasing it removes the task.
@@ -723,13 +723,13 @@ async function asgSyncTask(key,title,mod,doer,selector,text){
 }
 // One scholarship at a time: a person who holds a scholarship cannot take another until it is marked as applied (registration finished).
 const schActiveFor = (who,exceptKey) => Object.entries(S.asg||{}).filter(([k,a])=>a.mod==="scholar"&&a.doer===who&&k!==exceptKey).map(([k])=>SCH.find(p=>"sch_"+p.id===k)).filter(p=>p&&!["applied","failed"].includes(schStatus(p)));
-function asgForm(key,title,mod,other){
+function asgForm(key,title,mod,other,task0){
   const a=asgOf(key)||{}; if(!asgCan(a,mod)){ toast("این مورد واگذار شده است؛ فقط انجام‌دهنده یا واگذارکننده می‌تواند آن را تغییر یا لغو کند"); return; }
   const admin=asgAdmin(mod) && (!a.doer || a.selector===S.me.id);
   const opts={"":"— بدون انجام‌دهنده —"}; (S.roster&&S.roster.length?S.roster:(S.members||[])).forEach(m=>{opts[m.id]=m.id===S.me.id?"خودم":(m.full_name||m.id)});
   const fields=admin?[{k:"doer",label:"انجام‌دهنده",type:"select",options:opts,value:a.doer||""}]
     :[{k:"doer",label:"انجام‌دهنده",type:"select",options:{"":"— رها کردن —",[S.me.id]:"خودم انجام می‌دهم"},value:a.doer||""}];
-  fields.push({k:"task",label:"شرح تسک (انجام‌دهنده و مدیر می‌توانند بنویسند)",type:"textarea",value:a.task||""});
+  fields.push({k:"task",label:"شرح تسک (انجام‌دهنده و مدیر می‌توانند بنویسند)",type:"textarea",value:a.task||task0||""});
   openForm({title:"انتخاب / واگذاری: "+title,fields,values:{doer:other&&!a.doer?"":(a.doer||"")},onSave:o=>{ if(other&&!a.doer&&!o.doer){ toast("عضو انجام‌دهنده را انتخاب کنید."); return false } return asgApply(key,title,mod,a,o); }});
 }
 async function asgApply(key,title,mod,a,o){ {
@@ -3689,6 +3689,20 @@ const PRES_CLS = {inperson:"p-info",online:"p-ok",hybrid:"p-ok",unknown:"p-warn"
 const ART_PRES = {none:"ندارد (ژورنال)",inperson:"دارد – حضوری",online:"دارد – آنلاین",hybrid:"دارد – حضوری و آنلاین",unknown:"اعلام نشده"};
 const ART_TYPE = {journal:"ژورنال",special:"ویژه‌شماره‌ی ژورنال",conf:"کنفرانس / سامیت"};
 const ARTICLES_SEED = [
+ {id:"q1_eaai",field:"ai_industry",name:"Engineering Applications of Artificial Intelligence (Elsevier)",type:"journal",impact:"Q1",impact_note:"رتبه‌ی Q1 (SCImago) و نبود هزینه را در سایت رسمی تأیید کنید",deadline:"",dl_note:"پذیرش مداوم",details:"کاربرد هوش مصنوعی در مهندسی و صنعت. مسیر اشتراکی (subscription) بدون هزینه‌ی ارسال؛ دسترسی آزاد اختیاری و پولی است.",present:"none",country:"هلند",city:"آمستردام (ناشر Elsevier)",url:"https://www.sciencedirect.com/journal/engineering-applications-of-artificial-intelligence",ver:false,q1:true,free:true},
+ {id:"q1_ress",field:"ai_industry",name:"Reliability Engineering & System Safety (Elsevier)",type:"journal",impact:"Q1",impact_note:"رتبه‌ی Q1 (SCImago) و نبود هزینه را در سایت رسمی تأیید کنید",deadline:"",dl_note:"پذیرش مداوم",details:"قابلیت اطمینان، ایمنی و نگهداری پیش‌بینانه. مسیر اشتراکی (subscription) بدون هزینه‌ی ارسال؛ دسترسی آزاد اختیاری و پولی است.",present:"none",country:"هلند",city:"آمستردام (ناشر Elsevier)",url:"https://www.sciencedirect.com/journal/reliability-engineering-and-system-safety",ver:false,q1:true,free:true},
+ {id:"q1_mssp",field:"ai_industry",name:"Mechanical Systems and Signal Processing (Elsevier)",type:"journal",impact:"Q1",impact_note:"رتبه‌ی Q1 (SCImago) و نبود هزینه را در سایت رسمی تأیید کنید",deadline:"",dl_note:"پذیرش مداوم",details:"پایش وضعیت، تشخیص عیب و پردازش سیگنال ماشین‌آلات. مسیر اشتراکی (subscription) بدون هزینه‌ی ارسال؛ دسترسی آزاد اختیاری و پولی است.",present:"none",country:"هلند",city:"آمستردام (ناشر Elsevier)",url:"https://www.sciencedirect.com/journal/mechanical-systems-and-signal-processing",ver:false,q1:true,free:true},
+ {id:"q1_tii",field:"ai_industry",name:"IEEE Transactions on Industrial Informatics",type:"journal",impact:"Q1",impact_note:"رتبه‌ی Q1 (SCImago) و نبود هزینه را در سایت رسمی تأیید کنید",deadline:"",dl_note:"پذیرش مداوم",details:"انفورماتیک صنعتی، دوقلوی دیجیتال و هوش مصنوعی صنعتی. مسیر اشتراکی (subscription) بدون هزینه‌ی ارسال؛ دسترسی آزاد اختیاری و پولی است.",present:"none",country:"آمریکا",city:"نیویورک (ناشر IEEE)",url:"https://ieeexplore.ieee.org/xpl/RecentIssue.jsp?punumber=9424",ver:false,q1:true,free:true},
+ {id:"q1_jmlr",field:"ai_industry",name:"Journal of Machine Learning Research (JMLR)",type:"journal",impact:"Q1",impact_note:"رتبه‌ی Q1 (SCImago) و نبود هزینه را در سایت رسمی تأیید کنید",deadline:"",dl_note:"پذیرش مداوم",details:"یادگیری ماشین؛ ژورنال دسترسی آزاد بدون هزینه برای نویسنده. مسیر اشتراکی (subscription) بدون هزینه‌ی ارسال؛ دسترسی آزاد اختیاری و پولی است.",present:"none",country:"آمریکا",city:"— (ناشر مستقل)",url:"https://jmlr.org/",ver:false,q1:true,free:true},
+ {id:"q1_gse",field:"oil_gas",name:"Geoenergy Science and Engineering (Elsevier)",type:"journal",impact:"Q1",impact_note:"رتبه‌ی Q1 (SCImago) و نبود هزینه را در سایت رسمی تأیید کنید",deadline:"",dl_note:"پذیرش مداوم",details:"مهندسی نفت و ژئوانرژی: مخزن، حفاری و تولید. مسیر اشتراکی (subscription) بدون هزینه‌ی ارسال؛ دسترسی آزاد اختیاری و پولی است.",present:"none",country:"هلند",city:"آمستردام (ناشر Elsevier)",url:"https://www.sciencedirect.com/journal/geoenergy-science-and-engineering",ver:false,q1:true,free:true},
+ {id:"q1_cce",field:"oil_gas",name:"Computers & Chemical Engineering (Elsevier)",type:"journal",impact:"Q1",impact_note:"رتبه‌ی Q1 (SCImago) و نبود هزینه را در سایت رسمی تأیید کنید",deadline:"",dl_note:"پذیرش مداوم",details:"مهندسی فرایند، بهینه‌سازی و کنترل (پتروشیمی). مسیر اشتراکی (subscription) بدون هزینه‌ی ارسال؛ دسترسی آزاد اختیاری و پولی است.",present:"none",country:"هلند",city:"آمستردام (ناشر Elsevier)",url:"https://www.sciencedirect.com/journal/computers-and-chemical-engineering",ver:false,q1:true,free:true},
+ {id:"q1_aim",field:"medical",name:"Artificial Intelligence in Medicine (Elsevier)",type:"journal",impact:"Q1",impact_note:"رتبه‌ی Q1 (SCImago) و نبود هزینه را در سایت رسمی تأیید کنید",deadline:"",dl_note:"پذیرش مداوم",details:"هوش مصنوعی در پزشکی و سلامت. مسیر اشتراکی (subscription) بدون هزینه‌ی ارسال؛ دسترسی آزاد اختیاری و پولی است.",present:"none",country:"هلند",city:"آمستردام (ناشر Elsevier)",url:"https://www.sciencedirect.com/journal/artificial-intelligence-in-medicine",ver:false,q1:true,free:true},
+ {id:"q1_mia",field:"medical",name:"Medical Image Analysis (Elsevier)",type:"journal",impact:"Q1",impact_note:"رتبه‌ی Q1 (SCImago) و نبود هزینه را در سایت رسمی تأیید کنید",deadline:"",dl_note:"پذیرش مداوم",details:"تحلیل تصویر پزشکی با یادگیری ماشین. مسیر اشتراکی (subscription) بدون هزینه‌ی ارسال؛ دسترسی آزاد اختیاری و پولی است.",present:"none",country:"هلند",city:"آمستردام (ناشر Elsevier)",url:"https://www.sciencedirect.com/journal/medical-image-analysis",ver:false,q1:true,free:true},
+ {id:"q1_pra",field:"quantum",name:"Physical Review A (APS)",type:"journal",impact:"Q1",impact_note:"رتبه‌ی Q1 (SCImago) و نبود هزینه را در سایت رسمی تأیید کنید",deadline:"",dl_note:"پذیرش مداوم",details:"اطلاعات و محاسبات کوانتومی، اپتیک کوانتومی. مسیر اشتراکی (subscription) بدون هزینه‌ی ارسال؛ دسترسی آزاد اختیاری و پولی است.",present:"none",country:"آمریکا",city:"کالج‌پارک (ناشر APS)",url:"https://journals.aps.org/pra/",ver:false,q1:true,free:true},
+ {id:"q1_wr",field:"water",name:"Water Research (Elsevier)",type:"journal",impact:"Q1",impact_note:"رتبه‌ی Q1 (SCImago) و نبود هزینه را در سایت رسمی تأیید کنید",deadline:"",dl_note:"پذیرش مداوم",details:"تصفیه و مدیریت آب با روش‌های داده‌محور. مسیر اشتراکی (subscription) بدون هزینه‌ی ارسال؛ دسترسی آزاد اختیاری و پولی است.",present:"none",country:"هلند",city:"آمستردام (ناشر Elsevier)",url:"https://www.sciencedirect.com/journal/water-research",ver:false,q1:true,free:true},
+ {id:"q1_ijrmms",field:"mining",name:"International Journal of Rock Mechanics and Mining Sciences (Elsevier)",type:"journal",impact:"Q1",impact_note:"رتبه‌ی Q1 (SCImago) و نبود هزینه را در سایت رسمی تأیید کنید",deadline:"",dl_note:"پذیرش مداوم",details:"مکانیک سنگ و معدن. مسیر اشتراکی (subscription) بدون هزینه‌ی ارسال؛ دسترسی آزاد اختیاری و پولی است.",present:"none",country:"هلند",city:"آمستردام (ناشر Elsevier)",url:"https://www.sciencedirect.com/journal/international-journal-of-rock-mechanics-and-mining-sciences",ver:false,q1:true,free:true},
+ {id:"q1_ane",field:"nuclear",name:"Annals of Nuclear Energy (Elsevier)",type:"journal",impact:"Q1",impact_note:"رتبه‌ی Q1 (SCImago) و نبود هزینه را در سایت رسمی تأیید کنید",deadline:"",dl_note:"پذیرش مداوم",details:"مهندسی و ایمنی هسته‌ای. مسیر اشتراکی (subscription) بدون هزینه‌ی ارسال؛ دسترسی آزاد اختیاری و پولی است.",present:"none",country:"هلند",city:"آمستردام (ناشر Elsevier)",url:"https://www.sciencedirect.com/journal/annals-of-nuclear-energy",ver:false,q1:true,free:true},
+ {id:"q1_ast",field:"aerospace",name:"Aerospace Science and Technology (Elsevier)",type:"journal",impact:"Q1",impact_note:"رتبه‌ی Q1 (SCImago) و نبود هزینه را در سایت رسمی تأیید کنید",deadline:"",dl_note:"پذیرش مداوم",details:"هوافضا، کنترل و ناوبری. مسیر اشتراکی (subscription) بدون هزینه‌ی ارسال؛ دسترسی آزاد اختیاری و پولی است.",present:"none",country:"هلند",city:"آمستردام (ناشر Elsevier)",url:"https://www.sciencedirect.com/journal/aerospace-science-and-technology",ver:false,q1:true,free:true},
  {id:"s_eg",field:"oil_gas",name:"Energy Geoscience – ویژه‌شماره‌ی «AI for Energy Systems and Subsurface Engineering»",type:"special",impact:"4.7",impact_note:"JCR 2025 (اعلام ناشر، ژوئن ۲۰۲۶)",deadline:"2026-10-31",details:"هوش مصنوعی برای تفسیر زیرسطحی، مشخصه‌یابی مخزن و بهینه‌سازی تولید؛ ناشر KeAi؛ هنگام ارسال گزینه‌ی «SI: AI for energy» را انتخاب کنید.",present:"none",country:"چین",city:"پکن (ناشر KeAi)",url:"https://www.keaipublishing.com/en/journals/energy-geoscience/news/energy-geoscience-latest-impact-factor-47/",ver:true},
  {id:"s_ps",field:"oil_gas",name:"Petroleum Science (KeAi)",type:"journal",impact:"6.1",impact_note:"اعلام ناشر؛ سال را تأیید کنید",deadline:"",dl_note:"پذیرش مداوم",details:"مهندسی نفت: اکتشاف، حفاری، مخزن و تولید؛ دسترسی آزاد.",present:"none",country:"چین",city:"پکن (ناشر KeAi)",url:"https://www.keaipublishing.com/en/journals/petroleum-science/news/petroleum-science-latest-impact-factor-announced-61/",ver:true},
  {id:"s_pet",field:"oil_gas",name:"Petroleum (KeAi) – شامل ویژه‌شماره‌ی کاربرد AI/ML در صنعت نفت",type:"journal",impact:"3.5",impact_note:"اعلام ناشر؛ سال را تأیید کنید",deadline:"",dl_note:"پذیرش مداوم؛ ددلاین ویژه‌شماره‌ی AI/ML پیدا نشد",details:"کاربرد هوش مصنوعی و سامانه‌های دانش‌بنیان در بالادست و پایین‌دست صنعت نفت.",present:"none",country:"چین",city:"پکن (ناشر KeAi)",url:"https://www.keaipublishing.com/en/journals/petroleum/petroleum-news/petroleum-latest-impact-factor-announced-35/",ver:false},
@@ -3764,34 +3778,47 @@ async function buildAbstractDocx(v,a){
     {name:"word/_rels/document.xml.rels",data:rels([["rIdSty","styles","styles.xml"]])}]);
 }
 const ABS_DOCX = "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
-const absBtn = a => (absOf(a.id)&&S.downloads)?`<div style="margin-top:8px"><button class="btn sm" data-act="art-abs" data-id="${esc(a.id)}" title="چکیده طبق قالب همین ژورنال یا کنفرانس (فایل Word)">چکیده (Word)</button> ${msBtn(a)}</div>`:"";
 const msOf = id => (S.msDb&&S.msDb[id]) || null;
-const msBtn = a => msOf(a.id) ? (S.downloads?`<button class="btn sm sig" data-act="art-ms" data-id="${esc(a.id)}" title="متن کامل مقاله (Word)">منو اسکریپت (Word)</button>`:"") : `<span class="meta" style="display:block;margin-top:4px">منو اسکریپت: ${esc(((absOf(a.id)||{}).ms_status)||"هنوز نوشته نشده است")}</span>`;   // a venue without a full text says why, instead of showing nothing
+// «منواسکریپت» is ONE file: title, abstract and keywords first, then the full text, then the internal submission sheet. Abstract and manuscript are never offered apart.
+const msBtn = a => (msOf(a.id)||absOf(a.id)) ? (S.downloads?`<button class="btn sm sig" data-act="art-ms" data-id="${esc(a.id)}" title="منواسکریپت: خلاصه و متن کامل در یک فایل Word">منواسکریپت (Word)</button>`:"")+(msOf(a.id)?"":`<span class="meta" style="display:block;margin-top:4px">شامل خلاصه؛ ${esc(((absOf(a.id)||{}).ms_status)||"متن کامل هنوز نوشته نشده است")}</span>`) : `<span class="meta" style="display:block;margin-top:4px">منواسکریپت: ${esc(((absOf(a.id)||{}).ms_status)||"هنوز نوشته نشده است")}</span>`;
+const absBtn = a => `<div style="margin-top:8px">${msBtn(a)}</div>`;
+function absSheetRows(v,a){
+  const pr=absProf(a), prod=absProd(a), n=absWords(a.abstract), type={journal:"Journal",special:"Journal special issue",conf:"Conference"}[v.type]||v.type;
+  const repo=prod.repo?(ABS_GH+prod.repo+(prod.new?"":"/tree/"+ABS.branch)):"—";
+  const todo="Check the limits against the venue's author guidelines (they are typical values for the venue family, not copied from the call). Add co-authors if any. Patent rule: methods covered by the product's filed claims are not disclosed here."+(a.draft_note?" "+a.draft_note:"");
+  return [["Venue",v.name],["Type",type],["Deadline",(v.deadline||"not stated")+(v.dl_note?" – "+v.dl_note:"")],["Official page",v.url||""],
+    ["Abstract rule ("+pr.label+")",`${pr.rule} Typical length ${pr.min}–${pr.max} words; keywords ${pr.kw}.`],["Length of the abstract",`${n} words (limit ${pr.max})`],
+    ["Product",prod.name],["Repository",repo],["To do before submitting",todo]];
+}
+async function buildMsUnified(v,a,m){
+  const blocks=[], hasAbs=m&&m.blocks.some(b=>b.t==="h"&&/^abstract/i.test(String(b.x)));
+  const title=(a&&a.title)||(m&&(m.blocks.find(b=>b.t==="title")||{}).x)||v.name;
+  blocks.push({t:"title",x:title},{t:"note",x:"Mohammad Parsa Sohrabi · Parsa International Group, Istanbul, Türkiye"});
+  if(a&&!hasAbs) blocks.push({t:"h",x:"Abstract"},{t:"p",x:a.abstract},{t:"p",x:absProf(a).kw_label+": "+(a.keywords||[]).join("; ")});
+  if(m) blocks.push(...m.blocks.filter(b=>b.t!=="title")); else blocks.push({t:"note",x:"The full text is not written yet. This file already holds the abstract; the full text will be added to this same file."});
+  if(a) blocks.push({t:"h",x:"Submission sheet (internal – remove before submitting)"},{t:"table",head:["Item","Detail"],rows:absSheetRows(v,a)});
+  return buildPropDocx({blocks});
+}
+const absFile = id => `${id.replace(/^s_/,"")}-manuscript.docx`;
 async function downloadMs(id){
   if(!S.downloads){ toast("دریافت فایل فقط داخل claude.ai فعال است."); return; }
-  const m=msOf(id); if(!m) return;
-  try{ await S.downloads.save({filename:`${id.replace(/^s_/,"")}-manuscript.docx`,data:new Blob([await buildPropDocx(m)],{type:ABS_DOCX})}); }
-  catch(err){ if(!err||err.code!=="declined"){ toast("ساخت یا دریافت فایل Word منو اسکریپت انجام نشد."); console.error(err); } }
+  const v=artAll().find(x=>x.id===id), a=absOf(id), m=msOf(id); if(!v||(!a&&!m)) return;
+  try{ await S.downloads.save({filename:absFile(id),data:new Blob([await buildMsUnified(v,a,m)],{type:ABS_DOCX})}); }
+  catch(err){ if(!err||err.code!=="declined"){ toast("ساخت یا دریافت فایل Word منواسکریپت انجام نشد."); console.error(err); } }
 }
-const absFile = id => `${id.replace(/^s_/,"")}-abstract.docx`;
-async function downloadAbstract(id){
-  if(!S.downloads){ toast("دریافت فایل فقط داخل claude.ai فعال است."); return; }
-  const v=artAll().find(x=>x.id===id), a=absOf(id); if(!v||!a) return;
-  try{ await S.downloads.save({filename:absFile(id),data:new Blob([await buildAbstractDocx(v,a)],{type:ABS_DOCX})}); }
-  catch(err){ if(!err||err.code!=="declined"){ toast("ساخت یا دریافت فایل Word انجام نشد."); console.error(err); } }
-}
+async function downloadAbstract(id){ return downloadMs(id); }
 async function downloadMyAbstracts(){
   if(!S.downloads){ toast("دریافت فایل فقط داخل claude.ai فعال است."); return; }
-  try{ const ids=[...new Set(areaTasks("articles").map(t=>t.venue).filter(v=>v&&absOf(v)))], files=[];
-    for(const v of artAll().filter(x=>ids.includes(x.id))) files.push({name:absFile(v.id),data:await buildAbstractDocx(v,absOf(v.id))});
-    if(!files.length){ toast("برای تسک‌های شما چکیده‌ای آماده نیست."); return; }
-    await S.downloads.save({filename:`ppt-my-abstracts-${today()}.zip`,data:new Blob([await zipStore(files)],{type:"application/zip"})}); }
+  try{ const ids=[...new Set(areaTasks("articles").map(t=>t.venue).filter(v=>v&&(absOf(v)||msOf(v))))], files=[];
+    for(const v of artAll().filter(x=>ids.includes(x.id))) files.push({name:absFile(v.id),data:await buildMsUnified(v,absOf(v.id),msOf(v.id))});
+    if(!files.length){ toast("برای تسک‌های شما منواسکریپتی آماده نیست."); return; }
+    await S.downloads.save({filename:`ppt-my-manuscripts-${today()}.zip`,data:new Blob([await zipStore(files)],{type:"application/zip"})}); }
   catch(err){ if(!err||err.code!=="declined"){ toast("ساخت فایل ZIP انجام نشد."); console.error(err); } }
 }
 async function downloadAllAbstracts(){
   if(!S.downloads){ toast("دریافت فایل فقط داخل claude.ai فعال است."); return; }
-  try{ const files=[]; for(const v of artAll().filter(x=>absOf(x.id))) files.push({name:absFile(v.id),data:await buildAbstractDocx(v,absOf(v.id))});
-    await S.downloads.save({filename:`ppt-abstracts-${today()}.zip`,data:new Blob([await zipStore(files)],{type:"application/zip"})}); }
+  try{ const files=[]; for(const v of artAll().filter(x=>absOf(x.id)||msOf(x.id))) files.push({name:absFile(v.id),data:await buildMsUnified(v,absOf(v.id),msOf(v.id))});
+    await S.downloads.save({filename:`ppt-manuscripts-${today()}.zip`,data:new Blob([await zipStore(files)],{type:"application/zip"})}); }
   catch(err){ if(!err||err.code!=="declined"){ toast("ساخت فایل ZIP انجام نشد."); console.error(err); } }
 }
 function artCredForm(a){
@@ -3816,9 +3843,8 @@ async function artSetStatus(id,st){
 }
 function artActions(a){
   const st=artStatus(a), id=esc(a.id), b=[];
-  if(absOf(a.id)&&S.downloads) b.push(`<button class="btn sm" data-act="art-abs" data-id="${id}" title="چکیده طبق قالب همین ژورنال یا کنفرانس، آماده‌ی ثبت در سامانه (فایل Word)">چکیده (Word)</button>`);
-  if(msOf(a.id)&&S.downloads) b.push(`<button class="btn sm sig" data-act="art-ms" data-id="${id}" title="متن کامل مقاله (Word)">منو اسکریپت (Word)</button>`);
-  { const f=(S.artForms||{})[a.id]; if(f&&f.ms&&S.downloads) b.push(`<button class="btn sm" data-act="art-form" data-k="ms" data-v="${id}" title="مقاله‌ی خام (manuscript) طبق قالب همین مقصد (فایل Word)">مقاله (Word)</button>`);
+  if((msOf(a.id)||absOf(a.id))&&S.downloads) b.push(`<button class="btn sm sig" data-act="art-ms" data-id="${id}" title="منواسکریپت: خلاصه و متن کامل در یک فایل Word">منواسکریپت (Word)</button>`);
+  { const f=(S.artForms||{})[a.id]; if(f&&f.ms&&S.downloads) b.push(`<button class="btn sm" data-act="art-form" data-k="ms" data-v="${id}" title="منواسکریپت طبق قالب همین مقصد (فایل Word)">منواسکریپت – قالب مقصد (Word)</button>`);
     if(f&&f.tpl) b.push(`<a class="btn sm ghost" href="${esc(f.tpl)}" target="_blank" rel="noopener" title="قالب رسمی مقصد">قالب رسمی</a>`); }
   const cl=S.artSt[a.id]||{}, taken=(st==="doing"||st==="applied")&&cl.by&&cl.by!==S.me.id&&!S.me.isOwner;
   if(st==="doing"&&cl.by) b.push(`<span class="pill p-warn">در دست اقدام: ${esc(memberName(cl.by))}${cl.by===S.me.id?" (شما)":""}</span>`);
@@ -3831,7 +3857,7 @@ function artActions(a){
   if(ART_OUT[st]){ const o=artEntry(a.id); b.push(`<span class="pill ${ART_OUT[st][1]}">${ART_OUT[st][0]}${o.outcome_date?" · "+faDate(o.outcome_date):""}</span>`); if(o.outcome_note) b.push(`<span class="meta">${esc(o.outcome_note)}</span>`); if(isAdmin()) b.push(`<button class="btn sm ghost" data-act="art-out" data-st="clear" data-id="${id}">بازگردانی به فهرست</button>`); }
   else if(isAdmin()){ if(st==="doing"||st==="applied") b.push(`<button class="btn sm sig" data-act="art-out" data-st="success" data-id="${id}">ثبت موفقیت</button>`); b.push(`<button class="btn sm ghost" data-act="art-out" data-st="failed" data-id="${id}">ثبت عدم موفقیت</button>`); }
   if(isAdmin()) b.push(`<button class="btn sm ghost" data-act="art-out" data-st="removed" data-id="${id}">حذف از فهرست</button>`);
-  { b.push(artFileBtn(a.id,"ms"),artFileBtn(a.id,"abs")); if(isAdmin()||cl.by===S.me.id){ const fl=artFilesOf(a.id); b.push(`<button class="btn sm ghost" data-act="art-base" data-id="${id}">ویرایش اطلاعات پایه</button><button class="btn sm ghost" data-act="art-file" data-k="ms" data-id="${id}">${fl.ms?"جایگزینی":"افزودن"} Manuscript</button><button class="btn sm ghost" data-act="art-file" data-k="abs" data-id="${id}">${fl.abs?"جایگزینی":"افزودن"} Abstract</button>`); } }
+  { b.push(artFileBtn(a.id,"ms")); if(isAdmin()||cl.by===S.me.id){ const fl=artFilesOf(a.id); b.push(`<button class="btn sm ghost" data-act="art-base" data-id="${id}">ویرایش اطلاعات پایه</button><button class="btn sm ghost" data-act="art-file" data-k="ms" data-id="${id}">${fl.ms?"جایگزینی":"افزودن"} منواسکریپت (شامل خلاصه)</button>`); } }
   if(isAdmin()){ const c=(S.portal||{})[a.id];
     b.push(`<button class="btn sm ghost" data-act="art-cred" data-id="${id}">${c&&(c.user||c.pass)?"حساب سامانه ✓":"حساب سامانه"}</button>`);
     if(c&&c.user) b.push(`<button class="btn sm ghost" data-act="art-cred-copy" data-id="${id}" data-k="user">کپی کاربر</button>`);
@@ -3873,7 +3899,7 @@ function artView(page){
   return `<p class="note">ژورنال‌ها، ویژه‌شماره‌ها و کنفرانس‌هایی که برای مقاله در حوزه‌های فعالیت ما مناسب‌اند و ددلاینشان نگذشته است. فهرست از فراخوان‌های عمومی تا ${faDate("2026-10-21")} گردآوری شده و کامل نیست؛ ردیف‌های با نشان «تأیید شود» باید پیش از ارسال در سایت رسمی بررسی شوند. هر عضو می‌تواند ردیف اضافه یا اصلاح کند.</p>`+
   kpis([["مورد باز",faNum(open.length)],["دارای ددلاین",faNum(dated.length)],["ددلاین ≤ ۴۵ روز",faNum(soon),soon>0],["تأییدشده در منبع رسمی",faNum(open.filter(a=>a.ver).length)],["اولویت ۱: غیرحضوری و بدون هزینه",faNum(open.filter(a=>artPrio(a)===1).length)]])+
   `<div class="toolbar">${sel("field",ART_FIELDS,"همه‌ی حوزه‌ها")}${sel("type",ART_TYPE,"همه‌ی انواع")}<select data-af="mode"><option value="">ارائه: همه</option><option value="any"${f.mode==="any"?" selected":""}>دارای ارائه</option>${Object.entries(ART_PRES).map(([v,l])=>`<option value="${v}"${f.mode===v?" selected":""}>${esc(l)}</option>`).join("")}</select>
-    <label class="chip"><input type="checkbox" data-af="past"${f.past?" checked":""}> نمایش گذشته‌ها</label><button class="btn" data-act="art-new">افزودن ردیف</button>${S.downloads?`<button class="btn sig" data-act="art-abs-all">همه‌ی چکیده‌ها (ZIP)</button>`:""}<button class="btn ghost" data-act="art-layout" data-v="${S.artLayout==="table"?"tiles":"table"}">${S.artLayout==="table"?"نمایش کاشی":"نمایش جدول"}</button></div>`+
+    <label class="chip"><input type="checkbox" data-af="past"${f.past?" checked":""}> نمایش گذشته‌ها</label><button class="btn" data-act="art-new">افزودن ردیف</button>${S.downloads?`<button class="btn sig" data-act="art-abs-all">همه‌ی منواسکریپت‌ها (ZIP)</button>`:""}<button class="btn ghost" data-act="art-layout" data-v="${S.artLayout==="table"?"tiles":"table"}">${S.artLayout==="table"?"نمایش کاشی":"نمایش جدول"}</button></div>`+
   (S.artLayout!=="table"?artTiles(rows):table(["حوزه","ژورنال / کنفرانس","ایمپکت فاکتور","ددلاین ارسال","جزئیات","ارائه‌ی دفاعیه","کشور و شهر برگزارکننده",""], rows.map(a=>{
     const days=a.deadline?dayDiff(a.deadline):null;
     return `<tr>${td("حوزه",esc(ART_FIELDS[a.field]||a.field||"—"))}
@@ -4017,10 +4043,10 @@ async function submitAssign(who, only){
 VIEWS["articles.submit"] = () => {
   const vs=submitVenues(), done=vs.filter(v=>{const t=submitTaskOf(v.a.id);return t&&(t.status==="done"||t.status==="approved")}).length, def=vs.filter(v=>submitTaskOf(v.a.id)).length;
   const opts=`<option value="">— انتخاب مسئول —</option>${S.members.map(m=>`<option value="${esc(m.id)}"${S.stkWho===m.id?" selected":""}>${esc(m.full_name||m.id)}</option>`).join("")}`;
-  return `<p class="note">Claude چکیده و بسته‌ی ارسال را آماده می‌کند، اما ثبت چکیده و ثبت‌نام نهایی با حساب شخصی را فرد انسانی انجام می‌دهد. یک نفر را انتخاب کنید و با «تخصیص به همه» برای همه‌ی مقصدها تسک تعریف و واگذار شود؛ یا برای هر مقصد جداگانه مسئول بگذارید. تسک‌ها در «تخته‌ی اسکرام» و «روز من» و اعلان‌های مسئول دیده می‌شوند.</p>`+
+  return `<p class="note">Claude منواسکریپت (شامل خلاصه) و بسته‌ی ارسال را آماده می‌کند، اما ثبت چکیده و ثبت‌نام نهایی با حساب شخصی را فرد انسانی انجام می‌دهد. یک نفر را انتخاب کنید و با «تخصیص به همه» برای همه‌ی مقصدها تسک تعریف و واگذار شود؛ یا برای هر مقصد جداگانه مسئول بگذارید. تسک‌ها در «تخته‌ی اسکرام» و «روز من» و اعلان‌های مسئول دیده می‌شوند.</p>`+
    kpis([["مقصد در جریان",faNum(vs.length-done)],["تسک تعریف‌شده",faNum(def)],["بدون تسک",faNum(vs.length-def),vs.length-def>0],["انجام‌شده",faNum(done)]])+
    (isAdmin()?`<div class="card"><div class="row"><label for="stkWho"><b>مسئول:</b></label><select id="stkWho" data-stkwho>${opts}</select><button class="btn sig" data-act="stk-all">تخصیص به همه (تعریف تسک برای همه‌ی مقصدها)</button></div><p class="meta" style="margin:6px 0 0">تسک‌های موجود که انجام نشده‌اند به همین فرد منتقل می‌شوند؛ تسک‌های انجام‌شده تغییر نمی‌کنند.</p></div>`:`<div class="banner">فقط مدیر می‌تواند تسک تعریف یا واگذار کند.</div>`)+
-   (S.downloads?`<div class="toolbar"><button class="btn sig" data-act="art-abs-all">همه‌ی چکیده‌ها (ZIP)</button><span class="meta">چکیده‌ی هر مقصد طبق قالب همان ژورنال یا کنفرانس؛ [داخل کروشه] هنوز اندازه‌گیری نشده است.</span></div>`:"")+
+   (S.downloads?`<div class="toolbar"><button class="btn sig" data-act="art-abs-all">همه‌ی منواسکریپت‌ها (ZIP)</button><span class="meta">منواسکریپت هر مقصد (خلاصه در ابتدای همان فایل)؛ [داخل کروشه] هنوز اندازه‌گیری نشده است.</span></div>`:"")+
    (Object.keys(S.artForms||{}).length?`<div class="card"><h3 style="margin-top:0">فرم‌های آماده‌ی ثبت و قالب خام مقاله (Word)</h3><p class="note">عنوان، چکیده، کلیدواژه‌ها، مشخصات نویسنده و چک‌لیست هر مقصد پر شده است. فقط بررسی و ثبت دستی باقی مانده؛ چیزی ارسال نشده است.</p>${table(["مقصد","محصول","ددلاین","پیوند",""],Object.entries(S.artForms).map(([id,f])=>`<tr>${td("مقصد",esc(f.name),"t")}${td("محصول",`<span class="mono">${esc(f.prod||"—")}</span>`)}${td("ددلاین",f.deadline?faDate(f.deadline):"—")}${td("پیوند",(f.url?`<a href="${esc(f.url)}" target="_blank" rel="noopener">صفحه‌ی مقصد</a>`:"—")+(f.tpl?` · <a href="${esc(f.tpl)}" target="_blank" rel="noopener">قالب رسمی</a>`:""))}${td("",`${f.noform?"":`<button class="btn sm sig" data-act="art-form" data-v="${esc(id)}">فرم ثبت (Word)</button>`}${f.ms?` <button class="btn sm ghost" data-act="art-form" data-k="ms" data-v="${esc(id)}">مقاله‌ی خام (Word)</button>`:""}`)}</tr>`),"")}</div>`:"")+
    (()=>{ const subDone=v=>{const t=submitTaskOf(v.a.id);return !!t&&(t.status==="done"||t.status==="approved")}; const rowf=({a})=>{ const t=submitTaskOf(a.id);
      return `<tr>${td("مقصد",esc(a.name),"t")}${td("ددلاین",a.deadline?faDate(a.deadline):"—")}${td("مسئول",t?esc(memberName(t.assignee)):'<span class="meta">تعریف نشده</span>')}${td("وضعیت",t?`<span class="pill ${t.status==="done"||t.status==="approved"?"p-ok":t.status==="doing"?"p-info":"p-warn"}">${esc(TASK_ST[t.status]||t.status)}</span>`:'<span class="pill p-mute">—</span>')}${td("",absBtn(a)+(isAdmin()?`<button class="btn sm ghost" data-act="stk-one" data-id="${esc(a.id)}">${t?"واگذاری به مسئول انتخاب‌شده":"تعریف تسک برای مسئول انتخاب‌شده"}</button>`:""))}</tr>`; }; const H=["مقصد","ددلاین","مسئول","وضعیت",""], act=vs.filter(v=>!subDone(v)), dn=vs.filter(subDone);
@@ -4074,11 +4100,11 @@ VIEWS["articles.ready"] = () => {
     ${td("۴. نبوغ برای پتنت (مقدماتی)",`<span class="pill ${i[0]}">${i[1]}</span><div class="meta">${esc(r.invN)}</div>`)}
     ${td("۵. سهم بازار (کیفی)",`<div class="meta">${esc(r.mkt)}</div>`)}
     ${td("۷. نوآوری برای پذیرش",r.idea?`<span class="pill ${(RD_IDEA[r.ideaSt]||RD_IDEA.none)[0]}">${(RD_IDEA[r.ideaSt]||RD_IDEA.none)[1]}</span><div class="meta">${esc(r.idea)}</div>`:"—")}
-    ${td("۶. چکیده و منو اسکریپت",`<span class="pill p-ok">چکیده ✓</span> ${msOf(v.id)?'<span class="pill p-ok">منو اسکریپت ✓</span>':'<span class="pill p-bad">منو اسکریپت ندارد</span>'}`)}</tr>`; };
+    ${td("۶. منواسکریپت",`<span class="pill p-ok">منواسکریپت (شامل خلاصه) ✓</span> ${msOf(v.id)?'<span class="pill p-ok">متن کامل ✓</span>':'<span class="pill p-warn">متن کامل نوشته نشده</span>'}`)}</tr>`; };
   return `<p class="note">برای هر مقاله‌ی دارای چکیده، شش معیار ثبت نشان داده می‌شود. بخش «پتنت» و «بازار» ارزیابی مقدماتی است، مشاوره‌ی حقوقی نیست ؛ هیچ سهم بازار عددی ادعا نشده است. پیوندهای پیشینه نتیجه‌ی واقعی جستجوی وب‌اند و جستجو کامل نیست.</p>`+
-   kpis([["محصول با ارزیابی شش‌معیاره",faNum(withR.length),false],["مقاله با چکیده",faNum(rows.length),false],["دارای منو اسکریپت",faNum(ms.length),false],["کد کامل تا TRL ۴",faNum(withR.filter(x=>x.r.code==="ok").length),false],["کد ناقص یا بدون تست",faNum(withR.filter(x=>x.r.code!=="ok").length),true],["نبوغ پتنتی متوسط یا بالاتر",faNum(withR.filter(x=>x.r.inv==="mod").length),false]])+
+   kpis([["محصول با ارزیابی شش‌معیاره",faNum(withR.length),false],["منواسکریپت (شامل خلاصه)",faNum(rows.length),false],["دارای متن کامل",faNum(ms.length),false],["کد کامل تا TRL ۴",faNum(withR.filter(x=>x.r.code==="ok").length),false],["کد ناقص یا بدون تست",faNum(withR.filter(x=>x.r.code!=="ok").length),true],["نبوغ پتنتی متوسط یا بالاتر",faNum(withR.filter(x=>x.r.inv==="mod").length),false]])+
    `<div class="banner bad"><b>هشدار افشا:</b> صفحه‌ی عمومی ریپوی StretchWatch پیش از خصوصی‌شدن فهرست شده بود و شاخص همپوشانی HF و آنتروپی را توصیف می‌کرد؛ وکیل پتنت باید مطلع شود. در مجموع، بیشتر محصولات کاربرد روش‌های استاندارد (conformal، change-point، QAOA) هستند و نبوغ پتنتی آنها پایین است؛ مسیر واقع‌بینانه انتشار مقاله است نه ثبت اختراع.</div>`+
-   `<div class="tablewrap rows"><table><thead><tr><th>مقاله</th><th>۱. محصول و ریپو</th><th>۲. کد تا TRL ۴</th><th>۳. پیشینه</th><th>۴. نبوغ پتنتی</th><th>۵. بازار</th><th>۶. چکیده و منو اسکریپت</th><th>۷. نوآوری برای پذیرش</th></tr></thead><tbody>${withR.map(cell).join("")}</tbody></table></div>`+
+   `<div class="tablewrap rows"><table><thead><tr><th>مقاله</th><th>۱. محصول و ریپو</th><th>۲. کد تا TRL ۴</th><th>۳. پیشینه</th><th>۴. نبوغ پتنتی</th><th>۵. بازار</th><th>۶. منواسکریپت</th><th>۷. نوآوری برای پذیرش</th></tr></thead><tbody>${withR.map(cell).join("")}</tbody></table></div>`+
    (noR.length?`<h3>مقالاتی که هنوز ارزیابی شش‌معیاره ندارند (${faNum(noR.length)})</h3><p class="note">${noR.map(x=>esc(cvVenueName(x.v.name))+" — "+esc(x.pr.name)).join("؛ ")}</p>`:"");
 };
 
@@ -4103,7 +4129,7 @@ VIEWS["articles.pool"] = () => {
    `<div class="card" style="margin-bottom:10px"><b>فضای خالی در ژورنال‌های رایگان (بدون چکیده):</b> ${free.length?free.map(a=>`<span class="pill p-ok" title="${esc(a.fee_note||"")}">${esc(a.name.replace(/\s*\(.*$/,""))}</span>`).join(" "):'<span class="meta">همه‌ی ژورنال‌های رایگان فهرست محصول گرفته‌اند</span>'}</div>`+
    `<div class="toolbar">${chip("","همه")}${Object.entries(POOL_ST).map(([k,v])=>chip(k,v[1])).join("")}</div>`+
    `<div class="tablewrap rows"><table><thead><tr><th>محصول</th><th>وضعیت</th><th>شواهد (واقعی)</th><th>نوآوری یا کار لازم</th><th>ژورنال رایگان پیشنهادی (تأییدنشده)</th><th>تسک توسعه</th></tr></thead><tbody>${rows.map(x=>{const st=POOL_ST[x.state]||["p-mute",x.state]; return `<tr>${td("محصول",`<b>${esc(x.name)}</b><div class="meta">${link(x.url,x.repo)}</div>`,"t")}${td("وضعیت",`<span class="pill ${st[0]}">${esc(st[1])}</span>`)}${td("شواهد",`<span class="meta">${esc(x.evidence)}</span>`)}${td("کار لازم",`<span class="meta">${esc(x.gap)}</span>`)}${td("ژورنال",`<span class="meta">${(x.journals||[]).map(esc).join("<br>")}</span>`)}${td("تسک",x.dev_task?`<span class="mono">${esc(x.dev_task)}</span>`:"—")}</tr>`}).join("")||'<tr><td colspan="6" class="empty">موردی با این فیلتر نیست.</td></tr>'}</tbody></table></div>`+
-   `<p class="meta">هر محصول پس از افزودن نوآوری، اجرای واقعی یا ظرفیت خالی ژورنال، با چکیده و منو اسکریپت به ژورنال رایگان منتقل می‌شود و از استخر خارج می‌شود؛ تسک ثبت نهایی برای Parsa Babaei تعریف می‌شود.</p>`;
+   `<p class="meta">هر محصول پس از افزودن نوآوری، اجرای واقعی یا ظرفیت خالی ژورنال، با منواسکریپت (خلاصه + متن کامل در یک فایل) به ژورنال رایگان منتقل می‌شود و از استخر خارج می‌شود؛ تسک ثبت نهایی برای Parsa Babaei تعریف می‌شود.</p>`;
 };
 VIEWS["articles.fitgate"] = () => {
   const cs=callsList().filter(c=>c.fit_gate), ord={blocked:0,high:1,medium:2,clear:3};
@@ -4350,13 +4376,19 @@ function apBestFor(a){
 }
 const apQuickText = (a,p) => `Write a 200-word conference abstract for ${a.name}${a.deadline?` (deadline ${a.deadline})`:""}, based on a product called "${p.name}" (${String(p.algorithms||"").slice(0,160)}). Important: the product is in the patent process, so do not describe any novel method in detail; stay at the level of the problem, the evaluation approach and expected contribution, and mark every result as [to be measured].`;
 const apQuickNewText = a => `Suggest three product ideas for a paper at ${a.name} (field: ${ART_FIELDS[a.field]||a.field}). The ideas must be generic extensions that do not overlap with patented methods, each with a one-line contribution, an evaluation plan and the data needed.`;
+const apTokens = t => new Set(String(t||"").toLowerCase().split(/[^a-z0-9\u0600-\u06ff]+/).filter(w=>w.length>=4));
+// how well a product from the repos fits a venue: same field first, then shared topic words, then maturity (TRL); repo products first
+function apScore(v,p){ const fn=AP_MATCH[v.field]; let sc=(fn&&fn(p))?100:0; const vt=apTokens([v.name,v.details,ART_FIELDS[v.field]].join(" ")), pt=apTokens([p.name,p.algorithms,p.domain,p.summary].join(" ")); for(const w of vt) if(pt.has(w)) sc+=5; return sc+(p.github?20:0)+(p.trl||0); }
+function apHumanTask(a,p){
+  return `مقصد: ${a.name}${a.deadline?` (ددلاین ${a.deadline})`:""}${a.url?` – ${a.url}`:""}\nمحصول: «${p.name}» (TRL ${p.trl||"—"})${p.github?` – ریپوی موجود: ${p.github}`:""}. ریپوی جدید و ایده‌پردازی لازم نیست.\nکارها: ۱) ریپو را بخوان و برای مقاله یک شاخه‌ی جدا بساز؛ ۲) فقط روی قابلیت یا تغییر تازه‌ای بنویس که در ادعانامه‌های ثبت اختراع نیست و روش ثبت‌شده را فاش نکن؛ ۳) یک فایل «منواسکریپت» بساز که خلاصه (Abstract) در ابتدای همان فایل باشد و آن را از متن کامل جدا نکن؛ ۴) مدارک مقصد را جمع کن و ثبت را در سامانه‌ی مقصد انجام بده؛ ۵) وضعیت را در تب «در دست اقدام» به‌روز کن.`;
+}
 function apAssign(venues){ // each product goes to exactly one venue: queued tasks are fixed, the rest greedily by earliest deadline
   const taken=new Map(), used=new Set();
   for(const t of S.ct) if(t.kind==="paper_submit"&&t.venue&&t.product){ const pr=S.products.find(x=>x.id===t.product); if(pr){ taken.set(t.venue,pr); used.add(pr.id); } }
   const order=[...venues].sort((x,y)=>(x.deadline||"9999").localeCompare(y.deadline||"9999")||x.name.localeCompare(y.name));
   for(const v of order){ if(taken.has(v.id)) continue; const fn=AP_MATCH[v.field]||(()=>false);
-    const c=S.products.filter(pr=>fn(pr)&&!apIntroduced(pr)&&!used.has(pr.id)).sort((a,b)=>(b.trl||0)-(a.trl||0))[0];
-    if(c){ taken.set(v.id,c); used.add(c.id); } }
+    const c=S.products.filter(pr=>!apIntroduced(pr)&&!used.has(pr.id)).map(pr=>({pr,sc:apScore(v,pr)})).sort((x,y)=>y.sc-x.sc)[0];
+    if(c){ taken.set(v.id,{...c.pr,_fit:fn(c.pr)?"field":"topic"}); used.add(c.pr.id); } }
   return taken;
 }
 const apClaudeLink = text => "https://claude.ai/new?q="+encodeURIComponent(text);
@@ -4370,7 +4402,7 @@ function apNewText(a,hasRelated){
 function avKpis(all,assign){
   const need=all.length-all.filter(a=>assign.has(a.id)).length, nt=S.ct.filter(t=>t.venue).length;
   const tile=(k,label,n,alert)=>`<button class="kpi${alert?" alert":""}" data-act="av-show" data-k="${k}" title="برای دیدن فهرست کلیک کنید" style="font:inherit;color:inherit;background:var(--surface);border:1px solid var(--line);cursor:pointer;text-align:start;${S.avShow===k?"outline:2px solid var(--signal);":""}"><b>${esc(faNum(n))}</b><span>${esc(label)} ▾</span></button>`;
-  return `<div class="kpis">${tile("open","مقصد باز",all.length)}${tile("withp","دارای محصول مناسب",all.length-need)}${tile("need","نیازمند محصول جدید",need,need>0)}${tile("tasks","تسک ثبت‌شده",nt)}</div>`;
+  return `<div class="kpis">${tile("open","مقصد باز",all.length)}${tile("withp","دارای محصول مناسب",all.length-need)}${tile("need","بدون محصول کاندید",need,need>0)}${tile("tasks","تسک ثبت‌شده",nt)}</div>`;
 }
 function avPanel(all,assign){
   const k=S.avShow; if(!k) return `<p class="note">روی هر کادر بالا کلیک کنید تا فهرستش نمایش داده شود.</p>`;
@@ -4379,7 +4411,7 @@ function avPanel(all,assign){
   const venue=a=>`${a.url?link(a.url,a.name):esc(a.name)}<br><span class="pill p-mute">${esc(ART_TYPE[a.type]||"")}</span> <span class="meta">${esc(ART_FIELDS[a.field]||"")}</span>`;
   if(k==="open") return `<div class="card"><h3>مقصدهای باز (${faNum(all.length)})</h3>`+table(["مقصد","ایمپکت","ددلاین","کشور و شهر","ارائه"],sorted.map(a=>`<tr>${td("مقصد",venue(a),"t")}${td("IF",`<span class="mono">${esc(a.impact||"—")}</span>`)}${td("ددلاین",dl(a))}${td("کشور",`${esc(a.country||"—")}${a.city&&a.city!=="—"?" – "+esc(a.city):""}`)}${td("ارائه",esc(ART_PRES[a.present]||"—"))}</tr>`),"مقصد بازی نیست.")+`</div>`;
   if(k==="withp"){ const rows=sorted.filter(a=>assign.has(a.id)); return `<div class="card"><h3>مقصدهای دارای محصول مناسب (${faNum(rows.length)})</h3>`+table(["مقصد","محصول تخصیص‌یافته","TRL","ددلاین"],rows.map(a=>{const pr=assign.get(a.id);return `<tr>${td("مقصد",venue(a),"t")}${td("محصول",`<b>${esc(pr.name)}</b><br><span class="meta">${esc(pr.algorithms||"")}</span>`)}${td("TRL",`<span class="mono">${esc(pr.trl??"—")}</span>`)}${td("ددلاین",dl(a))}</tr>`}),"محصولی تخصیص نیافته است.")+`</div>`; }
-  if(k==="need"){ const rows=sorted.filter(a=>!assign.has(a.id)); return `<div class="card"><h3>مقصدهای نیازمند محصول جدید (${faNum(rows.length)})</h3>`+table(["مقصد","دلیل","ددلاین",""],rows.map(a=>{const m0=apBestFor(a);return `<tr>${td("مقصد",venue(a),"t")}${td("دلیل",m0.all.length?"محصولات مرتبط یا قبلاً در مقاله معرفی شده‌اند یا برای مقصد دیگری رزرو شده‌اند":"در سبد محصولی در این حوزه نیست")}${td("ددلاین",dl(a))}${td("",isAdmin()?`<button class="btn sm sig" data-act="av-new" data-v="${esc(a.id)}">📥 ثبت در صف: تعریف محصول + ریپوی جدید</button>`:"")}</tr>`}),"همه‌ی مقصدها محصول دارند.")+`</div>`; }
+  if(k==="need"){ const rows=sorted.filter(a=>!assign.has(a.id)); return `<div class="card"><h3>مقصدهای بدون محصول کاندید (${faNum(rows.length)})</h3>`+table(["مقصد","دلیل","ددلاین",""],rows.map(a=>{const m0=apBestFor(a);return `<tr>${td("مقصد",venue(a),"t")}${td("دلیل",m0.all.length?"محصولات مرتبط یا قبلاً در مقاله معرفی شده‌اند یا برای مقصد دیگری رزرو شده‌اند":"در سبد محصولی در این حوزه نیست")}${td("ددلاین",dl(a))}${td("",isAdmin()?`<button class="btn sm sig" data-act="av-new" data-v="${esc(a.id)}">📥 ثبت در صف: تعریف محصول + ریپوی جدید</button>`:"")}</tr>`}),"همه‌ی مقصدها محصول دارند.")+`</div>`; }
   const tl=S.ct.filter(t=>t.venue);
   return `<div class="card"><h3>تسک‌های ثبت‌شده برای مقصدها (${faNum(tl.length)})</h3>`+table(["تسک","وضعیت","تاریخ","نتیجه"],[...tl].reverse().map(t=>`<tr>${td("تسک",`<b>${esc(t.name||"")}</b><br><span class="meta" style="white-space:pre-wrap">${esc(String(t.text||"").slice(0,220))}…</span>`,"t")}${td("وضعیت",t.status==="open"?'<span class="pill p-warn">در صف Claude Code</span>':'<span class="pill p-ok">انجام شد</span>')}${td("تاریخ",faDate((t.at||"").slice(0,10)))}${td("نتیجه",`<span style="white-space:pre-wrap">${esc(t.result||"—")}</span>`)}</tr>`),"هنوز تسکی برای مقصدها ثبت نشده است.")+`</div>`;
 }
@@ -4387,25 +4419,19 @@ VIEWS["articles.product"] = () => {
   const f=S.artF, all=artAll().filter(a=>artOpen(a)&&a.status0!=="applied");
   const rows=all.filter(a=>(!f.field||a.field===f.field)&&(!f.type||a.type===f.type)).filter(a=>match(a.name,a.details,a.city,a.country,ART_FIELDS[a.field]))
     .sort((a,b)=>(a.deadline||"9999").localeCompare(b.deadline||"9999")||a.name.localeCompare(b.name));
-  const assign=apAssign(all), withP=all.filter(a=>assign.has(a.id)).length;
-  const taskOf=a=>S.ct.find(t=>t.venue===a.id);
+  const assign=apAssign(all);
   const sel=(k,opts,all0)=>`<select data-af="${k}"><option value="">${all0}</option>${Object.entries(opts).map(([v,l])=>`<option value="${v}"${f[k]===v?" selected":""}>${esc(l)}</option>`).join("")}</select>`;
-  return `<div class="banner"><b>قاعده‌ی ثبت اختراع:</b> همه‌ی محصولات در مسیر ثبت اختراع‌اند. مقاله فقط روی قابلیت تازه‌ای نوشته می‌شود که در ادعانامه‌ها نیست، روی ریپوی موجود و در شاخه‌ی جدا ساخته می‌شود و روش ادعاشده در آن فاش نمی‌شود.</div><p class="note">همه‌ی ژورنال‌ها، ویژه‌شماره‌ها و کنفرانس‌های باز فهرست مقالات اینجا هستند. برای هر کدام، محصولِ سبد که با موضوعش هم‌پوشانی دارد و هنوز در مقاله‌ای معرفی نشده پیشنهاد می‌شود. با «تسک برای Claude» نگارش چکیده، تجمیع مدارک و آماده‌سازی بسته‌ی ارسال سفارش داده می‌شود (ثبت نهایی با حساب شخصی شماست). اگر محصول مناسبی نباشد، تسک «تعریف محصول، ساخت ریپوی جدید و اسکافلد» ثبت می‌شود. هر ردیف دو راه جدا دارد: «۱) سفارش کامل» تسک را در صف Claude Code می‌گذارد تا روی ریپو و ادعانامه‌های شما اجرا شود؛ «۲) پیش‌نویس سریع» فقط یک گفتگوی تازه در claude.ai باز می‌کند و ریپو یا فایل‌های شما را نمی‌بیند.</p>`+
+  return `<div class="banner"><b>قاعده‌ی ثبت اختراع:</b> همه‌ی محصولات در مسیر ثبت اختراع‌اند. مقاله فقط روی قابلیت تازه‌ای نوشته می‌شود که در ادعانامه‌ها نیست، روی ریپوی موجود و در شاخه‌ی جدا ساخته می‌شود و روش ادعاشده در آن فاش نمی‌شود.</div><p class="note">برای هر ژورنال، ویژه‌شماره یا کنفرانس بازی که هنوز اقدام نشده، یکی از محصولات ریپوهای موجود که هنوز در هیچ مقاله‌ای معرفی نشده و بیشترین تناسب موضوعی را دارد کاندید می‌شود (هر محصول فقط برای یک مقصد). ریپوی جدید و ایده‌پردازی لازم نیست؛ فقط «تسک را انجام می‌دهم» یا «تعریف تسک برای دیگری» را بزنید. منواسکریپت یک فایل واحد است و خلاصه در ابتدای همان فایل می‌آید.</p>`+
    avKpis(all,assign)+avPanel(all,assign)+
    `<div class="card" style="margin-bottom:8px"><b>تخصیص محصول به مقصد (هر محصول فقط برای یک مقاله):</b> ${assign.size?[...assign.entries()].map(([vid,pr])=>{const v=all.find(x=>x.id===vid); return `<span class="pill p-info" title="${esc(v?v.name:"")}">${esc(pr.name.split("–")[0].trim())} ← ${esc(v?v.name.split("–")[0].trim().slice(0,38):"")}</span>`}).join(" "):'<span class="meta">محصولی تخصیص نیافته است</span>'}</div>`+
-   `<div class="toolbar">${sel("field",ART_FIELDS,"همه‌ی حوزه‌ها")}${sel("type",ART_TYPE,"همه‌ی انواع")}<button class="btn ghost" data-act="sub" data-k="claude">تسک‌های Claude</button>${S.downloads?`<button class="btn sig" data-act="art-abs-all">همه‌ی چکیده‌ها (ZIP)</button>`:""}</div>`+
-   table(["حوزه","ژورنال / کنفرانس","ایمپکت و ددلاین","محصول پیشنهادی از سبد","اقدام"],rows.map(a=>{
-     const m0=apBestFor(a), m={all:m0.all,fresh:m0.fresh,best:assign.get(a.id)||null}, t=taskOf(a);
-     const prod = m.best ? `<b>${esc(m.best.name)}</b> <span class="pill p-info mono">TRL ${esc(m.best.trl??"—")}</span><br><span class="meta">${esc((m.best.algorithms||"").slice(0,90))}</span>`
-       : (()=>{ const ab=absOf(a.id), pp=ab&&ab.product, nm=pp&&(typeof pp==="object"?pp.name:(ABS.products[pp]||{}).name||pp); return nm&&!/^\[/.test(nm)?`<b>${esc(nm)}</b> <span class="pill p-ok">چکیده‌ی آماده</span><br><span class="meta">محصول همان چکیده‌ی ثبت‌شده؛ تخصیص خودکار سبد لازم نیست</span>`:null; })() || `<span class="pill p-warn">محصول مناسب ندارد</span><br><span class="meta">${m.all.length?"محصولات مرتبط یا قبلاً در مقاله معرفی شده‌اند یا برای مقصد دیگری رزرو شده‌اند":"در سبد محصولی در این حوزه نیست"}</span>`;
-     const quick = m.best ? apQuickText(a,m.best) : apQuickNewText(a);
-     const queued = t ? `<span class="pill ${t.status==="open"?"p-warn":"p-ok"}">${t.status==="open"?"در صف Claude Code":"انجام شد"}</span>` : "";
-     const act = isAdmin() ? `<div style="border-inline-start:3px solid var(--signal);padding-inline-start:8px;margin-bottom:8px"><div class="meta"><b>۱) سفارش کامل</b> – روی ریپو، در Claude Code ${queued}</div>
-        <button class="btn sm sig" data-act="${m.best?"av-task":"av-new"}" data-v="${esc(a.id)}"${m.best?` data-p="${esc(m.best.id)}"`:""}>📥 ${m.best?"ثبت در صف: چکیده + مدارک + بسته‌ی ارسال":"ثبت در صف: تعریف محصول + ریپوی جدید"}</button></div>
-       <div style="border-inline-start:3px solid var(--line);padding-inline-start:8px"><div class="meta"><b>۲) پیش‌نویس سریع</b> – گفتگوی تازه در claude.ai، بدون دسترسی به ریپو</div>
-        <a class="btn sm ghost" href="${esc(apClaudeLink(quick))}" target="_blank" rel="noopener" title="فقط متن چکیده یا ایده می‌دهد؛ ریپو و فایل‌های شما را نمی‌بیند">↗ ${m.best?"پیش‌نویس چکیده":"ایده‌پردازی محصول"}</a></div>` : `<span class="meta">فقط owner</span>`;
-     return `<tr>${td("حوزه",esc(ART_FIELDS[a.field]||a.field||"—"))}${td("نام",`${a.url?link(a.url,a.name):esc(a.name)}<br><span class="pill p-mute">${esc(ART_TYPE[a.type]||"")}</span> ${a.ver?'<span class="pill p-ok">منبع رسمی</span>':'<span class="pill p-warn">تأیید شود</span>'}<br><span class="meta">${esc(a.details||"")}</span><br><span class="meta">${esc(a.country||"")}${a.city&&a.city!=="—"?" – "+esc(a.city):""} · ${esc(ART_PRES[a.present]||"")}</span>`,"t")}
-       ${td("IF",`<b class="mono">${esc(a.impact||"—")}</b><br>${a.deadline?`<b title="${esc(a.dl_note||"")}">${faDate(a.deadline)}</b>`:dlShort(a)}`)}
+   `<div class="toolbar">${sel("field",ART_FIELDS,"همه‌ی حوزه‌ها")}${sel("type",ART_TYPE,"همه‌ی انواع")}${S.downloads?`<button class="btn sig" data-act="art-abs-all">همه‌ی منواسکریپت‌ها (ZIP)</button>`:""}</div>`+
+   table(["حوزه","ژورنال / کنفرانس","ایمپکت و ددلاین","محصول کاندید از ریپو","اقدام"],rows.map(a=>{
+     const best=assign.get(a.id)||null;
+     const prod = best ? `<b>${esc(best.name)}</b> <span class="pill p-info mono">TRL ${esc(best.trl??"—")}</span> <span class="pill ${best._fit==="field"?"p-ok":"p-warn"}">${best._fit==="field"?"هم‌حوزه":"کاندید بر اساس تناسب موضوع"}</span><br><span class="meta">${esc((best.algorithms||"").slice(0,90))}</span>${best.github?`<br>${ghLink(best.github,best.github.replace("https://github.com/",""))} <span class="meta">ریپوی موجود</span>`:""}`
+       : (()=>{ const ab=absOf(a.id), pp=ab&&ab.product, nm=pp&&(typeof pp==="object"?pp.name:(ABS.products[pp]||{}).name||pp); return nm&&!/^\[/.test(nm)?`<b>${esc(nm)}</b> <span class="pill p-ok">منواسکریپت آماده</span><br><span class="meta">محصول همان منواسکریپت ثبت‌شده است</span>`:null; })() || `<span class="pill p-warn">محصول آزاد باقی نمانده</span><br><span class="meta">همه‌ی محصولات سبد یا در مقاله معرفی شده‌اند یا برای مقصد دیگری کاندید شده‌اند</span>`;
+     const act = best ? asgCell("av_"+a.id,"مقاله برای "+a.name.split("–")[0].trim().slice(0,70),"articles",{me:"تسک را انجام می‌دهم",other:"تعریف تسک برای دیگری",task:apHumanTask(a,best)}) : "";
+     return `<tr>${td("حوزه",esc(ART_FIELDS[a.field]||a.field||"—"))}${td("نام",`${a.url?link(a.url,a.name):esc(a.name)}<br><span class="pill p-mute">${esc(ART_TYPE[a.type]||"")}</span> ${a.q1?'<span class="pill p-ok">Q1 · بدون هزینه‌ی ارسال</span> ':""}${a.ver?'<span class="pill p-ok">منبع رسمی</span>':'<span class="pill p-warn">تأیید شود</span>'}<br><span class="meta">${esc(a.details||"")}</span><br><span class="meta">${esc(a.country||"")}${a.city&&a.city!=="—"?" – "+esc(a.city):""} · ${esc(ART_PRES[a.present]||"")}</span>`,"t")}
+       ${td("IF",`<b class="mono">${esc(a.impact||"—")}</b>${a.impact_note?`<br><span class="meta">${esc(a.impact_note)}</span>`:""}<br>${a.deadline?`<b title="${esc(a.dl_note||"")}">${faDate(a.deadline)}</b>`:dlShort(a)}`)}
        ${td("محصول",prod)}${td("",act+absBtn(a))}</tr>`;}),"مقصد بازی با این فیلترها نیست.");
 };
 function artForm(a={}){
@@ -4598,7 +4624,7 @@ function mindOwnerView(mid){ const x=(S.allMind||[]).find(a=>a.member===mid); if
 // Keeping the two apart means a recorded result never erases who did the work (the productivity audit still counts it).
 const ART_OUT = {success:["موفق","p-ok"],failed:["ناموفق","p-bad"],removed:["حذف‌شده","p-mute"]};
 const ART_EDITABLE = ["name","url","type","field","impact","deadline","dl_note","country","city","details","present"];
-const ART_FK = {ms:"Manuscript",abs:"Abstract"};
+const ART_FK = {ms:"منواسکریپت (شامل خلاصه)",abs:"منواسکریپت"};
 const artEntry = id => (S.artSt||{})[id]||{};
 const artEditBase = a => { const e=(S.artEdit||{})[a.id]; if(!e) return a; const o={...a,edited:true};
   for(const k of ART_EDITABLE){ if(e[k]===undefined||e[k]==="") continue; o[k]=(k==="deadline"&&e[k]==="-")?"":e[k]; } return o; };
@@ -4640,7 +4666,7 @@ function artBaseForm(id){
     }});
 }
 // ---- Manuscript / Abstract files (uploaded file or link) per article
-const artFilesOf = id => (S.artFiles||{})[id]||{};
+const artFilesOf = id => { const f=(S.artFiles||{})[id]||{}; return f.ms||!f.abs?f:{...f,ms:f.abs}; };   // an older separate Abstract file is shown as the one manuscript file
 async function artStoreFile(id,f){
   const sha=await sha256Hex(f), lim=S.assets?UP_MAX:DB_MAX;
   if(f.size>lim) throw new Error(`حجم فایل بیش از ${faNum(Math.round(lim/1048576))} مگابایت است`);
@@ -4708,8 +4734,8 @@ VIEWS["articles.report"]=()=>{
 // ---- general edit: every row, base info + files in one table
 VIEWS["articles.edit"]=()=>{
   const rows=artAllAll().filter(a=>match(a.name,a.url,a.city,a.country,a.details,a.impact)).sort((a,b)=>String(a.name).localeCompare(String(b.name),"fa"));
-  return `<p class="note">ویرایش کلیِ مقاله‌ها. اگر مقاله‌ای به ژورنال یا کنفرانس دیگری منتقل شد، «ویرایش اطلاعات» نام، لینک، IF و ددلاین را به مقصد جدید تغییر می‌دهد (سابقه و وضعیت حفظ می‌شود). برای هر مقاله فایل نهایی Manuscript و Abstract را هم می‌توانید بگذارید یا جایگزین کنید؛ فایل‌های قدیمی در تاریخچه می‌مانند. برای یافتن مقاله از جست‌وجوی بالای صفحه استفاده کنید.</p>`+
-   kpis([["همه‌ی ردیف‌ها",faNum(rows.length)],["دارای Manuscript",faNum(rows.filter(a=>artFilesOf(a.id).ms).length)],["دارای Abstract",faNum(rows.filter(a=>artFilesOf(a.id).abs).length)],["ویرایش‌شده",faNum(rows.filter(a=>a.edited).length)]])+
+  return `<p class="note">ویرایش کلیِ مقاله‌ها. اگر مقاله‌ای به ژورنال یا کنفرانس دیگری منتقل شد، «ویرایش اطلاعات» نام، لینک، IF و ددلاین را به مقصد جدید تغییر می‌دهد (سابقه و وضعیت حفظ می‌شود). برای هر مقاله فایل نهایی منواسکریپت (شامل خلاصه، یک فایل) را هم می‌توانید بگذارید یا جایگزین کنید؛ فایل‌های قدیمی در تاریخچه می‌مانند. برای یافتن مقاله از جست‌وجوی بالای صفحه استفاده کنید.</p>`+
+   kpis([["همه‌ی ردیف‌ها",faNum(rows.length)],["دارای فایل منواسکریپت",faNum(rows.filter(a=>artFilesOf(a.id).ms).length)],["ویرایش‌شده",faNum(rows.filter(a=>a.edited).length)]])+
    table(["ژورنال / کنفرانس","نوع و IF","ددلاین","وضعیت","فایل‌ها",""],rows.slice(0,400).map(a=>{ const s=artStatus(a), fl=artFilesOf(a.id), can=isAdmin()||artEntry(a.id).by===S.me.id;
     return `<tr>${td("مقاله",`${a.url?link(a.url,a.name):esc(a.name)}${a.edited?' <span class="pill p-info">ویرایش‌شده</span>':""}`,"t")}${td("نوع",`${esc(ART_TYPE[a.type]||"")} <span class="meta mono">IF ${esc(a.impact||"—")}</span>`)}${td("ددلاین",a.deadline?faDate(a.deadline):"—")}${td("وضعیت",ART_OUT[s]?`<span class="pill ${ART_OUT[s][1]}">${ART_OUT[s][0]}</span>`:esc(({todo:"اقدام‌نشده",doing:"در دست اقدام",applied:"ارسال‌شده"})[s]||s))}${td("فایل‌ها",`${artFileBtn(a.id,"ms")||'<span class="meta">Manuscript ندارد</span>'} ${artFileBtn(a.id,"abs")||'<span class="meta">Abstract ندارد</span>'}`)}${td("",can?`<div class="row" style="gap:4px;flex-wrap:wrap"><button class="btn sm ghost" data-act="art-base" data-id="${esc(a.id)}">ویرایش اطلاعات</button><button class="btn sm ghost" data-act="art-file" data-k="ms" data-id="${esc(a.id)}">${fl.ms?"جایگزینی":"افزودن"} Manuscript</button><button class="btn sm ghost" data-act="art-file" data-k="abs" data-id="${esc(a.id)}">${fl.abs?"جایگزینی":"افزودن"} Abstract</button></div>`:"")}</tr>`; }),"موردی با این جست‌وجو نیست.")+(rows.length>400?`<p class="meta">فقط ۴۰۰ ردیف اول نمایش داده شد؛ جست‌وجو را دقیق‌تر کنید.</p>`:"");
 };
@@ -4847,6 +4873,55 @@ function helpView(mod){
 }
 for(const [k] of MODULES) VIEWS[k+".help"]=()=>helpView(k);
 
+// ================================================================== member activity log (owner view)
+// Every signed-in member writes a small log of their day to activity/<member>/days/<date>: when they came in, which sections they opened,
+// what they saved, when they left or came back. Only the owner reads all of it (a member only ever writes their own day).
+const ACT = {ev:[], old:[], loaded:false, first:"", day:"", lastView:"", dirty:false, timer:null};
+const actNow = () => new Date().toTimeString().slice(0,8);
+function actPush(k,v){
+  const last=ACT.ev[ACT.ev.length-1]; if(last&&last.k===k&&last.v===v&&k!=="act") return;
+  ACT.ev.push({t:actNow(),k,v:String(v).slice(0,140)}); if(ACT.ev.length>300) ACT.ev.shift(); ACT.dirty=true;
+}
+async function actFlush(){
+  if(!ACT.loaded||!ACT.dirty||!S.db||!S.me.id) return; ACT.dirty=false;
+  const m=myMember()||{}, evs=[...ACT.old,...ACT.ev].slice(-400);
+  try{ await S.db.doc(`activity/${S.me.id}/days/${ACT.day}`).set({events:evs,first:ACT.first,last:actNow(),name:m.full_name||"",team:m.team||"",updated:new Date().toISOString()}); }catch(e){ ACT.dirty=true; }
+}
+async function actInit(){
+  if(ACT.loaded||ACT.busy||!S.db||!S.me.id||!myMember()) return; ACT.busy=true; ACT.day=today();
+  let old={}; try{ const sn=await S.db.doc(`activity/${S.me.id}/days/${ACT.day}`).get(); if(sn.exists) old=sn.data(); }catch(e){}
+  ACT.old=(old.events||[]).slice(-250); ACT.first=old.first||actNow(); ACT.loaded=true;
+  actPush("in",ACT.old.length?"ورود دوباره به سامانه":"ورود به سامانه"); ACT.lastView=""; actView();
+  ACT.timer=setInterval(actFlush,45000);
+  document.addEventListener("visibilitychange",()=>{ if(document.visibilityState==="hidden"){ actPush("out","خروج یا ترک صفحه"); actFlush(); } else actPush("in","بازگشت به سامانه"); });
+  window.addEventListener("pagehide",()=>{ actPush("out","بستن سامانه"); actFlush(); });
+}
+function actView(){
+  if(!ACT.loaded){ actInit(); return; }
+  const key=S.mod+"."+S.sub; if(key===ACT.lastView) return; ACT.lastView=key;
+  const mod=(MODULES.find(x=>x[0]===S.mod)||[])[1]||S.mod, sub=((SUBS[S.mod]||[]).find(x=>x[0]===S.sub)||[])[1]||S.sub;
+  actPush("view",`${mod} ← ${sub}`);
+}
+async function actLoad(date){
+  S.actData={date,map:{},loading:true};
+  for(const m of S.members){ try{ const sn=await S.db.doc(`activity/${m.id}/days/${date}`).get(); if(sn.exists) S.actData.map[m.id]=sn.data(); }catch(e){} }
+  S.actData.loading=false; render();
+}
+const actMin = (a,b) => { const f=x=>{ const p=String(x||"").split(":").map(Number); return p[0]*60+(p[1]||0); }; return Math.max(0,f(b)-f(a)); };
+const ACT_K = {in:["ورود","p-ok"],out:["خروج","p-mute"],view:["بخش","p-info"],act:["اقدام","p-warn"]};
+VIEWS["bpms.activity"] = () => {
+  if(!S.me.isOwner) return `<p class="empty">این بخش فقط برای مالک سامانه نمایش داده می‌شود.</p>`;
+  const date=S.actDate||today();
+  if(!S.actData||S.actData.date!==date){ if(!S.actData||!S.actData.loading) actLoad(date); }
+  const d=(S.actData&&S.actData.date===date)?S.actData:{map:{},loading:true};
+  const rows=S.members.map(m=>({m,r:d.map[m.id]})).filter(x=>!S.q||match(x.m.full_name,x.m.id));
+  const act=rows.filter(x=>x.r);
+  const bar=`<div class="toolbar"><button class="btn sm ghost" data-act="act-day" data-v="-1">روز قبل</button><b>${esc(faDate(date))}</b><button class="btn sm ghost" data-act="act-day" data-v="1">روز بعد</button><button class="btn sm ghost" data-act="act-day" data-v="0">امروز</button><button class="btn sm ghost" data-act="act-day" data-v="r">به‌روزرسانی</button></div>`;
+  const tl=r=>`<ul style="margin:4px 0;padding-inline-start:18px">${(r.events||[]).map(e=>`<li><span class="mono">${esc(e.t)}</span> <span class="pill ${(ACT_K[e.k]||["","p-mute"])[1]}">${esc((ACT_K[e.k]||[e.k])[0])}</span> ${esc(e.v)}</li>`).join("")}</ul>`;
+  return `<p class="note">از لحظه‌ی ورود هر عضو تا خروج یا آخرین فعالیتش: بخش‌هایی که باز کرده، کارهایی که ذخیره کرده و زمان ترک یا بازگشت. «خروج» همان آخرین ثبت قبل از بسته‌شدن یا ترک صفحه است. فقط مالک می‌بیند.</p>`+bar+
+   kpis([["اعضای فعال در این روز",faNum(act.length)],["اعضای بدون فعالیت",faNum(rows.length-act.length),rows.length-act.length>0]])+
+   (d.loading?`<p class="empty">در حال دریافت…</p>`:table(["عضو","اولین ورود","آخرین فعالیت / خروج","مدت","رویدادها"],rows.map(({m,r})=>`<tr>${td("عضو",`<b>${esc(m.full_name||m.id)}</b><br><span class="meta">${esc(TEAMS[m.team]||"")}</span>`,"t")}${r?`${td("ورود",`<span class="mono">${esc(r.first||"—")}</span>`)}${td("خروج",`<span class="mono">${esc(r.last||"—")}</span>`)}${td("مدت",`${faNum(Math.round(actMin(r.first,r.last)))} دقیقه`)}${td("رویدادها",`<details><summary class="meta">${faNum((r.events||[]).length)} رویداد</summary>${tl(r)}</details>`)}`:`${td("ورود",'<span class="pill p-bad">بدون فعالیت</span>')}${td("خروج","—")}${td("مدت","—")}${td("رویدادها","—")}`}</tr>`),"عضوی نیست."));
+};
 const TOUR = [
  {title:"به iPetro خوش آمدید",text:"iPetro سامانه‌ی یکپارچه‌ی پترو پالا توس است و کار روزانه‌ی تیم را در یک جا جمع می‌کند: پیدا کردن فرصت‌های بازار، مدیریت شرکت، کار روزانه‌ی اعضا، نامه‌نگاری و پتنت. آموزش را قدم‌به‌قدم می‌بینید؛ هر مرحله خودش به همان تب می‌رود. هر زمان بخواهید از دکمه‌ی «راهنما» بالای صفحه دوباره شروع کنید."},
  {mod:"market",title:"Market – بازار",text:"همه‌ی فرصت‌های بیرونی شرکت اینجاست. ایجنت هر روز بازار را می‌گردد و فرصت‌ها را می‌آورد؛ شما مسئولیت می‌گیرید و پیگیری می‌کنید."},
@@ -5017,8 +5092,8 @@ document.addEventListener("click", async e => {
       await save(`products/${id}`,{...pr,edit_requests:rq,editors:eds,access_by:S.me.id,access_at:new Date().toISOString()},a==="product-approve"?"اجازه‌ی کار داده شد":a==="product-reject"?"درخواست رد شد":"دسترسی لغو شد"); break; }
     case "product-new": productForm(); break;
     case "tn-new": tnForm(); break;
-    case "asg": asgForm(id,b.dataset.t,b.dataset.m,b.dataset.other==="1"); break;
-    case "asg-me": { const a=asgOf(id)||{}; if(!asgCan(a,b.dataset.m)){ toast("این مورد واگذار شده است."); break; } await asgApply(id,b.dataset.t,b.dataset.m,a,{doer:S.me.id,task:a.task||""}); break; }
+    case "asg": asgForm(id,b.dataset.t,b.dataset.m,b.dataset.other==="1",b.dataset.task); break;
+    case "asg-me": { const a=asgOf(id)||{}; if(!asgCan(a,b.dataset.m)){ toast("این مورد واگذار شده است."); break; } await asgApply(id,b.dataset.t,b.dataset.m,a,{doer:S.me.id,task:a.task||b.dataset.task||""}); break; }
     case "cc-task": contentTaskForm(id); break;
     case "cc-add": ccItemForm(id); break;
     case "cc-del": { const dn=Object.keys(S.ccD||{}).find(k=>(S.ccD[k]||[]).some(x=>x.id===id)); if(dn&&isAdmin()&&await askConfirm("این آیتم از تقویم محتوایی حذف شود؟","حذف")) await save("settings/"+dn,{items:S.ccD[dn].filter(x=>x.id!==id)},"حذف شد"); break; }
@@ -5111,6 +5186,7 @@ document.addEventListener("click", async e => {
       await save(`taskclaims/${id}`,{...c,status:"approved",task_id:tid,decided_by:S.me.id,decided:new Date().toISOString()},"تأیید شد؛ گزارش آن روز دوباره نمره‌دهی می‌شود");
       try{ const snap=await S.db.doc(`reports/${c.by}/items/${c.date}`).get(), m=S.members.find(x=>x.id===c.by); if(snap.exists&&m) await gradeReport({...snap.data(),date:c.date},{...m,id:m.id},[...(S.tasks||[]).filter(x=>x.assignee===c.by&&x.id!==tid),{id:tid,...t}],pendingClaims(c.by,c.date)); }catch(e){ console.error("regrade",e); }
       break; }
+    case "act-day": { const v=b.dataset.v; if(v==="r"){ S.actData=null; } else { S.actDate=v==="0"?today():addDays(S.actDate||today(),Number(v)); S.actData=null; } render(); break; }
     case "task-unlisted": unlistedForm(); break;
     case "art-out": await artOutcome(id,b.dataset.st); break;
     case "art-base": artBaseForm(id); break;
