@@ -24,3 +24,20 @@ def test_activity_log_is_private_to_member_and_owner():
     assert not rules.can_write(_u("owner", "o"), p)
     assert rules.can_read(_u("member", "u1"), p) and rules.can_read(_u("owner", "o"), p)
     assert not rules.can_read(_u("member", "u2"), p) and not rules.can_read(_u("admin", "a"), p)
+
+
+def test_access_lists_are_owner_write():
+    for d in ("article_access", "task_assigners", "notice_access"):
+        p = f"settings/{d}"
+        assert rules.can_write(_u("owner"), p)
+        assert not rules.can_write(_u("admin"), p) and not rules.can_write(_u("member"), p)
+        assert rules.can_read(_u("member"), p)
+
+
+def test_task_claims_only_owner_decides():
+    p = "taskclaims/c1"
+    pend = {"by": "u1", "status": "pending"}
+    assert rules.can_write(_u("member", "u1"), p, None, pend)
+    assert not rules.can_write(_u("member", "u2"), p, None, pend)
+    assert not rules.can_write(_u("member", "u1"), p, pend, {**pend, "status": "approved"})
+    assert rules.can_write(_u("owner", "o"), p, pend, {**pend, "status": "approved"})

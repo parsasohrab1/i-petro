@@ -35,6 +35,11 @@ def _mine(data, uid):
     return bool(data) and (data.get("assignee") == uid or data.get("created_by") == uid)
 
 
+# who may use each module is chosen by the owner: those lists are written by the owner only (everyone reads them to know their own access)
+ACCESS_DOCS = {"article_access", "basket_access", "letters_access", "news_access", "notice_access", "patent_access",
+               "phonebook_access", "scholar_access", "task_assigners"}
+
+
 def can_read(u, path: str, data=None) -> bool:
     s, uid = split(path), u["id"]
     top = s[0]
@@ -72,6 +77,12 @@ def can_write(u, path: str, old=None, new=None) -> bool:
         return _admin(u) or (len(s) > 1 and s[1] == uid)
     if top == "tasks":
         return _admin(u) or _mine(old, uid) or _mine(new, uid)
+    if top == "settings" and len(s) > 1 and s[1] in ACCESS_DOCS:
+        return u["role"] == "owner"
+    if top == "taskclaims":                                            # a member proposes (pending); only the owner approves or rejects
+        if u["role"] == "owner":
+            return True
+        return (new or {}).get("status") == "pending" and (new or {}).get("by") == uid and (old is None or old.get("by") == uid and old.get("status") == "pending")
     if top in ("settings", "market", "patentops"):                     # same as the claude.ai rules: members read, admins write
         return _admin(u)
     return True
