@@ -327,7 +327,7 @@ function subColl(path,key,n=0){
 }
 // Subscription budget: the page may hold only a limited number of live listeners ("Too many active subscriptions"). Settings documents that only one module uses
 // are registered here and listened to only while that module is open (the listener is closed again when the person leaves it).
-const LZ_MODS = {ast:["articles","patent","basket","erp","bpms"],art:["articles","patent"],ms:["articles","patent"],sch:["scholar"],cal:["content","bpms"]};
+const LZ_MODS = {ast:["articles","patent","basket","erp","bpms"],art:["articles","patent","basket"],ms:["articles","patent","basket"],sch:["scholar"],cal:["content","bpms"]};
 function LZD(grp,id,fn){ (S.lzReg=S.lzReg||[]).push({grp,id,fn,unsub:null}); }
 function lzSync(){
   if(!S.db||!S.lzReg) return;
