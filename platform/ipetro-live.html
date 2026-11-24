@@ -507,7 +507,7 @@ const canSeeLetters = () => { if(S.me.isOwner||S.me.id) return true;   // Letter
 const AREA_KINDS = {patent:["human_patent"], scholar:["human_scholar"], articles:["submit"]};
 const areaTasks = mod => (S.tasks||[]).filter(t=>t.assignee===S.me.id&&(AREA_KINDS[mod]||[]).includes(t.kind));
 const schAccess = () => !!(S.me.id&&(((S.schAcc||{}).ids||[]).includes(S.me.id)||asgMine("scholar").length));
-const areaAccess = mod => S.me.isOwner?"full":(mod==="scholar"&&schAccess())?"full":(mod==="patent"&&S.me.id&&((S.patAcc||{}).ids||[]).includes(S.me.id))?"full":(mod==="articles"&&S.me.id&&((S.artDeny||{}).ids||[]).includes(S.me.id))?"none":(mod==="articles"&&S.me.id&&((S.artAcc||{}).ids||[]).includes(S.me.id))?"full":(areaTasks(mod).length||asgMine(mod).length)?"mine":"none";   // settings/article_deny {ids}: people with article tasks who must not see the Articles tab
+const areaAccess = mod => S.me.isOwner?"full":(mod==="scholar"&&schAccess())?"full":(mod==="patent"&&S.me.id&&((S.patAcc||{}).ids||[]).includes(S.me.id))?"full":(mod==="articles"&&S.me.id&&((S.artAcc||{}).ids||[]).includes(S.me.id))?"full":(mod==="articles"&&S.me.id&&((S.artDeny||{}).ids||[]).includes(S.me.id))?"none":(areaTasks(mod).length||asgMine(mod).length)?"mine":"none";   // settings/article_deny {ids}: people with article tasks who must not see the Articles tab
 const newsOpen = () => !!(S.me.isOwner||(S.me.id&&((S.newsAcc||{}).ids||[]).includes(S.me.id)));
 const visibleModules = () => MODULES.filter(([k])=>(!AREA_KINDS[k]||areaAccess(k)!=="none")&&(k!=="news"||newsOpen())&&(k!=="letters"||canSeeLetters())&&(k!=="basket"||!!S.me.isOwner||basAcc()||asgMine("basket").length>0));
 const basAcc = () => !!(S.me.id&&((S.basAcc||{}).ids||[]).includes(S.me.id));
@@ -5122,7 +5122,8 @@ document.addEventListener("click", async e => {
     case "art-layout": S.artLayout=b.dataset.v; try{localStorage.setItem("artLayout",S.artLayout)}catch(e){} render(); break;
     case "art-new": artForm(); break;
     case "mod-acc": { if(!S.me.isOwner){ toast("فقط مالک سامانه می‌تواند دسترسی را تغییر دهد."); render(); break; } const k=b.dataset.k, ma=MOD_ACC[k]; if(!ma) break; const set=new Set((S[ma[0]]||{}).ids||[]); if(b.checked) set.add(id); else set.delete(id); await save("settings/"+ma[1],{...(S[ma[0]]||{}),ids:[...set]},"دسترسی ذخیره شد"); break; }
-    case "art-acc": { if(!S.me.isOwner){ toast("فقط مالک سامانه می‌تواند دسترسی را تغییر دهد."); render(); break; } const s=new Set((S.artAcc||{}).ids||[]); if(b.checked) s.add(id); else s.delete(id); await save("settings/article_access",{ids:[...s]},"دسترسی تب مقالات ذخیره شد"); break; }
+    case "art-acc": { if(!S.me.isOwner){ toast("فقط مالک سامانه می‌تواند دسترسی را تغییر دهد."); render(); break; } const s=new Set((S.artAcc||{}).ids||[]); if(b.checked) s.add(id); else s.delete(id); if(b.checked&&((S.artDeny||{}).ids||[]).includes(id)) await save("settings/article_deny",{ids:((S.artDeny||{}).ids||[]).filter(x=>x!==id)},"");   // an explicit grant by the owner lifts an older deny
+    await save("settings/article_access",{ids:[...s]},"دسترسی تب مقالات ذخیره شد"); break; }
     case "art-abs": await downloadAbstract(id); break;
     case "art-ms": await downloadMs(id); break;
     case "art-abs-all": await downloadAllAbstracts(); break;
