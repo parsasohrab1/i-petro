@@ -2,6 +2,7 @@
 
   create-user --email a@b.c --name "Name" --role owner|admin|member [--id ID] [--password-stdin]
   set-password --email a@b.c [--password-stdin]
+  activate-user --email a@b.c                  (the owner removing a member switches the login off; this restores it)
   list-users
   list-members                                 (member documents: id, name, email)
   import-backup ppt-backup-YYYY-MM-DD.json     (the backup file the dashboard's ERP -> backup page produces)
@@ -68,6 +69,13 @@ def set_password(args):
     print("updated" if n else "no such user")
 
 
+def activate_user(args):
+    """Restores the login of a person who was removed from the dashboard."""
+    with db.pool().connection() as c:
+        n = c.execute("UPDATE users SET active = true WHERE lower(email) = %s", (args.email.lower(),)).rowcount
+    print("activated" if n else "no such user")
+
+
 def list_users(_):
     with db.pool().connection() as c:
         for r in c.execute("SELECT id, email, name, role, active FROM users ORDER BY created"):
@@ -123,6 +131,7 @@ def main(argv=None):
     p = sub.add_parser("create-user"); p.add_argument("--email", required=True); p.add_argument("--name", default="")
     p.add_argument("--role", choices=["owner", "admin", "member"], required=True); p.add_argument("--id"); p.add_argument("--password-stdin", action="store_true"); p.set_defaults(f=create_user)
     p = sub.add_parser("set-password"); p.add_argument("--email", required=True); p.add_argument("--password-stdin", action="store_true"); p.set_defaults(f=set_password)
+    p = sub.add_parser("activate-user"); p.add_argument("--email", required=True); p.set_defaults(f=activate_user)
     sub.add_parser("list-users").set_defaults(f=list_users)
     sub.add_parser("list-members").set_defaults(f=list_members)
     p = sub.add_parser("import-backup"); p.add_argument("file"); p.set_defaults(f=import_backup)

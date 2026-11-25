@@ -148,6 +148,27 @@ def test_asset_delete_only_by_uploader_or_owner(env):
     assert ann.get(f"/_blob/{aid}").status_code == 404
 
 
+def test_removed_member_loses_access_until_reactivated(env):
+    from fastapi.testclient import TestClient
+    from server import db, manage, security
+    from server.app import app
+    with db.pool().connection() as c:
+        c.execute("INSERT INTO users (id, email, name, pw_hash, role) VALUES (%s,%s,%s,%s,%s)",
+                  ("gone", "gone@x.io", "gone", security.hash_password("correct-horse-1"), "member"))
+    gone, boss, adm = (client_as(env, u) for u in ("gone", "boss", "adm"))
+    p = {"path": "members/gone"}
+    assert gone.put("/api/doc", params=p, json={"full_name": "G"}, headers=H).status_code == 200
+    assert adm.delete("/api/doc", params=p, headers=H).status_code == 200          # only the owner's removal closes the login
+    assert gone.get("/api/me").status_code == 200
+    assert gone.put("/api/doc", params=p, json={"full_name": "G"}, headers=H).status_code == 200
+    assert boss.delete("/api/doc", params=p, headers=H).status_code == 200
+    assert gone.get("/api/me").status_code == 401
+    login = {"email": "gone@x.io", "password": "correct-horse-1"}
+    assert TestClient(app).post("/api/login", json=login, headers=H).status_code == 401
+    manage.activate_user(type("A", (), {"email": "gone@x.io"}))
+    assert TestClient(app).post("/api/login", json=login, headers=H).status_code == 200
+
+
 def test_index_is_served_with_shim_after_login(env):
     r = client_as(env, "ann").get("/")
     assert r.status_code == 200 and r.text.startswith('<script src="/shim.js"></script>')

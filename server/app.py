@@ -188,6 +188,11 @@ def delete_doc(request: Request, path: str, user=Depends(current_user)):
         if not rules.can_write(user, path, old[0], None):
             raise HTTPException(403, "forbidden")
         c.execute("DELETE FROM docs WHERE path = %s", (path,))
+        segs = path.split("/")
+        if segs[0] == "members" and len(segs) == 2 and user["role"] == "owner" and segs[1] != user["id"]:
+            # a removed person loses access at once; "python -m server.manage activate-user" restores it
+            if c.execute("UPDATE users SET active = false WHERE id = %s AND role <> 'owner'", (segs[1],)).rowcount:
+                c.execute("DELETE FROM sessions WHERE user_id = %s", (segs[1],))
     publish({"path": path, "parent": rules.parent_of(path)})
     return {"ok": True}
 

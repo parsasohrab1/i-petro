@@ -240,12 +240,14 @@ try{S.seenTasks=new Set(JSON.parse(localStorage.getItem("ppt-seen")||"[]"))}catc
 // ------------------------------------------------------------------ helpers
 const $ = s => document.querySelector(s);
 const esc = v => String(v ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
-const link = (u,t) => u ? `<a href="${esc(u)}" target="_blank" rel="noopener">${esc(t||u)}</a>` : "";
+const link = (u,t) => u ? `<a href="${esc(safeUrl(u))}" target="_blank" rel="noopener">${esc(t||u)}</a>` : "";
 const ghLink = (u,t) => link(u,t) + ` <span class="meta" title="ریپوها خصوصی‌اند. اگر صفحه خطای ۴۰۴ داد، یعنی هنوز به ریپو دعوت نشده‌اید؛ حساب GitHub خود را به مالک بدهید تا به‌عنوان Collaborator اضافه‌تان کند.">🔒</span>`;   // repos are private: GitHub shows 404 to people who are not invited
 const today = () => new Date().toISOString().slice(0,10);
 const faDate = d => { if(!d) return ""; try{return new Intl.DateTimeFormat("fa-IR-u-ca-persian",{year:"numeric",month:"long",day:"numeric"}).format(new Date(d+(d.length===10?"T12:00:00":"")))}catch(e){return d} };
 const faNum = n => { try{return new Intl.NumberFormat("fa-IR").format(n)}catch(e){return n} };
 const blobUrl = id => id ? "/_blob/" + id : "";
+// a stored address is linked only when it is a web or mail address (or a file of this page); javascript:, data: and the like become "#"
+const safeUrl = v => { const u=String(v??""); try{ return ["http:","https:","mailto:"].includes(new URL(u,"https://relative.invalid/").protocol)?u:"#"; }catch(e){ return "#"; } };
 const memberName = id => (S.members.find(m=>m.id===id)||{}).full_name || (id&&!isAdmin()?"همکار":"—");
 const isAdmin = () => S.me.isOwner || S.me.canEdit;
 // management notices (backup reminder, unsigned NDA list, team deadlines, product permission requests …): owner + the members the owner ticked (ERP ← اعلان‌های مدیریتی)
@@ -1045,7 +1047,7 @@ const mk = filter => () => {
 VIEWS["market.iran"] = mk(t=>t.market==="domestic"&&t.line!=="web");
 const WEBMAIL_DEFAULT = "https://parsaint.group/webmail";   // Parsa International Group corporate mailbox (cPanel); the login form opens there
 const webmailUrl = () => { const u=String((S.settings&&S.settings.webmail_url)||"").trim(); return /^https:\/\//i.test(u)?u:WEBMAIL_DEFAULT; };
-const webmailLink = cls => `<a class="btn ${cls}" href="${esc(webmailUrl())}" target="_blank" rel="noopener noreferrer">رفتن به پرتال ایمیل شرکتی (Parsa International Group)</a>`;
+const webmailLink = cls => `<a class="btn ${cls}" href="${esc(safeUrl(webmailUrl()))}" target="_blank" rel="noopener noreferrer">رفتن به پرتال ایمیل شرکتی (Parsa International Group)</a>`;
 const webmailBar = () => `<div class="toolbar">${webmailLink("sig")}<span class="meta">پیش‌نویس ایمیل شرکا در Drafts همین وب‌میل ذخیره می‌شود؛ پس از ورود با حساب info@parsaint.group آن را بازبینی و ارسال کنید.</span></div>`;
 VIEWS["market.overseas"] = mk(t=>(t.market||"international")==="international"&&t.line!=="web");
 { const _mi=VIEWS["market.iran"], _mo=VIEWS["market.overseas"]; VIEWS["market.iran"]=()=>companyDocsStrip("ppt")+_mi(); VIEWS["market.overseas"]=()=>webmailBar()+companyDocsStrip("parsa")+_mo(); }
@@ -2010,6 +2012,8 @@ E --> F[جلسه‌ی پیرو و اقدام بعدی]</pre></div>
 <div class="card"><h3>فرایند روزانه‌ی هر عضو</h3><pre class="mermaid">flowchart LR
 A[ثبت ورود] --> B[انجام تسک‌ها] --> C[ثبت خروج] --> D[گزارش عملکرد] --> E[نمره‌ی Claude]</pre></div></div>`;
 // ------------------------------------------------------------------ removing a person: their records go with them (owner only)
+// every collection that can hold the id of an uploaded file
+const PG_REFS = ["settings","members","letters","letters_archive","tasks","tasksdeleted","artfiles","artedits","articles","products","patents","clients","finance","finance/_portal/items","tracking","scholarships","phonebook","prodready","sprints","techneeds","erp_log"];
 const PG_LISTS = ["article_access","basket_access","letters_access","news_access","notice_access","patent_access","phonebook_access","scholar_access","task_assigners","article_deny"];
 // reads everything fresh from the database and returns the list of changes; any failed read throws, so nothing is half-planned
 async function purgePlan(id){
@@ -2034,17 +2038,22 @@ async function purgePlan(id){
   const ct=await doc("settings/claude_tasks");
   if(ct&&(ct.list||[]).some(t=>t.by===id&&t.status==="open")) set("تسک باز برای Claude",`settings/claude_tasks`,ct,{...ct,list:ct.list.filter(t=>!(t.by===id&&t.status==="open"))});
   const m=await doc(`members/${id}`);
-  const assets=m?[...new Set([m.signature_asset,m.fingerprint_asset,m.nda_sig_asset,m.nda_fp_asset].filter(Boolean))]:[];
+  let assets=m?[...new Set([m.signature_asset,m.fingerprint_asset,m.nda_sig_asset,m.nda_fp_asset].filter(a=>typeof a==="string"&&a))]:[];
+  // a member can write any id into their own file, so an image is deleted only when no other record points to it
+  if(assets.length){ const gone=new Set(ops.filter(o=>o.after===null).map(o=>o.path));
+    for(const c of PG_REFS){ if(!assets.length) break;
+      for(const d of await col(S.db.collection(c))){ if(gone.has(`${c}/${d.id}`)||`${c}/${d.id}`===`members/${id}`) continue; const t=JSON.stringify(d.data); assets=assets.filter(a=>!t.includes(a)); } } }
   if(m) del("پرونده‌ی عضو (مشخصات و قرارداد محرمانگی)",`members/${id}`,m);   // always last: while it exists the removal can be repeated
   return {ops,assets};
 }
 async function purgeRun(plan){
   let failed=0;
-  for(const o of plan.ops){
-    if(o.path.startsWith("members/")&&failed) break;
-    try{ if(o.after===null) await S.db.doc(o.path).delete(); else await S.db.doc(o.path).set(o.after); }catch(e){ failed++; console.error("purge",o.path,e); }
-  }
-  if(!failed&&S.assets&&S.assets.delete) for(const a of plan.assets){ try{ await S.assets.delete(a); }catch(e){ console.error("purge asset",a,e); } }
+  const run=async o=>{ try{ if(o.after===null) await S.db.doc(o.path).delete(); else await S.db.doc(o.path).set(o.after); }catch(e){ failed++; console.error("purge",o.path,e); } };
+  for(const o of plan.ops) if(!o.path.startsWith("members/")) await run(o);
+  // the images go while the member file still lists them, so a failed deletion can be repeated
+  if(!failed) for(const a of plan.assets){ try{ if(!S.assets||!S.assets.delete) throw new Error("file store unavailable"); await S.assets.delete(a); }
+    catch(e){ if(!/not.?found|404/i.test(`${e&&e.code} ${e&&e.message}`)){ failed++; console.error("purge asset",a,e); } } }
+  if(!failed) for(const o of plan.ops) if(o.path.startsWith("members/")) await run(o);
   return failed;
 }
 async function purgeMember(id){
@@ -2057,13 +2066,13 @@ async function purgeMember(id){
     let plan; try{ plan=await purgePlan(id); }catch(e){ console.error("purge plan",e); toast("خواندن موارد کامل نشد؛ چیزی حذف نشد."); return; }
     const by={}; plan.ops.forEach(o=>by[o.kind]=(by[o.kind]||0)+1);
     const sum=Object.entries(by).map(([k,n])=>`${k}: ${faNum(n)}`).join("، ")||"موردی نیست";
-    if(!(await askConfirm(`حذف «${name}» و موارد مربوط به او. این موارد حذف یا آزاد می‌شوند: ${sum}. تصاویر امضا و اثر انگشت هم پاک می‌شود. نامه‌ها، مقاله‌ها، سوابق پروژه، مالی و دفترچه‌ی تلفن سوابق شرکت‌اند و می‌مانند. ابتدا فایل پشتیبان دریافت می‌شود. حذف برگشت‌پذیر نیست.`,"دریافت پشتیبان و حذف"))) return;
+    if(!(await askConfirm(`حذف «${name}» و موارد مربوط به او. این موارد حذف یا آزاد می‌شوند: ${sum}. تصاویر امضا و اثر انگشت هم پاک می‌شود (تصویری که در سند دیگری به کار رفته باشد می‌ماند). نامه‌ها، مقاله‌ها، سوابق پروژه، مالی و دفترچه‌ی تلفن سوابق شرکت‌اند و می‌مانند. ابتدا فایل پشتیبان دریافت می‌شود. حذف برگشت‌پذیر نیست.`,"دریافت پشتیبان و حذف"))) return;
     try{
       const blob=new Blob([JSON.stringify({member:id,name,at:new Date().toISOString(),assets:plan.assets,changes:plan.ops},null,1)],{type:"application/json"}), filename=`ipetro-removed-member-${today()}.json`;
       if(S.downloads) await S.downloads.save({filename,data:blob}); else { const a=document.createElement("a"); a.href=URL.createObjectURL(blob); a.download=filename; a.click(); }
     }catch(e){ toast("فایل پشتیبان دریافت نشد؛ چیزی حذف نشد."); return; }
     const failed=await purgeRun(plan);
-    toast(failed?`${faNum(failed)} مورد حذف نشد؛ پرونده‌ی عضو نگه داشته شد تا دوباره اجرا کنید.`:`«${name}» و موارد مربوط حذف شد. دسترسی او را از منوی Share صفحه هم بردارید.`);
+    toast(failed?`${faNum(failed)} مورد حذف نشد؛ پرونده‌ی عضو نگه داشته شد تا دوباره اجرا کنید.`:`«${name}» و موارد مربوط حذف شد. دسترسی او را از منوی Share صفحه هم بردارید (در نسخه‌ی روی سرور، ورود او خودکار بسته می‌شود).`);
     render();
   } finally{ S.purging=false; }
 }
@@ -2321,11 +2330,11 @@ function schSupBlock(p){
   if(pr&&pr.na) return `<div style="margin-top:8px">${warn}<div class="banner" style="margin:6px 0;border-color:var(--muted);background:var(--sunken)"><b>وضعیت استاد و پروپوزال:</b> ${esc(pr.na)}</div>${pr.proposal?`<details style="margin-top:8px"><summary><b>پروپوزال پژوهشی (پیش‌نویس)</b></summary><textarea readonly style="min-height:420px;direction:ltr;text-align:left">${esc(pr.proposal)}</textarea></details>`:""}${pr.sop?`<details style="margin-top:8px"><summary><b>انگیزه‌نامه (SOP – پیش‌نویس)</b></summary><textarea readonly style="min-height:420px;direction:ltr;text-align:left">${esc(pr.sop)}</textarea></details>`:""}</div>`;
   if(!pr) return `<div style="margin-top:8px">${warn}${SCH_PROP[p.id]?"":`<p class="meta">استادان و ایمیل این دانشگاه هنوز آماده نشده است؛ در «تسک برای Claude» درخواست دهید.</p>`}</div>`;
   const sup=supList(pr).map((s,j)=>{ const t=((S.cvT||{})[p.id]||{})[s.name]; return `<li><b>${esc(s.name)}</b> – ${esc(s.role||"")} · <span class="meta">${esc(s.area||"")}</span> ${s.url?link(s.url):""}${t?`<details style="margin:4px 0 8px"><summary><b>رزومه‌ی اختصاصی برای ${esc(s.name)}</b> <span class="meta">(بر پایه‌ی حوزه‌ی او: ${esc(t.focus)})</span></summary><p class="meta" style="direction:ltr;text-align:left"><b>Headline:</b> ${esc(t.headline)}</p><p class="meta" style="direction:ltr;text-align:left"><b>Opening paragraph for the email / CV profile:</b> ${esc(t.pitch)}</p><ul style="direction:ltr;text-align:left">${(t.bullets||[]).map(b=>`<li>${esc(b)}</li>`).join("")}</ul><div class="row"><button class="btn sm sig" data-act="sup-cv" data-id="${esc(p.id)}" data-j="${j}">دریافت رزومه‌ی Word اختصاصی این استاد</button><button class="btn sm sig" data-act="sup-prop" data-id="${esc(p.id)}" data-j="${j}">دریافت پروپوزال Word اختصاصی این استاد</button></div><details style="margin:6px 0"><summary><b>پروپوزال اختصاصی برای ${esc(s.name)}</b> <span class="meta">(بر پایه‌ی حوزه‌ی او و توانمندی‌های شما)</span></summary><textarea readonly style="min-height:380px;direction:ltr;text-align:left">${esc(profPropText(p.id,j))}</textarea></details><p class="meta">برای هر استاد فقط همین رزومه‌ی اختصاصی ارسال شود؛ ارسال یک رزومه‌ی واحد پذیرفته نیست.</p></details>`:`<p class="meta" style="margin:2px 0">رزومه‌ی اختصاصی این استاد هنوز تهیه نشده؛ در «تسک برای Claude» درخواست دهید.</p>`}</li>`; }).join("");
-  const em=(pr.emails||[]).map((e0,i)=>{ const e=effEmail(e0); return `<details style="margin:6px 0"><summary>${supPill(e)} ایمیل به ${esc(e.to_name)}${e.to_email?` ‹${esc(e.to_email)}›`:" (آدرس گیرنده را وارد کنید)"}${e.draft_url?` – <a href="${esc(e.draft_url)}" target="_blank" rel="noopener noreferrer">باز کردن درافت در Gmail</a>`:""}</summary><p class="meta">موضوع: ${esc(e.subject)}</p><textarea readonly style="min-height:260px;direction:ltr;text-align:left">${esc(e.body)}</textarea><div class="row" style="margin-top:6px;gap:8px;flex-wrap:wrap"><label class="meta">وضعیت: <select id="sst_${esc(p.id)}_${i}">${Object.entries(SUP_ST).map(([k,v])=>`<option value="${k}"${(e.status||"draft")===k?" selected":""}>${v[1]}</option>`).join("")}</select></label><input id="srs_${esc(p.id)}_${i}" value="${esc(e.result||"")}" placeholder="نتیجه / خلاصه‌ی پاسخ استاد" style="flex:1;min-width:220px"><button class="btn sm sig" data-act="sup-save" data-id="${esc(p.id)}" data-i="${i}">ثبت وضعیت</button>${e.at?`<span class="meta">آخرین به‌روزرسانی: ${esc(e.at)}</span>`:""}</div></details>`; }).join("");
+  const em=(pr.emails||[]).map((e0,i)=>{ const e=effEmail(e0); return `<details style="margin:6px 0"><summary>${supPill(e)} ایمیل به ${esc(e.to_name)}${e.to_email?` ‹${esc(e.to_email)}›`:" (آدرس گیرنده را وارد کنید)"}${e.draft_url?` – <a href="${esc(safeUrl(e.draft_url))}" target="_blank" rel="noopener noreferrer">باز کردن درافت در Gmail</a>`:""}</summary><p class="meta">موضوع: ${esc(e.subject)}</p><textarea readonly style="min-height:260px;direction:ltr;text-align:left">${esc(e.body)}</textarea><div class="row" style="margin-top:6px;gap:8px;flex-wrap:wrap"><label class="meta">وضعیت: <select id="sst_${esc(p.id)}_${i}">${Object.entries(SUP_ST).map(([k,v])=>`<option value="${k}"${(e.status||"draft")===k?" selected":""}>${v[1]}</option>`).join("")}</select></label><input id="srs_${esc(p.id)}_${i}" value="${esc(e.result||"")}" placeholder="نتیجه / خلاصه‌ی پاسخ استاد" style="flex:1;min-width:220px"><button class="btn sm sig" data-act="sup-save" data-id="${esc(p.id)}" data-i="${i}">ثبت وضعیت</button>${e.at?`<span class="meta">آخرین به‌روزرسانی: ${esc(e.at)}</span>`:""}</div></details>`; }).join("");
   return `<details style="margin-top:8px"><summary><b>استاد راهنما، ایمیل و پروپوزال</b> – تهیه‌شده ${esc(pr.updated||"")} · ایمیل: ${["draft","sent","replied","declined"].map(k=>{const n=(pr.emails||[]).filter(e=>(effEmail(e).status||"draft")===k).length; return n?`${faNum(n)} ${SUP_ST[k][1]}`:"";}).filter(Boolean).join("، ")||"—"}</summary>${warn}
    <h4>استادان پیشنهادی (از صفحه‌های رسمی؛ علاقه‌مندی آن‌ها را خودشان تأیید کنند)</h4><ul>${sup}</ul>
    <p class="meta">${esc(pr.format_note||"")}</p>
-   <h4>ایمیل آماده (درافت در Gmail؛ آدرس گیرنده را از صفحه‌ی استاد وارد کنید)</h4>${em}${(pr.alt_emails||[]).map(e0=>{ const e=effEmail(e0); return `<div class="meta" style="margin:6px 0">${supPill(e)} استاد جایگزین: ${esc(e.to_name)} ‹${esc(e.to_email||"")}› – ${e.draft_url?`<a href="${esc(e.draft_url)}" target="_blank" rel="noopener noreferrer">باز کردن درافت در Gmail</a>`:""}<br>موضوع: ${esc(e.subject||"")}</div>`; }).join("")}
+   <h4>ایمیل آماده (درافت در Gmail؛ آدرس گیرنده را از صفحه‌ی استاد وارد کنید)</h4>${em}${(pr.alt_emails||[]).map(e0=>{ const e=effEmail(e0); return `<div class="meta" style="margin:6px 0">${supPill(e)} استاد جایگزین: ${esc(e.to_name)} ‹${esc(e.to_email||"")}› – ${e.draft_url?`<a href="${esc(safeUrl(e.draft_url))}" target="_blank" rel="noopener noreferrer">باز کردن درافت در Gmail</a>`:""}<br>موضوع: ${esc(e.subject||"")}</div>`; }).join("")}
    ${(schState(p.id)||{}).letter?`<h4>${esc(schState(p.id).letter.title||"انگیزه‌نامه")}</h4><textarea readonly style="min-height:520px;direction:ltr;text-align:left">${esc(schState(p.id).letter.text)}</textarea>`:""}${pr.sop?`<h4>انگیزه‌نامه (SOP – پیش‌نویس)</h4><textarea readonly style="min-height:420px;direction:ltr;text-align:left">${esc(pr.sop)}</textarea>`:""}${pr.proposal?`<h4>پروپوزال پژوهشی (پیش‌نویس)</h4><textarea readonly style="min-height:420px;direction:ltr;text-align:left">${esc(pr.proposal)}</textarea>`:""}</details>`;
 }
 function schChance(p){
@@ -2448,7 +2457,7 @@ VIEWS["scholar.doing"]=schTeam(()=>schList("doing"));
 VIEWS["scholar.postdocs"]=schTeam(()=>{
   const L=(S.pdc||[]).filter(x=>match(x.name,x.inst,x.prof,x.prog,x.topic));
   return `<h2>پست‌داک‌های گروه‌های هدف (برای ارتباط)</h2><p class="note">نام و ایمیل از صفحه‌ی رسمی همان گروه آمده است. پست‌داک رسماً دانشجوی دکتری نمی‌پذیرد؛ از او فقط برای شناخت گروه، پروژه‌های باز و معرفی به استاد کمک بخواهید و پیام را کوتاه و اختصاصی بنویسید. لینک لینکدین «جست‌وجو» است، نه پروفایل تأییدشده؛ پروفایل درست را خودتان از نتیجه انتخاب کنید و پیش از ارتباط با آن تطبیق دهید.</p>`+
-   (L.length?`<div class="tablewrap rows"><table><thead><tr><th>نام</th><th>گروه</th><th>استاد</th><th>برنامه</th><th>ایمیل</th><th>موضوع</th><th>لینکدین</th></tr></thead><tbody>${L.map(x=>`<tr>${td("نام",esc(x.name)+`<div class="meta">${esc(x.role||"")}</div>`,"t")}${td("گروه",esc(x.inst)+` <a href="${esc(x.src)}" target="_blank" rel="noopener noreferrer">منبع</a>`)}${td("استاد",esc(x.prof))}${td("برنامه",esc(x.prog))}${td("ایمیل",x.email?`<a href="mailto:${esc(x.email)}">${esc(x.email)}</a>`:'<span class="meta">ثبت نشد</span>')}${td("موضوع",esc(x.topic||"—"))}${td("لینکدین",`<a href="${esc(x.linkedin)}" target="_blank" rel="noopener noreferrer">جست‌وجو</a>`)}</tr>`).join("")}</tbody></table></div>`:'<p class="empty">موردی ثبت نشده است.</p>');
+   (L.length?`<div class="tablewrap rows"><table><thead><tr><th>نام</th><th>گروه</th><th>استاد</th><th>برنامه</th><th>ایمیل</th><th>موضوع</th><th>لینکدین</th></tr></thead><tbody>${L.map(x=>`<tr>${td("نام",esc(x.name)+`<div class="meta">${esc(x.role||"")}</div>`,"t")}${td("گروه",esc(x.inst)+` <a href="${esc(safeUrl(x.src))}" target="_blank" rel="noopener noreferrer">منبع</a>`)}${td("استاد",esc(x.prof))}${td("برنامه",esc(x.prog))}${td("ایمیل",x.email?`<a href="mailto:${esc(x.email)}">${esc(x.email)}</a>`:'<span class="meta">ثبت نشد</span>')}${td("موضوع",esc(x.topic||"—"))}${td("لینکدین",`<a href="${esc(safeUrl(x.linkedin))}" target="_blank" rel="noopener noreferrer">جست‌وجو</a>`)}</tr>`).join("")}</tbody></table></div>`:'<p class="empty">موردی ثبت نشده است.</p>');
 });
 VIEWS["scholar.failed"]=schTeam(()=>schList("failed"));
 VIEWS["scholar.todo"]=schTeam(()=>schList("todo"));
@@ -3581,7 +3590,7 @@ ${CERT_PARA}
 }
 VIEWS["letters.hpc"] = () => {
   const mine=S.products.find(p=>p.id==="hpc_petro_energy"), list=HPC_PLANTS.filter(([k,n])=>match(n,k));
-  return `<p class="note">محصول <b>PetroEnergy</b> (کنترل مصرف سوخت، بهینه‌سازی انرژی، هوشمندسازی خط تولید و داشبورد مدیریتی) برای شرکت‌های هلدینگ خلیج فارس تعریف شده و تا <b>TRL 4</b> با داده‌ی ساختگی توسعه یافته است؛ هر شرکت یک پیکربندی و یک داشبورد نمونه دارد. «ساخت نامه» متن را با سربرگ <b>پترو پالا توس</b> در «نامه‌ی جدید» باز می‌کند. فهرست شرکت‌ها از منابع عمومی است و با هلدینگ باید تأیید شود. <a href="${esc((mine&&mine.github)||HPC_REPO)}" target="_blank" rel="noopener">مخزن محصول</a>.</p>
+  return `<p class="note">محصول <b>PetroEnergy</b> (کنترل مصرف سوخت، بهینه‌سازی انرژی، هوشمندسازی خط تولید و داشبورد مدیریتی) برای شرکت‌های هلدینگ خلیج فارس تعریف شده و تا <b>TRL 4</b> با داده‌ی ساختگی توسعه یافته است؛ هر شرکت یک پیکربندی و یک داشبورد نمونه دارد. «ساخت نامه» متن را با سربرگ <b>پترو پالا توس</b> در «نامه‌ی جدید» باز می‌کند. فهرست شرکت‌ها از منابع عمومی است و با هلدینگ باید تأیید شود. <a href="${esc(safeUrl((mine&&mine.github)||HPC_REPO))}" target="_blank" rel="noopener">مخزن محصول</a>.</p>
    <div class="banner bad"><b>ملاحظه‌ی تحریم:</b> هلدینگ خلیج فارس و چند زیرمجموعه‌اش در فهرست OFAC (۲۰۱۹) هستند. این کار فقط توسط شرکت ایرانی پترو پالاتوس انجام شود و پارسا اینت (استانبول) نقشی نداشته باشد؛ پیش از همکاری مشورت حقوقی بگیرید.</div>`+
    kpis([["شرکت زیرمجموعه",faNum(HPC_PLANTS.length)],["دارای محصول دوقلوی فرایند",faNum(HPC_PLANTS.filter(x=>x[2]).length)],["پیکربندی PetroEnergy",faNum(HPC_PLANTS.length)],["سطح بلوغ","TRL 4"]])+
    table(["شرکت","محصول از قبل","محصول PetroEnergy","داشبورد نمونه",""],list.map(([k,n,ex])=>`<tr>${td("شرکت",`<b>${esc(n)}</b>`,"t")}${td("از قبل",ex?`<span class="pill p-ok">${esc(refProdName(ex))}</span>`:"—")}${td("PetroEnergy",'<span class="pill p-info">TRL 4 · داده‌ی ساختگی</span>')}${td("داشبورد",link(`${HPC_REPO}/reports/${k}.html`,"نمونه"))}${td("",`<button class="btn sm sig" data-act="hpc-letter" data-id="${esc(k)}">ساخت نامه (سربرگ پترو پالا توس)</button>`+asgCell("hpc_"+k,"نامه و پیگیری: "+n,"letters"))}</tr>`),"شرکتی با این جست‌وجو نیست.")+
@@ -4061,13 +4070,13 @@ const artStatusId = vid => artStatus({id:vid,status0:(ARTICLES_SEED.find(x=>x.id
 function msLine(vid){
   if(artStatusId(vid)!=="doing") return "";
   const f=fullMs(vid), url=f?(f.repo_url||(f.store==="link"?f.link:"")):"";
-  if(/^https:\/\/github\.com\//.test(url)) return `<div class="row meta" style="gap:6px;flex-wrap:wrap"><a class="btn sm sig" href="${esc(url)}" target="_blank" rel="noopener" title="ریپوی خصوصی منواسکریپت‌ها؛ با حساب GitHub دارای دسترسی باز می‌شود">دانلود منواسکریپت (Word) از ریپو ↗</a></div>`;
+  if(/^https:\/\/github\.com\//.test(url)) return `<div class="row meta" style="gap:6px;flex-wrap:wrap"><a class="btn sm sig" href="${esc(safeUrl(url))}" target="_blank" rel="noopener" title="ریپوی خصوصی منواسکریپت‌ها؛ با حساب GitHub دارای دسترسی باز می‌شود">دانلود منواسکریپت (Word) از ریپو ↗</a></div>`;
   if(f) return `<div class="row meta" style="gap:6px;flex-wrap:wrap">فایل در ریپو ثبت نشده؛ نسخه‌ی بارگذاری‌شده: ${artFileBtn(vid,"ms")}</div>`;
   return `<div class="meta">منواسکریپت Word هنوز در ریپو آماده نیست${(msOf(vid)||absOf(vid))&&S.downloads?` · <button class="btn sm ghost" data-act="art-ms" data-id="${esc(vid)}">متن موجود (Word)</button>`:""}</div>`;
 }
 // small=true: one short link for tiles
 function artRepoLine(vid,small){
-  const r=artRepos(vid), a=x=>`<a href="${esc(x.url)}" target="_blank" rel="noopener" title="${esc(x.url)} (${esc(x.src)})">${esc(small?"ریپوی محصول ↗":x.name+" ↗")}</a>`;
+  const r=artRepos(vid), a=x=>`<a href="${esc(safeUrl(x.url))}" target="_blank" rel="noopener" title="${esc(x.url)} (${esc(x.src)})">${esc(small?"ریپوی محصول ↗":x.name+" ↗")}</a>`;
   if(!r.length) return `<div class="meta">ریپوی محصول: تعیین نشده</div>${msLine(vid)}`;
   if(small) return `<div class="meta">${a(r[0])}</div>${msLine(vid)}`;
   return `<div class="meta">ریپوی محصول: ${r.map(a).join(" · ")}</div>${msLine(vid)}`;
@@ -4076,7 +4085,7 @@ function artActions(a){
   const st=artStatus(a), id=esc(a.id), b=[];
   if(st==="applied") return artApplied(a);
   { const rj=(S.artSt[a.id]||{}).rejected; if(st==="doing"&&rj) b.push(`<div class="banner" style="width:100%">این مقاله رد شده است (${faDate(String(rj.at).slice(0,10))}${rj.note?` – ${esc(rj.note)}`:""})؛ بازنگری و ارسال دوباره بر عهده‌ی انجام‌دهنده است.</div>`); }
-  { const f=(S.artForms||{})[a.id]; if(st==="doing"&&f&&f.tpl) b.push(`<a class="btn sm ghost" href="${esc(f.tpl)}" target="_blank" rel="noopener" title="قالب رسمی مقصد">قالب رسمی</a>`); }
+  { const f=(S.artForms||{})[a.id]; if(st==="doing"&&f&&f.tpl) b.push(`<a class="btn sm ghost" href="${esc(safeUrl(f.tpl))}" target="_blank" rel="noopener" title="قالب رسمی مقصد">قالب رسمی</a>`); }
   const cl=S.artSt[a.id]||{}, held=holdOf("art_"+a.id), taken=!!held&&held.who!==S.me.id&&!S.me.isOwner;
   if(st==="doing"&&held) b.push(`<span class="pill p-warn">در دست اقدام: ${esc(memberName(held.who))}${held.who===S.me.id?" (شما)":""}</span>`);
   else if(st==="applied"&&(held||cl.by)) b.push(`<span class="pill p-ok">ارسال/اقدام: ${esc(memberName(held?held.who:cl.by))}</span>`);
@@ -4093,7 +4102,7 @@ function artActions(a){
     b.push(`<button class="btn sm ghost" data-act="art-cred" data-id="${id}">${c&&(c.user||c.pass)?"حساب سامانه ✓":"حساب سامانه"}</button>`);
     if(c&&c.user) b.push(`<button class="btn sm ghost" data-act="art-cred-copy" data-id="${id}" data-k="user">کپی کاربر</button>`);
     if(c&&c.pass) b.push(`<button class="btn sm ghost" data-act="art-cred-copy" data-id="${id}" data-k="pass">کپی رمز</button>`);
-    if(c&&/^https?:\/\//.test(c.url||"")) b.push(`<a class="btn sm ghost" href="${esc(c.url)}" target="_blank" rel="noopener">باز کردن سامانه</a>`); }
+    if(c&&/^https?:\/\//.test(c.url||"")) b.push(`<a class="btn sm ghost" href="${esc(safeUrl(c.url))}" target="_blank" rel="noopener">باز کردن سامانه</a>`); }
   if(a.mine) b.push(`<button class="btn sm ghost" data-act="art-edit" data-id="${id}">ویرایش</button>`);
   return `<div class="row" style="gap:6px;flex-wrap:wrap">${b.join("")}</div>${artRepoLine(a.id)}${ART_OUT[st]?"":asgCell("art_"+a.id,a.name,"articles",{me:"تسک را برمی‌دارم",other:"واگذاری به عضو دیگر"})}`;
 }
@@ -4107,12 +4116,12 @@ function artApplied(a){
   const id=esc(a.id), cl=artEntry(a.id), held=holdOf("art_"+a.id), who=held?held.who:cl.by, m=(S.artMail||{})[a.id]||{}, prog=((S.artFiles||{})[a.id]||{}).progress||[];
   const mail=[["reg","ثبت چکیده"],["conf","تاییدیه‌ی چکیده"],["ms","مقاله‌ی کامل"]].filter(([k])=>m[k]&&m[k].status&&m[k].status!=="none").map(([k,l])=>`<li>${l}: <b>${esc(MAIL_STL[m[k].status]||m[k].status)}</b>${m[k].date?` · ${faDate(String(m[k].date).slice(0,10))}`:""}${m[k].ref?` · <span class="mono" dir="ltr">${esc(m[k].ref)}</span>`:""}${m[k].note?`<br><span class="meta">${esc(m[k].note)}</span>`:""}</li>`).join("");
   const rejectedMail=["reg","conf","ms"].some(k=>(m[k]||{}).status==="rejected");
-  const line=p=>{ const f=p.file, u=f?(f.store==="asset"?(f.url||blobUrl(f.id)):f.store==="link"?f.link:""):""; return `<li>${faDate(String(p.date||p.at).slice(0,10))} · <b>${esc(ART_PROG[p.stage]||p.stage||"")}</b>${p.ref?` · <span class="mono" dir="ltr">${esc(p.ref)}</span>`:""}${p.note?` – ${esc(p.note)}`:""}${f?` · مدرک: ${u?`<a href="${esc(u)}" target="_blank" rel="noopener">${esc(f.name||"پیوند")}</a>`:esc(f.name||"")}`:""} <span class="meta">(${esc(p.by==="claude"?"سامانه از ایمیل":memberName(p.by))})</span></li>`; };
+  const line=p=>{ const f=p.file, u=f?(f.store==="asset"?(f.url||blobUrl(f.id)):f.store==="link"?f.link:""):""; return `<li>${faDate(String(p.date||p.at).slice(0,10))} · <b>${esc(ART_PROG[p.stage]||p.stage||"")}</b>${p.ref?` · <span class="mono" dir="ltr">${esc(p.ref)}</span>`:""}${p.note?` – ${esc(p.note)}`:""}${f?` · مدرک: ${u?`<a href="${esc(safeUrl(u))}" target="_blank" rel="noopener">${esc(f.name||"پیوند")}</a>`:esc(f.name||"")}`:""} <span class="meta">(${esc(p.by==="claude"?"سامانه از ایمیل":memberName(p.by))})</span></li>`; };
   const b=[];
   if(artCanProg(a.id)) b.push(`<button class="btn sm sig" data-act="art-prog" data-id="${id}">ثبت و بارگذاری پیشرفت ژورنال</button>`);
   if(isAdmin()){ const c=(S.portal||{})[a.id];
     b.push(`<button class="btn sm ghost" data-act="art-out" data-st="success" data-id="${id}">ثبت موفقیت</button>`,`<button class="btn sm ghost" data-act="art-reject" data-id="${id}">رد شد – برگشت به انجام‌دهنده</button>`,`<button class="btn sm ghost" data-act="art-st" data-id="${id}" data-st="doing">بازگردانی به در دست اقدام</button>`,`<button class="btn sm ghost" data-act="art-cred" data-id="${id}">${c&&(c.user||c.pass)?"حساب سامانه ✓":"حساب سامانه"}</button>`); }
-  const repos=artRepos(a.id).map(x=>`<a href="${esc(x.url)}" target="_blank" rel="noopener">${esc(x.name)} ↗</a>`).join(" · ");
+  const repos=artRepos(a.id).map(x=>`<a href="${esc(safeUrl(x.url))}" target="_blank" rel="noopener">${esc(x.name)} ↗</a>`).join(" · ");
   return `<div>${artStPill("applied")}${who?` <span class="meta">ثبت‌کننده: ${esc(memberName(who))}</span>`:""}${cl.at?` <span class="meta">· ${faDate(String(cl.at).slice(0,10))}</span>`:""}</div>
    ${rejectedMail?`<div class="banner">ایمیل «رد شد» ثبت شده است؛ مدیر دکمه‌ی «رد شد» را بزند تا به کارتابل انجام‌دهنده برگردد.</div>`:""}
    ${mail?`<div class="meta">اطلاعات ثبت (از ایمیل):</div><ul style="margin:4px 0;padding-inline-start:18px">${mail}</ul>`:""}
@@ -4350,7 +4359,7 @@ VIEWS["articles.submit"] = () => {
    kpis([["مقصد در جریان",faNum(vs.length-done)],["تسک تعریف‌شده",faNum(def)],["بدون تسک",faNum(vs.length-def),vs.length-def>0],["انجام‌شده",faNum(done)]])+
    (isAdmin()?`<div class="card"><div class="row"><label for="stkWho"><b>مسئول:</b></label><select id="stkWho" data-stkwho>${opts}</select><button class="btn sig" data-act="stk-all">تخصیص به همه (تعریف تسک برای همه‌ی مقصدها)</button></div><p class="meta" style="margin:6px 0 0">تسک‌های موجود که انجام نشده‌اند به همین فرد منتقل می‌شوند؛ تسک‌های انجام‌شده تغییر نمی‌کنند.</p></div>`:`<div class="banner">فقط مدیر می‌تواند تسک تعریف یا واگذار کند.</div>`)+
    (S.downloads?`<div class="toolbar"><button class="btn sig" data-act="art-abs-all">همه‌ی منواسکریپت‌ها (ZIP)</button><span class="meta">منواسکریپت هر مقصد (خلاصه در ابتدای همان فایل)؛ [داخل کروشه] هنوز اندازه‌گیری نشده است.</span></div>`:"")+
-   (Object.keys(S.artForms||{}).length?`<div class="card"><h3 style="margin-top:0">فرم‌های آماده‌ی ثبت و قالب خام مقاله (Word)</h3><p class="note">عنوان، چکیده، کلیدواژه‌ها، مشخصات نویسنده و چک‌لیست هر مقصد پر شده است. فقط بررسی و ثبت دستی باقی مانده؛ چیزی ارسال نشده است.</p>${table(["مقصد","محصول","ددلاین","پیوند",""],Object.entries(S.artForms).map(([id,f])=>`<tr>${td("مقصد",esc(f.name),"t")}${td("محصول",`<span class="mono">${esc(f.prod||"—")}</span>`)}${td("ددلاین",f.deadline?faDate(f.deadline):"—")}${td("پیوند",(f.url?`<a href="${esc(f.url)}" target="_blank" rel="noopener">صفحه‌ی مقصد</a>`:"—")+(f.tpl?` · <a href="${esc(f.tpl)}" target="_blank" rel="noopener">قالب رسمی</a>`:""))}${td("",`${f.noform?"":`<button class="btn sm sig" data-act="art-form" data-v="${esc(id)}">فرم ثبت (Word)</button>`}${f.ms?` <button class="btn sm ghost" data-act="art-form" data-k="ms" data-v="${esc(id)}">مقاله‌ی خام (Word)</button>`:""}`)}</tr>`),"")}</div>`:"")+
+   (Object.keys(S.artForms||{}).length?`<div class="card"><h3 style="margin-top:0">فرم‌های آماده‌ی ثبت و قالب خام مقاله (Word)</h3><p class="note">عنوان، چکیده، کلیدواژه‌ها، مشخصات نویسنده و چک‌لیست هر مقصد پر شده است. فقط بررسی و ثبت دستی باقی مانده؛ چیزی ارسال نشده است.</p>${table(["مقصد","محصول","ددلاین","پیوند",""],Object.entries(S.artForms).map(([id,f])=>`<tr>${td("مقصد",esc(f.name),"t")}${td("محصول",`<span class="mono">${esc(f.prod||"—")}</span>`)}${td("ددلاین",f.deadline?faDate(f.deadline):"—")}${td("پیوند",(f.url?`<a href="${esc(safeUrl(f.url))}" target="_blank" rel="noopener">صفحه‌ی مقصد</a>`:"—")+(f.tpl?` · <a href="${esc(safeUrl(f.tpl))}" target="_blank" rel="noopener">قالب رسمی</a>`:""))}${td("",`${f.noform?"":`<button class="btn sm sig" data-act="art-form" data-v="${esc(id)}">فرم ثبت (Word)</button>`}${f.ms?` <button class="btn sm ghost" data-act="art-form" data-k="ms" data-v="${esc(id)}">مقاله‌ی خام (Word)</button>`:""}`)}</tr>`),"")}</div>`:"")+
    (()=>{ const subDone=v=>{const t=submitTaskOf(v.a.id);return !!t&&(t.status==="done"||t.status==="approved")}; const rowf=({a})=>{ const t=submitTaskOf(a.id);
      return `<tr>${td("مقصد",esc(a.name)+artRepoLine(a.id),"t")}${td("ددلاین",a.deadline?faDate(a.deadline):"—")}${td("مسئول",t?esc(memberName(t.assignee)):'<span class="meta">تعریف نشده</span>')}${td("وضعیت",t?`<span class="pill ${t.status==="done"||t.status==="approved"?"p-ok":t.status==="doing"?"p-info":"p-warn"}">${esc(TASK_ST[t.status]||t.status)}</span>`:'<span class="pill p-mute">—</span>')}${td("",absBtn(a)+(isAdmin()?`<button class="btn sm ghost" data-act="stk-one" data-id="${esc(a.id)}">${t?"واگذاری به مسئول انتخاب‌شده":"تعریف تسک برای مسئول انتخاب‌شده"}</button>`:""))}</tr>`; }; const H=["مقصد","ددلاین","مسئول","وضعیت",""], act=vs.filter(v=>!subDone(v)), dn=vs.filter(subDone);
      return table(H,act.map(rowf),vs.length?"همه‌ی مقصدها انجام شده‌اند.":"هنوز مقصدی در صف Claude نیست.")+(dn.length?`<details class="card"><summary>انجام‌شده (${faNum(dn.length)})</summary>${table(H,dn.map(rowf),"")}</details>`:""); })();
@@ -4475,7 +4484,7 @@ async function fgSet(id,k){
 function upBlock(t){ const ups=t.uploads||[];
   return `<div class="card" style="margin-bottom:12px"><h4 style="margin:0 0 4px">بارگذاری فایل (پیوست تسک)</h4>
   <p class="meta" style="margin:0 0 6px">فایل‌ها با انتخاب بلافاصله بارگذاری و در همین تسک ثبت می‌شوند (تا ۲۰ مگابایت برای هر فایل). برای دیدن فهرست به‌روز، فرم را ببندید و دوباره باز کنید.</p>
-  ${ups.length?`<ul style="margin:0 0 6px">${ups.map(u=>`<li>${u.store==="db"?esc(u.name):`<a href="${esc(u.url||("/_blob/"+u.id))}" target="_blank" rel="noopener">${esc(u.name)}</a>`} <span class="meta">${esc(fmtMB(u.size||0))}</span></li>`).join("")}</ul>`:`<p class="meta" style="margin:0 0 6px">هنوز فایلی بارگذاری نشده است.</p>`}
+  ${ups.length?`<ul style="margin:0 0 6px">${ups.map(u=>`<li>${u.store==="db"?esc(u.name):`<a href="${esc(safeUrl(u.url||("/_blob/"+u.id)))}" target="_blank" rel="noopener">${esc(u.name)}</a>`} <span class="meta">${esc(fmtMB(u.size||0))}</span></li>`).join("")}</ul>`:`<p class="meta" style="margin:0 0 6px">هنوز فایلی بارگذاری نشده است.</p>`}
   <label class="btn sm sig" style="cursor:pointer">انتخاب و آپلود فایل<input type="file" multiple data-up="${esc(t.id)}" hidden></label></div>`; }
 // Data upload: tasks of kind data_download (made by the data-request agent) get files uploaded to the asset store; Claude reads them from there.
 const UP_MAX = 20*1024*1024;
@@ -4487,7 +4496,7 @@ VIEWS["articles.upload"] = () => {
   const card=t=>{ const ups=t.uploads||[], done=t.status==="done"||t.status==="approved";
     return `<div class="card" style="margin-bottom:12px"><div class="row" style="align-items:flex-start;gap:10px"><h3 style="flex:1;margin:0">${esc(t.title)}</h3><span class="pill ${done&&ups.length?"p-ok":done?"p-risk":ups.length?"p-info":"p-warn"}">${done&&ups.length?"انجام شد":done?"علامت «انجام‌شده» خورده، اما فایلی بارگذاری نشده":ups.length?"در حال انجام":"منتظر آپلود"}</span></div>
     <details><summary class="meta">شرح تسک، لینک دانلود و محل جانمایی</summary><p style="white-space:pre-wrap;font-size:13px">${esc(t.desc||"")}</p></details>
-    ${ups.length?`<table style="width:100%;margin-top:8px"><thead><tr><th>فایل</th><th>حجم</th><th>SHA256</th><th>زمان</th></tr></thead><tbody>${ups.map(u=>`<tr><td>${u.store==="local"?`${esc(u.name)} <span class="meta">(روی رایانه‌ی مالک: <span class="mono">${esc(u.path||"")}</span>)</span>${u.note?`<div class="meta">${esc(u.note)}</div>`:""}`:u.store==="db"?`${esc(u.name)} <span class="meta">(پایگاه، ${faNum(u.chunks||1)} بخش)</span>`:`<a href="${esc(u.url||("/_blob/"+u.id))}" target="_blank" rel="noopener">${esc(u.name)}</a>`}</td><td>${esc(fmtMB(u.size||0))}</td><td class="mono" style="font-size:11px">${esc((u.sha256||"").slice(0,16))}${u.sha256?"…":""}</td><td class="meta">${esc((u.at||"").slice(0,16).replace("T"," "))}</td></tr>`).join("")}</tbody></table>`:`<p class="meta" style="margin-top:8px">هنوز فایلی بارگذاری نشده است.</p>`}
+    ${ups.length?`<table style="width:100%;margin-top:8px"><thead><tr><th>فایل</th><th>حجم</th><th>SHA256</th><th>زمان</th></tr></thead><tbody>${ups.map(u=>`<tr><td>${u.store==="local"?`${esc(u.name)} <span class="meta">(روی رایانه‌ی مالک: <span class="mono">${esc(u.path||"")}</span>)</span>${u.note?`<div class="meta">${esc(u.note)}</div>`:""}`:u.store==="db"?`${esc(u.name)} <span class="meta">(پایگاه، ${faNum(u.chunks||1)} بخش)</span>`:`<a href="${esc(safeUrl(u.url||("/_blob/"+u.id)))}" target="_blank" rel="noopener">${esc(u.name)}</a>`}</td><td>${esc(fmtMB(u.size||0))}</td><td class="mono" style="font-size:11px">${esc((u.sha256||"").slice(0,16))}${u.sha256?"…":""}</td><td class="meta">${esc((u.at||"").slice(0,16).replace("T"," "))}</td></tr>`).join("")}</tbody></table>`:`<p class="meta" style="margin-top:8px">هنوز فایلی بارگذاری نشده است.</p>`}
     <div class="row" style="margin-top:8px"><label class="btn sm sig" style="cursor:pointer">انتخاب و آپلود فایل‌ها<input type="file" multiple data-up="${esc(t.id)}" hidden></label>${ups.length&&!done?`<button class="btn sm" data-act="up-done" data-id="${esc(t.id)}">همه‌ی فایل‌ها بارگذاری شد؛ تسک را انجام‌شده کن</button>`:""}</div></div>`; };
   return `<p class="note">فایل‌های مجموعه‌داده‌هایی که Claude به سایتشان دسترسی ندارد را اینجا بارگذاری کنید. هر فایل تا ۲۰ مگابایت (۸ مگابایت اگر فضای فایل برای شما فعال نباشد)؛ برای فایل بزرگ‌تر آن را به چند بخش (zip چندبخشی یا فایل‌های جدا) تقسیم کنید. SHA256 هر فایل خودکار ثبت می‌شود. پس از آپلود، Claude داده را می‌خواند و نتایج مقاله را بازتولید می‌کند. به مجوز هر داده (در شرح تسک) دقت کنید؛ داده‌ی SRMG فقط برای پژوهش دانشگاهی است.</p>`+
    kpis([["تسک‌های دانلود داده",faNum(ts.length),false],["منتظر آپلود",faNum(todo),todo>0],["فایل‌های بارگذاری‌شده",faNum(nf),false]])+
@@ -4508,7 +4517,7 @@ function dataCard(key,name,kindLabel,links,searchQ,extra){
    ${all.length?`<ul style="margin:2px 0 6px">${all.map(l=>`<li>${link(l.url,l.name)}${l.status?` <span class="meta">(${esc((TRL_SRC_ST[l.status]||[l.status])[0])})</span>`:""}${l.note?` <span class="meta">${esc(l.note)}</span>`:""}</li>`).join("")}</ul>`:""}
    <div class="meta" style="margin:2px 0 6px">جستجوی مجموعه‌داده‌ی عمومی: ${dsSearch(searchQ||name).map(([n,u])=>link(u,n)).join(" · ")}</div>
    ${admin?`<div class="row" style="margin:4px 0"><input id="dl_${esc(key)}" placeholder="نام | https://لینک-دانلود" style="flex:1;min-width:220px" dir="ltr"><button class="btn sm" data-act="dl-add" data-key="${esc(key)}">افزودن لینک</button></div>`:""}
-   ${ups.length?`<ul style="margin:6px 0">${ups.map(u=>`<li>${u.store==="db"?esc(u.name)+` <span class="meta">(پایگاه)</span>`:u.store==="local"?esc(u.name):`<a href="${esc(u.url||("/_blob/"+u.id))}" target="_blank" rel="noopener">${esc(u.name)}</a>`} <span class="meta">${esc(fmtMB(u.size||0))}</span></li>`).join("")}</ul>`:""}
+   ${ups.length?`<ul style="margin:6px 0">${ups.map(u=>`<li>${u.store==="db"?esc(u.name)+` <span class="meta">(پایگاه)</span>`:u.store==="local"?esc(u.name):`<a href="${esc(safeUrl(u.url||("/_blob/"+u.id)))}" target="_blank" rel="noopener">${esc(u.name)}</a>`} <span class="meta">${esc(fmtMB(u.size||0))}</span></li>`).join("")}</ul>`:""}
    <div class="row" style="margin-top:6px"><label class="btn sm sig" style="cursor:pointer">آپلود داده<input type="file" multiple data-up="${esc(tid)}" data-dn="${esc(name)}" hidden></label><span class="meta">تا ۲۰ مگابایت برای هر فایل؛ SHA256 ثبت می‌شود.</span></div></div>`;
 }
 function dataHubProducts(){
@@ -4621,7 +4630,7 @@ VIEWS["articles.evidence"] = () => {
    kpis([["محصول",faNum(ev.length)],["اعتبارسنجی افزونه با داده‌ی واقعی",faNum(real)],["بدون داده‌ی واقعی",faNum(ev.filter(e=>String(e.real).startsWith("خیر")).length),true],["هنوز انجام نشده",faNum(ev.filter(e=>!String(e.status).startsWith("انجام")).length),true]])+
    table(["محصول","TRL","مقصد","وضعیت","مناسب ژورنال؟","داده‌ی واقعی؟","مجموعه‌داده و منبع دانلود","محاسبه","ملاحظات"],ev.filter(e=>match(e.name,e.dataset,e.venue)).map(e=>
     `<tr>${td("محصول",`${esc(e.name)}<br><span class="meta">${esc(e.kind)} · ${esc(e.repo||"")}</span>`,"t")}${td("TRL",`<b class="mono">${esc(e.trl)}</b>`)}${td("مقصد",esc(e.venue))}${td("وضعیت",esc(e.status))}${td("مناسب ژورنال",`<b>${esc(e.journal_fit||"—")}</b><br><span class="meta">${esc(e.journal_fit_note||"")}</span>`)}${td("داده‌ی واقعی",pill(e))}
-     ${td("مجموعه‌داده",`${esc(e.dataset)}${e.url?`<br><a href="${esc(e.url)}" target="_blank" rel="noopener noreferrer" class="mono">${esc(e.url)}</a>`:""}<br><span class="meta">مجوز: ${esc(e.license||"—")}</span>`)}${td("محاسبه",`<span class="meta">${esc(e.compute||"")}</span>`)}${td("ملاحظات",esc(e.note||"—"))}</tr>`),"هنوز موردی ثبت نشده است.");
+     ${td("مجموعه‌داده",`${esc(e.dataset)}${e.url?`<br><a href="${esc(safeUrl(e.url))}" target="_blank" rel="noopener noreferrer" class="mono">${esc(e.url)}</a>`:""}<br><span class="meta">مجوز: ${esc(e.license||"—")}</span>`)}${td("محاسبه",`<span class="meta">${esc(e.compute||"")}</span>`)}${td("ملاحظات",esc(e.note||"—"))}</tr>`),"هنوز موردی ثبت نشده است.");
 };
 const AP_SUBMITTED = ["neuropredict","inescape","diagnostic kit","qpcr","health informatics","car-t","energy and carbon","carbon management","data routing"];
 const AP_SUGGEST = [
@@ -5068,9 +5077,9 @@ function artFileForm(id,kind){
 function artFileBtn(id,kind){
   const f=artFilesOf(id)[kind]; if(!f) return "";
   const lab=`${ART_FK[kind]} ✓`, tip=`${esc(f.name||"")}${f.at?" · "+faDate(String(f.at).slice(0,10)):""}`;
-  if(f.store==="asset") return `<a class="btn sm" href="${esc(f.url||blobUrl(f.id))}" target="_blank" rel="noopener" title="${tip}">${lab}</a>`;
-  if(f.store==="link") return `<a class="btn sm" href="${esc(f.link)}" target="_blank" rel="noopener" title="${tip}">${lab}</a>`;
-  const repo=/^https:\/\/github\.com\//.test(f.repo_url||"")?` <a class="btn sm ghost" href="${esc(f.repo_url)}" target="_blank" rel="noopener" title="ریپوی خصوصی منواسکریپت‌ها؛ با حساب GitHub دارای دسترسی باز می‌شود">دانلود از ریپو ↗</a>`:"";
+  if(f.store==="asset") return `<a class="btn sm" href="${esc(safeUrl(f.url||blobUrl(f.id)))}" target="_blank" rel="noopener" title="${tip}">${lab}</a>`;
+  if(f.store==="link") return `<a class="btn sm" href="${esc(safeUrl(f.link))}" target="_blank" rel="noopener" title="${tip}">${lab}</a>`;
+  const repo=/^https:\/\/github\.com\//.test(f.repo_url||"")?` <a class="btn sm ghost" href="${esc(safeUrl(f.repo_url))}" target="_blank" rel="noopener" title="ریپوی خصوصی منواسکریپت‌ها؛ با حساب GitHub دارای دسترسی باز می‌شود">دانلود از ریپو ↗</a>`:"";
   return `<button class="btn sm" data-act="art-file-get" data-id="${esc(id)}" data-k="${kind}" title="${tip}">${lab}</button>${repo}`;
 }
 async function artFileGet(id,kind){
@@ -5734,4 +5743,5 @@ async function boot(){
 boot();
 })();
 </script>
+
 
