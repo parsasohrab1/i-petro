@@ -82,7 +82,8 @@
         upload: function (file) {
           var fd = new FormData(); fd.append("file", file, file.name || "file");
           return api("POST", "/api/assets", undefined, fd);
-        }
+        },
+        delete: function (id) { return api("DELETE", "/api/assets/" + encodeURIComponent(id)); }
       };
     },
     sample: function () {

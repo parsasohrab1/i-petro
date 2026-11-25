@@ -188,6 +188,11 @@ def delete_doc(request: Request, path: str, user=Depends(current_user)):
         if not rules.can_write(user, path, old[0], None):
             raise HTTPException(403, "forbidden")
         c.execute("DELETE FROM docs WHERE path = %s", (path,))
+        segs = path.split("/")
+        if segs[0] == "members" and len(segs) == 2 and user["role"] == "owner" and segs[1] != user["id"]:
+            # a removed person loses access at once; "python -m server.manage activate-user" restores it
+            if c.execute("UPDATE users SET active = false WHERE id = %s AND role <> 'owner'", (segs[1],)).rowcount:
+                c.execute("DELETE FROM sessions WHERE user_id = %s", (segs[1],))
     publish({"path": path, "parent": rules.parent_of(path)})
     return {"ok": True}
 
@@ -257,6 +262,21 @@ async def upload(request: Request, file: UploadFile = File(...), user=Depends(cu
         c.execute("INSERT INTO assets (id, name, mime, size, data, owner) VALUES (%s, %s, %s, %s, %s, %s)",
                   (aid, (file.filename or "")[:200], file.content_type or "application/octet-stream", len(data), data, user["id"]))
     return {"id": aid}
+
+
+@app.delete("/api/assets/{aid}")
+def delete_asset(request: Request, aid: str, user=Depends(current_user)):
+    csrf(request)
+    if not re.fullmatch(r"[0-9a-f]{24}", aid):
+        raise HTTPException(404)
+    with db.pool().connection() as c:                                  # the owner, or whoever uploaded it
+        row = c.execute("SELECT owner FROM assets WHERE id = %s", (aid,)).fetchone()
+        if row is None:
+            return {"ok": True}
+        if user["role"] != "owner" and row[0] != user["id"]:
+            raise HTTPException(403, "forbidden")
+        c.execute("DELETE FROM assets WHERE id = %s", (aid,))
+    return {"ok": True}
 
 
 @app.get("/_blob/{aid}")

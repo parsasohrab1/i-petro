@@ -41,3 +41,12 @@ def test_task_claims_only_owner_decides():
     assert not rules.can_write(_u("member", "u2"), p, None, pend)
     assert not rules.can_write(_u("member", "u1"), p, pend, {**pend, "status": "approved"})
     assert rules.can_write(_u("owner", "o"), p, pend, {**pend, "status": "approved"})
+
+
+def test_owner_may_delete_but_not_edit_a_removed_members_records():
+    for p in ("reports/u1/items/a", "mindtest/u1/items/result", "activity/u1/days/d"):
+        assert rules.can_write(_u("owner", "o"), p, {"x": 1}, None)
+        assert not rules.can_write(_u("owner", "o"), p, {"x": 1}, {"x": 2})
+        assert not rules.can_write(_u("admin", "a"), p, {"x": 1}, None)
+        assert not rules.can_write(_u("member", "u2"), p, {"x": 1}, None)
+
