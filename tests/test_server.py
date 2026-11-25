@@ -142,7 +142,7 @@ def test_assets_roundtrip_and_unsafe_type_downgraded(env):
 
 def test_asset_delete_only_by_uploader_or_owner(env):
     ann = client_as(env, "ann")
-    aid = ann.post("/api/assets", files={"file": ("sig.png", b"‰PNG", "image/png")}, headers=H).json()["id"]
+    aid = ann.post("/api/assets", files={"file": ("sig.png", b"\x89PNG", "image/png")}, headers=H).json()["id"]
     assert client_as(env, "bob").delete(f"/api/assets/{aid}", headers=H).status_code == 403
     assert ann.delete(f"/api/assets/{aid}", headers=H).status_code == 200
     assert ann.get(f"/_blob/{aid}").status_code == 404
