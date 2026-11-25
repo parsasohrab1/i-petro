@@ -67,6 +67,9 @@ def can_write(u, path: str, old=None, new=None) -> bool:
         return u["role"] == "owner"
     if top in ("finance", "clients"):
         return _admin(u)
+    # removing a person: the owner may delete (never edit) the records kept under that member
+    if top in ("reports", "mindtest", "activity") and u["role"] == "owner" and old is not None and new is None:
+        return len(s) > 1
     if top in ("reports", "mindtest"):
         return len(s) > 1 and s[1] == uid                              # nobody edits another person's report or test
     if top == "attendance":

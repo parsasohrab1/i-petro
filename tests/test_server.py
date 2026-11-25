@@ -140,6 +140,14 @@ def test_assets_roundtrip_and_unsafe_type_downgraded(env):
     assert TestClient(app).get(f"/_blob/{aid}").status_code == 401
 
 
+def test_asset_delete_only_by_uploader_or_owner(env):
+    ann = client_as(env, "ann")
+    aid = ann.post("/api/assets", files={"file": ("sig.png", b"‰PNG", "image/png")}, headers=H).json()["id"]
+    assert client_as(env, "bob").delete(f"/api/assets/{aid}", headers=H).status_code == 403
+    assert ann.delete(f"/api/assets/{aid}", headers=H).status_code == 200
+    assert ann.get(f"/_blob/{aid}").status_code == 404
+
+
 def test_index_is_served_with_shim_after_login(env):
     r = client_as(env, "ann").get("/")
     assert r.status_code == 200 and r.text.startswith('<script src="/shim.js"></script>')

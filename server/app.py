@@ -259,6 +259,21 @@ async def upload(request: Request, file: UploadFile = File(...), user=Depends(cu
     return {"id": aid}
 
 
+@app.delete("/api/assets/{aid}")
+def delete_asset(request: Request, aid: str, user=Depends(current_user)):
+    csrf(request)
+    if not re.fullmatch(r"[0-9a-f]{24}", aid):
+        raise HTTPException(404)
+    with db.pool().connection() as c:                                  # the owner, or whoever uploaded it
+        row = c.execute("SELECT owner FROM assets WHERE id = %s", (aid,)).fetchone()
+        if row is None:
+            return {"ok": True}
+        if user["role"] != "owner" and row[0] != user["id"]:
+            raise HTTPException(403, "forbidden")
+        c.execute("DELETE FROM assets WHERE id = %s", (aid,))
+    return {"ok": True}
+
+
 @app.get("/_blob/{aid}")
 def blob(aid: str, user=Depends(current_user)):
     if not re.fullmatch(r"[0-9a-f]{24}", aid):
