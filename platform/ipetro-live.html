@@ -4066,13 +4066,16 @@ function artRepos(vid){
 // the complete Word file of a venue (abstract, full text, figures), when one is stored
 const fullMs = vid => artFilesOf(vid).ms||null;
 const artStatusId = vid => artStatus({id:vid,status0:(ARTICLES_SEED.find(x=>x.id===vid)||{}).status0});
-// the manuscript download exists only while the item is in progress; it opens the Word file in the GitHub repository
+// the manuscript download exists only while the item is in progress; the Word file is saved straight from the dashboard,
+// so nobody is sent into the GitHub repository (an address is used only when no copy is stored here)
+const directUrl = u => String(u||"").replace(/^(https:\/\/github\.com\/[^\/]+\/[^\/]+\/)blob\//,"$1raw/");
 function msLine(vid){
   if(artStatusId(vid)!=="doing") return "";
-  const f=fullMs(vid), url=f?(f.repo_url||(f.store==="link"?f.link:"")):"";
-  if(/^https:\/\/github\.com\//.test(url)) return `<div class="row meta" style="gap:6px;flex-wrap:wrap"><a class="btn sm sig" href="${esc(safeUrl(url))}" target="_blank" rel="noopener" title="ریپوی خصوصی منواسکریپت‌ها؛ با حساب GitHub دارای دسترسی باز می‌شود">دانلود منواسکریپت (Word) از ریپو ↗</a></div>`;
-  if(f) return `<div class="row meta" style="gap:6px;flex-wrap:wrap">فایل در ریپو ثبت نشده؛ نسخه‌ی بارگذاری‌شده: ${artFileBtn(vid,"ms")}</div>`;
-  return `<div class="meta">منواسکریپت Word هنوز در ریپو آماده نیست${(msOf(vid)||absOf(vid))&&S.downloads?` · <button class="btn sm ghost" data-act="art-ms" data-id="${esc(vid)}">متن موجود (Word)</button>`:""}</div>`;
+  const f=fullMs(vid), wrap=x=>`<div class="row meta" style="gap:6px;flex-wrap:wrap">${x}</div>`, lab="دانلود مستقیم منواسکریپت (Word)";
+  if(f&&f.store==="db") return wrap(`<button class="btn sm sig" data-act="art-file-get" data-id="${esc(vid)}" data-k="ms" title="${esc(f.name||"")}">${lab}</button>`);
+  const url=f?(f.store==="asset"?(f.url||blobUrl(f.id)):directUrl(f.repo_url||f.link)):"";
+  if(url) return wrap(`<a class="btn sm sig" href="${esc(safeUrl(url))}" target="_blank" rel="noopener" download="${esc(f.name||"")}" title="${esc(f.name||"")}">${lab}</a>`);
+  return `<div class="meta">فایل Word منواسکریپت هنوز آماده نیست${(msOf(vid)||absOf(vid))&&S.downloads?` · <button class="btn sm ghost" data-act="art-ms" data-id="${esc(vid)}">متن موجود (Word)</button>`:""}</div>`;
 }
 // small=true: one short link for tiles
 function artRepoLine(vid,small){
@@ -5079,12 +5082,14 @@ function artFileBtn(id,kind){
   const lab=`${ART_FK[kind]} ✓`, tip=`${esc(f.name||"")}${f.at?" · "+faDate(String(f.at).slice(0,10)):""}`;
   if(f.store==="asset") return `<a class="btn sm" href="${esc(safeUrl(f.url||blobUrl(f.id)))}" target="_blank" rel="noopener" title="${tip}">${lab}</a>`;
   if(f.store==="link") return `<a class="btn sm" href="${esc(safeUrl(f.link))}" target="_blank" rel="noopener" title="${tip}">${lab}</a>`;
-  const repo=/^https:\/\/github\.com\//.test(f.repo_url||"")?` <a class="btn sm ghost" href="${esc(safeUrl(f.repo_url))}" target="_blank" rel="noopener" title="ریپوی خصوصی منواسکریپت‌ها؛ با حساب GitHub دارای دسترسی باز می‌شود">دانلود از ریپو ↗</a>`:"";
-  return `<button class="btn sm" data-act="art-file-get" data-id="${esc(id)}" data-k="${kind}" title="${tip}">${lab}</button>${repo}`;
+  return `<button class="btn sm" data-act="art-file-get" data-id="${esc(id)}" data-k="${kind}" title="${tip}">${lab}</button>`;
 }
 async function artFileGet(id,kind){
   const f=artFilesOf(id)[kind]; if(!f||f.store!=="db") return; toast("در حال آماده‌سازی فایل…");
-  try{ const q=await S.db.collection("taskfiles").where("key","==",f.key).get(), parts=q.docs.map(d=>d.data()).sort((a,b)=>a.i-b.i);
+  try{ const q=await S.db.collection("taskfiles").where("key","==",f.key).get(), got=new Map(q.docs.map(d=>d.data()).map(p=>[p.i,p]));
+    // a query returns one page only: a large file's remaining pieces are read one by one
+    for(let i=0;i<(f.chunks||1);i++) if(!got.has(i)){ const d=await S.db.doc(`taskfiles/art_${id}__${f.key}__${String(i).padStart(3,"0")}`).get(); if(d.exists) got.set(i,d.data()); }
+    const parts=[...got.values()].sort((a,b)=>a.i-b.i);
     if(!parts.length||parts.length<(f.chunks||1)){ toast("بخش‌هایی از فایل پیدا نشد؛ دوباره بارگذاری کنید."); return; }
     const blob=new Blob(parts.map(p=>Uint8Array.from(atob(p.b64),c=>c.charCodeAt(0))),{type:f.type||"application/octet-stream"});
     if(S.downloads) await S.downloads.save({filename:f.name||"file",data:blob});
