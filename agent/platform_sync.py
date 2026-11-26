@@ -66,6 +66,9 @@ def export(include_seed=False):
             _write("settings", "investor_mail", payload.get("doc", {"map": {}}), docs)
         except Exception:
             pass
+    ir_file = DATA_DIR / "investors_ir.json"   # Iranian investors, funds and accelerators (main investors tab)
+    if ir_file.exists():
+        _write("settings", "investors_ir", json.loads(ir_file.read_text(encoding="utf-8")), docs)
     for lead in leads.load()["leads"].values():
         if lead.get("status") != "do_not_call":
             _write("market/data/leads", lead["id"], lead, docs)
