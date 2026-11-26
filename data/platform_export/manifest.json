@@ -1305,6 +1305,11 @@
     "collection": "market/data/leads",
     "doc_id": "abcagahi-25125",
     "file_path": "data/platform_export/market/data/leads/abcagahi-25125.json"
+   },
+   {
+    "collection": "settings",
+    "doc_id": "investors_ir",
+    "file_path": "data/platform_export/settings/investors_ir.json"
    }
   ]
  ]
